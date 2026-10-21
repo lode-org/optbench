@@ -1,9 +1,9 @@
-force_calls 224
-force_calls_min 105
+force_calls 153
+force_calls_min 99
 force_calls_median 145
-force_calls_max 3962
+force_calls_max 336
 nfailed 0
-par2_mean 223.8979591837
+par2_mean 153.1632653061
 successes 49
 wilson_low 0.9273021808
 wilson_high 1.0000000000
@@ -15,11 +15,11 @@ n_crash 0
 counter harness
 code rgsaddle
 code_version 0.2.2
-commit c0db2b8d333c557251635cb8bb7b3d81f0088a71
+commit 38c3137f62ce1436d662bb37188a8d7cd2d789b8
 algorithm Dimer rotation-skip L-BFGS
 tuning default
 template rgsaddle/pt-dimer-rotskip
 problem tsopt/pt-island
-rotation_steps 3856
-library_evaluations 10922
-harness_calls 10971
+rotation_steps 2642
+library_evaluations 7456
+harness_calls 7505

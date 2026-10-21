@@ -176,6 +176,8 @@ No full harness row.
 
 No ranked row: `rgmin`, `eon`, `ase`.
 
+The rgsaddle lines above are the c0db2b8 files scored for this merge. The stock rows are the 38c3137f files in `results/campaign/rgsaddle-minmode.md`.
+
 ### `tsopt/pt-island`
 
 | Rank | Template | Version | Source | Commit | PAR-2 | Mean | Per-image | Median | Min | Max | nfailed | n |
@@ -187,4 +189,6 @@ No ranked row: `rgmin`, `eon`, `ase`.
 | 5 | `rgsaddle/pt-dimer-fire-tuned` | rgsaddle 0.2.2 | campaign, asv | `c0db2b8d333c` | 1096.9 | 1096.9 |  | 918 | 536 | 3039 | 0 | 49 |
 
 No ranked row: `rgmin`, `eon`, `ase`.
+
+The rgsaddle lines above are the c0db2b8 files scored for this merge. The stock rows are the 38c3137f files in `results/campaign/rgsaddle-minmode.md`.
 

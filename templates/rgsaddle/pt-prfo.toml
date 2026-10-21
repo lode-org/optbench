@@ -3,7 +3,7 @@ engine = "rgsaddle"
 problem = "tsopt/pt-island"
 code = "rgsaddle"
 code_version = "0.2.2"
-commit = "c0db2b8d333c557251635cb8bb7b3d81f0088a71"
+commit = "38c3137f62ce1436d662bb37188a8d7cd2d789b8"
 algorithm = "P-RFO"
 tuning = "default"
 

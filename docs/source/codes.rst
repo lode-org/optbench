@@ -385,7 +385,7 @@ The number is written only after the run finishes under the problem rule.
    <tr>
    <td>saddle search</td>
    <td>main</td>
-   <td>c0db2b8d333c</td>
+   <td>38c3137f62ce</td>
    <td><a href="https://github.com/OmniPotentRPC/rgsaddle">https://github.com/OmniPotentRPC/rgsaddle</a></td>
    </tr>
    </tbody></table></div>
@@ -458,24 +458,24 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="failures">crash 0, divergence 17717, cap 2246, wrong_stationary 35</td>
    <td data-field="n">20000</td>
    </tr>
-   <tr data-problem="tsopt/LJ38" data-template="rgsaddle/prfo-tuned">
+   <tr data-problem="tsopt/LJ38" data-template="rgsaddle/prfo">
    <td>LJ38</td>
-   <td data-field="template">rgsaddle/prfo-tuned</td>
+   <td data-field="template">rgsaddle/prfo</td>
    <td data-field="version">rgsaddle 0.2.2</td>
-   <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">192.6</td>
-   <td data-field="mean_calls">192.6</td>
-   <td data-field="median_calls">173</td>
+   <td data-field="commit">38c3137f62ce</td>
+   <td data-field="par2_mean">68.47</td>
+   <td data-field="mean_calls">68.47</td>
+   <td data-field="median_calls">59</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">200</td>
    </tr>
-   <tr data-problem="tsopt/pt-island" data-template="rgsaddle/pt-dimer-rotskip">
+   <tr data-problem="tsopt/pt-island" data-template="rgsaddle/pt-dimer-lbfgs">
    <td>pt-island</td>
-   <td data-field="template">rgsaddle/pt-dimer-rotskip</td>
+   <td data-field="template">rgsaddle/pt-dimer-lbfgs</td>
    <td data-field="version">rgsaddle 0.2.2</td>
-   <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">223.898</td>
-   <td data-field="mean_calls">223.898</td>
+   <td data-field="commit">38c3137f62ce</td>
+   <td data-field="par2_mean">147.878</td>
+   <td data-field="mean_calls">147.878</td>
    <td data-field="median_calls">145</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">49</td>

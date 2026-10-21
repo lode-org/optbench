@@ -1,0 +1,25 @@
+force_calls 312
+force_calls_min 71
+force_calls_median 208.0
+force_calls_max 8680
+nfailed 30
+par2_mean 3265.1300000000
+successes 170
+wilson_low 0.7939442072
+wilson_high 0.8928640644
+par2_median 220.5000000000
+n_cap 12
+n_wrong_stationary 18
+n_divergence 0
+n_crash 0
+counter harness
+code rgsaddle
+code_version 0.2.2
+commit 38c3137f62ce1436d662bb37188a8d7cd2d789b8
+algorithm Dimer rotation-skip L-BFGS
+tuning default
+template rgsaddle/dimer-rotskip
+problem tsopt/LJ38
+rotation_steps 73384
+library_evaluations 219734
+harness_calls 219922

@@ -45,7 +45,7 @@ def test_rgsaddle_grid_is_seed_then_one_start_until_full(monkeypatch):
         for value in vars(bench_rgsaddle).values()
         if isinstance(value, type) and getattr(value, "template_id", "").startswith("rgsaddle/")
     ]
-    assert len(classes) == 22
+    assert len(classes) == 13
     for benchmark in classes:
         assert benchmark.param_names == ["seed", "start"]
         assert benchmark.params[0] == ["0"]

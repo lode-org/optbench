@@ -261,7 +261,7 @@ It does not run a campaign.
    <td data-code="eOn" data-template="eon-client/ts-lj38-lanczos-improved" data-par2="280.33"><span class="bench-score">280.33</span><a href="generated/suites/tsopt.html#LJ38-templates">eon-client/ts-lj38-lanczos-improved</a></td>
    <td data-code="Eon svn" data-template="eon-svn/ts-lj38-lanczos-improved" data-par2="270.85"><span class="bench-score">270.85</span><a href="generated/suites/tsopt.html#LJ38-templates">eon-svn/ts-lj38-lanczos-improved</a></td>
    <td data-code="rgmin">—</td>
-   <td data-code="rgsaddle" data-template="rgsaddle/prfo-tuned" data-par2="192.6"><span class="bench-score">192.6</span><a href="generated/suites/tsopt.html#LJ38-templates">rgsaddle/prfo-tuned</a></td>
+   <td data-code="rgsaddle" data-template="rgsaddle/prfo" data-par2="68.47"><span class="bench-score">68.47</span><a href="generated/suites/tsopt.html#LJ38-templates">rgsaddle/prfo</a></td>
    <td data-code="geodesic">—</td>
    <td data-code="ASE">—</td>
    <td data-code="Sella" data-template="sella/lj38-ts-default" data-par2="68.74"><span class="bench-score">68.74</span><a href="generated/suites/tsopt.html#LJ38-templates">sella/lj38-ts-default</a></td>
@@ -285,7 +285,7 @@ It does not run a campaign.
    <td data-code="eOn" data-template="eon-client/ts-pt-lanczos-improved" data-par2="108.796"><span class="bench-score">108.796</span><a href="generated/suites/tsopt.html#pt-island-templates">eon-client/ts-pt-lanczos-improved</a></td>
    <td data-code="Eon svn" data-template="eon-svn/ts-pt-lanczos-improved" data-par2="106.388"><span class="bench-score">106.388</span><a href="generated/suites/tsopt.html#pt-island-templates">eon-svn/ts-pt-lanczos-improved</a></td>
    <td data-code="rgmin">—</td>
-   <td data-code="rgsaddle" data-template="rgsaddle/pt-dimer-rotskip" data-par2="223.898"><span class="bench-score">223.898</span><a href="generated/suites/tsopt.html#pt-island-templates">rgsaddle/pt-dimer-rotskip</a></td>
+   <td data-code="rgsaddle" data-template="rgsaddle/pt-dimer-lbfgs" data-par2="147.878"><span class="bench-score">147.878</span><a href="generated/suites/tsopt.html#pt-island-templates">rgsaddle/pt-dimer-lbfgs</a></td>
    <td data-code="geodesic">—</td>
    <td data-code="ASE">—</td>
    <td data-code="Sella" data-template="sella/pt-island-ts-default" data-par2="74.2857"><span class="bench-score">74.2857</span><a href="generated/suites/tsopt.html#pt-island-templates">sella/pt-island-ts-default</a></td>
