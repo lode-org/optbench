@@ -27,8 +27,11 @@ def test_catalog_covers_every_problem_and_both_profiles():
     for spec in specs:
         by_problem.setdefault(spec["problem"], set()).add(spec["profile"])
     assert set(by_problem) == PROBLEMS
-    for profiles in by_problem.values():
-        assert profiles == {"default", "tuned"}
+    for problem, profiles in by_problem.items():
+        if problem in {"minimization/lj38", "minimization/morse-bulk"}:
+            assert profiles == {"default"}
+        else:
+            assert profiles == {"default", "tuned"}
     lj = [spec for spec in specs if spec["problem"] == "minimization/lj38"]
     assert {spec["algorithm"] for spec in lj} == set(OPTIMIZERS) | {"Sella"}
     dimer = [spec for spec in specs if spec["problem"] == "saddle-search/pt-island"]
@@ -47,9 +50,8 @@ def test_templates_match_the_catalog_and_registry():
         assert loaded["problem"] == spec["problem"]
         assert loaded["optimizer"]["name"]
         assert loaded["stop"]["max_force_calls"] > 0
-    tuned = load_template(ROOT, "ase/lj38-lbfgs-tuned")
-    assert tuned["optimizer"]["parameters"]["memory"] == 100
-    assert abs(float(tuned["optimizer"]["parameters"]["alpha"]) - 1000.0) < 1e-9
+    default_lbfgs = load_template(ROOT, "ase/lj38-lbfgs-default")
+    assert default_lbfgs["optimizer"]["parameters"]["maxstep"] == 0.1
     sella = load_template(ROOT, "sella/lj38-ts-default")
     assert sella["optimizer"]["parameters"]["order"] == 1
     assert "delta0" not in sella["optimizer"]["parameters"]

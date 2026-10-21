@@ -30,7 +30,6 @@ ARCHIVE = (
 TEMPLATES = (
     ("Lj38EonCg", "eon-client/cg", 1800),
     ("Lj38EonFire", "eon-client/fire", 1800),
-    ("Lj38EonLbfgsM100", "eon-client/lbfgs-m100", 600),
     ("Lj38EonLbfgsM20", "eon-client/lbfgs-m20", 600),
     ("Lj38EonQm", "eon-client/qm", 3600),
     ("Lj38EonSd", "eon-client/sd", 3600),

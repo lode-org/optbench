@@ -113,100 +113,6 @@ def _opt_slug(name: str) -> str:
     return _OPT_SLUG[name]
 
 
-def _tuned_minimizer(problem: str, name: str) -> tuple[dict, str, str]:
-    """Return requested parameters, source tag, and note."""
-    exp = {"precon": {"name": "Exp", "A": 3.0}}
-    if problem == "minimization/lj38":
-        table = {
-            "BFGS": (
-                {"maxstep": 0.1},
-                "archive",
-                "Archive minimization/lj38/ase-BFGS sets maxstep 0.1.",
-            ),
-            "LBFGS": (
-                {"maxstep": 0.1, "alpha": 1000.0, "memory": 100},
-                "archive",
-                "Archive minimization/lj38/ase-lbfgs sets maxstep 0.1, alpha 1000, memory 100.",
-            ),
-            "FIRE": (
-                {"maxstep": 0.2, "dt": 1.0},
-                "archive",
-                "Archive minimization/lj38/ase-fire sets maxstep 0.2 and dt 1.",
-            ),
-            "BFGSLineSearch": (
-                {"maxstep": 0.2, "alpha": 1.0 / 0.003},
-                "archive",
-                "Archive minimization/lj38/ase-bfgslinesearch sets maxstep 0.2 and alpha 1/0.003.",
-            ),
-            "GPMin": (
-                {"update_hyperparams": True},
-                "library",
-                "No archived GPMin script. Tuned turns on update_hyperparams.",
-            ),
-            "PreconLBFGS": (
-                {"maxstep": 0.1, **exp},
-                "archive",
-                "Archive minimization/lj38/ase-preconlbfgs sets Exp A 3 and maxstep 0.1.",
-            ),
-            "PreconFIRE": (
-                {"maxstep": 0.2, **exp},
-                "transferred",
-                "No archived PreconFIRE script. Tuned uses the LJ38 Exp A 3 preconditioner and maxstep 0.2.",
-            ),
-            "PreconODE12r": (
-                dict(exp),
-                "library",
-                "No archived PreconODE12r script. ASE 3.29.0 already builds Exp with A=3, and the tuned row passes that Exp explicitly.",
-            ),
-        }
-    elif problem == "minimization/morse-bulk":
-        table = {
-            "BFGS": (
-                {"maxstep": 0.1},
-                "transferred",
-                "No archived Morse BFGS script. Tuned uses maxstep 0.1 from the LJ38 ASE BFGS archive.",
-            ),
-            "LBFGS": (
-                {"maxstep": 0.2, "alpha": 25.0, "memory": 20},
-                "archive",
-                "Archive minimization/morse-bulk/ase-lbfgs sets memory 20, maxstep 0.2, alpha 25.",
-            ),
-            "FIRE": (
-                {"maxstep": 0.2},
-                "archive",
-                "Archive minimization/morse-bulk/ase-fire sets maxstep 0.2.",
-            ),
-            "BFGSLineSearch": (
-                {"maxstep": 0.2, "alpha": 1.0 / 0.003},
-                "transferred",
-                "No archived Morse BFGSLineSearch script. Tuned uses the LJ38 archive maxstep 0.2 and alpha 1/0.003.",
-            ),
-            "GPMin": (
-                {"update_hyperparams": True},
-                "library",
-                "No archived GPMin script. Tuned turns on update_hyperparams.",
-            ),
-            "PreconLBFGS": (
-                {"maxstep": 0.1, **exp},
-                "archive",
-                "Archive minimization/morse-bulk/ase-preconLBFGS sets Exp A 3 and maxstep 0.1.",
-            ),
-            "PreconFIRE": (
-                {"maxstep": 0.2, **exp},
-                "transferred",
-                "No archived Morse PreconFIRE script. Tuned uses Exp A 3 and maxstep 0.2.",
-            ),
-            "PreconODE12r": (
-                dict(exp),
-                "library",
-                "No archived Morse PreconODE12r script. ASE 3.29.0 already builds Exp with A=3, and the tuned row passes that Exp explicitly.",
-            ),
-        }
-    else:
-        raise KeyError(problem)
-    return table[name]
-
-
 def _minimization_specs() -> list[dict]:
     problems = (
         (
@@ -229,78 +135,66 @@ def _minimization_specs() -> list[dict]:
     specs = []
     for slug, problem, archive, potential, stop, select in problems:
         for name in OPTIMIZERS:
-            for profile in ("default", "tuned"):
-                if profile == "default":
-                    params = {}
-                    source = "default"
-                    note = f"ASE {ASE_VERSION} {name} constructor defaults."
-                    if problem == "minimization/lj38" and name in {"BFGS", "LBFGS"}:
-                        params = {"maxstep": 0.1}
-                        source = "repaired"
-                        note = (
-                            f"ASE {ASE_VERSION} {name} constructor maxstep is 0.2. "
-                            "On LJ38 starts that begin inside the repulsive core that step increases the force. "
-                            "This default row uses maxstep 0.1. Morse defaults stay at the constructor value."
-                        )
-                else:
-                    params, source, note = _tuned_minimizer(problem, name)
-                specs.append(
-                    {
-                        "id": f"ase/{slug}-{_opt_slug(name)}-{profile}",
-                        "engine": "ase",
-                        "code": "ASE",
-                        "code_version": ASE_VERSION,
-                        "commit": ASE_COMMIT,
-                        "algorithm": name,
-                        "problem": problem,
-                        "task": "minimize",
-                        "profile": profile,
-                        "reducer": "capped",
-                        "ranked": True,
-                        "parameter_source": source,
-                        "note": note,
-                        "optimizer": {"name": name, "parameters": params},
-                        "potential": potential,
-                        "stop": stop,
-                        "input": {"archive_path": archive, "select": select},
-                    }
-                )
-        # Sella can minimize with order 0.
-        for profile in ("default", "tuned"):
-            if profile == "default":
-                params = {"order": 0}
-                source = "default"
-                note = f"Sella {SELLA_VERSION} minimum defaults, order 0."
-            else:
-                params = {"order": 0, **SELLA_TUNED}
-                source = "transferred"
+            profile = "default"
+            params = {}
+            source = "default"
+            note = f"ASE {ASE_VERSION} {name} constructor defaults."
+            if problem == "minimization/lj38" and name in {"BFGS", "LBFGS"}:
+                params = {"maxstep": 0.1}
+                source = "repaired"
                 note = (
-                    "Sella minimization has no archived script. "
-                    + SELLA_TUNED_NOTE
-                    + " order 0."
+                    f"ASE {ASE_VERSION} {name} constructor maxstep is 0.2. "
+                    "On LJ38 starts that begin inside the repulsive core that step increases the force. "
+                    "This default row uses maxstep 0.1. Morse defaults stay at the constructor value."
                 )
             specs.append(
                 {
-                    "id": f"sella/{slug}-min-{profile}",
-                    "engine": "sella",
-                    "code": "Sella",
-                    "code_version": SELLA_VERSION,
-                    "commit": SELLA_COMMIT,
-                    "algorithm": "Sella",
+                    "id": f"ase/{slug}-{_opt_slug(name)}-{profile}",
+                    "engine": "ase",
+                    "code": "ASE",
+                    "code_version": ASE_VERSION,
+                    "commit": ASE_COMMIT,
+                    "algorithm": name,
                     "problem": problem,
-                    "task": "sella",
+                    "task": "minimize",
                     "profile": profile,
                     "reducer": "capped",
                     "ranked": True,
                     "parameter_source": source,
                     "note": note,
-                    "optimizer": {"name": "Sella", "parameters": params},
+                    "optimizer": {"name": name, "parameters": params},
                     "potential": potential,
                     "stop": stop,
                     "input": {"archive_path": archive, "select": select},
-                    "sella": {"order": 0, "v0": "none"},
                 }
             )
+        # Sella can minimize with order 0.
+        profile = "default"
+        params = {"order": 0}
+        source = "default"
+        note = f"Sella {SELLA_VERSION} minimum defaults, order 0."
+        specs.append(
+            {
+                "id": f"sella/{slug}-min-{profile}",
+                "engine": "sella",
+                "code": "Sella",
+                "code_version": SELLA_VERSION,
+                "commit": SELLA_COMMIT,
+                "algorithm": "Sella",
+                "problem": problem,
+                "task": "sella",
+                "profile": profile,
+                "reducer": "capped",
+                "ranked": True,
+                "parameter_source": source,
+                "note": note,
+                "optimizer": {"name": "Sella", "parameters": params},
+                "potential": potential,
+                "stop": stop,
+                "input": {"archive_path": archive, "select": select},
+                "sella": {"order": 0, "v0": "none"},
+            }
+        )
     return specs
 
 

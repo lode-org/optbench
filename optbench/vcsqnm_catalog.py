@@ -126,7 +126,6 @@ def specs() -> list[dict]:
                 continue
             for tuned, profile, parameters in (
                 (False, "default", DEFAULT),
-                (True, "tuned", TUNED),
             ):
                 suffix = "-tuned" if tuned else ""
                 found.append(

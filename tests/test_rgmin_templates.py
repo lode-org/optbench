@@ -28,18 +28,20 @@ def test_rgmin_templates_cover_both_problems_and_both_tunings():
     pinned = next(row for row in registry["code"] if row["id"] == "rgmin")
     assert pinned["commit"] == COMMIT
     found = [row for row in list_templates(ROOT) if str(row["id"]).startswith("rgmin/")]
-    assert len(found) == 72
+    assert len(found) == 36
     seen = set()
     noise_sigmas = set()
     for template in found:
         assert template["engine"] == "rgmin"
         assert template["commit"] == COMMIT
         assert template["code_version"] == "0.4.1"
-        assert template["tuning"] in ("default", "tuned")
+        assert template["tuning"] == "default"
         assert template["rgmin"]["method"] in METHODS
         problem = resolve_problem(ROOT, template["problem"])
         _check_stop(problem, template)
         lj_like = template["problem"] in {"minimization/lj38", "minimization/lj38-noise"}
+        if template["problem"] in {"minimization/lj38", "minimization/morse-bulk"}:
+            assert template["tuning"] == "default"
         if lj_like or template["tuning"] == "tuned":
             assert template["rgmin"]["maxstep"] == 0.2
         else:
@@ -52,10 +54,14 @@ def test_rgmin_templates_cover_both_problems_and_both_tunings():
     for problem in ("minimization/lj38", "minimization/morse-bulk"):
         for method in METHODS:
             assert (problem, method, "default") in seen
-            assert (problem, method, "tuned") in seen
+    assert all(
+        tuning == "default"
+        for problem, _method, tuning in seen
+        if problem in {"minimization/lj38", "minimization/morse-bulk"}
+    )
     assert noise_sigmas == {
         (tuning, sigma)
-        for tuning in ("default", "tuned")
+        for tuning in ("default",)
         for sigma in (0.0, 1e-4, 1e-3, 1e-2)
     }
     memories = {

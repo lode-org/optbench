@@ -19,14 +19,14 @@ def test_pele_templates_cover_the_minimization_problems():
     pinned = next(row for row in registry["code"] if row["id"] == "pele")
     assert pinned["commit"] == PELE_COMMIT
     found = [row for row in list_templates(ROOT) if str(row["id"]).startswith("pele/")]
-    assert len(found) == 9
+    assert len(found) == 8
     seen = set()
     for template in found:
         assert template["engine"] == "pele"
         assert template["commit"] == PELE_COMMIT
         assert template["code_version"] == PELE_VERSION
         assert template["code"] == "pele"
-        assert template["tuning"] in ("default", "tuned")
+        assert template["tuning"] == "default"
         problem = resolve_problem(ROOT, template["problem"])
         _check_stop(problem, template)
         method = template["pele"]["method"]
@@ -36,10 +36,6 @@ def test_pele_templates_cover_the_minimization_problems():
     for problem in ("minimization/lj38", "minimization/morse-bulk"):
         for method in METHODS:
             assert (problem, method, "default") in seen
-    assert ("minimization/lj38", "lbfgs", "tuned") in seen
-    tuned = next(row for row in found if row["id"] == "pele/lj38-lbfgs-m100")
-    assert tuned["pele"]["M"] == 100
-    assert tuned["pele"]["maxstep"] == 0.2
 
 
 def test_unknown_pele_option_is_rejected():

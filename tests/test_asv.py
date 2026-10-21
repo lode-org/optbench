@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from benchmarks import bench_rgsaddle
-from benchmarks.bench_lj38 import Lj38EonLbfgsM100, selected_starts, start_names
+from benchmarks.bench_lj38 import Lj38EonLbfgsM20, selected_starts, start_names
 from benchmarks.bench_rgsaddle import RgsaddleLj38DimerLbfgs, RgsaddlePtDimerLbfgs
 from benchmarks.pending import code_ids, problem_ids
 from benchmarks.quadratic import QuadraticDisplacement, QuadraticDimer
@@ -80,11 +80,11 @@ def test_each_lj38_start_is_one_asv_parameter(monkeypatch):
     names = start_names()
     assert len(names) == 1000
     assert os.environ.get("OPTBENCH_ASV_FULL") != "1"
-    assert Lj38EonLbfgsM100.params[0] == ["0"]
-    assert Lj38EonLbfgsM100.params[1] == [names[0]]
-    assert Lj38EonLbfgsM100.param_names == ["seed", "start"]
-    assert Lj38EonLbfgsM100.repeat == 1
-    assert Lj38EonLbfgsM100.track_force_calls.unit == "force calls"
+    assert Lj38EonLbfgsM20.params[0] == ["0"]
+    assert Lj38EonLbfgsM20.params[1] == [names[0]]
+    assert Lj38EonLbfgsM20.param_names == ["seed", "start"]
+    assert Lj38EonLbfgsM20.repeat == 1
+    assert Lj38EonLbfgsM20.track_force_calls.unit == "force calls"
     assert selected_starts() == names[:1]
     monkeypatch.setenv("OPTBENCH_ASV_FULL", "1")
     assert selected_starts() == names

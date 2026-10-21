@@ -68,12 +68,16 @@ def test_templates_match_the_catalog_and_the_registry():
     assert pinned["commit"] == COMMIT
     assert pinned["ref"] == "v1.3"
     catalog = specs()
-    assert len(catalog) == 12
+    assert len(catalog) == 6
     assert {row["id"] for row in catalog if row["problem"] == "minimization/lj38"} == {
         "vcsqnm/lj38-sqnm",
-        "vcsqnm/lj38-sqnm-tuned",
         "vcsqnm/lj38-ase",
-        "vcsqnm/lj38-ase-tuned",
+    }
+    assert {row["id"] for row in catalog if row["problem"] == "minimization/morse-bulk"} == {
+        "vcsqnm/morse-sqnm",
+        "vcsqnm/morse-ase",
+        "vcsqnm/morse-vc",
+        "vcsqnm/morse-ase-vc",
     }
     on_disk = [row for row in list_templates(ROOT) if row.get("engine") == "vcsqnm"]
     assert {row["id"] for row in on_disk} == {row["id"] for row in catalog}
@@ -97,10 +101,10 @@ def test_templates_match_the_catalog_and_the_registry():
 
 def test_write_templates_matches_the_catalog(tmp_path: Path):
     paths = write_templates(tmp_path)
-    assert len(paths) == 12
-    text = (tmp_path / "templates" / "vcsqnm" / "morse-ase-vc-tuned.toml").read_text(encoding="utf-8")
+    assert len(paths) == 6
+    text = (tmp_path / "templates" / "vcsqnm" / "morse-ase-vc.toml").read_text(encoding="utf-8")
     assert 'method = "ase-vc"' in text
-    assert "nhist_max = 20" in text
+    assert "nhist_max = 10" in text
     assert "eps_subsp = 1e-05" in text
 
 

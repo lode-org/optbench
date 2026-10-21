@@ -167,7 +167,7 @@ def validate_subset(
     sends every force evaluation to the counting server. The server
     count is the harness count.
     """
-    template = load_template(root, "eon-client/lbfgs-m100")
+    template = load_template(root, "eon-client/lbfgs-m20")
     version, commit, version_line = client_version(client)
     memory = template["ini"]["Optimizer"].get("lbfgs_memory")
     scratch = work or output.parent / "work"
@@ -233,7 +233,7 @@ def validate_subset(
     lines = [
         "kind validation",
         "problem minimization/lj38",
-        "template eon-client/lbfgs-m100",
+        f"template {template['id']}",
         f"subset {limit}",
         "published_mean false",
         "counter harness",
