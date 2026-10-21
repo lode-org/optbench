@@ -1,0 +1,52 @@
+id = "eon-develop/htst-al-dimer-cg-stock"
+engine = "eon"
+problem = "hTST/Al"
+task = "htst"
+reducer = "harness"
+client_family = "develop"
+code = "eOn"
+code_version = "(develop 500350d9)"
+commit = "500350d9fae881f06c7ef194e5868da079c4be5a"
+algorithm = "Dimer-CG rotation: max=50 tol=1"
+tuning = "default"
+failure_cap = 100000000
+search_limit = 10000
+rate_template = "eon-develop/htst-al-dimer-cg-stock-rate"
+rate_stem = "eon-develop-htst-al-dimer-cg-stock-rate"
+geometry = "website/hTST/Al/eon-dimer-cg/pos.con"
+note = "Dimer CG on the Al reactant. The archived config sets confidence 1.95, displace_radius 3.3, displace_magnitude 0.5, max_energy 100, listed-atom weight 1, prefactor 1.2e12, minimize_first, optimizer force 0.001 and max_iterations 5000, and num_jobs 10000. The dimer block is CG, 50 rotations, angle 1. The archived displace_atomlist value -1 is the last atom on the r2549 server. On this client that same value selects every free atom, so the list is file-order row 384, the last atom in the reactant. The names displace_listed_atom_weight and displace_atom_list are the keys this server accepts for the archived displace_listed_weight and displace_atomlist. The kernel is the Fortran Aluminum EAM through ext_pot. The client is eOn develop 500350d9. A window closes by the 2014 report rule once the processtable holds the eight reference barriers. The search stops at 10000 registered searches or when 639 barrier windows and 20 rate windows have closed."
+
+[ini.Main]
+job = "akmc"
+temperature = 300
+random_seed = 42
+
+[ini.Optimizer]
+converged_force = 0.001
+max_iterations = 5000
+
+[ini.AKMC]
+confidence = 1.95
+server_side_process_search = false
+
+[ini.Prefactor]
+default_value = 1.2e12
+
+[ini."Process Search"]
+minimize_first = true
+
+[ini.Communicator]
+num_jobs = 10000
+
+[ini."Saddle Search"]
+displace_radius = 3.3
+displace_magnitude = 0.5
+max_energy = 100.0
+displace_listed_atom_weight = 1.0
+displace_atom_list = "384"
+min_mode_method = "dimer"
+
+[ini.Dimer]
+rotations_max = 50
+converged_angle = 1
+opt_method = "cg"

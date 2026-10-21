@@ -302,7 +302,11 @@ def run(
             limit=limit,
         )
     if template["engine"] == "pele":
-        from .runners.pele_min import run_template
+        method = str((template.get("pele") or {}).get("method") or "")
+        if method == "basinhopping":
+            from .runners.pele_bh import run_template
+        else:
+            from .runners.pele_min import run_template
 
         problem = resolve_problem(root, problem_name)
         stated = template.get("problem")
@@ -444,6 +448,45 @@ def run(
             output=output,
             workers=workers,
         )
+    task = str(template.get("task") or "")
+    reducer = str(template.get("reducer") or "")
+    if template["engine"] in _EON_ENGINES and task == "minimize" and reducer.startswith("harness"):
+        from .runners.eon_min import run_template
+
+        problem = resolve_problem(root, problem_name)
+        stated = template.get("problem")
+        if stated and stated != problem["id"]:
+            raise ValueError(f"{template_name} belongs to {stated}")
+        return run_template(
+            root,
+            problem,
+            template,
+            geometries=geometries,
+            output=output,
+            workers=workers,
+            work=work,
+            limit=limit,
+        )
+    if template["engine"] in _EON_ENGINES and task == "htst" and reducer.startswith("harness"):
+        from .runners.eon_htst import run_template
+
+        problem = resolve_problem(root, problem_name)
+        stated = template.get("problem")
+        if stated and stated != problem["id"]:
+            raise ValueError(f"{template_name} belongs to {stated}")
+        return run_template(
+            root,
+            problem,
+            template,
+            geometries=geometries,
+            output=output,
+            workers=workers,
+            work=work,
+            limit=limit,
+        )
+    if template["engine"] in _EON_ENGINES and task == "htst-written":
+        paired = template.get("paired") or "the barrier template"
+        raise RuntimeError(f"{template['id']} is written by {paired}")
     if template["engine"] not in _EON_ENGINES:
         raise ValueError(f"unknown engine {template['engine']}")
     if client is None:

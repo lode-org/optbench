@@ -4,8 +4,8 @@ force_calls_max 1562
 force_calls_median 778.0
 call_unit total
 nfailed 0
-code Eon svn
-code_version r2549
+code EON
+code_version (SVN r2549)
 commit r2549
 algorithm CG
 template eon-svn/neb-pt-cg

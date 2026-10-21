@@ -7,10 +7,10 @@
    <section class="bench" id="summary"><div class="bench-scroll">
    <table data-board-table="summary">
    <caption>Best full harness run of each code. Lower PAR-2 is better. The full template table is on the problem page.</caption>
-   <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
+   <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>EON</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
    <tr data-problem="hTST/Al">
    <th scope="row"><a href="#Al">Al</a></th>
-   <td data-code="eOn">—</td>
+   <td data-code="eOn" data-template="eon-develop/htst-al-dimer-cg-stock" data-par2="117877"><span class="bench-score">117877</span><a href="#Al-templates">eon-develop/htst-al-dimer-cg-stock</a></td>
    <td data-code="Eon svn">—</td>
    <td data-code="rgmin">—</td>
    <td data-code="rgsaddle">—</td>
@@ -23,6 +23,7 @@
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
    <td data-code="vc-SQNM">—</td>
+   <td data-code="EON" data-template="eon-svn/htst-al-dimer-cg-stock" data-par2="83937.2"><span class="bench-score">83937.2</span><a href="#Al-templates">eon-svn/htst-al-dimer-cg-stock</a></td>
    <td data-code="artn">—</td>
    <td data-code="compass">—</td>
    <td data-code="dlfind">—</td>
@@ -47,6 +48,7 @@
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
    <td data-code="vc-SQNM">—</td>
+   <td data-code="EON">—</td>
    <td data-code="artn">—</td>
    <td data-code="compass">—</td>
    <td data-code="dlfind">—</td>
@@ -64,13 +66,18 @@
    </dl>
    <p>Ranked by the v2 PAR-2 mean of the harness total. Only the newest full version of a template is in this table. A partial row, including a one-start asv smoke run, is not.</p>
    <p class="bench-gaps">Partial rows stay off the ranked table.</p>
+   <figure class="bench-plot"><a href="../../_static/board/hTST-Al-profile.svg"><picture><source srcset="../../_static/board/hTST-Al-profile.webp" type="image/webp"><img src="../../_static/board/hTST-Al-profile.png" alt="Dolan-More profile for hTST/Al" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../_static/board/hTST-Al-cost.svg"><picture><source srcset="../../_static/board/hTST-Al-cost.webp" type="image/webp"><img src="../../_static/board/hTST-Al-cost.png" alt="Cost versus success for hTST/Al" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <details class="bench-details" id="Al-templates">
-   <summary>All templates (0 ranked)</summary>
+   <summary>All templates (4 ranked)</summary>
    <div class="bench-scroll">
    <table data-board-table="ranked" data-problem="hTST/Al">
    <caption>Lower PAR-2 is better. PAR-2 and the call columns are harness force-call totals. Wilson bounds are the 95% interval on the success rate.</caption>
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td colspan="11">No full harness row.</td></tr>
+   <tr><td data-field="template">eon-svn/htst-al-dimer-cg-stock</td><td data-field="version">EON (SVN r2549)</td><td data-field="commit">r2549</td><td data-field="source">campaign</td><td data-field="par2_mean">83937.2</td><td data-field="success_rate">1</td><td data-field="wilson">0.962647–1</td><td data-field="median_calls">77307</td><td data-field="mean_calls">83937.2</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">99</td></tr>
+   <tr><td data-field="template">eon-develop/htst-al-dimer-cg-stock</td><td data-field="version">eOn (develop 500350d9)</td><td data-field="commit">500350d9fae8</td><td data-field="source">campaign</td><td data-field="par2_mean">117877</td><td data-field="success_rate">1</td><td data-field="wilson">0.948672–1</td><td data-field="median_calls">96099</td><td data-field="mean_calls">117877</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">71</td></tr>
+   <tr><td data-field="template">eon-svn/htst-al-dimer-cg-stock-rate</td><td data-field="version">EON (SVN r2549)</td><td data-field="commit">r2549</td><td data-field="source">campaign</td><td data-field="par2_mean">4.15629e+06</td><td data-field="success_rate">1</td><td data-field="wilson">0.34238–1</td><td data-field="median_calls">4.15629e+06</td><td data-field="mean_calls">4.15629e+06</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">2</td></tr>
+   <tr><td data-field="template">eon-develop/htst-al-dimer-cg-stock-rate</td><td data-field="version">eOn (develop 500350d9)</td><td data-field="commit">500350d9fae8</td><td data-field="source">campaign</td><td data-field="par2_mean">6.95506e+06</td><td data-field="success_rate">1</td><td data-field="wilson">0.206549–1</td><td data-field="median_calls">6.95506e+06</td><td data-field="mean_calls">6.95506e+06</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">1</td></tr>
    </tbody></table></div>
    <h3>Partial</h3><ul>
    <li>eon-client/htst-al-dimer-cg eOn campaign n=1, result file sets partial true.</li>

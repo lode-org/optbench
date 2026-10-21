@@ -19,7 +19,7 @@ def test_pele_templates_cover_the_minimization_problems():
     pinned = next(row for row in registry["code"] if row["id"] == "pele")
     assert pinned["commit"] == PELE_COMMIT
     found = [row for row in list_templates(ROOT) if str(row["id"]).startswith("pele/")]
-    assert len(found) == 9
+    assert len(found) == 10
     seen = set()
     for template in found:
         assert template["engine"] == "pele"
@@ -30,6 +30,19 @@ def test_pele_templates_cover_the_minimization_problems():
         problem = resolve_problem(ROOT, template["problem"])
         _check_stop(problem, template)
         method = template["pele"]["method"]
+        if method == "basinhopping":
+            assert set(template["pele"]) == {
+                "method",
+                "temperature",
+                "stepsize",
+                "acc_ratio",
+                "interval",
+                "quench_tol",
+                "nquenches",
+            }
+            assert template["problem"] == "globalopt/lj38"
+            assert template["tuning"] == "default"
+            continue
         assert method in METHODS
         merged_options(method, {key: value for key, value in template["pele"].items() if key != "method"})
         seen.add((template["problem"], method, template["tuning"]))

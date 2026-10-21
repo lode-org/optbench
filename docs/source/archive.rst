@@ -2267,7 +2267,7 @@ The 2014 rows follow, in the published order, inside Legacy 2014 archive.
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="hTST/Al">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td colspan="11">No full harness row.</td></tr>
+   <tr><td data-field="template">eon-svn/htst-al-dimer-cg-stock</td><td data-field="version">EON (SVN r2549)</td><td data-field="commit">r2549</td><td data-field="source">campaign</td><td data-field="par2_mean">83937.2</td><td data-field="success_rate">1</td><td data-field="wilson">0.962647–1</td><td data-field="median_calls">77307</td><td data-field="mean_calls">83937.2</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">99</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">Partial rows stay off the ranked table.</p>
    <p><a href="generated/suites/hTST.html#Al">Full ranked table and performance profile</a>.</p>

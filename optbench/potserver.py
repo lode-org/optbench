@@ -85,6 +85,10 @@ def handle_lines(lines: list[str], rgpot: RgpotCounter) -> list[str]:
         return ["ok"]
     if command == "bye":
         return ["bye"]
+    if command == "charge":
+        # One client-side evaluation. The geometry never crosses the socket.
+        counter.charge(())
+        return ["ok", str(counter.calls), str(counter.verify_calls)]
     if command != "calculate":
         raise ValueError(f"unknown command {command}")
     if len(lines) < 3:

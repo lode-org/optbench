@@ -1,0 +1,30 @@
+# counter harness. One force call is one getEnergyGradient entry.
+# The potential is the harness Lennard-Jones potential. A repeated coordinate is cached.
+# A start succeeds when a converged quench is within energy_above_minimum of the Wales LJ38 energy.
+# The quench is lbfgs_cpp with the archived tolerance. Other quench arguments stay at the constructor.
+# The call ceiling is the PAR-2 cap. It is above the archived maximum and is not a quench setting.
+# Basin hopping from the archived driver. Temperature 1.0, RandomDisplacement stepsize 0.41, AdaptiveStepsize acceptance ratio 0.5 and interval 100. The adaptive factor stays the constructor value 0.9. The quench is lbfgs_cpp with tol 0.001; memory, maxstep, maxErise, H0, and the iteration limit stay at the constructor. The driver allows 100000 quenches and checks the Markov energy after each hop. The stop is the problem energy_above_minimum on the harness Lennard-Jones energy of the Wales LJ38 coordinates. The call ceiling is 4000000, above the archived maximum, and is the PAR-2 cap.
+force_calls 528658
+force_calls_min 6208
+force_calls_max 2765495
+nfailed 0
+median 385463.5
+code pele
+code_version 0.1.2
+commit b7081b932a060be11342fbe8287ac35da8ada879
+algorithm basin hopping
+template pele/lj38-basinhopping
+tuning default
+counter harness
+problem globalopt/lj38
+par2_mean 528657.52
+wilson_low 0.963006501793
+wilson_high 1
+par2_median 385463.5
+par2_median_low 306421.45
+par2_median_high 436270.5
+v2_nfailed 0
+v2_successes 100
+n 100
+energy_min -173.928426431
+energy_max -173.928423598

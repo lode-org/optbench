@@ -49,6 +49,7 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
         str(template["id"])
         for template in list_templates(root)
         if template.get("engine") == "pele"
+        and str((template.get("pele") or {}).get("method") or "") != "basinhopping"
     }
     groups: dict[str, list[dict]] = {}
     for path in sorted(campaign.glob("pele-b7081b93-*.starts.jsonl")):
@@ -59,6 +60,8 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
                 template = line.split(None, 1)[1].strip()
         if not template:
             raise ValueError(f"{dat} has no template")
+        if template not in expected:
+            continue
         rows = _records(path)
         if any(row.get("partial") for row in rows):
             raise ValueError(f"{path} is a partial campaign")

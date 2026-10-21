@@ -1,0 +1,36 @@
+id = "eon-develop/neb-pt-cg"
+engine = "eon"
+problem = "neb/Pt-heptamer"
+code = "eOn"
+code_version = "(develop 500350d9)"
+commit = "500350d9fae881f06c7ef194e5868da079c4be5a"
+algorithm = "CG"
+reducer = "harness"
+failure_cap = 10000
+kind = "neb-pt"
+kernel = "morse_shift"
+tuning = "default"
+note = "Climbing-image NEB on the 13 Pt-heptamer pairs. Optimizer cg, max_move 0.2, converged_force 0.01, images 8, spring 5. Those match the problem stop. climbing_image_method and climbing_image_converged_only stay at the develop constructor, which is enabled and converged-only. Slack stays 10. The harness kernel is r2549 Morse::force, the same surface as the EON row: cutoff 9.5, pair energy shifted to zero at the cutoff, minimum image on the box diagonal. The client is eOn develop 500350d9."
+
+[ini.Main]
+job = "nudged_elastic_band"
+
+[ini.Potential]
+potential = "morse_pt"
+
+[ini.Optimizer]
+opt_method = "cg"
+convergence_metric = "norm"
+converged_force = 0.01
+max_move = 0.2
+max_iterations = 1000
+
+[ini."Nudged Elastic Band"]
+images = 8
+climbing_image_method = true
+doubly_nudged = false
+doubly_nudged_switching = false
+opt_method = "cg"
+converged_force = 0.01
+max_iterations = 1000
+spring = 5

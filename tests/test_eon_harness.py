@@ -41,6 +41,45 @@ def test_c_bridge_matches_the_python_reply(tmp_path, monkeypatch):
     assert got == want
 
 
+def test_local_aluminum_bridge_matches_the_server_force(tmp_path, monkeypatch):
+    import subprocess
+
+    from optbench.eon_harness import bridge_binary, eam_al, ensure_eam
+    from optbench.extpot import format_extpot
+
+    positions = (0.1, 0.2, 0.3, 1.4, 1.5, 1.6, 2.2, 2.3, 2.4, 3.0, 3.1, 3.2)
+    numbers = (13, 13, 13, 13)
+    box = (8.0, 0.0, 0.0, 0.0, 9.0, 0.0, 0.0, 0.0, 10.0)
+    energy, forces = eam_al(positions, numbers, box)
+    rows = [
+        "8 0 0",
+        "0 9 0",
+        "0 0 10",
+    ]
+    for index, number in enumerate(numbers):
+        base = 3 * index
+        rows.append(
+            f"{number} {positions[base]} {positions[base + 1]} {positions[base + 2]}"
+        )
+    (tmp_path / "from_eon_to_extpot").write_text("\n".join(rows) + "\n", encoding="utf-8")
+    server = PotServer(eam_al).start()
+    monkeypatch.setenv("OPTBENCH_POTSERVER", server.endpoint())
+    monkeypatch.setenv("OPTBENCH_EAM_LIB", str(ensure_eam()))
+    monkeypatch.chdir(tmp_path)
+    try:
+        first = subprocess.run([str(bridge_binary())], cwd=tmp_path, check=False, text=True, capture_output=True)
+        second = subprocess.run([str(bridge_binary())], cwd=tmp_path, check=False, text=True, capture_output=True)
+        calls = server.counter.calls
+    finally:
+        server.stop()
+    assert first.returncode == 0, first.stderr
+    assert second.returncode == 0, second.stderr
+    got = [[float(part) for part in line.split()] for line in (tmp_path / "from_extpot_to_eon").read_text().splitlines()]
+    want = [[float(part) for part in line.split()] for line in format_extpot(energy, forces).splitlines()]
+    assert got == want
+    assert calls == 2
+
+
 def test_svn_default_grid_is_one_start():
     assert os.environ.get("OPTBENCH_ASV_FULL") != "1"
     from benchmarks.bench_eon_lane import EonSvnTsLj38DimerLjcut

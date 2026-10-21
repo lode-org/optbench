@@ -1,0 +1,19 @@
+id = "pele/lj38-basinhopping"
+engine = "pele"
+problem = "globalopt/lj38"
+code = "pele"
+code_version = "0.1.2"
+commit = "b7081b932a060be11342fbe8287ac35da8ada879"
+algorithm = "basin hopping"
+tuning = "default"
+failure_cap = 4000000
+note = "Basin hopping from the archived driver. Temperature 1.0, RandomDisplacement stepsize 0.41, AdaptiveStepsize acceptance ratio 0.5 and interval 100. The adaptive factor stays the constructor value 0.9. The quench is lbfgs_cpp with tol 0.001; memory, maxstep, maxErise, H0, and the iteration limit stay at the constructor. The driver allows 100000 quenches and checks the Markov energy after each hop. The stop is the problem energy_above_minimum on the harness Lennard-Jones energy of the Wales LJ38 coordinates. The call ceiling is 4000000, above the archived maximum, and is the PAR-2 cap."
+
+[pele]
+method = "basinhopping"
+temperature = 1.0
+stepsize = 0.41
+acc_ratio = 0.5
+interval = 100
+quench_tol = 0.001
+nquenches = 100000

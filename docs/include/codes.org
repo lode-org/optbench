@@ -22,8 +22,8 @@
    </tr>
    <tr>
    <td>minimization and saddle search</td>
-   <td>develop</td>
-   <td>7095b23ac17d</td>
+   <td>fix/develop-regressions-vs-350</td>
+   <td>500350d9fae8</td>
    <td><a href="https://github.com/TheochemUI/eon">https://github.com/TheochemUI/eon</a></td>
    </tr>
    </tbody></table></div>
@@ -74,6 +74,17 @@
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">100</td>
    </tr>
+   <tr data-problem="hTST/Al" data-template="eon-svn/htst-al-dimer-cg-stock">
+   <td>Al</td>
+   <td data-field="template">eon-svn/htst-al-dimer-cg-stock</td>
+   <td data-field="version">EON (SVN r2549)</td>
+   <td data-field="commit">r2549</td>
+   <td data-field="par2_mean">83937.2</td>
+   <td data-field="mean_calls">83937.2</td>
+   <td data-field="median_calls">77307</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">99</td>
+   </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-template="eon-client/low-lj38-lanczos">
    <td>lj38</td>
    <td data-field="template">eon-client/low-lj38-lanczos</td>
@@ -107,14 +118,14 @@
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">100</td>
    </tr>
-   <tr data-problem="neb/Pt-heptamer" data-template="eon/neb-pt-lbfgs">
+   <tr data-problem="neb/Pt-heptamer" data-template="eon-svn/neb-pt-cg">
    <td>Pt-heptamer</td>
-   <td data-field="template">eon/neb-pt-lbfgs</td>
-   <td data-field="version">eOn 3.6.0</td>
-   <td data-field="commit">1d71c9445018</td>
-   <td data-field="par2_mean">3517.69</td>
-   <td data-field="mean_calls">3517.69</td>
-   <td data-field="median_calls">3738</td>
+   <td data-field="template">eon-svn/neb-pt-cg</td>
+   <td data-field="version">EON (SVN r2549)</td>
+   <td data-field="commit">r2549</td>
+   <td data-field="par2_mean">929.385</td>
+   <td data-field="mean_calls">929.385</td>
+   <td data-field="median_calls">778</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">13</td>
    </tr>
@@ -816,6 +827,17 @@
    <div class="bench-scroll"><table data-board-table="code-best">
    <caption>Best full harness run on each problem.</caption>
    <thead><tr><th>Problem</th><th>Template</th><th>Version</th><th>Commit</th><th>PAR-2</th><th>Mean calls</th><th>Median calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <tr data-problem="globalopt/lj38" data-template="pele/lj38-basinhopping">
+   <td>Lennard-Jones 38 global minimum</td>
+   <td data-field="template">pele/lj38-basinhopping</td>
+   <td data-field="version">pele 0.1.2</td>
+   <td data-field="commit">b7081b932a06</td>
+   <td data-field="par2_mean">528658</td>
+   <td data-field="mean_calls">528658</td>
+   <td data-field="median_calls">385464</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">100</td>
+   </tr>
    <tr data-problem="minimization/lj38" data-template="pele/lj38-lbfgs-m100">
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="template">pele/lj38-lbfgs-m100</td>

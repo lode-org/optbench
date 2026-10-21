@@ -1,0 +1,22 @@
+id = "eon-svn/morse-sd-harness"
+engine = "eon"
+problem = "minimization/morse-bulk"
+task = "minimize"
+reducer = "harness"
+client_family = "svn"
+code = "EON"
+code_version = "(SVN r2549)"
+commit = "r2549"
+algorithm = "SD"
+tuning = "default"
+note = "Steepest descent on the harness Morse bulk potential. The archived r2030 config sets opt_method sd, sd_alpha 0.04, max_move 0.2, and converged_force 0.001. sd_twopoint is unset. max_iterations is unset, so r2549 keeps its constructor limit of 1000. r2549 reads sd_alpha from the Optimizer section. The potential is the harness morse_bulk surface through ext_pot. Force calls are HarnessCounter charges."
+
+[ini.Main]
+job = "minimization"
+
+[ini.Optimizer]
+opt_method = "sd"
+convergence_metric = "norm"
+converged_force = 0.001
+max_move = 0.2
+sd_alpha = 0.04

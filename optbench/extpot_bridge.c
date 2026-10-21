@@ -4,9 +4,14 @@
    three box rows and then one "Z x y z" row per atom. OPTBENCH_POTSERVER
    is host:port. The reply file from_extpot_to_eon is the energy and one
    force row per atom. One run is one force call.
+
+   OPTBENCH_EAM_LIB, when set, is the r2549 Aluminum shared library. This
+   program calls force_ itself and sends "charge" so the server only
+   counts the evaluation. The default path still forwards the geometry.
 */
 #define _POSIX_C_SOURCE 200112L
 
+#include <dlfcn.h>
 #include <errno.h>
 #include <netdb.h>
 #include <netinet/in.h>
@@ -153,6 +158,124 @@ static char *next_line(char **cursor) {
     return start;
 }
 
+static void kill_for_cap(void) {
+    pid_t shell = getppid();
+    pid_t client = shell;
+    char path[64];
+    FILE *status;
+    snprintf(path, sizeof(path), "/proc/%d/status", (int)shell);
+    status = fopen(path, "r");
+    if (status != NULL) {
+        char status_line[256];
+        while (fgets(status_line, sizeof(status_line), status) != NULL) {
+            int ppid = 0;
+            if (sscanf(status_line, "PPid: %d", &ppid) == 1) {
+                client = (pid_t)ppid;
+                break;
+            }
+        }
+        fclose(status);
+    }
+    if (client > 1 && client != shell) {
+        kill(client, SIGKILL);
+    }
+    if (shell > 1) {
+        kill(shell, SIGKILL);
+    }
+}
+
+typedef void (*potinit_fn)(void);
+typedef void (*force_fn)(long long *, double *, double *, double *, double *, double *, double *);
+
+static int local_aluminum(char **lines, int atoms, const char *host, const char *port) {
+    const char *library = getenv("OPTBENCH_EAM_LIB");
+    void *lib;
+    potinit_fn potinit;
+    force_fn force;
+    double *coords;
+    double *forces;
+    double box[9];
+    double energy = 0.0;
+    long long count;
+    int index;
+    int fd;
+    int row;
+    size_t reply_length = 0;
+    char *reply;
+    FILE *out;
+
+    if (library == NULL || library[0] == '\0') {
+        die("OPTBENCH_EAM_LIB is empty");
+    }
+    lib = dlopen(library, RTLD_NOW);
+    if (lib == NULL) {
+        die(dlerror());
+    }
+    potinit = (potinit_fn)dlsym(lib, "potinit_");
+    force = (force_fn)dlsym(lib, "force_");
+    if (potinit == NULL || force == NULL) {
+        die("Aluminum library is missing potinit_ or force_");
+    }
+    potinit();
+    coords = (double *)calloc((size_t)atoms * 3, sizeof(double));
+    forces = (double *)calloc((size_t)atoms * 3, sizeof(double));
+    if (coords == NULL || forces == NULL) {
+        die("out of memory");
+    }
+    for (row = 0; row < 3; row++) {
+        if (sscanf(lines[row], "%lf %lf %lf", &box[row * 3], &box[row * 3 + 1], &box[row * 3 + 2]) != 3) {
+            die("box row must hold three floats");
+        }
+    }
+    for (index = 0; index < atoms; index++) {
+        int number = 0;
+        double x = 0.0;
+        double y = 0.0;
+        double z = 0.0;
+        if (sscanf(lines[index + 3], "%d %lf %lf %lf", &number, &x, &y, &z) != 4) {
+            die("atom row must be Z x y z");
+        }
+        coords[3 * index] = x;
+        coords[3 * index + 1] = y;
+        coords[3 * index + 2] = z;
+    }
+    count = atoms;
+    force(&count, coords, forces, &energy, &box[0], &box[4], &box[8]);
+    fd = connect_server(host, port);
+    send_all(fd, "charge\n", 7);
+    shutdown(fd, SHUT_WR);
+    reply = recv_all(fd, &reply_length);
+    close(fd);
+    if (reply_length == 0) {
+        die("potential server closed without a reply");
+    }
+    if (strncmp(reply, "ok", 2) != 0) {
+        int cap_refusal = strstr(reply, "cap") != NULL;
+        fprintf(stderr, "optbench ext_pot: %s\n", reply);
+        free(reply);
+        if (cap_refusal) {
+            kill_for_cap();
+        }
+        exit(1);
+    }
+    free(reply);
+    out = fopen("from_extpot_to_eon", "w");
+    if (out == NULL) {
+        die("cannot write from_extpot_to_eon");
+    }
+    fprintf(out, "%.17g\n", energy);
+    for (index = 0; index < atoms; index++) {
+        fprintf(out, "%.17g %.17g %.17g\n", forces[3 * index], forces[3 * index + 1], forces[3 * index + 2]);
+    }
+    free(coords);
+    free(forces);
+    dlclose(lib);
+    if (fclose(out) != 0) {
+        die("cannot close from_extpot_to_eon");
+    }
+    return 0;
+}
+
 static void append(char **payload, size_t *used, size_t *cap, const char *text) {
     size_t length = strlen(text);
     if (*used + length + 1 >= *cap) {
@@ -235,6 +358,12 @@ int main(void) {
         die("ext_pot request is shorter than a box plus one atom");
     }
     atoms = (int)line_count - 3;
+    if (getenv("OPTBENCH_EAM_LIB") != NULL) {
+        int status = local_aluminum(lines, atoms, host, port);
+        free(lines);
+        free(request);
+        return status;
+    }
 
     payload_cap = request_length + 64;
     payload = (char *)malloc(payload_cap);

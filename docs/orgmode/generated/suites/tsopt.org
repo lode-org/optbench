@@ -7,7 +7,7 @@
    <section class="bench" id="summary"><div class="bench-scroll">
    <table data-board-table="summary">
    <caption>Best full harness run of each code. Lower PAR-2 is better. The full template table is on the problem page.</caption>
-   <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
+   <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>EON</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
    <tr data-problem="tsopt/LJ38">
    <th scope="row"><a href="#LJ38">LJ38</a></th>
    <td data-code="eOn" data-template="eon-client/ts-lj38-lanczos-improved" data-par2="280.33"><span class="bench-score">280.33</span><a href="#LJ38-templates">eon-client/ts-lj38-lanczos-improved</a></td>
@@ -23,6 +23,7 @@
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
    <td data-code="vc-SQNM">—</td>
+   <td data-code="EON">—</td>
    <td data-code="artn" data-template="partn/ts-lj38" data-par2="20000"><span class="bench-score">20000</span><a href="#LJ38-templates">partn/ts-lj38</a></td>
    <td data-code="compass">—</td>
    <td data-code="dlfind">—</td>
@@ -47,6 +48,7 @@
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
    <td data-code="vc-SQNM">—</td>
+   <td data-code="EON">—</td>
    <td data-code="artn" data-template="partn/ts-pt" data-par2="1970.22"><span class="bench-score">1970.22</span><a href="#pt-island-templates">partn/ts-pt</a></td>
    <td data-code="compass">—</td>
    <td data-code="dlfind">—</td>
