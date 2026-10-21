@@ -786,6 +786,34 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
     return rows, unparsed
 
 
+def omit_retired_tuned_track(class_name: str, described: dict) -> bool:
+    """A tuned benchmark class that is no longer registered is not a row.
+
+    The measurements can stay in the asv store. Without a template they are
+    not a ranked row and not an unranked row. ``*Tuned`` is the old suffix.
+    ``*LbfgsM100`` is the eOn and pele memory-100 class. An unregistered
+    rgsaddle class ending in ``Lbfgs`` is a band stepper the library does
+    not ship.
+    """
+    if described.get("template") or described.get("problem"):
+        return False
+    name = str(class_name)
+    if name.endswith("Tuned") or name.endswith("LbfgsM100"):
+        return True
+    return "Rgsaddle" in name and name.endswith("Lbfgs")
+
+
+def _row_is_tuned(row: dict) -> bool:
+    """True for a row the stock board does not keep.
+
+    Tuned template files are deleted on the following branches. Omitting
+    the rows in this rebuild keeps those branches from publishing the
+    tables again.
+    """
+    template = str(row.get("template") or "")
+    return template.endswith("-tuned") or row.get("tuned") is True or row.get("tuning") == "tuned"
+
+
 def _benchmark_index() -> dict[str, dict]:
     import importlib
 
@@ -860,6 +888,8 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
             seen.add(class_name)
             module_name = parts[-2] if len(parts) >= 2 else ""
             described = index.get(f"{module_name}.{class_name}") or index.get(class_name) or {}
+            if omit_retired_tuned_track(class_name, described):
+                continue
             template_id = described.get("template") or ""
             template = templates.get(template_id)
             pinned = _template_at_commit(root, str(result.commit_hash), template_id) if template_id else None
@@ -981,7 +1011,9 @@ def build_board(root: Path) -> dict:
     campaign, unparsed = _campaign_rows(root, problems, templates)
     asv_rows, asv_unparsed, unmapped = _asv_rows(root, problems, templates)
     unparsed.extend(asv_unparsed)
-    rows = _dedup(campaign + asv_rows)
+    rows = [row for row in _dedup(campaign + asv_rows) if not _row_is_tuned(row)]
+    unparsed = [row for row in unparsed if not _row_is_tuned(row)]
+    unmapped = [row for row in unmapped if not _row_is_tuned(row)]
     full_n: dict[str, int | None] = {}
     for problem_id, problem in problems.items():
         full_n[problem_id] = stated_full_n(root, problem)

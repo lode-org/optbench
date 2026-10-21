@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 
 from optbench.board import ranked_cells
@@ -104,8 +105,11 @@ def test_rendered_pages_use_the_board_rank():
     assert "tsopt-LJ38-profile.svg" in tsopt
     saddle = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "saddle-search.org").read_text(encoding="utf-8")
     assert 'data-board-table="ranked" data-problem="saddle-search/pt-island"' in saddle
-    assert "rgsaddle/saddle-dimer-rotskip-tuned" in saddle
-    assert 'data-field="par2_mean">10127.1<' in saddle
+    assert "sella/pt-island-search-default" in saddle
+    assert 'data-field="par2_mean">5201.62<' in saddle
+    saddle_templates = re.findall(r'data-field="template">([^<]+)', saddle)
+    assert saddle_templates
+    assert all(not item.endswith("-tuned") for item in saddle_templates)
     assert "No full harness row." not in saddle
     assert "eon-3.5.0-saddle-pt-dimer" in saddle
     assert "not yet on the harness counter" in saddle

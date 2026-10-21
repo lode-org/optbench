@@ -173,7 +173,6 @@
    <li>eon-qm: no per-start record.</li>
    <li>eon-client/cg: no per-start record.</li>
    <li>eon-client/fire: no per-start record.</li>
-   <li>eon-client/lbfgs-m100: no per-start record.</li>
    <li>eon-client/lbfgs-m20: no per-start record.</li>
    <li>eon-client/morse-cg: no per-start record.</li>
    <li>eon-client/morse-fire: no per-start record.</li>
@@ -380,37 +379,37 @@
    <div class="bench-scroll"><table data-board-table="code-best">
    <caption>Best full harness run on each problem.</caption>
    <thead><tr><th>Problem</th><th>Template</th><th>Version</th><th>Commit</th><th>PAR-2</th><th>Mean calls</th><th>Median calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr data-problem="double-ended-saddle-search/lj38" data-template="rgsaddle/ew-ci-neb-lbfgs">
+   <tr data-problem="double-ended-saddle-search/lj38" data-template="rgsaddle/ew-ci-neb">
    <td>LJ38 double-ended saddle</td>
-   <td data-field="template">rgsaddle/ew-ci-neb-lbfgs</td>
+   <td data-field="template">rgsaddle/ew-ci-neb</td>
    <td data-field="version">rgsaddle 0.2.2</td>
    <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">853.56</td>
-   <td data-field="mean_calls">673.94</td>
-   <td data-field="median_calls">529</td>
-   <td data-field="failures">crash 0, divergence 1, cap 2, wrong_stationary 0</td>
+   <td data-field="par2_mean">2145.72</td>
+   <td data-field="mean_calls">1595.72</td>
+   <td data-field="median_calls">1461.5</td>
+   <td data-field="failures">crash 0, divergence 0, cap 11, wrong_stationary 0</td>
    <td data-field="n">50</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="rgsaddle/ew-ci-neb-lbfgs">
+   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="rgsaddle/ew-ci-neb">
    <td>lj38_2ts_separation</td>
-   <td data-field="template">rgsaddle/ew-ci-neb-lbfgs</td>
+   <td data-field="template">rgsaddle/ew-ci-neb</td>
    <td data-field="version">rgsaddle 0.2.2</td>
    <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">8024.43</td>
-   <td data-field="mean_calls">4639.8</td>
-   <td data-field="median_calls">2414</td>
-   <td data-field="failures">crash 0, divergence 0, cap 16, wrong_stationary 1</td>
+   <td data-field="par2_mean">12098.1</td>
+   <td data-field="mean_calls">6803.94</td>
+   <td data-field="median_calls">10000</td>
+   <td data-field="failures">crash 0, divergence 0, cap 27, wrong_stationary 0</td>
    <td data-field="n">51</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/pt-island" data-template="rgsaddle/ew-ci-neb-lbfgs">
+   <tr data-problem="double-ended-saddle-search/pt-island" data-template="rgsaddle/ew-ci-neb">
    <td>pt-island</td>
-   <td data-field="template">rgsaddle/ew-ci-neb-lbfgs</td>
+   <td data-field="template">rgsaddle/ew-ci-neb</td>
    <td data-field="version">rgsaddle 0.2.2</td>
    <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">422.136</td>
-   <td data-field="mean_calls">224.017</td>
-   <td data-field="median_calls">226</td>
-   <td data-field="failures">crash 0, divergence 2, cap 0, wrong_stationary 0</td>
+   <td data-field="par2_mean">938.102</td>
+   <td data-field="mean_calls">561.644</td>
+   <td data-field="median_calls">478</td>
+   <td data-field="failures">crash 0, divergence 2, cap 0, wrong_stationary 2</td>
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-template="rgsaddle/mode-lanczos">
@@ -424,26 +423,26 @@
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">200</td>
    </tr>
-   <tr data-problem="neb/Pt-heptamer" data-template="rgsaddle/idpp-ci-neb-lbfgs">
+   <tr data-problem="neb/Pt-heptamer" data-template="rgsaddle/sidpp-ci-neb">
    <td>Pt-heptamer</td>
-   <td data-field="template">rgsaddle/idpp-ci-neb-lbfgs</td>
+   <td data-field="template">rgsaddle/sidpp-ci-neb</td>
    <td data-field="version">rgsaddle 0.2.2</td>
    <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">318.308</td>
-   <td data-field="mean_calls">318.308</td>
-   <td data-field="median_calls">314</td>
+   <td data-field="par2_mean">732.462</td>
+   <td data-field="mean_calls">732.462</td>
+   <td data-field="median_calls">682</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">13</td>
    </tr>
-   <tr data-problem="saddle-search/pt-island" data-template="rgsaddle/saddle-dimer-rotskip-tuned">
+   <tr data-problem="saddle-search/pt-island" data-template="rgsaddle/saddle-dimer-fire">
    <td>Pt heptamer island</td>
-   <td data-field="template">rgsaddle/saddle-dimer-rotskip-tuned</td>
+   <td data-field="template">rgsaddle/saddle-dimer-fire</td>
    <td data-field="version">rgsaddle 0.2.2</td>
    <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">10127.1</td>
-   <td data-field="mean_calls">619.017</td>
-   <td data-field="median_calls">550</td>
-   <td data-field="failures">crash 0, divergence 17717, cap 2246, wrong_stationary 35</td>
+   <td data-field="par2_mean">10128</td>
+   <td data-field="mean_calls">1011.03</td>
+   <td data-field="median_calls">1013</td>
+   <td data-field="failures">crash 0, divergence 1, cap 19999, wrong_stationary 0</td>
    <td data-field="n">20000</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-template="rgsaddle/prfo">
@@ -505,15 +504,15 @@
    <td data-field="failures">crash 0, divergence 0, cap 38, wrong_stationary 4</td>
    <td data-field="n">51</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/pt-island" data-template="geodesic/ase-de-pt-tuned">
+   <tr data-problem="double-ended-saddle-search/pt-island" data-template="geodesic/ase-de-pt-default">
    <td>pt-island</td>
-   <td data-field="template">geodesic/ase-de-pt-tuned</td>
+   <td data-field="template">geodesic/ase-de-pt-default</td>
    <td data-field="version">geodesic 1.0.0</td>
    <td data-field="commit">476aa041f562</td>
-   <td data-field="par2_mean">595.983</td>
-   <td data-field="mean_calls">494.288</td>
-   <td data-field="median_calls">347</td>
-   <td data-field="failures">crash 0, divergence 0, cap 2, wrong_stationary 0</td>
+   <td data-field="par2_mean">824.119</td>
+   <td data-field="mean_calls">773.271</td>
+   <td data-field="median_calls">716</td>
+   <td data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 0</td>
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-template="geodesic/ci-neb-lbfgs">
@@ -542,15 +541,15 @@
    <div class="bench-scroll"><table data-board-table="code-best">
    <caption>Best full harness run on each problem.</caption>
    <thead><tr><th>Problem</th><th>Template</th><th>Version</th><th>Commit</th><th>PAR-2</th><th>Mean calls</th><th>Median calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr data-problem="double-ended-saddle-search/lj38" data-template="ase/de-lj38-tuned">
+   <tr data-problem="double-ended-saddle-search/lj38" data-template="ase/de-lj38-default">
    <td>LJ38 double-ended saddle</td>
-   <td data-field="template">ase/de-lj38-tuned</td>
+   <td data-field="template">ase/de-lj38-default</td>
    <td data-field="version">ASE 3.29.0</td>
    <td data-field="commit">f27c0005ae6a</td>
-   <td data-field="par2_mean">3463.64</td>
-   <td data-field="mean_calls">2014.22</td>
+   <td data-field="par2_mean">4912.84</td>
+   <td data-field="mean_calls">2463.82</td>
    <td data-field="median_calls">2501</td>
-   <td data-field="failures">crash 0, divergence 0, cap 29, wrong_stationary 0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 49, wrong_stationary 0</td>
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="ase/de-lj38-2ts-default">
@@ -564,26 +563,26 @@
    <td data-field="failures">crash 0, divergence 51, cap 0, wrong_stationary 0</td>
    <td data-field="n">51</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/pt-island" data-template="ase/de-pt-island-tuned">
+   <tr data-problem="double-ended-saddle-search/pt-island" data-template="ase/de-pt-island-default">
    <td>pt-island</td>
-   <td data-field="template">ase/de-pt-island-tuned</td>
+   <td data-field="template">ase/de-pt-island-default</td>
    <td data-field="version">ASE 3.29.0</td>
    <td data-field="commit">f27c0005ae6a</td>
-   <td data-field="par2_mean">847.678</td>
-   <td data-field="mean_calls">593.864</td>
-   <td data-field="median_calls">374</td>
-   <td data-field="failures">crash 0, divergence 0, cap 5, wrong_stationary 0</td>
+   <td data-field="par2_mean">926.475</td>
+   <td data-field="mean_calls">875.712</td>
+   <td data-field="median_calls">707</td>
+   <td data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 0</td>
    <td data-field="n">59</td>
    </tr>
-   <tr data-problem="minimization/lj38" data-template="ase/lj38-lbfgs-tuned">
+   <tr data-problem="minimization/lj38" data-template="ase/lj38-lbfgs-default">
    <td>Lennard-Jones 38 clusters</td>
-   <td data-field="template">ase/lj38-lbfgs-tuned</td>
+   <td data-field="template">ase/lj38-lbfgs-default</td>
    <td data-field="version">ASE 3.29.0</td>
    <td data-field="commit">f27c0005ae6a</td>
-   <td data-field="par2_mean">395.645</td>
-   <td data-field="mean_calls">375.645</td>
-   <td data-field="median_calls">319</td>
-   <td data-field="failures">crash 0, divergence 0, cap 2, wrong_stationary 0</td>
+   <td data-field="par2_mean">532.882</td>
+   <td data-field="mean_calls">344.881</td>
+   <td data-field="median_calls">257</td>
+   <td data-field="failures">crash 0, divergence 0, cap 7, wrong_stationary 6</td>
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-template="noise/ase-lbfgs-s0">
@@ -608,14 +607,14 @@
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">100</td>
    </tr>
-   <tr data-problem="neb/Pt-heptamer" data-template="ase/neb-pt-heptamer-tuned">
+   <tr data-problem="neb/Pt-heptamer" data-template="ase/neb-pt-heptamer-default">
    <td>Pt-heptamer</td>
-   <td data-field="template">ase/neb-pt-heptamer-tuned</td>
+   <td data-field="template">ase/neb-pt-heptamer-default</td>
    <td data-field="version">ASE 3.29.0</td>
    <td data-field="commit">f27c0005ae6a</td>
-   <td data-field="par2_mean">442.615</td>
-   <td data-field="mean_calls">442.615</td>
-   <td data-field="median_calls">450</td>
+   <td data-field="par2_mean">606.923</td>
+   <td data-field="mean_calls">606.923</td>
+   <td data-field="median_calls">618</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">13</td>
    </tr>
@@ -643,47 +642,47 @@
    <div class="bench-scroll"><table data-board-table="code-best">
    <caption>Best full harness run on each problem.</caption>
    <thead><tr><th>Problem</th><th>Template</th><th>Version</th><th>Commit</th><th>PAR-2</th><th>Mean calls</th><th>Median calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr data-problem="double-ended-saddle-search/lj38" data-template="sella/de-lj38-tuned">
+   <tr data-problem="double-ended-saddle-search/lj38" data-template="sella/de-lj38-default">
    <td>LJ38 double-ended saddle</td>
-   <td data-field="template">sella/de-lj38-tuned</td>
+   <td data-field="template">sella/de-lj38-default</td>
    <td data-field="version">Sella 2.6.0</td>
    <td data-field="commit">6cfb60cdb100</td>
-   <td data-field="par2_mean">1753.96</td>
-   <td data-field="mean_calls">1753.96</td>
-   <td data-field="median_calls">2051.5</td>
+   <td data-field="par2_mean">2055.3</td>
+   <td data-field="mean_calls">2055.3</td>
+   <td data-field="median_calls">2047.5</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">50</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="sella/de-lj38-2ts-tuned">
+   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="sella/de-lj38-2ts-default">
    <td>lj38_2ts_separation</td>
-   <td data-field="template">sella/de-lj38-2ts-tuned</td>
+   <td data-field="template">sella/de-lj38-2ts-default</td>
    <td data-field="version">Sella 2.6.0</td>
    <td data-field="commit">6cfb60cdb100</td>
-   <td data-field="par2_mean">30105.9</td>
-   <td data-field="mean_calls">30105.9</td>
-   <td data-field="median_calls">32141</td>
+   <td data-field="par2_mean">31447.3</td>
+   <td data-field="mean_calls">31447.3</td>
+   <td data-field="median_calls">32178</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">51</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/pt-island" data-template="sella/de-pt-island-tuned">
+   <tr data-problem="double-ended-saddle-search/pt-island" data-template="sella/de-pt-island-default">
    <td>pt-island</td>
-   <td data-field="template">sella/de-pt-island-tuned</td>
+   <td data-field="template">sella/de-pt-island-default</td>
    <td data-field="version">Sella 2.6.0</td>
    <td data-field="commit">6cfb60cdb100</td>
-   <td data-field="par2_mean">615.153</td>
-   <td data-field="mean_calls">615.153</td>
-   <td data-field="median_calls">374</td>
+   <td data-field="par2_mean">921.847</td>
+   <td data-field="mean_calls">921.847</td>
+   <td data-field="median_calls">756</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">59</td>
    </tr>
-   <tr data-problem="minimization/lj38" data-template="sella/lj38-min-tuned">
+   <tr data-problem="minimization/lj38" data-template="sella/lj38-min-default">
    <td>Lennard-Jones 38 clusters</td>
-   <td data-field="template">sella/lj38-min-tuned</td>
+   <td data-field="template">sella/lj38-min-default</td>
    <td data-field="version">Sella 2.6.0</td>
    <td data-field="commit">6cfb60cdb100</td>
-   <td data-field="par2_mean">253.921</td>
-   <td data-field="mean_calls">253.921</td>
-   <td data-field="median_calls">248</td>
+   <td data-field="par2_mean">710.089</td>
+   <td data-field="mean_calls">710.089</td>
+   <td data-field="median_calls">692.5</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">1000</td>
    </tr>
@@ -816,14 +815,14 @@
    <div class="bench-scroll"><table data-board-table="code-best">
    <caption>Best full harness run on each problem.</caption>
    <thead><tr><th>Problem</th><th>Template</th><th>Version</th><th>Commit</th><th>PAR-2</th><th>Mean calls</th><th>Median calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr data-problem="minimization/lj38" data-template="pele/lj38-lbfgs-m100">
+   <tr data-problem="minimization/lj38" data-template="pele/lj38-mylbfgs">
    <td>Lennard-Jones 38 clusters</td>
-   <td data-field="template">pele/lj38-lbfgs-m100</td>
+   <td data-field="template">pele/lj38-mylbfgs</td>
    <td data-field="version">pele 0.1.2</td>
    <td data-field="commit">b7081b932a06</td>
-   <td data-field="par2_mean">197.936</td>
-   <td data-field="mean_calls">178.096</td>
-   <td data-field="median_calls">167</td>
+   <td data-field="par2_mean">268.036</td>
+   <td data-field="mean_calls">248.224</td>
+   <td data-field="median_calls">235</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 1</td>
    <td data-field="n">1000</td>
    </tr>
@@ -1396,15 +1395,15 @@
    <div class="bench-scroll"><table data-board-table="code-best">
    <caption>Best full harness run on each problem.</caption>
    <thead><tr><th>Problem</th><th>Template</th><th>Version</th><th>Commit</th><th>PAR-2</th><th>Mean calls</th><th>Median calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr data-problem="minimization/lj38" data-template="vcsqnm/lj38-ase-tuned">
+   <tr data-problem="minimization/lj38" data-template="vcsqnm/lj38-ase">
    <td>Lennard-Jones 38 clusters</td>
-   <td data-field="template">vcsqnm/lj38-ase-tuned</td>
+   <td data-field="template">vcsqnm/lj38-ase</td>
    <td data-field="version">vc-SQNM 1.3</td>
    <td data-field="commit">4241692173cc</td>
-   <td data-field="par2_mean">482.515</td>
-   <td data-field="mean_calls">384.513</td>
-   <td data-field="median_calls">369</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 5</td>
+   <td data-field="par2_mean">598.05</td>
+   <td data-field="mean_calls">382.068</td>
+   <td data-field="median_calls">365.5</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 11</td>
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-template="noise/vcsqnm-ase-s0">
@@ -1444,15 +1443,15 @@
    <div class="bench-scroll"><table data-board-table="code-best">
    <caption>Best full harness run on each problem.</caption>
    <thead><tr><th>Problem</th><th>Template</th><th>Version</th><th>Commit</th><th>PAR-2</th><th>Mean calls</th><th>Median calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr data-problem="lowest-eigenvector/lj38" data-template="softsaddle/mode-lanczos-tuned">
+   <tr data-problem="lowest-eigenvector/lj38" data-template="softsaddle/mode-lanczos">
    <td>lj38</td>
-   <td data-field="template">softsaddle/mode-lanczos-tuned</td>
+   <td data-field="template">softsaddle/mode-lanczos</td>
    <td data-field="version">softsaddle 2019.04</td>
    <td data-field="commit">5a00aeede06f</td>
-   <td data-field="par2_mean">34.73</td>
-   <td data-field="mean_calls">34.73</td>
-   <td data-field="median_calls">34</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="par2_mean">18700.6</td>
+   <td data-field="mean_calls">18.91</td>
+   <td data-field="median_calls">19</td>
+   <td data-field="failures">crash 0, divergence 187, cap 0, wrong_stationary 0</td>
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-template="softsaddle/saddle-lanczos-sm0">
