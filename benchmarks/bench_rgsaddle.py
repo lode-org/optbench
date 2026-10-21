@@ -470,9 +470,7 @@ _ROWS = [
     ("RgsaddlePtLanczos", "rgsaddle/pt-lanczos", "tsopt/pt-island", selected_pt(), 7200),
     ("RgsaddlePtDimerRotskip", "rgsaddle/pt-dimer-rotskip", "tsopt/pt-island", selected_pt(), 7200),
     ("RgsaddleModeDimer", "rgsaddle/mode-dimer", "lowest-eigenvector/lj38", selected_lj38(), 1800),
-    ("RgsaddleModeDimerTuned", "rgsaddle/mode-dimer-tuned", "lowest-eigenvector/lj38", selected_lj38(), 1800),
     ("RgsaddleModeLanczos", "rgsaddle/mode-lanczos", "lowest-eigenvector/lj38", selected_lj38(), 1800),
-    ("RgsaddleModeLanczosTuned", "rgsaddle/mode-lanczos-tuned", "lowest-eigenvector/lj38", selected_lj38(), 1800),
 ]
 
 for _class_name, _template_id, _problem_id, _starts, _timeout in _ROWS:

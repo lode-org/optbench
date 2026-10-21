@@ -149,9 +149,7 @@ def _bind(class_name: str, template_id: str, problem_id: str, starts: list[str],
 
 _ROWS = [
     ("SoftsaddleModeLanczos", "softsaddle/mode-lanczos", "lowest-eigenvector/lj38", selected_lj38(), 1800),
-    ("SoftsaddleModeLanczosTuned", "softsaddle/mode-lanczos-tuned", "lowest-eigenvector/lj38", selected_lj38(), 1800),
     ("SoftsaddleModeDavidson", "softsaddle/mode-davidson", "lowest-eigenvector/lj38", selected_lj38(), 1800),
-    ("SoftsaddleModeDavidsonTuned", "softsaddle/mode-davidson-tuned", "lowest-eigenvector/lj38", selected_lj38(), 1800),
 ]
 
 for _class_name, _template_id, _problem_id, _starts, _timeout in _ROWS:
