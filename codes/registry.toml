@@ -414,14 +414,6 @@ task = "neb"
 ranked = true
 
 [[template]]
-id = "ase/neb-pt-heptamer-tuned"
-code = "ase"
-problem = "neb/Pt-heptamer"
-profile = "tuned"
-task = "neb"
-ranked = true
-
-[[template]]
 id = "ase/de-lj38-default"
 code = "ase"
 problem = "double-ended-saddle-search/lj38"

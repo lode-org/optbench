@@ -48,7 +48,6 @@ ASE_TEMPLATES = (
     ("Lj38TwoTs", "geodesic/ase-de-2ts-default", "AseDefault"),
     ("PtIsland", "geodesic/ase-de-pt-default", "AseDefault"),
     ("Heptamer", "geodesic/ase-heptamer-default", "AseDefault"),
-    ("Heptamer", "geodesic/ase-heptamer-tuned", "AseTuned"),
 )
 
 TRACKS = (

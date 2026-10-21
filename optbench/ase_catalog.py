@@ -1,8 +1,9 @@
 """ASE 3.29.0 and Sella 2.6.0 template catalog.
 
 The files under ``templates/ase`` and ``templates/sella`` are rendered
-from this module. A default row is the library constructor. A tuned row
-is the archived OptBench script when one exists.
+from this module. Each row is the library constructor. Lennard-Jones 38
+BFGS and LBFGS use maxstep 0.1, because the constructor step of 0.2
+increases the force on starts inside the repulsive core.
 """
 
 from __future__ import annotations
@@ -73,21 +74,6 @@ MORSE_SMOOTH = {
     "form": "smooth",
     "pbc": [True, True, False],
 }
-
-# Archived Sella trust region from the 0.1.1 LJ38 and Pt-island scripts.
-SELLA_TUNED = {
-    "eta": 1e-6,
-    "gamma": 0.4,
-    "rho_inc": 1.035,
-    "rho_dec": 5.0,
-    "sigma_inc": 1.15,
-    "sigma_dec": 0.65,
-    "delta0": 1.3e-3,
-}
-SELLA_TUNED_NOTE = (
-    "Archived Sella trust region: eta 1e-6, gamma 0.4, delta0 1.3e-3, "
-    "rho_inc 1.035, rho_dec 5, sigma_inc 1.15, sigma_dec 0.65."
-)
 
 _LJ_STOP = {
     "norm": "l2",
@@ -388,63 +374,44 @@ def _neb_specs() -> list[dict]:
         },
     )
     specs = []
-    stock = {
-        "double-ended-saddle-search/lj38",
-        "double-ended-saddle-search/lj38_2ts_separation",
-        "double-ended-saddle-search/pt-island",
-    }
     for row in rows:
-        for profile in ("default", "tuned"):
-            if profile == "tuned" and row["problem"] in stock:
-                continue
-            if profile == "default":
-                optimizer = "FIRE"
-                params: dict = {}
-                spring = 0.1
-                climb = False
-                source = "default"
-                note = row["default_note"]
-            else:
-                optimizer = row["tuned_optimizer"]
-                params = dict(row["tuned_parameters"])
-                spring = row["tuned_spring"]
-                climb = row["tuned_climb"]
-                source = row.get("tuned_source", "archive")
-                note = row["tuned_note"]
-            neb = {
-                "layout": row["layout"],
-                "moving_images": row["moving_images"],
-                "spring": spring,
-                "climb": climb,
-                "method": "improvedtangent",
-            }
-            if profile == "tuned" and row.get("tuned_interpolate"):
-                neb["interpolate"] = row["tuned_interpolate"]
-            if profile == "tuned" and row.get("tuned_climb_after") is not None:
-                neb["climb_after"] = float(row["tuned_climb_after"])
-            if "count" in row:
-                neb["count"] = row["count"]
-            spec = {
-                "id": f"ase/{row['id']}-{profile}",
-                "engine": "ase",
-                "code": "ASE",
-                "code_version": ASE_VERSION,
-                "commit": ASE_COMMIT,
-                "algorithm": f"NEB-{optimizer}",
-                "problem": row["problem"],
-                "task": "neb",
-                "profile": profile,
-                "reducer": row["reducer"],
-                "ranked": True,
-                "parameter_source": source,
-                "note": note,
-                "optimizer": {"name": optimizer, "parameters": params},
-                "potential": row["potential"],
-                "stop": row["stop"],
-                "input": {"archive_path": row["archive"]},
-                "neb": neb,
-            }
-            specs.append(spec)
+        profile = "default"
+        optimizer = "FIRE"
+        params: dict = {}
+        spring = 0.1
+        climb = False
+        source = "default"
+        note = row["default_note"]
+        neb = {
+            "layout": row["layout"],
+            "moving_images": row["moving_images"],
+            "spring": spring,
+            "climb": climb,
+            "method": "improvedtangent",
+        }
+        if "count" in row:
+            neb["count"] = row["count"]
+        spec = {
+            "id": f"ase/{row['id']}-{profile}",
+            "engine": "ase",
+            "code": "ASE",
+            "code_version": ASE_VERSION,
+            "commit": ASE_COMMIT,
+            "algorithm": f"NEB-{optimizer}",
+            "problem": row["problem"],
+            "task": "neb",
+            "profile": profile,
+            "reducer": row["reducer"],
+            "ranked": True,
+            "parameter_source": source,
+            "note": note,
+            "optimizer": {"name": optimizer, "parameters": params},
+            "potential": row["potential"],
+            "stop": row["stop"],
+            "input": {"archive_path": row["archive"]},
+            "neb": neb,
+        }
+        specs.append(spec)
     return specs
 
 
@@ -455,21 +422,12 @@ def _sella_neb_specs() -> list[dict]:
         if not str(spec["problem"]).startswith("double-ended-saddle-search/"):
             continue
         profile = spec["profile"]
-        if profile == "default":
-            params = {"order": 1}
-            source = "default"
-            head = (
-                f"Sella {SELLA_VERSION} order 1 defaults refine the highest-energy image "
-                "after the ASE default band (FIRE, spring 0.1, climb off, linear interpolation). "
-            )
-        else:
-            params = {"order": 1, **SELLA_TUNED}
-            source = spec["parameter_source"]
-            head = (
-                "Sella refines the highest-energy image of this problem's tuned ASE band. "
-                + SELLA_TUNED_NOTE
-                + " "
-            )
+        params = {"order": 1}
+        source = "default"
+        head = (
+            f"Sella {SELLA_VERSION} order 1 defaults refine the highest-energy image "
+            "after the ASE default band (FIRE, spring 0.1, climb off, linear interpolation). "
+        )
         neb = dict(spec["neb"])
         neb["band_optimizer"] = spec["optimizer"]["name"]
         neb["band_parameters"] = dict(spec["optimizer"].get("parameters") or {})
