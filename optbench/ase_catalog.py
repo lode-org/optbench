@@ -508,12 +508,6 @@ def _sella_search_specs() -> list[dict]:
             "default",
             f"Sella {SELLA_VERSION} saddle defaults, order 1. ",
         ),
-        (
-            "tuned",
-            {"order": 1, **SELLA_TUNED},
-            "transferred",
-            SELLA_TUNED_NOTE + " ",
-        ),
     ):
         specs.append(
             {
@@ -564,12 +558,6 @@ def _dimer_specs() -> list[dict]:
             {},
             "default",
             "ASE 3.29.0 DimerControl defaults. One search is not the saddle catalog.",
-        ),
-        (
-            "tuned",
-            {"maximum_translation": 0.2, "max_num_rot": 4, "dimer_separation": 0.01},
-            "library",
-            "No archived ASE dimer script. Tuned raises the translation cap to 0.2, rotations to 4, and the separation to 0.01.",
         ),
     ):
         specs.append(

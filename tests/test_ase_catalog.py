@@ -33,6 +33,7 @@ def test_catalog_covers_every_problem_and_both_profiles():
             "minimization/morse-bulk",
             "tsopt/LJ38",
             "tsopt/pt-island",
+            "saddle-search/pt-island",
         }:
             assert profiles == {"default"}
         else:

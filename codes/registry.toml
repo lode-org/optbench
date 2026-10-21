@@ -526,25 +526,9 @@ task = "dimer"
 ranked = false
 
 [[template]]
-id = "ase/dimer-pt-island-tuned"
-code = "ase"
-problem = "saddle-search/pt-island"
-profile = "tuned"
-task = "dimer"
-ranked = false
-
-[[template]]
 id = "sella/pt-island-search-default"
 code = "sella"
 problem = "saddle-search/pt-island"
 profile = "default"
-task = "sella-search"
-ranked = false
-
-[[template]]
-id = "sella/pt-island-search-tuned"
-code = "sella"
-problem = "saddle-search/pt-island"
-profile = "tuned"
 task = "sella-search"
 ranked = false
