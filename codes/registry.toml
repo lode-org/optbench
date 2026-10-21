@@ -398,26 +398,10 @@ task = "sella"
 ranked = true
 
 [[template]]
-id = "sella/lj38-ts-tuned"
-code = "sella"
-problem = "tsopt/LJ38"
-profile = "tuned"
-task = "sella"
-ranked = true
-
-[[template]]
 id = "sella/pt-island-ts-default"
 code = "sella"
 problem = "tsopt/pt-island"
 profile = "default"
-task = "sella"
-ranked = true
-
-[[template]]
-id = "sella/pt-island-ts-tuned"
-code = "sella"
-problem = "tsopt/pt-island"
-profile = "tuned"
 task = "sella"
 ranked = true
 

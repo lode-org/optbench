@@ -221,40 +221,32 @@ def _ts_specs() -> list[dict]:
     )
     specs = []
     for row in rows:
-        for profile in ("default", "tuned"):
-            if profile == "default":
-                params = {"order": 1}
-                source = "default"
-                note = (
-                    f"Sella {SELLA_VERSION} saddle defaults, order 1."
-                    + row["pbc_note"]
-                )
-            else:
-                params = {"order": 1, **SELLA_TUNED}
-                source = "archive"
-                note = SELLA_TUNED_NOTE + row["pbc_note"]
-            specs.append(
-                {
-                    "id": f"sella/{row['slug']}-{profile}",
-                    "engine": "sella",
-                    "code": "Sella",
-                    "code_version": SELLA_VERSION,
-                    "commit": SELLA_COMMIT,
-                    "algorithm": "Sella",
-                    "problem": row["problem"],
-                    "task": "sella",
-                    "profile": profile,
-                    "reducer": "all",
-                    "ranked": True,
-                    "parameter_source": source,
-                    "note": note,
-                    "optimizer": {"name": "Sella", "parameters": params},
-                    "potential": row["potential"],
-                    "stop": _TS_STOP,
-                    "input": {"archive_path": row["archive"], "select": row["select"]},
-                    "sella": {"order": 1, "v0": row["v0"]},
-                }
-            )
+        profile = "default"
+        params = {"order": 1}
+        source = "default"
+        note = f"Sella {SELLA_VERSION} saddle defaults, order 1." + row["pbc_note"]
+        specs.append(
+            {
+                "id": f"sella/{row['slug']}-{profile}",
+                "engine": "sella",
+                "code": "Sella",
+                "code_version": SELLA_VERSION,
+                "commit": SELLA_COMMIT,
+                "algorithm": "Sella",
+                "problem": row["problem"],
+                "task": "sella",
+                "profile": profile,
+                "reducer": "all",
+                "ranked": True,
+                "parameter_source": source,
+                "note": note,
+                "optimizer": {"name": "Sella", "parameters": params},
+                "potential": row["potential"],
+                "stop": _TS_STOP,
+                "input": {"archive_path": row["archive"], "select": row["select"]},
+                "sella": {"order": 1, "v0": row["v0"]},
+            }
+        )
     return specs
 
 
