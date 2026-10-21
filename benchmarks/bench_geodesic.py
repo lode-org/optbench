@@ -45,11 +45,8 @@ RGSADDLE_TEMPLATES = (
 
 ASE_TEMPLATES = (
     ("Lj38De", "geodesic/ase-de-lj38-default", "AseDefault"),
-    ("Lj38De", "geodesic/ase-de-lj38-tuned", "AseTuned"),
     ("Lj38TwoTs", "geodesic/ase-de-2ts-default", "AseDefault"),
-    ("Lj38TwoTs", "geodesic/ase-de-2ts-tuned", "AseTuned"),
     ("PtIsland", "geodesic/ase-de-pt-default", "AseDefault"),
-    ("PtIsland", "geodesic/ase-de-pt-tuned", "AseTuned"),
     ("Heptamer", "geodesic/ase-heptamer-default", "AseDefault"),
     ("Heptamer", "geodesic/ase-heptamer-tuned", "AseTuned"),
 )

@@ -51,17 +51,11 @@ PROBLEMS = (
 
 TEMPLATES = (
     ("Neb", "rgsaddle/neb"),
-    ("NebLbfgs", "rgsaddle/neb-lbfgs"),
     ("CiNeb", "rgsaddle/ci-neb"),
-    ("CiNebLbfgs", "rgsaddle/ci-neb-lbfgs"),
     ("EwCiNeb", "rgsaddle/ew-ci-neb"),
-    ("EwCiNebLbfgs", "rgsaddle/ew-ci-neb-lbfgs"),
     ("IdppCiNeb", "rgsaddle/idpp-ci-neb"),
-    ("IdppCiNebLbfgs", "rgsaddle/idpp-ci-neb-lbfgs"),
     ("SidppCiNeb", "rgsaddle/sidpp-ci-neb"),
-    ("SidppCiNebLbfgs", "rgsaddle/sidpp-ci-neb-lbfgs"),
     ("OciNeb", "rgsaddle/oci-neb"),
-    ("OciNebLbfgs", "rgsaddle/oci-neb-lbfgs"),
 )
 
 TRACKS = (

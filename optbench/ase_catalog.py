@@ -388,8 +388,15 @@ def _neb_specs() -> list[dict]:
         },
     )
     specs = []
+    stock = {
+        "double-ended-saddle-search/lj38",
+        "double-ended-saddle-search/lj38_2ts_separation",
+        "double-ended-saddle-search/pt-island",
+    }
     for row in rows:
         for profile in ("default", "tuned"):
+            if profile == "tuned" and row["problem"] in stock:
+                continue
             if profile == "default":
                 optimizer = "FIRE"
                 params: dict = {}

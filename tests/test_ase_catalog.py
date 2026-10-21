@@ -34,6 +34,9 @@ def test_catalog_covers_every_problem_and_both_profiles():
             "tsopt/LJ38",
             "tsopt/pt-island",
             "saddle-search/pt-island",
+            "double-ended-saddle-search/lj38",
+            "double-ended-saddle-search/lj38_2ts_separation",
+            "double-ended-saddle-search/pt-island",
         }:
             assert profiles == {"default"}
         else:
