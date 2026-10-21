@@ -45,7 +45,7 @@ The rgsaddle displacement rows are a different sample. Each start is one search.
 
 ## Tuning and provenance
 
-`tuning` is `default` or `tuned`. `default` means every optimizer parameter is the value the code ships. `tuned` means a parameter was changed, including a change that copies the 2014 archive. The eOn 3.5.0 client default L-BFGS memory is 20, so `eon-client/lbfgs-m20` is `default` and `eon-client/lbfgs-m100` is `tuned`. Rows without that fact stay unlabelled.
+`tuning` is `default` when every optimizer parameter is the value the code ships. The eOn 3.5.0 client L-BFGS memory is 20, so `eon-client/lbfgs-m20` is `default`. A memory of 100 is not that struct, and it is not a template. `optbench check` rejects `tuning = "tuned"`. Rows without the stock fact stay unlabelled.
 
 Provenance is the code name, the version, the commit, the parameter object, and the machine. A score without those fields is not a v2 score.
 

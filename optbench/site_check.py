@@ -257,12 +257,15 @@ def check_site(root: Path) -> list[str]:
         document = build_board(root)
     except MissingAsvCommit as exc:
         return [str(exc)]
+    from .check import tuned_row_errors
+
     problems = load_all(root / "problems") if (root / "problems").is_dir() else {}
     codes = summary_codes(document, _registry(root))
-    errors: list[str] = []
+    errors: list[str] = tuned_row_errors(document)
     pages = _page_texts(root)
     if not pages:
-        return ["site pages are missing"]
+        errors.append("site pages are missing")
+        return errors
     texts = {label: text for label, text in pages}
     summary_ids: dict[str, set[str]] = {}
     for label, text in pages:

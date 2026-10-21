@@ -49,7 +49,7 @@ One point uses the Cartesian distance, because centering a single point would re
 
 If the problem states no cap and every record is a success, `par_applied` is false and the mean is the mean of the recorded costs. That is how the ten Pt-island repetitions are summarised: each cost is `force_calls / total_searches` from the `# rep` line. The legacy `force_calls` value remains the mean of the campaign totals.
 
-`tuning` is `default` or `tuned`. Provenance is the code, version, commit, parameters, and machine. `collect_provenance` fills the machine from the process when the caller does not pass one.
+`tuning` records how the template sits against the code. `default` means the optimizer parameters are the values the code ships. `optbench check` rejects `tuning = "tuned"`, a template file named `*-tuned`, and a template that sets `tuned = true`. None of those is a board row. Provenance is the code, version, commit, parameters, and machine. `collect_provenance` fills the machine from the process when the caller does not pass one.
 
 ## Smoke
 

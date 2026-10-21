@@ -22,22 +22,22 @@ uv run optbench templates
 
 The harness does not contain eOn, pele, or Sella. Those are installed separately, and the commands below say which release produced the files in `results/campaign/`.
 
-## Reproduce the Lennard-Jones 38 L-BFGS mean
+## Run the Lennard-Jones 38 L-BFGS mean
 
-`results/campaign/eon-client-lbfgs-m100.dat` is:
+`results/campaign/eon-client-lbfgs-m20.dat` is:
 
 ```
-force_calls 181
-force_calls_min 90
-force_calls_max 403
+force_calls 201
+force_calls_min 100
+force_calls_max 551
 nfailed 0
 code eOn
 code_version 3.5.0
 algorithm LBFGS
-template eon-client/lbfgs-m100
+template eon-client/lbfgs-m20
 ```
 
-That file is eOn 3.5.0, commit `4d8b34baf1ba8d2d980df29838bac1f969d1662c`, on all 1000 starts in `problems/minimization/lj38.toml`. The stop is the Euclidean norm of the force at 0.01, or 10000 force calls. L-BFGS memory is 100. The client default is 20, and that default is a different score (about 201).
+That file is eOn 3.5.0, commit `4d8b34baf1ba8d2d980df29838bac1f969d1662c`, on all 1000 starts in `problems/minimization/lj38.toml`. The stop is the Euclidean norm of the force at 0.01, or 10000 force calls. L-BFGS memory is 20, which is the value the client ships (`lbfgs_t::memory` in `ParametersOptions.h`).
 
 Build `eonclient` from that commit of <https://github.com/TheochemUI/eon>. In an activated environment from that tree:
 
@@ -52,7 +52,7 @@ A run prints `Eon version 3.5.0`. `pip install pyeonclient` is a different inter
 From this repository, with `eonclient` on `PATH`:
 
 ```bash
-uv run optbench run minimization/lj38 eon-client/lbfgs-m100 \
+uv run optbench run minimization/lj38 eon-client/lbfgs-m20 \
   --workers 4 \
   --output benchmark.dat
 ```
@@ -61,12 +61,12 @@ The command uses `eonclient` from `PATH`. `--client` or `EONCLIENT` overrides th
 
 ```bash
 pixi exec --spec eon --spec uv -- uv run optbench run \
-  minimization/lj38 eon-client/lbfgs-m100 \
+  minimization/lj38 eon-client/lbfgs-m20 \
   --workers 4 \
   --output benchmark.dat
 ```
 
-The recorded 181 is commit `4d8b34baf`. Read the version line the client prints before treating another build as that score.
+The recorded 201 is commit `4d8b34baf`. Read the version line the client prints before treating another build as that score.
 
 `templates/eon/` is current main, commit `1d71c944501832bfafb955ffe13b9aae50c8efd4`, the merge of pull request 776. The version string is 3.6.0. `eon/lj38-lbfgs` is L-BFGS at the struct defaults, including memory 20 and `lbfgs_accept = energy`. `eon/lj38-lbfgs-m100` changes only the memory to 100. Both set the problem stop. The same pair for Morse bulk is `eon/morse-lbfgs` and `eon/morse-lbfgs-m100`. L-BFGS keys sit in `[LBFGS]`. A run writes `benchmark.dat` and `benchmark.starts`, one JSON object per geometry, failures included. The same commit has a default and a memory-100 template for the Pt-heptamer NEB, the LJ38 and Pt-island double-ended bands, and the LJ38 and Pt-island dimer saddle searches. `uv run optbench eon-job neb-pt-lbfgs` runs one of those. The NEB and saddle means follow the archived report: a counter under the cap stays in the mean, and `nfailed` counts a termination reason other than 0. The heptamer mean divides `force_calls_neb` by 8. The 3.5.0 and SVN templates are unchanged. `--workers` is the number of client processes. The default is 1. The problem file names `website/minimization/lj38/lj38-clusters.tgz`, and the manifest stores that archive at `inputs/sha256/86bf774955b906c486d37282c48e42628e8fe4af3579222f6e07fcf5913157b1/lj38-clusters.tgz`. The command unpacks it. `--work` chooses the scratch directory. The default is next to `--output`.
 
@@ -128,7 +128,7 @@ ASE 3.29.0 and Sella 2.6.0 templates live under `templates/ase/` and `templates/
 uv run --group campaign optbench campaign-ase --workers 4 --output-dir results/campaign
 ```
 
-One template is the same command as the eOn runs, with the template id in place of `eon-client/lbfgs-m100`:
+One template is the same command as the eOn runs, with the template id in place of `eon-client/lbfgs-m20`:
 
 ```bash
 uv run --group campaign optbench run minimization/lj38 ase/lj38-lbfgs-default \
@@ -206,7 +206,7 @@ A force call is one entry to `HarnessCounter`. ASE, pele, and Sella are charged 
 
 A v2 success is under the cap, at the force stop, and, when a reference is supplied, at Hessian index 0 for a minimum or index 1 for a saddle, with the energy and Kabsch RMSD inside the tolerances. A failure costs `2` times the cap. The table shows that PAR-2 mean, the Wilson 95% interval on the success rate, and the median and interquartile range with a bootstrap of 2000 resamples seeded by `20261015`.
 
-Pt-island cost is force calls in a repetition divided by the searches in that repetition. `eon-client/lbfgs-m20` is `tuning` `default`. `eon-client/lbfgs-m100` is `tuning` `tuned`.
+Pt-island cost is force calls in a repetition divided by the searches in that repetition. `eon-client/lbfgs-m20` is `tuning` `default`: L-BFGS memory 20, the value the client ships.
 
 `uv run optbench smoke` writes `results/smoke/quadratic.json`. That file is a quadratic check of the counter and the score. It is not a Lennard-Jones campaign. Those campaigns stay on rg.terra.
 
@@ -214,7 +214,7 @@ Pt-island cost is force calls in a repetition divided by the searches in that re
 
 `benchmark.dat` keeps the rounded mean, because that is the 2014 record. A v2 measurement is an asv track. Force calls, the success bit, and the four failure classes are `track_*` values. Wall time is `time_*`. The parameters are the seed and the start. `results/asv` is asv's result tree, one file per commit and environment, with `machine.json` beside it. `uv.lock` pins `asv==0.6.6` and `asv-runner==0.3.1`. `environments/eon-3.5.0.yml` pins the conda-forge eOn binary. `docs/asv.md` is how another unit adds a code. `docs/asv-gaps.md` is the upstream list.
 
-The environment type is `uv-pip`, from `optbench.asv_uv`. It creates the environment with `uv venv` and installs with `uv pip`. The committed quadratic sample is that environment. eonclient is not part of it. The seven Lennard-Jones 38 classes in `benchmarks/bench_lj38.py` skip unless `OPTBENCH_ASV_EON=1`, and the default grid is one start unless `OPTBENCH_ASV_FULL=1`.
+The environment type is `uv-pip`, from `optbench.asv_uv`. It creates the environment with `uv venv` and installs with `uv pip`. The committed quadratic sample is that environment. eonclient is not part of it. The six Lennard-Jones 38 classes in `benchmarks/bench_lj38.py` skip unless `OPTBENCH_ASV_EON=1`, and the default grid is one start unless `OPTBENCH_ASV_FULL=1`.
 
 ```bash
 uv run asv machine --yes

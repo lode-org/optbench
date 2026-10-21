@@ -91,13 +91,9 @@ success-only median. A row with no success has no median.
 | neb/Pt-heptamer | compass/sqnm | 13/13 | 0 | 548 |
 | double-ended-saddle-search/pt-island | compass/sqnm | 58/59 | 1 cap | 1000.5 |
 | minimization/lj38-noise | rgmin/lj38-noise-lbfgs-s0 | 996/1000 | 4 wrong stationary | 206 |
-| minimization/lj38-noise | rgmin/lj38-noise-lbfgs-s0-tuned | 996/1000 | 4 wrong stationary | 206 |
 | minimization/lj38-noise | rgmin/lj38-noise-lbfgs-s1em4 | 994/1000 | 6 wrong stationary | 205 |
-| minimization/lj38-noise | rgmin/lj38-noise-lbfgs-s1em4-tuned | 994/1000 | 6 wrong stationary | 205 |
 | minimization/lj38-noise | rgmin/lj38-noise-lbfgs-s1em3 | 989/1000 | 11 wrong stationary | 195 |
-| minimization/lj38-noise | rgmin/lj38-noise-lbfgs-s1em3-tuned | 989/1000 | 11 wrong stationary | 195 |
 | minimization/lj38-noise | rgmin/lj38-noise-lbfgs-s1em2 | 884/1000 | 116 wrong stationary | 161 |
-| minimization/lj38-noise | rgmin/lj38-noise-lbfgs-s1em2-tuned | 884/1000 | 116 wrong stationary | 161 |
 | lowest-eigenvector/lj38 | pysisyphus/lanczos-lj38 | 160/200 | 40 divergence | 22 |
 | minimization/lj38 | pysisyphus/lbfgs-lj38 | 0/1000 | 1000 cap | — |
 | minimization/lj38 | pysisyphus/cg-lj38 | 254/1000 | 745 cap, 1 wrong stationary | 693 |
@@ -107,8 +103,8 @@ The rgsaddle band campaigns on `neb/Pt-heptamer` and the three double-ended
 problems are on disk (12 templates each). The saddle-search catalog on
 `saddle-search/pt-island` is still running and has not written a file. A
 sample of that process was on search 387 of the first repetition, with 1
-connected saddle. The eight rgmin `lj38-noise` L-BFGS rows are on disk.
-Both tunings set `maxstep` 0.2, and each pair matches. Every start met the
+connected saddle. The four rgmin `lj38-noise` L-BFGS rows are on disk.
+Each sets `maxstep` 0.2. Every start met the
 force stop. The v2 failures are Hessian index not 0. Zero noise is 996 of
 1000. `1e-4` is 994 of 1000. `1e-3` is 989 of 1000. `1e-2` is 884 of 1000,
 116 wrong stationary, success median 161.

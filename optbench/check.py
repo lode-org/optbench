@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import tomllib
 from pathlib import Path
 
 from .dat import normalize
@@ -47,6 +48,80 @@ def archive_gaps(problems: dict[str, dict], rows: list[dict]) -> list[str]:
     return gaps
 
 
+def _sets_tuned_true(value: object) -> bool:
+    """True when a template document sets the boolean ``tuned`` key."""
+    if isinstance(value, dict):
+        if value.get("tuned") is True:
+            return True
+        return any(_sets_tuned_true(item) for item in value.values())
+    if isinstance(value, list):
+        return any(_sets_tuned_true(item) for item in value)
+    return False
+
+
+def _sets_tuning_tuned(value: object) -> bool:
+    """True when a template document sets ``tuning = "tuned"``."""
+    if isinstance(value, dict):
+        if value.get("tuning") == "tuned":
+            return True
+        return any(_sets_tuning_tuned(item) for item in value.values())
+    if isinstance(value, list):
+        return any(_sets_tuning_tuned(item) for item in value)
+    return False
+
+
+def tuned_template_errors(root: Path) -> list[str]:
+    """Templates named ``*-tuned``, setting ``tuned = true``, or ``tuning = "tuned"``.
+
+    The name is the file stem or the template id. The label is rejected on
+    every id, not only on a ranked row.
+    """
+    directory = Path(root) / "templates"
+    if not directory.is_dir():
+        return []
+    errors: list[str] = []
+    for path in sorted(directory.rglob("*.toml")):
+        rel = path.relative_to(root)
+        try:
+            data = tomllib.loads(path.read_text(encoding="utf-8"))
+        except tomllib.TOMLDecodeError as exc:
+            if path.stem.endswith("-tuned"):
+                errors.append(f"tuned template {rel} unreadable {exc}")
+            continue
+        ident = str(data.get("id") or "")
+        if (
+            path.stem.endswith("-tuned")
+            or ident.endswith("-tuned")
+            or _sets_tuned_true(data)
+            or _sets_tuning_tuned(data)
+        ):
+            errors.append(f"tuned template {rel}")
+    return errors
+
+
+def tuned_row_errors(document: dict) -> list[str]:
+    """Board rows whose template is tuned, on every list."""
+    errors: list[str] = []
+
+    def one(row: object, where: str) -> None:
+        if not isinstance(row, dict):
+            return
+        template = str(row.get("template") or "")
+        if template.endswith("-tuned") or row.get("tuned") is True or row.get("tuning") == "tuned":
+            errors.append(f"tuned row {where} {template or where}")
+
+    for problem_id, problem in (document.get("problems") or {}).items():
+        if not isinstance(problem, dict):
+            continue
+        for bucket in ("ranked", "partial", "history", "not_comparable"):
+            for row in problem.get(bucket) or []:
+                one(row, f"{problem_id} {bucket}")
+    for bucket in ("partial", "history", "not_comparable", "unparsed", "unmapped"):
+        for row in document.get(bucket) or []:
+            one(row, bucket)
+    return errors
+
+
 def check(problems_dir: Path, oracle_path: Path) -> int:
     """Return 0 when archive gaps match oracle/archive_gaps.txt."""
     problems = load_all(problems_dir)
@@ -89,9 +164,15 @@ def check(problems_dir: Path, oracle_path: Path) -> int:
             if line not in gaps:
                 print(f"- {line}")
         return 1
+    root = oracle_path.resolve().parent.parent
+    tuned = tuned_template_errors(root)
+    if tuned:
+        print(f"tuned {len(tuned)}")
+        for line in tuned:
+            print(line)
+        return 1
     from .site_check import check_site
 
-    root = oracle_path.resolve().parent.parent
     site_errors = check_site(root)
     if site_errors:
         print(f"site {len(site_errors)}")
