@@ -121,7 +121,7 @@ def test_template_pins_the_tarball_and_the_asv_grid_is_one_start(monkeypatch, tm
     assert AirssLj38.param_names == ["seed", "start"]
     assert AirssLj38.params[0] == ["0"]
     assert AirssLj38.params[1] == ["0"]
-    assert AirssLj38.cap is None
+    assert AirssLj38.cap == 2000000
     assert AirssLj38.repeat == 1
     assert AirssLj38.track_force_calls.unit == "force calls"
     monkeypatch.setenv("OPTBENCH_ASV_FULL", "1")
@@ -157,11 +157,11 @@ def test_lj75_budget_writes_partial_rows(tmp_path, monkeypatch):
     )
     text = output.read_text(encoding="utf-8")
     assert "partial true" in text
-    assert "cap 299" in text
+    assert "cap 2000000" in text
     assert "n 200" in text
     assert summary["starts"] == 200
     assert summary["nfailed"] == 200
-    assert summary["par2_mean"] == 598
+    assert summary["par2_mean"] == 4000000
     rows = [
         json.loads(line)
         for line in output.with_suffix(".starts.jsonl").read_text(encoding="utf-8").splitlines()

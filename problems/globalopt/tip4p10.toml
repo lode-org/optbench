@@ -4,6 +4,10 @@ suite = "globalopt"
 problem = "tip4p10"
 contract = "partial"
 entry_count = 2
+remark = "The 2014 archive states no force-call cap. archive/entries/globalopt/tip4p10/gmin/benchmark.dat records an observed force_calls_max of 1.4836e+05, which is not a cap. The declared cap is 2000000, the cap recorded for ranked rows eon-client-bh-lj38 and eon-svn-bh-lj38 in results/board/problems/globalopt-lj38.json."
+
+[convergence]
+max_force_calls = 2000000
 
 [metrics]
 required = ["force_calls", "force_calls_max", "force_calls_median", "force_calls_min", "nfailed"]

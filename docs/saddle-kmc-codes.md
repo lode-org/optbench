@@ -187,11 +187,16 @@ that heptamer diverges on all 13 pairs. Morse bulk L-BFGS meets the force
 stop and the Hessian index is not 0 for 88 of 100 starts. The success
 median is 53.5.
 
-Still open, and not given an invented budget: basin hopping and minima
-hopping on `globalopt/*`. Those problems state `energy_above_minimum` and
-do not state `max_force_calls`. AMD-SVM on `accelerated-md/aladatom` is not
-scored. The problem has no force-call protocol and the harness has no EAM
-potential. hTST prefactors are not scored for the same reason.
+Basin hopping and minima hopping on `globalopt/*` share
+`max_force_calls` 2000000. `lj100-binary` takes that number from
+`max_evaluations` in its problem file. Its 100 starts are quenched
+random clusters with 42 atoms of sigma 1.0 and 58 atoms of sigma 1.3,
+and a start succeeds at or below -604.796307 plus 0.001. The other
+globalopt archives state no force-call cap, so they use the cap the
+ranked eOn LJ38 rows on main already recorded. AMD-SVM on
+`accelerated-md/aladatom` is not scored. The problem has no force-call
+protocol and the harness has no EAM potential. hTST prefactors are not
+scored for the same reason.
 
 ## LAMMPS
 

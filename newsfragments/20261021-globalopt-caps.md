@@ -1,0 +1,1 @@
+Every `problems/globalopt` file states `max_force_calls` 2000000. `lj100-binary` takes that number from `max_evaluations` in the same file. The other archives state no force-call cap, so they use the cap already recorded for the ranked eOn LJ38 rows on main. AIRSS reads the problem cap. Ranked rows that used a different cap are left for a rerun and are not rewritten here.

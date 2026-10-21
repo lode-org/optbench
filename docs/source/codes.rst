@@ -1384,7 +1384,7 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="template">airss/lj38</td>
    <td data-field="version">AIRSS 0.9.4</td>
    <td data-field="commit">5593cc4ee360</td>
-   <td data-field="par2_mean"></td>
+   <td data-field="par2_mean">112134</td>
    <td data-field="mean_calls">112134</td>
    <td data-field="median_calls">70635.5</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>

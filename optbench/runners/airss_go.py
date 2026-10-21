@@ -8,7 +8,8 @@ potential and the harness counter.
 
 One archived start index is one independent search. The search stops
 when the harness energy is at or below the Wales minimum plus the
-problem tolerance. The problem states no force-call cap.
+problem tolerance, or when the harness count reaches the problem
+force-call cap.
 """
 
 from __future__ import annotations
@@ -29,7 +30,8 @@ from optbench.v2 import collect_provenance
 
 WALES_URL = "https://www-wales.ch.cam.ac.uk/examples/GMIN/LJ38/lowest"
 TARBALL_SHA256 = "5593cc4ee360d998764fceb188284fdf0ef781d206754176dcb360c65103ddaa"
-# Runaway guard. A hit is a crash, not a scored cap: the problem states none.
+# Runaway guard on the number of structures. A hit is a crash. The scored
+# cap is the problem max_force_calls.
 SAFETY_STRUCTURES = 4000
 _PASSES = 2
 
@@ -295,7 +297,15 @@ def _config(template: dict) -> dict:
     return config
 
 
-def _job(template: dict, index: int, start: str, binary: Path, reference: float | None, tolerance: float | None) -> dict:
+def _job(
+    template: dict,
+    index: int,
+    start: str,
+    binary: Path,
+    reference: float | None,
+    tolerance: float | None,
+    call_cap: int | None = None,
+) -> dict:
     config = _config(template)
     threshold = None if reference is None or tolerance is None else float(reference) + float(tolerance)
     job = {
@@ -320,6 +330,8 @@ def _job(template: dict, index: int, start: str, binary: Path, reference: float 
     }
     if config.get("budget_structures"):
         job["budget"] = int(config["budget_structures"])
+    if call_cap is not None:
+        job["call_cap"] = int(call_cap)
     return job
 
 
@@ -348,7 +360,7 @@ def _crash(job: dict, calls: int, energy: float | None, structures: int, error: 
 
 
 def _capped(job: dict, calls: int, energy: float, structures: int) -> dict:
-    """A start that stopped at the structure budget. The problem states no success rule."""
+    """A start that stopped at the force-call cap or the structure budget."""
     return {
         "schema": "optbench.start/v2",
         "start": job["start"],
@@ -428,6 +440,11 @@ def search_start(job: dict) -> dict:
             float(job["threshold"]) - float(job["reference_energy"]),
         ):
             return _success(job, calls, energy, structures)
+        call_cap = job.get("call_cap")
+        if call_cap is not None and calls >= int(call_cap):
+            if best is math.inf:
+                return _crash(job, calls, None, structures, "nonfinite")
+            return _capped(job, calls, best, structures)
     if budget_only and best is not math.inf:
         return _capped(job, calls, best, structures)
     return _crash(job, calls, None if best is math.inf else best, structures, "safety")
@@ -534,20 +551,31 @@ def _dat(summary: dict, template: dict, metrics: dict) -> str:
         "partial": "true" if summary.get("partial") else None,
         "cap": summary.get("cap"),
     }
+    stated_cap = summary.get("stated_cap")
     if summary.get("partial"):
         lines = [
             "# counter harness. One force call is one Lennard-Jones evaluation inside the two-point step.",
-            "# The problem states no energy window. Each start stops after the structure budget.",
-            "# failure is cap. cap is the largest harness count in this file, so PAR-2 is twice that count.",
-            "# force_calls is the half-even mean of those counts. energy_min and energy_max are the best energies.",
+            "# The problem states no energy window. Each start stops after the structure budget or the force-call cap.",
         ]
+        if stated_cap is None:
+            lines.append("# failure is cap. cap is the largest harness count in this file, so PAR-2 is twice that count.")
+        else:
+            lines.append(
+                f"# failure is cap. cap is {int(stated_cap)} force calls. PAR-2 charges each failure twice that cap."
+            )
+        lines.append("# force_calls is the half-even mean of those counts. energy_min and energy_max are the best energies.")
     else:
         lines = [
             "# counter harness. One force call is one Lennard-Jones evaluation inside the two-point step.",
             "# buildcell draws the cell. The archived .con files name the starts.",
             "# A start succeeds when the harness energy is at or below the Wales minimum plus energy_above_minimum.",
-            "# The problem states no force-call cap, so par2_mean is unset and the median is the call median.",
         ]
+        if stated_cap is None:
+            lines.append("# The problem states no force-call cap, so par2_mean is unset and the median is the call median.")
+        else:
+            lines.append(
+                f"# The problem force-call cap is {int(stated_cap)}. A start at or above it fails. PAR-2 charges each failure twice that cap."
+            )
     note = str(template.get("note") or "").strip()
     if note:
         lines.append("# " + note.replace("\n", " "))
@@ -556,6 +584,19 @@ def _dat(summary: dict, template: dict, metrics: dict) -> str:
             continue
         lines.append(f"{key} {_format_field(value)}")
     return "\n".join(lines) + "\n"
+
+
+def _cap_note(budget_only: bool, problem_cap: int | None) -> str:
+    if budget_only and problem_cap is None:
+        return "The problem states no energy window, so each start stops at the structure budget."
+    if budget_only:
+        return (
+            "The problem states no energy window. Each start stops at the structure budget "
+            f"or at {problem_cap} force calls."
+        )
+    if problem_cap is None:
+        return "The problem states no force-call cap."
+    return f"The problem force-call cap is {problem_cap}."
 
 
 def run_template(
@@ -576,6 +617,8 @@ def run_template(
     if template.get("commit") != TARBALL_SHA256:
         raise RuntimeError(f"{template['id']} commit is not the AIRSS 0.9.4 tarball sha256")
     convergence = problem.get("convergence") or {}
+    stated_cap = convergence.get("max_force_calls")
+    problem_cap = int(stated_cap) if stated_cap not in (None, "") else None
     config = _config(template)
     raw_tolerance = convergence.get("energy_above_minimum")
     if raw_tolerance is None and not config.get("budget_structures"):
@@ -597,7 +640,10 @@ def run_template(
         if coords.shape[0] != config["natoms"]:
             raise ValueError(f"Wales file has {coords.shape[0]} atoms, template has {config['natoms']}")
         reference = reference_energy(coords)
-    jobs = [_job(template, index, name, binary, reference, tolerance) for index, name in enumerate(names)]
+    jobs = [
+        _job(template, index, name, binary, reference, tolerance, problem_cap)
+        for index, name in enumerate(names)
+    ]
     if workers <= 1:
         records = []
         total = len(jobs)
@@ -629,7 +675,7 @@ def run_template(
     budget_only = reference is None
     crashes = [row for row in records if row.get("failure") == "crash"]
     missed = [row for row in records if not row["success"]]
-    if crashes or (missed and not budget_only):
+    if crashes or (missed and not budget_only and problem_cap is None):
         partial_path = output.with_suffix(".partial.jsonl")
         for row in records:
             row.pop("index", None)
@@ -642,7 +688,7 @@ def run_template(
     calls = [int(row["force_calls"]) for row in records]
     energies = [float(row["energy"]) for row in records if row.get("energy") is not None]
     structures = [int(row["structures"]) for row in records]
-    cap = max(calls) if budget_only else None
+    cap = problem_cap if problem_cap is not None else (max(calls) if budget_only else None)
     summary = {
         "force_calls": half_even(sum(calls) / len(calls)),
         "force_calls_min": min(calls),
@@ -654,6 +700,7 @@ def run_template(
         "structures_max": max(structures),
         "partial": budget_only,
         "cap": cap,
+        "stated_cap": problem_cap,
     }
     scored = [
         {"force_calls": row["force_calls"], "success": row["success"], "failure": row["failure"]}
@@ -682,11 +729,7 @@ def run_template(
         "note": (
             "Harness counter on optbench.potentials.lennard_jones. "
             "buildcell generates each cell. "
-            + (
-                "The problem states no energy window, so each start stops at the structure budget."
-                if budget_only
-                else "The problem states no force-call cap."
-            )
+            + _cap_note(budget_only, problem_cap)
         ),
         "runs": [
             {

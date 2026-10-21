@@ -50,7 +50,7 @@
     {
       "asv_commit": "",
       "call_unit": "total",
-      "cap": null,
+      "cap": 2000000,
       "code": "AIRSS",
       "code_version": "0.9.4",
       "commit": "5593cc4ee360d998764fceb188284fdf0ef781d206754176dcb360c65103ddaa",
@@ -78,7 +78,7 @@
       "n": 100,
       "nfailed": 0,
       "note": "starts.jsonl",
-      "par2_mean": null,
+      "par2_mean": 112134.16,
       "partial": false,
       "partial_reason": "",
       "path": "results/campaign/airss-0.9.4-lj38.dat",

@@ -27,6 +27,11 @@ def _cache_dir() -> Path:
     return Path(os.environ.get("OPTBENCH_ASV_CACHE", "/tmp/optbench-asv-airss"))
 
 
+def problem_cap() -> int:
+    data = tomllib.loads((ROOT / "problems" / "globalopt" / "lj38.toml").read_text(encoding="utf-8"))
+    return int(data["convergence"]["max_force_calls"])
+
+
 def selected_starts() -> list[str]:
     """Start indices on the grid. Full when ``OPTBENCH_ASV_FULL`` is set."""
     if os.environ.get("OPTBENCH_ASV_FULL") != "1":
@@ -53,7 +58,15 @@ def _compute(seed: str, start: str) -> dict:
     if index < 0 or index >= len(names):
         raise IndexError(f"airss/lj38 start {start} is outside the archive")
     tolerance = float(problem["convergence"]["energy_above_minimum"])
-    job = _job(template, index, names[index], find_buildcell(), reference_energy(), tolerance)
+    job = _job(
+        template,
+        index,
+        names[index],
+        find_buildcell(),
+        reference_energy(),
+        tolerance,
+        problem_cap(),
+    )
     record = search_start(job)
     record["seed"] = SEED
     record.pop("index", None)
@@ -80,7 +93,7 @@ class AirssLj38(TrackedSearch):
     timeout = 3600
     template_id = "airss/lj38"
     problem_id = "globalopt/lj38"
-    cap = None
+    cap = problem_cap()
 
     def setup(self, seed, start):
         from optbench.runners.airss_go import find_buildcell

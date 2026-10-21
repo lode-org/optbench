@@ -4,12 +4,14 @@ suite = "globalopt"
 problem = "lj38"
 contract = "stated"
 entry_count = 5
+remark = "The 2014 eOn config at archive/entries/globalopt/lj38/eon-basinhopping/config.ini sets steps to 10000000 and states no force-call cap. benchmark.dat in that directory records an observed force_calls_max of 1795901. The pele benchmark.dat records an observed force_calls_max of 2.5339e+06. Those lines are maxima, not caps. The declared cap is 2000000, the cap recorded for ranked rows eon-client-bh-lj38 and eon-svn-bh-lj38 in results/board/problems/globalopt-lj38.json."
 
 [sample]
 starts = 100
 
 [convergence]
 energy_above_minimum = 0.001
+max_force_calls = 2000000
 
 [input]
 archive_path = "website/globalopt/lj38/100_lj38.tar.gz"
