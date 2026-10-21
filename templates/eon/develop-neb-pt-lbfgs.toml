@@ -1,0 +1,28 @@
+id = "eon/develop-neb-pt-lbfgs"
+engine = "eon"
+problem = "neb/Pt-heptamer"
+code = "eOn"
+code_version = "eOn (develop 500350d9)"
+commit = "500350d9fae881f06c7ef194e5868da079c4be5a"
+algorithm = "LBFGS"
+reducer = "harness"
+failure_cap = 10000
+kind = "neb-pt"
+kernel = "morse_shift"
+asv_class = "EonDevelopNebPtCiLbfgs"
+seeds = [1]
+asv_timeout = 3600
+budget_seconds = 3600
+note = """Climbing-image NEB on the 13 Pt-heptamer pairs. The band optimizer default is L-BFGS and climbing is on. images is 8. converged_force stays 0.01. Optimizer max_iterations and the harness cap are 10000. The kernel is morse_shift: cutoff 9.5, pair energy shifted to zero at the cutoff, minimum image on the box diagonal. D 0.7102, alpha 1.6047, r0 2.897."""
+
+[ini.Main]
+job = "nudged_elastic_band"
+
+[ini.Potential]
+potential = "morse_pt"
+
+[ini.Optimizer]
+max_iterations = 10000
+
+[ini."Nudged Elastic Band"]
+images = 8

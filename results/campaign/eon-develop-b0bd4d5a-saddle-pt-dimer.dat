@@ -1,0 +1,11 @@
+call_unit total
+nfailed 1
+code eOn
+code_version (develop b0bd4d5a)
+commit b0bd4d5a5e0f4011831e45f4de389a4efa348e83
+algorithm Dimer
+template eon/develop-b0bd4d5a-saddle-pt-dimer
+problem saddle-search/pt-island
+reducer akmc-until-27
+counter harness
+count_keys HarnessCounter

@@ -1,0 +1,1 @@
+{"call_unit": "total", "client_calls": 2550786, "count_key": "harness", "counter": "harness", "failure": "cap", "force_calls": 2550858, "fraction_connected": 0.9976152623211447, "geometry": "0", "passes": 200, "qualifying": 11, "raw": 2550858, "seconds": 3627.7595795680027, "seed": 1000, "success": false, "total_searches": 5032, "unique_saddles": 40}

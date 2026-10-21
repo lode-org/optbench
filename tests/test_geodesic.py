@@ -66,8 +66,8 @@ def test_templates_are_an_initialiser_ablation():
     caps = {
         "geodesic/ase-de-lj38-default": 2500,
         "geodesic/ase-de-lj38-tuned": 2500,
-        "geodesic/ase-de-2ts-default": 10000,
-        "geodesic/ase-de-2ts-tuned": 10000,
+        "geodesic/ase-de-2ts-default": 250000,
+        "geodesic/ase-de-2ts-tuned": 250000,
         "geodesic/ase-de-pt-default": 3000,
         "geodesic/ase-de-pt-tuned": 3000,
         "geodesic/ase-heptamer-default": 10000,

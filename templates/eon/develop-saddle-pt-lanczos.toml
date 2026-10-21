@@ -7,6 +7,7 @@ commit = "7095b23ac17d49f434a5e08ccb072897ceca698e"
 algorithm = "Lanczos"
 reducer = "akmc-until-27"
 failure_cap = 100000000
+ranked = false
 note = "AKMC on the Pt island until 27 good saddles below 1.5 eV. Same thermostat, displacement list, prefactor, and L-BFGS translation as eon/develop-saddle-pt-dimer. The minimum mode is Lanczos, tolerance 0.001, max_iterations 20, quit_early true. Force calls are sad-fcs plus mins-fcs. Seeds are 1000 and 1001. pass_limit 250 stops a repetition that has not reached 27. A repetition that stops there stays out of the mean."
 
 pass_limit = 250

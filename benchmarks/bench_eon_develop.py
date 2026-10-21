@@ -22,10 +22,12 @@ A native bridge forwards each call to a ``PotServer`` in this process,
 and ``python -m optbench.extpot`` does that when the bridge is not built.
 The server refuses a search call at ``failure_cap`` before the potential
 runs, and that run is ``cap``. The client's ``total_force_calls`` is
-stored beside the harness count and is not the track. The binary is the
-develop source build named by ``EONCLIENT``
-(commit 7095b23ac17d49f434a5e08ccb072897ceca698e). The conda-forge 3.5.0
-pin is a different environment.
+stored beside the harness count and is not the track. The two AKMC
+classes use the develop source build named by ``EONCLIENT``
+(commit 7095b23ac17d49f434a5e08ccb072897ceca698e). The stock rows
+installed from ``optbench.eon_harness`` use ``EON_DEVELOP_CLIENT``
+(commit b0bd4d5a5e0f4011831e45f4de389a4efa348e83). The conda-forge 3.5.0
+pin is a different environment. EON SVN r2549 is a different code.
 
 The default grid is one seed and the first start. ``OPTBENCH_ASV_FULL=1``
 at import selects the campaign grid. That subset is not a published
@@ -50,6 +52,7 @@ import time
 from pathlib import Path
 
 from optbench.asv_tracks import TrackedSearch as _TrackedSearch
+from optbench.eon_harness import install_benchmarks
 
 ROOT = Path(__file__).resolve().parents[1]
 EON_COMMIT = "7095b23ac17d49f434a5e08ccb072897ceca698e"
@@ -818,15 +821,12 @@ def _akmc_passes(limit: int) -> int:
 def _specs() -> list[dict]:
     from optbench.campaign import load_template
 
-    lj = [f"{i:04d}" for i in range(200)]
     workers = min(8, os.cpu_count() or 1)
+    # Stock develop rows are installed by optbench.eon_harness. These two
+    # stay on this module: they are the AKMC repetitions.
     rows = [
-        ("EonDevelopTsLj38Lanczos", "eon/develop-ts-lj38-lanczos", "ts-lj38", ["1"], lj, 900),
-        ("EonDevelopTsLj38Dimer", "eon/develop-ts-lj38-dimer-accept-energy", "ts-lj38", ["1"], lj, 900),
-        ("EonDevelopTsLj38DimerMatched", "eon/develop-ts-lj38-dimer", "ts-lj38", ["1"], lj, 900),
-        ("EonDevelopTsPtLanczos", "eon/develop-ts-pt-lanczos", "ts-pt", ["1"], [f"initial_{i}" for i in range(49)], 1800),
-        ("EonDevelopTsPtDimer", "eon/develop-ts-pt-dimer-accept-energy", "ts-pt", ["1"], [f"initial_{i}" for i in range(49)], 1800),
-        ("EonDevelopTsPtDimerMatched", "eon/develop-ts-pt-dimer", "ts-pt", ["1"], [f"initial_{i}" for i in range(49)], 1800),
+        # These two measure templates/eon/neb-pt-lbfgs.toml and
+        # neb-pt-lbfgs-m100.toml. Those files are main, commit 1d71c944.
         (
             "EonDevelopNebPtLbfgs",
             "eon/neb-pt-lbfgs",
@@ -843,18 +843,6 @@ def _specs() -> list[dict]:
             [f"min{i:02d}" for i in range(1, 14)],
             3600,
         ),
-        ("EonDevelopDeLj38Ew", "eon/develop-de-lj38-ew", "de-lj38", ["1"], [f"pair_{i:02d}" for i in range(50)], 3600),
-        ("EonDevelopDeLj38Oci", "eon/develop-de-lj38-oci", "de-lj38", ["1"], [f"pair_{i:02d}" for i in range(50)], 3600),
-        ("EonDevelopDeLj38Cap", "eon/develop-de-lj38-cap-accept-energy", "de-lj38", ["1"], [f"pair_{i:02d}" for i in range(50)], 7200),
-        ("EonDevelopDeLj38CapMatched", "eon/develop-de-lj38-cap", "de-lj38", ["1"], [f"pair_{i:02d}" for i in range(50)], 7200),
-        ("EonDevelopDePtEw", "eon/develop-de-pt-ew", "de-pt", ["1"], [f"product_{i}" for i in range(59)], 3600),
-        ("EonDevelopDePtOci", "eon/develop-de-pt-oci", "de-pt", ["1"], [f"product_{i}" for i in range(59)], 3600),
-        ("EonDevelopDe2ts", "eon/develop-de-2ts-accept-energy", "de-2ts", ["1"], [f"pair_{i:02d}" for i in range(51)], 3600),
-        ("EonDevelopDe2tsMatched", "eon/develop-de-2ts", "de-2ts", ["1"], [f"pair_{i:02d}" for i in range(51)], 3600),
-        ("EonDevelopDe2tsOci", "eon/develop-de-2ts-oci", "de-2ts", ["1"], [f"pair_{i:02d}" for i in range(51)], 3600),
-        ("EonDevelopDe2tsEw", "eon/develop-de-2ts-ew", "de-2ts", ["1"], [f"pair_{i:02d}" for i in range(51)], 3600),
-        ("EonDevelopLowLj38Dimer", "eon/develop-low-lj38-dimer", "lowest", ["1"], lj, 1800),
-        ("EonDevelopLowLj38Lanczos", "eon/develop-low-lj38-lanczos", "lowest", ["1"], lj, 1800),
         # Asv bound for one repetition, not the problem cap. pass_limit is
         # what stops a search that has not reached 27 saddles.
         (
@@ -901,3 +889,5 @@ def _specs() -> list[dict]:
 for _spec in _specs():
     _cls = _bind(_spec)
     globals()[_spec["cls"]] = _cls
+
+install_benchmarks("develop", globals())

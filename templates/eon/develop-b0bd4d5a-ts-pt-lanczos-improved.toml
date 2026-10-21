@@ -1,0 +1,47 @@
+id = "eon/develop-b0bd4d5a-ts-pt-lanczos-improved"
+engine = "eon"
+problem = "tsopt/pt-island"
+code = "eOn"
+code_version = "(develop b0bd4d5a)"
+commit = "b0bd4d5a5e0f4011831e45f4de389a4efa348e83"
+algorithm = "Lanczos improved L-BFGS"
+reducer = "harness"
+failure_cap = 10000
+kind = "ts-pt"
+kernel = "morse"
+asv_class = "EonDevelopB0bd4d5aTsPtLanczosImproved"
+seeds = [1]
+asv_timeout = 7200
+budget_seconds = 0
+note = """Lanczos improved L-BFGS on the 49 Pt-island starts. The stops match eon-svn/ts-pt-lanczos-improved: max_iterations 10, tolerance 0.1, quit_early true, max_move 0.2. Optimizer max_iterations and the harness cap are 10000, the problem cap. The kernel is morse/smooth/linear with D 0.7102, alpha 1.6047, r0 2.897, cutoff 9.5, and periodic boundaries in x and y."""
+
+[ini.Main]
+job = "saddle_search"
+finite_difference = 0.001
+random_seed = 1
+
+[ini.Potential]
+potential = "morse_pt"
+
+[ini.Optimizer]
+opt_method = "lbfgs"
+convergence_metric = "norm"
+converged_force = 0.001
+max_move = 0.2
+max_iterations = 10000
+lbfgs_memory = 20
+
+[ini.LBFGS]
+lbfgs_memory = 20
+
+[ini."Saddle Search"]
+min_mode_method = "lanczos"
+client_displace_type = "load"
+converged_force = 0.001
+max_iterations = 10000
+displace_magnitude = 0.1
+
+[ini.Lanczos]
+max_iterations = 10
+tolerance = 0.1
+quit_early = true

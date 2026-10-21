@@ -2,9 +2,15 @@
 # eon=3.6.0 and it does not invent a build string. The binary the
 # develop benchmarks run is the source build pinned in
 # codes/registry.toml under id eon-develop:
-#   ref = develop
-#   commit = 7095b23ac17d49f434a5e08ccb072897ceca698e
-#   version string 3.6.0 (7095b23a)
+#   ref = fix/develop-regressions-vs-350
+#   commit = 500350d9fae881f06c7ef194e5868da079c4be5a
+#   version label eOn (develop 500350d9)
+# Ranked develop min-mode rows use develop at
+#   commit = b0bd4d5a5e0f4011831e45f4de389a4efa348e83
+#   version label eOn (develop b0bd4d5a)
+#   registry id eon-develop-b0bd4d5a
+# The 500350d9 min-mode result files stay, with ranked false.
+# The 7095b23 saddle templates set ranked = false.
 # asv has one environment_type, so this yml cannot be bound to one
 # class. Those classes call EONCLIENT. environments/eon-3.5.0.yml
 # remains the conda-forge 3.5.0 pin.

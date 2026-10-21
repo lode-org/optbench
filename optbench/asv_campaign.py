@@ -15,26 +15,8 @@ import shutil
 from pathlib import Path
 
 STEMS = {
-    "EonDevelopTsLj38Lanczos": "eon-develop-ts-lj38-lanczos",
-    "EonDevelopTsLj38Dimer": "eon-develop-ts-lj38-dimer-accept-energy",
-    "EonDevelopTsLj38DimerMatched": "eon-develop-ts-lj38-dimer",
-    "EonDevelopTsPtLanczos": "eon-develop-ts-pt-lanczos",
-    "EonDevelopTsPtDimer": "eon-develop-ts-pt-dimer-accept-energy",
-    "EonDevelopTsPtDimerMatched": "eon-develop-ts-pt-dimer",
-    "EonDevelopNebPtLbfgs": "eon-develop-neb-pt-lbfgs",
-    "EonDevelopNebPtLbfgsM100": "eon-develop-neb-pt-lbfgs-m100",
-    "EonDevelopDeLj38Ew": "eon-develop-de-lj38-ew",
-    "EonDevelopDeLj38Oci": "eon-develop-de-lj38-oci",
-    "EonDevelopDeLj38Cap": "eon-develop-de-lj38-cap-accept-energy",
-    "EonDevelopDeLj38CapMatched": "eon-develop-de-lj38-cap",
-    "EonDevelopDePtEw": "eon-develop-de-pt-ew",
-    "EonDevelopDePtOci": "eon-develop-de-pt-oci",
-    "EonDevelopDe2ts": "eon-develop-de-2ts-accept-energy",
-    "EonDevelopDe2tsMatched": "eon-develop-de-2ts",
-    "EonDevelopDe2tsOci": "eon-develop-de-2ts-oci",
-    "EonDevelopDe2tsEw": "eon-develop-de-2ts-ew",
-    "EonDevelopLowLj38Dimer": "eon-develop-low-lj38-dimer",
-    "EonDevelopLowLj38Lanczos": "eon-develop-low-lj38-lanczos",
+    "EonDevelopNebPtLbfgs": "eon-asv-neb-pt-lbfgs",
+    "EonDevelopNebPtLbfgsM100": "eon-asv-neb-pt-lbfgs-m100",
     "EonDevelopSaddlePtDimer": "eon-develop-saddle-pt-dimer",
     "EonDevelopSaddlePtLanczos": "eon-develop-saddle-pt-lanczos",
 }

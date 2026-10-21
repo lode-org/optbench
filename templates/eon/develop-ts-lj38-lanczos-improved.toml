@@ -1,0 +1,37 @@
+id = "eon/develop-ts-lj38-lanczos-improved"
+engine = "eon"
+problem = "tsopt/LJ38"
+code = "eOn"
+code_version = "eOn (develop 500350d9)"
+commit = "500350d9fae881f06c7ef194e5868da079c4be5a"
+algorithm = "Lanczos improved L-BFGS"
+reducer = "harness"
+failure_cap = 10000
+kind = "ts-lj38"
+kernel = "lj40"
+asv_class = "EonDevelopTsLj38LanczosImproved"
+seeds = [1]
+asv_timeout = 3600
+budget_seconds = 3600
+note = """Lanczos improved L-BFGS on the 200 LJ38 starts. min_mode_method is lanczos, client_displace_type is load, and the optimizer is lbfgs. direction.dat is Python random.Random of the start index. converged_force is 0.001. Optimizer max_iterations and the harness cap are 10000. finite_difference is 0.001, Saddle Search max_energy is 1000, Lanczos tolerance is 0.01, and Lanczos max_iterations is 50, from archive/entries/tsopt/LJ38/eon-lanczos-improved/config.ini. The kernel is unshifted lj/cut with epsilon 1, sigma 1, and cutoff 40."""
+
+[ini.Main]
+job = "saddle_search"
+finite_difference = 0.001
+
+[ini.Potential]
+potential = "lammps"
+
+[ini.Optimizer]
+opt_method = "lbfgs"
+converged_force = 0.001
+max_iterations = 10000
+
+[ini."Saddle Search"]
+min_mode_method = "lanczos"
+client_displace_type = "load"
+max_energy = 1000
+
+[ini.Lanczos]
+tolerance = 0.01
+max_iterations = 50

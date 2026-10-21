@@ -9,7 +9,7 @@ The same numbers are in =results/board/index.json=.
 
 #+INCLUDE: "../include/sota.org"
 
-The 2014 archive is labelled legacy on each problem page and on the archive page.
+The 2014 archive table is on each problem page and on the archive page.
 The commands that write a new =benchmark.dat= are on the Run a score page.
 
 #+begin_export rst

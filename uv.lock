@@ -1123,6 +1123,7 @@ campaign = [
     { name = "sella" },
 ]
 dev = [
+    { name = "ase" },
     { name = "asv" },
     { name = "asv-runner" },
     { name = "geodesic-interpolate" },
@@ -1146,6 +1147,7 @@ campaign = [
     { name = "sella", specifier = "==2.6.0" },
 ]
 dev = [
+    { name = "ase", specifier = "==3.29.0" },
     { name = "asv", specifier = "==0.6.6" },
     { name = "asv-runner", specifier = "==0.3.1" },
     { name = "geodesic-interpolate", git = "https://github.com/virtualzx-nad/geodesic-interpolate.git?rev=476aa041f562d37d5fb4121b86817a52d75e4c5d" },

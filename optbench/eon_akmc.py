@@ -41,6 +41,22 @@ def _fmt(value: float) -> str:
     return f"{value:.10g}"
 
 
+def next_search_batch(nominal: int, done: int, max_searches: int) -> int:
+    """How many displacement searches the next AKMC pass should submit.
+
+    ``max_searches`` of 0 leaves the template buffer unchanged. A positive
+    limit shrinks the last pass so the file stops on that count.
+    """
+    if nominal <= 0:
+        raise ValueError("nominal batch must be positive")
+    if max_searches <= 0:
+        return nominal
+    remaining = int(max_searches) - int(done)
+    if remaining <= 0:
+        return 0
+    return min(int(nominal), remaining)
+
+
 def _installed_python_dirs(root: Path) -> list[Path]:
     """Site directories for a prefix, plus paths named by editable ``.pth`` files.
 
@@ -203,7 +219,17 @@ def _one_repetition(
             progress["passes"] = 0
             progress["seconds"] = time.monotonic() - started
             return progress
+        nominal = int(template["ini"].get("Communicator", {}).get("num_jobs") or workers)
+        search_limit = int(template.get("max_searches") or 0)
+        force_cap = int(template.get("failure_cap") or 0)
         for index in range(passes):
+            done = int(progress.get("total_searches") or 0)
+            if search_limit:
+                batch = next_search_batch(nominal, done, search_limit)
+                if batch <= 0:
+                    progress["passes"] = index
+                    break
+                config.comm_job_buffer_size = batch
             try:
                 akmc_mod.akmc(config)
             except SystemExit as exc:
@@ -223,6 +249,12 @@ def _one_repetition(
                     flush=True,
                 )
             if progress["reached"]:
+                progress["passes"] = index + 1
+                break
+            if search_limit and int(progress.get("total_searches") or 0) >= search_limit:
+                progress["passes"] = index + 1
+                break
+            if force_cap and int(progress.get("force_calls") or 0) >= force_cap:
                 progress["passes"] = index + 1
                 break
         else:

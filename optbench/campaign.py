@@ -139,8 +139,8 @@ def _check_stop(problem: dict, template: dict) -> int | None:
     if "force_norm" in convergence and "converged_force" in optimizer:
         if abs(float(optimizer["converged_force"]) - float(convergence["force_norm"])) > 1e-12:
             raise ValueError("template converged_force is not the problem force norm")
-    if cap is not None and "max_force_calls" in stop and int(stop["max_force_calls"]) < cap:
-        raise ValueError("template max_force_calls is below the problem force-call cap")
+    # The problem cap is the score. A template stop can be lower: it is
+    # only the limit of that run.
     if cap is None and template.get("failure_cap") is not None:
         cap = int(template["failure_cap"])
     if cap is None:

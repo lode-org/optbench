@@ -3,7 +3,7 @@
 import os
 import sys
 
-from optbench.eon_akmc import prepare_client_env
+from optbench.eon_akmc import next_search_batch, prepare_client_env
 
 
 def test_prepare_client_env_reads_pixi_site_packages_and_pth(tmp_path):
@@ -31,3 +31,10 @@ def test_prepare_client_env_reads_pixi_site_packages_and_pth(tmp_path):
                 os.environ.pop(key, None)
             else:
                 os.environ[key] = value
+
+
+def test_next_search_batch_stops_on_the_search_limit():
+    assert next_search_batch(32, 0, 0) == 32
+    assert next_search_batch(32, 0, 5000) == 32
+    assert next_search_batch(32, 4976, 5000) == 24
+    assert next_search_batch(32, 5000, 5000) == 0

@@ -29,10 +29,20 @@ id = "eon-develop"
 name = "eOn"
 role = "minimization and saddle search"
 repository = "https://github.com/TheochemUI/eon"
+ref = "fix/develop-regressions-vs-350"
+commit = "500350d9fae881f06c7ef194e5868da079c4be5a"
+committed = "2026-10-20"
+note = "fix/develop-regressions-vs-350 at 500350d9, built from source with Fortran. The optbench label is eOn (develop 500350d9). eonclient --version prints 3.6.0 (500350d9). This pin is not the conda-forge 3.5.0 binary. EON SVN r2549 is a different code. Min-mode rows from this pin stay in the result files and are off the ranked table where a b0bd4d5a row of the same method exists."
+
+[[code]]
+id = "eon-develop-b0bd4d5a"
+name = "eOn"
+role = "minimization and saddle search"
+repository = "https://github.com/TheochemUI/eon"
 ref = "develop"
-commit = "7095b23ac17d49f434a5e08ccb072897ceca698e"
-committed = "2026-10-16"
-note = "develop HEAD built from source. The version string is 3.6.0 (7095b23a). GPR-dimer is absent: TheochemUI/gpr_optim is private and eonclient reports GPRD disabled. This pin is not the conda-forge 3.5.0 binary."
+commit = "b0bd4d5a5e0f4011831e45f4de389a4efa348e83"
+committed = "2026-10-21"
+note = "develop at b0bd4d5a, merge of pull request 784. The optbench label is eOn (develop b0bd4d5a). eonclient --version prints 3.6.0 (b0bd4d5a). Ranked develop min-mode rows use this commit. The 500350d9 pin stays for the rows run on that commit. EON SVN r2549 is a different code."
 
 [[code]]
 id = "eon-svn"
@@ -92,7 +102,7 @@ repository = "https://github.com/zadorlab/sella"
 ref = "2.6.0"
 commit = "6cfb60cdb100a146c3c6f0587d5308b247aa8010"
 committed = "2026-10-15"
-note = "Sella 2.6.0. Order 1 is a saddle and order 0 is a minimum. The Sella 0.1.1 rows on the 2014 tables are legacy and are not this pin. Force calls are harness calculator evaluations."
+note = "Sella 2.6.0. Order 1 is a saddle and order 0 is a minimum. The Sella 0.1.1 rows on the 2014 tables are not this pin. Force calls are harness calculator evaluations."
 
 [[code]]
 id = "gmin"

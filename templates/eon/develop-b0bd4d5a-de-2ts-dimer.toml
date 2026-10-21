@@ -1,0 +1,51 @@
+id = "eon/develop-b0bd4d5a-de-2ts-dimer"
+engine = "eon"
+problem = "double-ended-saddle-search/lj38_2ts_separation"
+code = "eOn"
+code_version = "(develop b0bd4d5a)"
+commit = "b0bd4d5a5e0f4011831e45f4de389a4efa348e83"
+algorithm = "Dimer L-BFGS"
+reducer = "harness"
+failure_cap = 250000
+kind = "de-2ts-mode"
+kernel = "lj40"
+asv_class = "EonDevelopB0bd4d5aDe2tsDimer"
+seeds = [1]
+asv_timeout = 7200
+budget_seconds = 0
+note = """Dimer L-BFGS from the interpolated midpoint on the 51 LJ38 two-transition pairs. The stops match eon-svn/de-2ts-dimer: converged_angle 5, rotations_max 10, improved true, max_move 0.2, max_energy 1e9. Optimizer max_iterations and the harness cap are 250000, the problem cap. The kernel is unshifted lj/cut with epsilon 1, sigma 1, and cutoff 40."""
+
+[ini.Main]
+job = "saddle_search"
+finite_difference = 0.001
+random_seed = 1
+
+[ini.Potential]
+potential = "lammps"
+
+[ini.Optimizer]
+opt_method = "lbfgs"
+convergence_metric = "norm"
+converged_force = 0.001
+max_move = 0.2
+max_iterations = 250000
+lbfgs_memory = 20
+
+[ini.LBFGS]
+lbfgs_memory = 20
+
+[ini."Saddle Search"]
+min_mode_method = "dimer"
+client_displace_type = "load"
+converged_force = 0.001
+max_iterations = 250000
+displace_magnitude = 0.1
+max_energy = 1000000000
+
+[ini.Dimer]
+opt_method = "cg"
+improved = true
+finite_angle = 0.005
+converged_angle = 5
+rotations_max = 10
+rotations_min = 1

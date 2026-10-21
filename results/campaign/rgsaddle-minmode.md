@@ -3,9 +3,9 @@
 asv result `results/asv/cursor/a914203c-uv-pip-py3.12.json`, optbench commit `a914203cbb891442232aea2c92f960df9a48dc1d`.
 rgsaddle `c0db2b8d333c557251635cb8bb7b3d81f0088a71` (0.2.2).
 Cost is `RgpotCounter.calculate` on `HarnessCounter(cache=True)`. Hessian checks are `verify_calls` and are not in `force_calls`.
-Seed is `0`. The grid is every start: 200 on LJ38, 49 on the Pt island. The legacy mean is half-even over successes. `par2_mean` charges a failure `2 * 10000`.
+Seed is `0`. The grid is every start: 200 on LJ38, 49 on the Pt island. The 2014 mean is half-even over successes. `par2_mean` charges a failure `2 * 10000`.
 
-| problem | template | tuning | n | legacy mean | legacy median | min | max | par2 mean | nfailed | cap | wrong stationary | divergence | crash |
+| problem | template | tuning | n | 2014 mean | 2014 median | min | max | par2 mean | nfailed | cap | wrong stationary | divergence | crash |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | tsopt/LJ38 | rgsaddle/dimer-lbfgs | default | 200 |  |  |  |  | 20000.0000 | 200 | 199 | 1 | 0 | 0 |
 | tsopt/LJ38 | rgsaddle/dimer-lbfgs-tuned | tuned | 200 | 4953 | 4953 | 4953 | 4953 | 19924.7650 | 199 | 199 | 0 | 0 | 0 |
@@ -30,7 +30,7 @@ Seed is `0`. The grid is every start: 200 on LJ38, 49 on the Pt island. The lega
 | lowest-eigenvector/lj38 | rgsaddle/mode-lanczos | default | 200 | 26 | 26 | 14 | 98 | 26.1200 | 0 | 0 | 0 | 0 | 0 |
 | lowest-eigenvector/lj38 | rgsaddle/mode-lanczos-tuned | tuned | 200 | 37 | 34 | 18 | 130 | 36.5600 | 0 | 0 | 0 | 0 | 0 |
 
-PAR-2 median is the bootstrap median of the penalised costs (2000 resamples, seed 20261015), not the legacy median of successes.
+PAR-2 median is the bootstrap median of the penalised costs (2000 resamples, seed 20261015), not the 2014 median of successes.
 
 | template | par2 median | median low | median high | wilson low | wilson high | rotation steps | library evaluations | harness calls | mean wall s |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -61,7 +61,7 @@ PAR-2 median is the bootstrap median of the penalised costs (2000 resamples, see
 
 These are files already in the tree. They are not reruns from this session.
 
-| row | legacy mean | median | min | max | nfailed | file |
+| row | 2014 mean | median | min | max | nfailed | file |
 | --- | --- | --- | --- | --- | --- | --- |
 | Sella 2.6.0 tsopt/LJ38 | 93 | 68.0 | 34 | 1846 | 2 | results/campaign/sella-2.6.0-ts-lj38.dat |
 | Sella 0.1.1 tsopt/LJ38 | 69.55 | 64.0 | 24 | 158 | 0 | archive/entries/tsopt/LJ38/sella/benchmark.dat |
@@ -72,9 +72,9 @@ These are files already in the tree. They are not reruns from this session.
 
 Sella 2.6.0 on LJ38 is mean 93 with 2 failures (`results/campaign/sella-2.6.0-ts-lj38.dat`). Archive Sella 0.1.1 is 69.55 with 0 failures.
 
-The best rgsaddle LJ38 legacy mean is tuned P-RFO, 193 with 0 failures and PAR-2 192.6000. That is above both Sella rows. Default P-RFO's legacy mean on its 50 successes is 588, with 147 wrong-stationary failures. The best dimer row is rotation-skip, legacy 640 with 74 failures. Default dimer L-BFGS has no success (199 cap, 1 wrong stationary): 1813890 rotation steps against 1998288 harness calls.
+The best rgsaddle LJ38 2014 mean is tuned P-RFO, 193 with 0 failures and PAR-2 192.6000. That is above both Sella rows. Default P-RFO's 2014 mean on its 50 successes is 588, with 147 wrong-stationary failures. The best dimer row is rotation-skip, 640 with 74 failures. Default dimer L-BFGS has no success (199 cap, 1 wrong stationary): 1813890 rotation steps against 1998288 harness calls.
 
-On the Pt island the best row is dimer rotation-skip, legacy 224 with 0 failures. Archive Sella 0.1.1 is 53 and archive eOn r2156 dimer is 116.
+On the Pt island the best row is dimer rotation-skip, 224 with 0 failures. Archive Sella 0.1.1 is 53 and archive eOn r2156 dimer is 116.
 
 On lowest-eigenvector/lj38 every row succeeds. Lanczos default is 26. Archive Sella 0.1.1 is 17.8.
 

@@ -2,31 +2,31 @@ id = "eon/develop-low-lj38-lanczos"
 engine = "eon"
 problem = "lowest-eigenvector/lj38"
 code = "eOn"
-code_version = "3.6.0"
-commit = "7095b23ac17d49f434a5e08ccb072897ceca698e"
+code_version = "eOn (develop 500350d9)"
+commit = "500350d9fae881f06c7ef194e5868da079c4be5a"
 algorithm = "Lanczos"
-reducer = "lowest-overlap"
+reducer = "harness"
 failure_cap = 10000
-note = "Lowest mode of the 200 LJ38 geometries. Saddle Search max_iterations is 0. Lanczos tolerance is 0 and quit_early is false. The harness raises Lanczos max_iterations from 1 to 1000 and keeps the smallest value whose absolute overlap with the reference mode is at least 0.99. The recorded total_force_calls are that successful run. nfailed counts geometries that never reach the overlap. Potential ljcluster. direction.dat is the numpy seed 314159 mode used for every geometry. client_displace_type load. Main random_seed is 1."
-
+kind = "lowest"
+kernel = "lj40"
+asv_class = "EonDevelopLowLj38LanczosLj40"
+seeds = [1]
+asv_timeout = 3600
+budget_seconds = 3600
+note = """Lowest mode of the 200 LJ38 geometries. Saddle Search max_iterations is 0. Lanczos tolerance is 0. The harness raises Lanczos max_iterations from 1 and keeps the first run whose absolute overlap with the reference mode is at least 0.99. The recorded calls are that run. The kernel is unshifted lj/cut with epsilon 1, sigma 1, and cutoff 40."""
 overlap = 0.99
 iteration_limit = 1000
 
 [ini.Main]
 job = "saddle_search"
-finite_difference = 0.001
-random_seed = 1
 
 [ini.Potential]
-potential = "ljcluster"
+potential = "lammps"
 
 [ini."Saddle Search"]
 max_iterations = 0
 min_mode_method = "lanczos"
 client_displace_type = "load"
-displace_magnitude = 0.1
 
 [ini.Lanczos]
 tolerance = 0
-max_iterations = 1
-quit_early = false

@@ -1,0 +1,29 @@
+id = "eon/develop-de-pt-ci"
+engine = "eon"
+problem = "double-ended-saddle-search/pt-island"
+code = "eOn"
+code_version = "eOn (develop 500350d9)"
+commit = "500350d9fae881f06c7ef194e5868da079c4be5a"
+algorithm = "CI-NEB"
+reducer = "harness"
+failure_cap = 3000
+kind = "de-pt"
+kernel = "morse_shift"
+asv_class = "EonDevelopDePtCi"
+seeds = [1]
+asv_timeout = 3600
+budget_seconds = 3600
+note = """Climbing-image NEB on the 59 Pt-island pairs. The band optimizer default is L-BFGS and climbing is on. images is 3, the problem interior-image count. converged_force is 0.001. Optimizer max_iterations and the harness cap are 3000. The kernel is morse_shift: cutoff 9.5, pair energy shifted to zero at the cutoff, minimum image on the box diagonal. D 0.7102, alpha 1.6047, r0 2.897."""
+
+[ini.Main]
+job = "nudged_elastic_band"
+
+[ini.Potential]
+potential = "morse_pt"
+
+[ini.Optimizer]
+converged_force = 0.001
+max_iterations = 3000
+
+[ini."Nudged Elastic Band"]
+images = 3

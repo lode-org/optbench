@@ -5,7 +5,7 @@ The JSON schemas live in this directory. Problem statements are TOML files under
 | File | Document |
 | --- | --- |
 | `problem.schema.json` | `optbench.problem/v1` |
-| `result.schema.json` | `optbench.result/v1`, the legacy board |
+| `result.schema.json` | `optbench.result/v1`, the 2014 board |
 | `result.v2.schema.json` | `optbench.result/v2` |
 | `start.v2.schema.json` | `optbench.start/v2`, one start |
 | `score.v2.schema.json` | `optbench.score/v2`, the PAR-2 summary |

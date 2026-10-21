@@ -65,7 +65,7 @@
    <dt>Products</dt><dd>5000</dd>
    <dt>Repetitions</dt><dd>1</dd>
    <dt>v2</dt><dd>par2-wilson-bootstrap</dd>
-   <dt>Note</dt><dd>Aluminum adatom on Al(100). The reactant is the 151-atom legacy con, and the potential is the Voter-Chen EAM built into eOn as eam_al. The reference escape rate is the 250 K parallel-replica row. One repetition is one AKMC catalogue. The published method sample is 5000 products, and that count turns the rate into simulated time.</dd>
+   <dt>Note</dt><dd>Aluminum adatom on Al(100). The reactant is the 151-atom con, and the potential is the Voter-Chen EAM built into eOn as eam_al. The reference escape rate is the 250 K parallel-replica row. One repetition is one AKMC catalogue. The published method sample is 5000 products, and that count turns the rate into simulated time.</dd>
    </dl>
    <p>Ranked by the v2 PAR-2 mean of the harness total. Only the newest full version of a template is in this table. A partial row, including a one-start asv smoke run, is not.</p>
    <p class="bench-gaps">eOn rows are not yet on the harness counter. Partial rows stay off the ranked table.</p>
@@ -88,12 +88,12 @@
    </ul>
    </details>
    </section><section class="bench bench-legacy-section" id="aladatom-legacy">
-   <h3>Legacy 2014 archive</h3>
+   <h3>2014 archive</h3>
    <details class="bench-details">
-   <summary>Legacy 2014 archive</summary>
-   <p class="bench-legacy">Legacy 2014 archive. These rows stay in the published order. They are not a v2 score.</p>
+   <summary>2014 archive</summary>
+   <p class="bench-legacy">2014 archive. These rows stay in the published order. They are not a v2 score.</p>
    <div class="bench-table"><table class="bench-legacy">
-   <caption>Legacy 2014 archive. Lowest rate first.</caption>
+   <caption>2014 archive. Lowest rate first.</caption>
    <thead><tr>
    <th class="num" scope="col"></th>
    <th class="text" scope="col">Entry</th>
@@ -145,12 +145,12 @@
    </ul>
    </details>
    </section><section class="bench bench-legacy-section" id="standard_aladatom-legacy">
-   <h3>Legacy 2014 archive</h3>
+   <h3>2014 archive</h3>
    <details class="bench-details">
-   <summary>Legacy 2014 archive</summary>
-   <p class="bench-legacy">Legacy 2014 archive. These rows stay in the published order. They are not a v2 score.</p>
+   <summary>2014 archive</summary>
+   <p class="bench-legacy">2014 archive. These rows stay in the published order. They are not a v2 score.</p>
    <div class="bench-table"><table class="bench-legacy">
-   <caption>Legacy 2014 archive. Lowest rate first.</caption>
+   <caption>2014 archive. Lowest rate first.</caption>
    <thead><tr>
    <th class="num" scope="col"></th>
    <th class="text" scope="col">Entry</th>

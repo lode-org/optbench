@@ -6,7 +6,7 @@ call once the budget is spent. That refused call is not counted. Analytic
 Hessians used by Newton and dogleg are not force calls. They are counted
 separately.
 
-A legacy success is a start whose harness count is under the cap and whose
+A 2014 success is a start whose harness count is under the cap and whose
 force norm is at the problem stop. A v2 success also has Hessian index 0.
 On LJ38 that index is the vibrational index: translations and rotations are
 removed, and a curvature counts only below ``-curvature_tolerance`` of the

@@ -10,13 +10,13 @@
    <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
    <tr data-problem="saddle-search/pt-island">
    <th scope="row"><a href="#pt-island">Pt heptamer island</a></th>
-   <td data-code="eOn" data-template="eon/develop-saddle-pt-lanczos" data-par2="2e+08"><span class="bench-score">2e+08</span><a href="#pt-island-templates">eon/develop-saddle-pt-lanczos</a></td>
+   <td data-code="eOn" data-template="eon/develop-b0bd4d5a-saddle-pt-dimer" data-par2="2e+08"><span class="bench-score">2e+08</span><a href="#pt-island-templates">eon/develop-b0bd4d5a-saddle-pt-dimer</a></td>
    <td data-code="Eon svn">—</td>
    <td data-code="rgmin">—</td>
    <td data-code="rgsaddle" data-template="rgsaddle/saddle-dimer-rotskip-tuned" data-par2="10127.1"><span class="bench-score">10127.1</span><a href="#pt-island-templates">rgsaddle/saddle-dimer-rotskip-tuned</a></td>
    <td data-code="geodesic">—</td>
    <td data-code="ASE">—</td>
-   <td data-code="Sella" data-template="sella/pt-island-search-default" data-par2="5201.62"><span class="bench-score">5201.62</span><a href="#pt-island-templates">sella/pt-island-search-default</a></td>
+   <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
    <td data-code="LAMMPS">—</td>
@@ -47,13 +47,11 @@
    <figure class="bench-plot"><a href="../../_static/board/saddle-search-pt-island-cost.svg"><picture><source srcset="../../_static/board/saddle-search-pt-island-cost.webp" type="image/webp"><img src="../../_static/board/saddle-search-pt-island-cost.png" alt="Cost versus success for saddle-search/pt-island" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <p class="bench-gaps">No performance profile. The ranked rows do not share one start set.</p>
    <details class="bench-details" id="pt-island-templates">
-   <summary>All templates (14 ranked)</summary>
+   <summary>All templates (13 ranked)</summary>
    <div class="bench-scroll">
    <table data-board-table="ranked" data-problem="saddle-search/pt-island">
    <caption>Lower PAR-2 is better. PAR-2 and the call columns are harness force-call totals. Wilson bounds are the 95% interval on the success rate.</caption>
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td data-field="template">sella/pt-island-search-default</td><td data-field="version">Sella 2.6.0</td><td data-field="commit">6cfb60cdb100</td><td data-field="source">asv</td><td data-field="par2_mean">5201.62</td><td data-field="success_rate">0.75</td><td data-field="wilson">0.505017–0.898179</td><td data-field="median_calls">225</td><td data-field="mean_calls">247.812</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 4</td><td data-field="n">16</td></tr>
-   <tr><td data-field="template">sella/pt-island-search-tuned</td><td data-field="version">Sella 2.6.0</td><td data-field="commit">6cfb60cdb100</td><td data-field="source">asv</td><td data-field="par2_mean">6420.12</td><td data-field="success_rate">0.6875</td><td data-field="wilson">0.444044–0.858354</td><td data-field="median_calls">249.5</td><td data-field="mean_calls">314.438</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 5</td><td data-field="n">16</td></tr>
    <tr><td data-field="template">softsaddle/saddle-lanczos-sm0</td><td data-field="version">softsaddle 2019.04</td><td data-field="commit">5a00aeede06f</td><td data-field="source">campaign</td><td data-field="par2_mean">10124.2</td><td data-field="success_rate">0.0004</td><td data-field="wilson">0.000109701–0.00145739</td><td data-field="median_calls">389</td><td data-field="mean_calls">431.839</td><td data-field="failures">crash 0, divergence 4884, cap 108, wrong_stationary 6</td><td data-field="n">5000</td></tr>
    <tr><td data-field="template">rgsaddle/saddle-dimer-rotskip-tuned</td><td data-field="version">rgsaddle 0.2.2</td><td data-field="commit">c0db2b8d333c</td><td data-field="source">campaign</td><td data-field="par2_mean">10127.1</td><td data-field="success_rate">0.0001</td><td data-field="wilson">2.7424e-05–0.000364574</td><td data-field="median_calls">550</td><td data-field="mean_calls">619.017</td><td data-field="failures">crash 0, divergence 17717, cap 2246, wrong_stationary 35</td><td data-field="n">20000</td></tr>
    <tr><td data-field="template">rgsaddle/saddle-dimer-fire</td><td data-field="version">rgsaddle 0.2.2</td><td data-field="commit">c0db2b8d333c</td><td data-field="source">campaign</td><td data-field="par2_mean">10128</td><td data-field="success_rate">0</td><td data-field="wilson">0–0.000192036</td><td data-field="median_calls">1013</td><td data-field="mean_calls">1011.03</td><td data-field="failures">crash 0, divergence 1, cap 19999, wrong_stationary 0</td><td data-field="n">20000</td></tr>
@@ -65,7 +63,8 @@
    <tr><td data-field="template">rgsaddle/saddle-lanczos-tuned</td><td data-field="version">rgsaddle 0.2.2</td><td data-field="commit">c0db2b8d333c</td><td data-field="source">campaign</td><td data-field="par2_mean">10128</td><td data-field="success_rate">0</td><td data-field="wilson">0–0.000192036</td><td data-field="median_calls">899</td><td data-field="mean_calls">871.296</td><td data-field="failures">crash 0, divergence 13743, cap 6257, wrong_stationary 0</td><td data-field="n">20000</td></tr>
    <tr><td data-field="template">softsaddle/saddle-davidson-sm50</td><td data-field="version">softsaddle 2019.04</td><td data-field="commit">5a00aeede06f</td><td data-field="source">campaign</td><td data-field="par2_mean">10128</td><td data-field="success_rate">0</td><td data-field="wilson">0–0.000767702</td><td data-field="median_calls">1060</td><td data-field="mean_calls">1059.76</td><td data-field="failures">crash 0, divergence 0, cap 5000, wrong_stationary 0</td><td data-field="n">5000</td></tr>
    <tr><td data-field="template">softsaddle/saddle-lanczos-sm50</td><td data-field="version">softsaddle 2019.04</td><td data-field="commit">5a00aeede06f</td><td data-field="source">campaign</td><td data-field="par2_mean">10128</td><td data-field="success_rate">0</td><td data-field="wilson">0–0.000767702</td><td data-field="median_calls">282</td><td data-field="mean_calls">304.651</td><td data-field="failures">crash 0, divergence 4999, cap 0, wrong_stationary 1</td><td data-field="n">5000</td></tr>
-   <tr><td data-field="template">eon/develop-saddle-pt-lanczos</td><td data-field="version">eOn 3.6.0</td><td data-field="commit">7095b23ac17d</td><td data-field="source">asv</td><td data-field="par2_mean">2e+08</td><td data-field="success_rate">0</td><td data-field="wilson">0–0.65762</td><td data-field="median_calls">3.98507e+06</td><td data-field="mean_calls">3.98507e+06</td><td data-field="failures">crash 0, divergence 0, cap 2, wrong_stationary 0</td><td data-field="n">2</td></tr>
+   <tr><td data-field="template">eon/develop-b0bd4d5a-saddle-pt-dimer</td><td data-field="version">eOn (develop b0bd4d5a)</td><td data-field="commit">b0bd4d5a5e0f</td><td data-field="source">campaign</td><td data-field="par2_mean">2e+08</td><td data-field="success_rate">0</td><td data-field="wilson">0–0.793451</td><td data-field="median_calls">2.4304e+06</td><td data-field="mean_calls">2.4304e+06</td><td data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 0</td><td data-field="n">1</td></tr>
+   <tr><td data-field="template">eon/develop-b0bd4d5a-saddle-pt-lanczos</td><td data-field="version">eOn (develop b0bd4d5a)</td><td data-field="commit">b0bd4d5a5e0f</td><td data-field="source">campaign</td><td data-field="par2_mean">2e+08</td><td data-field="success_rate">0</td><td data-field="wilson">0–0.793451</td><td data-field="median_calls">2.55086e+06</td><td data-field="mean_calls">2.55086e+06</td><td data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 0</td><td data-field="n">1</td></tr>
    </tbody></table></div>
    <h3>Partial</h3><ul>
    <li>ase/dimer-pt-island-default ASE campaign, asv n=16, result file sets ranked false.</li>
@@ -76,12 +75,15 @@
    <li>eon-svn/saddle-pt-dimer-bounded Eon svn campaign n=1, result file sets partial true.</li>
    <li>eon-svn/saddle-pt-lanczos-bounded Eon svn campaign n=1, result file sets partial true.</li>
    <li>eon-svn/saddle-pt-md Eon svn campaign n=1, result file sets partial true.</li>
-   <li>eon/develop-saddle-pt-dimer eOn asv n=1, smoke run; one start.</li>
-   <li>eon/develop-saddle-pt-lanczos eOn asv n=1, smoke run; one start.</li>
-   <li>ase/dimer-pt-island-default ASE asv n=1, smoke run; one start.</li>
-   <li>sella/pt-island-search-tuned Sella asv n=1, smoke run; one start.</li>
-   <li>ase/dimer-pt-island-tuned ASE asv n=1, smoke run; one start.</li>
-   <li>sella/pt-island-search-default Sella asv n=1, smoke run; one start.</li>
+   <li>sella/pt-island-search-tuned Sella asv n=16, template sets ranked false.</li>
+   <li>sella/pt-island-search-default Sella asv n=16, template sets ranked false.</li>
+   <li>eon/develop-saddle-pt-dimer eOn asv n=1, template sets ranked false.</li>
+   <li>eon/develop-saddle-pt-lanczos eOn asv n=1, template sets ranked false.</li>
+   <li>ase/dimer-pt-island-default ASE asv n=1, template sets ranked false.</li>
+   <li>sella/pt-island-search-tuned Sella asv n=1, template sets ranked false.</li>
+   <li>ase/dimer-pt-island-tuned ASE asv n=1, template sets ranked false.</li>
+   <li>sella/pt-island-search-default Sella asv n=1, template sets ranked false.</li>
+   <li>eon/develop-saddle-pt-lanczos eOn asv n=2, template sets ranked false.</li>
    </ul>
    <h3>Not a harness score</h3><ul>
    <li>eon-3.5.0-saddle-pt-classic Eon n=10, not yet on the harness counter.</li>
@@ -89,12 +91,12 @@
    </ul>
    </details>
    </section><section class="bench bench-legacy-section" id="pt-island-legacy">
-   <h3>Legacy 2014 archive</h3>
+   <h3>2014 archive</h3>
    <details class="bench-details">
-   <summary>Legacy 2014 archive</summary>
-   <p class="bench-legacy">Legacy 2014 archive. These rows stay in the published order. They are not a v2 score.</p>
+   <summary>2014 archive</summary>
+   <p class="bench-legacy">2014 archive. These rows stay in the published order. They are not a v2 score.</p>
    <div class="bench-table"><table class="bench-legacy">
-   <caption>Legacy 2014 archive. Fewest force calls first. Failures are left out of this mean.</caption>
+   <caption>2014 archive. Fewest force calls first. Failures are left out of this mean.</caption>
    <thead><tr>
    <th class="num" scope="col"></th>
    <th class="text" scope="col">Entry</th>
@@ -252,7 +254,7 @@
    <td class="text">13 Jun 2014</td>
    </tr>
    </tbody></table></div>
-   <figure class="bench-plot"><figcaption>Legacy 2014 scores. Fewer calls is to the left. Same order as the table.</figcaption><div class="bench-plot-mount" style="--bench-rows:12"></div><script type="application/json" class="bench-plot-data">{"metric": "force_calls", "scale": "log", "points": [{"id": "saddle-search-pt-island-adaptive-hsphere-lbfgs-davidson-sm50", "entry": "adaptive_HSphere-lbfgs-davidson-sm50", "code": "SoftSaddle", "value": 423491.1, "best": true, "held": false, "failed": false}, {"id": "saddle-search-pt-island-adaptive-hsphere-lbfgs-lanczos-sm50", "entry": "adaptive_HSphere-lbfgs-lanczos-sm50", "code": "SoftSaddle", "value": 814519.3, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-adaptive-hsphere-lbfgs-lanczos-sm0", "entry": "adaptive_HSphere-lbfgs-lanczos-sm0", "code": "SoftSaddle", "value": 1003433.0, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-lbfgs-5-rotations-20-bowl-breakout", "entry": "eon-dimer-lbfgs-5-rotations-20-bowl_breakout", "code": "Eon r2213", "value": 1345465.88889, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-md", "entry": "eon-md", "code": "Eon r2205", "value": 1478168.0, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-lbfgs-5-rotations", "entry": "eon-dimer-lbfgs-5-rotations", "code": "Eon r2213", "value": 1684436.77778, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-lbfgs-20-rotations-20-bowl-breakout", "entry": "eon-dimer-lbfgs-20-rotations-20-bowl_breakout", "code": "Eon r2213", "value": 2732309.11111, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-lbfgs-20-rotations", "entry": "eon-dimer-lbfgs-20-rotations", "code": "Eon r2213", "value": 3341488.0, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-cg-5-rotations-20-bowl-breakout", "entry": "eon-dimer-cg-5-rotations-20-bowl_breakout", "code": "Eon r2213", "value": 3463700.66667, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer", "entry": "eon-dimer", "code": "Eon r2205", "value": 3778880.0, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-cg-20-rotations-20-bowl-breakout", "entry": "eon-dimer-cg-20-rotations-20-bowl_breakout", "code": "Eon r2213", "value": 7174213.66667, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-cg-20-rotations", "entry": "eon-dimer-cg-20-rotations", "code": "Eon r2213", "value": 7947070.11111, "best": false, "held": false, "failed": false}]}</script></figure>
+   <figure class="bench-plot"><figcaption>2014 scores. Fewer calls is to the left. Same order as the table.</figcaption><div class="bench-plot-mount" style="--bench-rows:12"></div><script type="application/json" class="bench-plot-data">{"metric": "force_calls", "scale": "log", "points": [{"id": "saddle-search-pt-island-adaptive-hsphere-lbfgs-davidson-sm50", "entry": "adaptive_HSphere-lbfgs-davidson-sm50", "code": "SoftSaddle", "value": 423491.1, "best": true, "held": false, "failed": false}, {"id": "saddle-search-pt-island-adaptive-hsphere-lbfgs-lanczos-sm50", "entry": "adaptive_HSphere-lbfgs-lanczos-sm50", "code": "SoftSaddle", "value": 814519.3, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-adaptive-hsphere-lbfgs-lanczos-sm0", "entry": "adaptive_HSphere-lbfgs-lanczos-sm0", "code": "SoftSaddle", "value": 1003433.0, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-lbfgs-5-rotations-20-bowl-breakout", "entry": "eon-dimer-lbfgs-5-rotations-20-bowl_breakout", "code": "Eon r2213", "value": 1345465.88889, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-md", "entry": "eon-md", "code": "Eon r2205", "value": 1478168.0, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-lbfgs-5-rotations", "entry": "eon-dimer-lbfgs-5-rotations", "code": "Eon r2213", "value": 1684436.77778, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-lbfgs-20-rotations-20-bowl-breakout", "entry": "eon-dimer-lbfgs-20-rotations-20-bowl_breakout", "code": "Eon r2213", "value": 2732309.11111, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-lbfgs-20-rotations", "entry": "eon-dimer-lbfgs-20-rotations", "code": "Eon r2213", "value": 3341488.0, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-cg-5-rotations-20-bowl-breakout", "entry": "eon-dimer-cg-5-rotations-20-bowl_breakout", "code": "Eon r2213", "value": 3463700.66667, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer", "entry": "eon-dimer", "code": "Eon r2205", "value": 3778880.0, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-cg-20-rotations-20-bowl-breakout", "entry": "eon-dimer-cg-20-rotations-20-bowl_breakout", "code": "Eon r2213", "value": 7174213.66667, "best": false, "held": false, "failed": false}, {"id": "saddle-search-pt-island-eon-dimer-cg-20-rotations", "entry": "eon-dimer-cg-20-rotations", "code": "Eon r2213", "value": 7947070.11111, "best": false, "held": false, "failed": false}]}</script></figure>
    </details>
    </section>
 #+end_export

@@ -25,7 +25,7 @@ def test_wilson_locks_the_published_counts():
 
 
 def test_rounded_legacy_means_are_not_a_v2_score():
-    # Illustration only: every success is charged the rounded legacy mean.
+    # Illustration only: every success is charged the rounded 2014 mean.
     assert (975 * 3514 + 25 * 2 * 10000) / 1000 == 3926.15
     assert (904 * 4901 + 96 * 2 * 10000) / 1000 == 6350.504
     assert (999 * 1849 + 1 * 2 * 10000) / 1000 == 1867.151

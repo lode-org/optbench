@@ -6,7 +6,7 @@ is raised before a search call once the budget is spent, and that
 refused call is not counted. The Hessian used for the index is analytic
 and is not a force call.
 
-A legacy success is a start whose harness count is under the cap and
+A 2014 success is a start whose harness count is under the cap and
 whose force norm is at the problem stop. A v2 success also has Hessian
 index 0. On LJ38 that index is the vibrational index. The problem files
 do not give ``energy_tol``, ``rmsd_tol``, or a per-start reference

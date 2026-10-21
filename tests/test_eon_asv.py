@@ -11,17 +11,14 @@ from benchmarks.bench_eon_develop import (
     MORSE_D,
     MORSE_RE,
     MORSE_SHIFT,
-    EonDevelopDe2ts,
-    EonDevelopDe2tsMatched,
-    EonDevelopDeLj38Cap,
-    EonDevelopDeLj38CapMatched,
-    EonDevelopTsLj38Dimer,
-    EonDevelopTsLj38DimerMatched,
-    EonDevelopTsPtDimer,
-    EonDevelopTsPtDimerMatched,
+    EonDevelopDePtCiSingle,
+    EonDevelopDePtLanczosImproved,
+    EonDevelopLowLj38LanczosLj40,
+    EonDevelopNebPtCiCg,
     EonDevelopSaddlePtDimer,
     EonDevelopSaddlePtLanczos,
-    EonDevelopTsLj38Lanczos,
+    EonDevelopTsLj38LanczosImproved,
+    EonDevelopTsPtLanczosImproved,
     _akmc_server_ini,
     _ini,
     classify_akmc,
@@ -37,18 +34,17 @@ from optbench.counter import HarnessCounter
 
 
 def test_default_grid_is_one_real_start():
-    bench = EonDevelopTsLj38Lanczos
+    bench = EonDevelopTsLj38LanczosImproved
     assert bench.param_names == ["seed", "start"]
-    assert bench.params == [["1"], ["0000"]]
-    assert len(bench.campaign_starts) == 200
+    assert bench.params == [[1], ["0000"]]
     assert bench.repeat == 1
     assert bench.rounds == 1
     assert bench.number == 1
     assert bench.sample_time == 0
     assert bench.warmup_time == 0
     assert bench.cap == 10000
-    assert bench.published_mean is False
-    assert bench.potential == "ljcluster"
+    assert bench.template_name == "eon/develop-ts-lj38-lanczos-improved"
+    assert bench.kind == "ts-lj38"
     assert bench.track_force_calls.unit == "force calls"
     assert bench.track_success.unit == "fraction"
     assert bench.track_failure_cap.unit == "count"
@@ -59,10 +55,15 @@ def test_default_grid_is_one_real_start():
     assert bench.time_search is not _TrackedSearch.time_search
     assert not hasattr(bench, "time_run")
     assert not hasattr(bench, "track_failure_cause")
-    assert EonDevelopDe2ts.campaign_starts[-1] == "pair_50"
-    assert len(EonDevelopDe2ts.campaign_starts) == 51
-    assert EonDevelopDe2ts.params[1] == ["pair_00"]
-    assert EonDevelopDe2ts.track_extrema.unit == "count"
+    assert EonDevelopDePtCiSingle.template_name == "eon/develop-de-pt-ci-single"
+    assert EonDevelopDePtCiSingle.cap == 3000
+    assert EonDevelopDePtCiSingle.params == [[1], ["product_0"]]
+    assert EonDevelopDePtLanczosImproved.kind == "de-pt-mode"
+    assert EonDevelopTsPtLanczosImproved.kind == "ts-pt"
+    assert EonDevelopTsPtLanczosImproved.cap == 10000
+    assert EonDevelopLowLj38LanczosLj40.kind == "lowest"
+    assert EonDevelopLowLj38LanczosLj40.cap == 10000
+    assert EonDevelopNebPtCiCg.template_name == "eon/develop-neb-pt-cg"
     assert EonDevelopSaddlePtDimer.campaign_seeds == [str(seed) for seed in range(1000, 1010)]
     assert EonDevelopSaddlePtDimer.params == [["1000"], ["pt-island"]]
     assert EonDevelopSaddlePtDimer.passes == 1
@@ -102,20 +103,8 @@ def test_failure_classes_follow_the_harness_order():
     assert spent["success"] is False
     assert spent["force_calls"] == 2500
     assert classify_client(calls=2499, reason=None, cap=2500)["failure"] == "crash"
-    assert EonDevelopDeLj38Cap.cap == 2500
-    assert EonDevelopDeLj38Cap.template_name == "eon/develop-de-lj38-cap-accept-energy"
-    assert EonDevelopDeLj38CapMatched.template_name == "eon/develop-de-lj38-cap"
-    assert EonDevelopDeLj38CapMatched.cap == 2500
-    assert EonDevelopTsLj38Dimer.template_name == "eon/develop-ts-lj38-dimer-accept-energy"
-    assert EonDevelopTsLj38DimerMatched.template_name == "eon/develop-ts-lj38-dimer"
-    assert EonDevelopTsPtDimer.template_name == "eon/develop-ts-pt-dimer-accept-energy"
-    assert EonDevelopTsPtDimerMatched.template_name == "eon/develop-ts-pt-dimer"
-    assert EonDevelopDe2ts.template_name == "eon/develop-de-2ts-accept-energy"
-    assert EonDevelopDe2tsMatched.template_name == "eon/develop-de-2ts"
-    assert len(EonDevelopTsLj38DimerMatched.campaign_starts) == 200
-    assert len(EonDevelopTsPtDimerMatched.campaign_starts) == 49
-    assert len(EonDevelopDeLj38CapMatched.campaign_starts) == 50
-    assert len(EonDevelopDe2tsMatched.campaign_starts) == 51
+    assert EonDevelopDePtLanczosImproved.cap == 3000
+    assert EonDevelopTsLj38LanczosImproved.cap == 10000
 
 
 def test_ext_pot_ini_uses_one_potential(tmp_path):

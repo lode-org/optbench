@@ -10,7 +10,7 @@ Across problems, the Dolan-Moré performance profile of a code is the fraction o
 
 Success is the same predicate as in alternative A: force norm, cap, Hessian index, energy, and Kabsch RMSD. The Pt-island x-axis is force calls per search, not the campaign total. Tuning and provenance are required.
 
-The Wilson interval on the success rate is still reported. The median and interquartile range, with a bootstrap interval, are computed on the finished starts only, and the plot shows the censored mass at the cap.
+The Wilson bounds on the success rate are still reported. The median and interquartile range, with a bootstrap interval, are computed on the finished starts only, and the plot shows the censored mass at the cap.
 
 ## Why it was not selected
 

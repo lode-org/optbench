@@ -1,11 +1,11 @@
-#+TITLE: Current codes
+#+TITLE: Codes
 #+OPTIONS: toc:nil num:nil author:nil
 
 The table is the registry pin and the ranked harness runs for that code.
 A code with no full run on a problem is listed with the reason.
 The sections each client reads, and the commands that rerun a score, are in the README and on the Run a score page.
 A timestep or a band method in the wrong section is ignored.
-The Sella 0.1.1 rows stay on the 2014 tables and are labelled legacy.
+The Sella 0.1.1 rows stay on the 2014 tables.
 A new score is entered by Rohit Goswami.
 The number is written only after the run finishes under the problem rule.
 

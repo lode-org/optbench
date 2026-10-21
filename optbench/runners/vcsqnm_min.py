@@ -10,7 +10,7 @@ The Python package also multiplies the lattice derivative by minus one,
 so a variable-cell step is given ``-dE/dA``. The ASE wrapper builds the
 same input from ``cell_stress``.
 
-A legacy success is under the cap and at the problem force stop. A v2
+A 2014 success is under the cap and at the problem force stop. A v2
 success also has Hessian index 0. The variable-cell loop stops only when
 the atomic norm and the max-norm of ``dE/dA`` are both at that stop, so
 the recorded point meets the atomic test or it has hit the cap.

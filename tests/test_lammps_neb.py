@@ -66,7 +66,7 @@ def test_registry_commit_matches_both_templates():
 def test_iteration_budget_stays_under_each_problem_cap():
     expected = {
         "double-ended-saddle-search/lj38": (7, 2500),
-        "double-ended-saddle-search/lj38_2ts_separation": (7, 10000),
+        "double-ended-saddle-search/lj38_2ts_separation": (7, 250000),
         "double-ended-saddle-search/pt-island": (5, 3000),
         "neb/Pt-heptamer": (10, 10000),
     }

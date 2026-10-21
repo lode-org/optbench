@@ -9,7 +9,7 @@ displaced evaluation is a force call. Later steps use the Bofill update
 and cost one gradient. A repeated geometry is one call. The Hessian
 index is an analytic matrix and is not a search call.
 
-A legacy success is under the cap and at the problem force stop. A v2
+A 2014 success is under the cap and at the problem force stop. A v2
 success also has Hessian index 1. LJ38 removes rigid modes. The Pt
 island leaves fixed atoms out of the matrix and does not project rigid
 modes. Curvature counts only below ``-curvature_tolerance`` of the
@@ -661,7 +661,7 @@ def _dat(summary: dict, template: dict, metrics: dict, commit: str, version: str
         "# The initial Hessian is a central difference of the harness gradient on the free atoms.",
         "# Each displaced gradient is a force call. Later steps use the Bofill update and cost one gradient.",
         "# The Hessian index is analytic and is not a search call.",
-        "# The legacy mean is the half-even mean of starts at the force stop and under the cap.",
+        "# The 2014 mean is the half-even mean of starts at the force stop and under the cap.",
         "# v2 success also requires Hessian index 1.",
         "# A curvature is negative only below -max(force_norm, 1e-8*||H||_F, 1e-6).",
         "# LJ38 removes rigid modes. The Pt island keeps fixed atoms out of the matrix and does not project rigid modes.",

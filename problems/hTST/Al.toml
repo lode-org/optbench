@@ -10,7 +10,7 @@ required = ["barrier_force_calls", "barrier_jobs", "rate_force_calls", "rate_job
 
 [scoring.legacy]
 label = "legacy"
-rule = "2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row stays labelled legacy."
+rule = "2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row stays on the 2014 archive table."
 
 [scoring.v2]
 version = "par2-wilson-bootstrap"

@@ -24,8 +24,8 @@ def test_every_develop_benchmark_has_a_campaign_stem():
 
 def test_harness_tracks_use_the_cap_rule(tmp_path: Path):
     spec = {
-        "cls": "EonDevelopTsLj38Lanczos",
-        "template": "eon/develop-ts-lj38-lanczos",
+        "cls": "EonDevelopTsLj38LanczosImproved",
+        "template": "eon/develop-ts-lj38-lanczos-improved",
         "kind": "ts-lj38",
         "seeds": [1],
         "starts": ["0000", "0001", "0002"],
@@ -46,7 +46,7 @@ def test_harness_tracks_use_the_cap_rule(tmp_path: Path):
     assert fields["nfailed"] == "2"
     assert fields["force_calls_min"] == "40"
     assert fields["force_calls_max"] == "100"
-    assert fields["commit"] == "7095b23ac17d49f434a5e08ccb072897ceca698e"
+    assert fields["commit"] == "500350d9fae881f06c7ef194e5868da079c4be5a"
     assert fields["counter"] == "harness"
     assert fields["published_mean"] == "false"
     assert fields["asv_commit"] == "abc"

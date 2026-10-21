@@ -1,20 +1,20 @@
-=============
-Current codes
-=============
+=====
+Codes
+=====
 
 
 The table is the registry pin and the ranked harness runs for that code.
 A code with no full run on a problem is listed with the reason.
 The sections each client reads, and the commands that rerun a score, are in the README and on the Run a score page.
 A timestep or a band method in the wrong section is ignored.
-The Sella 0.1.1 rows stay on the 2014 tables and are labelled legacy.
+The Sella 0.1.1 rows stay on the 2014 tables.
 A new score is entered by Rohit Goswami.
 The number is written only after the run finishes under the problem rule.
 
 .. raw:: html
 
    <section class="bench" id="current-codes">
-   <h2>Current codes</h2>
+   <h2>Codes</h2>
    <p>The benchmark contributor is Rohit Goswami. A ranked row is a full harness run. The commit on that row is the commit that produced the score.</p>
    <h3>eOn</h3>
    <div class="bench-scroll"><table>
@@ -34,45 +34,51 @@ The number is written only after the run finishes under the problem rule.
    </tr>
    <tr>
    <td>minimization and saddle search</td>
+   <td>fix/develop-regressions-vs-350</td>
+   <td>500350d9fae8</td>
+   <td><a href="https://github.com/TheochemUI/eon">https://github.com/TheochemUI/eon</a></td>
+   </tr>
+   <tr>
+   <td>minimization and saddle search</td>
    <td>develop</td>
-   <td>7095b23ac17d</td>
+   <td>b0bd4d5a5e0f</td>
    <td><a href="https://github.com/TheochemUI/eon">https://github.com/TheochemUI/eon</a></td>
    </tr>
    </tbody></table></div>
    <div class="bench-scroll"><table data-board-table="code-best">
    <caption>Best full harness run on each problem.</caption>
    <thead><tr><th>Problem</th><th>Template</th><th>Version</th><th>Commit</th><th>PAR-2</th><th>Mean calls</th><th>Median calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr data-problem="double-ended-saddle-search/lj38" data-template="eon-client/de-lj38-lanczos-improved">
+   <tr data-problem="double-ended-saddle-search/lj38" data-template="eon/develop-b0bd4d5a-de-lj38-lanczos-improved">
    <td>LJ38 double-ended saddle</td>
-   <td data-field="template">eon-client/de-lj38-lanczos-improved</td>
-   <td data-field="version">eOn 3.5.0</td>
-   <td data-field="commit">4d8b34baf1ba</td>
-   <td data-field="par2_mean">259.46</td>
-   <td data-field="mean_calls">259.46</td>
-   <td data-field="median_calls">212</td>
+   <td data-field="template">eon/develop-b0bd4d5a-de-lj38-lanczos-improved</td>
+   <td data-field="version">eOn (develop b0bd4d5a)</td>
+   <td data-field="commit">b0bd4d5a5e0f</td>
+   <td data-field="par2_mean">230.72</td>
+   <td data-field="mean_calls">230.72</td>
+   <td data-field="median_calls">197</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">50</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="eon-client/de-2ts-lanczos-improved">
+   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="eon/develop-b0bd4d5a-de-2ts-lanczos-improved">
    <td>lj38_2ts_separation</td>
-   <td data-field="template">eon-client/de-2ts-lanczos-improved</td>
-   <td data-field="version">eOn 3.5.0</td>
-   <td data-field="commit">4d8b34baf1ba</td>
-   <td data-field="par2_mean">520.333</td>
-   <td data-field="mean_calls">520.333</td>
-   <td data-field="median_calls">422</td>
+   <td data-field="template">eon/develop-b0bd4d5a-de-2ts-lanczos-improved</td>
+   <td data-field="version">eOn (develop b0bd4d5a)</td>
+   <td data-field="commit">b0bd4d5a5e0f</td>
+   <td data-field="par2_mean">484.627</td>
+   <td data-field="mean_calls">484.627</td>
+   <td data-field="median_calls">417</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">51</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/pt-island" data-template="eon/develop-de-pt-oci">
+   <tr data-problem="double-ended-saddle-search/pt-island" data-template="eon/develop-de-pt-lanczos-improved">
    <td>pt-island</td>
-   <td data-field="template">eon/develop-de-pt-oci</td>
-   <td data-field="version">eOn 3.6.0</td>
-   <td data-field="commit">7095b23ac17d</td>
-   <td data-field="par2_mean">3080.19</td>
-   <td data-field="mean_calls">3220.9</td>
-   <td data-field="median_calls">2260</td>
-   <td data-field="failures">crash 0, divergence 0, cap 21, wrong_stationary 0</td>
+   <td data-field="template">eon/develop-de-pt-lanczos-improved</td>
+   <td data-field="version">eOn eOn (develop 500350d9)</td>
+   <td data-field="commit">500350d9fae8</td>
+   <td data-field="par2_mean">197.542</td>
+   <td data-field="mean_calls">197.542</td>
+   <td data-field="median_calls">159</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="globalopt/lj38" data-template="eon-client/bh-lj38">
@@ -119,47 +125,47 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">100</td>
    </tr>
-   <tr data-problem="neb/Pt-heptamer" data-template="eon/neb-pt-lbfgs">
+   <tr data-problem="neb/Pt-heptamer" data-template="eon/develop-neb-pt-lbfgs">
    <td>Pt-heptamer</td>
-   <td data-field="template">eon/neb-pt-lbfgs</td>
-   <td data-field="version">eOn 3.6.0</td>
-   <td data-field="commit">1d71c9445018</td>
-   <td data-field="par2_mean">3517.69</td>
-   <td data-field="mean_calls">3517.69</td>
-   <td data-field="median_calls">3738</td>
+   <td data-field="template">eon/develop-neb-pt-lbfgs</td>
+   <td data-field="version">eOn eOn (develop 500350d9)</td>
+   <td data-field="commit">500350d9fae8</td>
+   <td data-field="par2_mean">319.538</td>
+   <td data-field="mean_calls">319.538</td>
+   <td data-field="median_calls">330</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">13</td>
    </tr>
-   <tr data-problem="saddle-search/pt-island" data-template="eon/develop-saddle-pt-lanczos">
+   <tr data-problem="saddle-search/pt-island" data-template="eon/develop-b0bd4d5a-saddle-pt-dimer">
    <td>Pt heptamer island</td>
-   <td data-field="template">eon/develop-saddle-pt-lanczos</td>
-   <td data-field="version">eOn 3.6.0</td>
-   <td data-field="commit">7095b23ac17d</td>
+   <td data-field="template">eon/develop-b0bd4d5a-saddle-pt-dimer</td>
+   <td data-field="version">eOn (develop b0bd4d5a)</td>
+   <td data-field="commit">b0bd4d5a5e0f</td>
    <td data-field="par2_mean">2e+08</td>
-   <td data-field="mean_calls">3.98507e+06</td>
-   <td data-field="median_calls">3.98507e+06</td>
-   <td data-field="failures">crash 0, divergence 0, cap 2, wrong_stationary 0</td>
-   <td data-field="n">2</td>
+   <td data-field="mean_calls">2.4304e+06</td>
+   <td data-field="median_calls">2.4304e+06</td>
+   <td data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 0</td>
+   <td data-field="n">1</td>
    </tr>
-   <tr data-problem="tsopt/LJ38" data-template="eon-client/ts-lj38-lanczos-improved">
+   <tr data-problem="tsopt/LJ38" data-template="eon/develop-b0bd4d5a-ts-lj38-lanczos-improved">
    <td>LJ38</td>
-   <td data-field="template">eon-client/ts-lj38-lanczos-improved</td>
-   <td data-field="version">eOn 3.5.0</td>
-   <td data-field="commit">4d8b34baf1ba</td>
-   <td data-field="par2_mean">280.33</td>
-   <td data-field="mean_calls">280.33</td>
-   <td data-field="median_calls">214</td>
+   <td data-field="template">eon/develop-b0bd4d5a-ts-lj38-lanczos-improved</td>
+   <td data-field="version">eOn (develop b0bd4d5a)</td>
+   <td data-field="commit">b0bd4d5a5e0f</td>
+   <td data-field="par2_mean">256.5</td>
+   <td data-field="mean_calls">256.5</td>
+   <td data-field="median_calls">180</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">200</td>
    </tr>
-   <tr data-problem="tsopt/pt-island" data-template="eon-client/ts-pt-lanczos-improved">
+   <tr data-problem="tsopt/pt-island" data-template="eon/develop-b0bd4d5a-ts-pt-lanczos-improved">
    <td>pt-island</td>
-   <td data-field="template">eon-client/ts-pt-lanczos-improved</td>
-   <td data-field="version">eOn 3.5.0</td>
-   <td data-field="commit">4d8b34baf1ba</td>
-   <td data-field="par2_mean">108.796</td>
-   <td data-field="mean_calls">108.796</td>
-   <td data-field="median_calls">107</td>
+   <td data-field="template">eon/develop-b0bd4d5a-ts-pt-lanczos-improved</td>
+   <td data-field="version">eOn (develop b0bd4d5a)</td>
+   <td data-field="commit">b0bd4d5a5e0f</td>
+   <td data-field="par2_mean">106.347</td>
+   <td data-field="mean_calls">106.347</td>
+   <td data-field="median_calls">100</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">49</td>
    </tr>
@@ -172,7 +178,6 @@ The number is written only after the run finishes under the problem rule.
    <li>pt-island: not yet on the harness counter, partial.</li>
    <li>Al: partial.</li>
    <li>Pt: partial.</li>
-   <li>lj38: partial.</li>
    <li>Pt-heptamer: not yet on the harness counter, partial.</li>
    <li>Pt heptamer island: not yet on the harness counter, partial.</li>
    <li>LJ38: not yet on the harness counter, partial.</li>
@@ -408,7 +413,7 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="template">rgsaddle/ew-ci-neb-lbfgs</td>
    <td data-field="version">rgsaddle 0.2.2</td>
    <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">8024.43</td>
+   <td data-field="par2_mean">168024</td>
    <td data-field="mean_calls">4639.8</td>
    <td data-field="median_calls">2414</td>
    <td data-field="failures">crash 0, divergence 0, cap 16, wrong_stationary 1</td>
@@ -511,7 +516,7 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="template">geodesic/ci-neb-lbfgs</td>
    <td data-field="version">geodesic 1.0.0</td>
    <td data-field="commit">476aa041f562</td>
-   <td data-field="par2_mean">16807.4</td>
+   <td data-field="par2_mean">412102</td>
    <td data-field="mean_calls">8401.49</td>
    <td data-field="median_calls">10000</td>
    <td data-field="failures">crash 0, divergence 0, cap 38, wrong_stationary 4</td>
@@ -565,15 +570,15 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="failures">crash 0, divergence 0, cap 29, wrong_stationary 0</td>
    <td data-field="n">50</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="ase/de-lj38-2ts-default">
+   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="ase/de-lj38-2ts-tuned">
    <td>lj38_2ts_separation</td>
-   <td data-field="template">ase/de-lj38-2ts-default</td>
+   <td data-field="template">ase/de-lj38-2ts-tuned</td>
    <td data-field="version">ASE 3.29.0</td>
    <td data-field="commit">f27c0005ae6a</td>
-   <td data-field="par2_mean">20000</td>
-   <td data-field="mean_calls">2500</td>
-   <td data-field="median_calls">2500</td>
-   <td data-field="failures">crash 0, divergence 51, cap 0, wrong_stationary 0</td>
+   <td data-field="par2_mean">72328.6</td>
+   <td data-field="mean_calls">37035.3</td>
+   <td data-field="median_calls">40001</td>
+   <td data-field="failures">crash 0, divergence 0, cap 45, wrong_stationary 0</td>
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-template="ase/de-pt-island-tuned">
@@ -720,17 +725,6 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="median_calls">28</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">100</td>
-   </tr>
-   <tr data-problem="saddle-search/pt-island" data-template="sella/pt-island-search-default">
-   <td>Pt heptamer island</td>
-   <td data-field="template">sella/pt-island-search-default</td>
-   <td data-field="version">Sella 2.6.0</td>
-   <td data-field="commit">6cfb60cdb100</td>
-   <td data-field="par2_mean">5201.62</td>
-   <td data-field="mean_calls">247.812</td>
-   <td data-field="median_calls">225</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 4</td>
-   <td data-field="n">16</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-template="sella/lj38-ts-default">
    <td>LJ38</td>
@@ -990,7 +984,7 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="template">tsase/ci-neb</td>
    <td data-field="version">tsase 1.0</td>
    <td data-field="commit">98aac60b5d99</td>
-   <td data-field="par2_mean">18812.1</td>
+   <td data-field="par2_mean">451753</td>
    <td data-field="mean_calls">9690.35</td>
    <td data-field="median_calls">10000</td>
    <td data-field="failures">crash 0, divergence 1, cap 43, wrong_stationary 2</td>
@@ -1122,7 +1116,7 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="template">lammpsneb/ci-quickmin</td>
    <td data-field="version">LAMMPS 30 Sep 2026</td>
    <td data-field="commit">8de817dd79bf</td>
-   <td data-field="par2_mean">19017.8</td>
+   <td data-field="par2_mean">451959</td>
    <td data-field="mean_calls">9982</td>
    <td data-field="median_calls">9982</td>
    <td data-field="failures">crash 0, divergence 45, cap 0, wrong_stationary 1</td>
@@ -1262,7 +1256,7 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="template">compass/sqnm</td>
    <td data-field="version">compass 1.0.0</td>
    <td data-field="commit">22da7bd5f69c</td>
-   <td data-field="par2_mean">6713.37</td>
+   <td data-field="par2_mean">100831</td>
    <td data-field="mean_calls">4586.12</td>
    <td data-field="median_calls">4031</td>
    <td data-field="failures">crash 0, divergence 0, cap 9, wrong_stationary 1</td>

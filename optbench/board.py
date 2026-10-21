@@ -15,6 +15,7 @@ An asv result that covers one start is a smoke run and is partial.
 The full set is the problem file's sample, or the Morse archive when
 that file gives no sample count. It is not the largest campaign file.
 A result that sets ``ranked false`` stays off the ranked table.
+An asv track whose working-tree template sets ``ranked = false`` does the same.
 Partial rows stay in the output. A campaign file and an asv track for
 the same run are one row. Only the newest full version of a template
 is ranked. Older full versions stay in the history list.
@@ -922,6 +923,9 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
                 )
                 continue
             client_counter = module_name == "bench_lj38"
+            # The checkout template, not the pin: this branch decides
+            # which develop row stays on the ranked table.
+            unranked = template is not None and template.get("ranked") is False
             row = _blank_row(
                 problem=problem_id,
                 template=template_id,
@@ -938,6 +942,8 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
                 cap=cap,
                 note=pin_note,
             )
+            if unranked:
+                row["_declared_partial"] = "template sets ranked false"
             if not problem_id or not template_id:
                 row["note"] = f"benchmark {row['entry']} is not a problem template"
                 row["n"] = len(records)
@@ -1273,9 +1279,9 @@ def _show_per_image(problem: dict) -> bool:
 
 
 def _headers(problem: dict) -> list[str]:
-    # The ranked table and the headline table list the current version only.
-    # Older versions stay in the history list, so a Current column is yes on
-    # every ranked row. The Wilson interval is one cell, low then high.
+    # The ranked table and the headline table list the newest full version.
+    # Older versions stay in the history list. Wilson bounds are one cell,
+    # low then high.
     # Two separate columns push the minimization page over the DOM budget.
     headers = [
         "Template",

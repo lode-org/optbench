@@ -4,7 +4,7 @@ The archive mean is awk ``printf "%.0f"``. On halves that rounds to even,
 which is what Python ``round`` does for these ties.
 
 The v2 cost is the PAR-2 mean. A failure is charged ``2 * cap`` instead
-of being dropped. The Wilson interval and the bootstrap median sit
+of being dropped. The Wilson bounds and the bootstrap median sit
 beside that mean. See ``docs/design/decision.md``.
 """
 

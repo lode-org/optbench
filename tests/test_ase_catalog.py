@@ -64,7 +64,7 @@ def test_templates_match_the_catalog_and_registry():
     assert ase["commit"].startswith("f27c0005ae6a")
     assert sella_code["commit"].startswith("6cfb60cdb100")
     assert "0.1.1" in sella_code["note"]
-    assert "legacy" in sella_code["note"]
+    assert "are not this pin" in sella_code["note"]
     templates = {row["id"] for row in registry["template"]}
     assert {spec["id"] for spec in specs} <= templates
     assert campaign_problem("sella-2.6.0-ts-lj38") == "tsopt/LJ38"

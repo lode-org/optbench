@@ -84,7 +84,7 @@ scored = ["rate_accuracy", "catalogue_accuracy", "force_calls_per_simulated_time
 
 [scoring.legacy]
 label = "legacy"
-rule = "2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row stays labelled legacy."
+rule = "2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row stays on the 2014 archive table."
 
 [scoring.escape]
 rate_accuracy = "max(0, 1 - abs(rate - reference) / reference)"

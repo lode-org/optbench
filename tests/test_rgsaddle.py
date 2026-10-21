@@ -235,7 +235,7 @@ def test_asv_classes_parameterize_seed_and_the_selected_start(monkeypatch):
         "neb/Pt-heptamer": 10000,
         "double-ended-saddle-search/pt-island": 3000,
         "double-ended-saddle-search/lj38": 2500,
-        "double-ended-saddle-search/lj38_2ts_separation": 10000,
+        "double-ended-saddle-search/lj38_2ts_separation": 250000,
     }
     import benchmarks.bench_rgsaddle as bench
 

@@ -225,13 +225,13 @@ def con_spec_version(text: str) -> int:
 def _fixed_flag(flag: int, spec: int) -> bool:
     """True when the atom is not free on every axis.
 
-    Legacy files use 0 for free and 1 for fixed. Spec 2 and later store
+    Con files before spec 2 use 0 for free and 1 for fixed. Spec 2 and later store
     a three-bit mask of fixed axes, so 0 is free and 7 is fixed in x, y,
     and z. eOn writes that mask on the product geometries.
     """
     if spec < 2:
         if flag not in (0, 1):
-            raise ValueError(f"legacy con flag must be 0 or 1, found {flag}")
+            raise ValueError(f"con flag must be 0 or 1, found {flag}")
         return flag == 1
     if flag < 0 or flag > 7:
         raise ValueError(f"con flag must be a 3-bit mask, found {flag}")

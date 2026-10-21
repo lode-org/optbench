@@ -9,8 +9,8 @@ set those problems in J. Chem. Theory Comput. 2014, 10, 5476-5482
 A run in that archive counts as finished when it stops under 10000
 force calls.
 
-Each problem below leads with the current v2 rank.
-The 2014 rows follow, in the published order, inside Legacy 2014 archive.
+Each problem below leads with the v2 rank.
+The 2014 rows follow, in the published order, inside 2014 archive.
 
 #+INCLUDE: "../include/collection.org"
 

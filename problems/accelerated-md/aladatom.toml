@@ -4,7 +4,7 @@ suite = "accelerated-md"
 problem = "aladatom"
 contract = "stated"
 entry_count = 1
-remark = "Aluminum adatom on Al(100). The reactant is the 151-atom legacy con, and the potential is the Voter-Chen EAM built into eOn as eam_al. The reference escape rate is the 250 K parallel-replica row. One repetition is one AKMC catalogue. The published method sample is 5000 products, and that count turns the rate into simulated time."
+remark = "Aluminum adatom on Al(100). The reactant is the 151-atom con, and the potential is the Voter-Chen EAM built into eOn as eam_al. The reference escape rate is the 250 K parallel-replica row. One repetition is one AKMC catalogue. The published method sample is 5000 products, and that count turns the rate into simulated time."
 
 [potential]
 kind = "eam_al"
@@ -33,7 +33,7 @@ uncertainty = 1.807e6
 percent_uncertainty = 7.104e-1
 force_calls = 1.436e9
 force_calls_per_second = 315.110
-source = "legacy website eon-md-langevin dat files"
+source = "2014 website eon-md-langevin dat files"
 
 [[reference.comparison]]
 name = "eon-md-anderson"
@@ -42,7 +42,7 @@ uncertainty = 1.409e7
 percent_uncertainty = 6.810
 force_calls = 1.548e9
 force_calls_per_second = 338.350
-source = "legacy website eon-md-anderson dat files"
+source = "2014 website eon-md-anderson dat files"
 
 [catalogue]
 channels = 24
@@ -101,12 +101,12 @@ scored = ["rate_accuracy", "catalogue_accuracy", "force_calls_per_simulated_time
 
 [scoring.legacy]
 label = "legacy"
-rule = "2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row stays labelled legacy."
+rule = "2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row stays on the 2014 archive table."
 
 [scoring.escape]
 rate_accuracy = "max(0, 1 - abs(rate - reference) / reference)"
 catalogue_accuracy = "1 minus the total variation distance between the rate-weighted product channels and the published probabilities. Channel -1 is an unmatched product."
-force_calls_per_simulated_time = "Catalogue force calls divided by the seconds 5000 escapes would last at the calculated rate. The legacy force-calls-per-second column is wall-clock throughput, about 315 for the Langevin molecular dynamics row, and is not this score."
+force_calls_per_simulated_time = "Catalogue force calls divided by the seconds 5000 escapes would last at the calculated rate. The 2014 force-calls-per-second column is wall-clock throughput, about 315 for the Langevin molecular dynamics row, and is not this score."
 simulated_time = "sample.products divided by the calculated rate"
 
 [scoring.v2]

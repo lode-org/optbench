@@ -161,7 +161,7 @@ def _caption(primary: str | None) -> str:
         "true_rate": "Lowest rate first.",
     }
     detail = captions.get(primary or "", "The columns are the archived keys.")
-    return f"Legacy 2014 archive. {detail}"
+    return f"2014 archive. {detail}"
 
 
 def _plot(points: list[dict], primary: str | None, caption: str | None = None) -> str:
@@ -205,13 +205,10 @@ def _plot(points: list[dict], primary: str | None, caption: str | None = None) -
 
 
 def _code_label(fields: dict[str, str]) -> str:
-    """Code column. Sella 0.1.1 stays on the 2014 table and is marked legacy."""
+    """Code column. Sella 0.1.1 stays on the 2014 table."""
     code = fields.get("code", "")
     version = fields.get("code_version", "")
-    label = f"{code} {version}".strip() if version else code
-    if code == "Sella" and version == "0.1.1":
-        label = f"{label} legacy"
-    return label
+    return f"{code} {version}".strip() if version else code
 
 
 def campaign_problem(stem: str) -> str | None:
@@ -250,7 +247,7 @@ def problem_html(
     heading_text: str | None = None,
     include_rule: bool = True,
 ) -> str:
-    """Legacy 2014 table for one problem. The v2 rank is a separate section."""
+    """2014 archive table for one problem. The v2 rank is a separate section."""
     canonical_rows = []
     for row in _rows_for(problem, oracle):
         fields, _renamed = normalize(row["fields"])
@@ -280,7 +277,7 @@ def problem_html(
     if smoke_note:
         lines.append(f'<p class="bench-smoke">{html.escape(smoke_note)}</p>')
     lines.append('<details class="bench-details">')
-    lines.append("<summary>Legacy 2014 archive</summary>")
+    lines.append("<summary>2014 archive</summary>")
 
     prepared = []
     for rank, (row, fields) in enumerate(canonical_rows, 1):
@@ -303,7 +300,7 @@ def problem_html(
             }
         )
     lines.append(
-        '<p class="bench-legacy">Legacy 2014 archive. These rows stay in the published order. '
+        '<p class="bench-legacy">2014 archive. These rows stay in the published order. '
         "They are not a v2 score.</p>"
     )
     lines.append('<div class="bench-table"><table class="bench-legacy">')
@@ -334,7 +331,7 @@ def problem_html(
             lines.append(f'<td class="{kind}">{html.escape(cell)}</td>')
         lines.append("</tr>")
     lines.append("</tbody></table></div>")
-    lines.append(_plot(prepared, primary, "Legacy 2014 scores"))
+    lines.append(_plot(prepared, primary, "2014 scores"))
     lines.append("</details>")
     lines.append("</section>")
     return "\n".join(lines)
@@ -391,7 +388,7 @@ def _legacy_section(problem: dict, oracle: list[dict]) -> str:
         oracle,
         section_id=f"{problem['problem']}-legacy",
         heading="h3",
-        heading_text="Legacy 2014 archive",
+        heading_text="2014 archive",
         include_rule=False,
     )
 
@@ -412,7 +409,7 @@ def _headlines_html(
         '<section class="bench" id="headlines">',
         "<p>The first row of each problem is the best full harness run, ranked by PAR-2. "
         "The ranked table and the performance profile are on the problem page. "
-        "The 2014 archive is labelled legacy on that page.</p>",
+        "The 2014 archive table is on that page.</p>",
     ]
     for suite in order:
         group = by_suite.get(suite)
@@ -446,7 +443,7 @@ def _collection_html(
 
     lines = [
         '<section class="bench" id="collection">',
-        "<p>Each problem leads with the current v2 rank. "
+        "<p>Each problem leads with the v2 rank. "
         "The 2014 rows follow, in the published order.</p>",
     ]
     for suite in order:
@@ -498,7 +495,7 @@ def _codes_html(root: Path, document: dict) -> str:
         grouped[name].append(pin)
     lines = [
         '<section class="bench" id="current-codes">',
-        "<h2>Current codes</h2>",
+        "<h2>Codes</h2>",
         f"<p>The benchmark contributor is {html.escape(contributor)}. "
         "A ranked row is a full harness run. "
         "The commit on that row is the commit that produced the score.</p>",

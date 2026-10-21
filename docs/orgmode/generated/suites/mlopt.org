@@ -74,12 +74,12 @@
    </tbody></table></div>
    </details>
    </section><section class="bench bench-legacy-section" id="C2H4-legacy">
-   <h3>Legacy 2014 archive</h3>
+   <h3>2014 archive</h3>
    <details class="bench-details">
-   <summary>Legacy 2014 archive</summary>
-   <p class="bench-legacy">Legacy 2014 archive. These rows stay in the published order. They are not a v2 score.</p>
+   <summary>2014 archive</summary>
+   <p class="bench-legacy">2014 archive. These rows stay in the published order. They are not a v2 score.</p>
    <div class="bench-table"><table class="bench-legacy">
-   <caption>Legacy 2014 archive. Fewest epochs first. Failures are left out of this mean.</caption>
+   <caption>2014 archive. Fewest epochs first. Failures are left out of this mean.</caption>
    <thead><tr>
    <th class="num" scope="col"></th>
    <th class="text" scope="col">Entry</th>
@@ -179,7 +179,7 @@
    <td class="text">13 Dec 2022</td>
    </tr>
    </tbody></table></div>
-   <figure class="bench-plot"><figcaption>Legacy 2014 scores. Fewer calls is to the left. Same order as the table.</figcaption><div class="bench-plot-mount" style="--bench-rows:6"></div><script type="application/json" class="bench-plot-data">{"metric": "mean_epoch", "scale": "log", "points": [{"id": "mlopt-c2h4-pyamff-rprop10-7-fcoeff0", "entry": "pyamff-rprop10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 184.56, "best": true, "held": false, "failed": false}, {"id": "mlopt-c2h4-pyamff-lbfgs10-7-fcoeff0", "entry": "pyamff-lbfgs10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 2157.14, "best": false, "held": false, "failed": false}, {"id": "mlopt-c2h4-pyamff-adam10-7-fcoeff0", "entry": "pyamff-adam10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 4395.3, "best": false, "held": false, "failed": false}, {"id": "mlopt-c2h4-pyamff-rprop10-7-fcoeff0-1", "entry": "pyamff-rprop10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 12926.88, "best": false, "held": false, "failed": false}, {"id": "mlopt-c2h4-pyamff-adam10-7-fcoeff0-1", "entry": "pyamff-adam10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 13876.7, "best": false, "held": false, "failed": false}, {"id": "mlopt-c2h4-pyamff-lbfgs10-7-fcoeff0-1", "entry": "pyamff-lbfgs10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 23314.46, "best": false, "held": false, "failed": false}]}</script></figure>
+   <figure class="bench-plot"><figcaption>2014 scores. Fewer calls is to the left. Same order as the table.</figcaption><div class="bench-plot-mount" style="--bench-rows:6"></div><script type="application/json" class="bench-plot-data">{"metric": "mean_epoch", "scale": "log", "points": [{"id": "mlopt-c2h4-pyamff-rprop10-7-fcoeff0", "entry": "pyamff-rprop10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 184.56, "best": true, "held": false, "failed": false}, {"id": "mlopt-c2h4-pyamff-lbfgs10-7-fcoeff0", "entry": "pyamff-lbfgs10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 2157.14, "best": false, "held": false, "failed": false}, {"id": "mlopt-c2h4-pyamff-adam10-7-fcoeff0", "entry": "pyamff-adam10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 4395.3, "best": false, "held": false, "failed": false}, {"id": "mlopt-c2h4-pyamff-rprop10-7-fcoeff0-1", "entry": "pyamff-rprop10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 12926.88, "best": false, "held": false, "failed": false}, {"id": "mlopt-c2h4-pyamff-adam10-7-fcoeff0-1", "entry": "pyamff-adam10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 13876.7, "best": false, "held": false, "failed": false}, {"id": "mlopt-c2h4-pyamff-lbfgs10-7-fcoeff0-1", "entry": "pyamff-lbfgs10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 23314.46, "best": false, "held": false, "failed": false}]}</script></figure>
    </details>
    </section><section class="bench" id="emt-pt38" data-problem="mlopt/emt-pt38">
    <h2>EMT Pt 38 nanoparticle</h2>
@@ -199,12 +199,12 @@
    </tbody></table></div>
    </details>
    </section><section class="bench bench-legacy-section" id="emt-pt38-legacy">
-   <h3>Legacy 2014 archive</h3>
+   <h3>2014 archive</h3>
    <details class="bench-details">
-   <summary>Legacy 2014 archive</summary>
-   <p class="bench-legacy">Legacy 2014 archive. These rows stay in the published order. They are not a v2 score.</p>
+   <summary>2014 archive</summary>
+   <p class="bench-legacy">2014 archive. These rows stay in the published order. They are not a v2 score.</p>
    <div class="bench-table"><table class="bench-legacy">
-   <caption>Legacy 2014 archive. Fewest epochs first. Failures are left out of this mean.</caption>
+   <caption>2014 archive. Fewest epochs first. Failures are left out of this mean.</caption>
    <thead><tr>
    <th class="num" scope="col"></th>
    <th class="text" scope="col">Entry</th>
@@ -304,7 +304,7 @@
    <td class="text">09 Dec 2022</td>
    </tr>
    </tbody></table></div>
-   <figure class="bench-plot"><figcaption>Legacy 2014 scores. Fewer calls is to the left. Same order as the table.</figcaption><div class="bench-plot-mount" style="--bench-rows:6"></div><script type="application/json" class="bench-plot-data">{"metric": "mean_epoch", "scale": "log", "points": [{"id": "mlopt-emt-pt38-pyamff-rprop10-7-fcoeff0", "entry": "pyamff-rprop10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 97.58, "best": true, "held": false, "failed": false}, {"id": "mlopt-emt-pt38-pyamff-rprop10-7-fcoeff0-1", "entry": "pyamff-rprop10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 1022.86, "best": false, "held": false, "failed": false}, {"id": "mlopt-emt-pt38-pyamff-adam10-7-fcoeff0", "entry": "pyamff-adam10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 1103.24, "best": false, "held": false, "failed": false}, {"id": "mlopt-emt-pt38-pyamff-adam10-7-fcoeff0-1", "entry": "pyamff-adam10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 1708.8, "best": false, "held": false, "failed": false}, {"id": "mlopt-emt-pt38-pyamff-lbfgs10-7-fcoeff0", "entry": "pyamff-lbfgs10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 1791.8, "best": false, "held": false, "failed": false}, {"id": "mlopt-emt-pt38-pyamff-lbfgs10-7-fcoeff0-1", "entry": "pyamff-lbfgs10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 1943.34, "best": false, "held": false, "failed": false}]}</script></figure>
+   <figure class="bench-plot"><figcaption>2014 scores. Fewer calls is to the left. Same order as the table.</figcaption><div class="bench-plot-mount" style="--bench-rows:6"></div><script type="application/json" class="bench-plot-data">{"metric": "mean_epoch", "scale": "log", "points": [{"id": "mlopt-emt-pt38-pyamff-rprop10-7-fcoeff0", "entry": "pyamff-rprop10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 97.58, "best": true, "held": false, "failed": false}, {"id": "mlopt-emt-pt38-pyamff-rprop10-7-fcoeff0-1", "entry": "pyamff-rprop10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 1022.86, "best": false, "held": false, "failed": false}, {"id": "mlopt-emt-pt38-pyamff-adam10-7-fcoeff0", "entry": "pyamff-adam10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 1103.24, "best": false, "held": false, "failed": false}, {"id": "mlopt-emt-pt38-pyamff-adam10-7-fcoeff0-1", "entry": "pyamff-adam10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 1708.8, "best": false, "held": false, "failed": false}, {"id": "mlopt-emt-pt38-pyamff-lbfgs10-7-fcoeff0", "entry": "pyamff-lbfgs10-7-fcoeff0", "code": "Pyamff 8037eb98", "value": 1791.8, "best": false, "held": false, "failed": false}, {"id": "mlopt-emt-pt38-pyamff-lbfgs10-7-fcoeff0-1", "entry": "pyamff-lbfgs10-7-fcoeff0_1", "code": "Pyamff 8037eb98", "value": 1943.34, "best": false, "held": false, "failed": false}]}</script></figure>
    </details>
    </section>
 #+end_export

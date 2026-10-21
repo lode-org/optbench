@@ -12,7 +12,7 @@ tuning = "ablation"
 reducer = "capped"
 ranked = true
 parameter_source = "ablation"
-note = "Initialiser ablation of ase/de-lj38-2ts-default. The path is geodesic-interpolate 1.0.0 at 476aa041. Spring 0.1, climb off, and FIRE match that template. The force cap is the problem cap 10000."
+note = "Initialiser ablation of ase/de-lj38-2ts-default. The path is geodesic-interpolate 1.0.0 at 476aa041. Spring 0.1, climb off, and FIRE match that template. The force cap is the problem cap 250000."
 
 [optimizer]
 name = "FIRE"
@@ -29,7 +29,7 @@ pbc = [false, false, false]
 [stop]
 norm = "fmax"
 force_norm = 0.001
-max_force_calls = 10000
+max_force_calls = 250000
 max_steps = 10000
 
 [input]

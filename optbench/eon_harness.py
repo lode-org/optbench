@@ -1,4 +1,4 @@
-"""Harness runs for eOn SVN r2549 and the 3.5.0 source build.
+"""Harness runs for eOn SVN r2549, the 3.5.0 source build, and eOn develop.
 
 Each force evaluation is one ``HarnessCounter`` charge. eonclient is
 started with ``potential = ext_pot``. A small C program forwards
@@ -23,6 +23,11 @@ SVN r2549 does not read ``Main.parallel``. The 3.5.0 client does. The
 ini written for a C++ job sets it false. The Python AKMC server rejects
 the key, so those inis leave it unset. One server still receives every
 ``force()`` the clients open.
+
+The develop family is eOn at ``b0bd4d5a``, not a build of EON SVN r2549.
+``EON_DEVELOP_CLIENT`` points at that ``eonclient``. Its ``--version``
+line contains ``b0bd4d5a``. Templates that name commit ``500350d9`` stay
+in the tree. A develop-family run uses this binary.
 """
 
 from __future__ import annotations
@@ -81,6 +86,14 @@ FAMILIES = {
         "flag": "--version",
         "token": "4d8b34ba",
         "cache": "4d8b34ba",
+    },
+    "develop": {
+        "prefix": "eon/develop-",
+        "env": "EON_DEVELOP_CLIENT",
+        "default": Path.home() / "opt" / "eon-develop" / "bin" / "eonclient",
+        "flag": "--version",
+        "token": "b0bd4d5a",
+        "cache": "b0bd4d5a",
     },
 }
 
@@ -389,7 +402,7 @@ def _family_of(template: dict) -> str:
     for name, spec in FAMILIES.items():
         if ident.startswith(spec["prefix"]) and template.get("kind"):
             return name
-    raise ValueError(f"{ident} is not an r2549 or 3.5.0 harness template")
+    raise ValueError(f"{ident} is not an r2549, 3.5.0, or develop harness template")
 
 
 def _ini_text(template: dict, seed: int, wrapper: Path, *, python_job: bool) -> str:
@@ -957,7 +970,14 @@ def write_campaign(template: dict, rows: list[tuple[int, str, dict]], output: Pa
         return None
     problem = resolve_problem(ROOT, template["problem"])
     full_n = stated_full_n(ROOT, problem)
-    partial = bool(template.get("declare_partial")) or full_n is None or len(kept) < int(full_n or 0)
+    # A saddle template that states max_searches is complete at one
+    # repetition. The problem file does not list a start count.
+    bounded = int(template.get("max_searches") or 0) > 0
+    partial = bool(template.get("declare_partial"))
+    if full_n is not None and len(kept) < int(full_n):
+        partial = True
+    elif full_n is None and not bounded:
+        partial = True
     successes = [row for _seed, _start, row in kept if row.get("success")]
     summary = {
         "nfailed": len(kept) - len(successes),

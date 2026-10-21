@@ -12,7 +12,7 @@ tuning = "ablation"
 reducer = "capped"
 ranked = true
 parameter_source = "ablation"
-note = "Initialiser ablation of ase/de-lj38-2ts-tuned. The path is geodesic-interpolate 1.0.0 at 476aa041 instead of IDPP. Five images, spring 5, LBFGS maxstep 0.01, damping 0.2, and climb after residual 0.4 match that template. The force cap is the problem cap 10000."
+note = "Initialiser ablation of ase/de-lj38-2ts-tuned. The path is geodesic-interpolate 1.0.0 at 476aa041 instead of IDPP. Five images, spring 5, LBFGS maxstep 0.01, damping 0.2, and climb after residual 0.4 match that template. The force cap is the problem cap 250000."
 
 [optimizer]
 name = "LBFGS"
@@ -31,7 +31,7 @@ pbc = [false, false, false]
 [stop]
 norm = "fmax"
 force_norm = 0.001
-max_force_calls = 10000
+max_force_calls = 250000
 max_steps = 10000
 
 [input]

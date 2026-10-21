@@ -2,7 +2,7 @@
 .. raw:: html
 
    <section class="bench" id="headlines">
-   <p>The first row of each problem is the best full harness run, ranked by PAR-2. The ranked table and the performance profile are on the problem page. The 2014 archive is labelled legacy on that page.</p>
+   <p>The first row of each problem is the best full harness run, ranked by PAR-2. The ranked table and the performance profile are on the problem page. The 2014 archive table is on that page.</p>
    <h2 id="suite-minimization">Minimization</h2>
    <h3>Lennard-Jones 38 clusters</h3>
    <div class="bench-scroll">
@@ -32,7 +32,7 @@
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="saddle-search/pt-island">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td data-field="template">sella/pt-island-search-default</td><td data-field="version">Sella 2.6.0</td><td data-field="commit">6cfb60cdb100</td><td data-field="source">asv</td><td data-field="par2_mean">5201.62</td><td data-field="success_rate">0.75</td><td data-field="wilson">0.505017–0.898179</td><td data-field="median_calls">225</td><td data-field="mean_calls">247.812</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 4</td><td data-field="n">16</td></tr>
+   <tr><td data-field="template">softsaddle/saddle-lanczos-sm0</td><td data-field="version">softsaddle 2019.04</td><td data-field="commit">5a00aeede06f</td><td data-field="source">campaign</td><td data-field="par2_mean">10124.2</td><td data-field="success_rate">0.0004</td><td data-field="wilson">0.000109701–0.00145739</td><td data-field="median_calls">389</td><td data-field="mean_calls">431.839</td><td data-field="failures">crash 0, divergence 4884, cap 108, wrong_stationary 6</td><td data-field="n">5000</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">Eon rows are not yet on the harness counter. Partial rows stay off the ranked table.</p>
    <p><a href="generated/suites/saddle-search.html#pt-island">Ranked table, performance profile, and the 2014 archive</a>.</p>
@@ -41,7 +41,7 @@
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="double-ended-saddle-search/lj38">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td data-field="template">eon-svn/de-lj38-lanczos-improved</td><td data-field="version">Eon svn r2549</td><td data-field="commit">r2549</td><td data-field="source">campaign</td><td data-field="par2_mean">235.2</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">197</td><td data-field="mean_calls">235.2</td><td data-field="mean_per_image">47.04</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">eon/develop-b0bd4d5a-de-lj38-lanczos-improved</td><td data-field="version">eOn (develop b0bd4d5a)</td><td data-field="commit">b0bd4d5a5e0f</td><td data-field="source">campaign</td><td data-field="par2_mean">230.72</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">197</td><td data-field="mean_calls">230.72</td><td data-field="mean_per_image">46.144</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">eOn band rows are not yet on the harness counter. Partial rows stay off the ranked table. Files with no per-start harness record stay off the ranked table.</p>
    <p><a href="generated/suites/double-ended-saddle-search.html#lj38">Ranked table, performance profile, and the 2014 archive</a>.</p>
@@ -49,7 +49,7 @@
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="double-ended-saddle-search/lj38_2ts_separation">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td data-field="template">eon-svn/de-2ts-lanczos-improved</td><td data-field="version">Eon svn r2549</td><td data-field="commit">r2549</td><td data-field="source">campaign</td><td data-field="par2_mean">502.784</td><td data-field="success_rate">1</td><td data-field="wilson">0.929953–1</td><td data-field="median_calls">418</td><td data-field="mean_calls">502.784</td><td data-field="mean_per_image">100.557</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">51</td></tr>
+   <tr><td data-field="template">eon/develop-b0bd4d5a-de-2ts-lanczos-improved</td><td data-field="version">eOn (develop b0bd4d5a)</td><td data-field="commit">b0bd4d5a5e0f</td><td data-field="source">campaign</td><td data-field="par2_mean">484.627</td><td data-field="success_rate">1</td><td data-field="wilson">0.929953–1</td><td data-field="median_calls">417</td><td data-field="mean_calls">484.627</td><td data-field="mean_per_image">96.9255</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">51</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">Partial rows stay off the ranked table.</p>
    <p><a href="generated/suites/double-ended-saddle-search.html#lj38_2ts_separation">Ranked table, performance profile, and the 2014 archive</a>.</p>
