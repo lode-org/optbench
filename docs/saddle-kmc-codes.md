@@ -103,8 +103,7 @@ success-only median. A row with no success has no median.
 | minimization/lj38 | pysisyphus/lbfgs-lj38 | 0/1000 | 1000 cap | — |
 | minimization/lj38 | pysisyphus/cg-lj38 | 254/1000 | 745 cap, 1 wrong stationary | 693 |
 | minimization/lj38 | pysisyphus/sd-lj38 | 205/1000 | 795 cap | 808 |
-| hTST/Pt | eon-client/htst-pt-dimer-lbfgs | 13/13 | 0 | 586508 |
-| hTST/Pt | eon-client/htst-pt-lanczos-lbfgs | 13/13 | 0 | 580349 |
+| hTST/Pt | tsase/htst-pt-quench-stock | 1/1 | 0 | 1712105 |
 
 The rgsaddle band campaigns on `neb/Pt-heptamer` and the three double-ended
 problems are on disk (12 templates each). The saddle-search catalog on
@@ -321,17 +320,23 @@ is public and describes it as Loughborough's in-house molecular dynamics
 code; no source repository is given. There is no licence file and no
 potential callback. `pykmc/lattice` writes nothing.
 
-## eOn develop on hTST/Pt
+## TSASE quench confirmation on hTST/Pt
 
-`eon-client/htst-pt-dimer-lbfgs` and `eon-client/htst-pt-lanczos-lbfgs` are
-the ranked rows. Each file is 13 barrier windows on shifted Morse
-(`kernel morse_shift`, r2549 `Morse::force`). The counter is `harness`.
-The cap is `problems/hTST/Pt.toml` `convergence.max_force_calls`,
-20000000. The client commit is `4c1b814f62f1dcf5fcd0cf18ba0b6df3bcff7a28`.
-Dimer median 586508, PAR-2 671526.4615384615. Lanczos median 580349, PAR-2
-607392.5384615385. A window closes when every reference barrier, rounded to
-3 decimals, has been seen once. The one-pass fill path does not write
-these two templates.
+`tsase/htst-pt-quench-stock` is one confirmation at TSASE 1.0 commit
+`98aac60`. The ranked cost is the PotServer total, 1712105. The cap in
+`problems/hTST/Pt.toml` is 20000000. The total is under that cap, so
+PAR-2 is 1712105 and the median is 1712105. n is 1 and nfailed is 0.
+
+The problem sample of 13 is a barrier window. The window closes when
+every reference barrier, rounded to 3 decimals, has been seen once, and
+the cost is the harness sum of the searches in that window. The quench
+template does not fit that sample. The stop is the confirmation, where
+a barrier window and a rate window have both closed. The communicator
+runs batches of 8 and restarts job ids after each batch. The stored
+file has the PotServer total and the saddle-call sum in per-batch
+job-id order. It has no per-search harness tally, so the total is not
+split into windows. The template states `sample.starts = 1` for that
+confirmation. The eOn develop window rows are not on this branch.
 
 ## Codes that were not scored
 

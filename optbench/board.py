@@ -100,6 +100,21 @@ def stated_full_n(root: Path, problem: dict) -> int | None:
     return count or None
 
 
+def template_full_n(template: dict | None) -> int | None:
+    """Start count stated on the template, when it has one.
+
+    The problem sample is the default. A template states its own count
+    when its ranked object is not that sample. The Pt quench confirmation
+    is one stop. The hTST/Pt sample is 13 barrier windows.
+    """
+    sample = (template or {}).get("sample") or {}
+    for key in ("starts", "pairs", "repetitions"):
+        value = sample.get(key)
+        if value not in (None, "", 0, "0"):
+            return int(value)
+    return None
+
+
 def _registry(root: Path) -> list[dict]:
     path = root / "codes" / "registry.toml"
     if not path.is_file():
@@ -1004,7 +1019,8 @@ def build_board(root: Path) -> dict:
                     row["partial_reason"] = "no problem file states the full set"
             continue
         for row in group:
-            _mark_partial(row, stated)
+            override = template_full_n(templates.get(str(row.get("template") or "")))
+            _mark_partial(row, stated if override is None else override)
     for row in rows:
         row["registry_match"] = _registry_match(row, registry)
     _mark_versions(rows)

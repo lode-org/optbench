@@ -1,0 +1,1 @@
+{"call_unit": "total", "client_calls": 1696, "count_key": "harness", "counter": "harness", "force_calls": 1696, "fraction_connected": 0.5, "geometry": "pt", "passes": 1, "qualifying": 1, "raw": 1696, "seconds": 18.328725563999797, "seed": 42, "success": true, "total_searches": 2, "unique_saddles": 1}

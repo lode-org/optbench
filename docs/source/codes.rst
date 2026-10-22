@@ -86,17 +86,6 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">100</td>
    </tr>
-   <tr data-problem="hTST/Pt" data-template="eon-client/htst-pt-lanczos-lbfgs">
-   <td>Pt</td>
-   <td data-field="template">eon-client/htst-pt-lanczos-lbfgs</td>
-   <td data-field="version">eOn 3.6.0</td>
-   <td data-field="commit">4c1b814f62f1</td>
-   <td data-field="par2_mean">607393</td>
-   <td data-field="mean_calls">607393</td>
-   <td data-field="median_calls">580349</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-field="n">13</td>
-   </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-template="eon-client/low-lj38-lanczos">
    <td>lj38</td>
    <td data-field="template">eon-client/low-lj38-lanczos</td>
@@ -182,6 +171,7 @@ The number is written only after the run finishes under the problem rule.
    <li>lj38_2ts_separation: partial.</li>
    <li>pt-island: not yet on the harness counter, partial.</li>
    <li>Al: partial.</li>
+   <li>Pt: partial.</li>
    <li>lj38: partial.</li>
    <li>Pt-heptamer: not yet on the harness counter, partial.</li>
    <li>Pt heptamer island: not yet on the harness counter, partial.</li>
@@ -1016,6 +1006,17 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="median_calls">564</td>
    <td data-field="failures">crash 0, divergence 20, cap 1, wrong_stationary 0</td>
    <td data-field="n">59</td>
+   </tr>
+   <tr data-problem="hTST/Pt" data-template="tsase/htst-pt-quench-stock">
+   <td>Pt</td>
+   <td data-field="template">tsase/htst-pt-quench-stock</td>
+   <td data-field="version">TSASE 1.0 (98aac60)</td>
+   <td data-field="commit">98aac60b5d99</td>
+   <td data-field="par2_mean">1.7121e+06</td>
+   <td data-field="mean_calls">1.7121e+06</td>
+   <td data-field="median_calls">1.7121e+06</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">1</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-template="tsase/mode-lj38">
    <td>lj38</td>

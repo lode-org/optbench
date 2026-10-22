@@ -619,9 +619,6 @@ def _run_points(root, problem, template, settings, output: Path, workers: int, e
 
 
 def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
-    reason = available()
-    if reason:
-        raise RuntimeError(reason)
     root = Path(root)
     from optbench.campaign import load_template, resolve_problem
 
@@ -636,6 +633,14 @@ def run(root: Path, problem_name: str, template_name: str, *, output: Path, work
     if stated and stated != problem["id"]:
         raise ValueError(f"{template_name} belongs to {stated}")
     method = str((template.get("tsase") or {}).get("method", "ci"))
+    # quenchDimer is the 2014 AKMC client. This module runs ssneb, the
+    # solid-state dimer, and the two minimizers. Refusing here avoids
+    # treating that client as a band.
+    if method not in {"ci", "normal", "dimer", "lbfgs", "mdmin"}:
+        raise ValueError(f"{template_name} method {method} is not a search this module runs")
+    reason = available()
+    if reason:
+        raise RuntimeError(reason)
     if method == "dimer":
         settings = point_settings(problem)
         if settings["cap"] is None:

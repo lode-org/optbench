@@ -175,6 +175,29 @@ def test_short_grid_stays_off_the_ranked_table(tmp_path: Path):
     assert document["partial"][0]["template"] == "toy/fast"
 
 
+def test_a_template_sample_is_its_own_full_set(tmp_path: Path):
+    _problem(tmp_path, starts=13, cap=20000000)
+    _template(tmp_path)
+    path = tmp_path / "templates" / "toy" / "fast.toml"
+    path.write_text(path.read_text(encoding="utf-8") + "\n[sample]\nstarts = 1\n", encoding="utf-8")
+    _registry(tmp_path)
+    _dat(tmp_path, "toy-fast", PIN)
+    _starts(tmp_path, "toy-fast", [_row(1712105, True, "pt")])
+
+    document = build_board(tmp_path)
+    problem = document["problems"]["minimization/toy"]
+    assert problem["full_n"] == 13
+    assert problem["partial"] == []
+    row = problem["ranked"][0]
+    assert row["n"] == 1
+    assert row["nfailed"] == 0
+    assert row["full_n"] == 1
+    assert row["par2_mean"] == 1712105
+    assert row["median"] == 1712105
+    assert row["cap"] == 20000000
+    assert row["partial"] is False
+
+
 def test_duplicate_files_are_kept_and_the_registry_commit_is_current(tmp_path: Path):
     _problem(tmp_path, starts=2, cap=10)
     _template(tmp_path)

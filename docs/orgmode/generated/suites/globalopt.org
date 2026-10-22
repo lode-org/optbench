@@ -7,7 +7,7 @@
    <section class="bench" id="summary"><div class="bench-scroll">
    <table data-board-table="summary">
    <caption>Best full harness run of each code. Lower PAR-2 is better. The full template table is on the problem page.</caption>
-   <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
+   <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>TSASE</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
    <tr data-problem="globalopt/lj100-binary">
    <th scope="row"><a href="#lj100-binary">Binary Lennard-Jones 100</a></th>
    <td data-code="eOn">—</td>
@@ -19,6 +19,7 @@
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -43,6 +44,7 @@
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -67,6 +69,7 @@
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS" data-template="airss/lj38" data-par2=""><span class="bench-score"></span><a href="#lj38-templates">airss/lj38</a></td>
@@ -91,6 +94,7 @@
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -115,6 +119,7 @@
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -139,6 +144,7 @@
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -163,6 +169,7 @@
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -187,6 +194,7 @@
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>

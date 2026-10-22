@@ -58,6 +58,7 @@ def test_new_templates_match_a_problem_stop():
         "partn/ts-lj38",
         "partn/ts-pt",
         "tsase/ci-neb",
+        "tsase/htst-pt-quench-stock",
         "tsase/dimer-lj38",
         "tsase/dimer-pt",
         "tsase/lbfgs-lj38",
@@ -133,6 +134,13 @@ def test_new_templates_match_a_problem_stop():
         assert template["commit"]
         assert template["code"]
     assert set(found) == expected
+
+
+def test_quench_dimer_is_not_dispatched_as_neb(tmp_path: Path):
+    output = tmp_path / "benchmark.dat"
+    with pytest.raises(ValueError, match="quench-dimer"):
+        run(ROOT, "hTST/Pt", "tsase/htst-pt-quench-stock", output=output, workers=1)
+    assert not output.exists()
 
 
 def test_pykmc_and_optim_write_nothing(tmp_path: Path):

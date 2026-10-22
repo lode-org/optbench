@@ -15,7 +15,7 @@ It does not run a campaign.
    <div class="bench-scroll">
    <table data-board-table="summary">
    <caption>Best full harness run of each code. Lower PAR-2 is better. The full template table is on the problem page.</caption>
-   <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
+   <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>TSASE</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
    <tr data-problem="minimization/lj38">
    <th scope="row"><a href="generated/suites/minimization.html#lj38">Lennard-Jones 38 clusters</a></th>
    <td data-code="eOn" data-template="eon/lj38-lbfgs-m100" data-par2="180.137"><span class="bench-score">180.137</span><a href="generated/suites/minimization.html#lj38-templates">eon/lj38-lbfgs-m100</a></td>
@@ -27,6 +27,7 @@ It does not run a campaign.
    <td data-code="Sella" data-template="sella/lj38-min-tuned" data-par2="253.921"><span class="bench-score">253.921</span><a href="generated/suites/minimization.html#lj38-templates">sella/lj38-min-tuned</a></td>
    <td data-code="GMIN" data-template="gmin/lj38-lbfgs" data-par2="301.399"><span class="bench-score">301.399</span><a href="generated/suites/minimization.html#lj38-templates">gmin/lj38-lbfgs</a></td>
    <td data-code="pele" data-template="pele/lj38-lbfgs-m100" data-par2="197.936"><span class="bench-score">197.936</span><a href="generated/suites/minimization.html#lj38-templates">pele/lj38-lbfgs-m100</a></td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus" data-template="pysisyphus/cg-lj38" data-par2="15124.7"><span class="bench-score">15124.7</span><a href="generated/suites/minimization.html#lj38-templates">pysisyphus/cg-lj38</a></td>
    <td data-code="AIRSS">—</td>
@@ -51,6 +52,7 @@ It does not run a campaign.
    <td data-code="Sella" data-template="noise/sella-min-s0" data-par2="729.433"><span class="bench-score">729.433</span><a href="generated/suites/minimization.html#lj38-noise-templates">noise/sella-min-s0</a></td>
    <td data-code="GMIN" data-template="noise/gmin-lbfgs-s0" data-par2="301.399"><span class="bench-score">301.399</span><a href="generated/suites/minimization.html#lj38-noise-templates">noise/gmin-lbfgs-s0</a></td>
    <td data-code="pele" data-template="noise/pele-mylbfgs-s0" data-par2="268.036"><span class="bench-score">268.036</span><a href="generated/suites/minimization.html#lj38-noise-templates">noise/pele-mylbfgs-s0</a></td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -75,6 +77,7 @@ It does not run a campaign.
    <td data-code="Sella" data-template="sella/morse-min-default" data-par2="28.89"><span class="bench-score">28.89</span><a href="generated/suites/minimization.html#morse-bulk-templates">sella/morse-min-default</a></td>
    <td data-code="GMIN" data-template="gmin/morse-lbfgs" data-par2="34.4"><span class="bench-score">34.4</span><a href="generated/suites/minimization.html#morse-bulk-templates">gmin/morse-lbfgs</a></td>
    <td data-code="pele" data-template="pele/morse-lbfgs" data-par2="92.06"><span class="bench-score">92.06</span><a href="generated/suites/minimization.html#morse-bulk-templates">pele/morse-lbfgs</a></td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -99,6 +102,7 @@ It does not run a campaign.
    <td data-code="Sella" data-template="sella/pt-island-search-default" data-par2="5201.62"><span class="bench-score">5201.62</span><a href="generated/suites/saddle-search.html#pt-island-templates">sella/pt-island-search-default</a></td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -123,6 +127,7 @@ It does not run a campaign.
    <td data-code="Sella" data-template="sella/de-lj38-tuned" data-par2="1753.96"><span class="bench-score">1753.96</span><a href="generated/suites/double-ended-saddle-search.html#lj38-templates">sella/de-lj38-tuned</a></td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS" data-template="lammpsneb/ci-fire" data-par2="4526.2"><span class="bench-score">4526.2</span><a href="generated/suites/double-ended-saddle-search.html#lj38-templates">lammpsneb/ci-fire</a></td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -147,6 +152,7 @@ It does not run a campaign.
    <td data-code="Sella" data-template="sella/de-lj38-2ts-tuned" data-par2="30105.9"><span class="bench-score">30105.9</span><a href="generated/suites/double-ended-saddle-search.html#lj38_2ts_separation-templates">sella/de-lj38-2ts-tuned</a></td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS" data-template="lammpsneb/ci-quickmin" data-par2="19017.8"><span class="bench-score">19017.8</span><a href="generated/suites/double-ended-saddle-search.html#lj38_2ts_separation-templates">lammpsneb/ci-quickmin</a></td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -171,6 +177,7 @@ It does not run a campaign.
    <td data-code="Sella" data-template="sella/de-pt-island-tuned" data-par2="615.153"><span class="bench-score">615.153</span><a href="generated/suites/double-ended-saddle-search.html#pt-island-templates">sella/de-pt-island-tuned</a></td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS" data-template="lammpsneb/ci-fire" data-par2="2668.64"><span class="bench-score">2668.64</span><a href="generated/suites/double-ended-saddle-search.html#pt-island-templates">lammpsneb/ci-fire</a></td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -195,6 +202,7 @@ It does not run a campaign.
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS" data-template="airss/lj38" data-par2=""><span class="bench-score"></span><a href="generated/suites/globalopt.html#lj38-templates">airss/lj38</a></td>
@@ -219,6 +227,7 @@ It does not run a campaign.
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -243,6 +252,7 @@ It does not run a campaign.
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus" data-template="pysisyphus/lanczos-lj38" data-par2="4017.14"><span class="bench-score">4017.14</span><a href="generated/suites/lowest-eigenvector.html#lj38-templates">pysisyphus/lanczos-lj38</a></td>
    <td data-code="AIRSS">—</td>
@@ -267,6 +277,7 @@ It does not run a campaign.
    <td data-code="Sella" data-template="sella/lj38-ts-default" data-par2="68.74"><span class="bench-score">68.74</span><a href="generated/suites/tsopt.html#LJ38-templates">sella/lj38-ts-default</a></td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -291,6 +302,7 @@ It does not run a campaign.
    <td data-code="Sella" data-template="sella/pt-island-ts-default" data-par2="74.2857"><span class="bench-score">74.2857</span><a href="generated/suites/tsopt.html#pt-island-templates">sella/pt-island-ts-default</a></td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -315,6 +327,7 @@ It does not run a campaign.
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS" data-template="lammpsneb/ci-fire" data-par2="1398.46"><span class="bench-score">1398.46</span><a href="generated/suites/neb.html#Pt-heptamer-templates">lammpsneb/ci-fire</a></td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -339,6 +352,7 @@ It does not run a campaign.
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -354,7 +368,7 @@ It does not run a campaign.
    </tr>
    <tr data-problem="hTST/Pt">
    <th scope="row"><a href="generated/suites/hTST.html#Pt">Pt</a></th>
-   <td data-code="eOn" data-template="eon-client/htst-pt-lanczos-lbfgs" data-par2="607393"><span class="bench-score">607393</span><a href="generated/suites/hTST.html#Pt-templates">eon-client/htst-pt-lanczos-lbfgs</a></td>
+   <td data-code="eOn">—</td>
    <td data-code="Eon svn">—</td>
    <td data-code="rgmin">—</td>
    <td data-code="rgsaddle">—</td>
@@ -363,6 +377,7 @@ It does not run a campaign.
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE" data-template="tsase/htst-pt-quench-stock" data-par2="1.7121e+06"><span class="bench-score">1.7121e+06</span><a href="generated/suites/hTST.html#Pt-templates">tsase/htst-pt-quench-stock</a></td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -387,6 +402,7 @@ It does not run a campaign.
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
@@ -411,6 +427,7 @@ It does not run a campaign.
    <td data-code="Sella">—</td>
    <td data-code="GMIN">—</td>
    <td data-code="pele">—</td>
+   <td data-code="TSASE">—</td>
    <td data-code="LAMMPS">—</td>
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>

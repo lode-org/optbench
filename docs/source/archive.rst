@@ -2319,7 +2319,7 @@ The 2014 rows follow, in the published order, inside Legacy 2014 archive.
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="hTST/Pt">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td data-field="template">eon-client/htst-pt-lanczos-lbfgs</td><td data-field="version">eOn 3.6.0</td><td data-field="commit">4c1b814f62f1</td><td data-field="source">campaign</td><td data-field="par2_mean">607393</td><td data-field="success_rate">1</td><td data-field="wilson">0.771905–1</td><td data-field="median_calls">580349</td><td data-field="mean_calls">607393</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">13</td></tr>
+   <tr><td data-field="template">tsase/htst-pt-quench-stock</td><td data-field="version">TSASE 1.0 (98aac60)</td><td data-field="commit">98aac60b5d99</td><td data-field="source">campaign</td><td data-field="par2_mean">1.7121e+06</td><td data-field="success_rate">1</td><td data-field="wilson">0.206549–1</td><td data-field="median_calls">1.7121e+06</td><td data-field="mean_calls">1.7121e+06</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">1</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">Partial rows stay off the ranked table.</p>
    <p><a href="generated/suites/hTST.html#Pt">Full ranked table and performance profile</a>.</p>

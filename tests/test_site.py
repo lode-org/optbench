@@ -109,12 +109,21 @@ def test_rendered_pages_use_the_board_rank():
     assert "No full harness row." not in saddle
     assert "eon-3.5.0-saddle-pt-dimer" in saddle
     assert "not yet on the harness counter" in saddle
-    htst_ranked = {row["template"] for row in document["problems"]["hTST/Pt"]["ranked"]}
-    assert "eon-client/htst-pt-dimer-lbfgs" in htst_ranked
-    assert "eon-client/htst-pt-lanczos-lbfgs" in htst_ranked
+    htst_ranked = document["problems"]["hTST/Pt"]["ranked"]
+    assert [row["template"] for row in htst_ranked] == ["tsase/htst-pt-quench-stock"]
+    quench = htst_ranked[0]
+    assert quench["n"] == 1
+    assert quench["nfailed"] == 0
+    assert quench["par2_mean"] == 1712105
+    assert quench["median"] == 1712105
+    assert quench["cap"] == 20000000
     htst_page = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "hTST.org").read_text(encoding="utf-8")
-    assert "eon-client/htst-pt-dimer-lbfgs" in htst_page
-    assert "eon-client/htst-pt-lanczos-lbfgs" in htst_page
+    assert 'data-template="tsase/htst-pt-quench-stock"' in htst_page or "tsase/htst-pt-quench-stock" in htst_page
+    assert 'data-field="par2_mean">1.7121e+06<' in htst_page
+    ranked_html = htst_page.split('data-board-table="ranked" data-problem="hTST/Pt"', 1)[1].split("</table>", 1)[0]
+    assert "tsase/htst-pt-quench-stock" in ranked_html
+    assert "eon-client/htst-pt-dimer-lbfgs" not in ranked_html
+    assert "eon-client/htst-pt-lanczos-lbfgs" not in ranked_html
     assert "Per-search cost" not in saddle
     assert "noise/rgmin-dogleg-s0" in minimization
     assert 'data-field="par2_mean">81.881<' in minimization
