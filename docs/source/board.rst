@@ -354,7 +354,7 @@ It does not run a campaign.
    </tr>
    <tr data-problem="hTST/Pt">
    <th scope="row"><a href="generated/suites/hTST.html#Pt">Pt</a></th>
-   <td data-code="eOn">—</td>
+   <td data-code="eOn" data-template="eon-client/htst-pt-lanczos-lbfgs" data-par2="607393"><span class="bench-score">607393</span><a href="generated/suites/hTST.html#Pt-templates">eon-client/htst-pt-lanczos-lbfgs</a></td>
    <td data-code="Eon svn">—</td>
    <td data-code="rgmin">—</td>
    <td data-code="rgsaddle">—</td>

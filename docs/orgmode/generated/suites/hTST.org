@@ -34,7 +34,7 @@
    </tr>
    <tr data-problem="hTST/Pt">
    <th scope="row"><a href="#Pt">Pt</a></th>
-   <td data-code="eOn">—</td>
+   <td data-code="eOn" data-template="eon-client/htst-pt-lanczos-lbfgs" data-par2="607393"><span class="bench-score">607393</span><a href="#Pt-templates">eon-client/htst-pt-lanczos-lbfgs</a></td>
    <td data-code="Eon svn">—</td>
    <td data-code="rgmin">—</td>
    <td data-code="rgsaddle">—</td>
@@ -123,22 +123,26 @@
    </section><section class="bench" id="Pt" data-problem="hTST/Pt">
    <h2>Pt</h2>
    <dl class="bench-rule">
+   <dt>Cap</dt><dd>20000000 force calls</dd>
+   <dt>Starts</dt><dd>13</dd>
    <dt>v2</dt><dd>par2-wilson-bootstrap</dd>
+   <dt>Note</dt><dd>A start is one barrier window. The window closes when each reference barrier has been matched once. Force calls are the harness tally for that window. The rank uses PAR-2 on that cap. A missing rate window does not drop a finished barrier window. The 2014 Pt archive used shifted Morse.</dd>
    <dt>Contract</dt><dd>Partly stated. The columns are the keys shared by every archived file.</dd>
    </dl>
    <p>Ranked by the v2 PAR-2 mean of the harness total. Only the newest full version of a template is in this table. A partial row, including a one-start asv smoke run, is not.</p>
    <p class="bench-gaps">Partial rows stay off the ranked table.</p>
+   <figure class="bench-plot"><a href="../../_static/board/hTST-Pt-profile.svg"><picture><source srcset="../../_static/board/hTST-Pt-profile.webp" type="image/webp"><img src="../../_static/board/hTST-Pt-profile.png" alt="Dolan-More profile for hTST/Pt" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../_static/board/hTST-Pt-cost.svg"><picture><source srcset="../../_static/board/hTST-Pt-cost.webp" type="image/webp"><img src="../../_static/board/hTST-Pt-cost.png" alt="Cost versus success for hTST/Pt" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <details class="bench-details" id="Pt-templates">
-   <summary>All templates (0 ranked)</summary>
+   <summary>All templates (2 ranked)</summary>
    <div class="bench-scroll">
    <table data-board-table="ranked" data-problem="hTST/Pt">
    <caption>Lower PAR-2 is better. PAR-2 and the call columns are harness force-call totals. Wilson bounds are the 95% interval on the success rate.</caption>
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td colspan="11">No full harness row.</td></tr>
+   <tr><td data-field="template">eon-client/htst-pt-lanczos-lbfgs</td><td data-field="version">eOn 3.6.0</td><td data-field="commit">4c1b814f62f1</td><td data-field="source">campaign</td><td data-field="par2_mean">607393</td><td data-field="success_rate">1</td><td data-field="wilson">0.771905–1</td><td data-field="median_calls">580349</td><td data-field="mean_calls">607393</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">13</td></tr>
+   <tr><td data-field="template">eon-client/htst-pt-dimer-lbfgs</td><td data-field="version">eOn 3.6.0</td><td data-field="commit">4c1b814f62f1</td><td data-field="source">campaign</td><td data-field="par2_mean">671526</td><td data-field="success_rate">1</td><td data-field="wilson">0.771905–1</td><td data-field="median_calls">586508</td><td data-field="mean_calls">671526</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">13</td></tr>
    </tbody></table></div>
    <h3>Partial</h3><ul>
-   <li>eon-client/htst-pt-dimer-lbfgs eOn campaign n=1, result file sets ranked false; potential morse/smooth/linear (periodic in x and y, cutoff 9.5).</li>
-   <li>eon-client/htst-pt-lanczos-lbfgs eOn campaign n=1, result file sets ranked false; potential morse/smooth/linear (periodic in x and y, cutoff 9.5).</li>
    <li>eon-svn/htst-pt-dimer-lbfgs Eon svn campaign n=1, result file sets partial true.</li>
    <li>eon-svn/htst-pt-lanczos-lbfgs Eon svn campaign n=1, result file sets partial true.</li>
    </ul>

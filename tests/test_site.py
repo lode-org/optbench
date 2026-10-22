@@ -109,6 +109,12 @@ def test_rendered_pages_use_the_board_rank():
     assert "No full harness row." not in saddle
     assert "eon-3.5.0-saddle-pt-dimer" in saddle
     assert "not yet on the harness counter" in saddle
+    htst_ranked = {row["template"] for row in document["problems"]["hTST/Pt"]["ranked"]}
+    assert "eon-client/htst-pt-dimer-lbfgs" in htst_ranked
+    assert "eon-client/htst-pt-lanczos-lbfgs" in htst_ranked
+    htst_page = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "hTST.org").read_text(encoding="utf-8")
+    assert "eon-client/htst-pt-dimer-lbfgs" in htst_page
+    assert "eon-client/htst-pt-lanczos-lbfgs" in htst_page
     assert "Per-search cost" not in saddle
     assert "noise/rgmin-dogleg-s0" in minimization
     assert 'data-field="par2_mean">81.881<' in minimization

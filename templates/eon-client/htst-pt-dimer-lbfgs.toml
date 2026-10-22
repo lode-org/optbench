@@ -2,23 +2,22 @@ id = "eon-client/htst-pt-dimer-lbfgs"
 engine = "eon"
 problem = "hTST/Pt"
 code = "eOn"
-code_version = "3.5.0"
-commit = "4d8b34baf1ba8d2d980df29838bac1f969d1662c"
+code_version = "3.6.0"
+commit = "4c1b814f62f1dcf5fcd0cf18ba0b6df3bcff7a28"
 algorithm = "Dimer L-BFGS"
-reducer = "harness"
-failure_cap = 2000000
+reducer = "htst-cycles"
 kind = "htst"
-kernel = "morse"
+kernel = "morse_shift"
 asv_class = "EonClientHtstPtDimerLbfgs"
 note = '''
-Bounded AKMC on the Pt hTST reactant. Temperature 700, confidence 1.9, prefactor 1.2e12, LBFGS, dimer rotations_max 50, converged_angle 1, displace_least_coordinated_weight 1, radius 3.3, magnitude 0.3, seed 42. num_jobs is 2. Success is one good saddle during the pass, not the 2014 rate sum. The row is partial. The harness kernel is morse/smooth/linear with D 0.7102, alpha 1.6047, r0 2.897, cutoff 9.5, and periodic boundaries in x and y.
+AKMC on the Pt hTST reactant. Temperature 700, confidence 1.9, prefactor 1.2e12, LBFGS, dimer rotations_max 50, converged_angle 1, displace_least_coordinated_weight 1, radius 3.3, magnitude 0.3, seed 42. The ranked sample is 13 shifted-Morse barrier windows under the hTST/Pt cap of 20000000. The harness kernel is r2549 Morse::force: cutoff 9.5, pair energy shifted to zero at the cutoff, minimum image on the box diagonal. D 0.7102, alpha 1.6047, r0 2.897. eOn develop 4c1b814f.
 '''
 seeds = [42]
 starts = ["pt"]
 geometry = "website/hTST/Pt/eon-dimer-lbfgs/pos.con"
 pass_limit = 1
 workers = 1
-declare_partial = true
+max_searches = 100000
 asv_full = false
 asv_timeout = 3600
 budget_seconds = 2400

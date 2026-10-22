@@ -716,6 +716,22 @@ def _geometry(template: dict) -> Path | None:
     return _archive(str(raw))
 
 
+def stated_failure_cap(template: dict) -> int:
+    """PAR-2 cap for one harness template.
+
+    The template's own failure_cap is kept when it is set. A template
+    that states none uses the problem's convergence.max_force_calls.
+    """
+    raw = template.get("failure_cap")
+    if raw not in (None, ""):
+        return int(raw)
+    problem = resolve_problem(ROOT, str(template["problem"]))
+    stated = (problem.get("convergence") or {}).get("max_force_calls")
+    if stated in (None, ""):
+        raise KeyError(f"{template.get('id')} has no failure_cap and {problem['id']} states no max_force_calls")
+    return int(stated)
+
+
 def run_case(
     template_name: str,
     seed: int,
@@ -729,6 +745,11 @@ def run_case(
     from .potserver import PotServer, remote_count
 
     template = load_template(ROOT, template_name)
+    if template_name in {
+        "eon-client/htst-pt-dimer-lbfgs",
+        "eon-client/htst-pt-lanczos-lbfgs",
+    }:
+        raise RuntimeError(f"{template_name} is the 13-window sample in optbench.eon_htst")
     family = _family_of(template)
     kind = str(template["kind"])
     if passes is None:
@@ -736,7 +757,7 @@ def run_case(
     cached = _read_cache(family, template_name, int(seed), str(start), int(passes))
     if cached is not None:
         return cached
-    cap = int(template["failure_cap"])
+    cap = stated_failure_cap(template)
     python_job = kind in {"akmc", "htst"}
     if budget is None:
         budget = int(template.get("budget_seconds") or 0)
@@ -1073,7 +1094,7 @@ def install_benchmarks(family: str, namespace: dict) -> None:
         spec = {
             "cls": str(template["asv_class"]),
             "template": template["id"],
-            "cap": int(template["failure_cap"]),
+            "cap": stated_failure_cap(template),
             "seeds": used_seeds,
             "starts": used_starts,
             "passes": passes,

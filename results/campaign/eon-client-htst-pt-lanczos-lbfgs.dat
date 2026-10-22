@@ -1,18 +1,30 @@
-force_calls 1696
-force_calls_min 1696
-force_calls_max 1696
-force_calls_median 1696.0
-call_unit total
-nfailed 0
+# counter harness. eOn AKMC on the Pt hTST reactant.
+# Temperature 700 K, prefactor 1.2e+12, from archive/entries/hTST/Pt/eon-dimer-lbfgs/report.py.
+# A barrier window closes when every reference barrier, rounded to 3 decimals, has been seen once.
+# The ranked sample is 13 barrier windows. PAR-2 uses the hTST/Pt force-call cap 20000000.
+# A rate window closes at 0.999 of rate_ref. A missing rate window leaves a finished barrier window in the sample.
+# Potential is shifted Morse, r2549 Morse::force, served by the harness.
+# matched 15 of 15 reference barriers after 15742 searches. barrier windows 13. rate windows 310.
+barrier_jobs 1210.846154
+barrier_force_calls 607392.5385
+barrier_average_over 13
+rate_jobs 50.70967742
+rate_force_calls 25434.6871
+rate_average_over 310
+temperature_K 700
+prefactor 1.2e+12
+rate_ref 155055901.2
+matched_barriers 15
+reference_barriers 15
+processes 54
+total_searches 15742
+minimize_calls 0
 code eOn
-code_version 3.5.0
-commit 4d8b34baf1ba8d2d980df29838bac1f969d1662c
+code_version 3.6.0
+commit 4c1b814f62f1dcf5fcd0cf18ba0b6df3bcff7a28
 algorithm Lanczos L-BFGS
 template eon-client/htst-pt-lanczos-lbfgs
 problem hTST/Pt
-reducer harness
 counter harness
-count_keys HarnessCounter
-partial true
-ranked false
-potential morse/smooth/linear (periodic in x and y, cutoff 9.5)
+reducer htst-cycles
+cap 20000000
