@@ -1,0 +1,1 @@
+The native ext_pot bridge keeps an atom line longer than 64 characters. A Morse bulk coordinate was cut at that buffer, the next atom was joined onto the same line, and the potential call failed before a force evaluation.
