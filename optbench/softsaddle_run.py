@@ -21,13 +21,14 @@ from pathlib import Path
 
 import numpy as np
 
+from .connection import ProcessTable, per_atom_max, periodic_lengths, tolerances
+from .connection import connected as endpoints_connected
 from .failures import classify_failure
 from .rgsaddle_minmode import (
     HarnessSurface,
     _SADDLE_CLIMB_OVERSHOOT,
     _SADDLE_ENDPOINT_BUDGET,
     _bind,
-    _cartesian_rmsd,
     _finite_point,
     _geometries,
     _hessian_spectrum,
@@ -690,7 +691,8 @@ def _judge_saddle(payload: dict, climbed: dict, potential: HarnessSurface, calls
     force_tol = float(payload["force_tol"])
     minimum = np.asarray(payload["minimum"], dtype=np.float64)
     min_energy = float(payload["min_energy"])
-    connect = float(payload["connect_rmsd"])
+    distance_difference = float(payload["distance_difference"])
+    lengths = np.asarray(payload["lengths"], dtype=np.float64)
     barrier_max = float(payload["barrier_max"])
     search_cap = int(payload["search_cap"])
     reasons = ["force_norm"]
@@ -700,8 +702,8 @@ def _judge_saddle(payload: dict, climbed: dict, potential: HarnessSurface, calls
         "iterations": climbed["iterations"],
         "hessian_index": None,
         "barrier": None,
-        "rmsd_plus": None,
-        "rmsd_minus": None,
+        "per_atom_max_plus": None,
+        "per_atom_max_minus": None,
         "lambda_distance": None,
         "saddle_distance": None,
         "saddle_x": None,
@@ -728,16 +730,14 @@ def _judge_saddle(payload: dict, climbed: dict, potential: HarnessSurface, calls
             axis = _unit(np.asarray(mode, dtype=np.float64))
             plus, _plus_ok = _lbfgs_minimize(potential, point + 0.1 * axis, force_tol, _SADDLE_ENDPOINT_BUDGET)
             minus, _minus_ok = _lbfgs_minimize(potential, point - 0.1 * axis, force_tol, _SADDLE_ENDPOINT_BUDGET)
-            plus_rmsd = _cartesian_rmsd(plus.reshape(-1, 3), minimum.reshape(-1, 3))
-            minus_rmsd = _cartesian_rmsd(minus.reshape(-1, 3), minimum.reshape(-1, 3))
-            links = (plus_rmsd <= connect) ^ (minus_rmsd <= connect)
+            links = endpoints_connected(minimum, plus, minus, lengths, distance_difference)
             barrier = float(climbed["energy"] - min_energy)
             record["barrier"] = barrier
-            record["rmsd_plus"] = plus_rmsd
-            record["rmsd_minus"] = minus_rmsd
+            record["per_atom_max_plus"] = per_atom_max(plus, minimum, lengths)
+            record["per_atom_max_minus"] = per_atom_max(minus, minimum, lengths)
             record["saddle_distance"] = _norm(point - minimum)
             record["saddle_x"] = point.copy()
-            record["novel_candidate"] = True
+            record["novel_candidate"] = bool(links)
             if climbed["x_lambda"] is not None:
                 distance = _norm(np.asarray(climbed["x_lambda"], dtype=np.float64) - minimum)
                 if distance > 0.0:
@@ -798,15 +798,15 @@ def _saddle_worker(payload: dict) -> dict:
     return judged
 
 
-def _apply_novelty(judged: dict, found: list[np.ndarray], connect: float) -> dict:
+def _apply_novelty(judged: dict, found: ProcessTable) -> dict:
     reasons = list(judged["reasons"])
     success = bool(judged["success"])
     point = judged.get("saddle_x")
     if judged.get("novel_candidate") and point is not None:
         saddle = np.asarray(point, dtype=np.float64)
-        novel = all(_cartesian_rmsd(saddle.reshape(-1, 3), old.reshape(-1, 3)) > connect for old in found)
-        if novel:
-            found.append(saddle)
+        barrier = float(judged["barrier"])
+        if not found.repeat(saddle, barrier):
+            found.add(saddle, barrier)
             judged["accepted_novel"] = True
         else:
             if "duplicate" not in reasons:
@@ -913,9 +913,10 @@ def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, forc
     from .rgsaddle_minmode import _stored
 
     positions, fixed, cell = load_con(_stored(root, con_path))
+    lengths = periodic_lengths(cell, (problem.get("potential") or {}).get("pbc"))
     goal = int((problem.get("goal") or {}).get("connected_saddles", 27))
     barrier_max = float((problem.get("goal") or {}).get("barrier_below_eV", 1.5))
-    connect = 0.5
+    distance_difference, energy_difference = tolerances(problem)
     climb_budget = int(settings["cg_iter_max"])
     search_cap = climb_budget + _SADDLE_CLIMB_OVERSHOOT + 2 * _SADDLE_ENDPOINT_BUDGET
     vectors, order = hypersphere()
@@ -950,11 +951,11 @@ def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, forc
             encoding="utf-8",
         )
     radius, _lam, _sad = _replay_radius(saved, settings)
-    found = []
+    found = ProcessTable(lengths, distance_difference, energy_difference)
     connected = 0
     for row in saved:
         if row.get("saddle_stored") is not None:
-            found.append(np.asarray(row["saddle_stored"], dtype=np.float64))
+            found.add(row["saddle_stored"], float(row["barrier"]))
         if row.get("success"):
             connected += 1
     print(
@@ -982,7 +983,8 @@ def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, forc
                     "min_energy": min_energy,
                     "settings": settings,
                     "force_tol": force_tol,
-                    "connect_rmsd": connect,
+                    "distance_difference": distance_difference,
+                    "lengths": lengths,
                     "barrier_max": barrier_max,
                     "search_cap": search_cap,
                     "climb_budget": climb_budget,
@@ -1009,7 +1011,7 @@ def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, forc
                 judged_rows = list(pool.map(_saddle_worker, payloads))
             judged_rows.sort(key=lambda row: int(row["index"]))
             for judged in judged_rows:
-                applied = _apply_novelty(judged, found, connect)
+                applied = _apply_novelty(judged, found)
                 if applied["success"]:
                     connected += 1
                 stored_point = None
@@ -1026,8 +1028,8 @@ def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, forc
                     force_norm=applied.get("force_norm"),
                     hessian_index=applied.get("hessian_index"),
                     barrier=applied.get("barrier"),
-                    rmsd_plus=applied.get("rmsd_plus"),
-                    rmsd_minus=applied.get("rmsd_minus"),
+                    per_atom_max_plus=applied.get("per_atom_max_plus"),
+                    per_atom_max_minus=applied.get("per_atom_max_minus"),
                     curvature=applied.get("curvature"),
                     converged=bool(applied.get("converged")),
                     lambda_distance=applied.get("lambda_distance"),

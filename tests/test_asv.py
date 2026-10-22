@@ -165,6 +165,7 @@ def test_pending_grid_is_every_problem_and_code():
         "eon-svn",
         "rgmin",
         "rgsaddle",
+        "rgsaddle-main",
         "geodesic",
         "ase",
         "sella",

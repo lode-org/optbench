@@ -3,7 +3,7 @@ engine = "rgsaddle"
 problem = "saddle-search/pt-island"
 code = "rgsaddle"
 code_version = "0.2.2"
-commit = "c0db2b8d333c557251635cb8bb7b3d81f0088a71"
+commit = "8fa0eb1559c92b6ae9d1de190e253787a183729d"
 algorithm = "Dimer rotation-skip L-BFGS"
 tuning = "default"
 
@@ -32,5 +32,4 @@ mode_seed = "file"
 repetitions = 1
 displace_atoms = "0,1,2,3,4,5,6"
 displace_magnitude = 0.1
-rmsd_connect = 0.5
 max_searches = 20000

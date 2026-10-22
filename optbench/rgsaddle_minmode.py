@@ -28,6 +28,8 @@ from pathlib import Path
 
 import numpy as np
 
+from .connection import ProcessTable, per_atom_max, periodic_lengths, tolerances
+from .connection import connected as endpoints_connected
 from .counter import HarnessCounter
 from .failures import classify_failure
 from .potserver import RgpotCounter
@@ -1147,8 +1149,9 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
     Each search has its own harness count: the min-mode calls plus the
     two endpoint minimizations. The repetition total also includes the
     initial minimization. Hessian calls stay in ``verify_calls``.
-    Connection uses Cartesian RMSD of the free atoms. The substrate
-    fixes the frame, so the endpoints are not Kabsch-aligned.
+    The link and the novelty test are ``optbench.connection``: per-atom
+    minimum-image distance on the free atoms, as eOn compares structures.
+    Only a connected saddle enters the process table.
     ``work`` is unused; the searches do not extract an archive.
     """
     del work
@@ -1163,7 +1166,8 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
     repetitions = int(search.get("repetitions", 1))
     listed = [int(part) for part in str(search.get("displace_atoms", "0,1,2,3,4,5,6")).split(",") if part.strip()]
     magnitude = float(search.get("displace_magnitude", 0.1))
-    connect_rmsd = float(search.get("rmsd_connect", 0.5))
+    distance_difference, energy_difference = tolerances(problem)
+    lengths = periodic_lengths(cell, (problem.get("potential") or {}).get("pbc"))
     max_searches = int(search.get("max_searches", 20000))
     free = np.flatnonzero(~fixed)
     raw = potential_from_problem(problem)
@@ -1182,7 +1186,10 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
             min_ok = bool(header["min_ok"])
             resumed_outer = minimize_calls + sum(int(row.get("endpoint_calls") or 0) for row in saved)
             search_calls = sum(int(row.get("climb_calls") or 0) for row in saved)
-            found = [np.asarray(row["saddle_x"], dtype=np.float64) for row in saved if row.get("saddle_x") is not None]
+            found = ProcessTable(lengths, distance_difference, energy_difference)
+            for row in saved:
+                if row.get("saddle_x") is not None:
+                    found.add(row["saddle_x"], float(row["barrier"]))
             connected = sum(1 for row in saved if row.get("success"))
             searches = len(saved)
             rng = _rng_restore(saved[-1]["rng_state"]) if saved else np.random.default_rng(20261015 + rep)
@@ -1200,7 +1207,7 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
             minimize_calls = int(potential.calls)
             resumed_outer = 0
             rng = np.random.default_rng(20261015 + rep)
-            found = []
+            found = ProcessTable(lengths, distance_difference, energy_difference)
             connected = 0
             searches = 0
             search_calls = 0
@@ -1296,19 +1303,15 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
                     minus, _minus_ok = _lbfgs_minimize(
                         potential, saddle_x - 0.1 * axis, force_tol, _SADDLE_ENDPOINT_BUDGET
                     )
-                    plus_rmsd = _cartesian_rmsd(plus.reshape(-1, 3), minimum.reshape(-1, 3))
-                    minus_rmsd = _cartesian_rmsd(minus.reshape(-1, 3), minimum.reshape(-1, 3))
-                    links = (plus_rmsd <= connect_rmsd) ^ (minus_rmsd <= connect_rmsd)
-                    novel = all(
-                        _cartesian_rmsd(saddle_x.reshape(-1, 3), old.reshape(-1, 3)) > connect_rmsd for old in found
-                    )
+                    links = endpoints_connected(minimum, plus, minus, lengths, distance_difference)
                     barrier = float(outcome["energy"] - min_energy)
+                    novel = links and not found.repeat(saddle_x, barrier)
                     record["barrier"] = barrier
-                    record["rmsd_plus"] = plus_rmsd
-                    record["rmsd_minus"] = minus_rmsd
+                    record["per_atom_max_plus"] = per_atom_max(plus, minimum, lengths)
+                    record["per_atom_max_minus"] = per_atom_max(minus, minimum, lengths)
                     record["reasons"] = []
                     if novel:
-                        found.append(saddle_x)
+                        found.add(saddle_x, barrier)
                         saved_point = saddle_x
                     if links and novel and barrier < barrier_max:
                         connected += 1
@@ -1316,7 +1319,7 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
                     else:
                         if not links:
                             record["reasons"].append("not_connected")
-                        if not novel:
+                        elif not novel:
                             record["reasons"].append("duplicate")
                         if barrier >= barrier_max:
                             record["reasons"].append("barrier")

@@ -1,10 +1,10 @@
-# rep 1 force_calls 20220523 unique_saddles 0 fraction_connected 0.0 total_searches 20000 connected 0 minimize_calls 14 minimum_converged 1 seed 20261016
-force_calls 20220523.0
-force_calls_min 20220523
-force_calls_max 20220523
+# rep 1 force_calls 18655791 unique_saddles 17 fraction_connected 0.00035 total_searches 20000 connected 7 minimize_calls 14 minimum_converged 1 seed 20261016
+force_calls 18655791.0
+force_calls_min 18655791
+force_calls_max 18655791
 code rgsaddle
 code_version 0.2.2
-commit c0db2b8d333c557251635cb8bb7b3d81f0088a71
+commit 8fa0eb1559c92b6ae9d1de190e253787a183729d
 algorithm Dimer FIRE
 tuning default
 template rgsaddle/saddle-dimer-fire
@@ -15,5 +15,5 @@ nfailed 1
 goal 27
 cap 5064
 n 20000
-par2_mean 10128.0
-v2_nfailed 20000
+par2_mean 10124.76205
+v2_nfailed 19993

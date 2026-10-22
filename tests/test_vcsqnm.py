@@ -53,9 +53,9 @@ def test_morse_cell_matches_the_orthorhombic_kernel():
         high, _grad, _deriv = morse_cell(frac @ up.T, up)
         low, _grad, _deriv = morse_cell(frac @ down.T, down)
         assert (high - low) / (2 * eps) == pytest.approx(deriv[index], abs=1e-4)
-    from ase.stress import full_3x3_to_voigt_6_stress, voigt_6_to_full_3x3_stress
+    voigt = pytest.importorskip("ase.stress")
 
-    stress = voigt_6_to_full_3x3_stress(full_3x3_to_voigt_6_stress(cell_stress(deriv, cell)))
+    stress = voigt.voigt_6_to_full_3x3_stress(voigt.full_3x3_to_voigt_6_stress(cell_stress(deriv, cell)))
     deralat = -float(np.linalg.det(cell)) * stress @ np.linalg.inv(cell).T
     assert np.max(np.abs(deralat - sqnm_lattice_derivative(deriv))) < 1e-8
 

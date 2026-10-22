@@ -15,6 +15,12 @@
    <td>c0db2b8d333c</td>
    <td><a href="https://github.com/OmniPotentRPC/rgsaddle">https://github.com/OmniPotentRPC/rgsaddle</a></td>
    </tr>
+   <tr>
+   <td>saddle search</td>
+   <td>main</td>
+   <td>8fa0eb1559c9</td>
+   <td><a href="https://github.com/OmniPotentRPC/rgsaddle">https://github.com/OmniPotentRPC/rgsaddle</a></td>
+   </tr>
    </tbody></table></div>
    <div class="bench-scroll"><table data-board-table="code-rows">
    <caption>Every ranked row for this code.</caption>
@@ -383,60 +389,60 @@
    <td data-field="failures">crash 0, divergence 13, cap 0, wrong_stationary 0</td>
    <td data-field="n">13</td>
    </tr>
+   <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (0.2.2) · Dimer L-BFGS">
+   <td>Pt heptamer island</td>
+   <td data-field="label">rgsaddle (0.2.2) · Dimer L-BFGS</td>
+   <td data-field="family">Minimum mode</td>
+   <td data-field="family_rank">1</td>
+   <td data-field="par2_mean">10123.7</td>
+   <td data-field="published"></td>
+   <td data-field="median_calls">411</td>
+   <td data-field="mean_calls">419.237</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 19969, cap 10, wrong_stationary 12</td>
+   <td data-field="n">20000</td>
+   </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (0.2.2) · Dimer FIRE">
    <td>Pt heptamer island</td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer FIRE</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">2</td>
-   <td data-field="par2_mean">10128</td>
+   <td data-field="par2_mean">10124.8</td>
    <td data-field="published"></td>
-   <td data-field="median_calls">1013</td>
-   <td data-field="mean_calls">1011.03</td>
+   <td data-field="median_calls">1001</td>
+   <td data-field="mean_calls">932.789</td>
    <td data-field="hessian_calls">0</td>
    <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 1, cap 19999, wrong_stationary 0</td>
-   <td data-field="n">20000</td>
-   </tr>
-   <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (0.2.2) · Dimer L-BFGS">
-   <td>Pt heptamer island</td>
-   <td data-field="label">rgsaddle (0.2.2) · Dimer L-BFGS</td>
-   <td data-field="family">Minimum mode</td>
-   <td data-field="family_rank">3</td>
-   <td data-field="par2_mean">10128</td>
-   <td data-field="published"></td>
-   <td data-field="median_calls">1013</td>
-   <td data-field="mean_calls">1012.16</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 0, cap 20000, wrong_stationary 0</td>
+   <td data-field="failures">crash 0, divergence 9589, cap 10382, wrong_stationary 22</td>
    <td data-field="n">20000</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (0.2.2) · Dimer rotation-skip L-BFGS">
    <td>Pt heptamer island</td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer rotation-skip L-BFGS</td>
    <td data-field="family">Minimum mode</td>
-   <td data-field="family_rank">4</td>
-   <td data-field="par2_mean">10128</td>
+   <td data-field="family_rank">3</td>
+   <td data-field="par2_mean">10125.1</td>
    <td data-field="published"></td>
-   <td data-field="median_calls">441</td>
-   <td data-field="mean_calls">479.98</td>
+   <td data-field="median_calls">423</td>
+   <td data-field="mean_calls">444.528</td>
    <td data-field="hessian_calls">0</td>
    <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 19718, cap 262, wrong_stationary 20</td>
+   <td data-field="failures">crash 0, divergence 19916, cap 60, wrong_stationary 18</td>
    <td data-field="n">20000</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (0.2.2) · Lanczos L-BFGS">
    <td>Pt heptamer island</td>
    <td data-field="label">rgsaddle (0.2.2) · Lanczos L-BFGS</td>
    <td data-field="family">Minimum mode</td>
-   <td data-field="family_rank">5</td>
-   <td data-field="par2_mean">10128</td>
+   <td data-field="family_rank">4</td>
+   <td data-field="par2_mean">10126.6</td>
    <td data-field="published"></td>
-   <td data-field="median_calls">1002</td>
-   <td data-field="mean_calls">998.34</td>
+   <td data-field="median_calls">465</td>
+   <td data-field="mean_calls">461.978</td>
    <td data-field="hessian_calls">0</td>
    <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 4068, cap 15932, wrong_stationary 0</td>
+   <td data-field="failures">crash 0, divergence 19996, cap 1, wrong_stationary 0</td>
    <td data-field="n">20000</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="rgsaddle (0.2.2) · Dimer rotation-skip L-BFGS">

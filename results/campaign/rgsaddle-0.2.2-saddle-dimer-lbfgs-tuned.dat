@@ -17,3 +17,5 @@ cap 5064
 n 20000
 par2_mean 10128.0
 v2_nfailed 20000
+# tuned template: kept as a record, never a ranked row
+ranked false

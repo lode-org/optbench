@@ -18,11 +18,13 @@ from optbench.surfaces import lennard_jones, morse_smooth_linear, read_con
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_island_saddle_success_is_a_cartesian_connection():
+def test_island_saddle_success_is_the_eon_per_atom_link():
     problem = resolve_problem(ROOT, "saddle-search/pt-island")
     success = problem["scoring"]["v2"]["success"]
-    assert "Cartesian RMSD" in success
-    assert "Kabsch" not in success
+    assert "distance_difference 0.1" in success
+    assert "energy_difference 0.01" in success
+    assert "RMSD" not in success
+    assert problem["connection"] == {"distance_difference": 0.1, "energy_difference": 0.01}
     assert "max_force_calls" not in (problem.get("convergence") or {})
 
 
@@ -160,7 +162,11 @@ def test_rgsaddle_templates_match_their_problem_stop():
         problem = resolve_problem(ROOT, template["problem"])
         cap = _check_stop(problem, template)
         assert cap >= 1000
-        assert template["commit"] == "c0db2b8d333c557251635cb8bb7b3d81f0088a71"
+        expected = "c0db2b8d333c557251635cb8bb7b3d81f0088a71"
+        if template["problem"] == "saddle-search/pt-island" and template.get("tuning") == "default":
+            expected = "8fa0eb1559c92b6ae9d1de190e253787a183729d"
+        assert template["commit"] == expected
+        assert "rmsd_connect" not in ((template.get("ini") or {}).get("Search") or {})
         assert template["engine"] == "rgsaddle"
     assert "rgsaddle/dimer-lbfgs" in found
     assert "rgsaddle/prfo-tuned" in found

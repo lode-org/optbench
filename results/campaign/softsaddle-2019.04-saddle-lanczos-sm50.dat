@@ -22,3 +22,5 @@ n_wrong_stationary 1
 n_divergence 4999
 n_crash 0
 v2_nfailed 5000
+# judged by Cartesian RMSD 0.5; the per-atom eOn link of the problem needs endpoint geometries this file does not store
+ranked false

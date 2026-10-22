@@ -47,39 +47,11 @@
    <td data-field="failures">crash 0, divergence 189, cap 0, wrong_stationary 0</td>
    <td data-field="n">200</td>
    </tr>
-   <tr data-problem="saddle-search/pt-island" data-label="SoftSaddle (2019.04) · adaptive hypersphere LBFGS Lanczos">
-   <td>Pt heptamer island</td>
-   <td data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Lanczos</td>
-   <td data-field="family">Minimum mode</td>
-   <td data-field="family_rank">1</td>
-   <td data-field="par2_mean">10124.2</td>
-   <td data-field="published"></td>
-   <td data-field="median_calls">389</td>
-   <td data-field="mean_calls">431.839</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 4884, cap 108, wrong_stationary 6</td>
-   <td data-field="n">5000</td>
-   </tr>
-   <tr data-problem="saddle-search/pt-island" data-label="SoftSaddle (2019.04) · adaptive hypersphere LBFGS Davidson">
-   <td>Pt heptamer island</td>
-   <td data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Davidson</td>
-   <td data-field="family">Single-ended saddle</td>
-   <td data-field="family_rank">2</td>
-   <td data-field="par2_mean">10128</td>
-   <td data-field="published"></td>
-   <td data-field="median_calls">1060</td>
-   <td data-field="mean_calls">1059.76</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 0, cap 5000, wrong_stationary 0</td>
-   <td data-field="n">5000</td>
-   </tr>
    <tr data-problem="saddle-search/pt-island" data-label="SoftSaddle · adaptive_HSphere-lbfgs-davidson-sm50">
    <td>Pt heptamer island</td>
    <td data-field="label">SoftSaddle · adaptive_HSphere-lbfgs-davidson-sm50</td>
    <td data-field="family">Single-ended saddle</td>
-   <td data-field="family_rank">3</td>
+   <td data-field="family_rank">2</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">423491</td>
    <td data-field="median_calls"></td>
@@ -93,7 +65,7 @@
    <td>Pt heptamer island</td>
    <td data-field="label">SoftSaddle · adaptive_HSphere-lbfgs-lanczos-sm50</td>
    <td data-field="family">Minimum mode</td>
-   <td data-field="family_rank">6</td>
+   <td data-field="family_rank">5</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">814519</td>
    <td data-field="median_calls"></td>
@@ -107,7 +79,7 @@
    <td>Pt heptamer island</td>
    <td data-field="label">SoftSaddle · adaptive_HSphere-lbfgs-lanczos-sm0</td>
    <td data-field="family">Minimum mode</td>
-   <td data-field="family_rank">7</td>
+   <td data-field="family_rank">6</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">1.00343e+06</td>
    <td data-field="median_calls"></td>
