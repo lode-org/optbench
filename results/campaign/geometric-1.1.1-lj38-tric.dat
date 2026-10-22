@@ -1,0 +1,31 @@
+# counter harness. One force call is one RgpotCounter.calculate entry.
+# geomeTRIC finite-difference Hessians are not used.
+# v2 success is under the cap, at the force stop, and Hessian index 0.
+# energy and Kabsch RMSD were not applied: the problem file has no energy_tol, rmsd_tol, or per-start reference.
+# LJ38 index removes the six rigid modes. A curvature is negative only below -max(force_norm, 1e-8*||H||_F, 1e-6).
+# final coordinate system: CartesianCoordinates 3, DelocalizedInternalCoordinates 997
+# TRIC coordinates, DelocalizedInternalCoordinates with connect false and addcart false. Bonds are the two nearest neighbors. The covalent-radius graph is not used: pairs inside 1 Angstrom would be bonded and the primitive G matrix does not finish on these starts. Atoms are labeled H so Schlegel's guess stays positive near sigma. The stop, trust radius, and Hessian policy match the Cartesian row. A failed coordinate rebuild can continue in Cartesian coordinates, which is the library recovery.
+force_calls 1026
+force_calls_min 363
+force_calls_max 5339
+nfailed 9
+median 880
+code geomeTRIC
+code_version 1.1.1
+commit f657e69bae9c81bf7a23e7375db98502ca5c8c30
+algorithm TRIC
+template geometric/lj38-tric
+tuning default
+counter harness
+problem minimization/lj38
+par2_mean 1216.215
+wilson_low 0.98169053113
+wilson_high 0.994559245554
+par2_median 885
+par2_median_low 856.9875
+par2_median_high 912
+v2_nfailed 10
+v2_successes 990
+n 1000
+energy_min -170.275056984
+energy_max -101.930344998

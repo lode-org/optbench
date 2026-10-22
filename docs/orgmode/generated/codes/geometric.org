@@ -1,0 +1,108 @@
+#+TITLE: geomeTRIC
+#+OPTIONS: toc:nil num:nil author:nil
+
+#+begin_export rst
+.. raw:: html
+
+   <section class="bench" id="code-geometric">
+   <h2>geomeTRIC</h2>
+   <div class="bench-scroll"><table>
+   <caption>Registry pins.</caption>
+   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
+   <tr>
+   <td>minimization</td>
+   <td>1.1.1</td>
+   <td>f657e69bae9c</td>
+   <td><a href="https://github.com/leeping/geomeTRIC">https://github.com/leeping/geomeTRIC</a></td>
+   </tr>
+   </tbody></table></div>
+   <div class="bench-scroll"><table data-board-table="code-rows">
+   <caption>Every ranked row for this code.</caption>
+   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <tr data-problem="minimization/lj38" data-label="geomeTRIC (1.1.1) · Cartesian">
+   <td>Lennard-Jones 38 clusters</td>
+   <td data-field="label">geomeTRIC (1.1.1) · Cartesian</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">24</td>
+   <td data-field="par2_mean">507.683</td>
+   <td data-field="published"></td>
+   <td data-field="median_calls">329</td>
+   <td data-field="mean_calls">389.74</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 6</td>
+   <td data-field="n">1000</td>
+   </tr>
+   <tr data-problem="minimization/lj38" data-label="geomeTRIC (1.1.1) · TRIC">
+   <td>Lennard-Jones 38 clusters</td>
+   <td data-field="label">geomeTRIC (1.1.1) · TRIC</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">48</td>
+   <td data-field="par2_mean">1216.21</td>
+   <td data-field="published"></td>
+   <td data-field="median_calls">876</td>
+   <td data-field="mean_calls">1017.88</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 9, divergence 0, cap 0, wrong_stationary 1</td>
+   <td data-field="n">1000</td>
+   </tr>
+   <tr data-problem="minimization/lj38-noise" data-label="geomeTRIC (1.1.1) · Cartesian">
+   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
+   <td data-field="label">geomeTRIC (1.1.1) · Cartesian</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">10</td>
+   <td data-field="par2_mean">488.502</td>
+   <td data-field="published"></td>
+   <td data-field="median_calls">330</td>
+   <td data-field="mean_calls">390.099</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 2, cap 0, wrong_stationary 3</td>
+   <td data-field="n">1000</td>
+   </tr>
+   <tr data-problem="minimization/lj38-noise" data-label="geomeTRIC (1.1.1) · TRIC">
+   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
+   <td data-field="label">geomeTRIC (1.1.1) · TRIC</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">19</td>
+   <td data-field="par2_mean">1216.21</td>
+   <td data-field="published"></td>
+   <td data-field="median_calls">876</td>
+   <td data-field="mean_calls">1017.88</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 9, divergence 0, cap 0, wrong_stationary 1</td>
+   <td data-field="n">1000</td>
+   </tr>
+   <tr data-problem="minimization/morse-bulk" data-label="geomeTRIC (1.1.1) · Cartesian">
+   <td>Morse bulk</td>
+   <td data-field="label">geomeTRIC (1.1.1) · Cartesian</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">16</td>
+   <td data-field="par2_mean">43.96</td>
+   <td data-field="published"></td>
+   <td data-field="median_calls">45</td>
+   <td data-field="mean_calls">43.96</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">100</td>
+   </tr>
+   <tr data-problem="minimization/morse-bulk" data-label="geomeTRIC (1.1.1) · TRIC">
+   <td>Morse bulk</td>
+   <td data-field="label">geomeTRIC (1.1.1) · TRIC</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">56</td>
+   <td data-field="par2_mean">1312.01</td>
+   <td data-field="published"></td>
+   <td data-field="median_calls">808.5</td>
+   <td data-field="mean_calls">1212.01</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 0</td>
+   <td data-field="n">100</td>
+   </tr>
+   </tbody></table></div>
+   </section>
+#+end_export

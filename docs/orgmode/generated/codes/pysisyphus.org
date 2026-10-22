@@ -37,7 +37,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">pysisyphus (0.1.dev1) · conjugate gradient</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">66</td>
+   <td data-field="family_rank">68</td>
    <td data-field="par2_mean">15124.7</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -51,7 +51,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">pysisyphus (0.1.dev1) · steepest descent</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">67</td>
+   <td data-field="family_rank">69</td>
    <td data-field="par2_mean">16094.8</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -65,7 +65,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">pysisyphus (0.1.dev1) · L-BFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">73</td>
+   <td data-field="family_rank">75</td>
    <td data-field="par2_mean">20000</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>

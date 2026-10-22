@@ -35,6 +35,7 @@ Archived rows use the same key and appear on that code page.
    <li><a href="generated/codes/airss.html">AIRSS</a></li>
    <li><a href="generated/codes/vc-sqnm.html">vc-SQNM</a></li>
    <li><a href="generated/codes/softsaddle.html">SoftSaddle</a></li>
+   <li><a href="generated/codes/geometric.html">geomeTRIC</a></li>
    <li><a href="generated/codes/eon--svn-r2549.html">EON (SVN r2549)</a></li>
    <li><a href="generated/codes/eon--develop-500350d9.html">eOn (develop 500350d9)</a></li>
    <li><a href="generated/codes/eon-r2006.html">Eon r2006</a></li>
@@ -69,6 +70,7 @@ Archived rows use the same key and appear on that code page.
    generated/codes/airss
    generated/codes/vc-sqnm
    generated/codes/softsaddle
+   generated/codes/geometric
    generated/codes/eon--svn-r2549
    generated/codes/eon--develop-500350d9
    generated/codes/eon-r2006

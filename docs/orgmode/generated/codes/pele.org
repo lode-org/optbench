@@ -135,7 +135,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">pele (0.1.2) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">51</td>
+   <td data-field="family_rank">53</td>
    <td data-field="par2_mean">2141.38</td>
    <td data-field="published"></td>
    <td data-field="median_calls">739</td>
@@ -149,7 +149,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">pele (0.1.2) · steepest descent</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">72</td>
+   <td data-field="family_rank">74</td>
    <td data-field="par2_mean">20000</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -191,7 +191,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">pele (0.1.2) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">18</td>
+   <td data-field="family_rank">20</td>
    <td data-field="par2_mean">1909.56</td>
    <td data-field="published"></td>
    <td data-field="median_calls">614.5</td>
@@ -205,7 +205,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">pele (0.1.2) · steepest descent</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">25</td>
+   <td data-field="family_rank">27</td>
    <td data-field="par2_mean">19975.4</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -219,7 +219,7 @@
    <td>Morse bulk</td>
    <td data-field="label">pele (0.1.2) · LBFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">36</td>
+   <td data-field="family_rank">37</td>
    <td data-field="par2_mean">92.06</td>
    <td data-field="published"></td>
    <td data-field="median_calls">73</td>
@@ -233,7 +233,7 @@
    <td>Morse bulk</td>
    <td data-field="label">pele (0.1.2) · MYLBFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">37</td>
+   <td data-field="family_rank">38</td>
    <td data-field="par2_mean">92.06</td>
    <td data-field="published"></td>
    <td data-field="median_calls">73</td>
@@ -247,7 +247,7 @@
    <td>Morse bulk</td>
    <td data-field="label">pele (0.1.2) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">43</td>
+   <td data-field="family_rank">44</td>
    <td data-field="par2_mean">118.84</td>
    <td data-field="published"></td>
    <td data-field="median_calls">121</td>
@@ -261,7 +261,7 @@
    <td>Morse bulk</td>
    <td data-field="label">pele (0.1.2) · steepest descent</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">67</td>
+   <td data-field="family_rank">69</td>
    <td data-field="par2_mean">20000</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>

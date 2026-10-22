@@ -23,7 +23,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">vc-SQNM (1.3) · ASE-SQNM</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">27</td>
+   <td data-field="family_rank">28</td>
    <td data-field="par2_mean">598.05</td>
    <td data-field="published"></td>
    <td data-field="median_calls">365.5</td>
@@ -37,7 +37,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">vc-SQNM (1.3) · SQNM</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">28</td>
+   <td data-field="family_rank">29</td>
    <td data-field="par2_mean">598.05</td>
    <td data-field="published"></td>
    <td data-field="median_calls">365.5</td>
@@ -51,7 +51,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">vc-SQNM (1.3) · ASE-SQNM</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">11</td>
+   <td data-field="family_rank">12</td>
    <td data-field="par2_mean">598.05</td>
    <td data-field="published"></td>
    <td data-field="median_calls">365.5</td>
@@ -65,7 +65,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">vc-SQNM (1.3) · SQNM</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">12</td>
+   <td data-field="family_rank">13</td>
    <td data-field="par2_mean">598.05</td>
    <td data-field="published"></td>
    <td data-field="median_calls">365.5</td>
@@ -107,7 +107,7 @@
    <td>Morse bulk</td>
    <td data-field="label">vc-SQNM (1.3) · vc-SQNM</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">17</td>
+   <td data-field="family_rank">18</td>
    <td data-field="par2_mean">48.73</td>
    <td data-field="published"></td>
    <td data-field="median_calls">40</td>
@@ -121,7 +121,7 @@
    <td>Morse bulk</td>
    <td data-field="label">vc-SQNM (1.3) · ASE-vc-SQNM</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">18</td>
+   <td data-field="family_rank">19</td>
    <td data-field="par2_mean">49.37</td>
    <td data-field="published"></td>
    <td data-field="median_calls">40</td>

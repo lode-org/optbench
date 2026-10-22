@@ -52,6 +52,19 @@ def _quiet_threads() -> None:
         os.environ[name] = "1"
 
 
+def _exception_text(exc: BaseException) -> str:
+    """One ``Type: message`` string.
+
+    geomeTRIC already stores ``RuntimeError: Not bracketed``. Raising that
+    text again must not add a second type prefix.
+    """
+    message = str(exc)
+    prefix = f"{type(exc).__name__}: "
+    if message.startswith(prefix):
+        return message
+    return prefix + message
+
+
 class _Observed:
     """Clean potential plus the noisy force the stepper sees."""
 
@@ -154,6 +167,8 @@ def _minimize_job(job: dict) -> dict:
             point, stopped = _drive_ase(job, x0, observed, potential, cap, clean_tol, energy_tol, components)
         elif family == "sella":
             point, stopped = _drive_sella(job, x0, observed, potential, cap, clean_tol, energy_tol, components)
+        elif family == "geometric":
+            point, stopped = _drive_geometric(job, x0, observed, potential, cap, clean_tol, energy_tol, components)
         elif family == "gmin":
             point, stopped = _drive_gmin(job, x0, observed, potential, cap, clean_tol, energy_tol, components)
         elif family == "vcsqnm":
@@ -171,9 +186,11 @@ def _minimize_job(job: dict) -> dict:
         else:
             raise ValueError(f"unknown solver family {family}")
     except ForceCallCap as exc:
-        error = f"ForceCallCap: {exc}"
+        error = _exception_text(exc)
     except Exception as exc:
-        error = f"{type(exc).__name__}: {exc}"
+        error = _exception_text(exc)
+    if point is None and potential is not None and getattr(potential, "last_point", None) is not None:
+        point = potential.last_point
     if potential is not None and point is not None:
         calls = int(potential.counter.calls)
         try:
@@ -241,6 +258,11 @@ def _minimize_job(job: dict) -> dict:
         "seconds": time.perf_counter() - started,
         "rgmin_stop": None if report is None else str(getattr(report, "stop", "")),
     }
+    meta = getattr(potential, "geometric_meta", None) if potential is not None else None
+    if meta:
+        record["coordinate_system"] = meta["coordinate_system"]
+        record["geometric_steps"] = meta["geometric_steps"]
+        record["rebuilds"] = meta["rebuilds"]
     if error:
         record["error"] = error
     return record
@@ -391,6 +413,46 @@ def _drive_ase(job, x0, observed, potential, cap, clean_tol, energy_tol, compone
     return point, stopped
 
 
+def _drive_geometric(job, x0, observed, potential, cap, clean_tol, energy_tol, components):
+    import numpy as np
+
+    from optbench.runners.geometric_min import optimize
+
+    def evaluate(flat):
+        energy, gradient = observed(np.asarray(flat, dtype=np.float64).reshape(-1))
+        return float(energy), np.asarray(gradient, dtype=np.float64)
+
+    def stop(_gradient):
+        return observed.met(clean_tol, energy_tol, components)
+
+    report = optimize(
+        {
+            "coords": x0,
+            "box": None,
+            "kind": "lj",
+            "coordsys": str(job["options"].get("coordsys") or job.get("method") or "cart"),
+            "neighbors": int(job["options"].get("neighbors") or 2),
+            "element": str(job["options"].get("element") or "H"),
+            "cap": cap,
+            "start": job.get("start"),
+        },
+        evaluate,
+        stop,
+    )
+    potential.last_point = report["point"]
+    potential.geometric_meta = {
+        "coordinate_system": str(report.get("coordinate_system") or ""),
+        "geometric_steps": int(report.get("steps") or 0),
+        "rebuilds": int(report.get("rebuilds") or 0),
+    }
+    if report.get("error"):
+        text = str(report["error"])
+        if "ForceCallCap" in text or "force-call cap" in text:
+            raise ForceCallCap(text)
+        raise RuntimeError(text)
+    return report["point"], bool(report["stopped"])
+
+
 def _drive_vcsqnm(job, x0, observed, potential, cap, clean_tol, energy_tol, components):
     import numpy as np
 
@@ -484,7 +546,7 @@ def _drive_sella(job, x0, observed, potential, cap, clean_tol, energy_tol, compo
     return point, stopped
 
 
-def _dat(summary: dict, template: dict, metrics: dict, sigma: float) -> str:
+def _dat(summary: dict, template: dict, metrics: dict, sigma: float, ended: dict[str, int] | None = None) -> str:
     rows = {
         "force_calls": summary.get("force_calls"),
         "force_calls_min": summary.get("force_calls_min"),
@@ -520,6 +582,9 @@ def _dat(summary: dict, template: dict, metrics: dict, sigma: float) -> str:
         "# A curvature is negative only below -max(force_norm, 1e-8*||H||_F, 1e-6).",
         "# Energy and Kabsch RMSD are not applied: the problem file has no per-start reference.",
     ]
+    if ended:
+        parts = ", ".join(f"{name} {count}" for name, count in sorted(ended.items()))
+        lines.append("# final coordinate system: " + parts)
     note = str(template.get("note") or "").strip()
     if note:
         lines.append("# " + note.replace("\n", " "))
@@ -565,6 +630,15 @@ def run_template(
         version = str(rgmin.__version__)
         if template.get("code_version") and version != str(template["code_version"]):
             raise RuntimeError(f"rgmin {version} does not match template {template['code_version']}")
+    if family == "geometric":
+        import geometric
+
+        version = str(geometric.__version__)
+        revision = str(getattr(geometric, "__git_revision__", "") or "")
+        if template.get("code_version") and version != str(template["code_version"]):
+            raise RuntimeError(f"geometric {version} does not match template {template['code_version']}")
+        if template.get("commit") and revision and revision != str(template["commit"]):
+            raise RuntimeError(f"geometric revision {revision} does not match template {template['commit']}")
     if family == "gmin":
         from optbench.gmin_lbfgs import require_revision
 
@@ -624,20 +698,44 @@ def run_template(
                 "cap": cap,
             }
         )
-    if workers <= 1:
-        records = [_minimize_job(job) for job in jobs]
-    else:
-        import multiprocessing as mp
+    done_rows: dict[int, dict] = {}
+    partial_path = output.with_suffix(".partial.jsonl")
+    if partial_path.is_file():
+        for line in partial_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            done_rows[int(row["index"])] = row
+    pending = [job for job in jobs if job["index"] not in done_rows]
+    if pending:
+        partial_path.parent.mkdir(parents=True, exist_ok=True)
+        with partial_path.open("a", encoding="utf-8") as handle:
+            if workers <= 1:
+                for job in pending:
+                    record = _minimize_job(job)
+                    done_rows[int(record["index"])] = record
+                    handle.write(json.dumps(record, sort_keys=True) + "\n")
+                    handle.flush()
+            else:
+                import multiprocessing as mp
 
-        context = mp.get_context("spawn")
-        with ProcessPoolExecutor(max_workers=workers, mp_context=context) as pool:
-            futures = [pool.submit(_minimize_job, job) for job in jobs]
-            records = []
-            total = len(futures)
-            for done, future in enumerate(as_completed(futures), 1):
-                records.append(future.result())
-                if done == total or done % 50 == 0:
-                    print(f"{template['id']} {done}/{total}", flush=True)
+                context = mp.get_context("spawn")
+                with ProcessPoolExecutor(max_workers=workers, mp_context=context) as pool:
+                    futures = {pool.submit(_minimize_job, job): job["index"] for job in pending}
+                    total = len(jobs)
+                    finished = len(done_rows)
+                    for future in as_completed(futures):
+                        record = future.result()
+                        done_rows[int(record["index"])] = record
+                        handle.write(json.dumps(record, sort_keys=True) + "\n")
+                        handle.flush()
+                        finished += 1
+                        if finished == total or finished % 50 == 0:
+                            print(f"{template['id']} {finished}/{total}", flush=True)
+    records = [done_rows[job["index"]] for job in jobs]
     records.sort(key=lambda row: row["index"])
     for record in records:
         record.pop("index", None)
@@ -700,10 +798,17 @@ def run_template(
             }
         ],
     }
+    ended: dict[str, int] = {}
+    for record in records:
+        name = str(record.get("coordinate_system") or "")
+        if name:
+            ended[name] = ended.get(name, 0) + 1
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(_dat(summary, template, metrics, sigma), encoding="utf-8")
+    output.write_text(_dat(summary, template, metrics, sigma, ended), encoding="utf-8")
     write_starts(output.with_suffix(".starts.jsonl"), records)
     output.with_suffix(".v2.json").write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    if partial_path.is_file() and len(records) == len(jobs):
+        partial_path.unlink()
     summary["starts"] = len(records)
     summary["template"] = template["id"]
     summary["problem"] = problem["id"]

@@ -135,7 +135,7 @@
    <td>Morse bulk</td>
    <td data-field="label">OPTIM · L-BFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">16</td>
+   <td data-field="family_rank">17</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">46</td>
    <td data-field="median_calls">45</td>
@@ -149,7 +149,7 @@
    <td>Morse bulk</td>
    <td data-field="label">OPTIM (svn-snapshot) · L-BFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">59</td>
+   <td data-field="family_rank">61</td>
    <td data-field="par2_mean">17408.8</td>
    <td data-field="published"></td>
    <td data-field="median_calls">65</td>

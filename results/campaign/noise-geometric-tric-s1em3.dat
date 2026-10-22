@@ -1,0 +1,33 @@
+# counter harness. One force call is one clean energy and gradient.
+# Noise is added after the call. A repeated coordinate keeps that sample.
+# The index uses the clean Hessian. Six rigid modes are removed.
+# A curvature is negative only below -max(force_norm, 1e-8*||H||_F, 1e-6).
+# Energy and Kabsch RMSD are not applied: the problem file has no per-start reference.
+# final coordinate system: CartesianCoordinates 5, DelocalizedInternalCoordinates 995
+# geomeTRIC 1.1.1 trust-radius optimizer. The custom engine sees the harness Lennard-Jones energy and the noisy force, in Hartree and Hartree/Bohr. The search stops on the noise rule. Cartesian uses an empty bond list. TRIC uses the two nearest neighbors and labels the atoms H so Schlegel's guess stays defined at these distances. The index is the clean Hessian with the rigid-mode rule.
+force_calls 939
+force_calls_min 322
+force_calls_max 5937
+nfailed 13
+median 824
+code geomeTRIC
+code_version 1.1.1
+commit f657e69bae9c81bf7a23e7375db98502ca5c8c30
+algorithm TRIC
+template noise/geometric-tric-s1em3
+tuning default
+counter harness
+problem minimization/lj38-noise
+sigma 0.001
+par2_mean 1360.23
+wilson_low 0.966914326653
+wilson_high 0.985427292235
+par2_median 834
+par2_median_low 801
+par2_median_high 858.0125
+v2_nfailed 22
+v2_successes 978
+n 1000
+cap 10000
+energy_min -170.158430175
+energy_max -110.797391024

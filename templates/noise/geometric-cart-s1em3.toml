@@ -1,0 +1,19 @@
+id = "noise/geometric-cart-s1em3"
+engine = "noise"
+problem = "minimization/lj38-noise"
+code = "geomeTRIC"
+code_version = "1.1.1"
+commit = "f657e69bae9c81bf7a23e7375db98502ca5c8c30"
+algorithm = "Cartesian"
+tuning = "default"
+note = "geomeTRIC 1.1.1 trust-radius optimizer. The custom engine sees the harness Lennard-Jones energy and the noisy force, in Hartree and Hartree/Bohr. The search stops on the noise rule. Cartesian uses an empty bond list. TRIC uses the two nearest neighbors and labels the atoms H so Schlegel's guess stays defined at these distances. The index is the clean Hessian with the rigid-mode rule."
+
+[solver]
+family = "geometric"
+coordsys = "cart"
+neighbors = 2
+element = "H"
+
+[noise]
+sigma = 0.001
+seed = 20261016

@@ -37,7 +37,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">DL-FIND (0.0.3) · conjugate gradient</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">55</td>
+   <td data-field="family_rank">57</td>
    <td data-field="par2_mean">3048.62</td>
    <td data-field="published"></td>
    <td data-field="median_calls">2554</td>
@@ -51,7 +51,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">DL-FIND (0.0.3) · steepest descent</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">56</td>
+   <td data-field="family_rank">58</td>
    <td data-field="par2_mean">3093.74</td>
    <td data-field="published"></td>
    <td data-field="median_calls">2577</td>
@@ -79,7 +79,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">DL-FIND (0.0.3) · conjugate gradient</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">20</td>
+   <td data-field="family_rank">22</td>
    <td data-field="par2_mean">2747.86</td>
    <td data-field="published"></td>
    <td data-field="median_calls">1711.5</td>
@@ -93,7 +93,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">DL-FIND (0.0.3) · steepest descent</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">21</td>
+   <td data-field="family_rank">23</td>
    <td data-field="par2_mean">2798.89</td>
    <td data-field="published"></td>
    <td data-field="median_calls">2371.5</td>
@@ -107,7 +107,7 @@
    <td>Morse bulk</td>
    <td data-field="label">DL-FIND (0.0.3) · L-BFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">55</td>
+   <td data-field="family_rank">57</td>
    <td data-field="par2_mean">13626.5</td>
    <td data-field="published"></td>
    <td data-field="median_calls">74.5</td>
@@ -121,7 +121,7 @@
    <td>Morse bulk</td>
    <td data-field="label">DL-FIND (0.0.3) · conjugate gradient</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">58</td>
+   <td data-field="family_rank">60</td>
    <td data-field="par2_mean">16449.2</td>
    <td data-field="published"></td>
    <td data-field="median_calls">234.5</td>
@@ -135,7 +135,7 @@
    <td>Morse bulk</td>
    <td data-field="label">DL-FIND (0.0.3) · steepest descent</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">60</td>
+   <td data-field="family_rank">62</td>
    <td data-field="par2_mean">17438.6</td>
    <td data-field="published"></td>
    <td data-field="median_calls">264</td>

@@ -107,7 +107,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · BB</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">29</td>
+   <td data-field="family_rank">30</td>
    <td data-field="par2_mean">639.474</td>
    <td data-field="published"></td>
    <td data-field="median_calls">471.5</td>
@@ -121,7 +121,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · BB</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">30</td>
+   <td data-field="family_rank">31</td>
    <td data-field="par2_mean">639.474</td>
    <td data-field="published"></td>
    <td data-field="median_calls">471.5</td>
@@ -135,7 +135,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · CG</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">32</td>
+   <td data-field="family_rank">33</td>
    <td data-field="par2_mean">669.237</td>
    <td data-field="published"></td>
    <td data-field="median_calls">538</td>
@@ -149,7 +149,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · CG</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">33</td>
+   <td data-field="family_rank">34</td>
    <td data-field="par2_mean">669.237</td>
    <td data-field="published"></td>
    <td data-field="median_calls">538</td>
@@ -163,7 +163,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">40</td>
+   <td data-field="family_rank">41</td>
    <td data-field="par2_mean">769.36</td>
    <td data-field="published"></td>
    <td data-field="median_calls">625.5</td>
@@ -177,7 +177,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">41</td>
+   <td data-field="family_rank">42</td>
    <td data-field="par2_mean">769.36</td>
    <td data-field="published"></td>
    <td data-field="median_calls">625.5</td>
@@ -191,7 +191,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · FIRE2</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">42</td>
+   <td data-field="family_rank">43</td>
    <td data-field="par2_mean">845.947</td>
    <td data-field="published"></td>
    <td data-field="median_calls">639.5</td>
@@ -205,7 +205,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · FIRE2</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">43</td>
+   <td data-field="family_rank">44</td>
    <td data-field="par2_mean">845.947</td>
    <td data-field="published"></td>
    <td data-field="median_calls">639.5</td>
@@ -219,7 +219,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · BFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">44</td>
+   <td data-field="family_rank">45</td>
    <td data-field="par2_mean">1010.45</td>
    <td data-field="published"></td>
    <td data-field="median_calls">970</td>
@@ -233,7 +233,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · BFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">45</td>
+   <td data-field="family_rank">46</td>
    <td data-field="par2_mean">1010.45</td>
    <td data-field="published"></td>
    <td data-field="median_calls">970</td>
@@ -247,7 +247,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · QUICKMIN</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">48</td>
+   <td data-field="family_rank">50</td>
    <td data-field="par2_mean">1933</td>
    <td data-field="published"></td>
    <td data-field="median_calls">1598</td>
@@ -261,7 +261,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · QUICKMIN</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">49</td>
+   <td data-field="family_rank">51</td>
    <td data-field="par2_mean">1933</td>
    <td data-field="published"></td>
    <td data-field="median_calls">1598</td>
@@ -275,7 +275,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · DIIS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">50</td>
+   <td data-field="family_rank">52</td>
    <td data-field="par2_mean">1967.42</td>
    <td data-field="published"></td>
    <td data-field="median_calls">1652</td>
@@ -289,7 +289,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · SR1</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">52</td>
+   <td data-field="family_rank">54</td>
    <td data-field="par2_mean">2185.66</td>
    <td data-field="published"></td>
    <td data-field="median_calls">1728</td>
@@ -303,7 +303,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · SR2</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">53</td>
+   <td data-field="family_rank">55</td>
    <td data-field="par2_mean">2298.44</td>
    <td data-field="published"></td>
    <td data-field="median_calls">1837.5</td>
@@ -317,7 +317,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · SD</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">62</td>
+   <td data-field="family_rank">64</td>
    <td data-field="par2_mean">8392.75</td>
    <td data-field="published"></td>
    <td data-field="median_calls">6099</td>
@@ -331,7 +331,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · SD</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">63</td>
+   <td data-field="family_rank">65</td>
    <td data-field="par2_mean">8392.75</td>
    <td data-field="published"></td>
    <td data-field="median_calls">6099</td>
@@ -345,7 +345,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.1) · ADAM</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">64</td>
+   <td data-field="family_rank">66</td>
    <td data-field="par2_mean">13835.7</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -359,7 +359,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · ADAM</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">68</td>
+   <td data-field="family_rank">70</td>
    <td data-field="par2_mean">16420.2</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -373,7 +373,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · SR1</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">69</td>
+   <td data-field="family_rank">71</td>
    <td data-field="par2_mean">19908.9</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -387,7 +387,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · DIIS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">70</td>
+   <td data-field="family_rank">72</td>
    <td data-field="par2_mean">19945</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -401,7 +401,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">rgmin (0.4.0) · SR2</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">74</td>
+   <td data-field="family_rank">76</td>
    <td data-field="par2_mean">20000</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -457,7 +457,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">rgmin (0.4.1) · CG</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">13</td>
+   <td data-field="family_rank">14</td>
    <td data-field="par2_mean">669.237</td>
    <td data-field="published"></td>
    <td data-field="median_calls">538</td>
@@ -471,7 +471,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">rgmin (0.4.1) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">15</td>
+   <td data-field="family_rank">16</td>
    <td data-field="par2_mean">769.36</td>
    <td data-field="published"></td>
    <td data-field="median_calls">625.5</td>
@@ -583,7 +583,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.1) · CG</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">19</td>
+   <td data-field="family_rank">20</td>
    <td data-field="par2_mean">50.49</td>
    <td data-field="published"></td>
    <td data-field="median_calls">50</td>
@@ -597,7 +597,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · BFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">25</td>
+   <td data-field="family_rank">26</td>
    <td data-field="par2_mean">54.04</td>
    <td data-field="published"></td>
    <td data-field="median_calls">50</td>
@@ -611,7 +611,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.1) · BFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">26</td>
+   <td data-field="family_rank">27</td>
    <td data-field="par2_mean">54.04</td>
    <td data-field="published"></td>
    <td data-field="median_calls">50</td>
@@ -625,7 +625,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · CG</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">28</td>
+   <td data-field="family_rank">29</td>
    <td data-field="par2_mean">54.72</td>
    <td data-field="published"></td>
    <td data-field="median_calls">54</td>
@@ -639,7 +639,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.1) · SR2</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">29</td>
+   <td data-field="family_rank">30</td>
    <td data-field="par2_mean">59.53</td>
    <td data-field="published"></td>
    <td data-field="median_calls">61</td>
@@ -653,7 +653,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.1) · SR1</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">31</td>
+   <td data-field="family_rank">32</td>
    <td data-field="par2_mean">61.53</td>
    <td data-field="published"></td>
    <td data-field="median_calls">65.5</td>
@@ -667,7 +667,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.1) · QUICKMIN</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">32</td>
+   <td data-field="family_rank">33</td>
    <td data-field="par2_mean">61.75</td>
    <td data-field="published"></td>
    <td data-field="median_calls">61</td>
@@ -681,7 +681,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · QUICKMIN</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">33</td>
+   <td data-field="family_rank">34</td>
    <td data-field="par2_mean">62.03</td>
    <td data-field="published"></td>
    <td data-field="median_calls">62</td>
@@ -695,7 +695,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.1) · SD</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">35</td>
+   <td data-field="family_rank">36</td>
    <td data-field="par2_mean">90.48</td>
    <td data-field="published"></td>
    <td data-field="median_calls">89</td>
@@ -709,7 +709,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · SD</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">38</td>
+   <td data-field="family_rank">39</td>
    <td data-field="par2_mean">96.59</td>
    <td data-field="published"></td>
    <td data-field="median_calls">97</td>
@@ -723,7 +723,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.1) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">40</td>
+   <td data-field="family_rank">41</td>
    <td data-field="par2_mean">113.19</td>
    <td data-field="published"></td>
    <td data-field="median_calls">113</td>
@@ -737,7 +737,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">42</td>
+   <td data-field="family_rank">43</td>
    <td data-field="par2_mean">116.19</td>
    <td data-field="published"></td>
    <td data-field="median_calls">119</td>
@@ -751,7 +751,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · FIRE2</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">44</td>
+   <td data-field="family_rank">45</td>
    <td data-field="par2_mean">121.85</td>
    <td data-field="published"></td>
    <td data-field="median_calls">124</td>
@@ -765,7 +765,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.1) · FIRE2</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">45</td>
+   <td data-field="family_rank">46</td>
    <td data-field="par2_mean">121.85</td>
    <td data-field="published"></td>
    <td data-field="median_calls">124</td>
@@ -779,7 +779,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.1) · ADAM</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">49</td>
+   <td data-field="family_rank">50</td>
    <td data-field="par2_mean">219.34</td>
    <td data-field="published"></td>
    <td data-field="median_calls">222</td>
@@ -793,7 +793,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · ADAM</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">50</td>
+   <td data-field="family_rank">51</td>
    <td data-field="par2_mean">285.73</td>
    <td data-field="published"></td>
    <td data-field="median_calls">285</td>
@@ -807,7 +807,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · SR2</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">51</td>
+   <td data-field="family_rank">52</td>
    <td data-field="par2_mean">341.13</td>
    <td data-field="published"></td>
    <td data-field="median_calls">334</td>
@@ -821,7 +821,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · NEWTON</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">53</td>
+   <td data-field="family_rank">54</td>
    <td data-field="par2_mean">396.69</td>
    <td data-field="published"></td>
    <td data-field="median_calls">8</td>
@@ -835,7 +835,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · SR1</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">54</td>
+   <td data-field="family_rank">55</td>
    <td data-field="par2_mean">566.31</td>
    <td data-field="published"></td>
    <td data-field="median_calls">137</td>
@@ -849,7 +849,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · BB</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">56</td>
+   <td data-field="family_rank">58</td>
    <td data-field="par2_mean">15606.6</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -863,7 +863,7 @@
    <td>Morse bulk</td>
    <td data-field="label">rgmin (0.4.0) · DIIS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">57</td>
+   <td data-field="family_rank">59</td>
    <td data-field="par2_mean">16153.4</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>

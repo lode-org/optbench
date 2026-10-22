@@ -99,7 +99,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">Sella (2.6.0) · Sella</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">38</td>
+   <td data-field="family_rank">39</td>
    <td data-field="par2_mean">710.089</td>
    <td data-field="published"></td>
    <td data-field="median_calls">692.5</td>
@@ -113,7 +113,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">Sella (2.6.0) · Sella</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">14</td>
+   <td data-field="family_rank">15</td>
    <td data-field="par2_mean">729.433</td>
    <td data-field="published"></td>
    <td data-field="median_calls">691.5</td>

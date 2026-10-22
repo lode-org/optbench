@@ -806,6 +806,7 @@ def _benchmark_index() -> dict[str, dict]:
         "benchmarks.bench_softsaddle",
         "benchmarks.bench_lammpsneb",
         "benchmarks.bench_noise",
+        "benchmarks.bench_geometric",
         "benchmarks.bench_n2p2",
         "benchmarks.bench_gmin",
         "benchmarks.bench_vcsqnm",

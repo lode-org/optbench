@@ -219,7 +219,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">TSASE (1.0) · MDMin</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">71</td>
+   <td data-field="family_rank">73</td>
    <td data-field="par2_mean">20000</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -233,7 +233,7 @@
    <td>Morse bulk</td>
    <td data-field="label">TSASE (1.0) · SDLBFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">61</td>
+   <td data-field="family_rank">63</td>
    <td data-field="par2_mean">17606.4</td>
    <td data-field="published"></td>
    <td data-field="median_calls">50</td>

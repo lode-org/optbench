@@ -1,0 +1,30 @@
+# counter harness. One force call is one RgpotCounter.calculate entry.
+# geomeTRIC finite-difference Hessians are not used.
+# v2 success is under the cap, at the force stop, and Hessian index 0.
+# energy and Kabsch RMSD were not applied: the problem file has no energy_tol, rmsd_tol, or per-start reference.
+# final coordinate system: CartesianCoordinates 100
+# Cartesian coordinates. The custom engine evaluates the harness Morse potential. Energy in eV is converted with the library ev2au factor, and the gradient is converted from eV/Angstrom to Hartree/Bohr. The bond list is empty. Atoms are Pt. The stop is the problem force norm, 1e-3 eV/Angstrom. geomeTRIC GAU thresholds are 1e-30 and tmin is 1e-4. Trust radius 0.1 and maximum trust 0.3 are the minimization defaults. No finite-difference Hessian.
+force_calls 44
+force_calls_min 37
+force_calls_max 46
+nfailed 0
+median 45
+code geomeTRIC
+code_version 1.1.1
+commit f657e69bae9c81bf7a23e7375db98502ca5c8c30
+algorithm Cartesian
+template geometric/morse-cart
+tuning default
+counter harness
+problem minimization/morse-bulk
+par2_mean 43.96
+wilson_low 0.963006501793
+wilson_high 1
+par2_median 45
+par2_median_low 44
+par2_median_high 45
+v2_nfailed 0
+v2_successes 100
+n 100
+energy_min -1396.17323765
+energy_max -1396.17323762

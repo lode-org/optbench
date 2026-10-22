@@ -21,6 +21,8 @@ ASE_COMMIT = "f27c0005ae6a67ea419f996e728668865bfc1f86"
 ASE_VERSION = "3.29.0"
 SELLA_COMMIT = "6cfb60cdb100a146c3c6f0587d5308b247aa8010"
 SELLA_VERSION = "2.6.0"
+GEOMETRIC_COMMIT = "f657e69bae9c81bf7a23e7375db98502ca5c8c30"
+GEOMETRIC_VERSION = "1.1.1"
 GMIN_COMMIT = "df8da599267534fbe43a250e578f7396a7946311"
 GMIN_VERSION = "df8da5992675"
 PELE_COMMIT = "b7081b932a060be11342fbe8287ac35da8ada879"
@@ -168,6 +170,27 @@ def specs() -> list[dict]:
                 sigma,
             )
         )
+    geometric_note = (
+        "geomeTRIC 1.1.1 trust-radius optimizer. The custom engine sees the harness "
+        "Lennard-Jones energy and the noisy force, in Hartree and Hartree/Bohr. "
+        "The search stops on the noise rule. Cartesian uses an empty bond list. "
+        "TRIC uses the two nearest neighbors and labels the atoms H so Schlegel's guess "
+        "stays defined at these distances. The index is the clean Hessian with the rigid-mode rule."
+    )
+    for coordsys, algorithm in (("cart", "Cartesian"), ("tric", "TRIC")):
+        for sigma in SIGMAS:
+            found.append(
+                _base(
+                    f"noise/geometric-{coordsys}-{sigma_slug(sigma)}",
+                    "geomeTRIC",
+                    GEOMETRIC_VERSION,
+                    GEOMETRIC_COMMIT,
+                    algorithm,
+                    geometric_note,
+                    {"family": "geometric", "coordsys": coordsys, "neighbors": 2, "element": "H"},
+                    sigma,
+                )
+            )
     gmin_note = (
         "Default GMIN LBFGS. Memory 4, initial inverse-Hessian diagonal 0.1, maximum step 0.4, "
         "and MAXERISE 1e-10 are the keyword defaults. The RMS tolerance is the noise-aware force "

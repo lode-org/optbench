@@ -113,7 +113,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · Hessian-free truncated Newton</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">46</td>
+   <td data-field="family_rank">47</td>
    <td data-field="par2_mean">1123.81</td>
    <td data-field="published"></td>
    <td data-field="median_calls">974</td>
@@ -127,7 +127,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · Quickmin</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">57</td>
+   <td data-field="family_rank">59</td>
    <td data-field="par2_mean">3138.21</td>
    <td data-field="published"></td>
    <td data-field="median_calls">2545</td>
@@ -141,7 +141,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · conjugate gradient</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">59</td>
+   <td data-field="family_rank">61</td>
    <td data-field="par2_mean">4361.3</td>
    <td data-field="published"></td>
    <td data-field="median_calls">1550.5</td>
@@ -155,7 +155,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">61</td>
+   <td data-field="family_rank">63</td>
    <td data-field="par2_mean">5844.9</td>
    <td data-field="published"></td>
    <td data-field="median_calls">413</td>
@@ -169,7 +169,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · steepest descent</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">65</td>
+   <td data-field="family_rank">67</td>
    <td data-field="par2_mean">14468.2</td>
    <td data-field="published"></td>
    <td data-field="median_calls">10000</td>
@@ -183,7 +183,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · Hessian-free truncated Newton</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">17</td>
+   <td data-field="family_rank">18</td>
    <td data-field="par2_mean">1123.81</td>
    <td data-field="published"></td>
    <td data-field="median_calls">974</td>
@@ -197,7 +197,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · conjugate gradient</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">19</td>
+   <td data-field="family_rank">21</td>
    <td data-field="par2_mean">2046.69</td>
    <td data-field="published"></td>
    <td data-field="median_calls">1776.5</td>
@@ -211,7 +211,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · Quickmin</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">22</td>
+   <td data-field="family_rank">24</td>
    <td data-field="par2_mean">3138.21</td>
    <td data-field="published"></td>
    <td data-field="median_calls">2545</td>
@@ -225,7 +225,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">23</td>
+   <td data-field="family_rank">25</td>
    <td data-field="par2_mean">5802.74</td>
    <td data-field="published"></td>
    <td data-field="median_calls">411.5</td>
@@ -239,7 +239,7 @@
    <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · steepest descent</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">24</td>
+   <td data-field="family_rank">26</td>
    <td data-field="par2_mean">10074.7</td>
    <td data-field="published"></td>
    <td data-field="median_calls">6420.5</td>
@@ -253,7 +253,7 @@
    <td>Morse bulk</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">62</td>
+   <td data-field="family_rank">64</td>
    <td data-field="par2_mean">17656.7</td>
    <td data-field="published"></td>
    <td data-field="median_calls">478</td>
@@ -267,7 +267,7 @@
    <td>Morse bulk</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · conjugate gradient</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">63</td>
+   <td data-field="family_rank">65</td>
    <td data-field="par2_mean">19004.7</td>
    <td data-field="published"></td>
    <td data-field="median_calls">95.5</td>
@@ -281,7 +281,7 @@
    <td>Morse bulk</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · Quickmin</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">64</td>
+   <td data-field="family_rank">66</td>
    <td data-field="par2_mean">19150.8</td>
    <td data-field="published"></td>
    <td data-field="median_calls">1695.5</td>
@@ -295,7 +295,7 @@
    <td>Morse bulk</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · steepest descent</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">65</td>
+   <td data-field="family_rank">67</td>
    <td data-field="par2_mean">19211.2</td>
    <td data-field="published"></td>
    <td data-field="median_calls">258.5</td>
@@ -309,7 +309,7 @@
    <td>Morse bulk</td>
    <td data-field="label">LAMMPS (30 Sep 2026) · Hessian-free truncated Newton</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">66</td>
+   <td data-field="family_rank">68</td>
    <td data-field="par2_mean">19415</td>
    <td data-field="published"></td>
    <td data-field="median_calls">480</td>

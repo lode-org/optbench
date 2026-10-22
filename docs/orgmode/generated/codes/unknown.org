@@ -73,7 +73,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">pele-fire</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">37</td>
+   <td data-field="family_rank">38</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">709</td>
    <td data-field="median_calls"></td>
@@ -87,7 +87,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">ase-Precon-LBFGS maxstep=0.1</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">54</td>
+   <td data-field="family_rank">56</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">2686</td>
    <td data-field="median_calls"></td>
@@ -129,7 +129,7 @@
    <td>Morse bulk</td>
    <td data-field="label">pele-lbfgs</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">20</td>
+   <td data-field="family_rank">21</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">51</td>
    <td data-field="median_calls"></td>

@@ -13,6 +13,7 @@ import time
 from pathlib import Path
 
 from benchmarks.bench_noise import _class_name
+from optbench.noise_catalog import specs
 
 TRACKS = (
     "time_search",
@@ -57,8 +58,6 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
         if not template:
             raise ValueError(f"{dat} has no template")
         groups[template] = _records(path)
-    from optbench.noise_catalog import specs
-
     expected = len(specs())
     if len(groups) != expected:
         raise ValueError(f"expected {expected} noise campaigns, found {len(groups)}")

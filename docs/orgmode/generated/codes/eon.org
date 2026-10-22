@@ -755,7 +755,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">eOn (r2025) · eon-sd-twopoint</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">25</td>
+   <td data-field="family_rank">26</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">539</td>
    <td data-field="median_calls"></td>
@@ -769,7 +769,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">eOn (r2025) · FIRE</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">39</td>
+   <td data-field="family_rank">40</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">731</td>
    <td data-field="median_calls"></td>
@@ -783,7 +783,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">eOn (r2025) · QuickMin</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">58</td>
+   <td data-field="family_rank">60</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">3523</td>
    <td data-field="median_calls"></td>
@@ -797,7 +797,7 @@
    <td>Lennard-Jones 38 clusters</td>
    <td data-field="label">eOn (r2025) · eon-sd</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">60</td>
+   <td data-field="family_rank">62</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">4901</td>
    <td data-field="median_calls"></td>
@@ -811,7 +811,7 @@
    <td>Morse bulk</td>
    <td data-field="label">eOn (r2030) · eon-lbfgs</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">21</td>
+   <td data-field="family_rank">22</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">52</td>
    <td data-field="median_calls"></td>
@@ -825,7 +825,7 @@
    <td>Morse bulk</td>
    <td data-field="label">eOn (3.6.0) · LBFGS</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">27</td>
+   <td data-field="family_rank">28</td>
    <td data-field="par2_mean">54.18</td>
    <td data-field="published"></td>
    <td data-field="median_calls">53</td>
@@ -839,7 +839,7 @@
    <td>Morse bulk</td>
    <td data-field="label">eOn (r2030) · eon-sd-twopoint</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">34</td>
+   <td data-field="family_rank">35</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">64</td>
    <td data-field="median_calls"></td>
@@ -853,7 +853,7 @@
    <td>Morse bulk</td>
    <td data-field="label">eOn (r2030) · eon-cg</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">39</td>
+   <td data-field="family_rank">40</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">106</td>
    <td data-field="median_calls"></td>
@@ -867,7 +867,7 @@
    <td>Morse bulk</td>
    <td data-field="label">eOn (r2030) · eon-fire</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">47</td>
+   <td data-field="family_rank">48</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">156</td>
    <td data-field="median_calls"></td>
@@ -881,7 +881,7 @@
    <td>Morse bulk</td>
    <td data-field="label">eOn (r2030) · eon-sd</td>
    <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">48</td>
+   <td data-field="family_rank">49</td>
    <td data-field="par2_mean"></td>
    <td data-field="published">196</td>
    <td data-field="median_calls"></td>

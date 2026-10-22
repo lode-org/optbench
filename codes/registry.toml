@@ -283,6 +283,16 @@ commit = "0.1.1"
 committed = "2019-12-10"
 note = "Sella 0.1.1 PESWrapper.diag for the lowest-eigenvector row. eta 1e-6, gamma 1e-16, vreftol 0.99, gradient v0, rigid-mode projection. This pin is not Sella 2.6.0."
 
+[[code]]
+id = "geometric"
+name = "geomeTRIC"
+role = "minimization"
+repository = "https://github.com/leeping/geomeTRIC"
+ref = "1.1.1"
+commit = "f657e69bae9c81bf7a23e7375db98502ca5c8c30"
+committed = "2026-05-18"
+note = "geomeTRIC 1.1.1, tag 1.1.1, built from that commit. Minimization uses the custom engine and the trust-radius optimizer in Cartesian and TRIC coordinates. The harness potential is the spec Lennard-Jones or Morse kernel. TRIC bonds are the two nearest Cartesian neighbors. The covalent-radius graph is not used: the builder treats any pair inside 1 Angstrom as bonded, which on a compressed Lennard-Jones start produces a primitive G matrix that does not finish, and the Morse first shell asks for a matrix of about a tebibyte. A coordinate rebuild keeps the stored neighbor list; the library call would otherwise rediscover covalent bonds. Lennard-Jones atoms are labeled H so Schlegel's guess Hessian stays positive near sigma. Morse atoms are Pt."
+
 [[template]]
 id = "sella-0.1.1/lj38-loweig"
 code = "sella-0.1.1"
