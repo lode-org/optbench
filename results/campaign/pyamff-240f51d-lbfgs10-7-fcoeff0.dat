@@ -1,0 +1,25 @@
+# PyAMFF master 240f51d (2026-07-04). Harness cost is the logged training epoch.
+# One start reached Max Epoch at logged epoch 9999 and is a cap failure.
+force_calls 1748.4
+force_calls_min 381
+force_calls_max 9999
+force_calls_median 1065
+successes 49
+nfailed 1
+n 50
+cap 10000
+mean_epoch 1748.4
+median_epoch 1065
+mean_energy_rmse 0.0039466
+median_energy_rmse 0.00345995
+mean_force_rmse -1.0
+median_force_rmse -1.0
+code PyAMFF
+code_version 240f51d
+commit 240f51d01ca22969369f9bc21760c61cbb3b6665
+algorithm LBFGS
+template pyamff/emt-pt38-lbfgs10-7-fcoeff0
+problem mlopt/emt-pt38
+tuning stock
+counter harness
+note PyAMFF master 240f51d, unmodified torch LBFGS, stock learning rate 0.01, history 10, no line search. Same EMT Pt38 trajectory, 50 uniform[-1, 1) starts, loss-gradient tolerance 0.02, 10000 epochs. SSE is the current name of the archive SE loss. init_model_parameters is true so weights are drawn, because this tree reads saved_model_params.pyamff when that flag is false. Logged epochs mean 1748.4 median 1065; energy RMSE mean 0.0039466 median 0.00345995; nfailed 1. Archive is mean epoch 1791.8, median epoch 1275.5, energy RMSE mean 0.00389508 median 0.003633205, nfailed 1. The median epoch is outside 10 percent. That gap is left as a finding.

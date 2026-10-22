@@ -1,0 +1,27 @@
+# Latest PyAMFF master 240f51d0 (VERSION 0.1.0-beta), unmodified.
+# The archived 8037eb98 benchmark.dat remains the paper row.
+# One harness call is one loss-and-gradient evaluation. Failures at the cap stay in the legacy means.
+mean_epoch 11863.06
+median_epoch 4597.0
+mean_energy_rmse 0.0182945028
+median_energy_rmse 0.019434675
+mean_force_rmse 0.1643258122
+median_force_rmse 0.17808528
+nfailed 16
+n 50
+cap 30000
+counter harness
+code PyAMFF
+code_version 0.1.0-beta
+commit 240f51d01ca22969369f9bc21760c61cbb3b6665
+algorithm Rprop
+template pyamff/c2h4-rprop-force
+problem mlopt/C2H4
+tuning default
+par2_mean 21463.06
+median 4597.0
+median_low 3125.0
+median_high 5858.362499999993
+wilson_low 0.5418970269185592
+wilson_high 0.7924178373934316
+n_cap 16

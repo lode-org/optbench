@@ -1,0 +1,36 @@
+# counter harness. One force call is one PyAMFF epoch on the latest master.
+# Archive row mlopt/emt-pt38/pyamff-adam10-7-fcoeff0_1 stays the paper number.
+# VERSION 0.1.0-beta, commit 240f51d01ca22969369f9bc21760c61cbb3b6665 (2026-07-04).
+# Setup is the archive config: ADAM, hidden 10 7, tanh, random_uniform, NoScaler,
+# learning rate 0.01, force coefficient 0.1, energy coefficient 1.0,
+# max-abs loss gradient below 0.1, epochs_max 30000, 50 uniform starts.
+# The latest schema calls the sum-of-squares loss SSE. The criterion still labels itself SE.
+# init_model_parameters false on this release opens a saved-parameter file, so the run
+# sets true, which is the random-uniform start. Nothing else was tuned.
+# Runtime: Python 3.10.22, torch 1.13.1+cpu, gfortran 13.3.0, Fortran fingerprints.
+force_calls 1788
+force_calls_min 607
+force_calls_max 3538
+force_calls_median 1597.5
+successes 50
+nfailed 0
+n 50
+code PyAMFF
+code_version 0.1.0-beta
+commit 240f51d01ca22969369f9bc21760c61cbb3b6665
+algorithm ADAM
+template pyamff/emt-pt38-adam10-7-fcoeff0_1
+problem mlopt/emt-pt38
+tuning archive
+counter harness
+cap 30000
+par2_mean 1788.26
+median 1597.5
+wilson_low 0.9286524009
+wilson_high 1
+mean_epoch 1788.26
+median_epoch 1597.5
+mean_energy_rmse 0.0009040678
+median_energy_rmse 0.000906725
+mean_force_rmse 0.1066098816
+median_force_rmse 0.108326295

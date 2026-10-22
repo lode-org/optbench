@@ -794,3 +794,18 @@ def test_the_current_ase_benchmark_records_the_band_total():
         text=True,
     )
     assert 'float(record["force_calls"]) / images' in old
+
+
+def test_initializations_are_the_full_set(tmp_path: Path):
+    _problem(tmp_path, starts=4)
+    path = tmp_path / "problems" / "minimization" / "toy.toml"
+    path.write_text(path.read_text(encoding="utf-8").replace("starts = 4", "initializations = 4"), encoding="utf-8")
+    _template(tmp_path)
+    _registry(tmp_path)
+    _dat(tmp_path, "toy-fast", PIN)
+    _starts(tmp_path, "toy-fast", [_row(3, True, "0"), _row(4, True, "1")])
+
+    problem = build_board(tmp_path)["problems"]["minimization/toy"]
+    assert problem["full_n"] == 4
+    assert problem["ranked"] == []
+    assert problem["partial"][0]["partial_reason"] == "scored 2 of 4 starts"

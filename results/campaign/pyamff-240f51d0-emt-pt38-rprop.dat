@@ -1,0 +1,28 @@
+# PyAMFF 240f51d0 (2026-07-04). One harness call is one evaluation of the squared-error loss and its gradient.
+# Stock torch Rprop, learning rate 0.01. Network 10-7 tanh, force coefficient 0, energy coefficient 1, no scaler, one batch.
+# Fifty uniform[-1, 1) starts. Stop when every parameter gradient component is below 0.02, or at 10000 epochs.
+# mean_force_rmse and median_force_rmse are -1 because the force coefficient is 0.
+problem mlopt/emt-pt38
+template pyamff/emt-pt38-rprop
+cap 10000
+counter harness
+code PyAMFF
+code_version 240f51d0
+commit 240f51d01ca22969369f9bc21760c61cbb3b6665
+tuning default
+algorithm Rprop
+n 50
+force_calls 91.04
+force_calls_min 30
+force_calls_max 313
+nfailed 0
+median 75
+mean_epoch 91.04
+median_epoch 75
+mean_energy_rmse 0.0040654264
+median_energy_rmse 0.00404042
+mean_force_rmse -1
+median_force_rmse -1
+par2_mean 91.04
+wilson_low 0.928652400867
+wilson_high 1

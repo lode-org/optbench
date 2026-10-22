@@ -243,6 +243,16 @@ commit = "8de817dd79bfe4525d5d39246a212d833e6dee07"
 committed = "2026-09-30"
 note = "LAMMPS 30 Sep 2026, tag stable_30Sep2026. Band rows use fix neb with a climbing stage and min_style quickmin or fire. The pair style is the spec potential: lj/cut 40 with no shift, and morse 9.5 with pair_modify shift yes. Kspring is 1.0 with the default parallel neigh spring. The timestep is the unit default. Force calls are pair computes summed across replicas. The FIRE row leaves one fifth of the cap unused so a velocity-reset evaluation stays inside the cap."
 
+[[code]]
+id = "pyamff"
+name = "PyAMFF"
+role = "machine-learning optimization"
+repository = "https://gitlab.com/pyamff/pyamff"
+ref = "master"
+commit = "240f51d01ca22969369f9bc21760c61cbb3b6665"
+committed = "2026-07-04"
+note = "PyAMFF 0.1.0-beta at master 240f51d01ca22969369f9bc21760c61cbb3b6665 (2026-07-04, v3.0.0 plus 475 commits). Fortran Behler-Parrinello fingerprints, a 10-7 tanh network, NoScaler, and the SSE loss. The archived loss name is SE. The SSE class still tags that sum of squares as SE. Rprop, Adam, and LBFGS are the stock torch.optim objects from that release, learning rate 0.01, weight decay 0. Weights are unseeded uniform on [-1, 1). init_model_parameters is true: this revision opens saved_model_params.pyamff when the flag is false. One harness call is one loss and parameter-gradient evaluation. Each archive row keeps its own stop. Force coefficient 0 stops when every parameter gradient component is below 0.02, cap 10000. Force coefficient 0.1 stops when every component is below 0.1, cap 30000. A capped start scores twice the cap."
+
 # generated ASE and Sella templates
 
 [[template]]

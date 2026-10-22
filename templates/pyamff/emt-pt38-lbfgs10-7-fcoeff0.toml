@@ -1,0 +1,13 @@
+id = "pyamff/emt-pt38-lbfgs10-7-fcoeff0"
+engine = "pyamff"
+code = "PyAMFF"
+code_version = "240f51d"
+commit = "240f51d01ca22969369f9bc21760c61cbb3b6665"
+algorithm = "LBFGS"
+problem = "mlopt/emt-pt38"
+tuning = "stock"
+note = "PyAMFF master 240f51d (2026-07-04), the current clone. The newest GitLab release tag is v3.0.0 (2022-03-28), which is older than the archive commit. Unmodified torch LBFGS: history 10, max_iter 1, no line search, learning rate 0.01. The problem is the archive row: hidden layers 10 7, tanh, uniform[-1, 1), NoScaler, SSE (the current name of SE), energy coefficient 1, force coefficient 0, loss-gradient tolerance 0.02, 10000 epochs, 500 EMT Pt38 images. init_model_parameters is true because this tree loads saved_model_params.pyamff when the flag is false. Fingerprints are this build's Fortran module, computed once and reused. The harness cost is the logged epoch."
+
+[stop]
+max_force_calls = 10000
+max_steps = 10000

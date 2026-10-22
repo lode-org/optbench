@@ -1,0 +1,29 @@
+id = "pyamff/c2h4-lbfgs-force"
+engine = "pyamff"
+problem = "mlopt/C2H4"
+code = "PyAMFF"
+code_version = "0.1.0-beta"
+commit = "240f51d01ca22969369f9bc21760c61cbb3b6665"
+algorithm = "LBFGS"
+tuning = "default"
+failure_cap = 30000
+note = "PyAMFF 0.1.0-beta at 240f51d01ca22969369f9bc21760c61cbb3b6665 (2026-07-04). Stock LBFGS from that release on the archived config: 10-7 tanh, NoScaler, SSE (the release name for the archived SE loss), learning rate 0.01, force coefficient 0.1. Fifty unseeded uniform[-1, 1) starts. init_model_parameters is true because this revision opens saved_model_params.pyamff when the flag is false. The stop is this archive row's own rule: every parameter gradient component below 0.1, cap 30000. One harness call is one loss-and-gradient evaluation. A capped start scores twice the cap."
+
+[pyamff]
+optimizer = "LBFGS"
+learning_rate = 0.01
+hidden_layers = [10, 7]
+activation = "tanh"
+initial_weights = "random_uniform"
+loss_type = "SSE"
+energy_coefficient = 1.0
+force_coefficient = 0.1
+scaler = "NoScaler"
+loss_grad_tol = 0.1
+epochs_max = 30000
+init_model_parameters = true
+
+[stop]
+max_steps = 30000
+gradient_norm = 0.1
+norm = "max_abs"

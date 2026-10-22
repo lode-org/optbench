@@ -5,6 +5,20 @@ problem = "C2H4"
 contract = "partial"
 entry_count = 6
 
+[sample]
+initializations = 50
+initialization = "uniform[-1, 1)"
+structure_source = "DFT molecular dynamics"
+
+[convergence]
+max_epochs = 10000
+force_max_epochs = 30000
+energy_only_grad_norm = 0.02
+force_training_grad_norm = 0.1
+
+[input]
+archive_path = "website/mlopt/C2H4/C2H4_md.traj"
+
 [metrics]
 required = ["mean_energy_rmse", "mean_epoch", "mean_force_rmse", "median_energy_rmse", "median_epoch", "median_force_rmse", "nfailed"]
 

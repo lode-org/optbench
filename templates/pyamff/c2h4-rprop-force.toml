@@ -1,0 +1,13 @@
+# Latest PyAMFF on the archived C2H4 force-training problem.
+# The 2014 archive row stays the paper number. This template is the
+# unmodified current tree, stock settings, scored on the harness.
+id = "pyamff/c2h4-rprop-force"
+engine = "pyamff"
+problem = "mlopt/C2H4"
+code = "PyAMFF"
+code_version = "0.1.0-beta"
+commit = "240f51d01ca22969369f9bc21760c61cbb3b6665"
+algorithm = "Rprop"
+tuning = "default"
+failure_cap = 30000
+note = "GitLab master 240f51d0 (2026-07-04), VERSION 0.1.0-beta. No release tag is newer than v3.0.0, which predates the archive pin. Same trajectory, 50 unseeded uniform[-1,1) starts, Rprop, 10-7 tanh, NoScaler, force coefficient 0.1, learning rate 0.01, max-abs parameter gradient 0.10, energy RMSE 0.0001 and force RMSE 0.01, cap 30000. The current schema names the sum-of-squares loss SSE and initializes weights when init_model_parameters is true. One harness call is one loss-and-gradient evaluation."

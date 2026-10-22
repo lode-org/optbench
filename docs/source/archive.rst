@@ -1882,9 +1882,8 @@ The 2014 rows follow, in the published order, inside Legacy 2014 archive.
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="mlopt/C2H4">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td colspan="11">No full harness row.</td></tr>
+   <tr><td data-field="template">pyamff/c2h4-rprop</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">191.02</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">188</td><td data-field="mean_calls">191.02</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
    </tbody></table></div>
-   <p class="bench-gaps">No committed harness run.</p>
    <p><a href="generated/suites/mlopt.html#C2H4">Full ranked table and performance profile</a>.</p>
    <section class="bench bench-legacy-section" id="C2H4-legacy">
    <h3>Legacy 2014 archive</h3>
@@ -1999,9 +1998,8 @@ The 2014 rows follow, in the published order, inside Legacy 2014 archive.
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="mlopt/emt-pt38">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td colspan="11">No full harness row.</td></tr>
+   <tr><td data-field="template">pyamff/emt-pt38-rprop</td><td data-field="version">PyAMFF 240f51d0</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">91.04</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">75</td><td data-field="mean_calls">91.04</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
    </tbody></table></div>
-   <p class="bench-gaps">No committed harness run.</p>
    <p><a href="generated/suites/mlopt.html#emt-pt38">Full ranked table and performance profile</a>.</p>
    <section class="bench bench-legacy-section" id="emt-pt38-legacy">
    <h3>Legacy 2014 archive</h3>

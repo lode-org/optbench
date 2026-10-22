@@ -7,7 +7,7 @@
    <section class="bench" id="summary"><div class="bench-scroll">
    <table data-board-table="summary">
    <caption>Best full harness run of each code. Lower PAR-2 is better. The full template table is on the problem page.</caption>
-   <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
+   <thead><tr><th>Problem</th><th>eOn</th><th>Eon svn</th><th>rgmin</th><th>rgsaddle</th><th>geodesic</th><th>ASE</th><th>Sella</th><th>GMIN</th><th>pele</th><th>LAMMPS</th><th>pysisyphus</th><th>AIRSS</th><th>vc-SQNM</th><th>PyAMFF</th><th>artn</th><th>compass</th><th>dlfind</th><th>lammps</th><th>optim</th><th>optking</th><th>softsaddle</th><th>tsase</th></tr></thead><tbody>
    <tr data-problem="mlopt/C2H4">
    <th scope="row"><a href="#C2H4">C2H4</a></th>
    <td data-code="eOn">—</td>
@@ -23,6 +23,7 @@
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
    <td data-code="vc-SQNM">—</td>
+   <td data-code="PyAMFF" data-template="pyamff/c2h4-rprop" data-par2="191.02"><span class="bench-score">191.02</span><a href="#C2H4-templates">pyamff/c2h4-rprop</a></td>
    <td data-code="artn">—</td>
    <td data-code="compass">—</td>
    <td data-code="dlfind">—</td>
@@ -47,6 +48,7 @@
    <td data-code="pysisyphus">—</td>
    <td data-code="AIRSS">—</td>
    <td data-code="vc-SQNM">—</td>
+   <td data-code="PyAMFF" data-template="pyamff/emt-pt38-rprop" data-par2="91.04"><span class="bench-score">91.04</span><a href="#emt-pt38-templates">pyamff/emt-pt38-rprop</a></td>
    <td data-code="artn">—</td>
    <td data-code="compass">—</td>
    <td data-code="dlfind">—</td>
@@ -59,18 +61,25 @@
    </tbody></table></div></section><section class="bench" id="C2H4" data-problem="mlopt/C2H4">
    <h2>C2H4</h2>
    <dl class="bench-rule">
+   <dt>Cap</dt><dd>10000 epochs</dd>
    <dt>v2</dt><dd>par2-wilson-bootstrap</dd>
    <dt>Contract</dt><dd>Partly stated. The columns are the keys shared by every archived file.</dd>
    </dl>
    <p>Ranked by the v2 PAR-2 mean of the harness total. Only the newest full version of a template is in this table. A partial row, including a one-start asv smoke run, is not.</p>
-   <p class="bench-gaps">No committed harness run.</p>
+   <figure class="bench-plot"><a href="../../_static/board/mlopt-C2H4-profile.svg"><picture><source srcset="../../_static/board/mlopt-C2H4-profile.webp" type="image/webp"><img src="../../_static/board/mlopt-C2H4-profile.png" alt="Dolan-More profile for mlopt/C2H4" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../_static/board/mlopt-C2H4-cost.svg"><picture><source srcset="../../_static/board/mlopt-C2H4-cost.webp" type="image/webp"><img src="../../_static/board/mlopt-C2H4-cost.png" alt="Cost versus success for mlopt/C2H4" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <details class="bench-details" id="C2H4-templates">
-   <summary>All templates (0 ranked)</summary>
+   <summary>All templates (6 ranked)</summary>
    <div class="bench-scroll">
    <table data-board-table="ranked" data-problem="mlopt/C2H4">
    <caption>Lower PAR-2 is better. PAR-2 and the call columns are harness force-call totals. Wilson bounds are the 95% interval on the success rate.</caption>
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td colspan="11">No full harness row.</td></tr>
+   <tr><td data-field="template">pyamff/c2h4-rprop</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">191.02</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">188</td><td data-field="mean_calls">191.02</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">pyamff/c2h4-lbfgs</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">2999.06</td><td data-field="success_rate">0.96</td><td data-field="wilson">0.865399–0.988961</td><td data-field="median_calls">1911.5</td><td data-field="mean_calls">2599.02</td><td data-field="failures">crash 0, divergence 0, cap 2, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">pyamff/c2h4-adam</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">4329.84</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">4162.5</td><td data-field="mean_calls">4329.84</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">pyamff/c2h4-adam-force</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">17653.2</td><td data-field="success_rate">0.82</td><td data-field="wilson">0.692039–0.902298</td><td data-field="median_calls">7754</td><td data-field="mean_calls">12253.2</td><td data-field="failures">crash 0, divergence 0, cap 9, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">pyamff/c2h4-rprop-force</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">21463.1</td><td data-field="success_rate">0.68</td><td data-field="wilson">0.541897–0.792418</td><td data-field="median_calls">4597</td><td data-field="mean_calls">11863.1</td><td data-field="failures">crash 0, divergence 0, cap 16, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">pyamff/c2h4-lbfgs-force</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">35203.7</td><td data-field="success_rate">0.64</td><td data-field="wilson">0.50141–0.758613</td><td data-field="median_calls">24554</td><td data-field="mean_calls">24403.3</td><td data-field="failures">crash 0, divergence 0, cap 18, wrong_stationary 0</td><td data-field="n">50</td></tr>
    </tbody></table></div>
    </details>
    </section><section class="bench bench-legacy-section" id="C2H4-legacy">
@@ -188,14 +197,20 @@
    <dt>v2</dt><dd>par2-wilson-bootstrap</dd>
    </dl>
    <p>Ranked by the v2 PAR-2 mean of the harness total. Only the newest full version of a template is in this table. A partial row, including a one-start asv smoke run, is not.</p>
-   <p class="bench-gaps">No committed harness run.</p>
+   <figure class="bench-plot"><a href="../../_static/board/mlopt-emt-pt38-profile.svg"><picture><source srcset="../../_static/board/mlopt-emt-pt38-profile.webp" type="image/webp"><img src="../../_static/board/mlopt-emt-pt38-profile.png" alt="Dolan-More profile for mlopt/emt-pt38" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../_static/board/mlopt-emt-pt38-cost.svg"><picture><source srcset="../../_static/board/mlopt-emt-pt38-cost.webp" type="image/webp"><img src="../../_static/board/mlopt-emt-pt38-cost.png" alt="Cost versus success for mlopt/emt-pt38" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <details class="bench-details" id="emt-pt38-templates">
-   <summary>All templates (0 ranked)</summary>
+   <summary>All templates (6 ranked)</summary>
    <div class="bench-scroll">
    <table data-board-table="ranked" data-problem="mlopt/emt-pt38">
    <caption>Lower PAR-2 is better. PAR-2 and the call columns are harness force-call totals. Wilson bounds are the 95% interval on the success rate.</caption>
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td colspan="11">No full harness row.</td></tr>
+   <tr><td data-field="template">pyamff/emt-pt38-rprop</td><td data-field="version">PyAMFF 240f51d0</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">91.04</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">75</td><td data-field="mean_calls">91.04</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">pyamff/emt-pt38-rprop-force</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">947.86</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">931.5</td><td data-field="mean_calls">947.86</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">pyamff/emt-pt38-adam</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">1071.28</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">867.5</td><td data-field="mean_calls">1071.28</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">pyamff/emt-pt38-adam10-7-fcoeff0_1</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">1788.26</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">1597.5</td><td data-field="mean_calls">1788.26</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">pyamff/emt-pt38-lbfgs10-7-fcoeff0</td><td data-field="version">PyAMFF 240f51d</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">1948.42</td><td data-field="success_rate">0.98</td><td data-field="wilson">0.895046–0.996461</td><td data-field="median_calls">1065</td><td data-field="mean_calls">1748.4</td><td data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">pyamff/emt-pt38-lbfgs-force</td><td data-field="version">PyAMFF 0.1.0-beta</td><td data-field="commit">240f51d01ca2</td><td data-field="source">campaign</td><td data-field="par2_mean">2172.68</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">1650.5</td><td data-field="mean_calls">2172.68</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
    </tbody></table></div>
    </details>
    </section><section class="bench bench-legacy-section" id="emt-pt38-legacy">

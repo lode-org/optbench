@@ -1,0 +1,51 @@
+{
+  "counter": "harness",
+  "legacy": {
+    "mean_energy_rmse": 0.0039465972,
+    "mean_epoch": 1748.4,
+    "mean_force_rmse": -1.0,
+    "median_energy_rmse": 0.003459955,
+    "median_epoch": 1065.0,
+    "median_force_rmse": -1.0,
+    "n": 50,
+    "nfailed": 1
+  },
+  "problem": "mlopt/emt-pt38",
+  "provenance": {
+    "code": "PyAMFF",
+    "code_version": "240f51d",
+    "commit": "240f51d01ca22969369f9bc21760c61cbb3b6665"
+  },
+  "schema": "optbench.score/v2",
+  "score": {
+    "bootstrap_resamples": 2000,
+    "bootstrap_seed": 20261015,
+    "cap": 10000,
+    "includes_failures": true,
+    "iqr": 1157.0,
+    "iqr_high": 1645.26875,
+    "iqr_low": 589.65,
+    "mean": 1948.42,
+    "median": 1065.0,
+    "median_high": 1301.0,
+    "median_low": 859.5,
+    "n": 50,
+    "n_cap": 1,
+    "n_crash": 0,
+    "n_divergence": 0,
+    "n_wrong_stationary": 0,
+    "nfailed": 1,
+    "par2_mean": 1948.42,
+    "par_applied": true,
+    "par_factor": 2,
+    "q25": 682.5,
+    "q75": 1839.5,
+    "scoring": "par2-wilson-bootstrap",
+    "success_only_mean": 1580.0204081632653,
+    "success_rate": 0.98,
+    "successes": 49,
+    "wilson_high": 0.9964607407283539,
+    "wilson_low": 0.8950455641036219
+  },
+  "template": "pyamff/emt-pt38-lbfgs10-7-fcoeff0"
+}

@@ -1,0 +1,10 @@
+id = "pyamff/emt-pt38-adam10-7-fcoeff0_1"
+engine = "pyamff"
+problem = "mlopt/emt-pt38"
+code = "PyAMFF"
+code_version = "0.1.0-beta"
+commit = "240f51d01ca22969369f9bc21760c61cbb3b6665"
+algorithm = "ADAM"
+tuning = "archive"
+failure_cap = 30000
+note = "Latest PyAMFF master, VERSION 0.1.0-beta, commit 240f51d01ca22969369f9bc21760c61cbb3b6665 (2026-07-04). Not tag v3.0.0 and not the archive pin 8037eb98. The archive config is the setup: ADAM, hidden layers 10 7, tanh, random_uniform on [-1, 1), NoScaler, one batch, learning rate 0.01, force coefficient 0.1, energy coefficient 1.0, max-abs loss-gradient stop 0.1, epochs_max 30000. One epoch is one harness force call. The cap is that epoch budget. The latest schema names the sum-of-squares loss SSE; the criterion still labels itself SE. init_model_parameters false on this release opens saved_model_params.pyamff, so the run sets true, which leaves the weights on random_uniform. No other knob was moved."
