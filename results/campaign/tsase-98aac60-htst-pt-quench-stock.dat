@@ -1,0 +1,23 @@
+# force_calls is the harness PotServer total and the ranked cost
+# barrier_force_calls and rate_force_calls are sad-fcs in per-batch wuid order
+# sorting the whole file by wuid mixes the 20 batches, because each batch reuses wuid 0-7, and that sort sums the barrier to 782238
+force_calls 1712105
+barrier_force_calls 1038889
+barrier_jobs 156
+rate_force_calls 519444.5
+rate_jobs 78
+force_calls_min 1712105
+force_calls_max 1712105
+force_calls_median 1712105.0
+call_unit total
+nfailed 0
+code TSASE
+code_version 1.0 (98aac60)
+commit 98aac60b5d9905e81ee4e6b8c385f169258d0218
+algorithm quenchDimer+neb-QM
+template tsase/htst-pt-quench-stock
+problem hTST/Pt
+reducer harness
+counter harness
+count_keys HarnessCounter
+tuning stock
