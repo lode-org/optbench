@@ -17,3 +17,4 @@ cap 5064
 n 20000
 par2_mean 10128.0
 v2_nfailed 20000
+ranked false

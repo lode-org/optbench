@@ -3,7 +3,7 @@ engine = "rgsaddle"
 problem = "tsopt/pt-island"
 code = "rgsaddle"
 code_version = "0.2.2"
-commit = "c0db2b8d333c557251635cb8bb7b3d81f0088a71"
+commit = "2db34b42e6e029ebcf5b9868b94fcdf969103c9f"
 algorithm = "Dimer FIRE"
 tuning = "default"
 

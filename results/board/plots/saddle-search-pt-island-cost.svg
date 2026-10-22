@@ -64,7 +64,6 @@ z
      <use xlink:href="#m2d8934182f" x="74.732727" y="249.938387" style="fill: #1f77b4"/>
      <use xlink:href="#m2d8934182f" x="74.732727" y="249.938387" style="fill: #1f77b4"/>
      <use xlink:href="#m2d8934182f" x="74.732727" y="249.938387" style="fill: #1f77b4"/>
-     <use xlink:href="#m2d8934182f" x="74.732727" y="249.938387" style="fill: #1f77b4"/>
      <use xlink:href="#m2d8934182f" x="74.732727" y="36.816364" style="fill: #1f77b4"/>
     </g>
    </g>
@@ -318,12 +317,9 @@ L 507.6 26.16
     <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="77.732727" y="246.938387" transform="rotate(-0 77.732727 246.938387)">12</text>
    </g>
    <g id="text_33">
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="77.732727" y="246.938387" transform="rotate(-0 77.732727 246.938387)">13</text>
+    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="77.732727" y="33.816364" transform="rotate(-0 77.732727 33.816364)">13</text>
    </g>
    <g id="text_34">
-    <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="77.732727" y="33.816364" transform="rotate(-0 77.732727 33.816364)">14</text>
-   </g>
-   <g id="text_35">
     <text style="font-size: 12px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="280.86" y="20.16" transform="rotate(-0 280.86 20.16)">Cost and success: saddle-search/pt-island</text>
    </g>
   </g>

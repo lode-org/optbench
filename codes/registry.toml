@@ -60,9 +60,9 @@ name = "rgsaddle"
 role = "saddle search"
 repository = "https://github.com/OmniPotentRPC/rgsaddle"
 ref = "main"
-commit = "c0db2b8d333c557251635cb8bb7b3d81f0088a71"
-committed = "2026-10-15"
-note = "0.2.2 at main c0db2b8d. Band and min-mode sessions on this main. Stencil.band presets are not built here; the campaign calls the C band and min-mode API. OCI-NEB is CI-NEB followed by a min-mode refinement. Dimer, Lanczos, and P-RFO scores use this commit. Nonlinear CG is refused by check_force_driven; the min-mode translators are L-BFGS and FIRE."
+commit = "2db34b42e6e029ebcf5b9868b94fcdf969103c9f"
+committed = "2026-10-21"
+note = "0.2.2 at main 2db34b42, the merge of pull request 23. The min-mode Lanczos rows and the OCI-NEB L-BFGS refinement were measured on this commit. Dimer, P-RFO, and the other band presets were not rerun; those campaign files still name c0db2b8. Stencil.band presets are not built here. The campaign calls the C band and min-mode API. OCI-NEB is CI-NEB followed by a min-mode refinement. Nonlinear CG is refused by check_force_driven; the min-mode translators are L-BFGS and FIRE."
 
 [[code]]
 id = "geodesic"

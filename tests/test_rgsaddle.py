@@ -38,7 +38,7 @@ from optbench.rgsaddle_band import (
 from optbench.stationary import jacobi_eigenvalues
 
 ROOT = Path(__file__).resolve().parents[1]
-COMMIT = "c0db2b8d333c557251635cb8bb7b3d81f0088a71"
+COMMIT = "2db34b42e6e029ebcf5b9868b94fcdf969103c9f"
 
 
 def _problem_pairs(name: str):

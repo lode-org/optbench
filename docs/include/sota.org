@@ -41,7 +41,7 @@
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="double-ended-saddle-search/lj38">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td data-field="template">eon-svn/de-lj38-lanczos-improved</td><td data-field="version">Eon svn r2549</td><td data-field="commit">r2549</td><td data-field="source">campaign</td><td data-field="par2_mean">235.2</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">197</td><td data-field="mean_calls">235.2</td><td data-field="mean_per_image">47.04</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
+   <tr><td data-field="template">rgsaddle/oci-neb-lbfgs</td><td data-field="version">rgsaddle 0.2.2</td><td data-field="commit">2db34b42e6e0</td><td data-field="source">campaign</td><td data-field="par2_mean">182.16</td><td data-field="success_rate">1</td><td data-field="wilson">0.928652–1</td><td data-field="median_calls">135</td><td data-field="mean_calls">182.16</td><td data-field="mean_per_image">36.432</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">eOn band rows are not yet on the harness counter. Partial rows stay off the ranked table. Files with no per-start harness record stay off the ranked table.</p>
    <p><a href="generated/suites/double-ended-saddle-search.html#lj38">Ranked table, performance profile, and the 2014 archive</a>.</p>
@@ -57,7 +57,7 @@
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="double-ended-saddle-search/pt-island">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td data-field="template">eon-svn/de-pt-lanczos-improved</td><td data-field="version">Eon svn r2549</td><td data-field="commit">r2549</td><td data-field="source">campaign</td><td data-field="par2_mean">180.644</td><td data-field="success_rate">1</td><td data-field="wilson">0.938871–1</td><td data-field="median_calls">161</td><td data-field="mean_calls">180.644</td><td data-field="mean_per_image">60.2147</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">59</td></tr>
+   <tr><td data-field="template">rgsaddle/oci-neb-lbfgs</td><td data-field="version">rgsaddle 0.2.2</td><td data-field="commit">2db34b42e6e0</td><td data-field="source">campaign</td><td data-field="par2_mean">119.729</td><td data-field="success_rate">1</td><td data-field="wilson">0.938871–1</td><td data-field="median_calls">115</td><td data-field="mean_calls">119.729</td><td data-field="mean_per_image">39.9096</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">59</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">eOn band rows are not yet on the harness counter. Partial rows stay off the ranked table.</p>
    <p><a href="generated/suites/double-ended-saddle-search.html#pt-island">Ranked table, performance profile, and the 2014 archive</a>.</p>
@@ -130,7 +130,7 @@
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="lowest-eigenvector/lj38">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td data-field="template">rgsaddle/mode-lanczos</td><td data-field="version">rgsaddle 0.2.2</td><td data-field="commit">c0db2b8d333c</td><td data-field="source">campaign, asv</td><td data-field="par2_mean">26.12</td><td data-field="success_rate">1</td><td data-field="wilson">0.981155–1</td><td data-field="median_calls">26</td><td data-field="mean_calls">26.12</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">200</td></tr>
+   <tr><td data-field="template">rgsaddle/mode-lanczos</td><td data-field="version">rgsaddle 0.2.2</td><td data-field="commit">2db34b42e6e0</td><td data-field="source">campaign</td><td data-field="par2_mean">17.585</td><td data-field="success_rate">1</td><td data-field="wilson">0.981155–1</td><td data-field="median_calls">17</td><td data-field="mean_calls">17.585</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">200</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">Partial rows stay off the ranked table.</p>
    <p><a href="generated/suites/lowest-eigenvector.html#lj38">Ranked table, performance profile, and the 2014 archive</a>.</p>
@@ -173,7 +173,7 @@
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="neb/Pt-heptamer">
    <thead><tr><th>Template</th><th>Version</th><th>Commit</th><th>Source</th><th>PAR-2</th><th>Success</th><th>Wilson</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr><td data-field="template">rgsaddle/idpp-ci-neb-lbfgs</td><td data-field="version">rgsaddle 0.2.2</td><td data-field="commit">c0db2b8d333c</td><td data-field="source">campaign, asv</td><td data-field="par2_mean">318.308</td><td data-field="success_rate">1</td><td data-field="wilson">0.771905–1</td><td data-field="median_calls">314</td><td data-field="mean_calls">318.308</td><td data-field="mean_per_image">39.7885</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">13</td></tr>
+   <tr><td data-field="template">rgsaddle/oci-neb-lbfgs</td><td data-field="version">rgsaddle 0.2.2</td><td data-field="commit">2db34b42e6e0</td><td data-field="source">campaign</td><td data-field="par2_mean">121.308</td><td data-field="success_rate">1</td><td data-field="wilson">0.771905–1</td><td data-field="median_calls">126</td><td data-field="mean_calls">121.308</td><td data-field="mean_per_image">15.1635</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">13</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">eOn band rows are not yet on the harness counter. Partial rows stay off the ranked table. Files with no per-start harness record stay off the ranked table.</p>
    <p><a href="generated/suites/neb.html#Pt-heptamer">Ranked table, performance profile, and the 2014 archive</a>.</p>

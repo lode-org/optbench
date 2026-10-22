@@ -385,65 +385,65 @@ The number is written only after the run finishes under the problem rule.
    <tr>
    <td>saddle search</td>
    <td>main</td>
-   <td>c0db2b8d333c</td>
+   <td>2db34b42e6e0</td>
    <td><a href="https://github.com/OmniPotentRPC/rgsaddle">https://github.com/OmniPotentRPC/rgsaddle</a></td>
    </tr>
    </tbody></table></div>
    <div class="bench-scroll"><table data-board-table="code-best">
    <caption>Best full harness run on each problem.</caption>
    <thead><tr><th>Problem</th><th>Template</th><th>Version</th><th>Commit</th><th>PAR-2</th><th>Mean calls</th><th>Median calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
-   <tr data-problem="double-ended-saddle-search/lj38" data-template="rgsaddle/ew-ci-neb-lbfgs">
+   <tr data-problem="double-ended-saddle-search/lj38" data-template="rgsaddle/oci-neb-lbfgs">
    <td>LJ38 double-ended saddle</td>
-   <td data-field="template">rgsaddle/ew-ci-neb-lbfgs</td>
+   <td data-field="template">rgsaddle/oci-neb-lbfgs</td>
    <td data-field="version">rgsaddle 0.2.2</td>
-   <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">853.56</td>
-   <td data-field="mean_calls">673.94</td>
-   <td data-field="median_calls">529</td>
-   <td data-field="failures">crash 0, divergence 1, cap 2, wrong_stationary 0</td>
+   <td data-field="commit">2db34b42e6e0</td>
+   <td data-field="par2_mean">182.16</td>
+   <td data-field="mean_calls">182.16</td>
+   <td data-field="median_calls">135</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">50</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="rgsaddle/ew-ci-neb-lbfgs">
+   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-template="rgsaddle/oci-neb-lbfgs">
    <td>lj38_2ts_separation</td>
-   <td data-field="template">rgsaddle/ew-ci-neb-lbfgs</td>
+   <td data-field="template">rgsaddle/oci-neb-lbfgs</td>
    <td data-field="version">rgsaddle 0.2.2</td>
-   <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">8024.43</td>
-   <td data-field="mean_calls">4639.8</td>
-   <td data-field="median_calls">2414</td>
-   <td data-field="failures">crash 0, divergence 0, cap 16, wrong_stationary 1</td>
+   <td data-field="commit">2db34b42e6e0</td>
+   <td data-field="par2_mean">1347.35</td>
+   <td data-field="mean_calls">568.745</td>
+   <td data-field="median_calls">325</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 2</td>
    <td data-field="n">51</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/pt-island" data-template="rgsaddle/ew-ci-neb-lbfgs">
+   <tr data-problem="double-ended-saddle-search/pt-island" data-template="rgsaddle/oci-neb-lbfgs">
    <td>pt-island</td>
-   <td data-field="template">rgsaddle/ew-ci-neb-lbfgs</td>
+   <td data-field="template">rgsaddle/oci-neb-lbfgs</td>
    <td data-field="version">rgsaddle 0.2.2</td>
-   <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">422.136</td>
-   <td data-field="mean_calls">224.017</td>
-   <td data-field="median_calls">226</td>
-   <td data-field="failures">crash 0, divergence 2, cap 0, wrong_stationary 0</td>
+   <td data-field="commit">2db34b42e6e0</td>
+   <td data-field="par2_mean">119.729</td>
+   <td data-field="mean_calls">119.729</td>
+   <td data-field="median_calls">115</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-template="rgsaddle/mode-lanczos">
    <td>lj38</td>
    <td data-field="template">rgsaddle/mode-lanczos</td>
    <td data-field="version">rgsaddle 0.2.2</td>
-   <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">26.12</td>
-   <td data-field="mean_calls">26.12</td>
-   <td data-field="median_calls">26</td>
+   <td data-field="commit">2db34b42e6e0</td>
+   <td data-field="par2_mean">17.585</td>
+   <td data-field="mean_calls">17.585</td>
+   <td data-field="median_calls">17</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">200</td>
    </tr>
-   <tr data-problem="neb/Pt-heptamer" data-template="rgsaddle/idpp-ci-neb-lbfgs">
+   <tr data-problem="neb/Pt-heptamer" data-template="rgsaddle/oci-neb-lbfgs">
    <td>Pt-heptamer</td>
-   <td data-field="template">rgsaddle/idpp-ci-neb-lbfgs</td>
+   <td data-field="template">rgsaddle/oci-neb-lbfgs</td>
    <td data-field="version">rgsaddle 0.2.2</td>
-   <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">318.308</td>
-   <td data-field="mean_calls">318.308</td>
-   <td data-field="median_calls">314</td>
+   <td data-field="commit">2db34b42e6e0</td>
+   <td data-field="par2_mean">121.308</td>
+   <td data-field="mean_calls">121.308</td>
+   <td data-field="median_calls">126</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">13</td>
    </tr>
@@ -469,18 +469,28 @@ The number is written only after the run finishes under the problem rule.
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">200</td>
    </tr>
-   <tr data-problem="tsopt/pt-island" data-template="rgsaddle/pt-dimer-rotskip">
+   <tr data-problem="tsopt/pt-island" data-template="rgsaddle/pt-lanczos">
    <td>pt-island</td>
-   <td data-field="template">rgsaddle/pt-dimer-rotskip</td>
+   <td data-field="template">rgsaddle/pt-lanczos</td>
    <td data-field="version">rgsaddle 0.2.2</td>
-   <td data-field="commit">c0db2b8d333c</td>
-   <td data-field="par2_mean">223.898</td>
-   <td data-field="mean_calls">223.898</td>
-   <td data-field="median_calls">145</td>
+   <td data-field="commit">2db34b42e6e0</td>
+   <td data-field="par2_mean">209.98</td>
+   <td data-field="mean_calls">209.98</td>
+   <td data-field="median_calls">192</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">49</td>
    </tr>
    </tbody></table></div>
+   <p>No full ranked run</p><ul>
+   <li>LJ38 double-ended saddle: partial.</li>
+   <li>lj38_2ts_separation: partial.</li>
+   <li>pt-island: partial.</li>
+   <li>lj38: partial.</li>
+   <li>Pt-heptamer: partial.</li>
+   <li>Pt heptamer island: partial.</li>
+   <li>LJ38: partial.</li>
+   <li>pt-island: partial.</li>
+   </ul>
    <h3>geodesic</h3>
    <div class="bench-scroll"><table>
    <caption>Registry pins.</caption>

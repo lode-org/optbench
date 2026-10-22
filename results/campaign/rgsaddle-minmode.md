@@ -1,5 +1,72 @@
 # rgsaddle 0.2.2 min-mode
 
+## Measured at 2db34b42
+
+rgsaddle `2db34b42e6e029ebcf5b9868b94fcdf969103c9f` is the merge of pull request 23. That change folds the Lanczos residual into the push. The rows below were scored with the optbench harness as it stands: same problems, criteria, caps, and counters. PAR-2 charges a failure twice the cap. The `force_calls` line is the half-even mean of the successes.
+
+The library was built from that commit with `cargo +stable build --release --features capi`. `capi` is the C ABI the harness calls. Every other feature is a crate default. No optimizer setting was changed. `RGSADDLE_LIB` and `RGSADDLE_SRC` pointed at that tree.
+
+Templates with `min_mode_method = "lanczos"`:
+
+- `rgsaddle/mode-lanczos` and `rgsaddle/mode-lanczos-tuned` on lowest-eigenvector/lj38
+- `rgsaddle/lanczos` and `rgsaddle/lanczos-tuned` on tsopt/LJ38
+- `rgsaddle/pt-lanczos` and `rgsaddle/pt-lanczos-tuned` on tsopt/pt-island
+- `rgsaddle/saddle-lanczos` and `rgsaddle/saddle-lanczos-tuned` on saddle-search/pt-island
+
+`rgsaddle/oci-neb-lbfgs` sets `refine = "lanczos"` and uses the same push. Its four problems are scored in the next section. `rgsaddle/oci-neb` refines with the dimer and was not rerun. `rgsaddle/prfo-tuned` and `rgsaddle/pt-prfo-tuned` set `expand = "lanczos"` for the eigenvector expansion. That is not this push, and those rows were not rerun.
+
+The two saddle-search grids were started and not finished. A full cell is 20000 searches. No partial file is committed. The c0db2b8 saddle cells remain the recorded scores.
+
+| problem | template | legacy mean | min | median | max | successes | nfailed | par2 mean | cap | wrong stationary |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| lowest-eigenvector/lj38 | rgsaddle/mode-lanczos | 18 | 5 | 17.0 | 37 | 200 | 0 | 17.5850000000 | 0 | 0 |
+| lowest-eigenvector/lj38 | rgsaddle/mode-lanczos-tuned | 24 | 12 | 22.5 | 51 | 200 | 0 | 23.7850000000 | 0 | 0 |
+| tsopt/LJ38 | rgsaddle/lanczos | 597 | 75 | 355 | 6544 | 199 | 1 | 694.1000000000 | 1 | 0 |
+| tsopt/LJ38 | rgsaddle/lanczos-tuned | 436 | 59 | 309 | 3002 | 199 | 1 | 533.5650000000 | 0 | 1 |
+| tsopt/pt-island | rgsaddle/pt-lanczos | 210 | 123 | 192 | 426 | 49 | 0 | 209.9795918367 | 0 | 0 |
+| tsopt/pt-island | rgsaddle/pt-lanczos-tuned | 148 | 101 | 133 | 237 | 49 | 0 | 147.5918367347 | 0 | 0 |
+
+Pull request 23 reported mode-lanczos 17.585 with 200/200, tsopt/LJ38 lanczos 694.10 with 199/200, and pt-lanczos 209.98 with 49/49. Those match `par2_mean` here. 209.98 is 209.9795918367 rounded. The legacy lines are 18, 597, and 210. The unrounded means of the raw calls are 3517/200 = 17.585, 128829/200 = 644.145, and 10289/49 = 209.9795918367. On LJ38 the one failure hit the cap, so PAR-2 charges 20000 for that start.
+
+The pull request's mode-lanczos baseline of 18.81 is not the c0db2b8 cell. That cell is par2 26.1200000000. Only the merge was scored, so 18.81 was not measured on this tree.
+
+tsopt/LJ38 lanczos and tsopt/pt-island pt-lanczos match the 38c3137 cells on `origin/cells/rgsaddle/minmode-main` start for start on `force_calls`, success, failure, rotations, and library evaluations. Relative to that tree the residual fold did not move those two grids.
+
+Commands, from `/workspace`, with the library env above:
+
+```
+uv run optbench run lowest-eigenvector/lj38 rgsaddle/mode-lanczos --output results/campaign/rgsaddle-2db34b42-mode-lanczos-loweig.dat
+uv run optbench run lowest-eigenvector/lj38 rgsaddle/mode-lanczos-tuned --workers 6 --output results/campaign/rgsaddle-2db34b42-mode-lanczos-tuned-loweig.dat
+uv run optbench run tsopt/LJ38 rgsaddle/lanczos --workers 6 --output results/campaign/rgsaddle-2db34b42-lanczos-ts-lj38.dat
+uv run optbench run tsopt/LJ38 rgsaddle/lanczos-tuned --workers 6 --output results/campaign/rgsaddle-2db34b42-lanczos-tuned-ts-lj38.dat
+uv run optbench run tsopt/pt-island rgsaddle/pt-lanczos --workers 6 --output results/campaign/rgsaddle-2db34b42-pt-lanczos-ts-pt.dat
+uv run optbench run tsopt/pt-island rgsaddle/pt-lanczos-tuned --workers 6 --output results/campaign/rgsaddle-2db34b42-pt-lanczos-tuned-ts-pt.dat
+```
+
+The grid script pinned `--workers 6` on the last five commands. The default mode-lanczos file was produced by the same `optbench run` form.
+
+## OCI-NEB L-BFGS at 2db34b42
+
+`rgsaddle/oci-neb-lbfgs` refines the climbing image with Lanczos. The band harness reads `RGSADDLE_LIBRARY`, set to the same `librgsaddle.so`. All four problems used `--workers 6`. Pull request 23 did not publish these rows. The c0db2b8 cells are the previous board numbers. The commit range from c0db2b8 to 2db34b42 contains more than the residual fold, so the drop is not that one change.
+
+| problem | legacy mean | min | median | max | successes | nfailed | par2 mean | failure class |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| neb/Pt-heptamer | 121 | 90 | 126 | 139 | 13 | 0 | 121.3076923076923 |  |
+| double-ended-saddle-search/lj38 | 182 | 97 | 135 | 1693 | 50 | 0 | 182.16 |  |
+| double-ended-saddle-search/pt-island | 120 | 73 | 115 | 271 | 59 | 0 | 119.72881355932203 |  |
+| double-ended-saddle-search/lj38_2ts_separation | 586 | 118 | 327 | 5162 | 49 | 2 | 1347.3529411764705 | wrong_stationary 2 |
+
+On lj38_2ts_separation the two start records are `wrong_stationary` (Hessian index 2 and 3, 167 and 124 force calls). PAR-2 still charges each one `2 * 10000`. The `.v2.json` tally says `n_divergence` 2 because the band writer scores `force_calls` and `success` only, and that tally has no Hessian class. The board follows the start records.
+
+```
+uv run optbench run neb/Pt-heptamer rgsaddle/oci-neb-lbfgs --workers 6 --output results/campaign/rgsaddle-2db34b42-neb-Pt-heptamer--rgsaddle-oci-neb-lbfgs.dat
+uv run optbench run double-ended-saddle-search/lj38 rgsaddle/oci-neb-lbfgs --workers 6 --output results/campaign/rgsaddle-2db34b42-double-ended-saddle-search-lj38--rgsaddle-oci-neb-lbfgs.dat
+uv run optbench run double-ended-saddle-search/pt-island rgsaddle/oci-neb-lbfgs --workers 6 --output results/campaign/rgsaddle-2db34b42-double-ended-saddle-search-pt-island--rgsaddle-oci-neb-lbfgs.dat
+uv run optbench run double-ended-saddle-search/lj38_2ts_separation rgsaddle/oci-neb-lbfgs --workers 6 --output results/campaign/rgsaddle-2db34b42-double-ended-saddle-search-lj38_2ts_separation--rgsaddle-oci-neb-lbfgs.dat
+```
+
+## c0db2b8 board
+
 asv result `results/asv/cursor/a914203c-uv-pip-py3.12.json`, optbench commit `a914203cbb891442232aea2c92f960df9a48dc1d`.
 rgsaddle `c0db2b8d333c557251635cb8bb7b3d81f0088a71` (0.2.2).
 Cost is `RgpotCounter.calculate` on `HarnessCounter(cache=True)`. Hessian checks are `verify_calls` and are not in `force_calls`.
