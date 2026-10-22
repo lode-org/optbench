@@ -1,0 +1,65 @@
+# TSASE 1.0 quench dimer-QM on the Pt quench reactant.
+id = "tsase/htst-pt-quench-stock"
+engine = "tsase"
+problem = "hTST/Pt"
+code = "tsase"
+code_version = "1.0"
+commit = "98aac60b5d9905e81ee4e6b8c385f169258d0218"
+algorithm = "quenchDimer+neb-QM"
+reducer = "harness"
+kind = "htst"
+kernel = "morse_shift"
+tuning = "stock"
+note = '''
+Stock TSASE 1.0 at 98aac60 quench dimer-QM on the quench_dimer-qm reactant. Temperature 700, seed 42, confidence 1.1, prefactor 1.2e12, optimizer qm, converged_force 0.001, max_iterations 5000, time_step 0.3, minimize_first false, displace weight 1, radius 3.3, magnitude 0.3, dimer rotations_max 100, converged_angle 5, max step 0.1. The 1.0 SSDimer constructor has no alpha argument, so the call does not pass one. The harness potential is morse_shift. The ranked cost is the PotServer total at the stop. Sad-fcs in per-batch wuid order are stored beside that total. The archive communicator buffer is 1000 jobs on 2 CPUs; this score used local batches of 8.
+'''
+seeds = [42]
+starts = ["pt"]
+geometry = "website/hTST/Pt/quench_dimer-qm/states/0/reactant.con"
+pass_limit = 1
+workers = 8
+asv_full = false
+budget_seconds = 7200
+
+[tsase]
+method = "quench-dimer"
+
+[ini.Main]
+job = "akmc"
+temperature = 700
+random_seed = 42
+
+[ini.Potential]
+potential = "morse_pt"
+
+[ini.Prefactor]
+default_value = "1.2e12"
+
+[ini.Optimizer]
+converged_force = 0.001
+max_iterations = 5000
+opt_method = "qm"
+time_step = 0.3
+
+[ini.AKMC]
+confidence = 1.1
+
+[ini."Process Search"]
+minimize_first = false
+
+[ini.Communicator]
+type = "local"
+client_path = "dimer_ase.py"
+number_of_CPUs = 8
+num_jobs = 8
+
+[ini."Saddle Search"]
+displace_least_coordinated_weight = 1.0
+displace_radius = 3.3
+displace_magnitude = 0.3
+min_mode_method = "dimer"
+max_energy = 10.0
+
+[ini.Dimer]
+rotations_max = 100
+converged_angle = 5.0
