@@ -146,3 +146,39 @@ def test_native_bridge_keeps_a_long_morse_atom_line(tmp_path):
         server.stop()
     assert _numbers(native) == _numbers(python)
     assert len(native.splitlines()) == 3
+
+
+def test_native_bridge_feeds_an_atom_line_past_64_characters(tmp_path):
+    _require_gcc()
+    binary = bridge_executable()
+    assert binary is not None and os.access(binary, os.X_OK)
+    atom = "78 1.2345678901234567e-08 2.3456789012345678e-08 3.4567890123456789e-08"
+    assert len(atom) > 64
+    request = "\n".join(
+        [
+            "16.387907\t0.0\t0.0",
+            "0.0\t16.387907\t0.0",
+            "0.0\t0.0\t16.387907",
+            atom,
+            "78 1.0 2.0 3.0",
+            "",
+        ]
+    )
+    server = PotServer(morse_cluster).start()
+    try:
+        native_dir = tmp_path / "native"
+        python_dir = tmp_path / "python"
+        native_dir.mkdir()
+        python_dir.mkdir()
+        (native_dir / "from_eon_to_extpot").write_text(request, encoding="utf-8")
+        (python_dir / "from_eon_to_extpot").write_text(request, encoding="utf-8")
+        env = os.environ.copy()
+        env["OPTBENCH_POTSERVER"] = server.endpoint()
+        subprocess.run([str(binary)], cwd=native_dir, env=env, check=True, capture_output=True, text=True)
+        respond(python_dir, server.endpoint())
+        native = (native_dir / "from_extpot_to_eon").read_text(encoding="utf-8")
+        python = (python_dir / "from_extpot_to_eon").read_text(encoding="utf-8")
+    finally:
+        server.stop()
+    assert _numbers(native) == _numbers(python)
+    assert len(native.splitlines()) == 3
