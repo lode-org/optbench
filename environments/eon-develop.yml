@@ -1,10 +1,11 @@
 # eOn develop is not a conda-forge package. This file does not select
 # eon=3.6.0 and it does not invent a build string. The binary the
 # develop benchmarks run is the source build pinned in
-# codes/registry.toml under id eon-develop:
+# codes/registry.toml under id eon-develop-9d77066c:
 #   ref = develop
-#   commit = 7095b23ac17d49f434a5e08ccb072897ceca698e
-#   version string 3.6.0 (7095b23a)
+#   commit = 9d77066c375c11602514c7de2931c1ee936e93f6
+#   version string 3.6.0 (9d77066c)
+# The 7095b23 pin stays for the rows recorded on that commit.
 # asv has one environment_type, so this yml cannot be bound to one
 # class. Those classes call EONCLIENT. environments/eon-3.5.0.yml
 # remains the conda-forge 3.5.0 pin.

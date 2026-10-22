@@ -24,7 +24,7 @@ The server refuses a search call at ``failure_cap`` before the potential
 runs, and that run is ``cap``. The client's ``total_force_calls`` is
 stored beside the harness count and is not the track. The binary is the
 develop source build named by ``EONCLIENT``
-(commit 7095b23ac17d49f434a5e08ccb072897ceca698e). The conda-forge 3.5.0
+(commit 9d77066c375c11602514c7de2931c1ee936e93f6). The conda-forge 3.5.0
 pin is a different environment.
 
 The default grid is one seed and the first start. ``OPTBENCH_ASV_FULL=1``
@@ -52,8 +52,8 @@ from pathlib import Path
 from optbench.asv_tracks import TrackedSearch as _TrackedSearch
 
 ROOT = Path(__file__).resolve().parents[1]
-EON_COMMIT = "7095b23ac17d49f434a5e08ccb072897ceca698e"
-EON_VERSION_TOKEN = "7095b23"
+EON_COMMIT = "9d77066c375c11602514c7de2931c1ee936e93f6"
+EON_VERSION_TOKEN = "9d77066"
 MORSE_D = 0.7102
 MORSE_A = 1.6047
 MORSE_RE = 2.897

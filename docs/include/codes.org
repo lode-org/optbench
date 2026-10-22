@@ -26,6 +26,12 @@
    <td>7095b23ac17d</td>
    <td><a href="https://github.com/TheochemUI/eon">https://github.com/TheochemUI/eon</a></td>
    </tr>
+   <tr>
+   <td>minimization and saddle search</td>
+   <td>develop</td>
+   <td>9d77066c375c</td>
+   <td><a href="https://github.com/TheochemUI/eon">https://github.com/TheochemUI/eon</a></td>
+   </tr>
    </tbody></table></div>
    <div class="bench-scroll"><table data-board-table="code-best">
    <caption>Best full harness run on each problem.</caption>
@@ -55,12 +61,12 @@
    <tr data-problem="double-ended-saddle-search/pt-island" data-template="eon/develop-de-pt-oci">
    <td>pt-island</td>
    <td data-field="template">eon/develop-de-pt-oci</td>
-   <td data-field="version">eOn 3.6.0</td>
-   <td data-field="commit">7095b23ac17d</td>
-   <td data-field="par2_mean">3080.19</td>
-   <td data-field="mean_calls">3220.9</td>
-   <td data-field="median_calls">2260</td>
-   <td data-field="failures">crash 0, divergence 0, cap 21, wrong_stationary 0</td>
+   <td data-field="version">eOn (develop 9d77066c)</td>
+   <td data-field="commit">9d77066c375c</td>
+   <td data-field="par2_mean">311.186</td>
+   <td data-field="mean_calls">260.339</td>
+   <td data-field="median_calls">188</td>
+   <td data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 0</td>
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="globalopt/lj38" data-template="eon-client/bh-lj38">

@@ -35,6 +35,16 @@ committed = "2026-10-16"
 note = "develop HEAD built from source. The version string is 3.6.0 (7095b23a). GPR-dimer is absent: TheochemUI/gpr_optim is private and eonclient reports GPRD disabled. This pin is not the conda-forge 3.5.0 binary."
 
 [[code]]
+id = "eon-develop-9d77066c"
+name = "eOn"
+role = "minimization and saddle search"
+repository = "https://github.com/TheochemUI/eon"
+ref = "develop"
+commit = "9d77066c375c11602514c7de2931c1ee936e93f6"
+committed = "2026-10-21"
+note = "develop at 9d77066c, merge of pull request 791. The optbench label is eOn (develop 9d77066c). eonclient --version prints 3.6.0 (9d77066c). OCI-NEB rows use this commit. The 7095b23 pin stays for the rows recorded on that commit. EON (SVN r2549) is a different code."
+
+[[code]]
 id = "eon-svn"
 name = "Eon svn"
 role = "minimization and saddle search"
