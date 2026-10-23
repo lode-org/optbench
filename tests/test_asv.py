@@ -38,7 +38,7 @@ def test_asv_uses_the_uv_environment():
     assert "HaoZeke/asv-perch@v1" in workflow
     assert "results/asv" in workflow
     assert 'regression-threshold: "10"' in workflow
-    assert "asv-spyglass-args: --factor 10" in workflow
+    assert "asv-spyglass-args: --factor 9" in workflow
 
 
 def test_rgsaddle_grid_is_seed_then_one_start_until_full(monkeypatch):
