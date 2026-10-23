@@ -188,6 +188,13 @@ SVN r2549, `templates/eon-svn/`:
 
 `uv run optbench neb` and `uv run optbench pairs` copy an archived `[Optimizer]` timestep into `[QuickMin]` or `[FIRE]`, and copy `opt_method` into `[Nudged Elastic Band]`, then run that entry's `report.sh`. The values stay the archived values.
 
+Templates can also declare auxiliary run files with `[[inputs]]`.
+Each entry names a `source` file and an optional `target` path in the run
+directory. If `target` is omitted, the file keeps its basename. `source`
+is resolved relative to the repository root unless it is absolute. This is
+how eOn global optimization templates stage `in.lammps` and any future
+potential-side data files without hardcoding paths in the launcher.
+
 The LJ38 minimization templates name `ljcluster` or `lj_cluster`. They do not pass the problem cutoff of 40. Every pair in that cluster is inside the cutoff, and the all-pairs potential matches the archived means. A geometry whose pairs reach the cutoff has to use `lammps` and the archived `in.lammps`, as the climbing-image command does.
 
 ## The two boards

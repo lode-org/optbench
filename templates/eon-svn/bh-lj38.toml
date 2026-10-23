@@ -18,6 +18,10 @@ asv_full = false
 asv_timeout = 21600
 budget_seconds = 21600
 
+[[inputs]]
+source = "archive/entries/globalopt/lj38/eon-basinhopping/in.lammps"
+target = "in.lammps"
+
 [ini.Main]
 job = "basin_hopping"
 temperature = 8000

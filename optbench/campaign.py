@@ -167,13 +167,53 @@ def parse_client_dat(text: str) -> tuple[int | None, str | None]:
     return calls, reason
 
 
-def _launch_client(client: str, ini: str, con: str, work: str) -> Path:
+def _template_inputs(root: Path, template: dict) -> tuple[tuple[str, str], ...]:
+    declared = template.get("inputs") or []
+    if not declared:
+        return ()
+    if not isinstance(declared, list):
+        raise ValueError("template inputs must be a list")
+    staged = []
+    for row in declared:
+        if isinstance(row, str):
+            source_raw = row
+            target_raw = Path(row).name
+        elif isinstance(row, dict):
+            source_raw = row.get("source")
+            if not source_raw:
+                raise ValueError("template input entries need source")
+            target_raw = row.get("target") or Path(str(source_raw)).name
+        else:
+            raise ValueError("template input entries must be strings or tables")
+        source = Path(str(source_raw))
+        if not source.is_absolute():
+            source = root / source
+        if not source.is_file():
+            raise FileNotFoundError(f"template input {source_raw} is not a file")
+        target = Path(str(target_raw))
+        if target.is_absolute() or ".." in target.parts:
+            raise ValueError(f"template input target {target_raw} must stay within the run directory")
+        staged.append((str(source), str(target)))
+    return tuple(staged)
+
+
+def _launch_client(
+    client: str,
+    ini: str,
+    con: str,
+    work: str,
+    extra_inputs: tuple[tuple[str, str], ...] = (),
+) -> Path:
     dest = Path(work)
     if dest.exists():
         shutil.rmtree(dest)
     dest.mkdir(parents=True)
-    (dest / "config.ini").write_text(ini)
+    (dest / "config.ini").write_text(ini, encoding="utf-8")
     shutil.copy(con, dest / "pos.con")
+    for source, target in extra_inputs:
+        target_path = dest / target
+        target_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(source, target_path)
     subprocess.run(
         [client],
         cwd=dest,
@@ -197,17 +237,23 @@ def _bad_termination(calls: int | None, reason: str | None) -> bool:
     return calls is None or (reason is not None and reason != "0")
 
 
-def run_client(client: str, ini: str, con: str, work: str) -> int | None:
+def run_client(
+    client: str,
+    ini: str,
+    con: str,
+    work: str,
+    extra_inputs: tuple[tuple[str, str], ...] = (),
+) -> int | None:
     """Run one eonclient subprocess on one geometry. A bad termination is None."""
-    found = client_result(_launch_client(client, ini, con, work))
+    found = client_result(_launch_client(client, ini, con, work, extra_inputs))
     if _bad_termination(found["force_calls"], found["reason"]):
         return None
     return found["force_calls"]
 
 
-def _one(job: tuple[str, str, str, str]) -> dict:
-    client, ini, con, work = job
-    found = client_result(_launch_client(client, ini, con, work))
+def _one(job: tuple[str, str, str, str, tuple[tuple[str, str], ...]]) -> dict:
+    client, ini, con, work, extra_inputs = job
+    found = client_result(_launch_client(client, ini, con, work, extra_inputs))
     found["geometry"] = Path(con).name
     return found
 
@@ -498,6 +544,7 @@ def run(
     if cap is None:
         raise ValueError(f"{problem['id']} has no force-call cap")
     ini = format_ini(template["ini"])
+    extra_inputs = _template_inputs(root, template)
     if geometries is None:
         archive = geometry_archive(root, problem)
         dest = work or output.parent / "geometries"
@@ -511,7 +558,7 @@ def run(
         cons = iter_geometries(geometries)
     scratch = work or output.parent / "work" / template["id"].replace("/", "-")
     jobs = [
-        (str(client), ini, str(con), str(scratch / con.stem))
+        (str(client), ini, str(con), str(scratch / con.stem), extra_inputs)
         for con in cons
     ]
     if workers <= 1:
