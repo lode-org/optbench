@@ -152,15 +152,19 @@ static char *server_request(const double *values, size_t count, size_t *length) 
     }
     for (index = 0; index < atoms; index++) {
         size_t base = 9 + 4 * index;
-        char number[64];
+        char number[256];
         char x[64];
         char y[64];
         char z[64];
         long atomic = (long)values[base];
+        int wrote;
         format_double(x, sizeof(x), values[base + 1]);
         format_double(y, sizeof(y), values[base + 2]);
         format_double(z, sizeof(z), values[base + 3]);
-        snprintf(number, sizeof(number), "%ld %s %s %s\n", atomic, x, y, z);
+        wrote = snprintf(number, sizeof(number), "%ld %s %s %s\n", atomic, x, y, z);
+        if (wrote < 0 || (size_t)wrote >= sizeof(number)) {
+            fail("ext_pot atom line does not fit");
+        }
         append_text(&buffer, &used, &cap, number);
     }
     *length = used;
