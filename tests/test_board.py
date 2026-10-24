@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from optbench.board import MissingAsvCommit, build_board, write_board
+from optbench.board import MissingAsvCommit, build_board, headline_table, render_problem_section, write_board
 from optbench.score import rate_interval
 
 PIN = "a" * 40
@@ -155,6 +155,28 @@ def test_full_harness_row_is_ranked_by_par2(tmp_path: Path):
     assert row["registry_match"] is True
     assert row["short"] is False
     assert "rate_low" not in row or row.get("rate_low") is None
+
+
+def test_a_full_row_shows_a_repeated_energy_without_leaving_the_table(tmp_path: Path):
+    _problem(tmp_path, starts=2, cap=10)
+    _template(tmp_path)
+    _registry(tmp_path)
+    path = _dat(tmp_path, "toy-fast", PIN)
+    path.write_text(
+        path.read_text(encoding="utf-8")
+        + "finding 1 of 2 starts at -1.00000000; lowest energy -2.00000000\n",
+        encoding="utf-8",
+    )
+    _starts(tmp_path, "toy-fast", [_row(3, True, "0"), _row(4, True, "1")])
+
+    document = build_board(tmp_path)
+    problem = document["problems"]["minimization/toy"]
+    assert problem["short"] == []
+    assert problem["ranked"][0]["finding"] == "1 of 2 starts at -1.00000000; lowest energy -2.00000000"
+    html = render_problem_section(problem, set())
+    assert "<h3>Findings</h3>" in html
+    assert "1 of 2 starts at -1.00000000; lowest energy -2.00000000" in html
+    assert "1 of 2 starts at -1.00000000; lowest energy -2.00000000" in headline_table(problem)
 
 
 def test_short_grid_stays_off_the_ranked_table(tmp_path: Path):
