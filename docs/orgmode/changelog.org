@@ -3,6 +3,8 @@
 
 * 2026-10-24
 
+asv imports one OGOLEM class per template. The default grid is seed 0 and start 0. The code page lists registry pin =cce35a376d92=. This branch adds no campaign row.
+
 The campaign dispatches the =ogolem= engine to one JVM per archived start. The printed jar stamp must match the harness pin before a start is scored. The two-atom Lennard-Jones check runs when the jars are installed.
 
 A repeated OGOLEM energy that is not the lowest is shown under the headline. The row stays on the ranked table.
