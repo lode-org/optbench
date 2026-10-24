@@ -1,0 +1,17 @@
+id = "ogolem/lj38"
+engine = "ogolem"
+problem = "globalopt/lj38"
+code = "ogolem"
+code_version = "2016"
+commit = "cce35a376d929852ab1e80e98105c0d13d784b8d"
+algorithm = "genetic algorithm"
+tuning = "default"
+failure_cap = 2000000
+reference_energy = -173.928427
+note = "Genetic algorithm from examples/clusteropt/ar38/ar38_sweden.ogo at this commit. PoolSize is 100 and NumberOfGlobIterations is 19900. Crossover is 75 percent Sweden cutstyle 2 and 25 percent Sweden cutstyle 1. Mutation is 75 percent Monte Carlo some and 25 percent Monte Carlo one. Local optimization is LBFGS at the OGOLEM defaults: 2000 iterations, gradient threshold 1e-8, maximum step 1 bohr. The harness potential is lennard_jones with epsilon 1, sigma 1, cutoff 40, and no shift. It is not LennardJonesFF. Collision radii are bohr and Ar is 1.85, sized for the Ar Lennard-Jones sigma 6.434516991 bohr. Archived coordinates are reduced units. The xyz seed is scaled by that sigma over Constants.ANGTOBOHR, and the socket divides by the sigma. CellSize is 60 bohr, the example cell. setRandomCOM draws the other pool members about the origin, so the archived geometry is centered there and written as one xyz seed. The RNG is javarng with seed start_index+1. One JVM and one thread per start. The force-call cap is 2000000. The problem file states no max_force_calls, so the template budget is the cap. Success is energy at or below the archived eon-basinhopping stop_energy -173.927427, reference_energy plus energy_above_minimum 0.001."
+
+[ogolem]
+pool_size = 100
+glob_iterations = 19900
+cell_bohr = 60
+threads = 1

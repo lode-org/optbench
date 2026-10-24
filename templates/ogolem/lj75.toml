@@ -1,0 +1,20 @@
+id = "ogolem/lj75"
+engine = "ogolem"
+problem = "globalopt/lj75"
+code = "ogolem"
+code_version = "2016"
+commit = "cce35a376d929852ab1e80e98105c0d13d784b8d"
+algorithm = "genetic algorithm"
+tuning = "default"
+failure_cap = 1000000
+reference_energy = -397.492331
+note = "Same genetic algorithm as ogolem/lj38. The archive is website/globalopt/lj75/lj75_clusters.tgz, 200 coords files. Success is the Cambridge N=75 minimum -397.492331 plus energy_above_minimum 0.001. The force cap is the problem max_force_calls, 1000000. The generation budget stays 19900. A start that exhausts the force cap is cap. A start that ends under the cap above the window is wrong_stationary."
+
+[ogolem]
+pool_size = 100
+glob_iterations = 19900
+cell_bohr = 60
+threads = 1
+
+[input]
+archive_path = "website/globalopt/lj75/lj75_clusters.tgz"
