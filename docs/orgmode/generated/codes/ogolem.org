@@ -1,0 +1,21 @@
+#+TITLE: ogolem
+#+OPTIONS: toc:nil num:nil author:nil
+
+#+begin_export rst
+.. raw:: html
+
+   <section class="bench" id="code-ogolem">
+   <h2>ogolem</h2>
+   <div class="bench-scroll"><table>
+   <caption>Registry pins.</caption>
+   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
+   <tr>
+   <td>global optimization</td>
+   <td>master</td>
+   <td>cce35a376d92</td>
+   <td><a href="https://github.com/ogolem/ogolem">https://github.com/ogolem/ogolem</a></td>
+   </tr>
+   </tbody></table></div>
+   <p>No ranked row.</p>
+   </section>
+#+end_export

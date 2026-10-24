@@ -35,6 +35,7 @@ Archived rows use the same key and appear on that code page.
    generated/codes/airss
    generated/codes/vc-sqnm
    generated/codes/softsaddle
+   generated/codes/ogolem
    generated/codes/gpridge
    generated/codes/eon--svn-r2549
    generated/codes/eon--develop-500350d9
