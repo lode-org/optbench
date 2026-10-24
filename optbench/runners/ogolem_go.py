@@ -221,3 +221,103 @@ def write_xyz(path: Path, positions) -> None:
     for row in pos:
         lines.append(f"Ar {row[0]:.16e} {row[1]:.16e} {row[2]:.16e}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+class HarnessLJServer(socketserver.ThreadingTCPServer):
+    """One Lennard-Jones counter, shared by every socket from one JVM."""
+
+    allow_reuse_address = True
+    daemon_threads = True
+
+    def __init__(self, *, cap: int, threshold: float | None, trace: bool = False):
+        super().__init__(("127.0.0.1", 0), _Handler)
+        self.counter = HarnessCounter(cache=True, cap=cap)
+        self.threshold = None if threshold is None else float(threshold)
+        self.trace = trace
+        self.traces: list[dict] = []
+        self.best_energy: float | None = None
+        self.found = False
+        self.hit_cap = False
+        self.lock = threading.Lock()
+        self._thread = threading.Thread(target=self.serve_forever, name="ogolem-lj", daemon=True)
+        self._thread.start()
+
+    @property
+    def endpoint(self) -> str:
+        host, port = self.server_address
+        return f"{host}:{port}"
+
+    def close(self) -> None:
+        self.shutdown()
+        self.server_close()
+
+    def dispatch(self, line: str) -> str | None:
+        text = line.strip()
+        if not text:
+            return None
+        if text == "hello":
+            return "ok\n"
+        if text == "bye":
+            return None
+        if not text.startswith("calculate"):
+            return f"error unexpected {text.split()[0]}\n"
+        parts = text.split()
+        try:
+            atoms = int(parts[1])
+            coords = [float(value) for value in parts[2:]]
+        except (IndexError, ValueError) as exc:
+            return f"error {exc}\n"
+        if len(coords) != 3 * atoms:
+            return "error coordinate count\n"
+        with self.lock:
+            try:
+                energy, gradient, calls = self._evaluate(coords)
+            except ForceCallCap:
+                self.hit_cap = True
+                best = "nan" if self.best_energy is None else repr(self.best_energy)
+                return f"cap {self.counter.calls} {best}\n"
+            if self.trace:
+                self.traces.append({"energy": energy, "coords": list(coords), "calls": calls})
+            if self.best_energy is None or energy < self.best_energy:
+                self.best_energy = energy
+            cap = self.counter.cap
+            if (
+                self.threshold is not None
+                and energy <= self.threshold
+                and cap is not None
+                and calls < cap
+            ):
+                self.found = True
+                return f"found {calls} {energy!r}\n"
+            body = " ".join(repr(float(value)) for value in gradient)
+            return f"ok {calls} {energy!r} {body}\n"
+
+    def _evaluate(self, coords: list[float]) -> tuple[float, tuple[float, ...], int]:
+        key = tuple(coords)
+        _fresh, cached = self.counter.charge(key)
+        if cached is not None:
+            energy, gradient = cached
+            return float(energy), tuple(gradient), int(self.counter.calls)
+        energy, gradient = lennard_jones(coords)
+        stored = (float(energy), tuple(float(value) for value in gradient))
+        self.counter.remember(key, stored)
+        return stored[0], stored[1], int(self.counter.calls)
+
+
+class _Handler(socketserver.StreamRequestHandler):
+    def handle(self) -> None:
+        self.connection.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        self.connection.settimeout(60)
+        server: HarnessLJServer = self.server
+        try:
+            while True:
+                raw = self.rfile.readline()
+                if not raw:
+                    return
+                reply = server.dispatch(raw.decode("ascii"))
+                if reply is None:
+                    return
+                self.wfile.write(reply.encode("ascii"))
+                self.wfile.flush()
+        except (ConnectionError, TimeoutError, socket.timeout):
+            return
