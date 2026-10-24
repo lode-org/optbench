@@ -6,7 +6,7 @@ code_version = "0.9.4"
 commit = "5593cc4ee360d998764fceb188284fdf0ef781d206754176dcb360c65103ddaa"
 algorithm = "random structure search"
 tuning = "default"
-note = "Partial row. Each index is an independent AIRSS search of 20 cells, and every start stops at that budget. The runner's Wales reference is the LJ38 minimum, so this N=75 search does not apply the problem energy window. The 200 indices coords.1 through coords.200 follow the archived GMIN loop. POSAMP 2.351945 is the LJ38 value 1.875 times (75/38)^(1/3). MINSEP, SYMMOPS, and NFORM match the LJ38 cell. The recorded energy is the lowest harness energy in the budget."
+note = "Each index is an independent AIRSS search of 20 cells. A start succeeds when the harness energy is at or below the problem reference plus energy_above_minimum. The 200 indices coords.1 through coords.200 follow the archived GMIN loop. POSAMP 2.351945 is the LJ38 value 1.875 times (75/38)^(1/3). MINSEP, SYMMOPS, and NFORM match the LJ38 cell. The recorded energy is the lowest harness energy in the budget."
 
 [airss]
 natoms = 75

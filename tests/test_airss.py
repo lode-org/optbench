@@ -135,7 +135,7 @@ def test_template_pins_the_tarball_and_the_asv_grid_is_one_start(monkeypatch, tm
         AirssLj38().setup("0", "0")
 
 
-def test_lj75_budget_writes_partial_rows(tmp_path, monkeypatch):
+def test_lj75_window_writes_a_partial_log_when_every_start_misses(tmp_path, monkeypatch):
     import json
 
     import optbench.runners.airss_go as airss
@@ -147,29 +147,26 @@ def test_lj75_budget_writes_partial_rows(tmp_path, monkeypatch):
     monkeypatch.setattr(airss, "search_start", fake)
     monkeypatch.setenv("AIRSS_BUILDCELL", "/bin/true")
     output = tmp_path / "lj75.dat"
-    summary = run(
-        ROOT,
-        "globalopt/lj75",
-        "airss/lj75",
-        output=output,
-        workers=1,
-        work=tmp_path / "work",
-    )
-    text = output.read_text(encoding="utf-8")
-    assert "partial true" in text
-    assert "cap 299" in text
-    assert "n 200" in text
-    assert summary["starts"] == 200
-    assert summary["nfailed"] == 200
-    assert summary["par2_mean"] == 598
+    with pytest.raises(RuntimeError, match="200 of 200 starts missed the minimum"):
+        run(
+            ROOT,
+            "globalopt/lj75",
+            "airss/lj75",
+            output=output,
+            workers=1,
+            work=tmp_path / "work",
+        )
+    assert not output.exists()
     rows = [
         json.loads(line)
-        for line in output.with_suffix(".starts.jsonl").read_text(encoding="utf-8").splitlines()
+        for line in output.with_suffix(".partial.jsonl").read_text(encoding="utf-8").splitlines()
     ]
+    assert len(rows) == 200
     assert [row["start"] for row in rows[:2]] == ["coords.1", "coords.2"]
     assert rows[-1]["start"] == "coords.200"
     assert rows[0]["energy"] == -300.0
     assert rows[-1]["energy"] == -499.0
+    assert rows[0]["reference_energy"] == pytest.approx(-397.492331)
     assert all(row["success"] is False and row["failure"] == "cap" and row["counter"] == "harness" for row in rows)
 
 
