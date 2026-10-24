@@ -1,0 +1,1 @@
+The catalog writer keeps a code pin that sits after the template block. GPRidge band tests skip when h5py is absent. The CuH2 problem records the v2 scoring keys, and the board lists the CuH2 problem page and the GPRidge code page.

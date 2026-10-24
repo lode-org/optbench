@@ -1,6 +1,10 @@
 #+TITLE: Changelog
 #+OPTIONS: toc:nil num:nil author:nil
 
+* 2026-10-24
+
+The catalog writer keeps a code pin that sits after the template block. GPRidge band tests skip when =h5py= is absent. The CuH2 problem records the v2 scoring keys, and the board lists the CuH2 problem page and the GPRidge code page.
+
 * 2026-10-21
 
 =integrate/batch-3= ranks the stock rows from the finished board branches.
