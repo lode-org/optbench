@@ -2,6 +2,8 @@
 
 ## 2026-10-24
 
+OGOLEM commit cce35a376d929852ab1e80e98105c0d13d784b8d builds from source. The harness backend is OptbenchBackend.java on the exploded classpath, with the incubator vector module enabled.
+
 AIRSS applies the problem reference energy plus the tolerance on lj75, including when the search has a structure budget. A problem with no tolerance still stops after that budget.
 
 The catalog writer keeps a code pin that sits after the template block. GPRidge band tests skip when h5py is absent. The CuH2 problem records the v2 scoring keys, and the board lists the CuH2 problem page and the GPRidge code page.
