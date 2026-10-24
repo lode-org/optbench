@@ -1,4 +1,4 @@
-"""OGOLEM row text, archives, and the harness socket."""
+"""OGOLEM harness wiring. The dimer case runs only when the jars are installed."""
 
 import json
 import math
@@ -24,11 +24,14 @@ from optbench.runners.ogolem_go import (
     _write_outputs,
     center_cluster,
     classify_start,
+    jars_ready,
     load_starts,
     ogo_text,
+    smoke_dimer,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
+
 
 def _exchange(server: HarnessLJServer, line: str) -> str:
     host, port = server.server_address
@@ -41,6 +44,7 @@ def _exchange(server: HarnessLJServer, line: str) -> str:
         reader.write(line.encode("ascii") + b"\n")
         reader.flush()
         return reader.readline().decode("ascii")
+
 
 def test_server_matches_lennard_jones_and_caches_and_caps():
     server = HarnessLJServer(cap=2, threshold=None)
@@ -62,6 +66,7 @@ def test_server_matches_lennard_jones_and_caches_and_caps():
     finally:
         server.close()
 
+
 def test_lj38_stop_is_the_archived_eon_threshold():
     template = load_template(ROOT, "ogolem/lj38")
     problem = resolve_problem(ROOT, "globalopt/lj38")
@@ -70,6 +75,7 @@ def test_lj38_stop_is_the_archived_eon_threshold():
     assert float(template["reference_energy"]) + float(problem["convergence"]["energy_above_minimum"]) == pytest.approx(
         LJ38_STOP_ENERGY
     )
+
 
 def test_larger_clusters_use_the_cambridge_window_and_the_problem_cap():
     expected = {
@@ -88,6 +94,7 @@ def test_larger_clusters_use_the_cambridge_window_and_the_problem_cap():
     assert _threshold(lj38, load_template(ROOT, "ogolem/lj38")) == pytest.approx(LJ38_STOP_ENERGY)
     assert _force_cap(lj38, load_template(ROOT, "ogolem/lj38")) == 2_000_000
 
+
 def test_archive_counts_do_not_double_count_xyz(tmp_path: Path):
     lj38 = load_starts(ROOT, resolve_problem(ROOT, "globalopt/lj38"), load_template(ROOT, "ogolem/lj38"), tmp_path)
     assert len(lj38) == 100
@@ -103,11 +110,13 @@ def test_archive_counts_do_not_double_count_xyz(tmp_path: Path):
     assert lj98[0][1].shape[0] == 98
     assert lj150[0][1].shape[0] == 150
 
+
 def test_length_unit_is_the_argon_sigma():
     # Contact at this sigma is 2**(1/6)*6.434516991 bohr, above 1.2*(1.85+1.85).
     assert AR_SIGMA_BOHR == 6.434516991
     assert XYZ_SCALE * ANGTOBOHR == pytest.approx(AR_SIGMA_BOHR)
     assert load_template(ROOT, "ogolem/lj38")["ogolem"]["cell_bohr"] == 60
+
 
 def test_center_and_ogo_text_follow_the_sweden_example():
     import numpy as np
@@ -127,6 +136,7 @@ def test_center_and_ogo_text_follow_the_sweden_example():
     assert "AcceptableFitness" not in plain
     with pytest.raises(ValueError):
         ogo_text(atoms=2, pool=1, iterations=0, cell=18, seed=1, threshold=None)
+
 
 def test_classify_start_uses_the_energy_window_and_the_cap():
     assert classify_start(exit_code=0, calls=10, energy=-173.928, cap=100, threshold=LJ38_STOP_ENERGY, hit_cap=False)[0]
@@ -152,6 +162,7 @@ def test_classify_start_uses_the_energy_window_and_the_cap():
     )
     assert failure == "divergence"
 
+
 def test_partial_reason_counts_starts_on_the_lowest_energy():
     problem = {"id": "globalopt/lj75"}
     records = [
@@ -172,6 +183,7 @@ def test_partial_reason_counts_starts_on_the_lowest_energy():
         "scored 4 of 200 starts; lowest energy -397.49134614; "
         "2 of 4 starts at -396.28224883; mean calls 886121.0; median calls 1000000.0"
     )
+
 
 def test_a_complete_grid_records_a_repeated_energy_that_is_not_the_lowest(tmp_path: Path):
     records = [
@@ -199,6 +211,7 @@ def test_a_complete_grid_records_a_repeated_energy_that_is_not_the_lowest(tmp_pa
     text = output.read_text(encoding="utf-8")
     assert "partial true" not in text
     assert "finding 3 of 4 starts at -396.28224883; lowest energy -397.49134614" in text
+
 
 def test_partial_reason_is_kept_when_the_problem_states_no_full_set(tmp_path: Path):
     problem = tmp_path / "problems" / "globalopt" / "toy.toml"
@@ -273,3 +286,18 @@ def test_partial_reason_is_kept_when_the_problem_states_no_full_set(tmp_path: Pa
     assert row["short"] is True
     assert row["short_reason"] == "no success rule on globalopt/toy; lowest energy -1.25000000; mean calls 4.0"
     assert document["problems"]["globalopt/toy"]["ranked"] == []
+
+
+def test_dimer_matches_the_spec_lennard_jones():
+    if not jars_ready():
+        pytest.skip("ogolem jars are not installed")
+    record = smoke_dimer()
+    distance = 2.0 ** (1.0 / 6.0)
+    assert record["first_distance"] == pytest.approx(distance, abs=1e-6)
+    assert record["first_energy"] == pytest.approx(-1.0, abs=1e-6)
+    assert record["energy"] == pytest.approx(-1.0, abs=1e-6)
+    assert record["exit_code"] == 0
+    # The first LBFGS step length is 1/||g||. An exact minimum has a tiny
+    # gradient, so that step is long and the line search spends calls
+    # returning to the well. The first call is the conversion check.
+    assert 1 <= record["force_calls"] < 1000
