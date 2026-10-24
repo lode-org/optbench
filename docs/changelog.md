@@ -2,6 +2,8 @@
 
 ## 2026-10-24
 
+The campaign dispatches the ogolem engine to one JVM per archived start. The printed jar stamp must match the harness pin before a start is scored. The two-atom Lennard-Jones check runs when the jars are installed.
+
 A repeated OGOLEM energy that is not the lowest is shown under the headline. The row stays on the ranked table.
 
 An OGOLEM row records the lowest harness energy and a repeated energy that is not the lowest. A run that stops before every archived start keeps that reason on the row.
