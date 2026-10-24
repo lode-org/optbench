@@ -7,6 +7,7 @@ Each problem is its own page.
 .. raw:: html
 
    <ul>
+   <li><a href="tsopt/cuh2.html">H2 dissociation on a fixed Cu substrate</a></li>
    <li><a href="tsopt/LJ38.html">LJ38</a></li>
    <li><a href="tsopt/pt-island.html">pt-island</a></li>
    </ul>
@@ -18,6 +19,7 @@ Each problem is its own page.
    :hidden:
    :maxdepth: 1
 
+   tsopt/cuh2
    tsopt/LJ38
    tsopt/pt-island
 #+end_export
