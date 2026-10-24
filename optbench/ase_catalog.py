@@ -856,7 +856,18 @@ def write_all(root: Path) -> list[Path]:
                 path.unlink()
     registry = root / "codes" / "registry.toml"
     text = registry.read_text(encoding="utf-8")
+    tail = ""
     if _TEMPLATE_MARK in text:
-        text = text[: text.index(_TEMPLATE_MARK)]
-    registry.write_text(text.rstrip() + "\n\n" + _registry_templates(specs), encoding="utf-8")
+        head, rest = text.split(_TEMPLATE_MARK, 1)
+        # A code pin may follow the generated block. Replacing from the
+        # mark onward used to drop it.
+        marker = "\n[[code]]"
+        found = rest.find(marker)
+        if found != -1:
+            tail = rest[found + 1 :]
+        text = head
+    body = text.rstrip() + "\n\n" + _registry_templates(specs).rstrip() + "\n"
+    if tail.strip():
+        body = body.rstrip() + "\n\n" + tail.strip() + "\n"
+    registry.write_text(body, encoding="utf-8")
     return written

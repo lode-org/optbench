@@ -68,3 +68,34 @@ def test_templates_match_the_catalog_and_registry():
     templates = {row["id"] for row in registry["template"]}
     assert {spec["id"] for spec in specs} <= templates
     assert campaign_problem("sella-2.6.0-ts-lj38") == "tsopt/LJ38"
+
+
+def test_write_all_keeps_a_code_pin_after_the_generated_block(tmp_path):
+    registry = tmp_path / "codes" / "registry.toml"
+    registry.parent.mkdir(parents=True)
+    registry.write_text(
+        "\n".join(
+            [
+                "[[code]]",
+                'id = "ase"',
+                "",
+                "# generated ASE and Sella templates",
+                "",
+                "[[template]]",
+                'id = "stale"',
+                "",
+                "[[code]]",
+                'id = "gpridge"',
+                'name = "GPRidge"',
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    write_all(tmp_path)
+    text = registry.read_text(encoding="utf-8")
+    loaded = tomllib.loads(text)
+    assert [row["id"] for row in loaded["code"]] == ["ase", "gpridge"]
+    assert "stale" not in text
+    assert any(row["id"] == "ase/lj38-bfgs-default" for row in loaded["template"])
+    assert text.rstrip().endswith('name = "GPRidge"')
