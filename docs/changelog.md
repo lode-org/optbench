@@ -2,6 +2,8 @@
 
 ## 2026-10-24
 
+AIRSS applies the problem reference energy plus the tolerance on lj75, including when the search has a structure budget. A problem with no tolerance still stops after that budget.
+
 The catalog writer keeps a code pin that sits after the template block. GPRidge band tests skip when h5py is absent. The CuH2 problem records the v2 scoring keys, and the board lists the CuH2 problem page and the GPRidge code page.
 
 ## 2026-10-21
