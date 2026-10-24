@@ -444,3 +444,242 @@ def _ogolem_settings(template: dict) -> dict:
         "cell": float(section.get("cell_bohr", 60)),
         "threads": int(section.get("threads", 1)),
     }
+
+
+def _format_field(value: object) -> str:
+    if isinstance(value, float):
+        if value.is_integer():
+            return str(int(value))
+        return f"{value:.12g}"
+    return str(value)
+
+
+def _partial_reason(problem: dict, records: list[dict], scored: bool, full: int | None) -> str:
+    energies = [
+        float(record["energy"])
+        for record in records
+        if record.get("energy") is not None and math.isfinite(float(record["energy"]))
+    ]
+    calls = [float(record["force_calls"]) for record in records]
+    parts = []
+    if not scored:
+        parts.append(f"no success rule on {problem['id']}")
+    if full is not None and len(records) < int(full):
+        parts.append(f"scored {len(records)} of {int(full)} starts")
+    elif full is None:
+        parts.append(f"{len(records)} archive starts")
+    if energies:
+        lowest = min(energies)
+        printed = f"{lowest:.8f}"
+        parts.append(f"lowest energy {printed}")
+        labels = [f"{energy:.8f}" for energy in energies]
+        same = sum(1 for label in labels if label == printed)
+        if same >= 2:
+            parts.append(f"{same} of {len(records)} starts at {printed}")
+        counts = Counter(labels)
+        modal, modal_n = counts.most_common(1)[0]
+        if modal != printed and modal_n >= 2:
+            parts.append(f"{modal_n} of {len(records)} starts at {modal}")
+    if calls:
+        parts.append(f"mean calls {statistics.fmean(calls):.1f}")
+        parts.append(f"median calls {statistics.median(calls):.1f}")
+    if not scored:
+        failures = sorted({str(record["failure"]) for record in records if record.get("failure")})
+        if failures:
+            parts.append("failures " + ", ".join(failures))
+        else:
+            parts.append("a finite finish under the force cap is wrong_stationary")
+    return "; ".join(parts)
+
+
+def _repeated_energy(records: list[dict]) -> str:
+    """A repeated energy that is not the lowest, so a full row can still show it."""
+    energies = [
+        float(record["energy"])
+        for record in records
+        if record.get("energy") is not None and math.isfinite(float(record["energy"]))
+    ]
+    if len(energies) < 2:
+        return ""
+    labels = [f"{energy:.8f}" for energy in energies]
+    printed = f"{min(energies):.8f}"
+    modal, modal_n = Counter(labels).most_common(1)[0]
+    if modal == printed or modal_n < 2:
+        return ""
+    return f"{modal_n} of {len(records)} starts at {modal}; lowest energy {printed}"
+
+
+def _dat(
+    summary: dict,
+    template: dict,
+    metrics: dict,
+    commit: str,
+    version: str,
+    *,
+    partial: bool,
+    reason: str,
+    finding: str = "",
+) -> str:
+    rows = {
+        "force_calls": summary.get("force_calls"),
+        "force_calls_min": summary.get("force_calls_min"),
+        "force_calls_max": summary.get("force_calls_max"),
+        "nfailed": summary.get("nfailed"),
+        "median": summary.get("median"),
+        "code": template.get("code"),
+        "code_version": version,
+        "commit": commit,
+        "algorithm": template.get("algorithm"),
+        "template": template["id"],
+        "problem": template.get("problem"),
+        "tuning": template.get("tuning", ""),
+        "counter": "harness",
+        "cap": template.get("failure_cap"),
+        "par2_mean": metrics.get("par2_mean"),
+        "rate_low": metrics.get("rate_low"),
+        "rate_high": metrics.get("rate_high"),
+        "par2_median": metrics.get("median"),
+        "par2_median_low": metrics.get("median_low"),
+        "par2_median_high": metrics.get("median_high"),
+        "v2_nfailed": metrics.get("nfailed"),
+        "v2_successes": metrics.get("successes"),
+        "n": metrics.get("n"),
+        "energy_min": summary.get("energy_min"),
+        "energy_max": summary.get("energy_max"),
+    }
+    lines = [
+        "# counter harness. One force call is one lennard_jones evaluation through the OGOLEM socket.",
+        "# A repeated geometry is one call. The call that would pass the cap is not counted.",
+        "# The potential is epsilon 1, sigma 1, cutoff 40, no shift.",
+        "# One reduced sigma is the Ar sigma 6.434516991 bohr. The socket divides by it.",
+    ]
+    if partial:
+        rows["partial"] = "true"
+        rows["partial_reason"] = reason
+        lines.append("# partial. " + reason)
+    if finding:
+        rows["finding"] = finding
+        lines.append("# finding. " + finding)
+    note = str(template.get("note") or "").strip()
+    if note:
+        lines.append("# " + note.replace("\n", " "))
+    for key, value in rows.items():
+        if value is None or value == "":
+            continue
+        lines.append(f"{key} {_format_field(value)}")
+    return "\n".join(lines) + "\n"
+
+
+def _write_outputs(output: Path, records: list[dict], template: dict, problem: dict, cap: int, scored: bool) -> dict:
+    ordered = sorted(records, key=lambda row: (row.get("index", 0), _sort_key(str(row.get("start")))))
+    for record in ordered:
+        record.pop("traces", None)
+    legacy_counts = [int(record["force_calls"]) for record in ordered]
+    summary = summarize_capped(legacy_counts, cap)
+    under = [count for count in legacy_counts if count < cap]
+    summary["median"] = statistics.median(under) if under else None
+    energies = [
+        float(record["energy"])
+        for record in ordered
+        if record.get("energy") is not None and math.isfinite(float(record["energy"]))
+    ]
+    if energies:
+        summary["energy_min"] = min(energies)
+        summary["energy_max"] = max(energies)
+    metrics = score_v2(
+        [
+            {
+                "force_calls": record["force_calls"],
+                "success": record["success"],
+                "failure": record["failure"],
+            }
+            for record in ordered
+        ],
+        cap,
+    )
+    full = (problem.get("sample") or {}).get("starts")
+    full_n = None if full in (None, "") else int(full)
+    partial = (not scored) or (full_n is not None and len(ordered) < full_n)
+    reason = _partial_reason(problem, ordered, scored, full_n) if partial else ""
+    finding = "" if partial else _repeated_energy(ordered)
+    public = []
+    for record in ordered:
+        row = dict(record)
+        row.pop("index", None)
+        public.append(row)
+    version = str(template.get("code_version") or CODE_VERSION)
+    commit = str(template.get("commit") or COMMIT)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    dat_text = _dat(summary, template, metrics, commit, version, partial=partial, reason=reason, finding=finding)
+    temporary = output.with_suffix(".dat.tmp")
+    temporary.write_text(dat_text, encoding="utf-8")
+    temporary.replace(output)
+    starts_path = output.with_suffix(".starts.jsonl")
+    starts_tmp = starts_path.with_suffix(".jsonl.tmp")
+    write_starts(starts_tmp, public)
+    starts_tmp.replace(starts_path)
+    settings = _ogolem_settings(template)
+    provenance = collect_provenance(
+        code="ogolem",
+        code_version=version,
+        commit=commit,
+        parameters={
+            "pool_size": settings["pool"],
+            "glob_iterations": settings["iterations"],
+            "cell_bohr": settings["cell"],
+            "threads": settings["threads"],
+            "failure_cap": cap,
+            "threshold": _threshold(problem, template),
+            "ar_sigma_bohr": AR_SIGMA_BOHR,
+            "ang_to_bohr": ANGTOBOHR,
+        },
+    )
+    document = {
+        "schema": "optbench.result/v2",
+        "status": "partial" if partial else "archive",
+        "problem": problem["id"],
+        "scoring": "par2-bootstrap",
+        "par_factor": 2,
+        "bootstrap_resamples": 2000,
+        "bootstrap_seed": 20261015,
+        "note": reason or str(template.get("note") or ""),
+        "runs": [
+            {
+                "entry": output.stem,
+                "code": template.get("code"),
+                "algorithm": template.get("algorithm"),
+                "code_version": version,
+                "commit": commit,
+                "tuning": template.get("tuning", ""),
+                "present_source": True,
+                "cap": cap,
+                "partial": partial,
+                "provenance": provenance,
+                "metrics": metrics,
+                "starts": public,
+            }
+        ],
+    }
+    output.with_suffix(".v2.json").write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    summary["starts"] = len(public)
+    summary["template"] = template["id"]
+    summary["problem"] = problem["id"]
+    summary["par2_mean"] = metrics["par2_mean"]
+    summary["v2_nfailed"] = metrics["nfailed"]
+    summary["v2_successes"] = metrics["successes"]
+    summary["partial"] = partial
+    summary["failures"] = {name: metrics[f"n_{name}"] for name in ("crash", "divergence", "cap", "wrong_stationary")}
+    return summary
+
+
+def _completed(path: Path) -> dict[str, dict]:
+    if not path.is_file():
+        return {}
+    found = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        if row.get("start") is not None and row.get("force_calls") is not None:
+            found[str(row["start"])] = row
+    return found
