@@ -3,6 +3,8 @@
 
 * 2026-10-24
 
+OGOLEM uses =max_force_calls= when the problem file states one, and the template budget otherwise. The =lj38= template budget is 2000000. =lj75= is 1000000, =lj98= is 1000000000, and =lj150= is 10000000. Archived geometries load in numeric order.
+
 The OGOLEM harness socket evaluates =lennard_jones= with epsilon 1, sigma 1, cutoff 40, and no shift. A repeated geometry counts as one force call. The call that would pass the cap is refused.
 
 OGOLEM cluster input follows the Ar38 Sweden example. The archived geometry is centered on the origin and written as one xyz seed. One reduced sigma is 6.434516991 bohr.
