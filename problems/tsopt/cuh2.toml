@@ -48,3 +48,39 @@ note = "The force-call threshold rejects an over-budget result; the native outer
 
 [metrics]
 required = ["force_calls", "force_calls_min", "force_calls_max", "nfailed"]
+
+[scoring.half_even]
+label = "half-even"
+rule = "2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number."
+
+[scoring.v2]
+version = "par2-bootstrap"
+par_factor = 2
+bootstrap_resamples = 2000
+bootstrap_seed = 20261015
+counter = "harness"
+success = "harness force calls under the cap, Euclidean force norm at the stop, and Hessian index 1"
+required = [
+  "schema",
+  "counter",
+  "force_calls",
+  "success",
+  "failure",
+  "comparable",
+  "code",
+  "code_version",
+  "commit",
+  "tuning",
+  "par2_mean",
+  "median",
+  "median_low",
+  "median_high",
+  "rate_low",
+  "rate_high",
+  "n",
+  "nfailed",
+  "n_cap",
+  "n_wrong_stationary",
+  "n_divergence",
+  "n_crash",
+]
