@@ -1,0 +1,12 @@
+# OGOLEM is not a conda package. This file does not select an OGOLEM
+# build string. The jars the benchmarks run are the source build pinned
+# in codes/registry.toml under id ogolem:
+#   ref = master
+#   commit = cce35a376d929852ab1e80e98105c0d13d784b8d
+# asv has one environment_type, so this yml cannot be bound to one
+# class. Those classes call OGOLEM_HOME.
+name: ogolem
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12

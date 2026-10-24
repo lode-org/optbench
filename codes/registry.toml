@@ -283,6 +283,17 @@ commit = "8de817dd79bfe4525d5d39246a212d833e6dee07"
 committed = "2026-09-30"
 note = "LAMMPS 30 Sep 2026, tag stable_30Sep2026. Band rows use fix neb with a climbing stage and min_style quickmin or fire. The pair style is the spec potential: lj/cut 40 with no shift, and morse 9.5 with pair_modify shift yes. Kspring is 1.0 with the default parallel neigh spring. The timestep is the unit default. Force calls are pair computes summed across replicas. The FIRE row leaves one fifth of the cap unused so a velocity-reset evaluation stays inside the cap."
 
+
+[[code]]
+id = "ogolem"
+name = "ogolem"
+role = "global optimization"
+repository = "https://github.com/ogolem/ogolem"
+ref = "master"
+commit = "cce35a376d929852ab1e80e98105c0d13d784b8d"
+committed = "2026-03-02"
+note = "Snapshot built from source. The jar version line is the 2016 development stamp. The harness searches use the Ar38 Sweden example (pool 100, 19900 iterations, LBFGS, cell 60 bohr) and the harness potential, not LennardJonesFF. One reduced sigma is the Ar sigma 6.434516991 bohr so the built-in collision radius still fits a packed cluster. The harness backend is codes/ogolem/OptbenchBackend.java on the exploded classpath."
+
 [[code]]
 id = "sella-0.1.1"
 name = "Sella"
