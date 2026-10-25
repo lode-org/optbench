@@ -16,6 +16,12 @@ Verification of the Hessian uses `CountedPotential.verification`. Those calls in
 
 `uv run optbench run` still shells out to `eonclient` and leaves the client's potential in the binary. That command writes `benchmark.dat` unchanged and a sibling `benchmark.starts.jsonl`. Each line has `counter` `client`. It is not a v2 score.
 
+Auxiliary input files for one template are declared as `[[inputs]]` in that
+template. Each entry has `source` and optional `target`. The launcher copies
+those files into each run directory before starting the client, so templates
+can stage files such as `in.lammps` without hardcoded path logic in
+`optbench.campaign`.
+
 eonclient can be scored with the harness counter without rebuilding it. `optbench.potserver` serves one `HarnessCounter`. `python -m optbench.extpot` is the `ext_pot` program eOn already runs: one force evaluation is one socket `calculate`. `RgpotCounter.calculate` is the same counter for an rgpot client. The wire protocol, the seed sample, the failure classes, and the noise rule are `docs/v2.md`.
 
 ```bash
