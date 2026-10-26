@@ -1,0 +1,1 @@
+The CuH2 problem declares the half-even label and the shared v2 scoring keys. The counter is client. Success is client force calls under the cap, an infinity-norm force at the stop, and Hessian index 1.

@@ -1,0 +1,21 @@
+#+TITLE: GPRidge
+#+OPTIONS: toc:nil num:nil author:nil
+
+#+begin_export rst
+.. raw:: html
+
+   <section class="bench" id="code-gpridge">
+   <h2>GPRidge</h2>
+   <div class="bench-scroll"><table>
+   <caption>Registry pins.</caption>
+   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
+   <tr>
+   <td>Gaussian-process band and saddle search</td>
+   <td>develop</td>
+   <td>3ddd83b774f4</td>
+   <td><a href="https://github.com/TheochemUI/gpridge">https://github.com/TheochemUI/gpridge</a></td>
+   </tr>
+   </tbody></table></div>
+   <p>No ranked row.</p>
+   </section>
+#+end_export

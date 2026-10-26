@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-26
+
+The site export includes the GPRidge code page and the CuH2 problem page. The code page shows pin `3ddd83b774f4`.
+
+
+The CuH2 problem declares the half-even label and the shared v2 scoring keys. The counter is client. Success is client force calls under the cap, an infinity-norm force at the stop, and Hessian index 1.
+
+
+A catalog rewrite keeps the handwritten block after the generated template tables, and the asv grid names GPRidge.
+
+
 ## 2026-10-21
 
 `integrate/batch-3` ranks the stock rows from the finished board branches.

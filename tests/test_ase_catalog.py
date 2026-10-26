@@ -68,3 +68,41 @@ def test_templates_match_the_catalog_and_registry():
     templates = {row["id"] for row in registry["template"]}
     assert {spec["id"] for spec in specs} <= templates
     assert campaign_problem("sella-2.6.0-ts-lj38") == "tsopt/LJ38"
+
+
+def test_write_all_keeps_the_block_after_the_generated_templates(tmp_path):
+    codes = tmp_path / "codes"
+    codes.mkdir()
+    handwritten = (
+        "[[code]]\n"
+        'id = "gpridge"\n'
+        'name = "GPRidge"\n'
+        'role = "Gaussian-process band and saddle search"\n'
+        "\n"
+        "# a later pin stays with the block above\n"
+        "[[code]]\n"
+        'id = "after"\n'
+        'name = "After"\n'
+    )
+    registry = codes / "registry.toml"
+    registry.write_text(
+        '[[code]]\nid = "ase"\nname = "ASE"\n\n'
+        "# generated ASE and Sella templates\n"
+        "\n"
+        "[[template]]\n"
+        'id = "stale"\n'
+        'code = "ase"\n'
+        "\n"
+        + handwritten,
+        encoding="utf-8",
+    )
+    write_all(tmp_path)
+    text = registry.read_text(encoding="utf-8")
+    assert 'id = "stale"' not in text
+    assert handwritten.strip() in text
+    assert text.index("# generated ASE and Sella templates") < text.index('id = "gpridge"')
+    specs = all_specs()
+    assert f'id = "{specs[0]["id"]}"' in text
+    again = text
+    write_all(tmp_path)
+    assert registry.read_text(encoding="utf-8") == again
