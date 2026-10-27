@@ -3,8 +3,8 @@
 # surrogate evaluations are not force calls
 # the mean is round-half-even over successes; cap, force, or Hessian index other than 1 is a failure
 successes 0
-nfailed 32
-n 32
+nfailed 33
+n 33
 transition_states 0
 code gpatom
 code_version 1.0.1
