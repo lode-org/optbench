@@ -1317,6 +1317,7 @@ dev = [
     { name = "asv" },
     { name = "asv-runner" },
     { name = "geodesic-interpolate" },
+    { name = "h5py" },
     { name = "pytest" },
 ]
 gpridge = [
@@ -1346,6 +1347,7 @@ dev = [
     { name = "asv", specifier = "==0.6.6" },
     { name = "asv-runner", specifier = "==0.3.1" },
     { name = "geodesic-interpolate", git = "https://github.com/virtualzx-nad/geodesic-interpolate.git?rev=476aa041f562d37d5fb4121b86817a52d75e4c5d" },
+    { name = "h5py", specifier = ">=3.12" },
     { name = "pytest", specifier = ">=8.3" },
 ]
 gpridge = [

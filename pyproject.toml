@@ -16,6 +16,7 @@ dev = [
     "asv==0.6.6",
     "asv-runner==0.3.1",
     "ase==3.29.0",
+    "h5py>=3.12",
     "geodesic-interpolate @ git+https://github.com/virtualzx-nad/geodesic-interpolate.git@476aa041f562d37d5fb4121b86817a52d75e4c5d",
 ]
 campaign = [
