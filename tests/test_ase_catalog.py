@@ -1,3 +1,4 @@
+import shutil
 import tomllib
 from pathlib import Path
 
@@ -35,10 +36,21 @@ def test_catalog_covers_every_problem_and_both_profiles():
     assert dimer and all(spec["ranked"] is False for spec in dimer)
 
 
-def test_templates_match_the_catalog_and_registry():
+def test_templates_match_the_catalog_and_registry(tmp_path):
     specs = all_specs()
-    written = write_all(ROOT)
+    (tmp_path / "codes").mkdir()
+    shutil.copy(ROOT / "codes" / "registry.toml", tmp_path / "codes" / "registry.toml")
+    for folder in ("ase", "sella"):
+        shutil.copytree(ROOT / "templates" / folder, tmp_path / "templates" / folder)
+    written = write_all(tmp_path)
     assert len(written) == len(specs)
+    committed = {
+        path.relative_to(ROOT) for folder in ("ase", "sella") for path in (ROOT / "templates" / folder).glob("*.toml")
+    }
+    assert {path.relative_to(tmp_path) for path in written} == committed
+    for path in [tmp_path / "codes" / "registry.toml", *written]:
+        relative = path.relative_to(tmp_path)
+        assert path.read_bytes() == (ROOT / relative).read_bytes(), relative
     for spec in specs:
         loaded = load_template(ROOT, spec["id"])
         assert loaded["code"] == spec["code"]
