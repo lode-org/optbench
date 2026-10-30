@@ -1,0 +1,1 @@
+The CuH2 problem declares the half-even label and the v2 scoring keys, with the client counter that its GPRidge dimer records carry. The site exports the GPRidge code page and the CuH2 problem page. A catalog rewrite keeps the GPRidge registry pin, and the dev group installs h5py for the GPRidge band tests.
