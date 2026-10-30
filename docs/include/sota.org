@@ -130,6 +130,14 @@
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <p><a href="generated/suites/lowest-eigenvector/lj38.html">Family tables, overall table, and performance profile</a>.</p>
    <h2 id="suite-tsopt">Transition state optimization</h2>
+   <h3>H2 dissociation on a fixed Cu substrate</h3>
+   <div class="bench-scroll">
+   <table data-board-table="headline" data-problem="tsopt/cuh2">
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <tr><td colspan="11">No ranked row.</td></tr>
+   </tbody></table></div>
+   <p class="bench-gaps">No committed harness run.</p>
+   <p><a href="generated/suites/tsopt/cuh2.html">Family tables, overall table, and performance profile</a>.</p>
    <h3>LJ38</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="tsopt/LJ38">

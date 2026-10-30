@@ -1,0 +1,26 @@
+#+TITLE: H2 dissociation on a fixed Cu substrate
+#+OPTIONS: toc:nil num:nil author:nil
+
+#+begin_export rst
+.. raw:: html
+
+   <section class="bench" id="cuh2" data-problem="tsopt/cuh2">
+   <h2>H2 dissociation on a fixed Cu substrate</h2>
+   <dl class="bench-rule">
+   <dt>Stop</dt><dd>norm of the force at or below 0.01 eV/Angstrom</dd>
+   <dt>Cap</dt><dd>10000 force calls</dd>
+   <dt>Starts</dt><dd>4</dd>
+   <dt>Potential</dt><dd>cuh2</dd>
+   <dt>v2</dt><dd>par2-bootstrap</dd>
+   </dl>
+   <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
+   <p class="bench-gaps">No committed harness run.</p>
+   <h3>Overall</h3>
+   <div class="bench-scroll">
+   <table data-board-table="ranked" data-problem="tsopt/cuh2">
+   <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <tr><td colspan="11">No ranked row.</td></tr>
+   </tbody></table></div>
+   </section>
+#+end_export
