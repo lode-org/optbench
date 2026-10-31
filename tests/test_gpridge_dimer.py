@@ -184,6 +184,7 @@ def test_timed_out_search_keeps_a_failed_record_without_fabricating_calls(tmp_pa
     monkeypatch.setattr(native, "run_search", timeout)
     result = native._execute(job)
     assert result["success"] is False
+    assert result["counter"] == problem["scoring"]["v2"]["counter"]
     assert result["count_available"] is False
     assert result["returncode"] == 124
     assert {"timeout", "not_converged", "missing_count"}.issubset(result["reasons"])

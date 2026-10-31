@@ -301,6 +301,16 @@ profile = "archive"
 task = "lowest-eigenvector"
 ranked = true
 
+[[code]]
+id = "gpridge"
+name = "GPRidge"
+role = "Gaussian-process band and saddle search"
+repository = "https://github.com/TheochemUI/gpridge"
+ref = "develop"
+commit = "3ddd83b774f49b80031f1e940c9c5f1787e695d6"
+committed = "2026-10-25"
+note = "Native GP-NEB and CI-NEB share the rgpot Morse oracle. The runtime hash must match its native validation manifest. Provider counts are client counters; these rows do not enter the harness-ranked board."
+
 # generated ASE and Sella templates
 
 [[template]]
@@ -798,13 +808,3 @@ problem = "saddle-search/pt-island"
 profile = "adjusted"
 task = "sella-search"
 ranked = false
-
-[[code]]
-id = "gpridge"
-name = "GPRidge"
-role = "Gaussian-process band and saddle search"
-repository = "https://github.com/TheochemUI/gpridge"
-ref = "develop"
-commit = "3ddd83b774f49b80031f1e940c9c5f1787e695d6"
-committed = "2026-10-25"
-note = "Native GP-NEB and CI-NEB share the rgpot Morse oracle. The runtime hash must match its native validation manifest. Provider counts are client counters; these rows do not enter the harness-ranked board."
