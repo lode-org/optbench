@@ -65,6 +65,27 @@ def test_asv_uses_the_uv_environment():
     assert "--quick" not in snakefile
     assert "--skip-existing" not in snakefile
     assert "asv.ci.conf.json" in snakefile
+    rules = {}
+    matches = list(re.finditer(r"^rule (\w+):", snakefile, re.M))
+    for index, match in enumerate(matches):
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(snakefile)
+        rules[match.group(1)] = snakefile[match.start() : end]
+    measure = rules["asv_measure"]
+    compare = rules["asv_compare"]
+    assert 'report="results/asv-ci/compare.txt"' in measure
+    assert 'decision="results/asv-ci/gate.json"' in measure
+    assert "output:" not in compare
+    assert "compare.txt" not in compare
+    assert "rules.asv_measure.output.report" in compare
+    assert "rules.asv_measure.output.decision" in compare
+    assert "{input.decision}" in compare
+    assert 'HASHFILE:results/asv-ci/commits.txt' in measure
+    assert "--record-samples" in measure
+    assert "asv continuous" not in snakefile
+    assert "test $? -le 1" not in snakefile
+    assert 'test "$status" -eq 1' in measure
+    assert "test -s {output.report}" in measure
+    assert "test -s {output.decision}" in measure
     assert 'results_dir": "results/asv-ci/data"' in (ROOT / "asv.ci.conf.json").read_text(
         encoding="utf-8"
     )
