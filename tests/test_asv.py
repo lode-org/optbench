@@ -36,28 +36,49 @@ def test_asv_uses_the_uv_environment():
     assert Uv.matches("3.12") is True
     assert Uv.matches("not-a-version") is False
     workflow = (ROOT / ".github" / "workflows" / "asv.yml").read_text(encoding="utf-8")
+    comment_workflow = (ROOT / ".github" / "workflows" / "asv-comment.yml").read_text(
+        encoding="utf-8"
+    )
     snakefile = (ROOT / "Snakefile").read_text(encoding="utf-8")
     uses = re.findall(r"uses: (\S+)", workflow)
     assert uses == [
         "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
         "astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e",
-        "HaoZeke/asv-perch@3910616093eb463672fec90a2011ff71bfdff071",
+        "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
     ]
-    assert all(re.fullmatch(r"[\w.-]+/[\w.-]+@[0-9a-f]{40}", ref) for ref in uses)
+    comment_uses = re.findall(r"uses: (\S+)", comment_workflow)
+    assert comment_uses == [
+        "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
+    ]
+    assert all(
+        re.fullmatch(r"[\w.-]+/[\w.-]+@[0-9a-f]{40}", ref)
+        for ref in uses + comment_uses
+    )
     assert 'version: "0.13.1"' in workflow
     assert 'python-version: "3.12.3"' in workflow
     assert "uv python install 3.12.3" in workflow
     assert "if: always() && github.event_name == 'pull_request'" in workflow
-    assert workflow.index("comparison-text-file: results/asv-ci/compare.txt") < workflow.index(
-        "results/asv-ci/gate.json"
+    assert "pull-requests: write" not in workflow
+    assert "permissions:\n  contents: read\n" in workflow
+    assert "workflow_run:" in comment_workflow
+    assert (
+        "permissions:\n  actions: read\n  contents: read\n  pull-requests: write\n"
+        in comment_workflow
     )
+    assert "metadata-file" not in comment_workflow
+    assert "python3 ci/asv_comment.py" in comment_workflow
+    assert "workflow_run.head_sha" not in comment_workflow
+    assert "pull_requests[0]" not in comment_workflow
+    assert "github.event.pull_request." not in comment_workflow
+    assert "if: github.event.workflow_run.event == 'pull_request'" in comment_workflow
     assert workflow.count("if: always()") >= 2
     ci_conf = json.loads((ROOT / "asv.ci.conf.json").read_text(encoding="utf-8"))
     memray_conf = json.loads((ROOT / "asv.memray.conf.json").read_text(encoding="utf-8"))
     assert ci_conf["pythons"] == ["3.12.3"]
     assert memray_conf["pythons"] == ["3.12.3"]
     assert "snakemake --cores 1 asv_compare" in workflow
-    assert "comparison-text-file: results/asv-ci/compare.txt" in workflow
+    assert "path: results/asv-ci/compare.txt" in workflow
     assert "--quick" not in workflow
     assert "--skip-existing" not in workflow
     assert "factor 10" not in workflow

@@ -11,7 +11,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 concurrency:
   group: asv-${{ github.ref }}
@@ -62,16 +61,13 @@ jobs:
             echo "present=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Comment
+      - name: Upload comparison text
         if: always() && github.event_name == 'pull_request' && steps.report.outputs.present == 'true'
-        uses: HaoZeke/asv-perch@3910616093eb463672fec90a2011ff71bfdff071 # v1.2.2
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          post-comment: true
-          comparison-text-file: results/asv-ci/compare.txt
-          base-sha: ${{ github.event.pull_request.base.sha }}
-          pr-sha: ${{ github.event.pull_request.head.sha }}
-          regression-threshold: "1"
-          runner-info: optbench-ci
+          name: asv-compare-${{ github.run_id }}
+          path: results/asv-ci/compare.txt
+          retention-days: 1
 
       - name: Gate
         if: always()
