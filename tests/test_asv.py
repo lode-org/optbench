@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import stat
 from pathlib import Path
 
@@ -35,11 +36,38 @@ def test_asv_uses_the_uv_environment():
     assert Uv.matches("3.12") is True
     assert Uv.matches("not-a-version") is False
     workflow = (ROOT / ".github" / "workflows" / "asv.yml").read_text(encoding="utf-8")
-    assert "HaoZeke/asv-perch@v1" in workflow
-    assert "results/asv" in workflow
-    assert 'regression-threshold: "10"' in workflow
-    assert "asv-spyglass-args: --factor 10" in workflow
-    assert "github.event.pull_request.head.repo.full_name == github.repository" in workflow
+    snakefile = (ROOT / "Snakefile").read_text(encoding="utf-8")
+    uses = re.findall(r"uses: (\S+)", workflow)
+    assert uses == [
+        "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e",
+        "HaoZeke/asv-perch@3910616093eb463672fec90a2011ff71bfdff071",
+    ]
+    assert all(re.fullmatch(r"[\w.-]+/[\w.-]+@[0-9a-f]{40}", ref) for ref in uses)
+    assert 'version: "0.13.1"' in workflow
+    assert 'python-version: "3.12.3"' in workflow
+    assert "uv python install 3.12.3" in workflow
+    assert "if: always() && github.event_name == 'pull_request'" in workflow
+    assert workflow.index("comparison-text-file: results/asv-ci/compare.txt") < workflow.index(
+        "results/asv-ci/gate.json"
+    )
+    assert workflow.count("if: always()") >= 2
+    ci_conf = json.loads((ROOT / "asv.ci.conf.json").read_text(encoding="utf-8"))
+    memray_conf = json.loads((ROOT / "asv.memray.conf.json").read_text(encoding="utf-8"))
+    assert ci_conf["pythons"] == ["3.12.3"]
+    assert memray_conf["pythons"] == ["3.12.3"]
+    assert "snakemake --cores 1 asv_compare" in workflow
+    assert "comparison-text-file: results/asv-ci/compare.txt" in workflow
+    assert "--quick" not in workflow
+    assert "--skip-existing" not in workflow
+    assert "factor 10" not in workflow
+    assert "--interleave-rounds" in snakefile
+    assert "--quick" not in snakefile
+    assert "--skip-existing" not in snakefile
+    assert "asv.ci.conf.json" in snakefile
+    assert 'results_dir": "results/asv-ci/data"' in (ROOT / "asv.ci.conf.json").read_text(
+        encoding="utf-8"
+    )
 
 
 def _fenced_blocks(text: str) -> list[list[str]]:

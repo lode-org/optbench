@@ -1,0 +1,1 @@
+Pull-request timings are one `asv continuous` run, driven by Snakemake, on a single runner. Rounds are interleaved. The run does not pass `--quick`. A timing row fails only when the sample test finds a difference between the commits, and a track change fails at any size.

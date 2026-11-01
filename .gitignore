@@ -23,3 +23,5 @@ results/campaign/*.parts/
 results/campaign/work/
 results/campaign/geometries/
 /tutorial/
+results/asv-ci/
+results/asv-memray/
