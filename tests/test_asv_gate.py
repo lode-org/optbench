@@ -58,6 +58,17 @@ def test_track_change_is_exact():
     assert classify_track(139.0, 139.0)[0] == "ok"
     assert classify_track(139.0, 140.0)[0] == "regression"
     assert classify_track(140.0, 139.0)[0] == "regression"
+    assert classify_track(float("nan"), float("nan")) == ("unmeasured", None)
+    assert classify_track(float("nan"), 139.0) == ("unmeasured", None)
+    assert classify_track(139.0, float("nan")) == ("unmeasured", None)
+
+
+def test_two_missing_track_values_fail_the_gate(tmp_path: Path):
+    base = _track(tmp_path / "base", "a" * 40, float("nan"))
+    head = _track(tmp_path / "head", "b" * 40, float("nan"))
+    decision = compare_results(base, head)
+    assert decision["regression"] is True
+    assert decision["rows"][0]["kind"] == "unmeasured"
 
 
 def test_a_shift_outside_the_sample_noise_is_a_regression(tmp_path: Path):

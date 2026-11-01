@@ -7,6 +7,8 @@ when there are enough samples, and a 99% interval overlap check
 otherwise. A single sample has an infinite interval, so it cannot
 decide a timing regression. Track rows are exact: any force-call
 change is a regression, whether the head value rises or falls.
+A missing track value, including a pair of missing values, is
+unmeasured and fails the job.
 Points inside one benchmark are paired by parameter tuple, and the
 benchmark version on the two results must be the same string. A
 missing tuple or a version mismatch is unmeasured and fails the job.
@@ -111,9 +113,7 @@ def classify_track(base_value, head_value) -> tuple[str, float | None]:
     base = float(base_value)
     head = float(head_value)
     if math.isnan(base) or math.isnan(head):
-        if math.isnan(base) and math.isnan(head):
-            return "ok", None
-        return "regression", None
+        return "unmeasured", None
     if math.isclose(base, head, rel_tol=0.0, abs_tol=1e-9):
         ratio = 1.0 if base != 0 else None
         return "ok", ratio
