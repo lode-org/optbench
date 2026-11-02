@@ -452,22 +452,41 @@ def suite_name_for(suite: str) -> str:
     return suite_title(suite)
 
 
-def recorded_runs(root: Path, problem: dict, ranked: list[dict]) -> tuple[str, bool]:
-    """Run count from the problem file, else the largest ranked n."""
+def recorded_runs(root: Path, problem: dict, ranked: list[dict]) -> tuple[str, str]:
+    """Run count from the problem file, else the count the ranked rows record.
+
+    The second value is a footnote. It quotes the same number the cell shows.
+    """
     stated = run_text(root, problem)
     if stated:
-        return stated, False
-    counts: list[int] = []
+        return stated, ""
+    by_count: dict[int, set[str]] = {}
     for row in ranked:
         try:
             count = int(row.get("n") or 0)
         except (TypeError, ValueError):
             continue
-        if count > 0:
-            counts.append(count)
-    if counts:
-        return str(max(counts)), True
-    return "", False
+        if count <= 0:
+            continue
+        code = str(row.get("code") or "").strip() or "a ranked row"
+        by_count.setdefault(count, set()).add(code)
+    if not by_count:
+        return "", ""
+    if len(by_count) == 1:
+        count, codes = next(iter(by_count.items()))
+        names = ", ".join(sorted(codes))
+        return str(count), (
+            f"The problem file does not state a run count. "
+            f"The {names} rows record {count} runs."
+        )
+    shown = max(by_count)
+    detail = "; ".join(
+        f"{count} on {', '.join(sorted(codes))}" for count, codes in sorted(by_count.items())
+    )
+    return str(shown), (
+        f"The problem file does not state a run count. Ranked rows record {detail}. "
+        f"The cell shows {shown}."
+    )
 
 
 def suite_tables(
@@ -482,7 +501,7 @@ def suite_tables(
     prepared: list[dict] = []
     for problem in group:
         view = (document.get("problems") or {}).get(problem["id"]) or {}
-        runs, inferred = recorded_runs(root, problem, list(view.get("ranked") or []))
+        runs, note = recorded_runs(root, problem, list(view.get("ranked") or []))
         prepared.append(
             {
                 "problem": problem,
@@ -491,7 +510,7 @@ def suite_tables(
                 "system": system_text(problem),
                 "atoms": atom_text(problem),
                 "runs": runs,
-                "inferred": inferred,
+                "note": note,
                 "view": view,
             }
         )
@@ -509,7 +528,7 @@ def suite_tables(
         "<thead><tr>" + "".join(f"<th>{header}</th>" for header in headers) + "</tr></thead><tbody>",
     ]
     missing_atoms = False
-    inferred_runs = False
+    notes: list[str] = []
     for item in prepared:
         lines.append("<tr>")
         lines.append(f'<th scope="row"><a href="{_cell(item["href"])}">{_cell(item["title"])}</a></th>')
@@ -522,9 +541,10 @@ def suite_tables(
                 lines.append('<td class="num">—</td>')
         if show_runs:
             if item["runs"]:
-                mark = "<sup>1</sup>" if item["inferred"] else ""
-                if item["inferred"]:
-                    inferred_runs = True
+                mark = ""
+                if item["note"]:
+                    notes.append(item["note"])
+                    mark = f"<sup>{len(notes)}</sup>"
                 lines.append(f'<td class="num">{_cell(item["runs"])}{mark}</td>')
             else:
                 lines.append('<td class="num">—</td>')
@@ -532,11 +552,8 @@ def suite_tables(
     lines.append("</tbody></table></div>")
     if missing_atoms:
         lines.append("<p class=\"bench-note\">A dash means the problem file does not state an atom count.</p>")
-    if inferred_runs:
-        lines.append(
-            "<p class=\"bench-note\"><sup>1</sup> The problem file does not state a run count. "
-            "The number is the largest run count on a ranked row.</p>"
-        )
+    for index, note in enumerate(notes, start=1):
+        lines.append(f'<p class="bench-note"><sup>{index}</sup> {_cell(note)}</p>')
     lines.append("<h2>Results by code</h2>")
     lines.append(
         "<p>Best is the lowest cost for that code on that problem. "
