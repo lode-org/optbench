@@ -1,0 +1,51 @@
+#+begin_export rst
+.. raw:: html
+
+   <section class="bench" id="suites">
+   <h2>Suites</h2>
+   <p>Each suite is one kind of task. The link opens its problems and the best cost of each code.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-bench="suites">
+   <caption>The suites on this site.</caption>
+   <thead><tr><th>Suite</th><th>Problems</th></tr></thead><tbody>
+   <tr>
+   <th scope="row"><a href="generated/suites/minimization.html">Minimization</a></th>
+   <td>Lennard-Jones 38 clusters, Lennard-Jones 38 clusters with Gaussian force noise, Morse bulk</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="generated/suites/saddle-search.html">Saddle search</a></th>
+   <td>Pt heptamer island</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="generated/suites/double-ended-saddle-search.html">Double-ended saddle search</a></th>
+   <td>Lennard-Jones 38 transition-state separation, LJ38 double-ended saddle, Pt heptamer island</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="generated/suites/globalopt.html">Global optimization</a></th>
+   <td>Binary Lennard-Jones 100, Lennard-Jones 150, Lennard-Jones 38 global minimum, Lennard-Jones 75, and 4 more</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="generated/suites/lowest-eigenvector.html">Lowest eigenvector</a></th>
+   <td>Lennard-Jones 38</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="generated/suites/tsopt.html">Transition state optimization</a></th>
+   <td>H2 dissociation on a fixed Cu substrate, Lennard-Jones 38, Pt heptamer island</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="generated/suites/mlopt.html">Machine learning optimization</a></th>
+   <td>EMT Pt 38 nanoparticle, Ethene</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="generated/suites/neb.html">Nudged elastic band</a></th>
+   <td>Pt heptamer island</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="generated/suites/hTST.html">Harmonic transition state theory</a></th>
+   <td>EAM aluminum, Pt heptamer island</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="generated/suites/accelerated-md.html">Accelerated molecular dynamics</a></th>
+   <td>Al adatom on Al(100) at 150 K, Al adatom on Al(100) at 250 K</td>
+   </tr>
+   </tbody></table></div></section>
+#+end_export
