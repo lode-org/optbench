@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_nav_pages_have_titles_and_the_suites_fold_under_archive():
     org = ROOT / "docs" / "orgmode"
-    for name in ("index.org", "run.org", "archive.org", "codes.org", "board.org"):
+    for name in ("index.org", "run.org", "archive.org", "codes.org", "board.org", "methodology.org"):
         text = (org / name).read_text(encoding="utf-8")
         assert "title:nil" not in text
         assert text.startswith("#+TITLE:")
@@ -22,6 +22,8 @@ def test_nav_pages_have_titles_and_the_suites_fold_under_archive():
     assert "generated/suites/minimization" in index
     assert "generated/suites/neb" in index
     assert "generated/suites/accelerated-md" in index
+    assert "\n   methodology\n" in index
+    assert "bench-hero" in index
     archive = (org / "archive.org").read_text(encoding="utf-8")
     assert "generated/suites/minimization" not in archive
     assert ".. toctree::" not in archive
@@ -35,7 +37,9 @@ def test_suite_pages_name_problems_and_fold_code_spellings():
     render(ROOT)
     mlopt = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "mlopt.org").read_text(encoding="utf-8")
     assert "Each problem is its own page." not in mlopt
-    assert "data-bench=\"problems\"" in mlopt
+    assert "bench-stat-grid" in mlopt
+    assert "bench-problem-grid" in mlopt
+    assert "bench-leaderboard" in mlopt
     assert "data-bench=\"codes\"" in mlopt
     assert "EMT Pt 38 nanoparticle" in mlopt
     assert "suite-mlopt.svg" in mlopt
@@ -59,7 +63,9 @@ def test_suite_pages_name_problems_and_fold_code_spellings():
     assert "Newtons Method" in unknown
     assert "ase-BFGS" not in unknown
     problem = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "mlopt" / "emt-pt38.org").read_text(encoding="utf-8")
-    assert "The main metric is" in problem
+    assert "bench-fact-grid" in problem
+    assert "How scoring works" in problem
+    assert "bench-leaderboard" in problem
     assert "bench-sortable" in problem
 
 
@@ -128,7 +134,7 @@ def test_rendered_pages_use_the_board_rank():
     assert "minimization-lj38-profile.webp" in minimization
     assert 'loading="lazy"' in minimization
     assert 'data-board-table="summary"' not in minimization
-    assert "<details" not in minimization
+    assert 'class="bench-full-results"' in minimization
     assert "eOn (r2025) · Conjugate Gradients" in minimization
     assert "Present runs. Fewer force calls first." not in minimization
     neb_page = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "neb" / "Pt-heptamer.org").read_text(
