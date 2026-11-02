@@ -63,10 +63,23 @@
    <p>A Dolan–Moré profile compares methods on the same set of starts. At a
    performance ratio of 1, the curve reports the fraction of starts on which a
    method is best. Moving right shows the fraction solved within that multiple
-   of the best cost.</p>
-   <p>A profile is omitted when the ranked rows do not share a start set or
-   when fewer than two codes can be compared. Cost-and-success charts use only
-   committed run-level results.</p>
+   of the best cost. The paper-ready family profiles use every finite ratio
+   observed in the selected data; they add no smoothing or artificial failure
+   threshold. A failed run remains unsolved at every finite ratio. A start
+   failed by every selected method has no finite reference cost and is
+   identified as omitted on the figure.</p>
+   <p>Run-level figures use one lowest-ranked full row with per-start records
+   for each code. Archive-only rows remain in version histories when they
+   report a summary, but cannot appear in distributions or profiles without
+   per-start values.</p>
+   <p>History figures show the recorded PAR-2 and arithmetic mean force calls
+   against the stated code version or commit, without smoothing. Distribution
+   figures place every recorded start at its force-call count, use an × for a
+   failed run, and do not jitter points. Success bars report the exact
+   successful and total start counts.</p>
+   <p>Dolan, E. D. and Moré, J. J., “Benchmarking optimization software with
+   performance profiles,” <em>Mathematical Programming</em> 91, 201–213
+   (2002).</p>
    </div>
    </section>
 

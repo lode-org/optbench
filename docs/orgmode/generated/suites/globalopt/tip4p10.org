@@ -19,6 +19,10 @@
    <p>Also records Most force calls, Median force calls, Fewest force calls</p>
    <a href="../../../methodology.html">How scoring works <span aria-hidden="true">→</span></a></div>
    </div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Paper-ready evidence</p><h2>Performance</h2></div><p>Vector charts are generated locally from committed results.</p></div>
+   <section class="bench-chart-group"><h3>Version histories</h3><div class="bench-chart-grid"><figure class="bench-plot bench-paper-plot"><a href="../../../_static/paper/history/globalopt-tip4p10--gmin-2b802fde.svg"><img src="../../../_static/paper/history/globalopt-tip4p10--gmin-2b802fde.svg" alt="GMIN cost history by recorded version or commit. PAR-2 and mean force calls are unsmoothed. TIP4P 10" loading="lazy" decoding="async"></a><figcaption>GMIN cost history by recorded version or commit. PAR-2 and mean force calls are unsmoothed. Select the plot for the full SVG.</figcaption></figure></div></section>
+   <section class="bench-chart-group"><h3>Additional comparisons</h3><div class="bench-chart-grid"><figure class="bench-plot"><a href="../../../_static/board/globalopt-tip4p10-cost.svg"><picture><source srcset="../../../_static/board/globalopt-tip4p10-cost.webp" type="image/webp"><img src="../../../_static/board/globalopt-tip4p10-cost.png" alt="Cost and success for TIP4P 10" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure></div></section>
+   <p class="bench-gaps">No performance profile. The ranked rows have no per-start record.</p>
    <div class="bench-section-head"><div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div><p><a href="../../../methodology.html">PAR-2 methodology</a> · full-set, stock methods only</p></div>
    <div class="bench-scroll bench-leaderboard-wrap">
    <table class="bench-leaderboard" data-bench="leaderboard">
@@ -42,9 +46,6 @@
    </tr>
    </tbody></table></div>
    <p class="bench-note"><sup>*</sup> A dash marks a field the archived source does not record. Archived rows are ordered by their published mean.</p>
-   <div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p><h2>Performance</h2></div><p>Charts are generated locally from committed results.</p></div>
-   <div class="bench-chart-grid"><figure class="bench-plot"><a href="../../../_static/board/globalopt-tip4p10-cost.svg"><picture><source srcset="../../../_static/board/globalopt-tip4p10-cost.webp" type="image/webp"><img src="../../../_static/board/globalopt-tip4p10-cost.png" alt="Cost and success for TIP4P 10" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure></div>
-   <p class="bench-gaps">No performance profile. The ranked rows have no per-start record.</p>
    <details class="bench-full-results"><summary><span>Full result tables</span><small>2 ranked rows, grouped by method family</small></summary><div class="bench-full-results__body">
    <h3>Basin hopping / global</h3>
    <div class="bench-scroll">

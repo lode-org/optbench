@@ -537,6 +537,7 @@ def suite_tables(
         f'<div class="bench-stat"><strong>{ranked_count}</strong><span>Result rows</span></div>',
         '<div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>',
         "</div></div>",
+        "<!-- bench-suite-chart -->",
         '<div class="bench-section-head">',
         '<div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div>',
         "<p>Top five codes per problem. Lower scores rank first.</p>",
@@ -582,8 +583,6 @@ def suite_tables(
             '<p class="bench-note"><sup>*</sup> A dash marks a field the archived result does not record. '
             "Archived rows are ordered by their published mean; see the methodology.</p>"
         )
-    lines.append("<!-- bench-suite-chart -->")
-
     lines.extend(
         [
             '<div class="bench-section-head">',

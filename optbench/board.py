@@ -570,6 +570,7 @@ def _score_records(records: list[dict], cap: int | None) -> dict:
 
 def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
     row["scored"] = True
+    row["_records"] = records
     row["n"] = int(summary["n"])
     row["par2_mean"] = summary["par2_mean"]
     row["success_rate"] = summary["success_rate"]
@@ -1546,6 +1547,42 @@ def _plot_html(prefix: str, name: str, label: str, display: str) -> str:
     )
 
 
+def _paper_plot_html(prefix: str, figure: dict, display: str) -> str:
+    kind = str(figure.get("type") or "")
+    stem = str(figure.get("stem") or "")
+    href = f"{prefix.rstrip('/')}/{kind}/{stem}.svg"
+    if kind == "distribution":
+        label = (
+            "Force calls across recorded starts. Circles mark successes and × marks "
+            "failures."
+        )
+    elif kind == "success":
+        label = "Exact success rates; bar labels give successful and recorded starts."
+    elif kind == "profile":
+        family = str(figure.get("family_title") or "Method family")
+        label = (
+            f"{family} performance profile using Dolan and Moré (2002). "
+            "The abscissae are the observed performance ratios."
+        )
+    else:
+        code = str(figure.get("code") or "Code")
+        label = (
+            f"{code} cost history by recorded version or commit. "
+            "PAR-2 and mean force calls are unsmoothed."
+        )
+    if kind in {"distribution", "success", "profile"}:
+        label += " One lowest-ranked full row with per-start records is used per code."
+    return (
+        '<figure class="bench-plot bench-paper-plot">'
+        f'<a href="{_cell(href)}">'
+        f'<img src="{_cell(href)}" alt="{_cell(label + " " + display)}" '
+        'loading="lazy" decoding="async">'
+        "</a>"
+        f"<figcaption>{_cell(label)} Select the plot for the full SVG.</figcaption>"
+        "</figure>"
+    )
+
+
 def plot_names_for(problem: dict) -> set[str]:
     """SVG files ``write_board`` emits for this problem."""
     slug = _slug(str(problem.get("id") or ""))
@@ -1672,6 +1709,8 @@ def render_problem_section(
     plots: set[str],
     *,
     asset_prefix: str = "_static/board",
+    paper_asset_prefix: str = "_static/paper",
+    paper_figures: list[dict] | None = None,
     preamble: str = "",
     section_id: str | None = None,
     unparsed: list[dict] | None = None,
@@ -1683,6 +1722,8 @@ def render_problem_section(
         problem,
         plots,
         asset_prefix=asset_prefix,
+        paper_asset_prefix=paper_asset_prefix,
+        paper_figures=paper_figures,
         preamble=preamble,
         section_id=section_id,
         unparsed=unparsed,
@@ -1787,6 +1828,8 @@ def _table(
     plots: set[str],
     *,
     asset_prefix: str = "_static/board",
+    paper_asset_prefix: str = "_static/paper",
+    paper_figures: list[dict] | None = None,
     preamble: str = "",
     section_id: str | None = None,
     unparsed: list[dict] | None = None,
@@ -1804,6 +1847,63 @@ def _table(
         lines.append(f"<{heading}>{_cell(problem['title'])}</{heading}>")
     if preamble:
         lines.append(preamble)
+    slug = _slug(problem["id"])
+    prefix = asset_prefix.rstrip("/")
+    from .site_pages import profile_worth_showing
+
+    display = str(problem.get("title") or problem.get("id") or "")
+    ordered_paper = sorted(
+        paper_figures or [],
+        key=lambda figure: (
+            {"distribution": 0, "success": 1, "profile": 2, "history": 3}.get(
+                str(figure.get("type") or ""),
+                4,
+            ),
+            str(figure.get("family_title") or figure.get("code") or ""),
+        ),
+    )
+    paper_by_kind: dict[str, list[str]] = defaultdict(list)
+    for figure in ordered_paper:
+        paper_by_kind[str(figure.get("type") or "")].append(
+            _paper_plot_html(paper_asset_prefix, figure, display)
+        )
+    comparison_lines: list[str] = []
+    for kind, label in (("profile", "Performance profile"), ("cost", "Cost and success")):
+        name = f"{slug}-{kind}.svg"
+        if kind == "profile" and not profile_worth_showing(problem):
+            if problem.get("profile") or name in plots:
+                comparison_lines.append(
+                    "<p>A performance profile compares at least two codes. "
+                    "This problem has fewer, so that plot is omitted.</p>"
+                )
+            continue
+        if name in plots:
+            comparison_lines.append(_plot_html(prefix, name, label, display))
+    chart_groups = [
+        (
+            "Starts and outcomes",
+            paper_by_kind.get("distribution", []) + paper_by_kind.get("success", []),
+        ),
+        ("Method-family profiles", paper_by_kind.get("profile", [])),
+        ("Version histories", paper_by_kind.get("history", [])),
+        ("Additional comparisons", comparison_lines),
+    ]
+    chart_groups = [(title, charts) for title, charts in chart_groups if charts]
+    if chart_groups:
+        lines.append(
+            '<div class="bench-section-head"><div><p class="bench-eyebrow">Paper-ready evidence</p>'
+            "<h2>Performance</h2></div><p>Vector charts are generated locally from committed results.</p></div>"
+        )
+        for title, charts in chart_groups:
+            lines.append(
+                '<section class="bench-chart-group">'
+                f"<h3>{_cell(title)}</h3>"
+                '<div class="bench-chart-grid">'
+                + "\n".join(charts)
+                + "</div></section>"
+            )
+    if problem.get("profile_gap") and f"{slug}-profile.svg" not in plots:
+        lines.append(f'<p class="bench-gaps">{_cell(problem["profile_gap"])}</p>')
     lines.append(
         '<div class="bench-section-head"><div><p class="bench-eyebrow">Current results</p>'
         "<h2>Leaderboard</h2></div>"
@@ -1813,31 +1913,6 @@ def _table(
     lead = gap_paragraph(problem, unparsed)
     if lead:
         lines.append(lead)
-    slug = _slug(problem["id"])
-    prefix = asset_prefix.rstrip("/")
-    from .site_pages import profile_worth_showing
-
-    display = str(problem.get("title") or problem.get("id") or "")
-    chart_lines: list[str] = []
-    for kind, label in (("profile", "Performance profile"), ("cost", "Cost and success")):
-        name = f"{slug}-{kind}.svg"
-        if kind == "profile" and not profile_worth_showing(problem):
-            if problem.get("profile") or name in plots:
-                chart_lines.append(
-                    "<p>A performance profile compares at least two codes. "
-                    "This problem has fewer, so that plot is omitted.</p>"
-                )
-            continue
-        if name in plots:
-            chart_lines.append(_plot_html(prefix, name, label, display))
-    if chart_lines:
-        lines.append(
-            '<div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p>'
-            "<h2>Performance</h2></div><p>Charts are generated locally from committed results.</p></div>"
-        )
-        lines.append('<div class="bench-chart-grid">' + "\n".join(chart_lines) + "</div>")
-    if problem.get("profile_gap") and f"{slug}-profile.svg" not in plots:
-        lines.append(f'<p class="bench-gaps">{_cell(problem["profile_gap"])}</p>')
     lines.append(
         '<details class="bench-full-results"><summary><span>Full result tables</span>'
         f"<small>{len(ranked)} ranked rows, grouped by method family</small></summary>"

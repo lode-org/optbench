@@ -14,6 +14,7 @@
    <div class="bench-stat"><strong>2</strong><span>Result rows</span></div>
    <div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>
    </div></div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Cost comparison</p><h2>Best ranked cost</h2></div><p>Generated locally from the committed result rows.</p></div><figure class="bench-plot"><a href="../../_static/board/suite-accelerated-md.svg"><picture><source srcset="../../_static/board/suite-accelerated-md.webp" type="image/webp"><img src="../../_static/board/suite-accelerated-md.png" alt="Accelerated molecular dynamics best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Accelerated molecular dynamics best ranked cost. Select the plot for the full SVG.</figcaption></figure>
    <div class="bench-section-head">
    <div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div>
    <p>Top five codes per problem. Lower scores rank first.</p>
@@ -42,7 +43,6 @@
    </tr>
    </tbody></table></div>
    <p class="bench-note"><sup>*</sup> A dash marks a field the archived result does not record. Archived rows are ordered by their published mean; see the methodology.</p>
-   <div class="bench-section-head"><div><p class="bench-eyebrow">Cost comparison</p><h2>Best ranked cost</h2></div><p>Generated locally from the committed result rows.</p></div><figure class="bench-plot"><a href="../../_static/board/suite-accelerated-md.svg"><picture><source srcset="../../_static/board/suite-accelerated-md.webp" type="image/webp"><img src="../../_static/board/suite-accelerated-md.png" alt="Accelerated molecular dynamics best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Accelerated molecular dynamics best ranked cost. Select the plot for the full SVG.</figcaption></figure>
    <div class="bench-section-head">
    <div><p class="bench-eyebrow">Benchmark set</p><h2>Problems</h2></div>
    <p>Open a problem for every ranked method, run details, and performance charts.</p>

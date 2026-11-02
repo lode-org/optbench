@@ -14,6 +14,9 @@
    <div class="bench-stat"><strong>1</strong><span>Registry pins</span></div>
    <div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>
    </div></div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Recorded history</p><h2>Cost by version</h2></div><p>PAR-2 and mean force calls, without smoothing.</p></div>
+   <div class="bench-chart-grid"><figure class="bench-plot bench-paper-plot"><a href="../../_static/paper/history/tsopt-lj38--optking-7085a640.svg"><img src="../../_static/paper/history/tsopt-lj38--optking-7085a640.svg" alt="optking cost history by recorded version or commit. PAR-2 and mean force calls are unsmoothed. OptKing" loading="lazy" decoding="async"></a><figcaption>optking cost history by recorded version or commit. PAR-2 and mean force calls are unsmoothed. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot bench-paper-plot"><a href="../../_static/paper/history/tsopt-pt-island--optking-7085a640.svg"><img src="../../_static/paper/history/tsopt-pt-island--optking-7085a640.svg" alt="optking cost history by recorded version or commit. PAR-2 and mean force calls are unsmoothed. OptKing" loading="lazy" decoding="async"></a><figcaption>optking cost history by recorded version or commit. PAR-2 and mean force calls are unsmoothed. Select the plot for the full SVG.</figcaption></figure></div>
    <div class="bench-section-head"><div><p class="bench-eyebrow">Across all suites</p><h2>Results</h2></div>
    <p>One row is one version and one stock method. Select a heading to sort.</p></div>
    <div class="bench-scroll bench-leaderboard-wrap"><table class="bench-sortable" data-board-table="code-rows">

@@ -1061,6 +1061,37 @@ html.dark .bench-button--primary {
   gap: 1rem;
 }
 
+.bench-paper-problem {
+  margin: 0 0 2.5rem;
+}
+
+.bench-paper-problem > h3 {
+  margin: 0 0 0.8rem;
+  font-size: 1.05rem;
+}
+
+.bench-chart-group {
+  margin: 0 0 2.25rem;
+}
+
+.bench-chart-group > h3 {
+  margin: 0 0 0.85rem;
+  padding: 0 0 0.55rem 0.65rem;
+  border-left: 3px solid var(--bench-accent);
+  border-bottom: 1px solid var(--bench-line);
+  color: var(--bench-accent);
+  font-size: 0.92rem;
+  font-weight: 740;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.bench-paper-plot img {
+  width: 100%;
+  min-height: 12rem;
+  object-fit: contain;
+}
+
 .bench-chart-grid > p {
   margin: 0;
   padding: 1rem;
@@ -1096,7 +1127,8 @@ html.dark .bench-plot svg {
 .bench-plot figcaption {
   margin: 0.65rem 0.15rem 0;
   color: var(--bench-muted);
-  font-size: 0.7rem;
+  font-size: 0.76rem;
+  line-height: 1.45;
 }
 
 .bench-full-results,

@@ -1,0 +1,121 @@
+import glob
+import json
+import os
+
+
+DATA = "paper-figures/data/results.json.gz"
+MANIFEST = "paper-figures/data/manifest.json"
+
+DATA_SOURCES = [
+    path
+    for path in (
+        glob.glob("results/campaign/**", recursive=True)
+        + glob.glob("results/asv/**", recursive=True)
+        + glob.glob("problems/**", recursive=True)
+        + glob.glob("templates/**", recursive=True)
+    )
+    if os.path.isfile(path)
+] + [
+        "oracle/entries.jsonl",
+        "codes/registry.toml",
+        "optbench/board.py",
+        "optbench/profile.py",
+        "paper-figures/scripts/export_data.py",
+]
+
+
+def figure_outputs(_wildcards):
+    exported = checkpoints.export_data.get()
+    with open(exported.output.manifest, encoding="utf-8") as handle:
+        figures = json.load(handle)["figures"]
+    return [
+        path
+        for figure in figures
+        for path in (figure["site_svg"], figure["pdf"])
+    ]
+
+
+rule all:
+    input:
+        figure_outputs
+
+
+checkpoint export_data:
+    input:
+        DATA_SOURCES
+    output:
+        data=DATA,
+        manifest=MANIFEST,
+    shell:
+        """
+        PYTHONHASHSEED=0 python paper-figures/scripts/export_data.py \
+          --data {output.data} --manifest {output.manifest}
+        """
+
+
+rule history_figure:
+    input:
+        data=DATA,
+        manifest=MANIFEST,
+        script="paper-figures/scripts/plot_history.py",
+        helper="paper-figures/scripts/_plotting.py",
+    output:
+        svg="docs/source/_static/paper/history/{stem}.svg",
+        pdf="paper-figures/pdfs/history/{stem}.pdf",
+    shell:
+        """
+        PYTHONHASHSEED=0 python {input.script} --data {input.data} \
+          --manifest {input.manifest} --figure {wildcards.stem} \
+          --svg {output.svg} --pdf {output.pdf}
+        """
+
+
+rule profile_figure:
+    input:
+        data=DATA,
+        manifest=MANIFEST,
+        script="paper-figures/scripts/plot_profile.py",
+        helper="paper-figures/scripts/_plotting.py",
+    output:
+        svg="docs/source/_static/paper/profile/{stem}.svg",
+        pdf="paper-figures/pdfs/profile/{stem}.pdf",
+    shell:
+        """
+        PYTHONHASHSEED=0 python {input.script} --data {input.data} \
+          --manifest {input.manifest} --figure {wildcards.stem} \
+          --svg {output.svg} --pdf {output.pdf}
+        """
+
+
+rule distribution_figure:
+    input:
+        data=DATA,
+        manifest=MANIFEST,
+        script="paper-figures/scripts/plot_distribution.py",
+        helper="paper-figures/scripts/_plotting.py",
+    output:
+        svg="docs/source/_static/paper/distribution/{stem}.svg",
+        pdf="paper-figures/pdfs/distribution/{stem}.pdf",
+    shell:
+        """
+        PYTHONHASHSEED=0 python {input.script} --data {input.data} \
+          --manifest {input.manifest} --figure {wildcards.stem} \
+          --svg {output.svg} --pdf {output.pdf}
+        """
+
+
+rule success_figure:
+    input:
+        data=DATA,
+        manifest=MANIFEST,
+        script="paper-figures/scripts/plot_success.py",
+        helper="paper-figures/scripts/_plotting.py",
+    output:
+        svg="docs/source/_static/paper/success/{stem}.svg",
+        pdf="paper-figures/pdfs/success/{stem}.pdf",
+    shell:
+        """
+        PYTHONHASHSEED=0 python {input.script} --data {input.data} \
+          --manifest {input.manifest} --figure {wildcards.stem} \
+          --svg {output.svg} --pdf {output.pdf}
+        """

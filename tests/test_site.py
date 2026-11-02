@@ -178,6 +178,73 @@ def test_rendered_pages_use_the_board_rank():
     assert check_site(ROOT) == []
 
 
+def test_paper_figures_are_complete_and_precede_result_tables():
+    manifest = json.loads(
+        (ROOT / "paper-figures" / "data" / "manifest.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    figures = manifest["figures"]
+    assert {figure["type"] for figure in figures} == {
+        "history",
+        "profile",
+        "distribution",
+        "success",
+    }
+    for figure in figures:
+        assert (ROOT / figure["site_svg"]).is_file()
+        assert (ROOT / figure["pdf"]).is_file()
+    sample_pdf = (ROOT / figures[0]["pdf"]).read_bytes()
+    assert sample_pdf.startswith(b"%PDF-")
+    assert b"/MediaBox [ 0 0 241.2 " in sample_pdf
+    snakefile = (ROOT / "paper-figures" / "Snakefile").read_text(
+        encoding="utf-8"
+    )
+    for script in (
+        "plot_history.py",
+        "plot_profile.py",
+        "plot_distribution.py",
+        "plot_success.py",
+    ):
+        assert script in snakefile
+
+    problem = (
+        ROOT
+        / "docs"
+        / "orgmode"
+        / "generated"
+        / "suites"
+        / "minimization"
+        / "lj38.org"
+    ).read_text(encoding="utf-8")
+    assert "_static/paper/distribution/" in problem
+    assert "_static/paper/success/" in problem
+    assert problem.index("_static/paper/distribution/") < problem.index(
+        'data-bench="leaderboard"'
+    )
+
+    suite = (
+        ROOT
+        / "docs"
+        / "orgmode"
+        / "generated"
+        / "suites"
+        / "minimization.org"
+    ).read_text(encoding="utf-8")
+    assert "_static/paper/distribution/" in suite
+    assert suite.index("_static/paper/distribution/") < suite.index(
+        'data-bench="codes"'
+    )
+
+    code = (
+        ROOT / "docs" / "orgmode" / "generated" / "codes" / "eon.org"
+    ).read_text(encoding="utf-8")
+    assert "_static/paper/history/" in code
+    assert code.index("_static/paper/history/") < code.index(
+        'data-board-table="code-rows"'
+    )
+
+
 def test_a_stale_summary_number_fails_the_check():
     render(ROOT)
     document = json.loads((ROOT / "results" / "board" / "index.json").read_text(encoding="utf-8"))

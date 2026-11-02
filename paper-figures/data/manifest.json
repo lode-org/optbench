@@ -1,0 +1,3360 @@
+{
+  "figures": [
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/double-ended-saddle-search-lj38.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "e6e0236b5b51b037",
+        "d82a5c832f5bf4ea",
+        "899c0f12197a4e63",
+        "c8768991e4faa8ea",
+        "6994845409975618",
+        "211b8583e7113441",
+        "626a1de62f114d99",
+        "1a2deaa5eda1ed49",
+        "eac6459d43abab15",
+        "91e02740c0536a31"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/double-ended-saddle-search-lj38.svg",
+      "stem": "double-ended-saddle-search-lj38",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/double-ended-saddle-search-lj38-2ts-separation.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "585939766fbdfdff",
+        "85af78daa9a7faec",
+        "b6ab012018f65420",
+        "720fb646acfb2246",
+        "a14b5b31d86bd67f",
+        "2e312cf07a7a100e",
+        "cad8f03af73948f3",
+        "195e8e56535b4ef2",
+        "1114d51e60585871"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/double-ended-saddle-search-lj38-2ts-separation.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/double-ended-saddle-search-pt-island.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "326e016ef1444023",
+        "15750d48642b5cfd",
+        "37ca906ce9c9d61c",
+        "48960e659a6c6c74",
+        "41e982deed33f20f",
+        "b4855f3417715d15",
+        "b402571e13a01d77",
+        "ea9168e4200987c0",
+        "a2febff39d88cdde"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/double-ended-saddle-search-pt-island.svg",
+      "stem": "double-ended-saddle-search-pt-island",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/globalopt-lj150.pdf",
+      "problem": "globalopt/lj150",
+      "row_ids": [
+        "fb21b3dfb3888eb3"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/globalopt-lj150.svg",
+      "stem": "globalopt-lj150",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/globalopt-lj38.pdf",
+      "problem": "globalopt/lj38",
+      "row_ids": [
+        "ea0b13eca4562e87",
+        "6c772c46fc80af77",
+        "cd78ce17623f29f8",
+        "bfe016f7880392ce"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/globalopt-lj38.svg",
+      "stem": "globalopt-lj38",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/globalopt-lj75.pdf",
+      "problem": "globalopt/lj75",
+      "row_ids": [
+        "8f503e64e02edad2",
+        "7b4b9a8646247353"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/globalopt-lj75.svg",
+      "stem": "globalopt-lj75",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/globalopt-lj98.pdf",
+      "problem": "globalopt/lj98",
+      "row_ids": [
+        "93f3c6fa6597d2f8"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/globalopt-lj98.svg",
+      "stem": "globalopt-lj98",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/htst-al.pdf",
+      "problem": "hTST/Al",
+      "row_ids": [
+        "6234610f0439f341",
+        "df69a740c51a9dad"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/htst-al.svg",
+      "stem": "htst-al",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/lowest-eigenvector-lj38.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "dc7878239d5dbe59",
+        "cc748be824fc7e35",
+        "2ff4062204e88690",
+        "b21dbfc1fbdcbd5c",
+        "831b9a0384048ed8",
+        "5209891937bd714e",
+        "883da0cd7cd49d60",
+        "887d1131ed83c049",
+        "08e7a1ffbafac9d7"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/lowest-eigenvector-lj38.svg",
+      "stem": "lowest-eigenvector-lj38",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/minimization-lj38.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "32753cd71dc3d6f7",
+        "d25b35c98bc12df3",
+        "1a9ba073ecae97d3",
+        "daab72bb3babfef0",
+        "9b648a3ad4bb549c",
+        "47903af789661d13",
+        "e7b096f3f4f58577",
+        "4bb53b861dfe14bb",
+        "42c0290bc0e51de9",
+        "76f587ab317dafed",
+        "eea3cb763df8996e",
+        "ad65dc69f737162b"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/minimization-lj38.svg",
+      "stem": "minimization-lj38",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/minimization-lj38-noise.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "430e69ae3cadc4cc",
+        "bfcf54d850bbe489",
+        "5fb67ba5e9343c44",
+        "6ac41ab0ee0b5671",
+        "7480bc2fa291449b",
+        "044743e04e1f1d67",
+        "bd70fe223f806ed0",
+        "0c1c190b3fab8580",
+        "53f8de87f299055e"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/minimization-lj38-noise.svg",
+      "stem": "minimization-lj38-noise",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/minimization-morse-bulk.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "963822c6bff3a21a",
+        "33bee6b9dd96abf1",
+        "8e2e711d53bf5144",
+        "ee862262a7ada729",
+        "ef8d5be2ba2957e8",
+        "09d3a54a37376006",
+        "3961d2cf001d2ae1",
+        "98a78867581b4c0d",
+        "2ab3587ab596fc40",
+        "67d48a123afd6b22",
+        "8f99cdd027507b4c"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/minimization-morse-bulk.svg",
+      "stem": "minimization-morse-bulk",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/mlopt-c2h4.pdf",
+      "problem": "mlopt/C2H4",
+      "row_ids": [
+        "28917805394735ea"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/mlopt-c2h4.svg",
+      "stem": "mlopt-c2h4",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/mlopt-emt-pt38.pdf",
+      "problem": "mlopt/emt-pt38",
+      "row_ids": [
+        "4ed776ee97ec6aa8"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/mlopt-emt-pt38.svg",
+      "stem": "mlopt-emt-pt38",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/neb-pt-heptamer.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "7c6f22e0dd4aa15c",
+        "3a5cd898ddfe0762",
+        "3eeb0d5e2e8d0463",
+        "a496aaabdb8adbdb",
+        "7e8adfd4c7bd6980",
+        "3db6b8fe009b64ee",
+        "2170822c76f722c2",
+        "80432399f4ea027c",
+        "3e8cc324b14d4d17"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/neb-pt-heptamer.svg",
+      "stem": "neb-pt-heptamer",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/saddle-search-pt-island.pdf",
+      "problem": "saddle-search/pt-island",
+      "row_ids": [
+        "62e20beb1a013c23",
+        "8556b37174c088c7",
+        "1a3e3ca99b19767a",
+        "91e18bfc167fab14"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/saddle-search-pt-island.svg",
+      "stem": "saddle-search-pt-island",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/tsopt-lj38.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "98d617a6bf22a2fb",
+        "b5901feac121435b",
+        "df379a76c8efedfb",
+        "077cf1826e1ee80b",
+        "f79450f90723b945",
+        "925d10081b8ef147",
+        "74d9ec427842c8e6"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/tsopt-lj38.svg",
+      "stem": "tsopt-lj38",
+      "type": "distribution"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/distribution/tsopt-pt-island.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "7f63e5da5863dd94",
+        "cc2c513f5c3967dc",
+        "d19b06bc2ac8851b",
+        "c9f92be1ae14a05c",
+        "743ffe5bc55a0de5",
+        "9d6ef44f01fcfaad",
+        "a76528d53eab72d2"
+      ],
+      "site_svg": "docs/source/_static/paper/distribution/tsopt-pt-island.svg",
+      "stem": "tsopt-pt-island",
+      "type": "distribution"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/accelerated-md-aladatom--eon-e0330544.pdf",
+      "problem": "accelerated-md/aladatom",
+      "row_ids": [
+        "000af8d7a875ac9c"
+      ],
+      "site_svg": "docs/source/_static/paper/history/accelerated-md-aladatom--eon-e0330544.svg",
+      "stem": "accelerated-md-aladatom--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/accelerated-md-standard-aladatom--eon-e0330544.pdf",
+      "problem": "accelerated-md/standard_aladatom",
+      "row_ids": [
+        "7877dd16a228dc24"
+      ],
+      "site_svg": "docs/source/_static/paper/history/accelerated-md-standard-aladatom--eon-e0330544.svg",
+      "stem": "accelerated-md-standard-aladatom--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "ASE",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--ase-ef33676a.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "91e02740c0536a31"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--ase-ef33676a.svg",
+      "stem": "double-ended-saddle-search-lj38--ase-ef33676a",
+      "type": "history"
+    },
+    {
+      "code": "compass",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--compass-d1068bee.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "6994845409975618"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--compass-d1068bee.svg",
+      "stem": "double-ended-saddle-search-lj38--compass-d1068bee",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--eon-b459d73e.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "d82a5c832f5bf4ea",
+        "8940e35b37d3bbc4",
+        "8308a409c932befd",
+        "7bba49da0e325578",
+        "4a4958896eeaec40",
+        "a999f544ae54895b"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--eon-b459d73e.svg",
+      "stem": "double-ended-saddle-search-lj38--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "eOn (develop f6817b53)",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--eon-develop-f6817b53-18c3d4d6.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "899c0f12197a4e63"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--eon-develop-f6817b53-18c3d4d6.svg",
+      "stem": "double-ended-saddle-search-lj38--eon-develop-f6817b53-18c3d4d6",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--eon-e0330544.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "123a1233e3b8718e",
+        "cc85a716e8c07105",
+        "a7482edfa5526c0b",
+        "2375f7a68193a7b3",
+        "b26f8874df0a68ff"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--eon-e0330544.svg",
+      "stem": "double-ended-saddle-search-lj38--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "Eon svn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--eon-svn-aab8a403.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "e6e0236b5b51b037",
+        "6300ba1679042966",
+        "f6607dca990e8fb3",
+        "7076bac3e9161b12",
+        "a01c8c6d62a41350",
+        "cbaea0e9c43ea072"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--eon-svn-aab8a403.svg",
+      "stem": "double-ended-saddle-search-lj38--eon-svn-aab8a403",
+      "type": "history"
+    },
+    {
+      "code": "geodesic",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--geodesic-c5bcd26c.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "c8768991e4faa8ea",
+        "3425a21b295c7202",
+        "b84cfff5598c7415"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--geodesic-c5bcd26c.svg",
+      "stem": "double-ended-saddle-search-lj38--geodesic-c5bcd26c",
+      "type": "history"
+    },
+    {
+      "code": "LAMMPS",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--lammps-1d2a0d59.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "eac6459d43abab15",
+        "dfc19b2c1fcdc59a"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--lammps-1d2a0d59.svg",
+      "stem": "double-ended-saddle-search-lj38--lammps-1d2a0d59",
+      "type": "history"
+    },
+    {
+      "code": "OPTIM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--optim-c2b9f8a1.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "cccc511284c7404c",
+        "85181e5a784927cc"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--optim-c2b9f8a1.svg",
+      "stem": "double-ended-saddle-search-lj38--optim-c2b9f8a1",
+      "type": "history"
+    },
+    {
+      "code": "pele",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--pele-8e484aec.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "c03b9c50857b7461"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--pele-8e484aec.svg",
+      "stem": "double-ended-saddle-search-lj38--pele-8e484aec",
+      "type": "history"
+    },
+    {
+      "code": "rgsaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--rgsaddle-be0cd8ae.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "626a1de62f114d99",
+        "78c9aba0e014078b",
+        "2d79b3a143045131",
+        "365f2924e3a4af7f",
+        "98a1c72cf8b30c9d",
+        "edcba6c472ce8521"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--rgsaddle-be0cd8ae.svg",
+      "stem": "double-ended-saddle-search-lj38--rgsaddle-be0cd8ae",
+      "type": "history"
+    },
+    {
+      "code": "Sella",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--sella-8cf8ea26.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "211b8583e7113441"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--sella-8cf8ea26.svg",
+      "stem": "double-ended-saddle-search-lj38--sella-8cf8ea26",
+      "type": "history"
+    },
+    {
+      "code": "tsase",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38--tsase-5b60d68f.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "1a2deaa5eda1ed49",
+        "0735c13d11db297e"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38--tsase-5b60d68f.svg",
+      "stem": "double-ended-saddle-search-lj38--tsase-5b60d68f",
+      "type": "history"
+    },
+    {
+      "code": "ASE",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--ase-ef33676a.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "cad8f03af73948f3"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--ase-ef33676a.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--ase-ef33676a",
+      "type": "history"
+    },
+    {
+      "code": "compass",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--compass-d1068bee.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "720fb646acfb2246"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--compass-d1068bee.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--compass-d1068bee",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--eon-b459d73e.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "85af78daa9a7faec",
+        "61fabd60e70b4f5c",
+        "9c43011f09bc4d61",
+        "8db3814df0b2efb8",
+        "8ae1dad60937e406",
+        "cfcd3499bb77d7b6",
+        "1d27a7f87a55c150",
+        "79d6c687446b1a70",
+        "9e415a1ded94b723",
+        "4c05c33dfdf72305",
+        "d66a1dee955e24aa",
+        "10856e93eaf513a1",
+        "e7aae1fc6a57f156",
+        "23f4ed5ad159d319"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--eon-b459d73e.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "Eon svn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--eon-svn-aab8a403.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "585939766fbdfdff",
+        "46c415a65d1c9697",
+        "d7bf74ff12885b3d",
+        "6f48988e318a4699",
+        "4d4b52ce2931796c",
+        "193807f89a431c4e"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--eon-svn-aab8a403.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--eon-svn-aab8a403",
+      "type": "history"
+    },
+    {
+      "code": "geodesic",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--geodesic-c5bcd26c.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "2e312cf07a7a100e",
+        "0e7fc8dda34c0adc",
+        "4acde1b07f31bb65"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--geodesic-c5bcd26c.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--geodesic-c5bcd26c",
+      "type": "history"
+    },
+    {
+      "code": "LAMMPS",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--lammps-1d2a0d59.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "1114d51e60585871",
+        "b07e849d2cd32527"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--lammps-1d2a0d59.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--lammps-1d2a0d59",
+      "type": "history"
+    },
+    {
+      "code": "OPTIM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--optim-c2b9f8a1.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "7c12a5fb0bc51fb8"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--optim-c2b9f8a1.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--optim-c2b9f8a1",
+      "type": "history"
+    },
+    {
+      "code": "pele",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--pele-8e484aec.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "48417120651704c8"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--pele-8e484aec.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--pele-8e484aec",
+      "type": "history"
+    },
+    {
+      "code": "rgsaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--rgsaddle-be0cd8ae.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "a14b5b31d86bd67f",
+        "133adc33e70c2910",
+        "04734930370a2bb3",
+        "123b6a747d1422ef",
+        "ee3d077142b9d4dd",
+        "a2b1d708b9fb642c"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--rgsaddle-be0cd8ae.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--rgsaddle-be0cd8ae",
+      "type": "history"
+    },
+    {
+      "code": "Sella",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--sella-8cf8ea26.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "b6ab012018f65420"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--sella-8cf8ea26.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--sella-8cf8ea26",
+      "type": "history"
+    },
+    {
+      "code": "tsase",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-lj38-2ts-separation--tsase-5b60d68f.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "195e8e56535b4ef2",
+        "4b8f9787609a4a46"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-lj38-2ts-separation--tsase-5b60d68f.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--tsase-5b60d68f",
+      "type": "history"
+    },
+    {
+      "code": "ASE",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--ase-ef33676a.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "48960e659a6c6c74"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--ase-ef33676a.svg",
+      "stem": "double-ended-saddle-search-pt-island--ase-ef33676a",
+      "type": "history"
+    },
+    {
+      "code": "compass",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--compass-d1068bee.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "b4855f3417715d15"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--compass-d1068bee.svg",
+      "stem": "double-ended-saddle-search-pt-island--compass-d1068bee",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--eon-b459d73e.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "a2febff39d88cdde"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--eon-b459d73e.svg",
+      "stem": "double-ended-saddle-search-pt-island--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--eon-e0330544.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "bbff4fa2ab08ca0d",
+        "9c74ed9ab7f56ca8",
+        "4fce37b2064d68d2",
+        "2a2f7da9ac147fe3",
+        "84939901facd961f",
+        "f58b4713c45fc77f",
+        "99c40a2da1e3106b"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--eon-e0330544.svg",
+      "stem": "double-ended-saddle-search-pt-island--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "Eon svn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--eon-svn-aab8a403.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "326e016ef1444023",
+        "afad697c9f5c7a98",
+        "ec42bec820947508",
+        "f0095dd20407e65b",
+        "937b416e26bda3a8",
+        "be80486848119b64"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--eon-svn-aab8a403.svg",
+      "stem": "double-ended-saddle-search-pt-island--eon-svn-aab8a403",
+      "type": "history"
+    },
+    {
+      "code": "geodesic",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--geodesic-c5bcd26c.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "15750d48642b5cfd",
+        "c07ef5d42e3e69b3",
+        "a73a69be055f0d80"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--geodesic-c5bcd26c.svg",
+      "stem": "double-ended-saddle-search-pt-island--geodesic-c5bcd26c",
+      "type": "history"
+    },
+    {
+      "code": "LAMMPS",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--lammps-1d2a0d59.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "ea9168e4200987c0",
+        "7e12e463c2d36980"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--lammps-1d2a0d59.svg",
+      "stem": "double-ended-saddle-search-pt-island--lammps-1d2a0d59",
+      "type": "history"
+    },
+    {
+      "code": "OPTIM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--optim-c2b9f8a1.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "748015004cd70dce",
+        "dba4788d96cd30f7"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--optim-c2b9f8a1.svg",
+      "stem": "double-ended-saddle-search-pt-island--optim-c2b9f8a1",
+      "type": "history"
+    },
+    {
+      "code": "pele",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--pele-8e484aec.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "4a69f8ff082ae940"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--pele-8e484aec.svg",
+      "stem": "double-ended-saddle-search-pt-island--pele-8e484aec",
+      "type": "history"
+    },
+    {
+      "code": "rgsaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--rgsaddle-be0cd8ae.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "41e982deed33f20f",
+        "f5dd25b77320b1b3",
+        "82b06a00991031d0",
+        "fa0d91ba552cfb71",
+        "dcffa6fc49a4208b",
+        "bbea5b4ace489f1f"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--rgsaddle-be0cd8ae.svg",
+      "stem": "double-ended-saddle-search-pt-island--rgsaddle-be0cd8ae",
+      "type": "history"
+    },
+    {
+      "code": "Sella",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--sella-8cf8ea26.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "37ca906ce9c9d61c"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--sella-8cf8ea26.svg",
+      "stem": "double-ended-saddle-search-pt-island--sella-8cf8ea26",
+      "type": "history"
+    },
+    {
+      "code": "tsase",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/double-ended-saddle-search-pt-island--tsase-5b60d68f.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "b402571e13a01d77",
+        "bccf3f496adf48e4"
+      ],
+      "site_svg": "docs/source/_static/paper/history/double-ended-saddle-search-pt-island--tsase-5b60d68f.svg",
+      "stem": "double-ended-saddle-search-pt-island--tsase-5b60d68f",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj100-binary--eon-e0330544.pdf",
+      "problem": "globalopt/lj100-binary",
+      "row_ids": [
+        "3b5457a21ee1dea8"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj100-binary--eon-e0330544.svg",
+      "stem": "globalopt-lj100-binary--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj100-binary--gmin-2b802fde.pdf",
+      "problem": "globalopt/lj100-binary",
+      "row_ids": [
+        "4eddefda96e91097"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj100-binary--gmin-2b802fde.svg",
+      "stem": "globalopt-lj100-binary--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj150--gmin-2b802fde.pdf",
+      "problem": "globalopt/lj150",
+      "row_ids": [
+        "89f63720376b5b25",
+        "4e315f93705b7b13",
+        "fb21b3dfb3888eb3",
+        "5028f5418a954b05"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj150--gmin-2b802fde.svg",
+      "stem": "globalopt-lj150--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "AIRSS",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj38--airss-df56b9bc.pdf",
+      "problem": "globalopt/lj38",
+      "row_ids": [
+        "bfe016f7880392ce"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj38--airss-df56b9bc.svg",
+      "stem": "globalopt-lj38--airss-df56b9bc",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj38--eon-b459d73e.pdf",
+      "problem": "globalopt/lj38",
+      "row_ids": [
+        "6c772c46fc80af77"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj38--eon-b459d73e.svg",
+      "stem": "globalopt-lj38--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj38--eon-e0330544.pdf",
+      "problem": "globalopt/lj38",
+      "row_ids": [
+        "24ca8ff662886013"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj38--eon-e0330544.svg",
+      "stem": "globalopt-lj38--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "Eon svn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj38--eon-svn-aab8a403.pdf",
+      "problem": "globalopt/lj38",
+      "row_ids": [
+        "cd78ce17623f29f8"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj38--eon-svn-aab8a403.svg",
+      "stem": "globalopt-lj38--eon-svn-aab8a403",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj38--gmin-2b802fde.pdf",
+      "problem": "globalopt/lj38",
+      "row_ids": [
+        "ea0b13eca4562e87",
+        "e17bc660dda9dce4",
+        "0be63a862f950eba",
+        "5554979b778f5447",
+        "ac59cf46a7739eec",
+        "fdfe9d3fb041f963"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj38--gmin-2b802fde.svg",
+      "stem": "globalopt-lj38--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "pele",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj38--pele-8e484aec.pdf",
+      "problem": "globalopt/lj38",
+      "row_ids": [
+        "cf5a344f3f887c03"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj38--pele-8e484aec.svg",
+      "stem": "globalopt-lj38--pele-8e484aec",
+      "type": "history"
+    },
+    {
+      "code": "ASE",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj75--ase-ef33676a.pdf",
+      "problem": "globalopt/lj75",
+      "row_ids": [
+        "7b4b9a8646247353"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj75--ase-ef33676a.svg",
+      "stem": "globalopt-lj75--ase-ef33676a",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj75--gmin-2b802fde.pdf",
+      "problem": "globalopt/lj75",
+      "row_ids": [
+        "28338e094bec63eb",
+        "8f503e64e02edad2",
+        "7c598e3e85c0f7bc"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj75--gmin-2b802fde.svg",
+      "stem": "globalopt-lj75--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-lj98--gmin-2b802fde.pdf",
+      "problem": "globalopt/lj98",
+      "row_ids": [
+        "c33add5e1cdd6e67",
+        "c64e16ee2fea9ce5",
+        "93f3c6fa6597d2f8",
+        "6bcd9888ef2993cb"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-lj98--gmin-2b802fde.svg",
+      "stem": "globalopt-lj98--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-tip4p10--gmin-2b802fde.pdf",
+      "problem": "globalopt/tip4p10",
+      "row_ids": [
+        "d0a8f576d9bff9d6",
+        "159daeee3500ca07"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-tip4p10--gmin-2b802fde.svg",
+      "stem": "globalopt-tip4p10--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-tip4p15--gmin-2b802fde.pdf",
+      "problem": "globalopt/tip4p15",
+      "row_ids": [
+        "90a2d095089b8b0b",
+        "e43a59b10a448d45"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-tip4p15--gmin-2b802fde.svg",
+      "stem": "globalopt-tip4p15--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/globalopt-tip4p20--gmin-2b802fde.pdf",
+      "problem": "globalopt/tip4p20",
+      "row_ids": [
+        "02c7de11f38ce4b0",
+        "0e83144ab33ed178"
+      ],
+      "site_svg": "docs/source/_static/paper/history/globalopt-tip4p20--gmin-2b802fde.svg",
+      "stem": "globalopt-tip4p20--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "eOn (develop 500350d9)",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/htst-al--eon-develop-500350d9-1017dc60.pdf",
+      "problem": "hTST/Al",
+      "row_ids": [
+        "df69a740c51a9dad"
+      ],
+      "site_svg": "docs/source/_static/paper/history/htst-al--eon-develop-500350d9-1017dc60.svg",
+      "stem": "htst-al--eon-develop-500350d9-1017dc60",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/htst-al--eon-e0330544.pdf",
+      "problem": "hTST/Al",
+      "row_ids": [
+        "a4c68c1d6ecbc0ec",
+        "686c0c04ca492a88"
+      ],
+      "site_svg": "docs/source/_static/paper/history/htst-al--eon-e0330544.svg",
+      "stem": "htst-al--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "EON (SVN r2549)",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/htst-al--eon-svn-r2549-27039126.pdf",
+      "problem": "hTST/Al",
+      "row_ids": [
+        "6234610f0439f341"
+      ],
+      "site_svg": "docs/source/_static/paper/history/htst-al--eon-svn-r2549-27039126.svg",
+      "stem": "htst-al--eon-svn-r2549-27039126",
+      "type": "history"
+    },
+    {
+      "code": "Eon r2006",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/htst-pt--eon-r2006-ce52da8d.pdf",
+      "problem": "hTST/Pt",
+      "row_ids": [
+        "d551654958acf0e6",
+        "71aae77ccb7d4b50",
+        "dba37c12f17e3df6",
+        "b4e71eae266c7332",
+        "23022ce844208866",
+        "8f82fc9629ed9283",
+        "a07d1e97b0675a8a",
+        "b4493c17d49876a4"
+      ],
+      "site_svg": "docs/source/_static/paper/history/htst-pt--eon-r2006-ce52da8d.svg",
+      "stem": "htst-pt--eon-r2006-ce52da8d",
+      "type": "history"
+    },
+    {
+      "code": "TSASE",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/htst-pt--tsase-8f7495fa.pdf",
+      "problem": "hTST/Pt",
+      "row_ids": [
+        "8314ac35d10f297e",
+        "b1472ba0d7888789",
+        "3da672afc35fe098"
+      ],
+      "site_svg": "docs/source/_static/paper/history/htst-pt--tsase-8f7495fa.svg",
+      "stem": "htst-pt--tsase-8f7495fa",
+      "type": "history"
+    },
+    {
+      "code": "artn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--artn-50eac865.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "883da0cd7cd49d60"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--artn-50eac865.svg",
+      "stem": "lowest-eigenvector-lj38--artn-50eac865",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--eon-b459d73e.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "b21dbfc1fbdcbd5c",
+        "855d75cd8cd13e93",
+        "f79d58ebd28e64a1",
+        "64785dc357c6ce6e",
+        "2fc5f91689f37ea6"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--eon-b459d73e.svg",
+      "stem": "lowest-eigenvector-lj38--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "eOn (develop f6817b53)",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--eon-develop-f6817b53-18c3d4d6.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "831b9a0384048ed8"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--eon-develop-f6817b53-18c3d4d6.svg",
+      "stem": "lowest-eigenvector-lj38--eon-develop-f6817b53-18c3d4d6",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--eon-e0330544.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "ab7d9114ed193619",
+        "a14de5879d52fb3f",
+        "450abb3b8402024b"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--eon-e0330544.svg",
+      "stem": "lowest-eigenvector-lj38--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "Eon svn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--eon-svn-aab8a403.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "2ff4062204e88690",
+        "690a1e96828637da",
+        "727a57bf6cd3fea6"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--eon-svn-aab8a403.svg",
+      "stem": "lowest-eigenvector-lj38--eon-svn-aab8a403",
+      "type": "history"
+    },
+    {
+      "code": "OPTIM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--optim-c2b9f8a1.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "66c776b7d89a4b0c"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--optim-c2b9f8a1.svg",
+      "stem": "lowest-eigenvector-lj38--optim-c2b9f8a1",
+      "type": "history"
+    },
+    {
+      "code": "pele",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--pele-8e484aec.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "106e27e1d599d3ec"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--pele-8e484aec.svg",
+      "stem": "lowest-eigenvector-lj38--pele-8e484aec",
+      "type": "history"
+    },
+    {
+      "code": "pysisyphus",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--pysisyphus-f7bf6daf.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "887d1131ed83c049"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--pysisyphus-f7bf6daf.svg",
+      "stem": "lowest-eigenvector-lj38--pysisyphus-f7bf6daf",
+      "type": "history"
+    },
+    {
+      "code": "rgsaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--rgsaddle-be0cd8ae.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "cc748be824fc7e35",
+        "4feaeadb6db37105"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--rgsaddle-be0cd8ae.svg",
+      "stem": "lowest-eigenvector-lj38--rgsaddle-be0cd8ae",
+      "type": "history"
+    },
+    {
+      "code": "Sella",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--sella-8cf8ea26.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "dc7878239d5dbe59",
+        "8953f66b82bef499"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--sella-8cf8ea26.svg",
+      "stem": "lowest-eigenvector-lj38--sella-8cf8ea26",
+      "type": "history"
+    },
+    {
+      "code": "softsaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--softsaddle-96c040ea.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "08e7a1ffbafac9d7",
+        "2db95e27cce9fb6a"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--softsaddle-96c040ea.svg",
+      "stem": "lowest-eigenvector-lj38--softsaddle-96c040ea",
+      "type": "history"
+    },
+    {
+      "code": "tsase",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--tsase-5b60d68f.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "5209891937bd714e"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--tsase-5b60d68f.svg",
+      "stem": "lowest-eigenvector-lj38--tsase-5b60d68f",
+      "type": "history"
+    },
+    {
+      "code": "TSASE",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/lowest-eigenvector-lj38--tsase-8f7495fa.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "5b9cb1b58862e039",
+        "e2fdc0bbaff3315d",
+        "ddc6c7db4fe80df4"
+      ],
+      "site_svg": "docs/source/_static/paper/history/lowest-eigenvector-lj38--tsase-8f7495fa.svg",
+      "stem": "lowest-eigenvector-lj38--tsase-8f7495fa",
+      "type": "history"
+    },
+    {
+      "code": "ASE",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--ase-ef33676a.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "000c4146c3b7eec4",
+        "b084b5ad4ba1a6d7",
+        "4bb53b861dfe14bb",
+        "8abfba6aaf4af387",
+        "6f0d521fa0a72782",
+        "d86639053a1aaa50",
+        "a2b905b66ec8ad78",
+        "6b36aa2d30f63072",
+        "6fd074610955b040"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--ase-ef33676a.svg",
+      "stem": "minimization-lj38--ase-ef33676a",
+      "type": "history"
+    },
+    {
+      "code": "dlfind",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--dlfind-e18339b3.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "1a9ba073ecae97d3",
+        "36cd9a6eb4011015",
+        "28fe4ecc50a281f9"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--dlfind-e18339b3.svg",
+      "stem": "minimization-lj38--dlfind-e18339b3",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--eon-b459d73e.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "d25b35c98bc12df3"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--eon-b459d73e.svg",
+      "stem": "minimization-lj38--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--eon-e0330544.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "33d180457a151e58",
+        "671503fbf3d743e1",
+        "136a202c670bf27a",
+        "6f8a9acaa6393408",
+        "8332fb0f5fec0581",
+        "ccfc3d65a190428e"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--eon-e0330544.svg",
+      "stem": "minimization-lj38--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--gmin-2b802fde.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "e7b096f3f4f58577"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--gmin-2b802fde.svg",
+      "stem": "minimization-lj38--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "lammps",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--lammps-9549e838.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "eea3cb763df8996e",
+        "1b0b07786ca605be",
+        "6f44586a57f3b3b6",
+        "b7b71914148f3483",
+        "1037a1329f2bbc12"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--lammps-9549e838.svg",
+      "stem": "minimization-lj38--lammps-9549e838",
+      "type": "history"
+    },
+    {
+      "code": "optim",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--optim-04ac4067.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "47903af789661d13"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--optim-04ac4067.svg",
+      "stem": "minimization-lj38--optim-04ac4067",
+      "type": "history"
+    },
+    {
+      "code": "OPTIM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--optim-c2b9f8a1.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "2e8f81a15f1f9cbb"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--optim-c2b9f8a1.svg",
+      "stem": "minimization-lj38--optim-c2b9f8a1",
+      "type": "history"
+    },
+    {
+      "code": "pele",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--pele-8e484aec.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "6e58921f42103d12",
+        "9b648a3ad4bb549c",
+        "64638a3738acea3d",
+        "529d7dc37fb47ea9",
+        "aa10d8519e3987ee"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--pele-8e484aec.svg",
+      "stem": "minimization-lj38--pele-8e484aec",
+      "type": "history"
+    },
+    {
+      "code": "pysisyphus",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--pysisyphus-f7bf6daf.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "ad65dc69f737162b",
+        "da160f6e57305d72",
+        "03f65c6c9ac0f3b0"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--pysisyphus-f7bf6daf.svg",
+      "stem": "minimization-lj38--pysisyphus-f7bf6daf",
+      "type": "history"
+    },
+    {
+      "code": "rgmin",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--rgmin-325a34cc.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "32753cd71dc3d6f7",
+        "dea81994767b924d",
+        "f66a0b0a3fc3e9d4",
+        "2e38b9932f7cb0ff",
+        "aac9a77864ca371b",
+        "bc80e199a2cce5df",
+        "a79bc3667b5abdd4",
+        "cc3a3cdd9837155b",
+        "a1251569490179e6",
+        "0e5c05e9625b72aa",
+        "99e0ee15f1454a22",
+        "26018825ad8c621d",
+        "4c318be3ff936af8",
+        "dca565607412f76a",
+        "7bc8adc059c59237",
+        "665cb02b591512dd",
+        "d1d0f060ac73d620",
+        "4f7a4ad5a76d6cbe",
+        "664843bd2d0e1fb6",
+        "a189a552f21bcb35",
+        "43c2169408310e54",
+        "49932a82046e68a0",
+        "d6d0ed7a12edf28d",
+        "dff601622368e3a0",
+        "fba3c8f03fb619c6",
+        "639448bcf112e7cc",
+        "6c365584b9f10ff2",
+        "3bebd7c657a39e58"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--rgmin-325a34cc.svg",
+      "stem": "minimization-lj38--rgmin-325a34cc",
+      "type": "history"
+    },
+    {
+      "code": "Sella",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--sella-8cf8ea26.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "76f587ab317dafed"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--sella-8cf8ea26.svg",
+      "stem": "minimization-lj38--sella-8cf8ea26",
+      "type": "history"
+    },
+    {
+      "code": "tsase",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--tsase-5b60d68f.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "daab72bb3babfef0",
+        "6e9bc1a3df564b45"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--tsase-5b60d68f.svg",
+      "stem": "minimization-lj38--tsase-5b60d68f",
+      "type": "history"
+    },
+    {
+      "code": "unknown",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--unknown-b23a6a84.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "1ff8e3d42928078b",
+        "52d26f3e9083c665",
+        "16a7e9d4cbfeef9f",
+        "eafe77d94843afd8",
+        "a3ac1fa5cee5146e",
+        "ce4982f3361f6b65"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--unknown-b23a6a84.svg",
+      "stem": "minimization-lj38--unknown-b23a6a84",
+      "type": "history"
+    },
+    {
+      "code": "vc-SQNM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38--vc-sqnm-004d1444.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "42c0290bc0e51de9",
+        "b4d586acf031c49c"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38--vc-sqnm-004d1444.svg",
+      "stem": "minimization-lj38--vc-sqnm-004d1444",
+      "type": "history"
+    },
+    {
+      "code": "ASE",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38-noise--ase-ef33676a.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "044743e04e1f1d67",
+        "e4f7b491e121be01",
+        "840165cd277e0724"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38-noise--ase-ef33676a.svg",
+      "stem": "minimization-lj38-noise--ase-ef33676a",
+      "type": "history"
+    },
+    {
+      "code": "dlfind",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38-noise--dlfind-e18339b3.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "bfcf54d850bbe489",
+        "80b04ac7703e100c",
+        "1522023a3ef9e336"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38-noise--dlfind-e18339b3.svg",
+      "stem": "minimization-lj38-noise--dlfind-e18339b3",
+      "type": "history"
+    },
+    {
+      "code": "Eon svn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38-noise--eon-svn-aab8a403.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "6ac41ab0ee0b5671"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38-noise--eon-svn-aab8a403.svg",
+      "stem": "minimization-lj38-noise--eon-svn-aab8a403",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38-noise--gmin-2b802fde.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "7480bc2fa291449b"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38-noise--gmin-2b802fde.svg",
+      "stem": "minimization-lj38-noise--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "lammps",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38-noise--lammps-9549e838.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "53f8de87f299055e",
+        "f52b8ac852c75e18",
+        "a0f89ea0bd947c8e",
+        "9f4e10670b75d2ac",
+        "9e8ad99b54249b8a"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38-noise--lammps-9549e838.svg",
+      "stem": "minimization-lj38-noise--lammps-9549e838",
+      "type": "history"
+    },
+    {
+      "code": "pele",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38-noise--pele-8e484aec.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "5fb67ba5e9343c44",
+        "85a4ef0ebbe3ed9c",
+        "49f2a522cb235bd5",
+        "61dd5e3ce3167ff2"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38-noise--pele-8e484aec.svg",
+      "stem": "minimization-lj38-noise--pele-8e484aec",
+      "type": "history"
+    },
+    {
+      "code": "rgmin",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38-noise--rgmin-325a34cc.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "430e69ae3cadc4cc",
+        "e09c86c6ebd82bd1",
+        "85a63b5191d6472b",
+        "52d24a4b3f382bcb",
+        "5fe4be3e5001ec28"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38-noise--rgmin-325a34cc.svg",
+      "stem": "minimization-lj38-noise--rgmin-325a34cc",
+      "type": "history"
+    },
+    {
+      "code": "Sella",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38-noise--sella-8cf8ea26.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "0c1c190b3fab8580"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38-noise--sella-8cf8ea26.svg",
+      "stem": "minimization-lj38-noise--sella-8cf8ea26",
+      "type": "history"
+    },
+    {
+      "code": "vc-SQNM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-lj38-noise--vc-sqnm-004d1444.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "bd70fe223f806ed0",
+        "7e809d04055171dd"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-lj38-noise--vc-sqnm-004d1444.svg",
+      "stem": "minimization-lj38-noise--vc-sqnm-004d1444",
+      "type": "history"
+    },
+    {
+      "code": "ASE",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--ase-ef33676a.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "8e2e711d53bf5144",
+        "74f95bb5995a352b",
+        "bd0aed9219dc41e6",
+        "789e88842f973724",
+        "e08fb8083acd3cb3",
+        "c4a085f02178b22b",
+        "f69c3b1767b727a0",
+        "9f5af4ae7119f1a7",
+        "49892ed3808caffd"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--ase-ef33676a.svg",
+      "stem": "minimization-morse-bulk--ase-ef33676a",
+      "type": "history"
+    },
+    {
+      "code": "dlfind",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--dlfind-e18339b3.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "98a78867581b4c0d",
+        "ded9d751f70a6875",
+        "47f9d010f29c1de5"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--dlfind-e18339b3.svg",
+      "stem": "minimization-morse-bulk--dlfind-e18339b3",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--eon-b459d73e.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "09d3a54a37376006"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--eon-b459d73e.svg",
+      "stem": "minimization-morse-bulk--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--eon-e0330544.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "95712d5eb3086d35",
+        "eb975164ed1e7f01",
+        "1a25c1d402447d80",
+        "d6f7735f21dbc9cd",
+        "46ca7f2b701a3139"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--eon-e0330544.svg",
+      "stem": "minimization-morse-bulk--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "GMIN",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--gmin-2b802fde.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "ee862262a7ada729"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--gmin-2b802fde.svg",
+      "stem": "minimization-morse-bulk--gmin-2b802fde",
+      "type": "history"
+    },
+    {
+      "code": "lammps",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--lammps-9549e838.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "8f99cdd027507b4c",
+        "90f183985a158259",
+        "8cb08738953b60b0",
+        "075b05d3af00f5e8",
+        "eac04cbbf4fe90ec"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--lammps-9549e838.svg",
+      "stem": "minimization-morse-bulk--lammps-9549e838",
+      "type": "history"
+    },
+    {
+      "code": "optim",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--optim-04ac4067.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "2ab3587ab596fc40"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--optim-04ac4067.svg",
+      "stem": "minimization-morse-bulk--optim-04ac4067",
+      "type": "history"
+    },
+    {
+      "code": "OPTIM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--optim-c2b9f8a1.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "305f9f90c92568f4"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--optim-c2b9f8a1.svg",
+      "stem": "minimization-morse-bulk--optim-c2b9f8a1",
+      "type": "history"
+    },
+    {
+      "code": "pele",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--pele-8e484aec.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "3961d2cf001d2ae1",
+        "29646c40b10d296b",
+        "4297aa035293de2d",
+        "429abb966c84706f"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--pele-8e484aec.svg",
+      "stem": "minimization-morse-bulk--pele-8e484aec",
+      "type": "history"
+    },
+    {
+      "code": "rgmin",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--rgmin-325a34cc.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "963822c6bff3a21a",
+        "9d294767f2d8e018",
+        "a426021a2e3a0974",
+        "8f7f3d82359b425d",
+        "5c8aff1400d405f0",
+        "9fa2d0e91a603304",
+        "ca66e13f1c4f52fa",
+        "41d9f9e682bea9a1",
+        "c5b7eec224275d3e",
+        "12daf704a7958748",
+        "3b389c1c4d32fcb2",
+        "cd1b8a7abd7cb9fa",
+        "a876e164447ca99c",
+        "e77eb2e70fd80d5a",
+        "94bac7ad4eb8aa70",
+        "27ad46fa2dc18261",
+        "e1872bdbb065be22",
+        "20a2759ffb4eef12",
+        "814f2cea0d4e6e9c",
+        "94517599cba067af",
+        "18400915a0162a43",
+        "02891843d8b16407",
+        "13e9195c0dcf0216",
+        "3c6b3866e4eb6a82",
+        "78d9b9dd8eeb4ab8",
+        "40f1d74b97c6aa3c",
+        "9b718f5b65c56c3c",
+        "062d86eb9ac70cc6"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--rgmin-325a34cc.svg",
+      "stem": "minimization-morse-bulk--rgmin-325a34cc",
+      "type": "history"
+    },
+    {
+      "code": "Sella",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--sella-8cf8ea26.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "33bee6b9dd96abf1"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--sella-8cf8ea26.svg",
+      "stem": "minimization-morse-bulk--sella-8cf8ea26",
+      "type": "history"
+    },
+    {
+      "code": "tsase",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--tsase-5b60d68f.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "67d48a123afd6b22"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--tsase-5b60d68f.svg",
+      "stem": "minimization-morse-bulk--tsase-5b60d68f",
+      "type": "history"
+    },
+    {
+      "code": "unknown",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--unknown-b23a6a84.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "5be78aa89f954bac",
+        "4bbe244197cac0f0",
+        "c807de8e458eab73"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--unknown-b23a6a84.svg",
+      "stem": "minimization-morse-bulk--unknown-b23a6a84",
+      "type": "history"
+    },
+    {
+      "code": "vc-SQNM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/minimization-morse-bulk--vc-sqnm-004d1444.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "ef8d5be2ba2957e8",
+        "0d1c19359bc70026",
+        "0a70ec29c3918acf",
+        "6c1db020d221d741"
+      ],
+      "site_svg": "docs/source/_static/paper/history/minimization-morse-bulk--vc-sqnm-004d1444.svg",
+      "stem": "minimization-morse-bulk--vc-sqnm-004d1444",
+      "type": "history"
+    },
+    {
+      "code": "n2p2",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/mlopt-c2h4--n2p2-3d6f8717.pdf",
+      "problem": "mlopt/C2H4",
+      "row_ids": [
+        "28917805394735ea",
+        "21e54502e63141c6"
+      ],
+      "site_svg": "docs/source/_static/paper/history/mlopt-c2h4--n2p2-3d6f8717.svg",
+      "stem": "mlopt-c2h4--n2p2-3d6f8717",
+      "type": "history"
+    },
+    {
+      "code": "Pyamff",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/mlopt-c2h4--pyamff-259dba02.pdf",
+      "problem": "mlopt/C2H4",
+      "row_ids": [
+        "c9ada2eaf9d0929a",
+        "d380f33454fdde58",
+        "e7f9663136d572e9",
+        "deb1a887b42364aa",
+        "cf6a8b77d7f47acf",
+        "3e2569e4289c277e"
+      ],
+      "site_svg": "docs/source/_static/paper/history/mlopt-c2h4--pyamff-259dba02.svg",
+      "stem": "mlopt-c2h4--pyamff-259dba02",
+      "type": "history"
+    },
+    {
+      "code": "n2p2",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/mlopt-emt-pt38--n2p2-3d6f8717.pdf",
+      "problem": "mlopt/emt-pt38",
+      "row_ids": [
+        "4ed776ee97ec6aa8",
+        "d3749e08fd1e3d70"
+      ],
+      "site_svg": "docs/source/_static/paper/history/mlopt-emt-pt38--n2p2-3d6f8717.svg",
+      "stem": "mlopt-emt-pt38--n2p2-3d6f8717",
+      "type": "history"
+    },
+    {
+      "code": "Pyamff",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/mlopt-emt-pt38--pyamff-259dba02.pdf",
+      "problem": "mlopt/emt-pt38",
+      "row_ids": [
+        "5bbd4e35b53987bb",
+        "115d63fb3a0c2896",
+        "286f29b8a86b435c",
+        "4fdc54a31523758f",
+        "b427c3c9b8539283",
+        "c25fc57592437b69"
+      ],
+      "site_svg": "docs/source/_static/paper/history/mlopt-emt-pt38--pyamff-259dba02.svg",
+      "stem": "mlopt-emt-pt38--pyamff-259dba02",
+      "type": "history"
+    },
+    {
+      "code": "ASE",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--ase-ef33676a.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "7e8adfd4c7bd6980"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--ase-ef33676a.svg",
+      "stem": "neb-pt-heptamer--ase-ef33676a",
+      "type": "history"
+    },
+    {
+      "code": "compass",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--compass-d1068bee.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "a496aaabdb8adbdb"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--compass-d1068bee.svg",
+      "stem": "neb-pt-heptamer--compass-d1068bee",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--eon-b459d73e.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "3a5cd898ddfe0762",
+        "8ebbe2bcca77d684",
+        "f219631efeca4cc3",
+        "837869644f0e995b",
+        "ef9999ee597d64cc"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--eon-b459d73e.svg",
+      "stem": "neb-pt-heptamer--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "eOn (develop f6817b53)",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--eon-develop-f6817b53-18c3d4d6.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "3db6b8fe009b64ee"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--eon-develop-f6817b53-18c3d4d6.svg",
+      "stem": "neb-pt-heptamer--eon-develop-f6817b53-18c3d4d6",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--eon-e0330544.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "5aad1b1a59ef0981",
+        "dde4c984d28d189a",
+        "c91abfdbe6350bc5",
+        "a47b5fd802f8463f"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--eon-e0330544.svg",
+      "stem": "neb-pt-heptamer--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "Eon svn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--eon-svn-aab8a403.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "3eeb0d5e2e8d0463",
+        "a06886731c23f7fe",
+        "77432ab710c9000e",
+        "bad2f143ee5e528a"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--eon-svn-aab8a403.svg",
+      "stem": "neb-pt-heptamer--eon-svn-aab8a403",
+      "type": "history"
+    },
+    {
+      "code": "geodesic",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--geodesic-c5bcd26c.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "7c6f22e0dd4aa15c",
+        "54dff25b30ec3d2f",
+        "40d7d8009fb66ccb"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--geodesic-c5bcd26c.svg",
+      "stem": "neb-pt-heptamer--geodesic-c5bcd26c",
+      "type": "history"
+    },
+    {
+      "code": "Gman",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--gman-49737f55.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "af30fd36c407a020"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--gman-49737f55.svg",
+      "stem": "neb-pt-heptamer--gman-49737f55",
+      "type": "history"
+    },
+    {
+      "code": "LAMMPS",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--lammps-1d2a0d59.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "80432399f4ea027c",
+        "28f2dfd5d8ba4871"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--lammps-1d2a0d59.svg",
+      "stem": "neb-pt-heptamer--lammps-1d2a0d59",
+      "type": "history"
+    },
+    {
+      "code": "rgsaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--rgsaddle-be0cd8ae.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "2170822c76f722c2",
+        "4bafe851890b769c",
+        "12436ef692bc62c6",
+        "746473b8a65853fc",
+        "9f3574a13062392b",
+        "c3633271ce52d60f"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--rgsaddle-be0cd8ae.svg",
+      "stem": "neb-pt-heptamer--rgsaddle-be0cd8ae",
+      "type": "history"
+    },
+    {
+      "code": "tsase",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/neb-pt-heptamer--tsase-5b60d68f.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "3e8cc324b14d4d17",
+        "979f3dee9c8d7786"
+      ],
+      "site_svg": "docs/source/_static/paper/history/neb-pt-heptamer--tsase-5b60d68f.svg",
+      "stem": "neb-pt-heptamer--tsase-5b60d68f",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/saddle-search-pt-island--eon-b459d73e.pdf",
+      "problem": "saddle-search/pt-island",
+      "row_ids": [
+        "91e18bfc167fab14"
+      ],
+      "site_svg": "docs/source/_static/paper/history/saddle-search-pt-island--eon-b459d73e.svg",
+      "stem": "saddle-search-pt-island--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/saddle-search-pt-island--eon-e0330544.pdf",
+      "problem": "saddle-search/pt-island",
+      "row_ids": [
+        "c62e71de1d5f1ec9",
+        "6a911fa81d95036b",
+        "46c9ad16949bb306",
+        "b2e27e88ea62f582",
+        "0820b424ea012e32",
+        "1cb21ade4dcff070",
+        "b87cdcf9cfe5d15e",
+        "7c262a48791bf6ee",
+        "2a9ed33fdcc5bd4a"
+      ],
+      "site_svg": "docs/source/_static/paper/history/saddle-search-pt-island--eon-e0330544.svg",
+      "stem": "saddle-search-pt-island--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "rgsaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/saddle-search-pt-island--rgsaddle-be0cd8ae.pdf",
+      "problem": "saddle-search/pt-island",
+      "row_ids": [
+        "1a3e3ca99b19767a",
+        "439863c442343831",
+        "682886ed734d2a5e",
+        "ae80d409f5cb43d6"
+      ],
+      "site_svg": "docs/source/_static/paper/history/saddle-search-pt-island--rgsaddle-be0cd8ae.svg",
+      "stem": "saddle-search-pt-island--rgsaddle-be0cd8ae",
+      "type": "history"
+    },
+    {
+      "code": "Sella",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/saddle-search-pt-island--sella-8cf8ea26.pdf",
+      "problem": "saddle-search/pt-island",
+      "row_ids": [
+        "62e20beb1a013c23"
+      ],
+      "site_svg": "docs/source/_static/paper/history/saddle-search-pt-island--sella-8cf8ea26.svg",
+      "stem": "saddle-search-pt-island--sella-8cf8ea26",
+      "type": "history"
+    },
+    {
+      "code": "SoftSaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/saddle-search-pt-island--softsaddle-8af45290.pdf",
+      "problem": "saddle-search/pt-island",
+      "row_ids": [
+        "1a0fd74ef71650ba",
+        "7fe483b047d3845a",
+        "4041f420dc462604"
+      ],
+      "site_svg": "docs/source/_static/paper/history/saddle-search-pt-island--softsaddle-8af45290.svg",
+      "stem": "saddle-search-pt-island--softsaddle-8af45290",
+      "type": "history"
+    },
+    {
+      "code": "softsaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/saddle-search-pt-island--softsaddle-96c040ea.pdf",
+      "problem": "saddle-search/pt-island",
+      "row_ids": [
+        "8556b37174c088c7",
+        "652562b4205f3c4b"
+      ],
+      "site_svg": "docs/source/_static/paper/history/saddle-search-pt-island--softsaddle-96c040ea.svg",
+      "stem": "saddle-search-pt-island--softsaddle-96c040ea",
+      "type": "history"
+    },
+    {
+      "code": "artn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-lj38--artn-50eac865.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "74d9ec427842c8e6"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-lj38--artn-50eac865.svg",
+      "stem": "tsopt-lj38--artn-50eac865",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-lj38--eon-b459d73e.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "df379a76c8efedfb",
+        "251713ee8dca2d65",
+        "0561c5d0a72a5648",
+        "5b3efc9b1ca9a09b",
+        "2c1026a03bb874ac"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-lj38--eon-b459d73e.svg",
+      "stem": "tsopt-lj38--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-lj38--eon-e0330544.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "590d210978ac3ea8",
+        "945a7846f231e167",
+        "9a3db2b23365de1f"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-lj38--eon-e0330544.svg",
+      "stem": "tsopt-lj38--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "Eon svn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-lj38--eon-svn-aab8a403.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "b5901feac121435b",
+        "04e797cd70f34d8c",
+        "07d5b5e987ac5514"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-lj38--eon-svn-aab8a403.svg",
+      "stem": "tsopt-lj38--eon-svn-aab8a403",
+      "type": "history"
+    },
+    {
+      "code": "OPTIM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-lj38--optim-c2b9f8a1.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "8e66bb50355d2df5"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-lj38--optim-c2b9f8a1.svg",
+      "stem": "tsopt-lj38--optim-c2b9f8a1",
+      "type": "history"
+    },
+    {
+      "code": "optking",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-lj38--optking-7085a640.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "077cf1826e1ee80b",
+        "fdea294273249de7"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-lj38--optking-7085a640.svg",
+      "stem": "tsopt-lj38--optking-7085a640",
+      "type": "history"
+    },
+    {
+      "code": "pele",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-lj38--pele-8e484aec.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "cdf9f3ca432254fa"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-lj38--pele-8e484aec.svg",
+      "stem": "tsopt-lj38--pele-8e484aec",
+      "type": "history"
+    },
+    {
+      "code": "rgsaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-lj38--rgsaddle-be0cd8ae.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "f79450f90723b945",
+        "6daf6c4452e58c85",
+        "304791c470d00d4f",
+        "7922c3f8151eb6e4",
+        "f6c9b82b48b93cea"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-lj38--rgsaddle-be0cd8ae.svg",
+      "stem": "tsopt-lj38--rgsaddle-be0cd8ae",
+      "type": "history"
+    },
+    {
+      "code": "Sella",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-lj38--sella-8cf8ea26.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "98d617a6bf22a2fb",
+        "e62f4d5b08e72b78"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-lj38--sella-8cf8ea26.svg",
+      "stem": "tsopt-lj38--sella-8cf8ea26",
+      "type": "history"
+    },
+    {
+      "code": "tsase",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-lj38--tsase-5b60d68f.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "925d10081b8ef147"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-lj38--tsase-5b60d68f.svg",
+      "stem": "tsopt-lj38--tsase-5b60d68f",
+      "type": "history"
+    },
+    {
+      "code": "artn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-pt-island--artn-50eac865.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "a76528d53eab72d2"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-pt-island--artn-50eac865.svg",
+      "stem": "tsopt-pt-island--artn-50eac865",
+      "type": "history"
+    },
+    {
+      "code": "eOn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-pt-island--eon-b459d73e.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "d19b06bc2ac8851b",
+        "b56a26c4f84bab3a",
+        "a2268cad7635e476",
+        "6eade3bece40811a",
+        "6fa1e369079b69c9"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-pt-island--eon-b459d73e.svg",
+      "stem": "tsopt-pt-island--eon-b459d73e",
+      "type": "history"
+    },
+    {
+      "code": "Eon",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-pt-island--eon-e0330544.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "6241a787229b8c5b",
+        "702e89f3e76228e2",
+        "40a48e1b771de915"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-pt-island--eon-e0330544.svg",
+      "stem": "tsopt-pt-island--eon-e0330544",
+      "type": "history"
+    },
+    {
+      "code": "Eon svn",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-pt-island--eon-svn-aab8a403.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "cc2c513f5c3967dc",
+        "aa318fffb851d3fa",
+        "43190239f7ce532a"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-pt-island--eon-svn-aab8a403.svg",
+      "stem": "tsopt-pt-island--eon-svn-aab8a403",
+      "type": "history"
+    },
+    {
+      "code": "OPTIM",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-pt-island--optim-c2b9f8a1.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "7958e8e9b58f0b1b"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-pt-island--optim-c2b9f8a1.svg",
+      "stem": "tsopt-pt-island--optim-c2b9f8a1",
+      "type": "history"
+    },
+    {
+      "code": "optking",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-pt-island--optking-7085a640.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "743ffe5bc55a0de5",
+        "73d7a86fe8ba2dba"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-pt-island--optking-7085a640.svg",
+      "stem": "tsopt-pt-island--optking-7085a640",
+      "type": "history"
+    },
+    {
+      "code": "pele",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-pt-island--pele-8e484aec.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "9b7c4d28f61e2603"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-pt-island--pele-8e484aec.svg",
+      "stem": "tsopt-pt-island--pele-8e484aec",
+      "type": "history"
+    },
+    {
+      "code": "rgsaddle",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-pt-island--rgsaddle-be0cd8ae.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "c9f92be1ae14a05c",
+        "d5f3b8bc076cbb93",
+        "1c34b842e0d702e9",
+        "3b3a1580fc5aad38"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-pt-island--rgsaddle-be0cd8ae.svg",
+      "stem": "tsopt-pt-island--rgsaddle-be0cd8ae",
+      "type": "history"
+    },
+    {
+      "code": "Sella",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-pt-island--sella-8cf8ea26.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "5807e5a3679f7216",
+        "7f63e5da5863dd94"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-pt-island--sella-8cf8ea26.svg",
+      "stem": "tsopt-pt-island--sella-8cf8ea26",
+      "type": "history"
+    },
+    {
+      "code": "tsase",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/history/tsopt-pt-island--tsase-5b60d68f.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "9d6ef44f01fcfaad"
+      ],
+      "site_svg": "docs/source/_static/paper/history/tsopt-pt-island--tsase-5b60d68f.svg",
+      "stem": "tsopt-pt-island--tsase-5b60d68f",
+      "type": "history"
+    },
+    {
+      "code": "",
+      "family": "band",
+      "family_title": "Band / NEB",
+      "pdf": "paper-figures/pdfs/profile/double-ended-saddle-search-lj38--band.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "c8768991e4faa8ea",
+        "211b8583e7113441",
+        "626a1de62f114d99",
+        "1a2deaa5eda1ed49",
+        "eac6459d43abab15",
+        "91e02740c0536a31"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/double-ended-saddle-search-lj38--band.svg",
+      "stem": "double-ended-saddle-search-lj38--band",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "connect",
+      "family_title": "Connect / double-ended",
+      "pdf": "paper-figures/pdfs/profile/double-ended-saddle-search-lj38--connect.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "899c0f12197a4e63",
+        "6994845409975618"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/double-ended-saddle-search-lj38--connect.svg",
+      "stem": "double-ended-saddle-search-lj38--connect",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "min-mode",
+      "family_title": "Minimum mode",
+      "pdf": "paper-figures/pdfs/profile/double-ended-saddle-search-lj38--min-mode.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "e6e0236b5b51b037",
+        "d82a5c832f5bf4ea"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/double-ended-saddle-search-lj38--min-mode.svg",
+      "stem": "double-ended-saddle-search-lj38--min-mode",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "band",
+      "family_title": "Band / NEB",
+      "pdf": "paper-figures/pdfs/profile/double-ended-saddle-search-lj38-2ts-separation--band.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "b6ab012018f65420",
+        "a14b5b31d86bd67f",
+        "2e312cf07a7a100e",
+        "cad8f03af73948f3",
+        "195e8e56535b4ef2",
+        "1114d51e60585871"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/double-ended-saddle-search-lj38-2ts-separation--band.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--band",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "connect",
+      "family_title": "Connect / double-ended",
+      "pdf": "paper-figures/pdfs/profile/double-ended-saddle-search-lj38-2ts-separation--connect.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "720fb646acfb2246"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/double-ended-saddle-search-lj38-2ts-separation--connect.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--connect",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "min-mode",
+      "family_title": "Minimum mode",
+      "pdf": "paper-figures/pdfs/profile/double-ended-saddle-search-lj38-2ts-separation--min-mode.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "585939766fbdfdff",
+        "85af78daa9a7faec"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/double-ended-saddle-search-lj38-2ts-separation--min-mode.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation--min-mode",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "band",
+      "family_title": "Band / NEB",
+      "pdf": "paper-figures/pdfs/profile/double-ended-saddle-search-pt-island--band.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "15750d48642b5cfd",
+        "37ca906ce9c9d61c",
+        "48960e659a6c6c74",
+        "41e982deed33f20f",
+        "b402571e13a01d77",
+        "ea9168e4200987c0"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/double-ended-saddle-search-pt-island--band.svg",
+      "stem": "double-ended-saddle-search-pt-island--band",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "connect",
+      "family_title": "Connect / double-ended",
+      "pdf": "paper-figures/pdfs/profile/double-ended-saddle-search-pt-island--connect.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "b4855f3417715d15",
+        "a2febff39d88cdde"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/double-ended-saddle-search-pt-island--connect.svg",
+      "stem": "double-ended-saddle-search-pt-island--connect",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "min-mode",
+      "family_title": "Minimum mode",
+      "pdf": "paper-figures/pdfs/profile/double-ended-saddle-search-pt-island--min-mode.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "326e016ef1444023"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/double-ended-saddle-search-pt-island--min-mode.svg",
+      "stem": "double-ended-saddle-search-pt-island--min-mode",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "global",
+      "family_title": "Basin hopping / global",
+      "pdf": "paper-figures/pdfs/profile/globalopt-lj150--global.pdf",
+      "problem": "globalopt/lj150",
+      "row_ids": [
+        "fb21b3dfb3888eb3"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/globalopt-lj150--global.svg",
+      "stem": "globalopt-lj150--global",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "global",
+      "family_title": "Basin hopping / global",
+      "pdf": "paper-figures/pdfs/profile/globalopt-lj38--global.pdf",
+      "problem": "globalopt/lj38",
+      "row_ids": [
+        "ea0b13eca4562e87",
+        "6c772c46fc80af77",
+        "cd78ce17623f29f8",
+        "bfe016f7880392ce"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/globalopt-lj38--global.svg",
+      "stem": "globalopt-lj38--global",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "global",
+      "family_title": "Basin hopping / global",
+      "pdf": "paper-figures/pdfs/profile/globalopt-lj75--global.pdf",
+      "problem": "globalopt/lj75",
+      "row_ids": [
+        "8f503e64e02edad2",
+        "7b4b9a8646247353"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/globalopt-lj75--global.svg",
+      "stem": "globalopt-lj75--global",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "global",
+      "family_title": "Basin hopping / global",
+      "pdf": "paper-figures/pdfs/profile/globalopt-lj98--global.pdf",
+      "problem": "globalopt/lj98",
+      "row_ids": [
+        "93f3c6fa6597d2f8"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/globalopt-lj98--global.svg",
+      "stem": "globalopt-lj98--global",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "min-mode",
+      "family_title": "Minimum mode",
+      "pdf": "paper-figures/pdfs/profile/htst-al--min-mode.pdf",
+      "problem": "hTST/Al",
+      "row_ids": [
+        "6234610f0439f341",
+        "df69a740c51a9dad"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/htst-al--min-mode.svg",
+      "stem": "htst-al--min-mode",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "min-mode",
+      "family_title": "Minimum mode",
+      "pdf": "paper-figures/pdfs/profile/lowest-eigenvector-lj38--min-mode.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "dc7878239d5dbe59",
+        "cc748be824fc7e35",
+        "2ff4062204e88690",
+        "b21dbfc1fbdcbd5c",
+        "831b9a0384048ed8",
+        "5209891937bd714e",
+        "883da0cd7cd49d60",
+        "887d1131ed83c049",
+        "08e7a1ffbafac9d7"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/lowest-eigenvector-lj38--min-mode.svg",
+      "stem": "lowest-eigenvector-lj38--min-mode",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "minimize",
+      "family_title": "Minimizers",
+      "pdf": "paper-figures/pdfs/profile/minimization-lj38--minimize.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "32753cd71dc3d6f7",
+        "d25b35c98bc12df3",
+        "1a9ba073ecae97d3",
+        "daab72bb3babfef0",
+        "9b648a3ad4bb549c",
+        "47903af789661d13",
+        "e7b096f3f4f58577",
+        "4bb53b861dfe14bb",
+        "42c0290bc0e51de9",
+        "76f587ab317dafed",
+        "eea3cb763df8996e",
+        "ad65dc69f737162b"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/minimization-lj38--minimize.svg",
+      "stem": "minimization-lj38--minimize",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "minimize",
+      "family_title": "Minimizers",
+      "pdf": "paper-figures/pdfs/profile/minimization-lj38-noise--minimize.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "430e69ae3cadc4cc",
+        "bfcf54d850bbe489",
+        "5fb67ba5e9343c44",
+        "6ac41ab0ee0b5671",
+        "7480bc2fa291449b",
+        "044743e04e1f1d67",
+        "bd70fe223f806ed0",
+        "0c1c190b3fab8580",
+        "53f8de87f299055e"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/minimization-lj38-noise--minimize.svg",
+      "stem": "minimization-lj38-noise--minimize",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "minimize",
+      "family_title": "Minimizers",
+      "pdf": "paper-figures/pdfs/profile/minimization-morse-bulk--minimize.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "963822c6bff3a21a",
+        "33bee6b9dd96abf1",
+        "8e2e711d53bf5144",
+        "ee862262a7ada729",
+        "ef8d5be2ba2957e8",
+        "09d3a54a37376006",
+        "3961d2cf001d2ae1",
+        "98a78867581b4c0d",
+        "2ab3587ab596fc40",
+        "67d48a123afd6b22",
+        "8f99cdd027507b4c"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/minimization-morse-bulk--minimize.svg",
+      "stem": "minimization-morse-bulk--minimize",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "minimize",
+      "family_title": "Minimizers",
+      "pdf": "paper-figures/pdfs/profile/mlopt-c2h4--minimize.pdf",
+      "problem": "mlopt/C2H4",
+      "row_ids": [
+        "28917805394735ea"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/mlopt-c2h4--minimize.svg",
+      "stem": "mlopt-c2h4--minimize",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "minimize",
+      "family_title": "Minimizers",
+      "pdf": "paper-figures/pdfs/profile/mlopt-emt-pt38--minimize.pdf",
+      "problem": "mlopt/emt-pt38",
+      "row_ids": [
+        "4ed776ee97ec6aa8"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/mlopt-emt-pt38--minimize.svg",
+      "stem": "mlopt-emt-pt38--minimize",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "band",
+      "family_title": "Band / NEB",
+      "pdf": "paper-figures/pdfs/profile/neb-pt-heptamer--band.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "7c6f22e0dd4aa15c",
+        "7e8adfd4c7bd6980",
+        "2170822c76f722c2",
+        "80432399f4ea027c",
+        "3e8cc324b14d4d17"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/neb-pt-heptamer--band.svg",
+      "stem": "neb-pt-heptamer--band",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "connect",
+      "family_title": "Connect / double-ended",
+      "pdf": "paper-figures/pdfs/profile/neb-pt-heptamer--connect.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "3a5cd898ddfe0762",
+        "3eeb0d5e2e8d0463",
+        "a496aaabdb8adbdb",
+        "3db6b8fe009b64ee"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/neb-pt-heptamer--connect.svg",
+      "stem": "neb-pt-heptamer--connect",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "min-mode",
+      "family_title": "Minimum mode",
+      "pdf": "paper-figures/pdfs/profile/saddle-search-pt-island--min-mode.pdf",
+      "problem": "saddle-search/pt-island",
+      "row_ids": [
+        "8556b37174c088c7",
+        "1a3e3ca99b19767a",
+        "91e18bfc167fab14"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/saddle-search-pt-island--min-mode.svg",
+      "stem": "saddle-search-pt-island--min-mode",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "single-ended",
+      "family_title": "Single-ended saddle",
+      "pdf": "paper-figures/pdfs/profile/saddle-search-pt-island--single-ended.pdf",
+      "problem": "saddle-search/pt-island",
+      "row_ids": [
+        "62e20beb1a013c23"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/saddle-search-pt-island--single-ended.svg",
+      "stem": "saddle-search-pt-island--single-ended",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "min-mode",
+      "family_title": "Minimum mode",
+      "pdf": "paper-figures/pdfs/profile/tsopt-lj38--min-mode.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "b5901feac121435b",
+        "df379a76c8efedfb",
+        "f79450f90723b945",
+        "925d10081b8ef147"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/tsopt-lj38--min-mode.svg",
+      "stem": "tsopt-lj38--min-mode",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "single-ended",
+      "family_title": "Single-ended saddle",
+      "pdf": "paper-figures/pdfs/profile/tsopt-lj38--single-ended.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "98d617a6bf22a2fb",
+        "077cf1826e1ee80b",
+        "74d9ec427842c8e6"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/tsopt-lj38--single-ended.svg",
+      "stem": "tsopt-lj38--single-ended",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "min-mode",
+      "family_title": "Minimum mode",
+      "pdf": "paper-figures/pdfs/profile/tsopt-pt-island--min-mode.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "cc2c513f5c3967dc",
+        "d19b06bc2ac8851b",
+        "c9f92be1ae14a05c",
+        "9d6ef44f01fcfaad"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/tsopt-pt-island--min-mode.svg",
+      "stem": "tsopt-pt-island--min-mode",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "single-ended",
+      "family_title": "Single-ended saddle",
+      "pdf": "paper-figures/pdfs/profile/tsopt-pt-island--single-ended.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "7f63e5da5863dd94",
+        "743ffe5bc55a0de5",
+        "a76528d53eab72d2"
+      ],
+      "site_svg": "docs/source/_static/paper/profile/tsopt-pt-island--single-ended.svg",
+      "stem": "tsopt-pt-island--single-ended",
+      "type": "profile"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/double-ended-saddle-search-lj38.pdf",
+      "problem": "double-ended-saddle-search/lj38",
+      "row_ids": [
+        "e6e0236b5b51b037",
+        "d82a5c832f5bf4ea",
+        "899c0f12197a4e63",
+        "c8768991e4faa8ea",
+        "6994845409975618",
+        "211b8583e7113441",
+        "626a1de62f114d99",
+        "1a2deaa5eda1ed49",
+        "eac6459d43abab15",
+        "91e02740c0536a31"
+      ],
+      "site_svg": "docs/source/_static/paper/success/double-ended-saddle-search-lj38.svg",
+      "stem": "double-ended-saddle-search-lj38",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/double-ended-saddle-search-lj38-2ts-separation.pdf",
+      "problem": "double-ended-saddle-search/lj38_2ts_separation",
+      "row_ids": [
+        "585939766fbdfdff",
+        "85af78daa9a7faec",
+        "b6ab012018f65420",
+        "720fb646acfb2246",
+        "a14b5b31d86bd67f",
+        "2e312cf07a7a100e",
+        "cad8f03af73948f3",
+        "195e8e56535b4ef2",
+        "1114d51e60585871"
+      ],
+      "site_svg": "docs/source/_static/paper/success/double-ended-saddle-search-lj38-2ts-separation.svg",
+      "stem": "double-ended-saddle-search-lj38-2ts-separation",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/double-ended-saddle-search-pt-island.pdf",
+      "problem": "double-ended-saddle-search/pt-island",
+      "row_ids": [
+        "326e016ef1444023",
+        "15750d48642b5cfd",
+        "37ca906ce9c9d61c",
+        "48960e659a6c6c74",
+        "41e982deed33f20f",
+        "b4855f3417715d15",
+        "b402571e13a01d77",
+        "ea9168e4200987c0",
+        "a2febff39d88cdde"
+      ],
+      "site_svg": "docs/source/_static/paper/success/double-ended-saddle-search-pt-island.svg",
+      "stem": "double-ended-saddle-search-pt-island",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/globalopt-lj150.pdf",
+      "problem": "globalopt/lj150",
+      "row_ids": [
+        "fb21b3dfb3888eb3"
+      ],
+      "site_svg": "docs/source/_static/paper/success/globalopt-lj150.svg",
+      "stem": "globalopt-lj150",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/globalopt-lj38.pdf",
+      "problem": "globalopt/lj38",
+      "row_ids": [
+        "ea0b13eca4562e87",
+        "6c772c46fc80af77",
+        "cd78ce17623f29f8",
+        "bfe016f7880392ce"
+      ],
+      "site_svg": "docs/source/_static/paper/success/globalopt-lj38.svg",
+      "stem": "globalopt-lj38",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/globalopt-lj75.pdf",
+      "problem": "globalopt/lj75",
+      "row_ids": [
+        "8f503e64e02edad2",
+        "7b4b9a8646247353"
+      ],
+      "site_svg": "docs/source/_static/paper/success/globalopt-lj75.svg",
+      "stem": "globalopt-lj75",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/globalopt-lj98.pdf",
+      "problem": "globalopt/lj98",
+      "row_ids": [
+        "93f3c6fa6597d2f8"
+      ],
+      "site_svg": "docs/source/_static/paper/success/globalopt-lj98.svg",
+      "stem": "globalopt-lj98",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/htst-al.pdf",
+      "problem": "hTST/Al",
+      "row_ids": [
+        "6234610f0439f341",
+        "df69a740c51a9dad"
+      ],
+      "site_svg": "docs/source/_static/paper/success/htst-al.svg",
+      "stem": "htst-al",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/lowest-eigenvector-lj38.pdf",
+      "problem": "lowest-eigenvector/lj38",
+      "row_ids": [
+        "dc7878239d5dbe59",
+        "cc748be824fc7e35",
+        "2ff4062204e88690",
+        "b21dbfc1fbdcbd5c",
+        "831b9a0384048ed8",
+        "5209891937bd714e",
+        "883da0cd7cd49d60",
+        "887d1131ed83c049",
+        "08e7a1ffbafac9d7"
+      ],
+      "site_svg": "docs/source/_static/paper/success/lowest-eigenvector-lj38.svg",
+      "stem": "lowest-eigenvector-lj38",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/minimization-lj38.pdf",
+      "problem": "minimization/lj38",
+      "row_ids": [
+        "32753cd71dc3d6f7",
+        "d25b35c98bc12df3",
+        "1a9ba073ecae97d3",
+        "daab72bb3babfef0",
+        "9b648a3ad4bb549c",
+        "47903af789661d13",
+        "e7b096f3f4f58577",
+        "4bb53b861dfe14bb",
+        "42c0290bc0e51de9",
+        "76f587ab317dafed",
+        "eea3cb763df8996e",
+        "ad65dc69f737162b"
+      ],
+      "site_svg": "docs/source/_static/paper/success/minimization-lj38.svg",
+      "stem": "minimization-lj38",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/minimization-lj38-noise.pdf",
+      "problem": "minimization/lj38-noise",
+      "row_ids": [
+        "430e69ae3cadc4cc",
+        "bfcf54d850bbe489",
+        "5fb67ba5e9343c44",
+        "6ac41ab0ee0b5671",
+        "7480bc2fa291449b",
+        "044743e04e1f1d67",
+        "bd70fe223f806ed0",
+        "0c1c190b3fab8580",
+        "53f8de87f299055e"
+      ],
+      "site_svg": "docs/source/_static/paper/success/minimization-lj38-noise.svg",
+      "stem": "minimization-lj38-noise",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/minimization-morse-bulk.pdf",
+      "problem": "minimization/morse-bulk",
+      "row_ids": [
+        "963822c6bff3a21a",
+        "33bee6b9dd96abf1",
+        "8e2e711d53bf5144",
+        "ee862262a7ada729",
+        "ef8d5be2ba2957e8",
+        "09d3a54a37376006",
+        "3961d2cf001d2ae1",
+        "98a78867581b4c0d",
+        "2ab3587ab596fc40",
+        "67d48a123afd6b22",
+        "8f99cdd027507b4c"
+      ],
+      "site_svg": "docs/source/_static/paper/success/minimization-morse-bulk.svg",
+      "stem": "minimization-morse-bulk",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/mlopt-c2h4.pdf",
+      "problem": "mlopt/C2H4",
+      "row_ids": [
+        "28917805394735ea"
+      ],
+      "site_svg": "docs/source/_static/paper/success/mlopt-c2h4.svg",
+      "stem": "mlopt-c2h4",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/mlopt-emt-pt38.pdf",
+      "problem": "mlopt/emt-pt38",
+      "row_ids": [
+        "4ed776ee97ec6aa8"
+      ],
+      "site_svg": "docs/source/_static/paper/success/mlopt-emt-pt38.svg",
+      "stem": "mlopt-emt-pt38",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/neb-pt-heptamer.pdf",
+      "problem": "neb/Pt-heptamer",
+      "row_ids": [
+        "7c6f22e0dd4aa15c",
+        "3a5cd898ddfe0762",
+        "3eeb0d5e2e8d0463",
+        "a496aaabdb8adbdb",
+        "7e8adfd4c7bd6980",
+        "3db6b8fe009b64ee",
+        "2170822c76f722c2",
+        "80432399f4ea027c",
+        "3e8cc324b14d4d17"
+      ],
+      "site_svg": "docs/source/_static/paper/success/neb-pt-heptamer.svg",
+      "stem": "neb-pt-heptamer",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/saddle-search-pt-island.pdf",
+      "problem": "saddle-search/pt-island",
+      "row_ids": [
+        "62e20beb1a013c23",
+        "8556b37174c088c7",
+        "1a3e3ca99b19767a",
+        "91e18bfc167fab14"
+      ],
+      "site_svg": "docs/source/_static/paper/success/saddle-search-pt-island.svg",
+      "stem": "saddle-search-pt-island",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/tsopt-lj38.pdf",
+      "problem": "tsopt/LJ38",
+      "row_ids": [
+        "98d617a6bf22a2fb",
+        "b5901feac121435b",
+        "df379a76c8efedfb",
+        "077cf1826e1ee80b",
+        "f79450f90723b945",
+        "925d10081b8ef147",
+        "74d9ec427842c8e6"
+      ],
+      "site_svg": "docs/source/_static/paper/success/tsopt-lj38.svg",
+      "stem": "tsopt-lj38",
+      "type": "success"
+    },
+    {
+      "code": "",
+      "family": "",
+      "family_title": "",
+      "pdf": "paper-figures/pdfs/success/tsopt-pt-island.pdf",
+      "problem": "tsopt/pt-island",
+      "row_ids": [
+        "7f63e5da5863dd94",
+        "cc2c513f5c3967dc",
+        "d19b06bc2ac8851b",
+        "c9f92be1ae14a05c",
+        "743ffe5bc55a0de5",
+        "9d6ef44f01fcfaad",
+        "a76528d53eab72d2"
+      ],
+      "site_svg": "docs/source/_static/paper/success/tsopt-pt-island.svg",
+      "stem": "tsopt-pt-island",
+      "type": "success"
+    }
+  ],
+  "results_index_sha256": "a301bb2d9f6d11978750e4199661e4e408f80541e3080e8094f22792714fa398",
+  "schema": "optbench.paper-figures-manifest/v1",
+  "selection": "For distributions, success rates, and family profiles, use the lowest-ranked full row with per-start records for each code."
+}

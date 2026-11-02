@@ -5,6 +5,7 @@ __pycache__/
 .asv/
 env/
 .pytest_cache/
+.snakemake/
 softsaddle/work/
 softsaddle/lib/
 docs/build/

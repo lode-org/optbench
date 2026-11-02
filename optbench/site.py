@@ -7,6 +7,7 @@ and one page per code.
 from __future__ import annotations
 
 import html
+import json
 import tomllib
 from pathlib import Path
 
@@ -296,6 +297,7 @@ def problem_html(
                 "held": held,
             }
         )
+    lines.append(_plot(prepared, primary, "Archived scores"))
     lines.append('<div class="bench-table"><table class="bench-archive">')
     lines.append(f"<caption>{html.escape(_caption(primary))}</caption>")
     headers = ["", "Entry", "Code", *metrics, "Contributor", "Date"]
@@ -322,7 +324,6 @@ def problem_html(
             lines.append(f'<td class="{kind}">{html.escape(cell)}</td>')
         lines.append("</tr>")
     lines.append("</tbody></table></div>")
-    lines.append(_plot(prepared, primary, "Archived scores"))
     lines.append("</div>")
     lines.append("</section>")
     return "\n".join(lines)
@@ -476,8 +477,15 @@ def _problem_titles(root: Path) -> dict[str, str]:
     return {problem["id"]: human_title(problem, by_slug) for problem in problems.values()}
 
 
-def _code_page_html(name: str, pins: list[dict], document: dict, registry: list[dict], titles: dict[str, str]) -> str:
-    from .board import _headers, ranked_cells
+def _code_page_html(
+    name: str,
+    pins: list[dict],
+    document: dict,
+    registry: list[dict],
+    titles: dict[str, str],
+    paper_figures: list[dict],
+) -> str:
+    from .board import _headers, _paper_plot_html, ranked_cells
     from .site_pages import code_blurb, code_page_name, versions_html
 
     found: list[tuple[dict, dict]] = []
@@ -505,9 +513,36 @@ def _code_page_html(name: str, pins: list[dict], document: dict, registry: list[
         f'<div class="bench-stat"><strong>{len(pins)}</strong><span>Registry pins</span></div>',
         '<div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>',
         "</div></div>",
-        '<div class="bench-section-head"><div><p class="bench-eyebrow">Across all suites</p><h2>Results</h2></div>',
-        "<p>One row is one version and one stock method. Select a heading to sort.</p></div>",
     ]
+    problem_ids = {str(problem.get("id") or "") for problem, _row in found}
+    code_spellings = {str(row.get("code") or "").strip() or "unknown" for _problem, row in found}
+    histories = [
+        figure
+        for figure in paper_figures
+        if figure.get("type") == "history"
+        and str(figure.get("problem") or "") in problem_ids
+        and str(figure.get("code") or "") in code_spellings
+    ]
+    if histories:
+        lines.extend(
+            [
+                '<div class="bench-section-head"><div><p class="bench-eyebrow">Recorded history</p>'
+                "<h2>Cost by version</h2></div>"
+                "<p>PAR-2 and mean force calls, without smoothing.</p></div>",
+                '<div class="bench-chart-grid">'
+                + "\n".join(
+                    _paper_plot_html("../../_static/paper", figure, name)
+                    for figure in histories
+                )
+                + "</div>",
+            ]
+        )
+    lines.extend(
+        [
+            '<div class="bench-section-head"><div><p class="bench-eyebrow">Across all suites</p><h2>Results</h2></div>',
+            "<p>One row is one version and one stock method. Select a heading to sort.</p></div>",
+        ]
+    )
     if found:
         headers = _headers({"ranked": []})
         lines.append(
@@ -563,7 +598,7 @@ def _codes_index_html(contributor: str, order: list[str]) -> str:
     return "\n".join(lines)
 
 
-def _write_code_pages(root: Path, document: dict) -> None:
+def _write_code_pages(root: Path, document: dict, paper_figures: list[dict]) -> None:
     from .site_pages import code_page_name, group_pins
 
     contributor, pins = _registry_pins(root)
@@ -588,7 +623,16 @@ def _write_code_pages(root: Path, document: dict) -> None:
             f"#+TITLE: {name}",
             "#+OPTIONS: toc:nil num:nil author:nil",
             "",
-            _raw(_code_page_html(name, grouped[name], document, pins, titles)).rstrip(),
+            _raw(
+                _code_page_html(
+                    name,
+                    grouped[name],
+                    document,
+                    pins,
+                    titles,
+                    paper_figures,
+                )
+            ).rstrip(),
             "",
         ]
         (code_dir / f"{slug}.org").write_text("\n".join(page), encoding="utf-8")
@@ -681,6 +725,58 @@ def _problem_preamble(root: Path, problem: dict, view: dict, note: str = "") -> 
     return "\n".join(lines)
 
 
+def _paper_figures(root: Path) -> list[dict]:
+    path = root / "paper-figures" / "data" / "manifest.json"
+    if not path.is_file():
+        return []
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    figures = manifest.get("figures") or []
+    return [figure for figure in figures if isinstance(figure, dict)]
+
+
+def _suite_paper_gallery(
+    suite: str,
+    group: list[dict],
+    figures: list[dict],
+    by_slug: dict[str, list[dict]],
+) -> str:
+    from .board import _paper_plot_html
+    from .site_pages import human_title
+
+    by_problem: dict[str, list[dict]] = {}
+    for figure in figures:
+        if figure.get("type") in {"distribution", "success"}:
+            by_problem.setdefault(str(figure.get("problem") or ""), []).append(figure)
+    sections: list[str] = []
+    for problem in sorted(group, key=lambda item: human_title(item, by_slug).lower()):
+        selected = sorted(
+            by_problem.get(str(problem["id"]), []),
+            key=lambda figure: 0 if figure.get("type") == "distribution" else 1,
+        )
+        if not selected:
+            continue
+        title = human_title(problem, by_slug)
+        href = f"{suite}/{problem['problem']}.html"
+        sections.append(
+            '<section class="bench-paper-problem">'
+            f'<h3><a href="{html.escape(href)}">{html.escape(title)}</a></h3>'
+            '<div class="bench-chart-grid">'
+            + "\n".join(
+                _paper_plot_html("../../_static/paper", figure, title)
+                for figure in selected
+            )
+            + "</div></section>"
+        )
+    if not sections:
+        return ""
+    return (
+        '<div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p>'
+        "<h2>Distributions and success</h2></div>"
+        "<p>Exact committed starts; failures remain visible.</p></div>"
+        + "\n".join(sections)
+    )
+
+
 def render(root: Path) -> None:
     """Write the site tables from the v2 scorer."""
     from .board import plot_names_for, render_problem_section, write_board
@@ -694,6 +790,7 @@ def render(root: Path) -> None:
 
     root = Path(root)
     document = write_board(root, root / "results" / "board")
+    paper_figures = _paper_figures(root)
     problems = load_all(root / "problems")
     by_slug = _by_slug(problems)
     smoke = _smoke_note(root)
@@ -705,7 +802,7 @@ def render(root: Path) -> None:
 
     include = root / "docs" / "include"
     include.mkdir(parents=True, exist_ok=True)
-    _write_code_pages(root, document)
+    _write_code_pages(root, document, paper_figures)
     (include / "sota.org").write_text(
         _raw(_headlines_html(order, by_suite, document, pending, by_slug)),
         encoding="utf-8",
@@ -741,6 +838,12 @@ def render(root: Path) -> None:
                 view,
                 plot_names_for(view),
                 asset_prefix="../../../_static/board",
+                paper_asset_prefix="../../../_static/paper",
+                paper_figures=[
+                    figure
+                    for figure in paper_figures
+                    if figure.get("problem") == problem["id"]
+                ],
                 preamble=_problem_preamble(root, problem, view, note),
                 section_id=name,
                 unparsed=pending.get(problem["id"]),
@@ -762,6 +865,7 @@ def render(root: Path) -> None:
         plot_dir = root / "docs" / "source" / "_static" / "board"
         plot_name = write_suite_plot(suite, series, plot_dir)
         chart = ""
+        gallery = _suite_paper_gallery(suite, ordered, paper_figures, by_slug)
         if plot_name:
             chart = (
                 '<div class="bench-section-head"><div><p class="bench-eyebrow">Cost comparison</p>'
@@ -769,7 +873,7 @@ def render(root: Path) -> None:
                 "<p>Generated locally from the committed result rows.</p></div>"
                 + plot_figure("../../_static/board", plot_name, f"{suite_title(suite)} best ranked cost")
             )
-        tables = tables.replace("<!-- bench-suite-chart -->", chart)
+        tables = tables.replace("<!-- bench-suite-chart -->", gallery + chart)
         parts = [
             '<section class="bench">',
             tables,
