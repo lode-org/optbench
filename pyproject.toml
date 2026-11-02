@@ -1,5 +1,7 @@
 [project]
 name = "optbench"
+# The only handwritten OptBench version.
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#version
 version = "0.0.0"
 description = "Replay the OptBench geometry and saddle suites."
 readme = "README.md"
@@ -14,6 +16,7 @@ optbench = "optbench.__main__:main"
 [dependency-groups]
 gpridge = ["ase==3.29.0", "h5py>=3.12", "pycapnp>=2"]
 dev = [
+    "cogapp>=3.6.0",
     "pytest>=8.3",
     "asv==0.6.6",
     "asv-runner==0.3.1",

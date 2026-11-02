@@ -1,6 +1,13 @@
 [workspace]
 name = "optbench"
+# Generated from pyproject.toml by cog (https://nedbatchelder.com/code/cog/).
+# https://pixi.prefix.dev/latest/reference/pixi_manifest/#version-optional
+# [[[cog
+# from optbench.project_version import cog_out
+# cog_out(cog, 'version = "{version}"')
+# ]]]
 version = "0.0.0"
+# [[[end]]]
 channels = ["conda-forge"]
 platforms = ["linux-64"]
 

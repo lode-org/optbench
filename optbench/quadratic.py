@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import math
+from importlib import metadata
 from pathlib import Path
 
 from .v2 import collect_provenance, record_start, summarise_run
@@ -81,9 +82,10 @@ def _run(entry, algorithm, tuning, step, cap, evaluate, optimize, names, kind, e
         for index, name in enumerate(names)
     ]
     parameters = {"step": step, "force_norm": FORCE_NORM, "cap": cap, "kind": kind}
+    version = metadata.version("optbench")
     provenance = collect_provenance(
         code="optbench",
-        code_version="0.0.0",
+        code_version=version,
         commit=commit,
         parameters=parameters,
         machine=machine,
@@ -93,7 +95,7 @@ def _run(entry, algorithm, tuning, step, cap, evaluate, optimize, names, kind, e
         "entry": entry,
         "code": "optbench",
         "algorithm": algorithm,
-        "code_version": "0.0.0",
+        "code_version": version,
         "commit": commit,
         "tuning": tuning,
         "present_source": False,

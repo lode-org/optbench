@@ -30,6 +30,12 @@ jobs:
         with:
           enable-cache: true
 
+      - name: cog --check
+        run: >-
+          uv run cog --check --diff
+          --check-fail-msg='Run: uv run cog -r docs/source/conf.py optbench/__init__.py pixi.toml'
+          docs/source/conf.py optbench/__init__.py pixi.toml
+
       - name: Tests
         run: uv run pytest
 

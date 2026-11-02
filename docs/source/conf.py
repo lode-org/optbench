@@ -4,6 +4,18 @@ project = "OptBench"
 author = "OptBench"
 copyright = "2026, Rohit Goswami"
 html_title = "OptBench"
+# Sphinx version and release are the project version.
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-version
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-release
+# Generated from pyproject.toml by cog (https://nedbatchelder.com/code/cog/).
+# [[[cog
+# from optbench.project_version import cog_out
+# cog_out(cog, 'version = "{version}"')
+# cog_out(cog, 'release = "{version}"')
+# ]]]
+version = "0.0.0"
+release = "0.0.0"
+# [[[end]]]
 
 extensions = []
 exclude_patterns = ["_build"]

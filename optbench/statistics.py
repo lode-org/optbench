@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import math
 import random
+from importlib import metadata
 
 from .noise import KAPPA, SIGMA_LEVELS, WINDOW, noise_floor, noisy_descent, stop_threshold
 from .profile import performance_profile, profile_cost
@@ -340,7 +341,7 @@ def build_statistics(commit: str = "", machine: dict | str | None = "validation"
     failure_metrics = score_v2(combined_records, KEPT_CAP, resamples=COMBINED_RESAMPLES, seed=SEED)
     provenance = collect_provenance(
         code="optbench",
-        code_version="0.0.0",
+        code_version=metadata.version("optbench"),
         commit=commit,
         parameters={
             "displacement_sigma": DISPLACEMENT_SIGMA,
