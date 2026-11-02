@@ -39,6 +39,7 @@ def test_asv_uses_the_uv_environment():
     assert "results/asv" in workflow
     assert 'regression-threshold: "10"' in workflow
     assert "asv-spyglass-args: --factor 10" in workflow
+    assert "github.event.pull_request.head.repo.full_name == github.repository" in workflow
 
 
 def test_rgsaddle_grid_is_seed_then_one_start_until_full(monkeypatch):
@@ -186,6 +187,7 @@ def test_pending_grid_is_every_problem_and_code():
         "softsaddle",
         "lammpsneb",
         "sella-0.1.1",
+        "gpridge",
     ]
     assert Pending.params[1] == code_ids()
     assert Pending.track_force_calls.unit == "force calls"

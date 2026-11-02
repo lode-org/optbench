@@ -4,6 +4,9 @@ The files under ``templates/ase`` and ``templates/sella`` are rendered
 from this module. A default row is the library constructor. An adjusted
 row is the archived OptBench script when one exists. The template id
 keeps its previous suffix.
+
+``write_all`` rewrites the generated ``[[template]]`` tables in
+``codes/registry.toml``. A handwritten block after those tables stays.
 """
 
 from __future__ import annotations
@@ -819,6 +822,31 @@ def render_toml(spec: dict) -> str:
 _TEMPLATE_MARK = "# generated ASE and Sella templates"
 
 
+def _trailing_registry(after_mark: str) -> str:
+    """Return the handwritten registry text that follows the generated templates.
+
+    Every ``[[template]]`` table after the marker belongs to this catalog.
+    The next comment or other table is kept, so a ``[[code]]`` block that
+    was added after the generated templates is not deleted.
+    """
+    lines = after_mark.splitlines()
+    index = 0
+    count = len(lines)
+    while index < count and lines[index].strip() == "":
+        index += 1
+    while index < count and lines[index].strip() == "[[template]]":
+        index += 1
+        while index < count:
+            stripped = lines[index].strip()
+            if stripped == "" or (not stripped.startswith("[") and "=" in stripped):
+                index += 1
+                continue
+            break
+        while index < count and lines[index].strip() == "":
+            index += 1
+    return "\n".join(lines[index:]).strip()
+
+
 def _registry_templates(specs: list[dict]) -> str:
     lines = [_TEMPLATE_MARK, ""]
     for spec in specs:
@@ -857,6 +885,12 @@ def write_all(root: Path) -> list[Path]:
     registry = root / "codes" / "registry.toml"
     text = registry.read_text(encoding="utf-8")
     if _TEMPLATE_MARK in text:
-        text = text[: text.index(_TEMPLATE_MARK)]
-    registry.write_text(text.rstrip() + "\n\n" + _registry_templates(specs), encoding="utf-8")
+        head, _, after = text.partition(_TEMPLATE_MARK)
+        trailer = _trailing_registry(after)
+    else:
+        head, trailer = text, ""
+    body = head.rstrip() + "\n\n" + _registry_templates(specs).rstrip()
+    if trailer:
+        body += "\n\n" + trailer
+    registry.write_text(body + "\n", encoding="utf-8")
     return written

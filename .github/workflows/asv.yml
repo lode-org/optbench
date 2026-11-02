@@ -33,7 +33,9 @@ jobs:
       - uses: HaoZeke/asv-perch@v1
         with:
           results-path: results/asv
-          post-comment: ${{ github.event_name == 'pull_request' && 'true' || 'false' }}
+          # A pull request from a fork gets a read-only token, so creating the comment fails the job.
+          # Those runs keep the table in the step summary.
+          post-comment: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && 'true' || 'false' }}
           init-command: >-
             uv python install 3.12 &&
             uv sync --frozen --group dev &&
