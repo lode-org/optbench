@@ -14,10 +14,10 @@
    <th scope="row"><a href="saddle-search/pt-island.html">Pt heptamer island</a></th>
    <td>Morse</td>
    <td class="num">343</td>
-   <td class="num">20000<sup>1</sup></td>
+   <td class="num">—<sup>1</sup></td>
    </tr>
    </tbody></table></div>
-   <p class="bench-note"><sup>1</sup> The problem file does not state a run count. The number is the largest run count on a ranked row.</p>
+   <p class="bench-note"><sup>1</sup> The problem file does not state a run count, and the ranked rows do not agree. They record 2 on eOn; 16 on Sella; 5000 on softsaddle; 20000 on rgsaddle.</p>
    <h2>Results by code</h2>
    <p>Best is the lowest cost for that code on that problem. Median is the median of that code's costs. PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap. An archived row is ranked by the average it published. The success rate is the share of runs that finished.</p>
    <div class="bench-scroll">

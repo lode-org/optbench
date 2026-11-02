@@ -479,13 +479,12 @@ def recorded_runs(root: Path, problem: dict, ranked: list[dict]) -> tuple[str, s
             f"The problem file does not state a run count. "
             f"The {names} rows record {count} runs."
         )
-    shown = max(by_count)
     detail = "; ".join(
         f"{count} on {', '.join(sorted(codes))}" for count, codes in sorted(by_count.items())
     )
-    return str(shown), (
-        f"The problem file does not state a run count. Ranked rows record {detail}. "
-        f"The cell shows {shown}."
+    return "—", (
+        "The problem file does not state a run count, and the ranked rows do not agree. "
+        f"They record {detail}."
     )
 
 
@@ -540,14 +539,11 @@ def suite_tables(
                 missing_atoms = True
                 lines.append('<td class="num">—</td>')
         if show_runs:
-            if item["runs"]:
-                mark = ""
-                if item["note"]:
-                    notes.append(item["note"])
-                    mark = f"<sup>{len(notes)}</sup>"
-                lines.append(f'<td class="num">{_cell(item["runs"])}{mark}</td>')
-            else:
-                lines.append('<td class="num">—</td>')
+            mark = ""
+            if item["note"]:
+                notes.append(item["note"])
+                mark = f"<sup>{len(notes)}</sup>"
+            lines.append(f'<td class="num">{_cell(item["runs"] or "—")}{mark}</td>')
         lines.append("</tr>")
     lines.append("</tbody></table></div>")
     if missing_atoms:
