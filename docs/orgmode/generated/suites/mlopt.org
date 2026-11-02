@@ -24,7 +24,7 @@
    </tr>
    </tbody></table></div>
    <p class="bench-note">A dash means the problem file does not state an atom count.</p>
-   <p class="bench-note"><sup>1</sup> The problem file does not state a run count. The number is the largest run count on a ranked row.</p>
+   <p class="bench-note"><sup>1</sup> The problem file does not state a run count. The n2p2 rows record 50 runs.</p>
    <h2>Results by code</h2>
    <p>Best is the lowest cost for that code on that problem. Median is the median of that code's costs. PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap. An archived row is ranked by the average it published. The success rate is the share of runs that finished.</p>
    <div class="bench-scroll">

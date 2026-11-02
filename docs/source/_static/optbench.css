@@ -210,8 +210,6 @@ table[data-board-table="summary"] td {
   min-width: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 32rem;
 }
 
 .bench table {
@@ -220,6 +218,31 @@ table[data-board-table="summary"] td {
   border-collapse: collapse;
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
+}
+
+table[data-bench="suites"],
+table[data-bench="problems"] {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+table[data-bench="suites"] th,
+table[data-bench="suites"] td,
+table[data-bench="problems"] th,
+table[data-bench="problems"] td {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.bench table.bench-sortable:not([data-bench]):not([data-board-table]) {
+  width: 100%;
+  max-width: 100%;
+}
+.bench table.bench-sortable:not([data-bench]):not([data-board-table]) th,
+.bench table.bench-sortable:not([data-bench]):not([data-board-table]) td {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .bench caption {
@@ -278,26 +301,19 @@ table[data-board-table="summary"] td {
   color: CanvasText;
 }
 
-.yue {
-  font-family: Palatino, "Palatino Linotype", "Iowan Old Style", Georgia, serif;
-  line-height: 1.6;
-}
-
-.yue h1,
-.yue h2,
-.yue h3,
+.yue,
+.yue p,
+.yue li,
+.yue td,
+.yue th,
 .bench,
-.bench table,
-.sy-lside,
-.sy-head {
-  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+.bench table {
+  font-family: var(--sy-f-text, ui-sans-serif, system-ui, sans-serif);
 }
 
-.yue h1,
-.yue h2,
-.yue h3 {
-  letter-spacing: -0.015em;
-  line-height: 1.25;
+article.yue {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .sy-lside .caption,
@@ -358,9 +374,5 @@ html.dark .bench-plot svg {
   .bench th,
   .bench td {
     padding: 0.35rem 0.45rem;
-  }
-
-  article.yue {
-    overflow-x: hidden;
   }
 }

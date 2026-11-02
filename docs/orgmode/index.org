@@ -1,16 +1,15 @@
 #+TITLE: OptBench
 #+OPTIONS: toc:nil num:nil author:nil
 
-OptBench compares geometry optimizers, saddle searches, nudged elastic bands,
-and global optimization on a fixed set of problems.
+OptBench compares geometry optimizers, saddle searches, and global optimization.
+
 Chill, Stevenson, Ruehle, Shang, Xiao, Farrell, Wales, and Henkelman
-set out the 2014 problems in J. Chem. Theory Comput. 2014, 10, 5476-5482
+set the problems in J. Chem. Theory Comput. 2014, 10, 5476-5482
 ([[https://doi.org/10.1021/ct5008718][doi:10.1021/ct5008718]]).
-A lower cost is a cheaper search.
+
 The score on each problem they set is PAR-2, the mean cost of the runs.
-A run that finishes counts as the calls it used.
-A run that fails counts as twice the cap.
-An archived row keeps the average it published, and that average leaves failed runs out.
+A finished run counts as the calls it used, and a failed run counts as twice the cap.
+An archived row keeps the average it published, which leaves failed runs out.
 
 #+INCLUDE: "../include/overview.org"
 
