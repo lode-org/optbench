@@ -5,7 +5,6 @@
 .. raw:: html
 
    <section class="bench" id="code-eon">
-   <h2>eOn</h2>
    <p>eOn is used for minimization and saddle search. Version string 3.5.0 and Python client 0.4.2. Archived rows also spell it eOn (develop 500350d9).</p>
    <h3>Versions</h3>
    <div class="bench-scroll"><table class="bench-sortable">
@@ -43,10 +42,10 @@
    </tr>
    </tbody></table></div>
    <h3>Results</h3>
-   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <p>Ranked rows for this code, across every suite. One row is one version and one method. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published.</p>
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
-   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="eOn (3.5.0) · Lanczos improved L-BFGS">
    <td>Double-ended saddle search</td>
    <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
@@ -394,7 +393,7 @@
    </tr>
    <tr data-problem="hTST/Al" data-label="eOn (develop 500350d9) (500350d9) · Dimer-CG rotation: max=50 tol=1">
    <td>Harmonic transition state theory</td>
-   <td><a href="../suites/hTST/Al.html">Al</a></td>
+   <td><a href="../suites/hTST/Al.html">EAM aluminum</a></td>
    <td data-field="label">eOn (develop 500350d9) (500350d9) · Dimer-CG rotation: max=50 tol=1</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">4</td>
@@ -529,7 +528,7 @@
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="eOn ((develop 500350d9) · LBFGS) · LBFGS">
    <td>Nudged elastic band</td>
-   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td data-field="label">eOn ((develop 500350d9) · LBFGS) · LBFGS</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">6</td>
@@ -544,7 +543,7 @@
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="eOn ((develop 500350d9) · FIRE) · FIRE">
    <td>Nudged elastic band</td>
-   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td data-field="label">eOn ((develop 500350d9) · FIRE) · FIRE</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">10</td>
@@ -559,7 +558,7 @@
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="eOn (develop f6817b53) (3.6.0) · CG">
    <td>Nudged elastic band</td>
-   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td data-field="label">eOn (develop f6817b53) (3.6.0) · CG</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">11</td>
@@ -574,7 +573,7 @@
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="eOn ((develop 500350d9) · CG) · CG">
    <td>Nudged elastic band</td>
-   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td data-field="label">eOn ((develop 500350d9) · CG) · CG</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">13</td>
@@ -589,7 +588,7 @@
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="eOn ((develop 500350d9) · QuickMin) · QuickMin">
    <td>Nudged elastic band</td>
-   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td data-field="label">eOn ((develop 500350d9) · QuickMin) · QuickMin</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">15</td>
@@ -604,7 +603,7 @@
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="eOn (3.6.0) · LBFGS">
    <td>Nudged elastic band</td>
-   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td data-field="label">eOn (3.6.0) · LBFGS</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">16</td>

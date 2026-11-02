@@ -5,70 +5,63 @@
 .. raw:: html
 
    <section class="bench">
-   <p>Global optimization covers Binary Lennard-Jones 100, Lennard-Jones 150, Lennard-Jones 38 global minimum, Lennard-Jones 75, Lennard-Jones 98, TIP4P 10, TIP4P 15, and TIP4P 20. The recorded metrics include avg energy, min energy, max energy, basin hopping steps mean, basin hopping steps stddev, and cpu time mean. Binary Lennard-Jones 100 has 100 runs, Lennard-Jones 150 has 100 runs, Lennard-Jones 38 global minimum has 100 runs, Lennard-Jones 75 has 200 runs, Lennard-Jones 98 has 100 runs, TIP4P 10 has 10000 runs, TIP4P 15 has 500 runs, and TIP4P 20 has 100 runs. Archived means follow this rule: 2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <p>Global optimization covers Binary Lennard-Jones 100, Lennard-Jones 150, Lennard-Jones 38 global minimum, Lennard-Jones 75, Lennard-Jones 98, TIP4P 10, TIP4P 15, and TIP4P 20. The recorded metrics include Average energy, Lowest energy, Highest energy, Mean basin-hopping steps, Basin-hopping step spread, and Mean CPU time. Binary Lennard-Jones 100 has 100 runs, Lennard-Jones 150 has 100 runs, Lennard-Jones 38 global minimum has 100 runs, Lennard-Jones 75 has 200 runs, Lennard-Jones 98 has 100 runs, TIP4P 10 has 10000 runs, TIP4P 15 has 500 runs, and TIP4P 20 has 100 runs. An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
    <div class="bench-scroll">
    <table class="bench-sortable" data-bench="problems">
    <caption>Problems in this suite.</caption>
-   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Task</th><th>Runs</th></tr></thead><tbody>
+   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Runs</th></tr></thead><tbody>
    <tr>
    <th scope="row"><a href="globalopt/lj100-binary.html">Binary Lennard-Jones 100</a></th>
    <td>binary Lennard-Jones</td>
    <td class="num">100</td>
-   <td>Global optimization</td>
    <td class="num">100</td>
    </tr>
    <tr>
    <th scope="row"><a href="globalopt/lj150.html">Lennard-Jones 150</a></th>
    <td>Lennard-Jones</td>
    <td class="num">150</td>
-   <td>Global optimization</td>
    <td class="num">100</td>
    </tr>
    <tr>
    <th scope="row"><a href="globalopt/lj38.html">Lennard-Jones 38 global minimum</a></th>
    <td>Lennard-Jones</td>
    <td class="num">38</td>
-   <td>Global optimization</td>
    <td class="num">100</td>
    </tr>
    <tr>
    <th scope="row"><a href="globalopt/lj75.html">Lennard-Jones 75</a></th>
    <td>Lennard-Jones</td>
    <td class="num">75</td>
-   <td>Global optimization</td>
    <td class="num">200</td>
    </tr>
    <tr>
    <th scope="row"><a href="globalopt/lj98.html">Lennard-Jones 98</a></th>
    <td>Lennard-Jones</td>
    <td class="num">98</td>
-   <td>Global optimization</td>
    <td class="num">100</td>
    </tr>
    <tr>
    <th scope="row"><a href="globalopt/tip4p10.html">TIP4P 10</a></th>
    <td>TIP4P, N=10</td>
-   <td class="num"></td>
-   <td>Global optimization</td>
+   <td class="num">—</td>
    <td class="num">10000</td>
    </tr>
    <tr>
    <th scope="row"><a href="globalopt/tip4p15.html">TIP4P 15</a></th>
    <td>TIP4P, N=15</td>
-   <td class="num"></td>
-   <td>Global optimization</td>
+   <td class="num">—</td>
    <td class="num">500</td>
    </tr>
    <tr>
    <th scope="row"><a href="globalopt/tip4p20.html">TIP4P 20</a></th>
    <td>TIP4P, N=20</td>
-   <td class="num"></td>
-   <td>Global optimization</td>
+   <td class="num">—</td>
    <td class="num">100</td>
    </tr>
    </tbody></table></div>
+   <p class="bench-note">A dash means the problem file does not state an atom count.</p>
    <h2>Results by code</h2>
-   <p>Best is the lowest ranked cost for that code on that problem. Median is the median of that code's ranked costs. A harness row uses PAR-2. An archived row uses its published primary number. Success rate is the best row's rate, or the share of its runs that are not failures.</p>
+   <p>Best is the lowest cost for that code on that problem. Median is the median of that code's costs. PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap. An archived row is ranked by the average it published. The success rate is the share of runs that finished.</p>
    <div class="bench-scroll">
    <table class="bench-sortable" data-bench="codes">
    <caption>One row per code on each problem.</caption>
@@ -78,7 +71,7 @@
    <td><a href="../codes/gmin.html">GMIN</a></td>
    <td class="num">-589.507</td>
    <td class="num">-589.507</td>
-   <td class="num"></td>
+   <td class="num">—</td>
    <td class="num">1</td>
    </tr>
    <tr>
@@ -86,7 +79,7 @@
    <td><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num">-584.579</td>
    <td class="num">-584.579</td>
-   <td class="num"></td>
+   <td class="num">—</td>
    <td class="num">1</td>
    </tr>
    <tr>
@@ -118,7 +111,7 @@
    <td><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num">508011</td>
    <td class="num">553271</td>
-   <td class="num"></td>
+   <td class="num">—</td>
    <td class="num">2</td>
    </tr>
    <tr>

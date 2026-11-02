@@ -5,17 +5,16 @@
 .. raw:: html
 
    <section class="bench" id="code-pyamff">
-   <h2>Pyamff</h2>
    <p>The registry has no pin for this code string. The rows below use the spelling on the archived file.</p>
    <p>No registry pin.</p>
    <h3>Results</h3>
-   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <p>Ranked rows for this code, across every suite. One row is one version and one method. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published.</p>
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
-   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0">
    <td>Machine learning optimization</td>
-   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
+   <td><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">1</td>
@@ -30,7 +29,7 @@
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0">
    <td>Machine learning optimization</td>
-   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
+   <td><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">2</td>
@@ -45,7 +44,7 @@
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0">
    <td>Machine learning optimization</td>
-   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
+   <td><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">3</td>
@@ -60,7 +59,7 @@
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0_1">
    <td>Machine learning optimization</td>
-   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
+   <td><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0_1</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">4</td>
@@ -75,7 +74,7 @@
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0_1">
    <td>Machine learning optimization</td>
-   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
+   <td><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0_1</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">5</td>
@@ -90,7 +89,7 @@
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1">
    <td>Machine learning optimization</td>
-   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
+   <td><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">7</td>

@@ -144,10 +144,108 @@ def _size_token(problem: dict) -> str:
     return ""
 
 
+METRIC_LABELS = {
+    "force_calls": "Force calls",
+    "force_calls_min": "Fewest force calls",
+    "force_calls_max": "Most force calls",
+    "force_calls_median": "Median force calls",
+    "force_calls_mean_error": "Mean error of force calls",
+    "nfailed": "Failed runs",
+    "mean_epoch": "Mean epochs",
+    "median_epoch": "Median epochs",
+    "mean_epochs": "Mean epochs",
+    "median_epochs": "Median epochs",
+    "mean_energy_rmse": "Mean energy RMSE",
+    "median_energy_rmse": "Median energy RMSE",
+    "mean_force_rmse": "Mean force RMSE",
+    "median_force_rmse": "Median force RMSE",
+    "avg_energy": "Average energy",
+    "min_energy": "Lowest energy",
+    "max_energy": "Highest energy",
+    "basin_hopping_steps_mean": "Mean basin-hopping steps",
+    "basin_hopping_steps_stddev": "Basin-hopping step spread",
+    "cpu_time_mean": "Mean CPU time",
+    "cpu_time_stddev": "CPU time spread",
+    "energy_calls_mean": "Mean energy calls",
+    "energy_calls_stddev": "Energy-call spread",
+    "barrier_force_calls": "Barrier force calls",
+    "barrier_jobs": "Barrier jobs",
+    "rate_force_calls": "Rate force calls",
+    "rate_jobs": "Rate jobs",
+    "fraction_connected": "Fraction connected",
+    "total_searches": "Searches",
+    "unique_saddles": "Unique saddles",
+    "transition_states": "Transition states",
+    "true_rate": "True rate",
+}
+
+PAR2_SENTENCE = (
+    "PAR-2 is the mean cost of the runs. "
+    "A run that finishes counts as the calls it used. "
+    "A run that fails counts as twice the cap."
+)
+
+ARCHIVE_SENTENCE = (
+    "An archived score is the average of the runs that finished under the cap. "
+    "A run that hit the cap is a failure and is left out of that average."
+)
+
+
+def metric_label(key: str) -> str:
+    """Public name for one recorded metric. The mapping lives here."""
+    text = str(key or "").strip()
+    if text in METRIC_LABELS:
+        return METRIC_LABELS[text]
+    parts = []
+    for token in text.split("_"):
+        if token.lower() == "rmse":
+            parts.append("RMSE")
+        elif token:
+            parts.append(token[:1].upper() + token[1:])
+    return " ".join(parts) or text
+
+
+def _curve_code(label: str) -> str:
+    text = str(label or "").split("·", 1)[0].strip()
+    if "(" in text:
+        text = text.split("(", 1)[0].strip()
+    return text
+
+
+def profile_worth_showing(problem: dict) -> bool:
+    """A profile of one code is a flat line at 1 and is not shown."""
+    profile = problem.get("profile") or {}
+    curves = profile.get("rho") or {}
+    if len(curves) < 2:
+        return False
+    ranked_codes = {str(row.get("code") or "").strip() for row in problem.get("ranked") or []}
+    ranked_codes.discard("")
+    curve_codes = {_curve_code(label) for label in curves}
+    curve_codes.discard("")
+    return len(ranked_codes) >= 2 and len(curve_codes) >= 2
+
+
+def _same_pt_island(problem: dict) -> bool:
+    slug = str(problem.get("problem") or "")
+    ident = str(problem.get("id") or "")
+    if slug in {"pt-island", "Pt-heptamer", "Pt"}:
+        return True
+    if ident.endswith("/pt-island") or ident.endswith("/Pt-heptamer") or ident.endswith("/Pt"):
+        return True
+    band = str((problem.get("band") or {}).get("potential") or "")
+    return _kind_of(problem) == "morse_pt" or band == "morse_pt"
+
+
 def human_title(problem: dict, by_slug: dict[str, list[dict]] | None = None) -> str:
-    """Title for a heading. A lowercase slug is replaced from the file or a sibling."""
+    """Title for a heading. A formula or a slug is replaced from the files."""
     title = str(problem.get("title") or problem.get("problem") or "").strip()
     slug = str(problem.get("problem") or "")
+    if slug == "C2H4" or title == "C2H4":
+        return "Ethene"
+    if slug == "Al" and title == "Al":
+        return "EAM aluminum"
+    if _same_pt_island(problem) and (title in {"Pt", "Pt-heptamer", "pt-island"} or _bare_slug(title, slug)):
+        return "Pt heptamer island"
     if title and not _bare_slug(title, slug):
         return title
     if by_slug:
@@ -191,6 +289,8 @@ def system_text(problem: dict) -> str:
         return f"{label}. {source}"
     if label:
         return label
+    if str(problem.get("problem") or "") == "C2H4":
+        return "Ethene (C2H4)"
     if source:
         return source
     title = str(problem.get("title") or "").strip()
@@ -213,6 +313,10 @@ def atom_text(problem: dict) -> str:
     coords = coordinate_count(problem)
     if coords and coords % 3 == 0:
         return str(coords // 3)
+    title = str(problem.get("title") or "")
+    found = re.search(r"\bPt\s+(\d+)\b", title)
+    if found:
+        return found.group(1)
     return ""
 
 
@@ -252,7 +356,7 @@ def suite_paragraph(suite_name: str, group: list[dict], root: Path, by_slug: dic
         for key in required:
             if key == "nfailed":
                 continue
-            label = str(key).replace("_", " ")
+            label = metric_label(str(key))
             if label not in metrics:
                 metrics.append(label)
     metric_text = _english(metrics[:6])
@@ -272,8 +376,7 @@ def suite_paragraph(suite_name: str, group: list[dict], root: Path, by_slug: dic
     }
     rules.discard("")
     if len(rules) == 1:
-        rule = next(iter(rules))
-        text += " Archived means follow this rule: " + rule[0].lower() + rule[1:]
+        text += " " + ARCHIVE_SENTENCE
     return text
 
 
@@ -349,6 +452,24 @@ def suite_name_for(suite: str) -> str:
     return suite_title(suite)
 
 
+def recorded_runs(root: Path, problem: dict, ranked: list[dict]) -> tuple[str, bool]:
+    """Run count from the problem file, else the largest ranked n."""
+    stated = run_text(root, problem)
+    if stated:
+        return stated, False
+    counts: list[int] = []
+    for row in ranked:
+        try:
+            count = int(row.get("n") or 0)
+        except (TypeError, ValueError):
+            continue
+        if count > 0:
+            counts.append(count)
+    if counts:
+        return str(max(counts)), True
+    return "", False
+
+
 def suite_tables(
     group: list[dict],
     document: dict,
@@ -358,32 +479,71 @@ def suite_tables(
     suite: str,
 ) -> tuple[str, list[dict]]:
     """Problem table and per-code summary. The plot series is the second value."""
+    prepared: list[dict] = []
+    for problem in group:
+        view = (document.get("problems") or {}).get(problem["id"]) or {}
+        runs, inferred = recorded_runs(root, problem, list(view.get("ranked") or []))
+        prepared.append(
+            {
+                "problem": problem,
+                "title": human_title(problem, by_slug),
+                "href": f"{suite}/{problem['problem']}.html",
+                "system": system_text(problem),
+                "atoms": atom_text(problem),
+                "runs": runs,
+                "inferred": inferred,
+                "view": view,
+            }
+        )
+    show_atoms = any(item["atoms"] for item in prepared)
+    show_runs = any(item["runs"] for item in prepared)
+    headers = ["Problem", "System"]
+    if show_atoms:
+        headers.append("Atoms")
+    if show_runs:
+        headers.append("Runs")
     lines = [
         '<div class="bench-scroll">',
         '<table class="bench-sortable" data-bench="problems">',
         "<caption>Problems in this suite.</caption>",
-        "<thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Task</th><th>Runs</th></tr></thead><tbody>",
+        "<thead><tr>" + "".join(f"<th>{header}</th>" for header in headers) + "</tr></thead><tbody>",
     ]
-    task = suite_name_for(suite)
-    for problem in group:
-        name = str(problem["problem"])
-        title = human_title(problem, by_slug)
-        href = f"{suite}/{name}.html"
-        atoms = atom_text(problem)
+    missing_atoms = False
+    inferred_runs = False
+    for item in prepared:
         lines.append("<tr>")
-        lines.append(f'<th scope="row"><a href="{_cell(href)}">{_cell(title)}</a></th>')
-        lines.append(f"<td>{_cell(system_text(problem))}</td>")
-        lines.append(f'<td class="num">{_cell(atoms)}</td>')
-        lines.append(f"<td>{_cell(task)}</td>")
-        lines.append(f'<td class="num">{_cell(run_text(root, problem))}</td>')
+        lines.append(f'<th scope="row"><a href="{_cell(item["href"])}">{_cell(item["title"])}</a></th>')
+        lines.append(f"<td>{_cell(item['system'] or '—')}</td>")
+        if show_atoms:
+            if item["atoms"]:
+                lines.append(f'<td class="num">{_cell(item["atoms"])}</td>')
+            else:
+                missing_atoms = True
+                lines.append('<td class="num">—</td>')
+        if show_runs:
+            if item["runs"]:
+                mark = "<sup>1</sup>" if item["inferred"] else ""
+                if item["inferred"]:
+                    inferred_runs = True
+                lines.append(f'<td class="num">{_cell(item["runs"])}{mark}</td>')
+            else:
+                lines.append('<td class="num">—</td>')
         lines.append("</tr>")
     lines.append("</tbody></table></div>")
+    if missing_atoms:
+        lines.append("<p class=\"bench-note\">A dash means the problem file does not state an atom count.</p>")
+    if inferred_runs:
+        lines.append(
+            "<p class=\"bench-note\"><sup>1</sup> The problem file does not state a run count. "
+            "The number is the largest run count on a ranked row.</p>"
+        )
     lines.append("<h2>Results by code</h2>")
     lines.append(
-        "<p>Best is the lowest ranked cost for that code on that problem. "
-        "Median is the median of that code's ranked costs. "
-        "A harness row uses PAR-2. An archived row uses its published primary number. "
-        "Success rate is the best row's rate, or the share of its runs that are not failures.</p>"
+        "<p>Best is the lowest cost for that code on that problem. "
+        "Median is the median of that code's costs. "
+        f"{PAR2_SENTENCE} "
+        "An archived row is ranked by the average it published. "
+        "The success rate is the share of runs that finished.</p>"
     )
     lines.append('<div class="bench-scroll">')
     lines.append('<table class="bench-sortable" data-bench="codes">')
@@ -400,9 +560,12 @@ def suite_tables(
             lines.append("<tr>")
             lines.append(f"<td>{_cell(title)}</td>")
             lines.append(f'<td><a href="{_cell(href)}">{_cell(item["code"])}</a></td>')
-            lines.append(f'<td class="num">{_cell(_format_number(item["best"]))}</td>')
-            lines.append(f'<td class="num">{_cell(_format_number(item["median"]))}</td>')
-            lines.append(f'<td class="num">{_cell(_format_rate(item["success"]))}</td>')
+            best = _format_number(item["best"]) or "—"
+            median = _format_number(item["median"]) or "—"
+            rate = _format_rate(item["success"]) or "—"
+            lines.append(f'<td class="num">{_cell(best)}</td>')
+            lines.append(f'<td class="num">{_cell(median)}</td>')
+            lines.append(f'<td class="num">{_cell(rate)}</td>')
             lines.append(f'<td class="num">{_cell(item["n"])}</td>')
             lines.append("</tr>")
             series.append({**item, "title": title})
@@ -414,6 +577,22 @@ def suite_tables(
 
 def _slug(text: str) -> str:
     return "".join(ch.lower() if ch.isalnum() else "-" for ch in text).strip("-")
+
+
+def _style_axes(axis) -> None:
+    """Light panel, dark ink. The panel stays readable on a dark page."""
+    figure = axis.figure
+    figure.patch.set_facecolor("#f7f4ee")
+    axis.set_facecolor("#f7f4ee")
+    ink = "#1c1915"
+    axis.tick_params(colors=ink, labelsize=9)
+    axis.xaxis.label.set_color(ink)
+    axis.yaxis.label.set_color(ink)
+    axis.title.set_color(ink)
+    for spine in axis.spines.values():
+        spine.set_color("#c8c0b4")
+    axis.grid(True, axis="x", color="#d9d3c7", linewidth=0.6)
+    axis.set_axisbelow(True)
 
 
 def write_suite_plot(suite: str, series: list[dict], directory: Path) -> str | None:
@@ -448,18 +627,21 @@ def write_suite_plot(suite: str, series: list[dict], directory: Path) -> str | N
         ncols=1,
         figsize=(7.2, height * len(problems)),
         squeeze=False,
+        layout="tight",
     )
+    figure.patch.set_facecolor("#f7f4ee")
     plain = FuncFormatter(_plain_tick)
     for axis, title in zip(axes[:, 0], problems):
         rows = [row for row in series if row["title"] == title]
         labels = [row["code"] for row in rows]
         values = [row["best"] for row in rows]
         positions = list(range(len(rows)))
-        axis.barh(positions, values, color="C0", height=0.62)
+        _style_axes(axis)
+        axis.barh(positions, values, color="#0f6e6e", height=0.62)
         axis.set_yticks(positions, labels)
         axis.invert_yaxis()
         axis.xaxis.set_major_formatter(plain if min(values) > 0 else ScalarFormatter(useOffset=False))
-        axis.set_xlabel("best ranked cost")
+        axis.set_xlabel("Best cost")
         axis.set_title(title)
         if min(values) > 0 and max(values) / min(values) >= 8:
             axis.set_xscale("log")
@@ -469,6 +651,73 @@ def write_suite_plot(suite: str, series: list[dict], directory: Path) -> str | N
     _save_figure(figure, directory, f"suite-{suite}")
     plt.close(figure)
     return f"suite-{suite}.svg"
+
+
+def restyle_problem_plots(document: dict, directory: Path, titles: dict[str, str]) -> None:
+    """Redraw the site copies. The files under results/ are left alone."""
+    import os
+
+    import matplotlib
+    from matplotlib.ticker import FuncFormatter, ScalarFormatter
+
+    matplotlib.use("Agg", force=False)
+    os.environ.setdefault("SOURCE_DATE_EPOCH", "0")
+    import matplotlib.pyplot as plt
+
+    from .board import _plain_tick, _save_figure
+
+    plain = FuncFormatter(_plain_tick)
+    directory.mkdir(parents=True, exist_ok=True)
+    with matplotlib.rc_context({"svg.hashsalt": "optbench", "svg.fonttype": "none"}):
+        for problem_id, problem in (document.get("problems") or {}).items():
+            title = titles.get(problem_id) or str(problem.get("title") or problem_id)
+            slug = str(problem_id).replace("/", "-")
+            ranked = list(problem.get("ranked") or [])
+            profile = problem.get("profile") or {}
+            curves = profile.get("rho") or {}
+            if profile_worth_showing(problem):
+                figure, axis = plt.subplots(figsize=(7.2, 4.2))
+                ink_cycle = ("#0f6e6e", "#9a3412", "#1e3a5f", "#3f6212", "#6b21a8", "#9f1239")
+                for index, (label, values) in enumerate(curves.items()):
+                    axis.step(
+                        profile.get("taus") or [],
+                        values,
+                        where="post",
+                        label=label,
+                        color=ink_cycle[index % len(ink_cycle)],
+                    )
+                _style_axes(axis)
+                axis.set_xscale("log", base=2)
+                axis.xaxis.set_major_formatter(plain)
+                axis.yaxis.set_major_formatter(ScalarFormatter(useOffset=False))
+                axis.set_xlabel("Performance ratio")
+                axis.set_ylabel("Fraction of starts")
+                axis.set_ylim(0.0, 1.05)
+                axis.set_title(title)
+                if len(curves) <= 8:
+                    axis.legend(fontsize=8, loc="lower right", frameon=False)
+                figure.tight_layout()
+                _save_figure(figure, directory, f"{slug}-profile")
+                plt.close(figure)
+            plotted = [
+                row
+                for row in ranked
+                if row.get("par2_mean") is not None and row.get("success_rate") is not None
+            ]
+            if len(plotted) >= 1:
+                figure, axis = plt.subplots(figsize=(7.2, 4.2))
+                rates = [float(row["success_rate"]) for row in plotted]
+                costs = [float(row["par2_mean"]) for row in plotted]
+                axis.scatter(rates, costs, s=28, color="#0f6e6e", linewidths=0)
+                _style_axes(axis)
+                axis.xaxis.set_major_formatter(plain)
+                axis.yaxis.set_major_formatter(ScalarFormatter(useOffset=False))
+                axis.set_xlabel("Success rate")
+                axis.set_ylabel("PAR-2 cost")
+                axis.set_title(title)
+                figure.tight_layout()
+                _save_figure(figure, directory, f"{slug}-cost")
+                plt.close(figure)
 
 
 def plot_figure(prefix: str, name: str, label: str) -> str:
@@ -488,24 +737,26 @@ def plot_figure(prefix: str, name: str, label: str) -> str:
 
 
 def metric_html(problem: dict, primary: str | None) -> str:
-    """Metric names and the scoring sentences stored on the problem."""
-    lines = ["<h3>Metrics</h3>"]
+    """Metric names and a plain statement of the two scoring rules."""
+    lines = ["<h3>Metrics</h3>", f"<p>{_cell(PAR2_SENTENCE)}</p>"]
     if primary:
-        lines.append(f"<p>The main metric is {_cell(primary.replace('_', ' '))}.</p>")
+        lines.append(f"<p>The main metric is {_cell(metric_label(primary))}.</p>")
     scoring = problem.get("scoring") or {}
-    half = scoring.get("half_even") or {}
-    if half.get("rule"):
-        lines.append(f"<p>{_cell(half['rule'])}</p>")
+    if (scoring.get("half_even") or {}).get("rule"):
+        lines.append(f"<p>{_cell(ARCHIVE_SENTENCE)}</p>")
     version2 = scoring.get("v2") or {}
-    if version2.get("cost"):
-        lines.append(f"<p>{_cell(version2['cost'])}</p>")
     if version2.get("success"):
-        lines.append(f"<p>{_cell(version2['success'])}</p>")
+        success = str(version2["success"]).strip()
+        if success and success[-1] not in ".!?":
+            success += "."
+        lines.append(f"<p>A run counts as a success when {_cell(success)}</p>")
+    elif version2.get("cost"):
+        lines.append(f"<p>The cost is {_cell(version2['cost'])}.</p>")
     required = list((problem.get("metrics") or {}).get("required") or [])
     if required:
         lines.append("<ul>")
         for key in required:
-            lines.append(f"<li>{_cell(str(key).replace('_', ' '))}</li>")
+            lines.append(f"<li>{_cell(metric_label(str(key)))}</li>")
         lines.append("</ul>")
     lines.append("<p>Select a column heading to sort the table.</p>")
     return "\n".join(lines)

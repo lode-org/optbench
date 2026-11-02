@@ -5,7 +5,6 @@
 .. raw:: html
 
    <section class="bench" id="pt-island" data-problem="saddle-search/pt-island">
-   <h2>Pt heptamer island</h2>
    <dl class="bench-rule">
    <dt>System</dt><dd>Morse</dd>
    <dt>Atoms</dt><dd>343</dd>
@@ -13,32 +12,30 @@
    <dt>Stop</dt><dd>L2 norm of the force at or below 0.001 eV/Angstrom</dd>
    <dt>Goal</dt><dd>27 connected saddles below 1.5 eV</dd>
    <dt>Potential</dt><dd>morse</dd>
-   <dt>v2</dt><dd>par2-bootstrap</dd>
-   <dt>v2 cost</dt><dd>one displacement search: the climb plus the two endpoint minimizations</dd>
    </dl>
    <p class="bench-aside">A 2-search SoftSaddle batch stays off this rank. The April 2019 adaptive_HSphere-lbfgs-davidson-sm50 entry records 423491.1 force calls.</p>
    <h3>Metrics</h3>
-   <p>The main metric is force calls.</p>
-   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
-   <p>one displacement search: the climb plus the two endpoint minimizations</p>
-   <p>index 1 at eigenvalue tolerance 1e-6, force norm at the stop, barrier below 1.5 eV, and exactly one endpoint within Cartesian RMSD 0.5 of the minimized minimum. The substrate pins the frame, so the RMSD is Cartesian.</p>
+   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
+   <p>The main metric is Force calls.</p>
+   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
+   <p>A run counts as a success when index 1 at eigenvalue tolerance 1e-6, force norm at the stop, barrier below 1.5 eV, and exactly one endpoint within Cartesian RMSD 0.5 of the minimized minimum. The substrate pins the frame, so the RMSD is Cartesian.</p>
    <ul>
-   <li>force calls</li>
-   <li>force calls mean error</li>
-   <li>fraction connected</li>
-   <li>total searches</li>
-   <li>unique saddles</li>
+   <li>Force calls</li>
+   <li>Mean error of force calls</li>
+   <li>Fraction connected</li>
+   <li>Searches</li>
+   <li>Unique saddles</li>
    </ul>
    <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
+   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
    <p class="bench-gaps">Eon rows are not yet on the harness counter. A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/saddle-search-pt-island-cost.svg"><picture><source srcset="../../../_static/board/saddle-search-pt-island-cost.webp" type="image/webp"><img src="../../../_static/board/saddle-search-pt-island-cost.png" alt="Cost versus success for saddle-search/pt-island" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../../_static/board/saddle-search-pt-island-cost.svg"><picture><source srcset="../../../_static/board/saddle-search-pt-island-cost.webp" type="image/webp"><img src="../../../_static/board/saddle-search-pt-island-cost.png" alt="Cost and success for Pt heptamer island" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
    <p class="bench-gaps">No performance profile. The ranked rows do not share one start set.</p>
    <h3>Minimum mode</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="min-mode" data-problem="saddle-search/pt-island">
-   <caption>Minimum mode. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
+   <caption>Minimum mode. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Lanczos</td><td data-field="rank_cost">10124.2</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">5000</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">rgsaddle (0.2.2) · Dimer FIRE</td><td data-field="rank_cost">10128</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">20000</td></tr>
    <tr><td data-field="family_rank">3</td><td data-field="label">rgsaddle (0.2.2) · Dimer L-BFGS</td><td data-field="rank_cost">10128</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">20000</td></tr>
@@ -59,8 +56,8 @@
    <h3>Single-ended saddle</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="single-ended" data-problem="saddle-search/pt-island">
-   <caption>Single-ended saddle. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
+   <caption>Single-ended saddle. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">Sella (2.6.0) · Sella</td><td data-field="rank_cost">5201.62</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">16</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Davidson</td><td data-field="rank_cost">10128</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">5000</td></tr>
    <tr><td data-field="family_rank">3</td><td data-field="label">SoftSaddle · adaptive_HSphere-lbfgs-davidson-sm50</td><td data-field="rank_cost">423491</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">0</td></tr>
@@ -69,8 +66,8 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="saddle-search/pt-island">
-   <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">Sella (2.6.0) · Sella</td><td data-field="family">Single-ended saddle</td><td data-field="family_rank">1</td><td data-field="par2_mean">5201.62</td><td data-field="published"></td><td data-field="median_calls">225</td><td data-field="mean_calls">247.812</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 4</td><td data-field="n">16</td></tr>
    <tr><td data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Lanczos</td><td data-field="family">Minimum mode</td><td data-field="family_rank">1</td><td data-field="par2_mean">10124.2</td><td data-field="published"></td><td data-field="median_calls">389</td><td data-field="mean_calls">431.839</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 4884, cap 108, wrong_stationary 6</td><td data-field="n">5000</td></tr>
    <tr><td data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Davidson</td><td data-field="family">Single-ended saddle</td><td data-field="family_rank">2</td><td data-field="par2_mean">10128</td><td data-field="published"></td><td data-field="median_calls">1060</td><td data-field="mean_calls">1059.76</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 5000, wrong_stationary 0</td><td data-field="n">5000</td></tr>
@@ -92,7 +89,7 @@
    <tr><td data-field="label">eOn (r2213) · eon-dimer-cg-20-rotations</td><td data-field="family">Minimum mode</td><td data-field="family_rank">15</td><td data-field="par2_mean"></td><td data-field="published">7.94707e+06</td><td data-field="median_calls"></td><td data-field="mean_calls">7.94707e+06</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">0</td></tr>
    <tr><td data-field="label">eOn (3.6.0) · Lanczos</td><td data-field="family">Minimum mode</td><td data-field="family_rank">16</td><td data-field="par2_mean">2e+08</td><td data-field="published"></td><td data-field="median_calls">3.98507e+06</td><td data-field="mean_calls">3.98507e+06</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 2, wrong_stationary 0</td><td data-field="n">2</td></tr>
    </tbody></table></div>
-   <h3>Not a harness score</h3><ul>
+   <h3>Off the ranked table</h3><ul>
    <li>eOn (3.5.0) n=10, not yet on the harness counter.</li>
    <li>eOn (3.5.0) n=10, not yet on the harness counter.</li>
    </ul>

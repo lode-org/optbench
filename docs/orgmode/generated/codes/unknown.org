@@ -5,14 +5,13 @@
 .. raw:: html
 
    <section class="bench" id="code-unknown">
-   <h2>unknown</h2>
    <p>These archived files have no code field, and the entry name does not match a registry id. They stay on this page.</p>
    <p>No registry pin.</p>
    <h3>Results</h3>
-   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <p>Ranked rows for this code, across every suite. One row is one version and one method. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published.</p>
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
-   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="minimization/lj38" data-label="Newtons Method maxstep=0.25">
    <td>Minimization</td>
    <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
