@@ -6,8 +6,10 @@
 
    <section class="bench" id="code-tsase">
    <h2>TSASE</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
+   <p>TSASE is used for saddle search. setup.py version string 1.0.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td>saddle search</td>
@@ -16,11 +18,14 @@
    <td><a href="https://github.com/henkelmangroup/tsase">https://github.com/henkelmangroup/tsase</a></td>
    </tr>
    </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="TSASE (1.0) · CI-NEB">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">TSASE (1.0) · CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">15</td>
@@ -34,7 +39,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="TSASE (1.0) · NEB">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">TSASE (1.0) · NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">20</td>
@@ -48,7 +54,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="TSASE (1.0) · CI-NEB">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">TSASE (1.0) · CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">19</td>
@@ -62,7 +69,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="TSASE (1.0) · NEB">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">TSASE (1.0) · NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">22</td>
@@ -76,7 +84,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="TSASE (1.0) · CI-NEB">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">TSASE (1.0) · CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">17</td>
@@ -90,7 +99,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="TSASE (1.0) · NEB">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">TSASE (1.0) · NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">20</td>
@@ -104,7 +114,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="hTST/Pt" data-label="TSASE · quenchDimer+neb-QM">
-   <td>Pt</td>
+   <td>Harmonic transition state theory</td>
+   <td><a href="../suites/hTST/Pt.html">Pt</a></td>
    <td data-field="label">TSASE · quenchDimer+neb-QM</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">1</td>
@@ -118,7 +129,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="hTST/Pt" data-label="TSASE · Dimer-QM rotation: max=50, tol=5">
-   <td>Pt</td>
+   <td>Harmonic transition state theory</td>
+   <td><a href="../suites/hTST/Pt.html">Pt</a></td>
    <td data-field="label">TSASE · Dimer-QM rotation: max=50, tol=5</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">9</td>
@@ -132,7 +144,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="hTST/Pt" data-label="TSASE · alphaDimer-QM">
-   <td>Pt</td>
+   <td>Harmonic transition state theory</td>
+   <td><a href="../suites/hTST/Pt.html">Pt</a></td>
    <td data-field="label">TSASE · alphaDimer-QM</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">10</td>
@@ -146,7 +159,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-label="TSASE (410) · tsase-lanczos">
-   <td>lj38</td>
+   <td>Lowest eigenvector</td>
+   <td><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-field="label">TSASE (410) · tsase-lanczos</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">2</td>
@@ -160,7 +174,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-label="TSASE (408) · tsase-dimer-bfgs">
-   <td>lj38</td>
+   <td>Lowest eigenvector</td>
+   <td><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-field="label">TSASE (408) · tsase-dimer-bfgs</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">8</td>
@@ -174,7 +189,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-label="TSASE (408) · tsase-dimer-cg">
-   <td>lj38</td>
+   <td>Lowest eigenvector</td>
+   <td><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-field="label">TSASE (408) · tsase-dimer-cg</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">13</td>
@@ -188,7 +204,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-label="TSASE (1.0) · SSDimer">
-   <td>lj38</td>
+   <td>Lowest eigenvector</td>
+   <td><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-field="label">TSASE (1.0) · SSDimer</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">19</td>
@@ -201,8 +218,24 @@
    <td data-field="failures">crash 0, divergence 22, cap 0, wrong_stationary 0</td>
    <td data-field="n">200</td>
    </tr>
+   <tr data-problem="minimization/lj38" data-label="tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27;">
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
+   <td data-field="label">tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27;</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">4</td>
+   <td data-field="par2_mean"></td>
+   <td data-field="published">166</td>
+   <td data-field="median_calls"></td>
+   <td data-field="mean_calls">166</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">1000</td>
+   </tr>
    <tr data-problem="minimization/lj38" data-label="TSASE (1.0) · SDLBFGS">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">TSASE (1.0) · SDLBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">15</td>
@@ -216,7 +249,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="TSASE (1.0) · MDMin">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">TSASE (1.0) · MDMin</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">71</td>
@@ -229,8 +263,24 @@
    <td data-field="failures">crash 0, divergence 0, cap 1000, wrong_stationary 0</td>
    <td data-field="n">1000</td>
    </tr>
+   <tr data-problem="minimization/morse-bulk" data-label="tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27;">
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
+   <td data-field="label">tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27;</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">4</td>
+   <td data-field="par2_mean"></td>
+   <td data-field="published">19</td>
+   <td data-field="median_calls"></td>
+   <td data-field="mean_calls">19</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">100</td>
+   </tr>
    <tr data-problem="minimization/morse-bulk" data-label="TSASE (1.0) · SDLBFGS">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">TSASE (1.0) · SDLBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">61</td>
@@ -244,7 +294,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="TSASE (1.0) · CI-NEB">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">TSASE (1.0) · CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">11</td>
@@ -258,7 +309,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="TSASE (1.0) · NEB">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">TSASE (1.0) · NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">13</td>
@@ -272,7 +324,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="TSASE (1.0) · SSDimer">
-   <td>LJ38</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td data-field="label">TSASE (1.0) · SSDimer</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">14</td>
@@ -286,7 +339,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="tsopt/pt-island" data-label="TSASE (1.0) · SSDimer">
-   <td>pt-island</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">TSASE (1.0) · SSDimer</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">12</td>

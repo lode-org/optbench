@@ -6,8 +6,10 @@
 
    <section class="bench" id="code-geodesic">
    <h2>geodesic</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
+   <p>geodesic is used for band initialiser. geodesic-interpolate 1.0.0 at 476aa041.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td>band initialiser</td>
@@ -16,11 +18,14 @@
    <td><a href="https://github.com/virtualzx-nad/geodesic-interpolate">https://github.com/virtualzx-nad/geodesic-interpolate</a></td>
    </tr>
    </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="geodesic (1.0.0) · CI-NEB-LBFGS geodesic">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">geodesic (1.0.0) · CI-NEB-LBFGS geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">5</td>
@@ -34,7 +39,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="geodesic (1.0.0) · CI-NEB geodesic">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">geodesic (1.0.0) · CI-NEB geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">13</td>
@@ -48,7 +54,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="geodesic (1.0.0) · NEB-FIRE geodesic">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">geodesic (1.0.0) · NEB-FIRE geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">17</td>
@@ -62,7 +69,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="geodesic (1.0.0) · CI-NEB-LBFGS geodesic">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">geodesic (1.0.0) · CI-NEB-LBFGS geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">14</td>
@@ -76,7 +84,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="geodesic (1.0.0) · CI-NEB geodesic">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">geodesic (1.0.0) · CI-NEB geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">15</td>
@@ -90,7 +99,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="geodesic (1.0.0) · NEB-FIRE geodesic">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">geodesic (1.0.0) · NEB-FIRE geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">23</td>
@@ -104,7 +114,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="geodesic (1.0.0) · NEB-FIRE geodesic">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">geodesic (1.0.0) · NEB-FIRE geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">7</td>
@@ -118,7 +129,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="geodesic (1.0.0) · CI-NEB-LBFGS geodesic">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">geodesic (1.0.0) · CI-NEB-LBFGS geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">14</td>
@@ -132,7 +144,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="geodesic (1.0.0) · CI-NEB geodesic">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">geodesic (1.0.0) · CI-NEB geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">16</td>
@@ -146,7 +159,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="geodesic (1.0.0) · CI-NEB-LBFGS geodesic">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">geodesic (1.0.0) · CI-NEB-LBFGS geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">1</td>
@@ -160,7 +174,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="geodesic (1.0.0) · NEB-FIRE geodesic">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">geodesic (1.0.0) · NEB-FIRE geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">2</td>
@@ -174,7 +189,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="geodesic (1.0.0) · CI-NEB geodesic">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">geodesic (1.0.0) · CI-NEB geodesic</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">9</td>

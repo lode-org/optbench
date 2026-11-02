@@ -6,8 +6,10 @@
 
    <section class="bench" id="code-rgsaddle">
    <h2>rgsaddle</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
+   <p>rgsaddle is used for saddle search. 0.2.2 at main c0db2b8d.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td>saddle search</td>
@@ -16,11 +18,14 @@
    <td><a href="https://github.com/OmniPotentRPC/rgsaddle">https://github.com/OmniPotentRPC/rgsaddle</a></td>
    </tr>
    </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="rgsaddle (0.2.2) · CI-NEB energy-weighted">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">rgsaddle (0.2.2) · CI-NEB energy-weighted</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">9</td>
@@ -34,7 +39,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="rgsaddle (0.2.2) · CI-NEB">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">rgsaddle (0.2.2) · CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">10</td>
@@ -48,7 +54,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="rgsaddle (0.2.2) · OCI-NEB">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">rgsaddle (0.2.2) · OCI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">11</td>
@@ -62,7 +69,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="rgsaddle (0.2.2) · IDPP CI-NEB">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">rgsaddle (0.2.2) · IDPP CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">12</td>
@@ -76,7 +84,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="rgsaddle (0.2.2) · S-IDPP CI-NEB">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">rgsaddle (0.2.2) · S-IDPP CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">14</td>
@@ -90,7 +99,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="rgsaddle (0.2.2) · NEB">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">rgsaddle (0.2.2) · NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">21</td>
@@ -104,7 +114,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="rgsaddle (0.2.2) · CI-NEB energy-weighted">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">rgsaddle (0.2.2) · CI-NEB energy-weighted</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">7</td>
@@ -118,7 +129,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="rgsaddle (0.2.2) · CI-NEB">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">rgsaddle (0.2.2) · CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">12</td>
@@ -132,7 +144,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="rgsaddle (0.2.2) · OCI-NEB">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">rgsaddle (0.2.2) · OCI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">13</td>
@@ -146,7 +159,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="rgsaddle (0.2.2) · IDPP CI-NEB">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">rgsaddle (0.2.2) · IDPP CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">16</td>
@@ -160,7 +174,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="rgsaddle (0.2.2) · S-IDPP CI-NEB">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">rgsaddle (0.2.2) · S-IDPP CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">17</td>
@@ -174,7 +189,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="rgsaddle (0.2.2) · NEB">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">rgsaddle (0.2.2) · NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">24</td>
@@ -188,7 +204,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="rgsaddle (0.2.2) · CI-NEB energy-weighted">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · CI-NEB energy-weighted</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">10</td>
@@ -202,7 +219,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="rgsaddle (0.2.2) · OCI-NEB">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · OCI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">11</td>
@@ -216,7 +234,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="rgsaddle (0.2.2) · IDPP CI-NEB">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · IDPP CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">12</td>
@@ -230,7 +249,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="rgsaddle (0.2.2) · CI-NEB">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">13</td>
@@ -244,7 +264,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="rgsaddle (0.2.2) · S-IDPP CI-NEB">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · S-IDPP CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">15</td>
@@ -258,7 +279,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="rgsaddle (0.2.2) · NEB">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">21</td>
@@ -272,7 +294,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-label="rgsaddle (0.2.2) · Lanczos">
-   <td>lj38</td>
+   <td>Lowest eigenvector</td>
+   <td><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Lanczos</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">3</td>
@@ -286,7 +309,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-label="rgsaddle (0.2.2) · Dimer">
-   <td>lj38</td>
+   <td>Lowest eigenvector</td>
+   <td><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">18</td>
@@ -300,7 +324,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="rgsaddle (0.2.2) · S-IDPP CI-NEB">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">rgsaddle (0.2.2) · S-IDPP CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">4</td>
@@ -314,7 +339,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="rgsaddle (0.2.2) · IDPP CI-NEB">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">rgsaddle (0.2.2) · IDPP CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">5</td>
@@ -328,7 +354,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="rgsaddle (0.2.2) · CI-NEB">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">rgsaddle (0.2.2) · CI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">6</td>
@@ -342,7 +369,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="rgsaddle (0.2.2) · CI-NEB energy-weighted">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">rgsaddle (0.2.2) · CI-NEB energy-weighted</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">7</td>
@@ -356,7 +384,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="rgsaddle (0.2.2) · OCI-NEB">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">rgsaddle (0.2.2) · OCI-NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">8</td>
@@ -370,7 +399,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="rgsaddle (0.2.2) · NEB">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">rgsaddle (0.2.2) · NEB</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">14</td>
@@ -384,7 +414,8 @@
    <td data-field="n">13</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (0.2.2) · Dimer FIRE">
-   <td>Pt heptamer island</td>
+   <td>Saddle search</td>
+   <td><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer FIRE</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">2</td>
@@ -398,7 +429,8 @@
    <td data-field="n">20000</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (0.2.2) · Dimer L-BFGS">
-   <td>Pt heptamer island</td>
+   <td>Saddle search</td>
+   <td><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer L-BFGS</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">3</td>
@@ -412,7 +444,8 @@
    <td data-field="n">20000</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (0.2.2) · Dimer rotation-skip L-BFGS">
-   <td>Pt heptamer island</td>
+   <td>Saddle search</td>
+   <td><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer rotation-skip L-BFGS</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">4</td>
@@ -426,7 +459,8 @@
    <td data-field="n">20000</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (0.2.2) · Lanczos L-BFGS">
-   <td>Pt heptamer island</td>
+   <td>Saddle search</td>
+   <td><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Lanczos L-BFGS</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">5</td>
@@ -440,7 +474,8 @@
    <td data-field="n">20000</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="rgsaddle (0.2.2) · Dimer rotation-skip L-BFGS">
-   <td>LJ38</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer rotation-skip L-BFGS</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">11</td>
@@ -454,7 +489,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="rgsaddle (0.2.2) · P-RFO">
-   <td>LJ38</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td data-field="label">rgsaddle (0.2.2) · P-RFO</td>
    <td data-field="family">Single-ended saddle</td>
    <td data-field="family_rank">6</td>
@@ -468,7 +504,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="rgsaddle (0.2.2) · Lanczos L-BFGS">
-   <td>LJ38</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Lanczos L-BFGS</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">12</td>
@@ -482,7 +519,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="rgsaddle (0.2.2) · Dimer FIRE">
-   <td>LJ38</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer FIRE</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">13</td>
@@ -496,7 +534,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="rgsaddle (0.2.2) · Dimer L-BFGS">
-   <td>LJ38</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer L-BFGS</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">15</td>
@@ -510,7 +549,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="tsopt/pt-island" data-label="rgsaddle (0.2.2) · Dimer rotation-skip L-BFGS">
-   <td>pt-island</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer rotation-skip L-BFGS</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">10</td>
@@ -524,7 +564,8 @@
    <td data-field="n">49</td>
    </tr>
    <tr data-problem="tsopt/pt-island" data-label="rgsaddle (0.2.2) · Dimer FIRE">
-   <td>pt-island</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer FIRE</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">13</td>
@@ -538,7 +579,8 @@
    <td data-field="n">49</td>
    </tr>
    <tr data-problem="tsopt/pt-island" data-label="rgsaddle (0.2.2) · Lanczos L-BFGS">
-   <td>pt-island</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Lanczos L-BFGS</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">14</td>
@@ -552,7 +594,8 @@
    <td data-field="n">49</td>
    </tr>
    <tr data-problem="tsopt/pt-island" data-label="rgsaddle (0.2.2) · Dimer L-BFGS">
-   <td>pt-island</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">rgsaddle (0.2.2) · Dimer L-BFGS</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">15</td>

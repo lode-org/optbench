@@ -6,15 +6,16 @@
 
    <section class="bench" id="code-unknown">
    <h2>unknown</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
-   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
-   </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <p>These archived files have no code field, and the entry name does not match a registry id. They stay on this page.</p>
+   <p>No registry pin.</p>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="minimization/lj38" data-label="Newtons Method maxstep=0.25">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">Newtons Method maxstep=0.25</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">1</td>
@@ -26,118 +27,6 @@
    <td data-field="fd_calls">0</td>
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">1000</td>
-   </tr>
-   <tr data-problem="minimization/lj38" data-label="tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27;">
-   <td>Lennard-Jones 38 clusters</td>
-   <td data-field="label">tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27;</td>
-   <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">4</td>
-   <td data-field="par2_mean"></td>
-   <td data-field="published">166</td>
-   <td data-field="median_calls"></td>
-   <td data-field="mean_calls">166</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-field="n">1000</td>
-   </tr>
-   <tr data-problem="minimization/lj38" data-label="pele-lbfgs-M100-maxstep0.2">
-   <td>Lennard-Jones 38 clusters</td>
-   <td data-field="label">pele-lbfgs-M100-maxstep0.2</td>
-   <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">8</td>
-   <td data-field="par2_mean"></td>
-   <td data-field="published">179</td>
-   <td data-field="median_calls"></td>
-   <td data-field="mean_calls">179</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-field="n">1000</td>
-   </tr>
-   <tr data-problem="minimization/lj38" data-label="ase-BFGS maxstep=0.1">
-   <td>Lennard-Jones 38 clusters</td>
-   <td data-field="label">ase-BFGS maxstep=0.1</td>
-   <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">23</td>
-   <td data-field="par2_mean"></td>
-   <td data-field="published">463</td>
-   <td data-field="median_calls"></td>
-   <td data-field="mean_calls">463</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-field="n">1000</td>
-   </tr>
-   <tr data-problem="minimization/lj38" data-label="pele-fire">
-   <td>Lennard-Jones 38 clusters</td>
-   <td data-field="label">pele-fire</td>
-   <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">37</td>
-   <td data-field="par2_mean"></td>
-   <td data-field="published">709</td>
-   <td data-field="median_calls"></td>
-   <td data-field="mean_calls">709</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-field="n">1000</td>
-   </tr>
-   <tr data-problem="minimization/lj38" data-label="ase-Precon-LBFGS maxstep=0.1">
-   <td>Lennard-Jones 38 clusters</td>
-   <td data-field="label">ase-Precon-LBFGS maxstep=0.1</td>
-   <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">54</td>
-   <td data-field="par2_mean"></td>
-   <td data-field="published">2686</td>
-   <td data-field="median_calls"></td>
-   <td data-field="mean_calls">2686</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-field="n">1000</td>
-   </tr>
-   <tr data-problem="minimization/morse-bulk" data-label="tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27;">
-   <td>Morse bulk</td>
-   <td data-field="label">tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27;</td>
-   <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">4</td>
-   <td data-field="par2_mean"></td>
-   <td data-field="published">19</td>
-   <td data-field="median_calls"></td>
-   <td data-field="mean_calls">19</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-field="n">100</td>
-   </tr>
-   <tr data-problem="minimization/morse-bulk" data-label="ase-PreconLBFGS maxstep=0.1">
-   <td>Morse bulk</td>
-   <td data-field="label">ase-PreconLBFGS maxstep=0.1</td>
-   <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">11</td>
-   <td data-field="par2_mean"></td>
-   <td data-field="published">34</td>
-   <td data-field="median_calls"></td>
-   <td data-field="mean_calls">34</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-field="n">100</td>
-   </tr>
-   <tr data-problem="minimization/morse-bulk" data-label="pele-lbfgs">
-   <td>Morse bulk</td>
-   <td data-field="label">pele-lbfgs</td>
-   <td data-field="family">Minimizers</td>
-   <td data-field="family_rank">20</td>
-   <td data-field="par2_mean"></td>
-   <td data-field="published">51</td>
-   <td data-field="median_calls"></td>
-   <td data-field="mean_calls">51</td>
-   <td data-field="hessian_calls">0</td>
-   <td data-field="fd_calls">0</td>
-   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-field="n">100</td>
    </tr>
    </tbody></table></div>
    </section>

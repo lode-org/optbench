@@ -1,24 +1,39 @@
-#+TITLE: pt-island
+#+TITLE: Pt heptamer island
 #+OPTIONS: toc:nil num:nil author:nil
 
 #+begin_export rst
 .. raw:: html
 
    <section class="bench" id="pt-island" data-problem="double-ended-saddle-search/pt-island">
-   <h2>pt-island</h2>
+   <h2>Pt heptamer island</h2>
    <dl class="bench-rule">
+   <dt>System</dt><dd>Morse Pt</dd>
+   <dt>Atoms</dt><dd>343</dd>
+   <dt>Task</dt><dd>Double-ended saddle search</dd>
+   <dt>Runs</dt><dd>59</dd>
    <dt>Stop</dt><dd>L2 norm of the force at or below 0.001 eV/Ang</dd>
    <dt>Cap</dt><dd>3000 force calls</dd>
    <dt>v2</dt><dd>par2-bootstrap</dd>
    <dt>Contract</dt><dd>The columns are the keys shared by every archived file.</dd>
    </dl>
+   <h3>Metrics</h3>
+   <p>The main metric is force calls.</p>
+   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <ul>
+   <li>force calls</li>
+   <li>force calls max</li>
+   <li>force calls median</li>
+   <li>force calls min</li>
+   <li>nfailed</li>
+   </ul>
+   <p>Select a column heading to sort the table.</p>
    <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
    <p class="bench-gaps">eOn band rows are not yet on the harness counter. A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <figure class="bench-plot"><a href="../../../_static/board/double-ended-saddle-search-pt-island-profile.svg"><picture><source srcset="../../../_static/board/double-ended-saddle-search-pt-island-profile.webp" type="image/webp"><img src="../../../_static/board/double-ended-saddle-search-pt-island-profile.png" alt="Dolan-More profile for double-ended-saddle-search/pt-island" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
    <figure class="bench-plot"><a href="../../../_static/board/double-ended-saddle-search-pt-island-cost.svg"><picture><source srcset="../../../_static/board/double-ended-saddle-search-pt-island-cost.webp" type="image/webp"><img src="../../../_static/board/double-ended-saddle-search-pt-island-cost.png" alt="Cost versus success for double-ended-saddle-search/pt-island" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <h3>Band / NEB</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="band" data-problem="double-ended-saddle-search/pt-island">
+   <table class="bench-sortable" data-board-table="family" data-family="band" data-problem="double-ended-saddle-search/pt-island">
    <caption>Band / NEB. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">eOn (r2156) · eon-ci-neb-single</td><td data-field="rank_cost">110</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">59</td></tr>
@@ -45,7 +60,7 @@
    </tbody></table></div>
    <h3>Minimum mode</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="min-mode" data-problem="double-ended-saddle-search/pt-island">
+   <table class="bench-sortable" data-board-table="family" data-family="min-mode" data-problem="double-ended-saddle-search/pt-island">
    <caption>Minimum mode. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">Eon svn (r2549) · Lanczos improved L-BFGS</td><td data-field="rank_cost">180.644</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">59</td></tr>
@@ -57,7 +72,7 @@
    </tbody></table></div>
    <h3>Connect / double-ended</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="connect" data-problem="double-ended-saddle-search/pt-island">
+   <table class="bench-sortable" data-board-table="family" data-family="connect" data-problem="double-ended-saddle-search/pt-island">
    <caption>Connect / double-ended. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">OPTIM · DNEB + hybrid eigenvector following</td><td data-field="rank_cost">103</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">59</td></tr>
@@ -69,7 +84,7 @@
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
-   <table data-board-table="ranked" data-problem="double-ended-saddle-search/pt-island">
+   <table class="bench-sortable" data-board-table="ranked" data-problem="double-ended-saddle-search/pt-island">
    <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier. Per-image mean divides the harness total by the problem&#x27;s moving images.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">OPTIM · DNEB + hybrid eigenvector following</td><td data-field="family">Connect / double-ended</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">103</td><td data-field="median_calls">98</td><td data-field="mean_calls">103</td><td data-field="mean_per_image"></td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">59</td></tr>

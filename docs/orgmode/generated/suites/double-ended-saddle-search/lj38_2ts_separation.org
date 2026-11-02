@@ -1,24 +1,40 @@
-#+TITLE: lj38_2ts_separation
+#+TITLE: Lennard-Jones 38 transition-state separation
 #+OPTIONS: toc:nil num:nil author:nil
 
 #+begin_export rst
 .. raw:: html
 
    <section class="bench" id="lj38_2ts_separation" data-problem="double-ended-saddle-search/lj38_2ts_separation">
-   <h2>lj38_2ts_separation</h2>
+   <h2>Lennard-Jones 38 transition-state separation</h2>
    <dl class="bench-rule">
+   <dt>System</dt><dd>Lennard-Jones</dd>
+   <dt>Atoms</dt><dd>38</dd>
+   <dt>Task</dt><dd>Double-ended saddle search</dd>
+   <dt>Runs</dt><dd>51</dd>
    <dt>Stop</dt><dd>L2 norm of the force at or below 0.001</dd>
    <dt>Cap</dt><dd>250000 force calls</dd>
    <dt>v2</dt><dd>par2-bootstrap</dd>
    <dt>Contract</dt><dd>The columns are the keys shared by every archived file.</dd>
    </dl>
+   <h3>Metrics</h3>
+   <p>The main metric is force calls.</p>
+   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <ul>
+   <li>force calls</li>
+   <li>force calls max</li>
+   <li>force calls median</li>
+   <li>force calls min</li>
+   <li>nfailed</li>
+   <li>transition states</li>
+   </ul>
+   <p>Select a column heading to sort the table.</p>
    <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <figure class="bench-plot"><a href="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-profile.svg"><picture><source srcset="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-profile.webp" type="image/webp"><img src="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-profile.png" alt="Dolan-More profile for double-ended-saddle-search/lj38_2ts_separation" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
    <figure class="bench-plot"><a href="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-cost.svg"><picture><source srcset="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-cost.webp" type="image/webp"><img src="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-cost.png" alt="Cost versus success for double-ended-saddle-search/lj38_2ts_separation" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <h3>Band / NEB</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="band" data-problem="double-ended-saddle-search/lj38_2ts_separation">
+   <table class="bench-sortable" data-board-table="family" data-family="band" data-problem="double-ended-saddle-search/lj38_2ts_separation">
    <caption>Band / NEB. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">eOn (develop 500350d9) · energy-weighted CI-NEB</td><td data-field="rank_cost">15260.3</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">51</td></tr>
@@ -48,7 +64,7 @@
    </tbody></table></div>
    <h3>Minimum mode</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="min-mode" data-problem="double-ended-saddle-search/lj38_2ts_separation">
+   <table class="bench-sortable" data-board-table="family" data-family="min-mode" data-problem="double-ended-saddle-search/lj38_2ts_separation">
    <caption>Minimum mode. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">Eon svn (r2549) · Lanczos improved L-BFGS</td><td data-field="rank_cost">502.784</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">51</td></tr>
@@ -63,7 +79,7 @@
    </tbody></table></div>
    <h3>Connect / double-ended</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="connect" data-problem="double-ended-saddle-search/lj38_2ts_separation">
+   <table class="bench-sortable" data-board-table="family" data-family="connect" data-problem="double-ended-saddle-search/lj38_2ts_separation">
    <caption>Connect / double-ended. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">OPTIM · DNEB + hybrid eigenvector following + Djikstra shortest path</td><td data-field="rank_cost">2885</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">51</td></tr>
@@ -74,7 +90,7 @@
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
-   <table data-board-table="ranked" data-problem="double-ended-saddle-search/lj38_2ts_separation">
+   <table class="bench-sortable" data-board-table="ranked" data-problem="double-ended-saddle-search/lj38_2ts_separation">
    <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier. Per-image mean divides the harness total by the problem&#x27;s moving images.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">Eon svn (r2549) · Lanczos improved L-BFGS</td><td data-field="family">Minimum mode</td><td data-field="family_rank">1</td><td data-field="par2_mean">502.784</td><td data-field="published"></td><td data-field="median_calls">418</td><td data-field="mean_calls">502.784</td><td data-field="mean_per_image">100.557</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">51</td></tr>

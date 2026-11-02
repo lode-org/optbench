@@ -1707,7 +1707,7 @@ def _family_table(problem: dict, family_id: str, rows: list[dict]) -> str:
     lines = [
         '<div class="bench-scroll">',
         (
-            f'<table data-board-table="family" data-family="{_cell(family_id)}" '
+            f'<table class="bench-sortable" data-board-table="family" data-family="{_cell(family_id)}" '
             f'data-problem="{_cell(problem["id"])}">'
         ),
         f"<caption>{_cell(family_title(family_id))}. {_cell(_caption(False))}</caption>",
@@ -1765,7 +1765,9 @@ def _table(
         lines.append(_family_table(problem, family_id, grouped[family_id]))
     lines.append("<h3>Overall</h3>")
     lines.append('<div class="bench-scroll">')
-    lines.append(f'<table data-board-table="ranked" data-problem="{_cell(problem["id"])}">')
+    lines.append(
+        f'<table class="bench-sortable" data-board-table="ranked" data-problem="{_cell(problem["id"])}">'
+    )
     lines.append(f"<caption>{_cell(_caption(per_image))}</caption>")
     lines.append("<thead><tr>" + "".join(f"<th>{_cell(header)}</th>" for header in headers) + "</tr></thead><tbody>")
     for row in ranked:

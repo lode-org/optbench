@@ -7,18 +7,31 @@
    <section class="bench" id="Pt-heptamer" data-problem="neb/Pt-heptamer">
    <h2>Pt-heptamer</h2>
    <dl class="bench-rule">
+   <dt>System</dt><dd>Morse Pt</dd>
+   <dt>Atoms</dt><dd>343</dd>
+   <dt>Task</dt><dd>Nudged elastic band</dd>
+   <dt>Runs</dt><dd>13</dd>
    <dt>Stop</dt><dd>L2 norm of the force at or below 0.01 eV/Ang</dd>
    <dt>Cap</dt><dd>10000 force calls</dd>
    <dt>v2</dt><dd>par2-bootstrap</dd>
    <dt>Contract</dt><dd>The columns are the keys shared by every archived file.</dd>
    </dl>
+   <h3>Metrics</h3>
+   <p>The main metric is force calls.</p>
+   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <ul>
+   <li>force calls</li>
+   <li>force calls max</li>
+   <li>force calls min</li>
+   </ul>
+   <p>Select a column heading to sort the table.</p>
    <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
    <p class="bench-gaps">eOn band rows are not yet on the harness counter. A run short of the full set, or a run that is not the stock method, stays off the ranked table. Files with no per-start harness record stay off the ranked table.</p>
    <figure class="bench-plot"><a href="../../../_static/board/neb-Pt-heptamer-profile.svg"><picture><source srcset="../../../_static/board/neb-Pt-heptamer-profile.webp" type="image/webp"><img src="../../../_static/board/neb-Pt-heptamer-profile.png" alt="Dolan-More profile for neb/Pt-heptamer" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
    <figure class="bench-plot"><a href="../../../_static/board/neb-Pt-heptamer-cost.svg"><picture><source srcset="../../../_static/board/neb-Pt-heptamer-cost.webp" type="image/webp"><img src="../../../_static/board/neb-Pt-heptamer-cost.png" alt="Cost versus success for neb/Pt-heptamer" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <h3>Band / NEB</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="band" data-problem="neb/Pt-heptamer">
+   <table class="bench-sortable" data-board-table="family" data-family="band" data-problem="neb/Pt-heptamer">
    <caption>Band / NEB. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">geodesic (1.0.0) · CI-NEB-LBFGS geodesic</td><td data-field="rank_cost">318.923</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">13</td></tr>
@@ -38,7 +51,7 @@
    </tbody></table></div>
    <h3>Connect / double-ended</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="connect" data-problem="neb/Pt-heptamer">
+   <table class="bench-sortable" data-board-table="family" data-family="connect" data-problem="neb/Pt-heptamer">
    <caption>Connect / double-ended. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">eOn (r2090) · eon-lbfgs</td><td data-field="rank_cost">42</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">13</td></tr>
@@ -60,7 +73,7 @@
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
-   <table data-board-table="ranked" data-problem="neb/Pt-heptamer">
+   <table class="bench-sortable" data-board-table="ranked" data-problem="neb/Pt-heptamer">
    <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier. Per-image mean divides the harness total by the problem&#x27;s moving images.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">eOn (r2090) · eon-lbfgs</td><td data-field="family">Connect / double-ended</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">42</td><td data-field="median_calls"></td><td data-field="mean_calls">42</td><td data-field="mean_per_image"></td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">13</td></tr>

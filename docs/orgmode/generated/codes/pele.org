@@ -6,8 +6,10 @@
 
    <section class="bench" id="code-pele">
    <h2>pele</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
+   <p>pele is used for minimization. 0.1.2 at main b7081b93, built from source.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td>minimization</td>
@@ -16,11 +18,14 @@
    <td><a href="https://github.com/pele-python/pele">https://github.com/pele-python/pele</a></td>
    </tr>
    </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="pele · hybrid eigenvector following">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">pele · hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">2</td>
@@ -34,7 +39,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="pele · DNEB + hybrid eigenvector following">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">pele · DNEB + hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">3</td>
@@ -48,7 +54,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="pele · hybrid eigenvector following">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">pele · hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">3</td>
@@ -62,7 +69,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="globalopt/lj38" data-label="pele · hybrid eigenvector following">
-   <td>Lennard-Jones 38 global minimum</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj38.html">Lennard-Jones 38 global minimum</a></td>
    <td data-field="label">pele · hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">1</td>
@@ -76,7 +84,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-label="pele · hybrid eigenvector following">
-   <td>lj38</td>
+   <td>Lowest eigenvector</td>
+   <td><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-field="label">pele · hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">2</td>
@@ -89,8 +98,24 @@
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">200</td>
    </tr>
+   <tr data-problem="minimization/lj38" data-label="pele-lbfgs-M100-maxstep0.2">
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
+   <td data-field="label">pele-lbfgs-M100-maxstep0.2</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">8</td>
+   <td data-field="par2_mean"></td>
+   <td data-field="published">179</td>
+   <td data-field="median_calls"></td>
+   <td data-field="mean_calls">179</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">1000</td>
+   </tr>
    <tr data-problem="minimization/lj38" data-label="pele · lbfgs_scipy">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">pele · lbfgs_scipy</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">13</td>
@@ -104,7 +129,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="pele (0.1.2) · MYLBFGS">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">pele (0.1.2) · MYLBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">16</td>
@@ -118,7 +144,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="pele (0.1.2) · LBFGS">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">pele (0.1.2) · LBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">18</td>
@@ -131,8 +158,24 @@
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 2</td>
    <td data-field="n">1000</td>
    </tr>
+   <tr data-problem="minimization/lj38" data-label="pele-fire">
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
+   <td data-field="label">pele-fire</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">37</td>
+   <td data-field="par2_mean"></td>
+   <td data-field="published">709</td>
+   <td data-field="median_calls"></td>
+   <td data-field="mean_calls">709</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">1000</td>
+   </tr>
    <tr data-problem="minimization/lj38" data-label="pele (0.1.2) · FIRE">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">pele (0.1.2) · FIRE</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">51</td>
@@ -146,7 +189,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="pele (0.1.2) · steepest descent">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">pele (0.1.2) · steepest descent</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">72</td>
@@ -160,7 +204,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-label="pele (0.1.2) · MYLBFGS">
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></td>
    <td data-field="label">pele (0.1.2) · MYLBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">5</td>
@@ -174,7 +219,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-label="pele (0.1.2) · LBFGS">
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></td>
    <td data-field="label">pele (0.1.2) · LBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">6</td>
@@ -188,7 +234,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-label="pele (0.1.2) · FIRE">
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></td>
    <td data-field="label">pele (0.1.2) · FIRE</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">18</td>
@@ -202,7 +249,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-label="pele (0.1.2) · steepest descent">
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></td>
    <td data-field="label">pele (0.1.2) · steepest descent</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">25</td>
@@ -215,8 +263,24 @@
    <td data-field="failures">crash 0, divergence 5, cap 980, wrong_stationary 13</td>
    <td data-field="n">1000</td>
    </tr>
+   <tr data-problem="minimization/morse-bulk" data-label="pele-lbfgs">
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
+   <td data-field="label">pele-lbfgs</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">20</td>
+   <td data-field="par2_mean"></td>
+   <td data-field="published">51</td>
+   <td data-field="median_calls"></td>
+   <td data-field="mean_calls">51</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">100</td>
+   </tr>
    <tr data-problem="minimization/morse-bulk" data-label="pele (0.1.2) · LBFGS">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">pele (0.1.2) · LBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">36</td>
@@ -230,7 +294,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="pele (0.1.2) · MYLBFGS">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">pele (0.1.2) · MYLBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">37</td>
@@ -244,7 +309,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="pele (0.1.2) · FIRE">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">pele (0.1.2) · FIRE</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">43</td>
@@ -258,7 +324,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="pele (0.1.2) · steepest descent">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">pele (0.1.2) · steepest descent</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">67</td>
@@ -272,7 +339,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="pele · hybrid eigenvector following">
-   <td>LJ38</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td data-field="label">pele · hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">2</td>
@@ -286,7 +354,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="tsopt/pt-island" data-label="pele · hybrid eigenvector following">
-   <td>pt-island</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">pele · hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">2</td>

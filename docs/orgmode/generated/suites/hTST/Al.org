@@ -7,6 +7,10 @@
    <section class="bench" id="Al" data-problem="hTST/Al">
    <h2>Al</h2>
    <dl class="bench-rule">
+   <dt>System</dt><dd>EAM</dd>
+   <dt>Atoms</dt><dd>101</dd>
+   <dt>Task</dt><dd>Harmonic transition state theory</dd>
+   <dt>Runs</dt><dd>639</dd>
    <dt>Stop</dt><dd>norm of the force at or below 0.001 eV/Angstrom</dd>
    <dt>Starts</dt><dd>639</dd>
    <dt>Potential</dt><dd>eam (eam_al)</dd>
@@ -14,13 +18,23 @@
    <dt>Note</dt><dd>A start is one barrier window. The window closes when each reference barrier below 0.4 eV has been matched once from the processtable. The ranked cost counts every force evaluation: dimer images, minimizations, and prefactor calls. The stop is the maximum force on any atom. The potential is eam_al.</dd>
    <dt>Contract</dt><dd>The columns are the keys shared by every archived file.</dd>
    </dl>
+   <h3>Metrics</h3>
+   <p>The main metric is barrier force calls.</p>
+   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <ul>
+   <li>barrier force calls</li>
+   <li>barrier jobs</li>
+   <li>rate force calls</li>
+   <li>rate jobs</li>
+   </ul>
+   <p>Select a column heading to sort the table.</p>
    <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <figure class="bench-plot"><a href="../../../_static/board/hTST-Al-profile.svg"><picture><source srcset="../../../_static/board/hTST-Al-profile.webp" type="image/webp"><img src="../../../_static/board/hTST-Al-profile.png" alt="Dolan-More profile for hTST/Al" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
    <figure class="bench-plot"><a href="../../../_static/board/hTST-Al-cost.svg"><picture><source srcset="../../../_static/board/hTST-Al-cost.webp" type="image/webp"><img src="../../../_static/board/hTST-Al-cost.png" alt="Cost versus success for hTST/Al" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <h3>Minimum mode</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="min-mode" data-problem="hTST/Al">
+   <table class="bench-sortable" data-board-table="family" data-family="min-mode" data-problem="hTST/Al">
    <caption>Minimum mode. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">eOn (r2006) · Dimer-CG rotation: max=10 tol=1</td><td data-field="rank_cost">21070</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">639</td></tr>
@@ -30,7 +44,7 @@
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
-   <table data-board-table="ranked" data-problem="hTST/Al">
+   <table class="bench-sortable" data-board-table="ranked" data-problem="hTST/Al">
    <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">eOn (r2006) · Dimer-CG rotation: max=10 tol=1</td><td data-field="family">Minimum mode</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">21070</td><td data-field="median_calls"></td><td data-field="mean_calls">21070</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">639</td></tr>

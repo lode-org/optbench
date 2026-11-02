@@ -7,15 +7,31 @@
    <section class="bench" id="emt-pt38" data-problem="mlopt/emt-pt38">
    <h2>EMT Pt 38 nanoparticle</h2>
    <dl class="bench-rule">
+   <dt>System</dt><dd>EMT molecular dynamics at 300 K</dd>
+   <dt>Task</dt><dd>Machine learning optimization</dd>
+   <dt>Runs</dt><dd>50</dd>
    <dt>Cap</dt><dd>10000 epochs</dd>
    <dt>v2</dt><dd>par2-bootstrap</dd>
    </dl>
+   <h3>Metrics</h3>
+   <p>The main metric is mean epoch.</p>
+   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <ul>
+   <li>mean epoch</li>
+   <li>median epoch</li>
+   <li>mean energy rmse</li>
+   <li>median energy rmse</li>
+   <li>mean force rmse</li>
+   <li>median force rmse</li>
+   <li>nfailed</li>
+   </ul>
+   <p>Select a column heading to sort the table.</p>
    <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
    <figure class="bench-plot"><a href="../../../_static/board/mlopt-emt-pt38-profile.svg"><picture><source srcset="../../../_static/board/mlopt-emt-pt38-profile.webp" type="image/webp"><img src="../../../_static/board/mlopt-emt-pt38-profile.png" alt="Dolan-More profile for mlopt/emt-pt38" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
    <figure class="bench-plot"><a href="../../../_static/board/mlopt-emt-pt38-cost.svg"><picture><source srcset="../../../_static/board/mlopt-emt-pt38-cost.webp" type="image/webp"><img src="../../../_static/board/mlopt-emt-pt38-cost.png" alt="Cost versus success for mlopt/emt-pt38" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <h3>Minimizers</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="minimize" data-problem="mlopt/emt-pt38">
+   <table class="bench-sortable" data-board-table="family" data-family="minimize" data-problem="mlopt/emt-pt38">
    <caption>Minimizers. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">n2p2 (2.3.0) · Kalman energy</td><td data-field="rank_cost">25.02</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">50</td></tr>
@@ -29,7 +45,7 @@
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
-   <table data-board-table="ranked" data-problem="mlopt/emt-pt38">
+   <table class="bench-sortable" data-board-table="ranked" data-problem="mlopt/emt-pt38">
    <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">n2p2 (2.3.0) · Kalman energy</td><td data-field="family">Minimizers</td><td data-field="family_rank">1</td><td data-field="par2_mean">25.02</td><td data-field="published"></td><td data-field="median_calls">14</td><td data-field="mean_calls">25.02</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">50</td></tr>

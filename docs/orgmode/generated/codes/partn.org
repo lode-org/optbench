@@ -6,8 +6,10 @@
 
    <section class="bench" id="code-partn">
    <h2>pARTn</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
+   <p>pARTn is used for saddle search. pARTn 1.1.0 at DEVEL 9b753517.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td>saddle search</td>
@@ -16,11 +18,14 @@
    <td><a href="https://gitlab.com/mammasmias/artn-plugin">https://gitlab.com/mammasmias/artn-plugin</a></td>
    </tr>
    </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="lowest-eigenvector/lj38" data-label="pARTn (1.1.0) · ARTn Lanczos">
-   <td>lj38</td>
+   <td>Lowest eigenvector</td>
+   <td><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-field="label">pARTn (1.1.0) · ARTn Lanczos</td>
    <td data-field="family">Minimum mode</td>
    <td data-field="family_rank">20</td>
@@ -34,7 +39,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="pARTn (1.1.0) · ARTn">
-   <td>LJ38</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td data-field="label">pARTn (1.1.0) · ARTn</td>
    <td data-field="family">Single-ended saddle</td>
    <td data-field="family_rank">7</td>
@@ -48,7 +54,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="tsopt/pt-island" data-label="pARTn (1.1.0) · ARTn">
-   <td>pt-island</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">pARTn (1.1.0) · ARTn</td>
    <td data-field="family">Single-ended saddle</td>
    <td data-field="family_rank">6</td>

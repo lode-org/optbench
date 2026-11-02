@@ -37,6 +37,7 @@ note = "develop HEAD built from source. The version string is 3.6.0 (7095b23a). 
 [[code]]
 id = "eon-develop-500350d9"
 name = "eOn"
+aliases = ["eOn (develop 500350d9)"]
 role = "minimization and saddle search"
 repository = "https://github.com/TheochemUI/eon"
 ref = "develop"
@@ -47,6 +48,7 @@ note = "develop 500350d9fae881f06c7ef194e5868da079c4be5a built from that commit 
 [[code]]
 id = "eon-develop-f6817b53"
 name = "eOn (develop f6817b53)"
+page = "eOn"
 role = "minimization and saddle search"
 repository = "https://github.com/TheochemUI/eon"
 ref = "develop"
@@ -57,6 +59,9 @@ note = "develop at merge f6817b537ec1d1563420023fb45fbd0e5b75e7fd. The version s
 [[code]]
 id = "eon-svn"
 name = "Eon svn"
+# Archive rows spell the SVN code Eon, Eon r2006, or EON (SVN r2549).
+# The git pins above spell it eOn. The 2014 revisions are this code.
+aliases = ["Eon", "Eon r2006", "EON (SVN r2549)"]
 role = "minimization and saddle search"
 repository = "https://theory.cm.utexas.edu/svn/eon"
 ref = "r2549"

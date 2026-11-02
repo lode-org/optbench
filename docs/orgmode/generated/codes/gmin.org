@@ -6,8 +6,10 @@
 
    <section class="bench" id="code-gmin">
    <h2>GMIN</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
+   <p>GMIN is used for minimization and global optimization. Wales group GMIN.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td>minimization</td>
@@ -22,11 +24,14 @@
    <td><a href="https://www-wales.ch.cam.ac.uk/svn.tar.bz2">https://www-wales.ch.cam.ac.uk/svn.tar.bz2</a></td>
    </tr>
    </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="globalopt/lj100-binary" data-label="GMIN · basin-hopping">
-   <td>Binary Lennard-Jones 100</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj100-binary.html">Binary Lennard-Jones 100</a></td>
    <td data-field="label">GMIN · basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">1</td>
@@ -40,7 +45,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj150" data-label="GMIN · core orbits symmetrisation scheme">
-   <td>lj150</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj150.html">Lennard-Jones 150</a></td>
    <td data-field="label">GMIN · core orbits symmetrisation scheme</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">1</td>
@@ -54,7 +60,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj150" data-label="GMIN · no symmetrisation">
-   <td>lj150</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj150.html">Lennard-Jones 150</a></td>
    <td data-field="label">GMIN · no symmetrisation</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">2</td>
@@ -68,7 +75,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj150" data-label="GMIN (df8da599) · basin-hopping">
-   <td>lj150</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj150.html">Lennard-Jones 150</a></td>
    <td data-field="label">GMIN (df8da599) · basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">3</td>
@@ -82,7 +90,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj150" data-label="GMIN (df8da599) · parallel tempering basin-hopping">
-   <td>lj150</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj150.html">Lennard-Jones 150</a></td>
    <td data-field="label">GMIN (df8da599) · parallel tempering basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">4</td>
@@ -96,7 +105,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj38" data-label="GMIN (df8da599) · basin-hopping with continuous symmetry measures">
-   <td>Lennard-Jones 38 global minimum</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj38.html">Lennard-Jones 38 global minimum</a></td>
    <td data-field="label">GMIN (df8da599) · basin-hopping with continuous symmetry measures</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">1</td>
@@ -110,7 +120,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj38" data-label="GMIN · basin-hopping with symmetrise csm moves">
-   <td>Lennard-Jones 38 global minimum</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj38.html">Lennard-Jones 38 global minimum</a></td>
    <td data-field="label">GMIN · basin-hopping with symmetrise csm moves</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">2</td>
@@ -124,7 +135,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj38" data-label="GMIN · basin-hopping with symmetrise moves">
-   <td>Lennard-Jones 38 global minimum</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj38.html">Lennard-Jones 38 global minimum</a></td>
    <td data-field="label">GMIN · basin-hopping with symmetrise moves</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">3</td>
@@ -138,7 +150,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj38" data-label="GMIN · basin-hopping">
-   <td>Lennard-Jones 38 global minimum</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj38.html">Lennard-Jones 38 global minimum</a></td>
    <td data-field="label">GMIN · basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">4</td>
@@ -152,7 +165,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj38" data-label="GMIN (df8da599) · basin-hopping">
-   <td>Lennard-Jones 38 global minimum</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj38.html">Lennard-Jones 38 global minimum</a></td>
    <td data-field="label">GMIN (df8da599) · basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">5</td>
@@ -166,7 +180,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj38" data-label="GMIN (df8da599) · parallel tempering basin-hopping">
-   <td>Lennard-Jones 38 global minimum</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj38.html">Lennard-Jones 38 global minimum</a></td>
    <td data-field="label">GMIN (df8da599) · parallel tempering basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">9</td>
@@ -180,7 +195,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj75" data-label="GMIN · basin-hopping with symmetrise csm moves">
-   <td>lj75</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj75.html">Lennard-Jones 75</a></td>
    <td data-field="label">GMIN · basin-hopping with symmetrise csm moves</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">1</td>
@@ -194,7 +210,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="globalopt/lj75" data-label="GMIN (df8da599) · parallel tempering basin-hopping">
-   <td>lj75</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj75.html">Lennard-Jones 75</a></td>
    <td data-field="label">GMIN (df8da599) · parallel tempering basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">2</td>
@@ -208,7 +225,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="globalopt/lj75" data-label="GMIN (df8da599) · basin-hopping">
-   <td>lj75</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj75.html">Lennard-Jones 75</a></td>
    <td data-field="label">GMIN (df8da599) · basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">3</td>
@@ -222,7 +240,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="globalopt/lj98" data-label="GMIN · core orbits symmetrisation scheme">
-   <td>lj98</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj98.html">Lennard-Jones 98</a></td>
    <td data-field="label">GMIN · core orbits symmetrisation scheme</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">1</td>
@@ -236,7 +255,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj98" data-label="GMIN · no symmetrisation">
-   <td>lj98</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj98.html">Lennard-Jones 98</a></td>
    <td data-field="label">GMIN · no symmetrisation</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">2</td>
@@ -250,7 +270,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj98" data-label="GMIN (df8da599) · basin-hopping with core-orbit symmetrisation">
-   <td>lj98</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj98.html">Lennard-Jones 98</a></td>
    <td data-field="label">GMIN (df8da599) · basin-hopping with core-orbit symmetrisation</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">3</td>
@@ -264,7 +285,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/lj98" data-label="GMIN (df8da599) · parallel tempering basin-hopping with core-orbit symmetrisation">
-   <td>lj98</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj98.html">Lennard-Jones 98</a></td>
    <td data-field="label">GMIN (df8da599) · parallel tempering basin-hopping with core-orbit symmetrisation</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">4</td>
@@ -278,7 +300,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/tip4p10" data-label="GMIN · linear temperature basin-paving">
-   <td>tip4p10</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/tip4p10.html">TIP4P 10</a></td>
    <td data-field="label">GMIN · linear temperature basin-paving</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">1</td>
@@ -292,7 +315,8 @@
    <td data-field="n">10000</td>
    </tr>
    <tr data-problem="globalopt/tip4p10" data-label="GMIN · basin-hopping">
-   <td>tip4p10</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/tip4p10.html">TIP4P 10</a></td>
    <td data-field="label">GMIN · basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">2</td>
@@ -306,7 +330,8 @@
    <td data-field="n">10000</td>
    </tr>
    <tr data-problem="globalopt/tip4p15" data-label="GMIN · linear temperature basin-paving">
-   <td>tip4p15</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/tip4p15.html">TIP4P 15</a></td>
    <td data-field="label">GMIN · linear temperature basin-paving</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">1</td>
@@ -320,7 +345,8 @@
    <td data-field="n">500</td>
    </tr>
    <tr data-problem="globalopt/tip4p15" data-label="GMIN · basin-hopping">
-   <td>tip4p15</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/tip4p15.html">TIP4P 15</a></td>
    <td data-field="label">GMIN · basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">2</td>
@@ -334,7 +360,8 @@
    <td data-field="n">500</td>
    </tr>
    <tr data-problem="globalopt/tip4p20" data-label="GMIN · linear temperature basin-paving">
-   <td>tip4p20</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/tip4p20.html">TIP4P 20</a></td>
    <td data-field="label">GMIN · linear temperature basin-paving</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">1</td>
@@ -348,7 +375,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="globalopt/tip4p20" data-label="GMIN · basin-hopping">
-   <td>tip4p20</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/tip4p20.html">TIP4P 20</a></td>
    <td data-field="label">GMIN · basin-hopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">2</td>
@@ -362,7 +390,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="GMIN (df8da5992675) · LBFGS">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">GMIN (df8da5992675) · LBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">19</td>
@@ -376,7 +405,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-label="GMIN (df8da5992675) · LBFGS">
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></td>
    <td data-field="label">GMIN (df8da5992675) · LBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">8</td>
@@ -390,7 +420,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="GMIN (df8da5992675) · LBFGS">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">GMIN (df8da5992675) · LBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">12</td>

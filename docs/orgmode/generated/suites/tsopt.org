@@ -1,23 +1,198 @@
 #+TITLE: Transition state optimization
 #+OPTIONS: toc:nil num:nil author:nil
 
-Each problem is its own page.
-
 #+begin_export rst
 .. raw:: html
 
-   <ul>
-   <li><a href="tsopt/LJ38.html">LJ38</a></li>
-   <li><a href="tsopt/pt-island.html">pt-island</a></li>
-   </ul>
+   <section class="bench">
+   <p>Transition state optimization covers H2 dissociation on a fixed Cu substrate, Lennard-Jones 38, and Pt heptamer island. The recorded metrics include force calls, force calls min, force calls max, and force calls median. H2 dissociation on a fixed Cu substrate has 4 runs, Lennard-Jones 38 has 200 runs, and Pt heptamer island has 49 runs. Archived means follow this rule: 2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <div class="bench-scroll">
+   <table class="bench-sortable" data-bench="problems">
+   <caption>Problems in this suite.</caption>
+   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Task</th><th>Runs</th></tr></thead><tbody>
+   <tr>
+   <th scope="row"><a href="tsopt/cuh2.html">H2 dissociation on a fixed Cu substrate</a></th>
+   <td>CuH2</td>
+   <td class="num"></td>
+   <td>Transition state optimization</td>
+   <td class="num">4</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="tsopt/LJ38.html">Lennard-Jones 38</a></th>
+   <td>Lennard-Jones</td>
+   <td class="num">38</td>
+   <td>Transition state optimization</td>
+   <td class="num">200</td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="tsopt/pt-island.html">Pt heptamer island</a></th>
+   <td>Morse</td>
+   <td class="num">343</td>
+   <td>Transition state optimization</td>
+   <td class="num">49</td>
+   </tr>
+   </tbody></table></div>
+   <h2>Results by code</h2>
+   <p>Best is the lowest ranked cost for that code on that problem. Median is the median of that code's ranked costs. A harness row uses PAR-2. An archived row uses its published primary number. Success rate is the best row's rate, or the share of its runs that are not failures.</p>
+   <div class="bench-scroll">
+   <table class="bench-sortable" data-bench="codes">
+   <caption>One row per code on each problem.</caption>
+   <thead><tr><th>Problem</th><th>Code</th><th>Best</th><th>Median</th><th>Success rate</th><th>Rows</th></tr></thead><tbody>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/sella.html">Sella</a></td>
+   <td class="num">68.74</td>
+   <td class="num">69.145</td>
+   <td class="num">100.0%</td>
+   <td class="num">2</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/optim.html">OPTIM</a></td>
+   <td class="num">145</td>
+   <td class="num">145</td>
+   <td class="num">100.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/pele.html">pele</a></td>
+   <td class="num">192</td>
+   <td class="num">192</td>
+   <td class="num">100.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
+   <td class="num">237</td>
+   <td class="num">306.89</td>
+   <td class="num">100.0%</td>
+   <td class="num">6</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/eon.html">eOn</a></td>
+   <td class="num">280.33</td>
+   <td class="num">2102.72</td>
+   <td class="num">100.0%</td>
+   <td class="num">5</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/optking.html">OptKing</a></td>
+   <td class="num">7030.36</td>
+   <td class="num">7363.89</td>
+   <td class="num">66.5%</td>
+   <td class="num">2</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/rgsaddle.html">rgsaddle</a></td>
+   <td class="num">7803.19</td>
+   <td class="num">19418.8</td>
+   <td class="num">63.0%</td>
+   <td class="num">5</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/partn.html">pARTn</a></td>
+   <td class="num">20000</td>
+   <td class="num">20000</td>
+   <td class="num">0.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/tsase.html">TSASE</a></td>
+   <td class="num">20000</td>
+   <td class="num">20000</td>
+   <td class="num">0.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Pt heptamer island</td>
+   <td><a href="../codes/sella.html">Sella</a></td>
+   <td class="num">53</td>
+   <td class="num">63.6429</td>
+   <td class="num">100.0%</td>
+   <td class="num">2</td>
+   </tr>
+   <tr>
+   <td>Pt heptamer island</td>
+   <td><a href="../codes/optim.html">OPTIM</a></td>
+   <td class="num">71</td>
+   <td class="num">71</td>
+   <td class="num">100.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Pt heptamer island</td>
+   <td><a href="../codes/pele.html">pele</a></td>
+   <td class="num">88</td>
+   <td class="num">88</td>
+   <td class="num">100.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Pt heptamer island</td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
+   <td class="num">106</td>
+   <td class="num">115.48</td>
+   <td class="num">100.0%</td>
+   <td class="num">6</td>
+   </tr>
+   <tr>
+   <td>Pt heptamer island</td>
+   <td><a href="../codes/eon.html">eOn</a></td>
+   <td class="num">108.796</td>
+   <td class="num">135.408</td>
+   <td class="num">100.0%</td>
+   <td class="num">5</td>
+   </tr>
+   <tr>
+   <td>Pt heptamer island</td>
+   <td><a href="../codes/rgsaddle.html">rgsaddle</a></td>
+   <td class="num">223.898</td>
+   <td class="num">6505.47</td>
+   <td class="num">100.0%</td>
+   <td class="num">4</td>
+   </tr>
+   <tr>
+   <td>Pt heptamer island</td>
+   <td><a href="../codes/optking.html">OptKing</a></td>
+   <td class="num">1059.98</td>
+   <td class="num">1060.31</td>
+   <td class="num">100.0%</td>
+   <td class="num">2</td>
+   </tr>
+   <tr>
+   <td>Pt heptamer island</td>
+   <td><a href="../codes/tsase.html">TSASE</a></td>
+   <td class="num">1144.31</td>
+   <td class="num">1144.31</td>
+   <td class="num">100.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Pt heptamer island</td>
+   <td><a href="../codes/partn.html">pARTn</a></td>
+   <td class="num">1970.22</td>
+   <td class="num">1970.22</td>
+   <td class="num">91.8%</td>
+   <td class="num">1</td>
+   </tr>
+   </tbody></table></div>
+   <figure class="bench-plot"><a href="../../_static/board/suite-tsopt.svg"><picture><source srcset="../../_static/board/suite-tsopt.webp" type="image/webp"><img src="../../_static/board/suite-tsopt.png" alt="Transition state optimization best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Transition state optimization best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   </section>
 #+end_export
-
 
 #+begin_export rst
 .. toctree::
    :hidden:
    :maxdepth: 1
 
+   tsopt/cuh2
    tsopt/LJ38
    tsopt/pt-island
 #+end_export

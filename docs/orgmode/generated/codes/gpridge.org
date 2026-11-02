@@ -1,0 +1,25 @@
+#+TITLE: GPRidge
+#+OPTIONS: toc:nil num:nil author:nil
+
+#+begin_export rst
+.. raw:: html
+
+   <section class="bench" id="code-gpridge">
+   <h2>GPRidge</h2>
+   <p>GPRidge is used for Gaussian-process band and saddle search. Native GP-NEB and CI-NEB share the rgpot Morse oracle.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
+   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
+   <tr>
+   <td>Gaussian-process band and saddle search</td>
+   <td>develop</td>
+   <td>3ddd83b774f4</td>
+   <td><a href="https://github.com/TheochemUI/gpridge">https://github.com/TheochemUI/gpridge</a></td>
+   </tr>
+   </tbody></table></div>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <p>No ranked row.</p>
+   </section>
+#+end_export
