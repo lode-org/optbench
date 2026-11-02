@@ -277,3 +277,90 @@ table[data-board-table="summary"] td {
   background: color-mix(in srgb, CanvasText 20%, Canvas);
   color: CanvasText;
 }
+
+.yue {
+  font-family: Palatino, "Palatino Linotype", "Iowan Old Style", Georgia, serif;
+  line-height: 1.6;
+}
+
+.yue h1,
+.yue h2,
+.yue h3,
+.bench,
+.bench table,
+.sy-lside,
+.sy-head {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+.yue h1,
+.yue h2,
+.yue h3 {
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.sy-lside .caption,
+.sy-lside p.caption {
+  margin: 1.1rem 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, CanvasText 58%, Canvas);
+}
+
+.sy-lside a {
+  overflow-wrap: anywhere;
+  white-space: normal;
+  text-overflow: unset;
+}
+
+.globaltoc li > a {
+  display: block;
+  padding-right: 1.4rem;
+}
+
+.bench thead th {
+  position: sticky;
+  top: 0;
+  background: Canvas;
+  z-index: 1;
+}
+
+.bench-sortable th[aria-sort="ascending"]::after {
+  content: " \2191";
+}
+
+.bench-sortable th[aria-sort="descending"]::after {
+  content: " \2193";
+}
+
+.bench-plot picture,
+.bench-plot img,
+.bench-plot svg {
+  background: #fbfaf7;
+  border: 1px solid color-mix(in srgb, CanvasText 16%, Canvas);
+  border-radius: 2px;
+}
+
+html.dark .bench-plot picture,
+html.dark .bench-plot img,
+html.dark .bench-plot svg {
+  background: #fbfaf7;
+}
+
+@media (max-width: 48rem) {
+  .yue {
+    font-size: 1rem;
+  }
+
+  .bench th,
+  .bench td {
+    padding: 0.35rem 0.45rem;
+  }
+
+  article.yue {
+    overflow-x: hidden;
+  }
+}

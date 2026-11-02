@@ -23,10 +23,44 @@ def test_nav_pages_have_titles_and_the_suites_fold_under_archive():
     assert "generated/suites/neb" in index
     assert "generated/suites/accelerated-md" in index
     archive = (org / "archive.org").read_text(encoding="utf-8")
-    assert "generated/suites/minimization" in archive
-    assert "generated/suites/accelerated-md" in archive
+    assert "generated/suites/minimization" not in archive
+    assert ".. toctree::" not in archive
+    assert ":caption: Archive" in index
+    assert index.count("generated/suites/minimization") == 1
     conf = (ROOT / "docs" / "source" / "conf.py").read_text(encoding="utf-8")
-    assert '"globaltoc_expand_depth": 0' in conf
+    assert '"globaltoc_expand_depth": 1' in conf
+
+
+def test_suite_pages_name_problems_and_fold_code_spellings():
+    render(ROOT)
+    mlopt = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "mlopt.org").read_text(encoding="utf-8")
+    assert "Each problem is its own page." not in mlopt
+    assert "data-bench=\"problems\"" in mlopt
+    assert "data-bench=\"codes\"" in mlopt
+    assert "EMT Pt 38 nanoparticle" in mlopt
+    assert "suite-mlopt.svg" in mlopt
+    globalopt = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "globalopt.org").read_text(encoding="utf-8")
+    assert "Lennard-Jones 150" in globalopt
+    assert "TIP4P, N=10" in globalopt
+    assert ">lj150<" not in globalopt
+    assert ">tip4p10<" not in globalopt
+    assert ">pt-island<" not in (ROOT / "docs" / "orgmode" / "generated" / "suites" / "double-ended-saddle-search.org").read_text(encoding="utf-8")
+    codes = (ROOT / "docs" / "include" / "codes.org").read_text(encoding="utf-8")
+    assert 'href="generated/codes/eon-r2006.html"' not in codes
+    assert 'href="generated/codes/eon--develop-f6817b53.html"' not in codes
+    assert 'href="generated/codes/eon--svn-r2549.html"' not in codes
+    assert 'href="generated/codes/eon--develop-500350d9.html"' not in codes
+    assert 'href="generated/codes/unknown.html"' in codes
+    assert not (ROOT / "docs" / "orgmode" / "generated" / "codes" / "eon-r2006.org").exists()
+    eon_svn = (ROOT / "docs" / "orgmode" / "generated" / "codes" / "eon-svn.org").read_text(encoding="utf-8")
+    assert "Eon r2006" in eon_svn
+    assert "EON (SVN r2549)" in eon_svn
+    unknown = (ROOT / "docs" / "orgmode" / "generated" / "codes" / "unknown.org").read_text(encoding="utf-8")
+    assert "Newtons Method" in unknown
+    assert "ase-BFGS" not in unknown
+    problem = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "mlopt" / "emt-pt38.org").read_text(encoding="utf-8")
+    assert "The main metric is" in problem
+    assert "bench-sortable" in problem
 
 
 def test_campaign_names_map_to_problems():

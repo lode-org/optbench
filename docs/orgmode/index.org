@@ -18,10 +18,9 @@ The commands that write a new =benchmark.dat= are on the Run a score page.
 #+begin_export rst
 .. toctree::
    :hidden:
-   :maxdepth: 2
+   :maxdepth: 1
+   :caption: Suites
 
-   run
-   board
    generated/suites/minimization
    generated/suites/saddle-search
    generated/suites/double-ended-saddle-search
@@ -32,7 +31,21 @@ The commands that write a new =benchmark.dat= are on the Run a score page.
    generated/suites/neb
    generated/suites/hTST
    generated/suites/accelerated-md
-   archive
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Reference
+
+   run
+   board
    codes
    changelog
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Archive
+
+   archive
 #+end_export
