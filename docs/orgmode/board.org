@@ -1,4 +1,4 @@
-#+TITLE: v2 board
+#+TITLE: Board
 #+OPTIONS: toc:nil num:nil author:nil
 
 Each row is one code, one version, and one stock method.

@@ -28,7 +28,7 @@ def test_nav_pages_have_titles_and_the_suites_fold_under_archive():
     assert ":caption: Archive" in index
     assert index.count("generated/suites/minimization") == 1
     conf = (ROOT / "docs" / "source" / "conf.py").read_text(encoding="utf-8")
-    assert '"globaltoc_expand_depth": 1' in conf
+    assert '"globaltoc_expand_depth": 0' in conf
 
 
 def test_suite_pages_name_problems_and_fold_code_spellings():

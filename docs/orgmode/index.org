@@ -1,18 +1,20 @@
 #+TITLE: OptBench
 #+OPTIONS: toc:nil num:nil author:nil
 
-The score on this site is the v2 PAR-2 mean of harness force calls
-on the problem's full start set.
-eOn develop NEB methods, the n2p2 energy and force presets, and the
-hTST Al dimer rows for EON SVN r2549 and eOn develop 500350d9 are ranked
-with the other stock rows.
-A row with fewer starts stays off the ranked table.
-=python -m optbench.site= writes these pages from that scorer.
-The same numbers are in =results/board/index.json=.
+OptBench compares geometry optimizers, saddle searches, nudged elastic bands,
+and global optimization on a fixed set of problems.
+Chill, Stevenson, Ruehle, Shang, Xiao, Farrell, Wales, and Henkelman
+set out the 2014 problems in J. Chem. Theory Comput. 2014, 10, 5476-5482
+([[https://doi.org/10.1021/ct5008718][doi:10.1021/ct5008718]]).
+A lower cost is a cheaper search.
+The score on each problem they set is PAR-2, the mean cost of the runs.
+A run that finishes counts as the calls it used.
+A run that fails counts as twice the cap.
+An archived row keeps the average it published, and that average leaves failed runs out.
 
-#+INCLUDE: "../include/sota.org"
+#+INCLUDE: "../include/overview.org"
 
-Archived rows sit in the same tables as the latest rows on each problem page.
+The board page lists the lowest-cost row of every problem.
 The commands that write a new =benchmark.dat= are on the Run a score page.
 
 #+begin_export rst
