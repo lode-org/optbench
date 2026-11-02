@@ -45,15 +45,9 @@ def _check_family(label: str, table: dict, document: dict) -> list[str]:
 
 
 def _code_name(row: dict, registry: list[dict]) -> str:
-    code = str(row.get("code") or "").strip()
-    if not code:
-        return "unknown"
-    folded = code.lower()
-    for pin in registry:
-        names = {str(pin.get("id") or "").lower(), str(pin.get("name") or "").lower()}
-        if folded in names and pin.get("name"):
-            return str(pin["name"])
-    return code
+    from .site_pages import code_page_name
+
+    return code_page_name(row, registry)
 
 
 def _check_code_rows(label: str, table: dict, document: dict) -> list[str]:

@@ -6,15 +6,16 @@
 
    <section class="bench" id="code-pyamff">
    <h2>Pyamff</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
-   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
-   </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <p>The registry has no pin for this code string. The rows below use the spelling on the archived file.</p>
+   <p>No registry pin.</p>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0">
-   <td>C2H4</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">1</td>
@@ -28,7 +29,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0">
-   <td>C2H4</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">2</td>
@@ -42,7 +44,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0">
-   <td>C2H4</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">3</td>
@@ -56,7 +59,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0_1">
-   <td>C2H4</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0_1</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">4</td>
@@ -70,7 +74,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0_1">
-   <td>C2H4</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0_1</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">5</td>
@@ -84,7 +89,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1">
-   <td>C2H4</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">7</td>
@@ -98,7 +104,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0">
-   <td>EMT Pt 38 nanoparticle</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">2</td>
@@ -112,7 +119,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0_1">
-   <td>EMT Pt 38 nanoparticle</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0_1</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">3</td>
@@ -126,7 +134,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0">
-   <td>EMT Pt 38 nanoparticle</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">4</td>
@@ -140,7 +149,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0_1">
-   <td>EMT Pt 38 nanoparticle</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0_1</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">5</td>
@@ -154,7 +164,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0">
-   <td>EMT Pt 38 nanoparticle</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">6</td>
@@ -168,7 +179,8 @@
    <td data-field="n">0</td>
    </tr>
    <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1">
-   <td>EMT Pt 38 nanoparticle</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-field="label">Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">7</td>

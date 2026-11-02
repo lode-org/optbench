@@ -1,17 +1,72 @@
 #+TITLE: Machine learning optimization
 #+OPTIONS: toc:nil num:nil author:nil
 
-Each problem is its own page.
-
 #+begin_export rst
 .. raw:: html
 
-   <ul>
-   <li><a href="mlopt/C2H4.html">C2H4</a></li>
-   <li><a href="mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></li>
-   </ul>
+   <section class="bench">
+   <p>Machine learning optimization covers C2H4 and EMT Pt 38 nanoparticle. The recorded metrics include mean energy rmse, mean epoch, mean force rmse, median energy rmse, median epoch, and median force rmse. EMT Pt 38 nanoparticle has 50 runs. Archived means follow this rule: 2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <div class="bench-scroll">
+   <table class="bench-sortable" data-bench="problems">
+   <caption>Problems in this suite.</caption>
+   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Task</th><th>Runs</th></tr></thead><tbody>
+   <tr>
+   <th scope="row"><a href="mlopt/C2H4.html">C2H4</a></th>
+   <td>C2H4</td>
+   <td class="num"></td>
+   <td>Machine learning optimization</td>
+   <td class="num"></td>
+   </tr>
+   <tr>
+   <th scope="row"><a href="mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></th>
+   <td>EMT molecular dynamics at 300 K</td>
+   <td class="num"></td>
+   <td>Machine learning optimization</td>
+   <td class="num">50</td>
+   </tr>
+   </tbody></table></div>
+   <h2>Results by code</h2>
+   <p>Best is the lowest ranked cost for that code on that problem. Median is the median of that code's ranked costs. A harness row uses PAR-2. An archived row uses its published primary number. Success rate is the best row's rate, or the share of its runs that are not failures.</p>
+   <div class="bench-scroll">
+   <table class="bench-sortable" data-bench="codes">
+   <caption>One row per code on each problem.</caption>
+   <thead><tr><th>Problem</th><th>Code</th><th>Best</th><th>Median</th><th>Success rate</th><th>Rows</th></tr></thead><tbody>
+   <tr>
+   <td>C2H4</td>
+   <td><a href="../codes/pyamff.html">Pyamff</a></td>
+   <td class="num">184.56</td>
+   <td class="num">8661.09</td>
+   <td class="num"></td>
+   <td class="num">6</td>
+   </tr>
+   <tr>
+   <td>C2H4</td>
+   <td><a href="../codes/n2p2.html">n2p2</a></td>
+   <td class="num">17397.1</td>
+   <td class="num">38698.6</td>
+   <td class="num">20.0%</td>
+   <td class="num">2</td>
+   </tr>
+   <tr>
+   <td>EMT Pt 38 nanoparticle</td>
+   <td><a href="../codes/n2p2.html">n2p2</a></td>
+   <td class="num">25.02</td>
+   <td class="num">30012.5</td>
+   <td class="num">100.0%</td>
+   <td class="num">2</td>
+   </tr>
+   <tr>
+   <td>EMT Pt 38 nanoparticle</td>
+   <td><a href="../codes/pyamff.html">Pyamff</a></td>
+   <td class="num">97.58</td>
+   <td class="num">1406.02</td>
+   <td class="num"></td>
+   <td class="num">6</td>
+   </tr>
+   </tbody></table></div>
+   <figure class="bench-plot"><a href="../../_static/board/suite-mlopt.svg"><picture><source srcset="../../_static/board/suite-mlopt.webp" type="image/webp"><img src="../../_static/board/suite-mlopt.png" alt="Machine learning optimization best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Machine learning optimization best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   </section>
 #+end_export
-
 
 #+begin_export rst
 .. toctree::

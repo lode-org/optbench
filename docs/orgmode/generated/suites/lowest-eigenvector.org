@@ -1,16 +1,113 @@
 #+TITLE: Lowest eigenvector
 #+OPTIONS: toc:nil num:nil author:nil
 
-Each problem is its own page.
-
 #+begin_export rst
 .. raw:: html
 
-   <ul>
-   <li><a href="lowest-eigenvector/lj38.html">lj38</a></li>
-   </ul>
+   <section class="bench">
+   <p>Lowest eigenvector covers Lennard-Jones 38. The recorded metrics include force calls, force calls max, and force calls min. Lennard-Jones 38 has 200 runs. Archived means follow this rule: 2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <div class="bench-scroll">
+   <table class="bench-sortable" data-bench="problems">
+   <caption>Problems in this suite.</caption>
+   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Task</th><th>Runs</th></tr></thead><tbody>
+   <tr>
+   <th scope="row"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></th>
+   <td>Lennard-Jones</td>
+   <td class="num">38</td>
+   <td>Lowest eigenvector</td>
+   <td class="num">200</td>
+   </tr>
+   </tbody></table></div>
+   <h2>Results by code</h2>
+   <p>Best is the lowest ranked cost for that code on that problem. Median is the median of that code's ranked costs. A harness row uses PAR-2. An archived row uses its published primary number. Success rate is the best row's rate, or the share of its runs that are not failures.</p>
+   <div class="bench-scroll">
+   <table class="bench-sortable" data-bench="codes">
+   <caption>One row per code on each problem.</caption>
+   <thead><tr><th>Problem</th><th>Code</th><th>Best</th><th>Median</th><th>Success rate</th><th>Rows</th></tr></thead><tbody>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/sella.html">Sella</a></td>
+   <td class="num">17.8</td>
+   <td class="num">17.8</td>
+   <td class="num">100.0%</td>
+   <td class="num">2</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/optim.html">OPTIM</a></td>
+   <td class="num">25</td>
+   <td class="num">25</td>
+   <td class="num">100.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/pele.html">pele</a></td>
+   <td class="num">25</td>
+   <td class="num">25</td>
+   <td class="num">100.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/tsase.html">TSASE</a></td>
+   <td class="num">25</td>
+   <td class="num">28</td>
+   <td class="num">100.0%</td>
+   <td class="num">4</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/rgsaddle.html">rgsaddle</a></td>
+   <td class="num">26.12</td>
+   <td class="num">28.76</td>
+   <td class="num">100.0%</td>
+   <td class="num">2</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/eon.html">eOn</a></td>
+   <td class="num">26.385</td>
+   <td class="num">27.3575</td>
+   <td class="num">100.0%</td>
+   <td class="num">6</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
+   <td class="num">26.385</td>
+   <td class="num">28.165</td>
+   <td class="num">100.0%</td>
+   <td class="num">6</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/partn.html">pARTn</a></td>
+   <td class="num">2619.84</td>
+   <td class="num">2619.84</td>
+   <td class="num">87.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/pysisyphus.html">pysisyphus</a></td>
+   <td class="num">4017.14</td>
+   <td class="num">4017.14</td>
+   <td class="num">80.0%</td>
+   <td class="num">1</td>
+   </tr>
+   <tr>
+   <td>Lennard-Jones 38</td>
+   <td><a href="../codes/softsaddle.html">SoftSaddle</a></td>
+   <td class="num">18700.6</td>
+   <td class="num">18813.1</td>
+   <td class="num">6.5%</td>
+   <td class="num">2</td>
+   </tr>
+   </tbody></table></div>
+   <figure class="bench-plot"><a href="../../_static/board/suite-lowest-eigenvector.svg"><picture><source srcset="../../_static/board/suite-lowest-eigenvector.webp" type="image/webp"><img src="../../_static/board/suite-lowest-eigenvector.png" alt="Lowest eigenvector best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Lowest eigenvector best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   </section>
 #+end_export
-
 
 #+begin_export rst
 .. toctree::

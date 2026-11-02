@@ -6,8 +6,10 @@
 
    <section class="bench" id="code-airss">
    <h2>AIRSS</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
+   <p>AIRSS is used for random structure search. Version 0.9.4, June 2023.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td>random structure search</td>
@@ -16,11 +18,14 @@
    <td><a href="https://www.mtg.msm.cam.ac.uk/Codes/AIRSS">https://www.mtg.msm.cam.ac.uk/Codes/AIRSS</a></td>
    </tr>
    </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="globalopt/lj38" data-label="AIRSS (0.9.4) · random structure search">
-   <td>Lennard-Jones 38 global minimum</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj38.html">Lennard-Jones 38 global minimum</a></td>
    <td data-field="label">AIRSS (0.9.4) · random structure search</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">10</td>

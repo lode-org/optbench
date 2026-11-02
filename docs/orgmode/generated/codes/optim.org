@@ -6,8 +6,10 @@
 
    <section class="bench" id="code-optim">
    <h2>OPTIM</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
+   <p>OPTIM is used for saddle search. No public git commit.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td>saddle search</td>
@@ -16,11 +18,14 @@
    <td><a href="http://www-wales.ch.cam.ac.uk/svn.tar.bz2">http://www-wales.ch.cam.ac.uk/svn.tar.bz2</a></td>
    </tr>
    </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="OPTIM · DNEB + hybrid eigenvector following">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">OPTIM · DNEB + hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">1</td>
@@ -34,7 +39,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="OPTIM · climbing string">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">OPTIM · climbing string</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">3</td>
@@ -48,7 +54,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="OPTIM · DNEB + hybrid eigenvector following + Djikstra shortest path">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">OPTIM · DNEB + hybrid eigenvector following + Djikstra shortest path</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">1</td>
@@ -62,7 +69,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="OPTIM · DNEB + hybrid eigenvector following">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">OPTIM · DNEB + hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">1</td>
@@ -76,7 +84,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="OPTIM · climbing string">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">OPTIM · climbing string</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">4</td>
@@ -90,7 +99,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="lowest-eigenvector/lj38" data-label="OPTIM · hybrid eigenvector following">
-   <td>lj38</td>
+   <td>Lowest eigenvector</td>
+   <td><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-field="label">OPTIM · hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">1</td>
@@ -104,7 +114,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="OPTIM · L-BFGS">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">OPTIM · L-BFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">7</td>
@@ -118,7 +129,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="OPTIM (svn-snapshot) · L-BFGS">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">OPTIM (svn-snapshot) · L-BFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">17</td>
@@ -132,7 +144,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="OPTIM · L-BFGS">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">OPTIM · L-BFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">16</td>
@@ -146,7 +159,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="OPTIM (svn-snapshot) · L-BFGS">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">OPTIM (svn-snapshot) · L-BFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">59</td>
@@ -160,7 +174,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="OPTIM · hybrid eigenvector following">
-   <td>LJ38</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td data-field="label">OPTIM · hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">1</td>
@@ -174,7 +189,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="tsopt/pt-island" data-label="OPTIM · hybrid eigenvector following">
-   <td>pt-island</td>
+   <td>Transition state optimization</td>
+   <td><a href="../suites/tsopt/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">OPTIM · hybrid eigenvector following</td>
    <td data-field="family">Connect / double-ended</td>
    <td data-field="family_rank">1</td>

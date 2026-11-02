@@ -6,8 +6,10 @@
 
    <section class="bench" id="code-n2p2">
    <h2>n2p2</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
+   <p>n2p2 is used for neural network training. n2p2 2.3.0 is the latest release, tag e51667abf784bb9a6fd659857b6a9a878fdc6a90 (2024-11-23).</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td>neural network training</td>
@@ -16,11 +18,14 @@
    <td><a href="https://github.com/CompPhysVienna/n2p2">https://github.com/CompPhysVienna/n2p2</a></td>
    </tr>
    </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="mlopt/C2H4" data-label="n2p2 (2.3.0) · Kalman energy">
-   <td>C2H4</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
    <td data-field="label">n2p2 (2.3.0) · Kalman energy</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">6</td>
@@ -34,7 +39,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="mlopt/C2H4" data-label="n2p2 (2.3.0) · Kalman force">
-   <td>C2H4</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/C2H4.html">C2H4</a></td>
    <td data-field="label">n2p2 (2.3.0) · Kalman force</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">8</td>
@@ -48,7 +54,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="mlopt/emt-pt38" data-label="n2p2 (2.3.0) · Kalman energy">
-   <td>EMT Pt 38 nanoparticle</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-field="label">n2p2 (2.3.0) · Kalman energy</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">1</td>
@@ -62,7 +69,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="mlopt/emt-pt38" data-label="n2p2 (2.3.0) · Kalman force">
-   <td>EMT Pt 38 nanoparticle</td>
+   <td>Machine learning optimization</td>
+   <td><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-field="label">n2p2 (2.3.0) · Kalman force</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">8</td>

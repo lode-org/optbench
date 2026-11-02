@@ -6,8 +6,10 @@
 
    <section class="bench" id="code-ase">
    <h2>ASE</h2>
-   <div class="bench-scroll"><table>
-   <caption>Registry pins.</caption>
+   <p>ASE is used for minimization and saddle search. Atomic Simulation Environment 3.29.0.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td>minimization and saddle search</td>
@@ -16,11 +18,14 @@
    <td><a href="https://gitlab.com/ase/ase">https://gitlab.com/ase/ase</a></td>
    </tr>
    </tbody></table></div>
-   <div class="bench-scroll"><table data-board-table="code-rows">
-   <caption>Every ranked row for this code.</caption>
-   <thead><tr><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="ASE (3.29.0) · NEB-FIRE">
-   <td>LJ38 double-ended saddle</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-field="label">ASE (3.29.0) · NEB-FIRE</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">18</td>
@@ -34,7 +39,8 @@
    <td data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="ASE (3.29.0) · NEB-FIRE">
-   <td>lj38_2ts_separation</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-field="label">ASE (3.29.0) · NEB-FIRE</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">18</td>
@@ -48,7 +54,8 @@
    <td data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="ASE (3.29.0) · NEB-FIRE">
-   <td>pt-island</td>
+   <td>Double-ended saddle search</td>
+   <td><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-field="label">ASE (3.29.0) · NEB-FIRE</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">9</td>
@@ -62,7 +69,8 @@
    <td data-field="n">59</td>
    </tr>
    <tr data-problem="globalopt/lj75" data-label="ASE (3.29.0) · BasinHopping">
-   <td>lj75</td>
+   <td>Global optimization</td>
+   <td><a href="../suites/globalopt/lj75.html">Lennard-Jones 75</a></td>
    <td data-field="label">ASE (3.29.0) · BasinHopping</td>
    <td data-field="family">Basin hopping / global</td>
    <td data-field="family_rank">4</td>
@@ -76,7 +84,8 @@
    <td data-field="n">200</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="ASE (3.6.1) · L-BFGS M=5 maxstep=0.2">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">ASE (3.6.1) · L-BFGS M=5 maxstep=0.2</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">20</td>
@@ -90,7 +99,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="ASE (3.6.0) · L-BFGS Line Search M=5 maxstep=0.2">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">ASE (3.6.0) · L-BFGS Line Search M=5 maxstep=0.2</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">21</td>
@@ -103,8 +113,24 @@
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">1000</td>
    </tr>
+   <tr data-problem="minimization/lj38" data-label="ase-BFGS maxstep=0.1">
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
+   <td data-field="label">ase-BFGS maxstep=0.1</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">23</td>
+   <td data-field="par2_mean"></td>
+   <td data-field="published">463</td>
+   <td data-field="median_calls"></td>
+   <td data-field="mean_calls">463</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">1000</td>
+   </tr>
    <tr data-problem="minimization/lj38" data-label="ASE (3.29.0) · LBFGS">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">ASE (3.29.0) · LBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">24</td>
@@ -118,7 +144,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="ASE (3.29.0) · BFGSLineSearch">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">ASE (3.29.0) · BFGSLineSearch</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">26</td>
@@ -132,7 +159,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="ASE (3.6.0) · FIRE">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">ASE (3.6.0) · FIRE</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">31</td>
@@ -146,7 +174,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="ASE (3.29.0) · PreconLBFGS">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">ASE (3.29.0) · PreconLBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">34</td>
@@ -160,7 +189,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="ASE (3.29.0) · FIRE">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">ASE (3.29.0) · FIRE</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">35</td>
@@ -174,7 +204,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="ASE (3.29.0) · BFGS">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">ASE (3.29.0) · BFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">36</td>
@@ -188,7 +219,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="ASE (3.29.0) · PreconFIRE">
-   <td>Lennard-Jones 38 clusters</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-field="label">ASE (3.29.0) · PreconFIRE</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">47</td>
@@ -201,8 +233,24 @@
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">1000</td>
    </tr>
+   <tr data-problem="minimization/lj38" data-label="ase-Precon-LBFGS maxstep=0.1">
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
+   <td data-field="label">ase-Precon-LBFGS maxstep=0.1</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">54</td>
+   <td data-field="par2_mean"></td>
+   <td data-field="published">2686</td>
+   <td data-field="median_calls"></td>
+   <td data-field="mean_calls">2686</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">1000</td>
+   </tr>
    <tr data-problem="minimization/lj38-noise" data-label="ASE (3.29.0) · LBFGS">
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></td>
    <td data-field="label">ASE (3.29.0) · LBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">9</td>
@@ -216,7 +264,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-label="ASE (3.29.0) · BFGS">
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></td>
    <td data-field="label">ASE (3.29.0) · BFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">10</td>
@@ -230,7 +279,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-label="ASE (3.29.0) · FIRE">
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></td>
    <td data-field="label">ASE (3.29.0) · FIRE</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">16</td>
@@ -244,7 +294,8 @@
    <td data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="ASE (3.29.0) · BFGSLineSearch">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">ASE (3.29.0) · BFGSLineSearch</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">9</td>
@@ -257,8 +308,24 @@
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">100</td>
    </tr>
+   <tr data-problem="minimization/morse-bulk" data-label="ase-PreconLBFGS maxstep=0.1">
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
+   <td data-field="label">ase-PreconLBFGS maxstep=0.1</td>
+   <td data-field="family">Minimizers</td>
+   <td data-field="family_rank">11</td>
+   <td data-field="par2_mean"></td>
+   <td data-field="published">34</td>
+   <td data-field="median_calls"></td>
+   <td data-field="mean_calls">34</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">100</td>
+   </tr>
    <tr data-problem="minimization/morse-bulk" data-label="ASE (3.29.0) · PreconODE12r">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">ASE (3.29.0) · PreconODE12r</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">15</td>
@@ -272,7 +339,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="ASE (3.29.0) · BFGS">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">ASE (3.29.0) · BFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">22</td>
@@ -286,7 +354,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="ASE (3.29.0) · LBFGS">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">ASE (3.29.0) · LBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">23</td>
@@ -300,7 +369,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="ASE (3.6.0) · ase-lbfgs">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">ASE (3.6.0) · ase-lbfgs</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">24</td>
@@ -314,7 +384,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="ASE (3.29.0) · PreconLBFGS">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">ASE (3.29.0) · PreconLBFGS</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">30</td>
@@ -328,7 +399,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="ASE (3.29.0) · FIRE">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">ASE (3.29.0) · FIRE</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">41</td>
@@ -342,7 +414,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="ASE (3.6.0) · ase-fire">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">ASE (3.6.0) · ase-fire</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">46</td>
@@ -356,7 +429,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="minimization/morse-bulk" data-label="ASE (3.29.0) · PreconFIRE">
-   <td>Morse bulk</td>
+   <td>Minimization</td>
+   <td><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-field="label">ASE (3.29.0) · PreconFIRE</td>
    <td data-field="family">Minimizers</td>
    <td data-field="family_rank">52</td>
@@ -370,7 +444,8 @@
    <td data-field="n">100</td>
    </tr>
    <tr data-problem="neb/Pt-heptamer" data-label="ASE (3.29.0) · NEB-FIRE">
-   <td>Pt-heptamer</td>
+   <td>Nudged elastic band</td>
+   <td><a href="../suites/neb/Pt-heptamer.html">Pt-heptamer</a></td>
    <td data-field="label">ASE (3.29.0) · NEB-FIRE</td>
    <td data-field="family">Band / NEB</td>
    <td data-field="family_rank">3</td>

@@ -2,8 +2,9 @@
 #+OPTIONS: toc:nil num:nil author:nil
 
 Each code has its own page.
+The name is the registry page name.
 A ranked row is one version and one stock method.
-Archived rows use the same key and appear on that code page.
+Archived rows that spell the same code are on that page.
 
 #+INCLUDE: "../include/codes.org"
 
@@ -13,7 +14,6 @@ Archived rows use the same key and appear on that code page.
    :maxdepth: 1
 
    generated/codes/eon
-   generated/codes/eon--develop-f6817b53
    generated/codes/eon-svn
    generated/codes/rgmin
    generated/codes/rgsaddle
@@ -36,9 +36,6 @@ Archived rows use the same key and appear on that code page.
    generated/codes/vc-sqnm
    generated/codes/softsaddle
    generated/codes/gpridge
-   generated/codes/eon--svn-r2549
-   generated/codes/eon--develop-500350d9
-   generated/codes/eon-r2006
    generated/codes/unknown
    generated/codes/pyamff
    generated/codes/gman

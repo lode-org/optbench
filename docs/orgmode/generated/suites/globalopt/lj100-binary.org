@@ -7,6 +7,10 @@
    <section class="bench" id="lj100-binary" data-problem="globalopt/lj100-binary">
    <h2>Binary Lennard-Jones 100</h2>
    <dl class="bench-rule">
+   <dt>System</dt><dd>binary Lennard-Jones</dd>
+   <dt>Atoms</dt><dd>100</dd>
+   <dt>Task</dt><dd>Global optimization</dd>
+   <dt>Runs</dt><dd>100</dd>
    <dt>Cap</dt><dd>2000000 force calls</dd>
    <dt>Stop</dt><dd>within 0.001 of the known minimum</dd>
    <dt>Starts</dt><dd>100</dd>
@@ -14,12 +18,21 @@
    <dt>v2</dt><dd>par2-bootstrap</dd>
    <dt>Note</dt><dd>The archived files record energies. They do not record force calls. Success is an energy at or below the improved Cambridge minimum plus 0.001. The cap is the archived evaluation budget of 2000000.</dd>
    </dl>
+   <h3>Metrics</h3>
+   <p>The main metric is avg energy.</p>
+   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <ul>
+   <li>avg energy</li>
+   <li>min energy</li>
+   <li>max energy</li>
+   </ul>
+   <p>Select a column heading to sort the table.</p>
    <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
    <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj100-binary-cost.svg"><picture><source srcset="../../../_static/board/globalopt-lj100-binary-cost.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj100-binary-cost.png" alt="Cost versus success for globalopt/lj100-binary" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <p class="bench-gaps">No performance profile. The ranked rows have no per-start record.</p>
    <h3>Basin hopping / global</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="global" data-problem="globalopt/lj100-binary">
+   <table class="bench-sortable" data-board-table="family" data-family="global" data-problem="globalopt/lj100-binary">
    <caption>Basin hopping / global. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">GMIN · basin-hopping</td><td data-field="rank_cost">-589.507</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
@@ -27,7 +40,7 @@
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
-   <table data-board-table="ranked" data-problem="globalopt/lj100-binary">
+   <table class="bench-sortable" data-board-table="ranked" data-problem="globalopt/lj100-binary">
    <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">GMIN · basin-hopping</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">-589.507</td><td data-field="median_calls"></td><td data-field="mean_calls">-589.507</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>

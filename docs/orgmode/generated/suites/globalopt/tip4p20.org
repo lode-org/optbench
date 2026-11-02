@@ -1,12 +1,15 @@
-#+TITLE: tip4p20
+#+TITLE: TIP4P 20
 #+OPTIONS: toc:nil num:nil author:nil
 
 #+begin_export rst
 .. raw:: html
 
    <section class="bench" id="tip4p20" data-problem="globalopt/tip4p20">
-   <h2>tip4p20</h2>
+   <h2>TIP4P 20</h2>
    <dl class="bench-rule">
+   <dt>System</dt><dd>TIP4P, N=20</dd>
+   <dt>Task</dt><dd>Global optimization</dd>
+   <dt>Runs</dt><dd>100</dd>
    <dt>Cap</dt><dd>200000000 force calls</dd>
    <dt>Stop</dt><dd>within 0.001 of the known minimum</dd>
    <dt>Starts</dt><dd>100</dd>
@@ -15,12 +18,23 @@
    <dt>Note</dt><dd>Success is an energy at or below the Cambridge Cluster Database TIP4P N=20 minimum plus 0.001. The cap of 200000000 force calls is above the archived GMIN maximum of 143400000.</dd>
    <dt>Contract</dt><dd>The columns are the keys shared by every archived file.</dd>
    </dl>
+   <h3>Metrics</h3>
+   <p>The main metric is force calls.</p>
+   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <ul>
+   <li>force calls</li>
+   <li>force calls max</li>
+   <li>force calls median</li>
+   <li>force calls min</li>
+   <li>nfailed</li>
+   </ul>
+   <p>Select a column heading to sort the table.</p>
    <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
    <figure class="bench-plot"><a href="../../../_static/board/globalopt-tip4p20-cost.svg"><picture><source srcset="../../../_static/board/globalopt-tip4p20-cost.webp" type="image/webp"><img src="../../../_static/board/globalopt-tip4p20-cost.png" alt="Cost versus success for globalopt/tip4p20" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <p class="bench-gaps">No performance profile. The ranked rows have no per-start record.</p>
    <h3>Basin hopping / global</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="global" data-problem="globalopt/tip4p20">
+   <table class="bench-sortable" data-board-table="family" data-family="global" data-problem="globalopt/tip4p20">
    <caption>Basin hopping / global. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">GMIN · linear temperature basin-paving</td><td data-field="rank_cost">2.55667e+07</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
@@ -28,7 +42,7 @@
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
-   <table data-board-table="ranked" data-problem="globalopt/tip4p20">
+   <table class="bench-sortable" data-board-table="ranked" data-problem="globalopt/tip4p20">
    <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">GMIN · linear temperature basin-paving</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">2.55667e+07</td><td data-field="median_calls">1.81821e+07</td><td data-field="mean_calls">2.55667e+07</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>

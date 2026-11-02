@@ -377,11 +377,27 @@ def _sorted_problems(group: list[dict]) -> list[dict]:
     return sorted(group, key=lambda item: str(item.get("title") or item["problem"]).lower())
 
 
+def _by_slug(problems: dict) -> dict[str, list[dict]]:
+    grouped: dict[str, list[dict]] = {}
+    for problem in problems.values():
+        grouped.setdefault(str(problem.get("problem") or ""), []).append(problem)
+    return grouped
+
+
+def _titled_view(problem: dict, document: dict, by_slug: dict[str, list[dict]]) -> dict:
+    from .site_pages import human_title
+
+    view = dict(_board_view(problem, document))
+    view["title"] = human_title(problem, by_slug)
+    return view
+
+
 def _headlines_html(
     order: list[str],
     by_suite: dict[str, list[dict]],
     document: dict,
     pending: dict[str, list[dict]],
+    by_slug: dict[str, list[dict]],
 ) -> str:
     from .board import gap_paragraph, headline_table
 
@@ -396,8 +412,8 @@ def _headlines_html(
             continue
         lines.append(f'<h2 id="suite-{html.escape(suite)}">{html.escape(suite_title(suite))}</h2>')
         for problem in _sorted_problems(group):
-            view = _board_view(problem, document)
-            title = str(problem.get("title") or problem["problem"])
+            view = _titled_view(problem, document, by_slug)
+            title = view["title"]
             href = f"generated/suites/{suite}/{problem['problem']}.html"
             lines.append(f"<h3>{html.escape(title)}</h3>")
             lines.append(headline_table(view))
@@ -417,6 +433,7 @@ def _collection_html(
     document: dict,
     pending: dict[str, list[dict]],
     oracle: list[dict],
+    by_slug: dict[str, list[dict]],
 ) -> str:
     from .board import gap_paragraph, headline_table
 
@@ -431,8 +448,8 @@ def _collection_html(
             continue
         lines.append(f'<h2 id="suite-{html.escape(suite)}">{html.escape(suite_title(suite))}</h2>')
         for problem in _sorted_problems(group):
-            view = _board_view(problem, document)
-            title = str(problem.get("title") or problem["problem"])
+            view = _titled_view(problem, document, by_slug)
+            title = view["title"]
             href = f"generated/suites/{suite}/{problem['problem']}.html"
             lines.append(f"<h3>{html.escape(title)}</h3>")
             lines.append(headline_table(view))
@@ -444,70 +461,37 @@ def _collection_html(
     return "\n".join(lines)
 
 
-def _code_keys(pins: list[dict]) -> set[str]:
-    keys: set[str] = set()
-    for pin in pins:
-        keys.add(str(pin.get("id") or "").lower())
-        keys.add(str(pin.get("name") or "").lower())
-    keys.discard("")
-    return keys
-
-
-def _matches_code(row: dict, keys: set[str]) -> bool:
-    code = str(row.get("code") or "").strip().lower()
-    if not code:
-        return "unknown" in keys
-    return code in keys
-
-
-def _page_keys(name: str, pins: list[dict]) -> set[str]:
-    keys = _code_keys(pins)
-    if keys:
-        return keys
-    return {name.strip().lower() or "unknown"}
-
-
-def _code_catalog(root: Path) -> tuple[str, list[str], dict[str, list[dict]]]:
+def _registry_pins(root: Path) -> tuple[str, list[dict]]:
     record = tomllib.loads((root / "codes" / "registry.toml").read_text(encoding="utf-8"))
     contributor = str(record.get("benchmark_contributor") or "")
-    grouped: dict[str, list[dict]] = {}
-    order: list[str] = []
-    for pin in record.get("code") or []:
-        if not isinstance(pin, dict):
-            continue
-        name = str(pin.get("name") or pin.get("id") or "")
-        if name not in grouped:
-            grouped[name] = []
-            order.append(name)
-        grouped[name].append(pin)
-    return contributor, order, grouped
+    pins = [pin for pin in record.get("code") or [] if isinstance(pin, dict)]
+    return contributor, pins
 
 
-def _code_page_html(name: str, pins: list[dict], document: dict) -> str:
+def _problem_titles(root: Path) -> dict[str, str]:
+    from .site_pages import human_title
+
+    problems = load_all(root / "problems")
+    by_slug = _by_slug(problems)
+    return {problem["id"]: human_title(problem, by_slug) for problem in problems.values()}
+
+
+def _code_page_html(name: str, pins: list[dict], document: dict, registry: list[dict], titles: dict[str, str]) -> str:
     from .board import _headers, ranked_cells
+    from .site_pages import code_blurb, code_page_name, versions_html
 
-    keys = _page_keys(name, pins)
     lines = [
         f'<section class="bench" id="code-{html.escape(_slug(name))}">',
         f"<h2>{html.escape(name)}</h2>",
-        '<div class="bench-scroll"><table>',
-        "<caption>Registry pins.</caption>",
-        "<thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>",
+        f"<p>{html.escape(code_blurb(name, pins))}</p>",
+        versions_html(pins),
+        "<h3>Results</h3>",
+        "<p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>",
     ]
-    for pin in pins:
-        commit = str(pin.get("commit") or "")
-        repo = str(pin.get("repository") or "")
-        lines.append("<tr>")
-        lines.append(f"<td>{html.escape(str(pin.get('role') or ''))}</td>")
-        lines.append(f"<td>{html.escape(str(pin.get('ref') or ''))}</td>")
-        lines.append(f"<td>{html.escape(commit[:12])}</td>")
-        lines.append(f'<td><a href="{html.escape(repo)}">{html.escape(repo)}</a></td>')
-        lines.append("</tr>")
-    lines.append("</tbody></table></div>")
     found: list[tuple[dict, dict]] = []
     for problem in (document.get("problems") or {}).values():
         for row in problem.get("ranked") or []:
-            if _matches_code(row, keys):
+            if code_page_name(row, registry) == name:
                 found.append((problem, row))
     found.sort(
         key=lambda item: (
@@ -519,21 +503,26 @@ def _code_page_html(name: str, pins: list[dict], document: dict) -> str:
     )
     if found:
         headers = _headers({"ranked": []})
-        lines.append('<div class="bench-scroll"><table data-board-table="code-rows">')
-        lines.append("<caption>Every ranked row for this code.</caption>")
+        lines.append('<div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">')
+        lines.append("<caption>Every ranked row for this code. Select a column heading to sort.</caption>")
         lines.append(
-            "<thead><tr><th>Problem</th>"
+            "<thead><tr><th>Suite</th><th>Problem</th>"
             + "".join(f"<th>{html.escape(header)}</th>" for header in headers)
             + "</tr></thead><tbody>"
         )
         for problem, row in found:
             cells = dict(ranked_cells(row, False))
+            ident = str(problem["id"])
+            suite, _, slug = ident.partition("/")
+            href = f"../suites/{suite}/{slug}.html"
+            title = titles.get(ident) or str(problem.get("title") or ident)
             lines.append(
                 "<tr "
-                f'data-problem="{html.escape(str(problem["id"]))}" '
+                f'data-problem="{html.escape(ident)}" '
                 f'data-label="{html.escape(str(row.get("label") or ""))}">'
             )
-            lines.append(f"<td>{html.escape(str(problem.get('title') or problem['id']))}</td>")
+            lines.append(f"<td>{html.escape(suite_title(suite))}</td>")
+            lines.append(f'<td><a href="{html.escape(href)}">{html.escape(title)}</a></td>')
             for field, value in cells.items():
                 lines.append(f'<td data-field="{field}">{html.escape(value)}</td>')
             lines.append("</tr>")
@@ -549,7 +538,7 @@ def _codes_index_html(contributor: str, order: list[str]) -> str:
         '<section class="bench" id="codes">',
         "<h2>Codes</h2>",
         f"<p>The benchmark contributor is {html.escape(contributor)}. "
-        "Each code page lists every ranked row for that code.</p>",
+        "Each code page lists the pinned versions and every ranked row for that code.</p>",
         "<ul>",
     ]
     for name in order:
@@ -560,19 +549,18 @@ def _codes_index_html(contributor: str, order: list[str]) -> str:
 
 
 def _write_code_pages(root: Path, document: dict) -> None:
-    contributor, order, grouped = _code_catalog(root)
-    known: set[str] = set()
-    for pins in grouped.values():
-        known |= _code_keys(pins)
+    from .site_pages import code_page_name, group_pins
+
+    contributor, pins = _registry_pins(root)
+    grouped = dict(group_pins(pins))
+    order = [name for name, _pins in group_pins(pins)]
+    titles = _problem_titles(root)
     for problem in (document.get("problems") or {}).values():
         for row in problem.get("ranked") or []:
-            if _matches_code(row, known):
-                continue
-            name = str(row.get("code") or "").strip() or "unknown"
+            name = code_page_name(row, pins)
             if name not in grouped:
                 grouped[name] = []
                 order.append(name)
-                known |= _code_keys([{"id": name, "name": name}])
     code_dir = root / "docs" / "orgmode" / "generated" / "codes"
     code_dir.mkdir(parents=True, exist_ok=True)
     keep: set[str] = set()
@@ -585,7 +573,7 @@ def _write_code_pages(root: Path, document: dict) -> None:
             f"#+TITLE: {name}",
             "#+OPTIONS: toc:nil num:nil author:nil",
             "",
-            _raw(_code_page_html(name, grouped[name], document)).rstrip(),
+            _raw(_code_page_html(name, grouped[name], document, pins, titles)).rstrip(),
             "",
         ]
         (code_dir / f"{slug}.org").write_text("\n".join(page), encoding="utf-8")
@@ -600,8 +588,9 @@ def _write_code_pages(root: Path, document: dict) -> None:
         "#+OPTIONS: toc:nil num:nil author:nil",
         "",
         "Each code has its own page.",
+        "The name is the registry page name.",
         "A ranked row is one version and one stock method.",
-        "Archived rows use the same key and appear on that code page.",
+        "Archived rows that spell the same code are on that page.",
         "",
         '#+INCLUDE: "../include/codes.org"',
         "",
@@ -640,13 +629,42 @@ def _suite_problem_link(problem: dict, templates: bool = False) -> str:
     return f"#{anchor}"
 
 
+def _problem_preamble(root: Path, problem: dict, note: str = "") -> str:
+    from .site_pages import atom_text, metric_html, run_text, system_text
+
+    bits: list[tuple[str, str]] = []
+    system = system_text(problem)
+    if system:
+        bits.append(("System", system))
+    atoms = atom_text(problem)
+    if atoms:
+        bits.append(("Atoms", atoms))
+    bits.append(("Task", suite_title(str(problem.get("suite") or ""))))
+    runs = run_text(root, problem)
+    if runs:
+        bits.append(("Runs", runs))
+    bits.extend(_bits(problem))
+    lines: list[str] = []
+    if bits:
+        lines.append('<dl class="bench-rule">')
+        for label, text in bits:
+            lines.append(f"<dt>{html.escape(label)}</dt><dd>{html.escape(text)}</dd>")
+        lines.append("</dl>")
+    if note:
+        lines.append(f'<p class="bench-aside">{html.escape(note)}</p>')
+    lines.append(metric_html(problem, _primary(problem)))
+    return "\n".join(lines)
+
+
 def render(root: Path) -> None:
     """Write the site tables from the v2 scorer."""
     from .board import plot_names_for, render_problem_section, write_board
+    from .site_pages import human_title, plot_figure, suite_paragraph, suite_tables, write_suite_plot
 
     root = Path(root)
     document = write_board(root, root / "results" / "board")
     problems = load_all(root / "problems")
+    by_slug = _by_slug(problems)
     smoke = _smoke_note(root)
     pending = _unparsed_by_problem(document)
     by_suite: dict[str, list[dict]] = {}
@@ -658,11 +676,11 @@ def render(root: Path) -> None:
     include.mkdir(parents=True, exist_ok=True)
     _write_code_pages(root, document)
     (include / "sota.org").write_text(
-        _raw(_headlines_html(order, by_suite, document, pending)),
+        _raw(_headlines_html(order, by_suite, document, pending, by_slug)),
         encoding="utf-8",
     )
     (include / "collection.org").write_text(
-        _raw(_collection_html(order, by_suite, document, pending, [])),
+        _raw(_collection_html(order, by_suite, document, pending, [], by_slug)),
         encoding="utf-8",
     )
     for stale in ("featured.org", "terra-pass.org"):
@@ -680,20 +698,19 @@ def render(root: Path) -> None:
         problem_dir.mkdir(parents=True, exist_ok=True)
         keep: set[str] = set()
         toc: list[str] = []
-        links: list[str] = []
-        for problem in sorted(group, key=lambda item: item["problem"].lower()):
+        ordered = sorted(group, key=lambda item: human_title(item, by_slug).lower())
+        for problem in ordered:
             name = str(problem["problem"])
             keep.add(f"{name}.org")
             toc.append(f"   {suite}/{name}")
-            title = str(problem.get("title") or name)
-            links.append(f'<li><a href="{suite}/{name}.html">{html.escape(title)}</a></li>')
-            view = _board_view(problem, document)
+            title = human_title(problem, by_slug)
+            view = _titled_view(problem, document, by_slug)
             note = smoke if problem["id"] == "saddle-search/pt-island" else ""
             section = render_problem_section(
                 view,
                 plot_names_for(view),
                 asset_prefix="../../../_static/board",
-                preamble=_rule_html(problem, note),
+                preamble=_problem_preamble(root, problem, note),
                 section_id=name,
                 unparsed=pending.get(problem["id"]),
             )
@@ -708,13 +725,23 @@ def render(root: Path) -> None:
         for path in problem_dir.glob("*.org"):
             if path.name not in keep:
                 path.unlink()
+        _contributor, pins = _registry_pins(root)
+        tables, series = suite_tables(ordered, document, pins, root, by_slug, suite)
+        plot_dir = root / "docs" / "source" / "_static" / "board"
+        plot_name = write_suite_plot(suite, series, plot_dir)
+        parts = [
+            '<section class="bench">',
+            f"<p>{html.escape(suite_paragraph(suite_title(suite), ordered, root, by_slug))}</p>",
+            tables,
+        ]
+        if plot_name:
+            parts.append(plot_figure("../../_static/board", plot_name, f"{suite_title(suite)} best ranked cost"))
+        parts.append("</section>")
         body = [
             f"#+TITLE: {suite_title(suite)}",
             "#+OPTIONS: toc:nil num:nil author:nil",
             "",
-            "Each problem is its own page.",
-            "",
-            _raw("<ul>\n" + "\n".join(links) + "\n</ul>"),
+            _raw("\n".join(parts)).rstrip(),
             "",
             "#+begin_export rst",
             ".. toctree::",

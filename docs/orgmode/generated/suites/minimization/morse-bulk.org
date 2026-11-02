@@ -7,17 +7,30 @@
    <section class="bench" id="morse-bulk" data-problem="minimization/morse-bulk">
    <h2>Morse bulk</h2>
    <dl class="bench-rule">
+   <dt>System</dt><dd>Morse</dd>
+   <dt>Task</dt><dd>Minimization</dd>
+   <dt>Runs</dt><dd>100</dd>
    <dt>Stop</dt><dd>norm of the force at or below 0.001 eV/Ang</dd>
    <dt>Cap</dt><dd>10000 force calls</dd>
    <dt>v2</dt><dd>par2-bootstrap</dd>
    </dl>
+   <h3>Metrics</h3>
+   <p>The main metric is force calls.</p>
+   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <ul>
+   <li>force calls</li>
+   <li>force calls max</li>
+   <li>force calls min</li>
+   <li>nfailed</li>
+   </ul>
+   <p>Select a column heading to sort the table.</p>
    <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table. Files with no per-start harness record stay off the ranked table.</p>
    <figure class="bench-plot"><a href="../../../_static/board/minimization-morse-bulk-profile.svg"><picture><source srcset="../../../_static/board/minimization-morse-bulk-profile.webp" type="image/webp"><img src="../../../_static/board/minimization-morse-bulk-profile.png" alt="Dolan-More profile for minimization/morse-bulk" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
    <figure class="bench-plot"><a href="../../../_static/board/minimization-morse-bulk-cost.svg"><picture><source srcset="../../../_static/board/minimization-morse-bulk-cost.webp" type="image/webp"><img src="../../../_static/board/minimization-morse-bulk-cost.png" alt="Cost versus success for minimization/morse-bulk" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <h3>Minimizers</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="minimize" data-problem="minimization/morse-bulk">
+   <table class="bench-sortable" data-board-table="family" data-family="minimize" data-problem="minimization/morse-bulk">
    <caption>Minimizers. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">rgmin (0.4.1) · NEWTON</td><td data-field="rank_cost">8.35</td><td data-field="hessian_calls">7.35</td><td data-field="fd_calls"></td><td data-field="n">100</td></tr>
@@ -90,7 +103,7 @@
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
-   <table data-board-table="ranked" data-problem="minimization/morse-bulk">
+   <table class="bench-sortable" data-board-table="ranked" data-problem="minimization/morse-bulk">
    <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">rgmin (0.4.1) · NEWTON</td><td data-field="family">Minimizers</td><td data-field="family_rank">1</td><td data-field="par2_mean">8.35</td><td data-field="published"></td><td data-field="median_calls">9</td><td data-field="mean_calls">8.35</td><td data-field="hessian_calls">7.35</td><td data-field="fd_calls"></td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>

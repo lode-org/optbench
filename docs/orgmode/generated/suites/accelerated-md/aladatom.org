@@ -7,6 +7,10 @@
    <section class="bench" id="aladatom" data-problem="accelerated-md/aladatom">
    <h2>Al adatom on Al(100) at 250 K</h2>
    <dl class="bench-rule">
+   <dt>System</dt><dd>Voter-Chen EAM</dd>
+   <dt>Atoms</dt><dd>151</dd>
+   <dt>Task</dt><dd>Accelerated molecular dynamics</dd>
+   <dt>Runs</dt><dd>1</dd>
    <dt>Potential</dt><dd>eam_al (Voter-Chen aluminum)</dd>
    <dt>Temperature</dt><dd>250 K</dd>
    <dt>Reference rate</dt><dd>2.54294e+08 per second</dd>
@@ -15,20 +19,30 @@
    <dt>v2</dt><dd>par2-bootstrap</dd>
    <dt>Note</dt><dd>Aluminum adatom on Al(100). The reactant is the 151-atom archived con, and the potential is the Voter-Chen EAM built into eOn as eam_al. The reference escape rate is the 250 K parallel-replica row. One repetition is one AKMC catalogue. The published method sample is 5000 products, and that count turns the rate into simulated time.</dd>
    </dl>
+   <h3>Metrics</h3>
+   <p>The main metric is true rate.</p>
+   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <ul>
+   <li>percent uncertainty</li>
+   <li>thermostat</li>
+   <li>true rate</li>
+   <li>uncertainty</li>
+   </ul>
+   <p>Select a column heading to sort the table.</p>
    <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
    <p class="bench-gaps">eOn rows are not yet on the harness counter. A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <figure class="bench-plot"><a href="../../../_static/board/accelerated-md-aladatom-cost.svg"><picture><source srcset="../../../_static/board/accelerated-md-aladatom-cost.webp" type="image/webp"><img src="../../../_static/board/accelerated-md-aladatom-cost.png" alt="Cost versus success for accelerated-md/aladatom" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
    <p class="bench-gaps">No performance profile. The ranked rows have no per-start record.</p>
    <h3>Minimizers</h3>
    <div class="bench-scroll">
-   <table data-board-table="family" data-family="minimize" data-problem="accelerated-md/aladatom">
+   <table class="bench-sortable" data-board-table="family" data-family="minimize" data-problem="accelerated-md/aladatom">
    <caption>Minimizers. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">eOn · parallel replica</td><td data-field="rank_cost">2.54294e+08</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">1</td></tr>
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
-   <table data-board-table="ranked" data-problem="accelerated-md/aladatom">
+   <table class="bench-sortable" data-board-table="ranked" data-problem="accelerated-md/aladatom">
    <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">eOn · parallel replica</td><td data-field="family">Minimizers</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">2.54294e+08</td><td data-field="median_calls"></td><td data-field="mean_calls">2.54294e+08</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">1</td></tr>
