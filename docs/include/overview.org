@@ -1,51 +1,27 @@
 #+begin_export rst
 .. raw:: html
 
-   <section class="bench" id="suites">
-   <h2>Suites</h2>
-   <p>Each suite is one kind of task. The link opens its problems and the best cost of each code.</p>
-   <div class="bench-scroll"><table class="bench-sortable" data-bench="suites">
-   <caption>The suites on this site.</caption>
-   <thead><tr><th>Suite</th><th>Problems</th></tr></thead><tbody>
-   <tr>
-   <th scope="row"><a href="generated/suites/minimization.html">Minimization</a></th>
-   <td>Lennard-Jones 38 clusters, Lennard-Jones 38 clusters with Gaussian force noise, Morse bulk</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="generated/suites/saddle-search.html">Saddle search</a></th>
-   <td>Pt heptamer island</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="generated/suites/double-ended-saddle-search.html">Double-ended saddle search</a></th>
-   <td>Lennard-Jones 38 transition-state separation, LJ38 double-ended saddle, Pt heptamer island</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="generated/suites/globalopt.html">Global optimization</a></th>
-   <td>Binary Lennard-Jones 100, Lennard-Jones 150, Lennard-Jones 38 global minimum, Lennard-Jones 75, and 4 more</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="generated/suites/lowest-eigenvector.html">Lowest eigenvector</a></th>
-   <td>Lennard-Jones 38</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="generated/suites/tsopt.html">Transition state optimization</a></th>
-   <td>H2 dissociation on a fixed Cu substrate, Lennard-Jones 38, Pt heptamer island</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="generated/suites/mlopt.html">Machine learning optimization</a></th>
-   <td>EMT Pt 38 nanoparticle, Ethene</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="generated/suites/neb.html">Nudged elastic band</a></th>
-   <td>Pt heptamer island</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="generated/suites/hTST.html">Harmonic transition state theory</a></th>
-   <td>EAM aluminum, Pt heptamer island</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="generated/suites/accelerated-md.html">Accelerated molecular dynamics</a></th>
-   <td>Al adatom on Al(100) at 150 K, Al adatom on Al(100) at 250 K</td>
-   </tr>
-   </tbody></table></div></section>
+   <section class="bench bench-home" id="suites">
+   <div class="bench-home-stats">
+   <div><strong>10</strong><span>Scientific suites</span></div>
+   <div><strong>26</strong><span>Benchmark problems</span></div>
+   <div><strong>461</strong><span>Ranked result rows</span></div>
+   <div><strong>32</strong><span>Codes represented</span></div>
+   </div>
+   <div class="bench-section-head">
+   <div><p class="bench-eyebrow">Explore the benchmark</p><h2>Suites</h2></div>
+   <p>Each suite groups one scientific task and opens directly on its current leaderboard.</p>
+   </div>
+   <div class="bench-suite-grid">
+   <a class="bench-suite-card" href="generated/suites/minimization.html"><span class="bench-suite-card__number">01</span><h3>Minimization</h3><p>Lennard-Jones 38 clusters · Lennard-Jones 38 clusters with Gaussian force noise · +1</p><div class="bench-suite-card__meta"><span>3 problems</span><span>166 ranked rows</span></div><span class="bench-card-link">Open suite <span aria-hidden="true">→</span></span></a>
+   <a class="bench-suite-card" href="generated/suites/saddle-search.html"><span class="bench-suite-card__number">02</span><h3>Saddle search</h3><p>Pt heptamer island</p><div class="bench-suite-card__meta"><span>1 problem</span><span>20 ranked rows</span></div><span class="bench-card-link">Open suite <span aria-hidden="true">→</span></span></a>
+   <a class="bench-suite-card" href="generated/suites/double-ended-saddle-search.html"><span class="bench-suite-card__number">03</span><h3>Double-ended saddle search</h3><p>Lennard-Jones 38 transition-state separation · LJ38 double-ended saddle · +1</p><div class="bench-suite-card__meta"><span>3 problems</span><span>108 ranked rows</span></div><span class="bench-card-link">Open suite <span aria-hidden="true">→</span></span></a>
+   <a class="bench-suite-card" href="generated/suites/globalopt.html"><span class="bench-suite-card__number">04</span><h3>Global optimization</h3><p>Binary Lennard-Jones 100 · Lennard-Jones 150 · +6</p><div class="bench-suite-card__meta"><span>8 problems</span><span>31 ranked rows</span></div><span class="bench-card-link">Open suite <span aria-hidden="true">→</span></span></a>
+   <a class="bench-suite-card" href="generated/suites/lowest-eigenvector.html"><span class="bench-suite-card__number">05</span><h3>Lowest eigenvector</h3><p>Lennard-Jones 38</p><div class="bench-suite-card__meta"><span>1 problem</span><span>26 ranked rows</span></div><span class="bench-card-link">Open suite <span aria-hidden="true">→</span></span></a>
+   <a class="bench-suite-card" href="generated/suites/tsopt.html"><span class="bench-suite-card__number">06</span><h3>Transition state optimization</h3><p>H2 dissociation on a fixed Cu substrate · Lennard-Jones 38 · +1</p><div class="bench-suite-card__meta"><span>3 problems</span><span>47 ranked rows</span></div><span class="bench-card-link">Open suite <span aria-hidden="true">→</span></span></a>
+   <a class="bench-suite-card" href="generated/suites/mlopt.html"><span class="bench-suite-card__number">07</span><h3>Machine learning optimization</h3><p>EMT Pt 38 nanoparticle · Ethene</p><div class="bench-suite-card__meta"><span>2 problems</span><span>16 ranked rows</span></div><span class="bench-card-link">Open suite <span aria-hidden="true">→</span></span></a>
+   <a class="bench-suite-card" href="generated/suites/neb.html"><span class="bench-suite-card__number">08</span><h3>Nudged elastic band</h3><p>Pt heptamer island</p><div class="bench-suite-card__meta"><span>1 problem</span><span>30 ranked rows</span></div><span class="bench-card-link">Open suite <span aria-hidden="true">→</span></span></a>
+   <a class="bench-suite-card" href="generated/suites/hTST.html"><span class="bench-suite-card__number">09</span><h3>Harmonic transition state theory</h3><p>EAM aluminum · Pt heptamer island</p><div class="bench-suite-card__meta"><span>2 problems</span><span>15 ranked rows</span></div><span class="bench-card-link">Open suite <span aria-hidden="true">→</span></span></a>
+   <a class="bench-suite-card" href="generated/suites/accelerated-md.html"><span class="bench-suite-card__number">10</span><h3>Accelerated molecular dynamics</h3><p>Al adatom on Al(100) at 150 K · Al adatom on Al(100) at 250 K</p><div class="bench-suite-card__meta"><span>2 problems</span><span>2 ranked rows</span></div><span class="bench-card-link">Open suite <span aria-hidden="true">→</span></span></a>
+   </div></section>
 #+end_export

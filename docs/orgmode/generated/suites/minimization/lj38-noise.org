@@ -5,37 +5,99 @@
 .. raw:: html
 
    <section class="bench" id="lj38-noise" data-problem="minimization/lj38-noise">
-   <dl class="bench-rule">
-   <dt>System</dt><dd>Lennard-Jones</dd>
-   <dt>Atoms</dt><dd>38</dd>
-   <dt>Task</dt><dd>Minimization</dd>
-   <dt>Runs</dt><dd>1000</dd>
-   <dt>Stop</dt><dd>L2 norm of the force at or below 0.01 energy/distance</dd>
-   <dt>Cap</dt><dd>10000 force calls</dd>
-   <dt>Starts</dt><dd>1000</dd>
-   <dt>Potential</dt><dd>lennard-jones</dd>
-   <dt>Note</dt><dd>Gaussian force noise on the clean Lennard-Jones energy. The harness campaigns use that rule. The quadratic sample is results/validation/statistics.json.</dd>
-   </dl>
-   <h3>Metrics</h3>
-   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
-   <p>The main metric is Force calls.</p>
-   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <p>A run counts as a success when harness force calls under the cap, the noisy force at the noise-aware stop, and when sigma is positive a clean-energy window whose span is at most max(energy_tol, kappa * sigma). The Hessian is the clean force. The index is vibrational: the six rigid modes are removed, and a curvature is negative only below -max(force_norm, 1e-8*||H||_F, 1e-6), with that force_norm the noise-aware stop. Energy and Kabsch RMSD are not applied: this file has no per-start reference.</p>
-   <ul>
-   <li>Force calls</li>
-   <li>Most force calls</li>
-   <li>Fewest force calls</li>
-   <li>Failed runs</li>
-   </ul>
-   <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
+   <div class="bench-problem-lead">
+   <p class="bench-eyebrow">Benchmark problem</p>
+   <div class="bench-fact-grid">
+   <div class="bench-fact"><span>System</span><strong>Lennard-Jones</strong></div>
+   <div class="bench-fact"><span>Atoms</span><strong>38</strong></div>
+   <div class="bench-fact"><span>Runs</span><strong>1000</strong></div>
+   <div class="bench-fact"><span>Cap</span><strong>10000 calls</strong></div>
+   </div>
+   <div class="bench-metric-strip">
+   <div><span>Primary metric</span><strong>Force calls</strong></div>
+   <p>Also records Most force calls, Fewest force calls</p>
+   <a href="../../../methodology.html">How scoring works <span aria-hidden="true">→</span></a></div>
+   </div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div><p><a href="../../../methodology.html">PAR-2 methodology</a> · full-set, stock methods only</p></div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-leaderboard" data-bench="leaderboard">
+   <caption>Leading ranked methods. Lower PAR-2 is better.</caption>
+   <thead><tr><th>Rank</th><th>Code and method</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-rank="1">
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgmin (0.4.1) · DOGLEG</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">45</td>
+   <td class="num">79</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:100.00%"></span><strong>81.881</strong></td>
+   </tr>
+   <tr data-rank="2">
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgmin (0.4.1) · NEWTON</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">35</td>
+   <td class="num">64</td>
+   <td class="num">99.5%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:87.50%"></span><strong>166.337</strong></td>
+   </tr>
+   <tr data-rank="3">
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgmin (0.4.1) · LBFGS</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">96</td>
+   <td class="num">170</td>
+   <td class="num">99.9%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:75.00%"></span><strong>197.228</strong></td>
+   </tr>
+   <tr data-rank="4">
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">DL-FIND (0.0.3) · L-BFGS</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">99</td>
+   <td class="num">184</td>
+   <td class="num">99.8%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:62.50%"></span><strong>231.908</strong></td>
+   </tr>
+   <tr data-rank="5">
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">pele (0.1.2) · MYLBFGS</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">127</td>
+   <td class="num">235</td>
+   <td class="num">99.9%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:50.00%"></span><strong>268.036</strong></td>
+   </tr>
+   <tr data-rank="6">
+   <td class="num"><span class="bench-rank-badge">6</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">pele (0.1.2) · LBFGS</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">127</td>
+   <td class="num">235</td>
+   <td class="num">99.8%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:37.50%"></span><strong>288.145</strong></td>
+   </tr>
+   <tr data-rank="7">
+   <td class="num"><span class="bench-rank-badge">7</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">Eon svn (r2549) · LBFGS</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">100</td>
+   <td class="num">189</td>
+   <td class="num">99.5%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:25.00%"></span><strong>300.052</strong></td>
+   </tr>
+   <tr data-rank="8">
+   <td class="num"><span class="bench-rank-badge">8</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">GMIN (df8da5992675) · LBFGS</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">100</td>
+   <td class="num">223</td>
+   <td class="num">99.7%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:18.00%"></span><strong>301.399</strong></td>
+   </tr>
+   </tbody></table></div>
+   <p class="bench-table-count">Showing 8 of 25 ranked rows. Open the full result tables below for every method.</p>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/minimization-lj38-noise-profile.svg"><picture><source srcset="../../../_static/board/minimization-lj38-noise-profile.webp" type="image/webp"><img src="../../../_static/board/minimization-lj38-noise-profile.png" alt="Performance profile for Lennard-Jones 38 clusters with Gaussian force noise" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
-   <figure class="bench-plot"><a href="../../../_static/board/minimization-lj38-noise-cost.svg"><picture><source srcset="../../../_static/board/minimization-lj38-noise-cost.webp" type="image/webp"><img src="../../../_static/board/minimization-lj38-noise-cost.png" alt="Cost and success for Lennard-Jones 38 clusters with Gaussian force noise" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p><h2>Performance</h2></div><p>Charts are generated locally from committed results.</p></div>
+   <div class="bench-chart-grid"><figure class="bench-plot"><a href="../../../_static/board/minimization-lj38-noise-profile.svg"><picture><source srcset="../../../_static/board/minimization-lj38-noise-profile.webp" type="image/webp"><img src="../../../_static/board/minimization-lj38-noise-profile.png" alt="Performance profile for Lennard-Jones 38 clusters with Gaussian force noise" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../../_static/board/minimization-lj38-noise-cost.svg"><picture><source srcset="../../../_static/board/minimization-lj38-noise-cost.webp" type="image/webp"><img src="../../../_static/board/minimization-lj38-noise-cost.png" alt="Cost and success for Lennard-Jones 38 clusters with Gaussian force noise" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure></div>
+   <details class="bench-full-results"><summary><span>Full result tables</span><small>25 ranked rows, grouped by method family</small></summary><div class="bench-full-results__body">
    <h3>Minimizers</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="minimize" data-problem="minimization/lj38-noise">
-   <caption>Minimizers. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Minimizers. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">rgmin (0.4.1) · DOGLEG</td><td data-field="rank_cost">81.881</td><td data-field="hessian_calls">80.881</td><td data-field="fd_calls">9220.43</td><td data-field="n">1000</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">rgmin (0.4.1) · NEWTON</td><td data-field="rank_cost">166.337</td><td data-field="hessian_calls">65.649</td><td data-field="fd_calls">7483.99</td><td data-field="n">1000</td></tr>
@@ -66,7 +128,7 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="minimization/lj38-noise">
-   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">rgmin (0.4.1) · DOGLEG</td><td data-field="family">Minimizers</td><td data-field="family_rank">1</td><td data-field="par2_mean">81.881</td><td data-field="published"></td><td data-field="median_calls">79</td><td data-field="mean_calls">81.881</td><td data-field="hessian_calls">80.881</td><td data-field="fd_calls">9220.43</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">1000</td></tr>
    <tr><td data-field="label">rgmin (0.4.1) · NEWTON</td><td data-field="family">Minimizers</td><td data-field="family_rank">2</td><td data-field="par2_mean">166.337</td><td data-field="published"></td><td data-field="median_calls">64</td><td data-field="mean_calls">66.649</td><td data-field="hessian_calls">65.649</td><td data-field="fd_calls">7483.99</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 5</td><td data-field="n">1000</td></tr>
@@ -94,5 +156,6 @@
    <tr><td data-field="label">LAMMPS (30 Sep 2026) · steepest descent</td><td data-field="family">Minimizers</td><td data-field="family_rank">24</td><td data-field="par2_mean">10074.7</td><td data-field="published"></td><td data-field="median_calls">6420.5</td><td data-field="mean_calls">6693.33</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 227, wrong_stationary 75</td><td data-field="n">1000</td></tr>
    <tr><td data-field="label">pele (0.1.2) · steepest descent</td><td data-field="family">Minimizers</td><td data-field="family_rank">25</td><td data-field="par2_mean">19975.4</td><td data-field="published"></td><td data-field="median_calls">10000</td><td data-field="mean_calls">9923.97</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 5, cap 980, wrong_stationary 13</td><td data-field="n">1000</td></tr>
    </tbody></table></div>
+   </div></details>
    </section>
 #+end_export

@@ -5,21 +5,18 @@
 .. raw:: html
 
    <section class="bench" id="code-rgsaddle">
-   <p>rgsaddle is used for saddle search. 0.2.2 at main c0db2b8d.</p>
-   <h3>Versions</h3>
-   <div class="bench-scroll"><table class="bench-sortable">
-   <caption>Registry pins for this code.</caption>
-   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
-   <tr>
-   <td>saddle search</td>
-   <td>main</td>
-   <td>c0db2b8d333c</td>
-   <td><a href="https://github.com/OmniPotentRPC/rgsaddle">https://github.com/OmniPotentRPC/rgsaddle</a></td>
-   </tr>
-   </tbody></table></div>
-   <h3>Results</h3>
-   <p>Ranked rows for this code, across every suite. One row is one version and one method. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published.</p>
-   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <div class="bench-code-lead">
+   <p class="bench-eyebrow">Code profile</p>
+   <p class="bench-lede">rgsaddle is used for saddle search. 0.2.2 at main c0db2b8d.</p>
+   <div class="bench-stat-grid bench-stat-grid--compact">
+   <div class="bench-stat"><strong>8</strong><span>Problems</span></div>
+   <div class="bench-stat"><strong>39</strong><span>Ranked rows</span></div>
+   <div class="bench-stat"><strong>1</strong><span>Registry pins</span></div>
+   <div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>
+   </div></div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Across all suites</p><h2>Results</h2></div>
+   <p>One row is one version and one stock method. Select a heading to sort.</p></div>
+   <div class="bench-scroll bench-leaderboard-wrap"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
    <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="rgsaddle (0.2.2) · CI-NEB energy-weighted">
@@ -606,6 +603,17 @@
    <td data-field="fd_calls">0</td>
    <td data-field="failures">crash 0, divergence 0, cap 28, wrong_stationary 0</td>
    <td data-field="n">49</td>
+   </tr>
+   </tbody></table></div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Reproducibility</p><h2>Versions</h2></div></div>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
+   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
+   <tr>
+   <td>saddle search</td>
+   <td>main</td>
+   <td>c0db2b8d333c</td>
+   <td><a href="https://github.com/OmniPotentRPC/rgsaddle">https://github.com/OmniPotentRPC/rgsaddle</a></td>
    </tr>
    </tbody></table></div>
    </section>

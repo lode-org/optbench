@@ -5,32 +5,101 @@
 .. raw:: html
 
    <section class="bench" id="morse-bulk" data-problem="minimization/morse-bulk">
-   <dl class="bench-rule">
-   <dt>System</dt><dd>Morse</dd>
-   <dt>Task</dt><dd>Minimization</dd>
-   <dt>Runs</dt><dd>100</dd>
-   <dt>Stop</dt><dd>norm of the force at or below 0.001 eV/Ang</dd>
-   <dt>Cap</dt><dd>10000 force calls</dd>
-   </dl>
-   <h3>Metrics</h3>
-   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
-   <p>The main metric is Force calls.</p>
-   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <ul>
-   <li>Force calls</li>
-   <li>Most force calls</li>
-   <li>Fewest force calls</li>
-   <li>Failed runs</li>
-   </ul>
-   <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
+   <div class="bench-problem-lead">
+   <p class="bench-eyebrow">Benchmark problem</p>
+   <div class="bench-fact-grid">
+   <div class="bench-fact"><span>System</span><strong>Morse</strong></div>
+   <div class="bench-fact"><span>Atoms</span><strong>—</strong></div>
+   <div class="bench-fact"><span>Runs</span><strong>100</strong></div>
+   <div class="bench-fact"><span>Cap</span><strong>10000 calls</strong></div>
+   </div>
+   <p class="bench-note"><sup>*</sup> A dash marks a fact the problem definition does not state.</p>
+   <div class="bench-metric-strip">
+   <div><span>Primary metric</span><strong>Force calls</strong></div>
+   <p>Also records Most force calls, Fewest force calls</p>
+   <a href="../../../methodology.html">How scoring works <span aria-hidden="true">→</span></a></div>
+   </div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div><p><a href="../../../methodology.html">PAR-2 methodology</a> · full-set, stock methods only</p></div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-leaderboard" data-bench="leaderboard">
+   <caption>Leading ranked methods. Lower PAR-2 is better.</caption>
+   <thead><tr><th>Rank</th><th>Code and method</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-rank="1">
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgmin (0.4.1) · NEWTON</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">4</td>
+   <td class="num">9</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:100.00%"></span><strong>8.35</strong></td>
+   </tr>
+   <tr data-rank="2">
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgmin (0.4.0) · DOGLEG</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">6</td>
+   <td class="num">10</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:87.50%"></span><strong>10.11</strong></td>
+   </tr>
+   <tr data-rank="3">
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgmin (0.4.1) · DOGLEG</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">6</td>
+   <td class="num">10</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:75.00%"></span><strong>10.11</strong></td>
+   </tr>
+   <tr data-rank="4">
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27;</span><span class="bench-leader__family">Minimizers</span><span class="bench-leader__published">Published score 19</span></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   <tr data-rank="5">
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgmin (0.4.1) · LBFGS</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">22</td>
+   <td class="num">27</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:50.00%"></span><strong>26.87</strong></td>
+   </tr>
+   <tr data-rank="6">
+   <td class="num"><span class="bench-rank-badge">6</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgmin (0.4.0) · LBFGS</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">23</td>
+   <td class="num">27</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:37.50%"></span><strong>27.05</strong></td>
+   </tr>
+   <tr data-rank="7">
+   <td class="num"><span class="bench-rank-badge">7</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgmin (0.4.1) · DIIS</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">21</td>
+   <td class="num">28</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:25.00%"></span><strong>27.44</strong></td>
+   </tr>
+   <tr data-rank="8">
+   <td class="num"><span class="bench-rank-badge">8</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">Sella (2.6.0) · Sella</span><span class="bench-leader__family">Minimizers</span></td>
+   <td class="num">20</td>
+   <td class="num">28</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:18.00%"></span><strong>28.89</strong></td>
+   </tr>
+   </tbody></table></div>
+   <p class="bench-note"><sup>*</sup> A dash marks a field the archived source does not record. Archived rows are ordered by their published mean.</p>
+   <p class="bench-table-count">Showing 8 of 67 ranked rows. Open the full result tables below for every method.</p>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table. Files with no per-start harness record stay off the ranked table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/minimization-morse-bulk-profile.svg"><picture><source srcset="../../../_static/board/minimization-morse-bulk-profile.webp" type="image/webp"><img src="../../../_static/board/minimization-morse-bulk-profile.png" alt="Performance profile for Morse bulk" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
-   <figure class="bench-plot"><a href="../../../_static/board/minimization-morse-bulk-cost.svg"><picture><source srcset="../../../_static/board/minimization-morse-bulk-cost.webp" type="image/webp"><img src="../../../_static/board/minimization-morse-bulk-cost.png" alt="Cost and success for Morse bulk" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p><h2>Performance</h2></div><p>Charts are generated locally from committed results.</p></div>
+   <div class="bench-chart-grid"><figure class="bench-plot"><a href="../../../_static/board/minimization-morse-bulk-profile.svg"><picture><source srcset="../../../_static/board/minimization-morse-bulk-profile.webp" type="image/webp"><img src="../../../_static/board/minimization-morse-bulk-profile.png" alt="Performance profile for Morse bulk" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../../_static/board/minimization-morse-bulk-cost.svg"><picture><source srcset="../../../_static/board/minimization-morse-bulk-cost.webp" type="image/webp"><img src="../../../_static/board/minimization-morse-bulk-cost.png" alt="Cost and success for Morse bulk" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure></div>
+   <details class="bench-full-results"><summary><span>Full result tables</span><small>67 ranked rows, grouped by method family</small></summary><div class="bench-full-results__body">
    <h3>Minimizers</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="minimize" data-problem="minimization/morse-bulk">
-   <caption>Minimizers. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Minimizers. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">rgmin (0.4.1) · NEWTON</td><td data-field="rank_cost">8.35</td><td data-field="hessian_calls">7.35</td><td data-field="fd_calls"></td><td data-field="n">100</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">rgmin (0.4.0) · DOGLEG</td><td data-field="rank_cost">10.11</td><td data-field="hessian_calls">9.11</td><td data-field="fd_calls"></td><td data-field="n">100</td></tr>
@@ -103,7 +172,7 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="minimization/morse-bulk">
-   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">rgmin (0.4.1) · NEWTON</td><td data-field="family">Minimizers</td><td data-field="family_rank">1</td><td data-field="par2_mean">8.35</td><td data-field="published"></td><td data-field="median_calls">9</td><td data-field="mean_calls">8.35</td><td data-field="hessian_calls">7.35</td><td data-field="fd_calls"></td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
    <tr><td data-field="label">rgmin (0.4.0) · DOGLEG</td><td data-field="family">Minimizers</td><td data-field="family_rank">2</td><td data-field="par2_mean">10.11</td><td data-field="published"></td><td data-field="median_calls">10</td><td data-field="mean_calls">10.11</td><td data-field="hessian_calls">9.11</td><td data-field="fd_calls"></td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
@@ -184,5 +253,6 @@
    <li>Eon svn: no per-start record</li>
    <li>AseMorseGpminTuned: AseMorseGpminTuned (&quot;&#x27;0&#x27;&quot;, &quot;&#x27;pos_0000.con&#x27;&quot;) track_force_calls was skipped or failed</li>
    </ul>
+   </div></details>
    </section>
 #+end_export

@@ -5,302 +5,185 @@
 .. raw:: html
 
    <section class="bench">
-   <p>Double-ended saddle search covers Lennard-Jones 38 transition-state separation, LJ38 double-ended saddle, and Pt heptamer island. The recorded metrics include Force calls, Most force calls, Median force calls, Fewest force calls, and Transition states. Lennard-Jones 38 transition-state separation has 51 runs, LJ38 double-ended saddle has 50 runs, and Pt heptamer island has 59 runs. An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <div class="bench-scroll">
-   <table class="bench-sortable" data-bench="problems">
-   <caption>Problems in this suite.</caption>
-   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Runs</th></tr></thead><tbody>
-   <tr>
+   <div class="bench-suite-lead">
+   <p class="bench-eyebrow">Suite overview</p>
+   <p class="bench-lede">Compare the leading recorded methods across 3 benchmark problems.</p>
+   <div class="bench-stat-grid bench-stat-grid--compact">
+   <div class="bench-stat"><strong>3</strong><span>Problems</span></div>
+   <div class="bench-stat"><strong>11</strong><span>Codes ranked</span></div>
+   <div class="bench-stat"><strong>108</strong><span>Result rows</span></div>
+   <div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>
+   </div></div>
+   <div class="bench-section-head">
+   <div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div>
+   <p>Top five codes per problem. Lower scores rank first.</p>
+   </div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-sortable bench-leaderboard" data-bench="codes">
+   <caption>Best ranked method for each code. Select a heading to sort.</caption>
+   <thead><tr><th>Problem</th><th>Rank</th><th>Code</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation">
    <th scope="row"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></th>
-   <td>Lennard-Jones</td>
-   <td class="num">38</td>
-   <td class="num">51</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></th>
-   <td>Lennard-Jones</td>
-   <td class="num">38</td>
-   <td class="num">50</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></th>
-   <td>Morse Pt</td>
-   <td class="num">343</td>
-   <td class="num">59</td>
-   </tr>
-   </tbody></table></div>
-   <h2>Results by code</h2>
-   <p>Best is the lowest cost for that code on that problem. Median is the median of that code's costs. PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap. An archived row is ranked by the average it published. The success rate is the share of runs that finished.</p>
-   <div class="bench-scroll">
-   <table class="bench-sortable" data-bench="codes">
-   <caption>One row per code on each problem.</caption>
-   <thead><tr><th>Problem</th><th>Code</th><th>Best</th><th>Median</th><th>Success rate</th><th>Rows</th></tr></thead><tbody>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num">502.784</td>
-   <td class="num">7033.36</td>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a><small>Eon svn (r2549) · Lanczos improved L-BFGS</small></td>
+   <td class="num">178</td>
+   <td class="num">418</td>
    <td class="num">100.0%</td>
-   <td class="num">6</td>
+   <td class="num"><strong>502.784</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/eon.html">eOn</a></td>
-   <td class="num">520.333</td>
-   <td class="num">44040.5</td>
+   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation">
+   <th scope="row"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></th>
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td><a href="../codes/eon.html">eOn</a><small>eOn (3.5.0) · Lanczos improved</small></td>
+   <td class="num">169</td>
+   <td class="num">422</td>
    <td class="num">100.0%</td>
-   <td class="num">14</td>
+   <td class="num"><strong>520.333</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/optim.html">OPTIM</a></td>
-   <td class="num">2885</td>
-   <td class="num">2885</td>
+   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation">
+   <th scope="row"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></th>
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td><a href="../codes/optim.html">OPTIM</a><small>OPTIM · DNEB + hybrid eigenvector following + Djikstra shortest path · Published score 2885</small></td>
+   <td class="num">—</td>
+   <td class="num">2565</td>
    <td class="num">100.0%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/pele.html">pele</a></td>
-   <td class="num">25022</td>
-   <td class="num">25022</td>
+   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation">
+   <th scope="row"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></th>
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td><a href="../codes/pele.html">pele</a><small>pele · DNEB + hybrid eigenvector following · Published score 25022</small></td>
+   <td class="num">—</td>
+   <td class="num">20638</td>
    <td class="num">94.1%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/sella.html">Sella</a></td>
-   <td class="num">31447.3</td>
-   <td class="num">31447.3</td>
+   <tr data-problem="double-ended-saddle-search/lj38_2ts_separation">
+   <th scope="row"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></th>
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td><a href="../codes/sella.html">Sella</a><small>Sella (2.6.0) · Sella+NEB</small></td>
+   <td class="num">12873</td>
+   <td class="num">32178</td>
    <td class="num">100.0%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>31447.3</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/compass.html">COMPASS</a></td>
-   <td class="num">100831</td>
-   <td class="num">100831</td>
-   <td class="num">80.4%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/rgsaddle.html">rgsaddle</a></td>
-   <td class="num">266216</td>
-   <td class="num">417164</td>
-   <td class="num">47.1%</td>
-   <td class="num">6</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/geodesic.html">geodesic</a></td>
-   <td class="num">412102</td>
-   <td class="num">412455</td>
-   <td class="num">17.6%</td>
-   <td class="num">3</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/ase.html">ASE</a></td>
-   <td class="num">444244</td>
-   <td class="num">444244</td>
-   <td class="num">11.8%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/tsase.html">TSASE</a></td>
-   <td class="num">451753</td>
-   <td class="num">475877</td>
-   <td class="num">9.8%</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 transition-state separation</td>
-   <td><a href="../codes/lammps.html">LAMMPS</a></td>
-   <td class="num">451959</td>
-   <td class="num">475980</td>
-   <td class="num">9.8%</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/optim.html">OPTIM</a></td>
-   <td class="num">131</td>
-   <td class="num">458.5</td>
+   <tr data-problem="double-ended-saddle-search/lj38">
+   <th scope="row"><a href="double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></th>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/optim.html">OPTIM</a><small>OPTIM · DNEB + hybrid eigenvector following · Published score 131</small></td>
+   <td class="num">—</td>
+   <td class="num">120</td>
    <td class="num">100.0%</td>
-   <td class="num">2</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num">235.2</td>
-   <td class="num">469.64</td>
+   <tr data-problem="double-ended-saddle-search/lj38">
+   <th scope="row"><a href="double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></th>
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a><small>Eon svn (r2549) · Lanczos improved L-BFGS</small></td>
+   <td class="num">83</td>
+   <td class="num">197</td>
    <td class="num">100.0%</td>
-   <td class="num">11</td>
+   <td class="num"><strong>235.2</strong></td>
    </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/eon.html">eOn</a></td>
-   <td class="num">259.46</td>
-   <td class="num">1010.08</td>
+   <tr data-problem="double-ended-saddle-search/lj38">
+   <th scope="row"><a href="double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></th>
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td><a href="../codes/eon.html">eOn</a><small>eOn (3.5.0) · Lanczos improved L-BFGS</small></td>
+   <td class="num">95</td>
+   <td class="num">212</td>
    <td class="num">100.0%</td>
-   <td class="num">7</td>
+   <td class="num"><strong>259.46</strong></td>
    </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/pele.html">pele</a></td>
-   <td class="num">293</td>
-   <td class="num">293</td>
+   <tr data-problem="double-ended-saddle-search/lj38">
+   <th scope="row"><a href="double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></th>
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td><a href="../codes/pele.html">pele</a><small>pele · hybrid eigenvector following · Published score 293</small></td>
+   <td class="num">—</td>
+   <td class="num">222</td>
    <td class="num">100.0%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/geodesic.html">geodesic</a></td>
-   <td class="num">1208.42</td>
-   <td class="num">2452.66</td>
+   <tr data-problem="double-ended-saddle-search/lj38">
+   <th scope="row"><a href="double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></th>
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td><a href="../codes/geodesic.html">geodesic</a><small>geodesic (1.0.0) · CI-NEB-LBFGS geodesic</small></td>
+   <td class="num">277</td>
+   <td class="num">512</td>
    <td class="num">86.0%</td>
-   <td class="num">3</td>
+   <td class="num"><strong>1208.42</strong></td>
    </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/compass.html">COMPASS</a></td>
-   <td class="num">1517.3</td>
-   <td class="num">1517.3</td>
-   <td class="num">94.0%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/sella.html">Sella</a></td>
-   <td class="num">2055.3</td>
-   <td class="num">2055.3</td>
+   <tr data-problem="double-ended-saddle-search/pt-island">
+   <th scope="row"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></th>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/optim.html">OPTIM</a><small>OPTIM · DNEB + hybrid eigenvector following · Published score 103</small></td>
+   <td class="num">—</td>
+   <td class="num">98</td>
    <td class="num">100.0%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/rgsaddle.html">rgsaddle</a></td>
-   <td class="num">2145.72</td>
-   <td class="num">2331.95</td>
-   <td class="num">78.0%</td>
-   <td class="num">6</td>
-   </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/tsase.html">TSASE</a></td>
-   <td class="num">3119.56</td>
-   <td class="num">4059.78</td>
-   <td class="num">52.0%</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/lammps.html">LAMMPS</a></td>
-   <td class="num">4526.2</td>
-   <td class="num">4737.95</td>
-   <td class="num">16.0%</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>LJ38 double-ended saddle</td>
-   <td><a href="../codes/ase.html">ASE</a></td>
-   <td class="num">4912.84</td>
-   <td class="num">4912.84</td>
-   <td class="num">2.0%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/optim.html">OPTIM</a></td>
-   <td class="num">103</td>
-   <td class="num">211</td>
+   <tr data-problem="double-ended-saddle-search/pt-island">
+   <th scope="row"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></th>
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a><small>eOn (r2156) · eon-ci-neb-single · Published score 110</small></td>
+   <td class="num">—</td>
+   <td class="num">62</td>
    <td class="num">100.0%</td>
-   <td class="num">2</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num">110</td>
-   <td class="num">225.881</td>
-   <td class="num">100.0%</td>
-   <td class="num">13</td>
-   </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/pele.html">pele</a></td>
-   <td class="num">255</td>
-   <td class="num">255</td>
+   <tr data-problem="double-ended-saddle-search/pt-island">
+   <th scope="row"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></th>
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td><a href="../codes/pele.html">pele</a><small>pele · hybrid eigenvector following · Published score 255</small></td>
+   <td class="num">—</td>
+   <td class="num">244</td>
    <td class="num">96.6%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/geodesic.html">geodesic</a></td>
-   <td class="num">824.119</td>
-   <td class="num">1115.25</td>
+   <tr data-problem="double-ended-saddle-search/pt-island">
+   <th scope="row"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></th>
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td><a href="../codes/geodesic.html">geodesic</a><small>geodesic (1.0.0) · NEB-FIRE geodesic</small></td>
+   <td class="num">233</td>
+   <td class="num">716</td>
    <td class="num">98.3%</td>
-   <td class="num">3</td>
+   <td class="num"><strong>824.119</strong></td>
    </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/sella.html">Sella</a></td>
-   <td class="num">921.847</td>
-   <td class="num">921.847</td>
+   <tr data-problem="double-ended-saddle-search/pt-island">
+   <th scope="row"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></th>
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td><a href="../codes/sella.html">Sella</a><small>Sella (2.6.0) · Sella+NEB</small></td>
+   <td class="num">307</td>
+   <td class="num">756</td>
    <td class="num">100.0%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/ase.html">ASE</a></td>
-   <td class="num">926.475</td>
-   <td class="num">926.475</td>
-   <td class="num">98.3%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/rgsaddle.html">rgsaddle</a></td>
-   <td class="num">938.102</td>
-   <td class="num">1070.44</td>
-   <td class="num">93.2%</td>
-   <td class="num">6</td>
-   </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/compass.html">COMPASS</a></td>
-   <td class="num">1078.12</td>
-   <td class="num">1078.12</td>
-   <td class="num">98.3%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/tsase.html">TSASE</a></td>
-   <td class="num">2524.53</td>
-   <td class="num">4262.26</td>
-   <td class="num">64.4%</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/lammps.html">LAMMPS</a></td>
-   <td class="num">2668.64</td>
-   <td class="num">3617.71</td>
-   <td class="num">74.6%</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/eon.html">eOn</a></td>
-   <td class="num">3080.19</td>
-   <td class="num">3080.19</td>
-   <td class="num">64.4%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>921.847</strong></td>
    </tr>
    </tbody></table></div>
-   <figure class="bench-plot"><a href="../../_static/board/suite-double-ended-saddle-search.svg"><picture><source srcset="../../_static/board/suite-double-ended-saddle-search.webp" type="image/webp"><img src="../../_static/board/suite-double-ended-saddle-search.png" alt="Double-ended saddle search best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Double-ended saddle search best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   <p class="bench-note"><sup>*</sup> A dash marks a field the archived result does not record. Archived rows are ordered by their published mean; see the methodology.</p>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Cost comparison</p><h2>Best ranked cost</h2></div><p>Generated locally from the committed result rows.</p></div><figure class="bench-plot"><a href="../../_static/board/suite-double-ended-saddle-search.svg"><picture><source srcset="../../_static/board/suite-double-ended-saddle-search.webp" type="image/webp"><img src="../../_static/board/suite-double-ended-saddle-search.png" alt="Double-ended saddle search best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Double-ended saddle search best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-section-head">
+   <div><p class="bench-eyebrow">Benchmark set</p><h2>Problems</h2></div>
+   <p>Open a problem for every ranked method, run details, and performance charts.</p>
+   </div>
+   <div class="bench-problem-grid">
+   <a class="bench-problem-card" href="double-ended-saddle-search/lj38_2ts_separation.html">
+   <span class="bench-problem-card__system">Lennard-Jones</span>
+   <h3>Lennard-Jones 38 transition-state separation</h3>
+   <p>38 atoms · 51 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>Eon svn</strong></span><span>Score <strong>502.784</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="double-ended-saddle-search/lj38.html">
+   <span class="bench-problem-card__system">Lennard-Jones</span>
+   <h3>LJ38 double-ended saddle</h3>
+   <p>38 atoms · 50 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>OPTIM</strong></span><span>Score <strong>131</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="double-ended-saddle-search/pt-island.html">
+   <span class="bench-problem-card__system">Morse Pt</span>
+   <h3>Pt heptamer island</h3>
+   <p>343 atoms · 59 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>OPTIM</strong></span><span>Score <strong>103</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   </div>
    </section>
 #+end_export
 

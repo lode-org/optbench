@@ -5,39 +5,107 @@
 .. raw:: html
 
    <section class="bench" id="lj38" data-problem="globalopt/lj38">
-   <dl class="bench-rule">
-   <dt>System</dt><dd>Lennard-Jones</dd>
-   <dt>Atoms</dt><dd>38</dd>
-   <dt>Task</dt><dd>Global optimization</dd>
-   <dt>Runs</dt><dd>100</dd>
-   <dt>Stop</dt><dd>within 0.001 of the known minimum</dd>
-   <dt>Starts</dt><dd>100</dd>
-   </dl>
-   <h3>Metrics</h3>
-   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
-   <p>The main metric is Force calls.</p>
-   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <ul>
-   <li>Force calls</li>
-   <li>Fewest force calls</li>
-   <li>Most force calls</li>
-   <li>Failed runs</li>
-   </ul>
-   <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj38-profile.svg"><picture><source srcset="../../../_static/board/globalopt-lj38-profile.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj38-profile.png" alt="Performance profile for Lennard-Jones 38 global minimum" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
-   <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj38-cost.svg"><picture><source srcset="../../../_static/board/globalopt-lj38-cost.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj38-cost.png" alt="Cost and success for Lennard-Jones 38 global minimum" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-problem-lead">
+   <p class="bench-eyebrow">Benchmark problem</p>
+   <div class="bench-fact-grid">
+   <div class="bench-fact"><span>System</span><strong>Lennard-Jones</strong></div>
+   <div class="bench-fact"><span>Atoms</span><strong>38</strong></div>
+   <div class="bench-fact"><span>Runs</span><strong>100</strong></div>
+   <div class="bench-fact"><span>Cap</span><strong>—</strong></div>
+   </div>
+   <p class="bench-note"><sup>*</sup> A dash marks a fact the problem definition does not state.</p>
+   <div class="bench-metric-strip">
+   <div><span>Primary metric</span><strong>Force calls</strong></div>
+   <p>Also records Fewest force calls, Most force calls</p>
+   <a href="../../../methodology.html">How scoring works <span aria-hidden="true">→</span></a></div>
+   </div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div><p><a href="../../../methodology.html">PAR-2 methodology</a> · full-set, stock methods only</p></div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-leaderboard" data-bench="leaderboard">
+   <caption>Leading ranked methods. Lower PAR-2 is better.</caption>
+   <thead><tr><th>Rank</th><th>Code and method</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-rank="1">
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">GMIN (df8da599) · basin-hopping with continuous symmetry measures</span><span class="bench-leader__family">Basin hopping / global</span></td>
+   <td class="num">101</td>
+   <td class="num">3980.5</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:100.00%"></span><strong>5883.83</strong></td>
+   </tr>
+   <tr data-rank="2">
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">GMIN · basin-hopping with symmetrise csm moves</span><span class="bench-leader__family">Basin hopping / global</span><span class="bench-leader__published">Published score 6421</span></td>
+   <td class="num">—</td>
+   <td class="num">4771</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   <tr data-rank="3">
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">GMIN · basin-hopping with symmetrise moves</span><span class="bench-leader__family">Basin hopping / global</span><span class="bench-leader__published">Published score 22711</span></td>
+   <td class="num">—</td>
+   <td class="num">15998</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   <tr data-rank="4">
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">GMIN · basin-hopping</span><span class="bench-leader__family">Basin hopping / global</span><span class="bench-leader__published">Published score 265951</span></td>
+   <td class="num">—</td>
+   <td class="num">202167</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   <tr data-rank="5">
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">GMIN (df8da599) · basin-hopping</span><span class="bench-leader__family">Basin hopping / global</span></td>
+   <td class="num">6404</td>
+   <td class="num">301962</td>
+   <td class="num">99.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:50.00%"></span><strong>432092</strong></td>
+   </tr>
+   <tr data-rank="6">
+   <td class="num"><span class="bench-rank-badge">6</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">eOn (3.5.0) · Basin hopping</span><span class="bench-leader__family">Basin hopping / global</span></td>
+   <td class="num">3257</td>
+   <td class="num">369028</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:37.50%"></span><strong>503146</strong></td>
+   </tr>
+   <tr data-rank="7">
+   <td class="num"><span class="bench-rank-badge">7</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">eOn (r2156) · eon-basinhopping</span><span class="bench-leader__family">Basin hopping / global</span><span class="bench-leader__published">Published score 508011</span></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   <tr data-rank="8">
+   <td class="num"><span class="bench-rank-badge">8</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">pele · hybrid eigenvector following</span><span class="bench-leader__family">Connect / double-ended</span><span class="bench-leader__published">Published score 521595</span></td>
+   <td class="num">—</td>
+   <td class="num">320504</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   </tbody></table></div>
+   <p class="bench-note"><sup>*</sup> A dash marks a field the archived source does not record. Archived rows are ordered by their published mean.</p>
+   <p class="bench-table-count">Showing 8 of 11 ranked rows. Open the full result tables below for every method.</p>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p><h2>Performance</h2></div><p>Charts are generated locally from committed results.</p></div>
+   <div class="bench-chart-grid"><figure class="bench-plot"><a href="../../../_static/board/globalopt-lj38-profile.svg"><picture><source srcset="../../../_static/board/globalopt-lj38-profile.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj38-profile.png" alt="Performance profile for Lennard-Jones 38 global minimum" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj38-cost.svg"><picture><source srcset="../../../_static/board/globalopt-lj38-cost.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj38-cost.png" alt="Cost and success for Lennard-Jones 38 global minimum" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure></div>
+   <details class="bench-full-results"><summary><span>Full result tables</span><small>11 ranked rows, grouped by method family</small></summary><div class="bench-full-results__body">
    <h3>Connect / double-ended</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="connect" data-problem="globalopt/lj38">
-   <caption>Connect / double-ended. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Connect / double-ended. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">pele · hybrid eigenvector following</td><td data-field="rank_cost">521595</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
    </tbody></table></div>
    <h3>Basin hopping / global</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="global" data-problem="globalopt/lj38">
-   <caption>Basin hopping / global. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Basin hopping / global. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">GMIN (df8da599) · basin-hopping with continuous symmetry measures</td><td data-field="rank_cost">5883.83</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">GMIN · basin-hopping with symmetrise csm moves</td><td data-field="rank_cost">6421</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
@@ -53,7 +121,7 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="globalopt/lj38">
-   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">GMIN (df8da599) · basin-hopping with continuous symmetry measures</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">1</td><td data-field="par2_mean">5883.83</td><td data-field="published"></td><td data-field="median_calls">3980.5</td><td data-field="mean_calls">5883.83</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
    <tr><td data-field="label">GMIN · basin-hopping with symmetrise csm moves</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">2</td><td data-field="par2_mean"></td><td data-field="published">6421</td><td data-field="median_calls">4771</td><td data-field="mean_calls">6421</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
@@ -67,5 +135,6 @@
    <tr><td data-field="label">GMIN (df8da599) · parallel tempering basin-hopping</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">9</td><td data-field="par2_mean">674789</td><td data-field="published"></td><td data-field="median_calls">307290</td><td data-field="mean_calls">554789</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 6, wrong_stationary 0</td><td data-field="n">100</td></tr>
    <tr><td data-field="label">AIRSS (0.9.4) · random structure search</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">10</td><td data-field="par2_mean"></td><td data-field="published"></td><td data-field="median_calls">70635.5</td><td data-field="mean_calls">112134</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
    </tbody></table></div>
+   </div></details>
    </section>
 #+end_export

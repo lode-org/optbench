@@ -19,7 +19,6 @@ html_copy_source = False
 html_permalinks = False
 html_theme_options = {
     "accent_color": "teal",
-    "github_url": "https://github.com/lode-org/optbench",
     "dark_code": True,
     "globaltoc_expand_depth": 0,
     # The copy-page menu adds ChatGPT and Claude links, and the theme

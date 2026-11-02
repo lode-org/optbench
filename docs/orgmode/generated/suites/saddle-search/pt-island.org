@@ -5,36 +5,102 @@
 .. raw:: html
 
    <section class="bench" id="pt-island" data-problem="saddle-search/pt-island">
-   <dl class="bench-rule">
-   <dt>System</dt><dd>Morse</dd>
-   <dt>Atoms</dt><dd>343</dd>
-   <dt>Task</dt><dd>Saddle search</dd>
-   <dt>Stop</dt><dd>L2 norm of the force at or below 0.001 eV/Angstrom</dd>
-   <dt>Goal</dt><dd>27 connected saddles below 1.5 eV</dd>
-   <dt>Potential</dt><dd>morse</dd>
-   </dl>
-   <p class="bench-aside">A 2-search SoftSaddle batch stays off this rank. The April 2019 adaptive_HSphere-lbfgs-davidson-sm50 entry records 423491.1 force calls.</p>
-   <h3>Metrics</h3>
-   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
-   <p>The main metric is Force calls.</p>
-   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <p>A run counts as a success when index 1 at eigenvalue tolerance 1e-6, force norm at the stop, barrier below 1.5 eV, and exactly one endpoint within Cartesian RMSD 0.5 of the minimized minimum. The substrate pins the frame, so the RMSD is Cartesian.</p>
-   <ul>
-   <li>Force calls</li>
-   <li>Mean error of force calls</li>
-   <li>Fraction connected</li>
-   <li>Searches</li>
-   <li>Unique saddles</li>
-   </ul>
-   <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
+   <div class="bench-problem-lead">
+   <p class="bench-eyebrow">Benchmark problem</p>
+   <div class="bench-fact-grid">
+   <div class="bench-fact"><span>System</span><strong>Morse</strong></div>
+   <div class="bench-fact"><span>Atoms</span><strong>343</strong></div>
+   <div class="bench-fact"><span>Runs</span><strong>—</strong></div>
+   <div class="bench-fact"><span>Cap</span><strong>—</strong></div>
+   </div>
+   <p class="bench-note"><sup>*</sup> A dash marks a fact the problem definition does not state.</p>
+   <p class="bench-callout">A 2-search SoftSaddle batch stays off this rank. The April 2019 adaptive_HSphere-lbfgs-davidson-sm50 entry records 423491.1 force calls.</p>
+   <div class="bench-metric-strip">
+   <div><span>Primary metric</span><strong>Force calls</strong></div>
+   <p>Also records Mean error of force calls, Fraction connected, Searches +1</p>
+   <a href="../../../methodology.html">How scoring works <span aria-hidden="true">→</span></a></div>
+   </div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div><p><a href="../../../methodology.html">PAR-2 methodology</a> · full-set, stock methods only</p></div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-leaderboard" data-bench="leaderboard">
+   <caption>Leading ranked methods. Lower PAR-2 is better.</caption>
+   <thead><tr><th>Rank</th><th>Code and method</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-rank="1">
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">Sella (2.6.0) · Sella</span><span class="bench-leader__family">Single-ended saddle</span></td>
+   <td class="num">145</td>
+   <td class="num">225</td>
+   <td class="num">75.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:100.00%"></span><strong>5201.62</strong></td>
+   </tr>
+   <tr data-rank="2">
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Lanczos</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">5</td>
+   <td class="num">389</td>
+   <td class="num">0.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:87.50%"></span><strong>10124.2</strong></td>
+   </tr>
+   <tr data-rank="3">
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Davidson</span><span class="bench-leader__family">Single-ended saddle</span></td>
+   <td class="num">1054</td>
+   <td class="num">1060</td>
+   <td class="num">0.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:75.00%"></span><strong>10128</strong></td>
+   </tr>
+   <tr data-rank="4">
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgsaddle (0.2.2) · Dimer FIRE</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">936</td>
+   <td class="num">1013</td>
+   <td class="num">0.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:62.50%"></span><strong>10128</strong></td>
+   </tr>
+   <tr data-rank="5">
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgsaddle (0.2.2) · Dimer L-BFGS</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">1000</td>
+   <td class="num">1013</td>
+   <td class="num">0.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:50.00%"></span><strong>10128</strong></td>
+   </tr>
+   <tr data-rank="6">
+   <td class="num"><span class="bench-rank-badge">6</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgsaddle (0.2.2) · Dimer rotation-skip L-BFGS</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">180</td>
+   <td class="num">441</td>
+   <td class="num">0.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:37.50%"></span><strong>10128</strong></td>
+   </tr>
+   <tr data-rank="7">
+   <td class="num"><span class="bench-rank-badge">7</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgsaddle (0.2.2) · Lanczos L-BFGS</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">722</td>
+   <td class="num">1002</td>
+   <td class="num">0.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:25.00%"></span><strong>10128</strong></td>
+   </tr>
+   <tr data-rank="8">
+   <td class="num"><span class="bench-rank-badge">8</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">SoftSaddle · adaptive_HSphere-lbfgs-davidson-sm50</span><span class="bench-leader__family">Single-ended saddle</span><span class="bench-leader__published">Published score 423491</span></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   </tbody></table></div>
+   <p class="bench-note"><sup>*</sup> A dash marks a field the archived source does not record. Archived rows are ordered by their published mean.</p>
+   <p class="bench-table-count">Showing 8 of 20 ranked rows. Open the full result tables below for every method.</p>
    <p class="bench-gaps">Eon rows are not yet on the harness counter. A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/saddle-search-pt-island-cost.svg"><picture><source srcset="../../../_static/board/saddle-search-pt-island-cost.webp" type="image/webp"><img src="../../../_static/board/saddle-search-pt-island-cost.png" alt="Cost and success for Pt heptamer island" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p><h2>Performance</h2></div><p>Charts are generated locally from committed results.</p></div>
+   <div class="bench-chart-grid"><figure class="bench-plot"><a href="../../../_static/board/saddle-search-pt-island-cost.svg"><picture><source srcset="../../../_static/board/saddle-search-pt-island-cost.webp" type="image/webp"><img src="../../../_static/board/saddle-search-pt-island-cost.png" alt="Cost and success for Pt heptamer island" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure></div>
    <p class="bench-gaps">No performance profile. The ranked rows do not share one start set.</p>
+   <details class="bench-full-results"><summary><span>Full result tables</span><small>20 ranked rows, grouped by method family</small></summary><div class="bench-full-results__body">
    <h3>Minimum mode</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="min-mode" data-problem="saddle-search/pt-island">
-   <caption>Minimum mode. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Minimum mode. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Lanczos</td><td data-field="rank_cost">10124.2</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">5000</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">rgsaddle (0.2.2) · Dimer FIRE</td><td data-field="rank_cost">10128</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">20000</td></tr>
@@ -56,7 +122,7 @@
    <h3>Single-ended saddle</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="single-ended" data-problem="saddle-search/pt-island">
-   <caption>Single-ended saddle. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Single-ended saddle. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">Sella (2.6.0) · Sella</td><td data-field="rank_cost">5201.62</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">16</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Davidson</td><td data-field="rank_cost">10128</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">5000</td></tr>
@@ -66,7 +132,7 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="saddle-search/pt-island">
-   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">Sella (2.6.0) · Sella</td><td data-field="family">Single-ended saddle</td><td data-field="family_rank">1</td><td data-field="par2_mean">5201.62</td><td data-field="published"></td><td data-field="median_calls">225</td><td data-field="mean_calls">247.812</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 4</td><td data-field="n">16</td></tr>
    <tr><td data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Lanczos</td><td data-field="family">Minimum mode</td><td data-field="family_rank">1</td><td data-field="par2_mean">10124.2</td><td data-field="published"></td><td data-field="median_calls">389</td><td data-field="mean_calls">431.839</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 4884, cap 108, wrong_stationary 6</td><td data-field="n">5000</td></tr>
@@ -93,5 +159,6 @@
    <li>eOn (3.5.0) n=10, not yet on the harness counter.</li>
    <li>eOn (3.5.0) n=10, not yet on the harness counter.</li>
    </ul>
+   </div></details>
    </section>
 #+end_export

@@ -5,35 +5,100 @@
 .. raw:: html
 
    <section class="bench" id="lj38" data-problem="lowest-eigenvector/lj38">
-   <dl class="bench-rule">
-   <dt>System</dt><dd>Lennard-Jones</dd>
-   <dt>Atoms</dt><dd>38</dd>
-   <dt>Task</dt><dd>Lowest eigenvector</dd>
-   <dt>Runs</dt><dd>200</dd>
-   <dt>Cap</dt><dd>10000 force calls</dd>
-   <dt>Starts</dt><dd>200</dd>
-   <dt>Potential</dt><dd>lennard-jones</dd>
-   </dl>
-   <h3>Metrics</h3>
-   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
-   <p>The main metric is Force calls.</p>
-   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <p>A run counts as a success when harness calls under the cap and absolute overlap of at least 0.99 with the reference lowest mode.</p>
-   <ul>
-   <li>Force calls</li>
-   <li>Most force calls</li>
-   <li>Fewest force calls</li>
-   <li>Failed runs</li>
-   </ul>
-   <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
+   <div class="bench-problem-lead">
+   <p class="bench-eyebrow">Benchmark problem</p>
+   <div class="bench-fact-grid">
+   <div class="bench-fact"><span>System</span><strong>Lennard-Jones</strong></div>
+   <div class="bench-fact"><span>Atoms</span><strong>38</strong></div>
+   <div class="bench-fact"><span>Runs</span><strong>200</strong></div>
+   <div class="bench-fact"><span>Cap</span><strong>10000 calls</strong></div>
+   </div>
+   <div class="bench-metric-strip">
+   <div><span>Primary metric</span><strong>Force calls</strong></div>
+   <p>Also records Most force calls, Fewest force calls</p>
+   <a href="../../../methodology.html">How scoring works <span aria-hidden="true">→</span></a></div>
+   </div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div><p><a href="../../../methodology.html">PAR-2 methodology</a> · full-set, stock methods only</p></div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-leaderboard" data-bench="leaderboard">
+   <caption>Leading ranked methods. Lower PAR-2 is better.</caption>
+   <thead><tr><th>Rank</th><th>Code and method</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-rank="1">
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">Sella (0.1.1) · lowest eigenvector</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">4</td>
+   <td class="num">17</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:100.00%"></span><strong>17.8</strong></td>
+   </tr>
+   <tr data-rank="2">
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">Sella (0.1.1) · sella</span><span class="bench-leader__family">Single-ended saddle</span><span class="bench-leader__published">Published score 17.8</span></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   <tr data-rank="3">
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">OPTIM · hybrid eigenvector following</span><span class="bench-leader__family">Connect / double-ended</span><span class="bench-leader__published">Published score 25</span></td>
+   <td class="num">—</td>
+   <td class="num">23</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   <tr data-rank="4">
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">TSASE (410) · tsase-lanczos</span><span class="bench-leader__family">Minimum mode</span><span class="bench-leader__published">Published score 25</span></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   <tr data-rank="5">
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">pele · hybrid eigenvector following</span><span class="bench-leader__family">Connect / double-ended</span><span class="bench-leader__published">Published score 25</span></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   <tr data-rank="6">
+   <td class="num"><span class="bench-rank-badge">6</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">rgsaddle (0.2.2) · Lanczos</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">14</td>
+   <td class="num">26</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:37.50%"></span><strong>26.12</strong></td>
+   </tr>
+   <tr data-rank="7">
+   <td class="num"><span class="bench-rank-badge">7</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">Eon svn (r2549) · Lanczos CG</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">13</td>
+   <td class="num">25</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:25.00%"></span><strong>26.385</strong></td>
+   </tr>
+   <tr data-rank="8">
+   <td class="num"><span class="bench-rank-badge">8</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">eOn (3.5.0) · Lanczos CG</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">13</td>
+   <td class="num">25</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:18.00%"></span><strong>26.385</strong></td>
+   </tr>
+   </tbody></table></div>
+   <p class="bench-note"><sup>*</sup> A dash marks a field the archived source does not record. Archived rows are ordered by their published mean.</p>
+   <p class="bench-table-count">Showing 8 of 26 ranked rows. Open the full result tables below for every method.</p>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/lowest-eigenvector-lj38-profile.svg"><picture><source srcset="../../../_static/board/lowest-eigenvector-lj38-profile.webp" type="image/webp"><img src="../../../_static/board/lowest-eigenvector-lj38-profile.png" alt="Performance profile for Lennard-Jones 38" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
-   <figure class="bench-plot"><a href="../../../_static/board/lowest-eigenvector-lj38-cost.svg"><picture><source srcset="../../../_static/board/lowest-eigenvector-lj38-cost.webp" type="image/webp"><img src="../../../_static/board/lowest-eigenvector-lj38-cost.png" alt="Cost and success for Lennard-Jones 38" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p><h2>Performance</h2></div><p>Charts are generated locally from committed results.</p></div>
+   <div class="bench-chart-grid"><figure class="bench-plot"><a href="../../../_static/board/lowest-eigenvector-lj38-profile.svg"><picture><source srcset="../../../_static/board/lowest-eigenvector-lj38-profile.webp" type="image/webp"><img src="../../../_static/board/lowest-eigenvector-lj38-profile.png" alt="Performance profile for Lennard-Jones 38" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../../_static/board/lowest-eigenvector-lj38-cost.svg"><picture><source srcset="../../../_static/board/lowest-eigenvector-lj38-cost.webp" type="image/webp"><img src="../../../_static/board/lowest-eigenvector-lj38-cost.png" alt="Cost and success for Lennard-Jones 38" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure></div>
+   <details class="bench-full-results"><summary><span>Full result tables</span><small>26 ranked rows, grouped by method family</small></summary><div class="bench-full-results__body">
    <h3>Minimum mode</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="min-mode" data-problem="lowest-eigenvector/lj38">
-   <caption>Minimum mode. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Minimum mode. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">Sella (0.1.1) · lowest eigenvector</td><td data-field="rank_cost">17.8</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">200</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">TSASE (410) · tsase-lanczos</td><td data-field="rank_cost">25</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">200</td></tr>
@@ -62,14 +127,14 @@
    <h3>Single-ended saddle</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="single-ended" data-problem="lowest-eigenvector/lj38">
-   <caption>Single-ended saddle. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Single-ended saddle. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">Sella (0.1.1) · sella</td><td data-field="rank_cost">17.8</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">200</td></tr>
    </tbody></table></div>
    <h3>Connect / double-ended</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="connect" data-problem="lowest-eigenvector/lj38">
-   <caption>Connect / double-ended. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Connect / double-ended. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">OPTIM · hybrid eigenvector following</td><td data-field="rank_cost">25</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">200</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">pele · hybrid eigenvector following</td><td data-field="rank_cost">25</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">200</td></tr>
@@ -77,7 +142,7 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="lowest-eigenvector/lj38">
-   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">Sella (0.1.1) · lowest eigenvector</td><td data-field="family">Minimum mode</td><td data-field="family_rank">1</td><td data-field="par2_mean">17.8</td><td data-field="published"></td><td data-field="median_calls">17</td><td data-field="mean_calls">17.8</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">200</td></tr>
    <tr><td data-field="label">Sella (0.1.1) · sella</td><td data-field="family">Single-ended saddle</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">17.8</td><td data-field="median_calls"></td><td data-field="mean_calls">17.8</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">200</td></tr>
@@ -106,5 +171,6 @@
    <tr><td data-field="label">SoftSaddle (2019.04) · Lanczos</td><td data-field="family">Minimum mode</td><td data-field="family_rank">22</td><td data-field="par2_mean">18700.6</td><td data-field="published"></td><td data-field="median_calls">19</td><td data-field="mean_calls">18.91</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 187, cap 0, wrong_stationary 0</td><td data-field="n">200</td></tr>
    <tr><td data-field="label">SoftSaddle (2019.04) · Davidson</td><td data-field="family">Minimum mode</td><td data-field="family_rank">23</td><td data-field="par2_mean">18925.6</td><td data-field="published"></td><td data-field="median_calls">695</td><td data-field="mean_calls">696.475</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 189, cap 0, wrong_stationary 0</td><td data-field="n">200</td></tr>
    </tbody></table></div>
+   </div></details>
    </section>
 #+end_export

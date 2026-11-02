@@ -5,49 +5,57 @@
 .. raw:: html
 
    <section class="bench" id="aladatom" data-problem="accelerated-md/aladatom">
-   <dl class="bench-rule">
-   <dt>System</dt><dd>Voter-Chen EAM</dd>
-   <dt>Atoms</dt><dd>151</dd>
-   <dt>Task</dt><dd>Accelerated molecular dynamics</dd>
-   <dt>Runs</dt><dd>1</dd>
-   <dt>Potential</dt><dd>eam_al (Voter-Chen aluminum)</dd>
-   <dt>Temperature</dt><dd>250 K</dd>
-   <dt>Reference rate</dt><dd>2.54294e+08 per second</dd>
-   <dt>Products</dt><dd>5000</dd>
-   <dt>Repetitions</dt><dd>1</dd>
-   <dt>Note</dt><dd>Aluminum adatom on Al(100). The reactant is the 151-atom archived con, and the potential is the Voter-Chen EAM built into eOn as eam_al. The reference escape rate is the 250 K parallel-replica row. One repetition is one AKMC catalogue. The published method sample is 5000 products, and that count turns the rate into simulated time.</dd>
-   </dl>
-   <h3>Metrics</h3>
-   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
-   <p>The main metric is True rate.</p>
-   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <ul>
-   <li>Percent Uncertainty</li>
-   <li>Thermostat</li>
-   <li>True rate</li>
-   <li>Uncertainty</li>
-   </ul>
-   <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
+   <div class="bench-problem-lead">
+   <p class="bench-eyebrow">Benchmark problem</p>
+   <div class="bench-fact-grid">
+   <div class="bench-fact"><span>System</span><strong>Voter-Chen EAM</strong></div>
+   <div class="bench-fact"><span>Atoms</span><strong>151</strong></div>
+   <div class="bench-fact"><span>Runs</span><strong>1</strong></div>
+   <div class="bench-fact"><span>Cap</span><strong>—</strong></div>
+   </div>
+   <p class="bench-note"><sup>*</sup> A dash marks a fact the problem definition does not state.</p>
+   <div class="bench-metric-strip">
+   <div><span>Primary metric</span><strong>True rate</strong></div>
+   <p>Also records Percent Uncertainty, Thermostat, Uncertainty</p>
+   <a href="../../../methodology.html">How scoring works <span aria-hidden="true">→</span></a></div>
+   </div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div><p><a href="../../../methodology.html">PAR-2 methodology</a> · full-set, stock methods only</p></div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-leaderboard" data-bench="leaderboard">
+   <caption>Leading ranked methods. Lower PAR-2 is better.</caption>
+   <thead><tr><th>Rank</th><th>Code and method</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-rank="1">
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">eOn · parallel replica</span><span class="bench-leader__family">Minimizers</span><span class="bench-leader__published">Published score 2.54294e+08</span></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   </tbody></table></div>
+   <p class="bench-note"><sup>*</sup> A dash marks a field the archived source does not record. Archived rows are ordered by their published mean.</p>
    <p class="bench-gaps">eOn rows are not yet on the harness counter. A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/accelerated-md-aladatom-cost.svg"><picture><source srcset="../../../_static/board/accelerated-md-aladatom-cost.webp" type="image/webp"><img src="../../../_static/board/accelerated-md-aladatom-cost.png" alt="Cost and success for Al adatom on Al(100) at 250 K" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p><h2>Performance</h2></div><p>Charts are generated locally from committed results.</p></div>
+   <div class="bench-chart-grid"><figure class="bench-plot"><a href="../../../_static/board/accelerated-md-aladatom-cost.svg"><picture><source srcset="../../../_static/board/accelerated-md-aladatom-cost.webp" type="image/webp"><img src="../../../_static/board/accelerated-md-aladatom-cost.png" alt="Cost and success for Al adatom on Al(100) at 250 K" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure></div>
    <p class="bench-gaps">No performance profile. The ranked rows have no per-start record.</p>
+   <details class="bench-full-results"><summary><span>Full result tables</span><small>1 ranked rows, grouped by method family</small></summary><div class="bench-full-results__body">
    <h3>Minimizers</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="minimize" data-problem="accelerated-md/aladatom">
-   <caption>Minimizers. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Minimizers. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">eOn · parallel replica</td><td data-field="rank_cost">2.54294e+08</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">1</td></tr>
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="accelerated-md/aladatom">
-   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">eOn · parallel replica</td><td data-field="family">Minimizers</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">2.54294e+08</td><td data-field="median_calls"></td><td data-field="mean_calls">2.54294e+08</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">1</td></tr>
    </tbody></table></div>
    <h3>Off the ranked table</h3><ul>
    <li>eOn (3.6.0) · AKMC dimer n=1, not yet on the harness counter.</li>
    </ul>
+   </div></details>
    </section>
 #+end_export
