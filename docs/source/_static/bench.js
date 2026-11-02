@@ -81,3 +81,74 @@
     drawAll();
   }
 }());
+
+/* Column sort for the results tables. Empty cells stay last. */
+(function () {
+  function valueOf(cell) {
+    return (cell ? cell.textContent : "").replace(/\s+/g, " ").trim();
+  }
+
+  function asNumber(text) {
+    if (!text || text === "\u2014") {
+      return null;
+    }
+    var cleaned = text.replace(/,/g, "").replace(/%$/, "");
+    var value = Number(cleaned);
+    return isFinite(value) ? value : null;
+  }
+
+  function sortTable(table, index, ascending) {
+    var body = table.tBodies[0];
+    if (!body) {
+      return;
+    }
+    var rows = Array.prototype.slice.call(body.rows);
+    rows.sort(function (left, right) {
+      var a = valueOf(left.cells[index]);
+      var b = valueOf(right.cells[index]);
+      var an = asNumber(a);
+      var bn = asNumber(b);
+      if (an !== null && bn !== null) {
+        return ascending ? an - bn : bn - an;
+      }
+      if (!a && b) {
+        return 1;
+      }
+      if (a && !b) {
+        return -1;
+      }
+      var order = a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" });
+      return ascending ? order : -order;
+    });
+    rows.forEach(function (row) {
+      body.appendChild(row);
+    });
+  }
+
+  function bind(table) {
+    var head = table.tHead;
+    if (!head || !head.rows.length) {
+      return;
+    }
+    Array.prototype.forEach.call(head.rows[0].cells, function (cell, index) {
+      cell.addEventListener("click", function () {
+        var ascending = cell.getAttribute("aria-sort") !== "ascending";
+        Array.prototype.forEach.call(head.rows[0].cells, function (other) {
+          other.removeAttribute("aria-sort");
+        });
+        cell.setAttribute("aria-sort", ascending ? "ascending" : "descending");
+        sortTable(table, index, ascending);
+      });
+    });
+  }
+
+  function bindAll() {
+    document.querySelectorAll("table.bench-sortable").forEach(bind);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bindAll);
+  } else {
+    bindAll();
+  }
+}());

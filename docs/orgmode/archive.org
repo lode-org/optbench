@@ -14,20 +14,5 @@ The full tables, including archived rows, are on the problem page.
 
 #+INCLUDE: "../include/collection.org"
 
-#+begin_export rst
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: 2014 problems
-
-   generated/suites/minimization
-   generated/suites/saddle-search
-   generated/suites/double-ended-saddle-search
-   generated/suites/globalopt
-   generated/suites/lowest-eigenvector
-   generated/suites/tsopt
-   generated/suites/mlopt
-   generated/suites/neb
-   generated/suites/hTST
-   generated/suites/accelerated-md
-#+end_export
+The sidebar lists the suites.
+This page keeps the 2014 provenance and links each problem in the text.

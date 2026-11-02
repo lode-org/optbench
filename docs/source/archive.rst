@@ -61,7 +61,7 @@ The full tables, including archived rows, are on the problem page.
    </tbody></table></div>
    <p class="bench-gaps">eOn band rows are not yet on the harness counter. A run short of the full set, or a run that is not the stock method, stays off the ranked table. Files with no per-start harness record stay off the ranked table.</p>
    <p><a href="generated/suites/double-ended-saddle-search/lj38.html">Family tables, overall table, and performance profile</a>.</p>
-   <h3>lj38_2ts_separation</h3>
+   <h3>Lennard-Jones 38 transition-state separation</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="double-ended-saddle-search/lj38_2ts_separation">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
@@ -69,7 +69,7 @@ The full tables, including archived rows, are on the problem page.
    </tbody></table></div>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <p><a href="generated/suites/double-ended-saddle-search/lj38_2ts_separation.html">Family tables, overall table, and performance profile</a>.</p>
-   <h3>pt-island</h3>
+   <h3>Pt heptamer island</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="double-ended-saddle-search/pt-island">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
@@ -92,14 +92,14 @@ The full tables, including archived rows, are on the problem page.
    <tr><td data-field="label">GMIN (df8da599) · basin-hopping with continuous symmetry measures</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">1</td><td data-field="par2_mean">5883.83</td><td data-field="published"></td><td data-field="median_calls">3980.5</td><td data-field="mean_calls">5883.83</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
    </tbody></table></div>
    <p><a href="generated/suites/globalopt/lj38.html">Family tables, overall table, and performance profile</a>.</p>
-   <h3>lj150</h3>
+   <h3>Lennard-Jones 150</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="globalopt/lj150">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">GMIN · core orbits symmetrisation scheme</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">667.38</td><td data-field="median_calls"></td><td data-field="mean_calls">667.38</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
    </tbody></table></div>
    <p><a href="generated/suites/globalopt/lj150.html">Family tables, overall table, and performance profile</a>.</p>
-   <h3>lj75</h3>
+   <h3>Lennard-Jones 75</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="globalopt/lj75">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
@@ -107,28 +107,28 @@ The full tables, including archived rows, are on the problem page.
    </tbody></table></div>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <p><a href="generated/suites/globalopt/lj75.html">Family tables, overall table, and performance profile</a>.</p>
-   <h3>lj98</h3>
+   <h3>Lennard-Jones 98</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="globalopt/lj98">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">GMIN · core orbits symmetrisation scheme</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">1281.92</td><td data-field="median_calls"></td><td data-field="mean_calls">1281.92</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
    </tbody></table></div>
    <p><a href="generated/suites/globalopt/lj98.html">Family tables, overall table, and performance profile</a>.</p>
-   <h3>tip4p10</h3>
+   <h3>TIP4P 10</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="globalopt/tip4p10">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">GMIN · linear temperature basin-paving</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">16099</td><td data-field="median_calls">11387</td><td data-field="mean_calls">16099</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">10000</td></tr>
    </tbody></table></div>
    <p><a href="generated/suites/globalopt/tip4p10.html">Family tables, overall table, and performance profile</a>.</p>
-   <h3>tip4p15</h3>
+   <h3>TIP4P 15</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="globalopt/tip4p15">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
    <tr><td data-field="label">GMIN · linear temperature basin-paving</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">625362</td><td data-field="median_calls">416929</td><td data-field="mean_calls">625362</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">500</td></tr>
    </tbody></table></div>
    <p><a href="generated/suites/globalopt/tip4p15.html">Family tables, overall table, and performance profile</a>.</p>
-   <h3>tip4p20</h3>
+   <h3>TIP4P 20</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="globalopt/tip4p20">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
@@ -136,7 +136,7 @@ The full tables, including archived rows, are on the problem page.
    </tbody></table></div>
    <p><a href="generated/suites/globalopt/tip4p20.html">Family tables, overall table, and performance profile</a>.</p>
    <h2 id="suite-lowest-eigenvector">Lowest eigenvector</h2>
-   <h3>lj38</h3>
+   <h3>Lennard-Jones 38</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="lowest-eigenvector/lj38">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
@@ -145,7 +145,15 @@ The full tables, including archived rows, are on the problem page.
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <p><a href="generated/suites/lowest-eigenvector/lj38.html">Family tables, overall table, and performance profile</a>.</p>
    <h2 id="suite-tsopt">Transition state optimization</h2>
-   <h3>LJ38</h3>
+   <h3>H2 dissociation on a fixed Cu substrate</h3>
+   <div class="bench-scroll">
+   <table data-board-table="headline" data-problem="tsopt/cuh2">
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <tr><td colspan="11">No ranked row.</td></tr>
+   </tbody></table></div>
+   <p class="bench-gaps">No committed harness run.</p>
+   <p><a href="generated/suites/tsopt/cuh2.html">Family tables, overall table, and performance profile</a>.</p>
+   <h3>Lennard-Jones 38</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="tsopt/LJ38">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
@@ -153,7 +161,7 @@ The full tables, including archived rows, are on the problem page.
    </tbody></table></div>
    <p class="bench-gaps">eOn rows are not yet on the harness counter. A run short of the full set, or a run that is not the stock method, stays off the ranked table. Files with no per-start harness record stay off the ranked table.</p>
    <p><a href="generated/suites/tsopt/LJ38.html">Family tables, overall table, and performance profile</a>.</p>
-   <h3>pt-island</h3>
+   <h3>Pt heptamer island</h3>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="tsopt/pt-island">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
@@ -221,18 +229,5 @@ The full tables, including archived rows, are on the problem page.
    <p><a href="generated/suites/accelerated-md/aladatom.html">Family tables, overall table, and performance profile</a>.</p>
    </section>
 
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: 2014 problems
-
-   generated/suites/minimization
-   generated/suites/saddle-search
-   generated/suites/double-ended-saddle-search
-   generated/suites/globalopt
-   generated/suites/lowest-eigenvector
-   generated/suites/tsopt
-   generated/suites/mlopt
-   generated/suites/neb
-   generated/suites/hTST
-   generated/suites/accelerated-md
+The suite list in the sidebar is the board.
+This page keeps the 2014 provenance and the same problem links in the text.
