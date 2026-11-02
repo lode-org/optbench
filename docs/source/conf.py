@@ -2,7 +2,7 @@
 
 project = "OptBench"
 author = "OptBench"
-copyright = "2014--present, OptBench contributors"
+copyright = "2026, Rohit Goswami"
 html_title = "OptBench"
 
 extensions = []
