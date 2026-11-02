@@ -5,173 +5,197 @@
 .. raw:: html
 
    <section class="bench">
-   <p>Global optimization covers Binary Lennard-Jones 100, Lennard-Jones 150, Lennard-Jones 38 global minimum, Lennard-Jones 75, Lennard-Jones 98, TIP4P 10, TIP4P 15, and TIP4P 20. The recorded metrics include Average energy, Lowest energy, Highest energy, Mean basin-hopping steps, Basin-hopping step spread, and Mean CPU time. Binary Lennard-Jones 100 has 100 runs, Lennard-Jones 150 has 100 runs, Lennard-Jones 38 global minimum has 100 runs, Lennard-Jones 75 has 200 runs, Lennard-Jones 98 has 100 runs, TIP4P 10 has 10000 runs, TIP4P 15 has 500 runs, and TIP4P 20 has 100 runs. An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <div class="bench-scroll">
-   <table class="bench-sortable" data-bench="problems">
-   <caption>Problems in this suite.</caption>
-   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Runs</th></tr></thead><tbody>
-   <tr>
+   <div class="bench-suite-lead">
+   <p class="bench-eyebrow">Suite overview</p>
+   <p class="bench-lede">Compare the leading recorded methods across 8 benchmark problems.</p>
+   <div class="bench-stat-grid bench-stat-grid--compact">
+   <div class="bench-stat"><strong>8</strong><span>Problems</span></div>
+   <div class="bench-stat"><strong>5</strong><span>Codes ranked</span></div>
+   <div class="bench-stat"><strong>31</strong><span>Result rows</span></div>
+   <div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>
+   </div></div>
+   <div class="bench-section-head">
+   <div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div>
+   <p>Top five codes per problem. Lower scores rank first.</p>
+   </div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-sortable bench-leaderboard" data-bench="codes">
+   <caption>Best ranked method for each code. Select a heading to sort.</caption>
+   <thead><tr><th>Problem</th><th>Rank</th><th>Code</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-problem="globalopt/lj100-binary">
    <th scope="row"><a href="globalopt/lj100-binary.html">Binary Lennard-Jones 100</a></th>
-   <td>binary Lennard-Jones</td>
-   <td class="num">100</td>
-   <td class="num">100</td>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/gmin.html">GMIN</a><small>GMIN · basin-hopping · Published score -589.507</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
+   <tr data-problem="globalopt/lj100-binary">
+   <th scope="row"><a href="globalopt/lj100-binary.html">Binary Lennard-Jones 100</a></th>
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a><small>eOn (r2156) · eon-basinhopping · Published score -584.579</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num"><strong>—</strong></td>
+   </tr>
+   <tr data-problem="globalopt/lj150">
    <th scope="row"><a href="globalopt/lj150.html">Lennard-Jones 150</a></th>
-   <td>Lennard-Jones</td>
-   <td class="num">150</td>
-   <td class="num">100</td>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/gmin.html">GMIN</a><small>GMIN · core orbits symmetrisation scheme · Published score 667.38</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">100.0%</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
+   <tr data-problem="globalopt/lj38">
    <th scope="row"><a href="globalopt/lj38.html">Lennard-Jones 38 global minimum</a></th>
-   <td>Lennard-Jones</td>
-   <td class="num">38</td>
-   <td class="num">100</td>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/gmin.html">GMIN</a><small>GMIN (df8da599) · basin-hopping with continuous symmetry measures</small></td>
+   <td class="num">101</td>
+   <td class="num">3980.5</td>
+   <td class="num">100.0%</td>
+   <td class="num"><strong>5883.83</strong></td>
    </tr>
-   <tr>
+   <tr data-problem="globalopt/lj38">
+   <th scope="row"><a href="globalopt/lj38.html">Lennard-Jones 38 global minimum</a></th>
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td><a href="../codes/eon.html">eOn</a><small>eOn (3.5.0) · Basin hopping</small></td>
+   <td class="num">3257</td>
+   <td class="num">369028</td>
+   <td class="num">100.0%</td>
+   <td class="num"><strong>503146</strong></td>
+   </tr>
+   <tr data-problem="globalopt/lj38">
+   <th scope="row"><a href="globalopt/lj38.html">Lennard-Jones 38 global minimum</a></th>
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a><small>eOn (r2156) · eon-basinhopping · Published score 508011</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num"><strong>—</strong></td>
+   </tr>
+   <tr data-problem="globalopt/lj38">
+   <th scope="row"><a href="globalopt/lj38.html">Lennard-Jones 38 global minimum</a></th>
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td><a href="../codes/pele.html">pele</a><small>pele · hybrid eigenvector following · Published score 521595</small></td>
+   <td class="num">—</td>
+   <td class="num">320504</td>
+   <td class="num">100.0%</td>
+   <td class="num"><strong>—</strong></td>
+   </tr>
+   <tr data-problem="globalopt/lj75">
    <th scope="row"><a href="globalopt/lj75.html">Lennard-Jones 75</a></th>
-   <td>Lennard-Jones</td>
-   <td class="num">75</td>
-   <td class="num">200</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="globalopt/lj98.html">Lennard-Jones 98</a></th>
-   <td>Lennard-Jones</td>
-   <td class="num">98</td>
-   <td class="num">100</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="globalopt/tip4p10.html">TIP4P 10</a></th>
-   <td>TIP4P, N=10</td>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/gmin.html">GMIN</a><small>GMIN · basin-hopping with symmetrise csm moves · Published score 60692</small></td>
    <td class="num">—</td>
-   <td class="num">10000</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="globalopt/tip4p15.html">TIP4P 15</a></th>
-   <td>TIP4P, N=15</td>
-   <td class="num">—</td>
-   <td class="num">500</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="globalopt/tip4p20.html">TIP4P 20</a></th>
-   <td>TIP4P, N=20</td>
-   <td class="num">—</td>
-   <td class="num">100</td>
-   </tr>
-   </tbody></table></div>
-   <p class="bench-note">A dash means the problem file does not state an atom count.</p>
-   <h2>Results by code</h2>
-   <p>Best is the lowest cost for that code on that problem. Median is the median of that code's costs. PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap. An archived row is ranked by the average it published. The success rate is the share of runs that finished.</p>
-   <div class="bench-scroll">
-   <table class="bench-sortable" data-bench="codes">
-   <caption>One row per code on each problem.</caption>
-   <thead><tr><th>Problem</th><th>Code</th><th>Best</th><th>Median</th><th>Success rate</th><th>Rows</th></tr></thead><tbody>
-   <tr>
-   <td>Binary Lennard-Jones 100</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">-589.507</td>
-   <td class="num">-589.507</td>
-   <td class="num">—</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Binary Lennard-Jones 100</td>
-   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num">-584.579</td>
-   <td class="num">-584.579</td>
-   <td class="num">—</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 150</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">667.38</td>
-   <td class="num">880661</td>
+   <td class="num">38118</td>
    <td class="num">100.0%</td>
-   <td class="num">4</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 global minimum</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">5883.83</td>
-   <td class="num">144331</td>
-   <td class="num">100.0%</td>
-   <td class="num">6</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 global minimum</td>
-   <td><a href="../codes/eon.html">eOn</a></td>
-   <td class="num">503146</td>
-   <td class="num">503146</td>
-   <td class="num">100.0%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 global minimum</td>
-   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num">508011</td>
-   <td class="num">553271</td>
-   <td class="num">—</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 global minimum</td>
-   <td><a href="../codes/pele.html">pele</a></td>
-   <td class="num">521595</td>
-   <td class="num">521595</td>
-   <td class="num">100.0%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 75</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">60692</td>
-   <td class="num">1.96655e+06</td>
-   <td class="num">100.0%</td>
-   <td class="num">3</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 75</td>
-   <td><a href="../codes/ase.html">ASE</a></td>
-   <td class="num">2e+06</td>
-   <td class="num">2e+06</td>
+   <tr data-problem="globalopt/lj75">
+   <th scope="row"><a href="globalopt/lj75.html">Lennard-Jones 75</a></th>
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td><a href="../codes/ase.html">ASE</a><small>ASE (3.29.0) · BasinHopping</small></td>
+   <td class="num">1e+06</td>
+   <td class="num">1e+06</td>
    <td class="num">0.0%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>2e+06</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 98</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">1281.92</td>
-   <td class="num">163318</td>
+   <tr data-problem="globalopt/lj98">
+   <th scope="row"><a href="globalopt/lj98.html">Lennard-Jones 98</a></th>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/gmin.html">GMIN</a><small>GMIN · core orbits symmetrisation scheme · Published score 1281.92</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
    <td class="num">100.0%</td>
-   <td class="num">4</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>TIP4P 10</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">16099</td>
-   <td class="num">16167.5</td>
+   <tr data-problem="globalopt/tip4p10">
+   <th scope="row"><a href="globalopt/tip4p10.html">TIP4P 10</a></th>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/gmin.html">GMIN</a><small>GMIN · linear temperature basin-paving · Published score 16099</small></td>
+   <td class="num">—</td>
+   <td class="num">11387</td>
    <td class="num">100.0%</td>
-   <td class="num">2</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>TIP4P 15</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">625362</td>
-   <td class="num">648004</td>
+   <tr data-problem="globalopt/tip4p15">
+   <th scope="row"><a href="globalopt/tip4p15.html">TIP4P 15</a></th>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/gmin.html">GMIN</a><small>GMIN · linear temperature basin-paving · Published score 625362</small></td>
+   <td class="num">—</td>
+   <td class="num">416929</td>
    <td class="num">100.0%</td>
-   <td class="num">2</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>TIP4P 20</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">2.55667e+07</td>
-   <td class="num">2.70817e+07</td>
+   <tr data-problem="globalopt/tip4p20">
+   <th scope="row"><a href="globalopt/tip4p20.html">TIP4P 20</a></th>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/gmin.html">GMIN</a><small>GMIN · linear temperature basin-paving · Published score 2.55667e+07</small></td>
+   <td class="num">—</td>
+   <td class="num">1.81821e+07</td>
    <td class="num">100.0%</td>
-   <td class="num">2</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
    </tbody></table></div>
-   <figure class="bench-plot"><a href="../../_static/board/suite-globalopt.svg"><picture><source srcset="../../_static/board/suite-globalopt.webp" type="image/webp"><img src="../../_static/board/suite-globalopt.png" alt="Global optimization best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Global optimization best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   <p class="bench-note"><sup>*</sup> A dash marks a field the archived result does not record. Archived rows are ordered by their published mean; see the methodology.</p>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Cost comparison</p><h2>Best ranked cost</h2></div><p>Generated locally from the committed result rows.</p></div><figure class="bench-plot"><a href="../../_static/board/suite-globalopt.svg"><picture><source srcset="../../_static/board/suite-globalopt.webp" type="image/webp"><img src="../../_static/board/suite-globalopt.png" alt="Global optimization best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Global optimization best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-section-head">
+   <div><p class="bench-eyebrow">Benchmark set</p><h2>Problems</h2></div>
+   <p>Open a problem for every ranked method, run details, and performance charts.</p>
+   </div>
+   <div class="bench-problem-grid">
+   <a class="bench-problem-card" href="globalopt/lj100-binary.html">
+   <span class="bench-problem-card__system">binary Lennard-Jones</span>
+   <h3>Binary Lennard-Jones 100</h3>
+   <p>100 atoms · 100 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>GMIN</strong></span><span>Score <strong>-589.507</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="globalopt/lj150.html">
+   <span class="bench-problem-card__system">Lennard-Jones</span>
+   <h3>Lennard-Jones 150</h3>
+   <p>150 atoms · 100 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>GMIN</strong></span><span>Score <strong>667.38</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="globalopt/lj38.html">
+   <span class="bench-problem-card__system">Lennard-Jones</span>
+   <h3>Lennard-Jones 38 global minimum</h3>
+   <p>38 atoms · 100 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>GMIN</strong></span><span>Score <strong>5883.83</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="globalopt/lj75.html">
+   <span class="bench-problem-card__system">Lennard-Jones</span>
+   <h3>Lennard-Jones 75</h3>
+   <p>75 atoms · 200 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>GMIN</strong></span><span>Score <strong>60692</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="globalopt/lj98.html">
+   <span class="bench-problem-card__system">Lennard-Jones</span>
+   <h3>Lennard-Jones 98</h3>
+   <p>98 atoms · 100 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>GMIN</strong></span><span>Score <strong>1281.92</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="globalopt/tip4p10.html">
+   <span class="bench-problem-card__system">TIP4P, N=10</span>
+   <h3>TIP4P 10</h3>
+   <p>10000 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>GMIN</strong></span><span>Score <strong>16099</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="globalopt/tip4p15.html">
+   <span class="bench-problem-card__system">TIP4P, N=15</span>
+   <h3>TIP4P 15</h3>
+   <p>500 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>GMIN</strong></span><span>Score <strong>625362</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="globalopt/tip4p20.html">
+   <span class="bench-problem-card__system">TIP4P, N=20</span>
+   <h3>TIP4P 20</h3>
+   <p>100 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>GMIN</strong></span><span>Score <strong>2.55667e+07</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   </div>
    </section>
 #+end_export
 

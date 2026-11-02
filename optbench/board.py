@@ -1693,11 +1693,9 @@ def render_problem_section(
 
 def _caption(per_image: bool) -> str:
     caption = (
-        "One row is one code, one version, and one method. A lower cost is better. "
-        "PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. "
-        "An archived row shows the average it published. "
-        "Hessians is the mean analytic Hessian count. "
-        "FD calls is that count times one force call per coordinate."
+        "One row is one code, one version, and one method. A lower ranked cost is better. "
+        "A dash marks a field the source does not record. "
+        "See Methodology for scoring and archive comparability."
     )
     if per_image:
         caption += " The per-image mean divides the total by the number of moving images."
@@ -1719,6 +1717,68 @@ def _family_table(problem: dict, family_id: str, rows: list[dict]) -> str:
         cells = "".join(f'<td data-field="{field}">{_cell(value)}</td>' for field, value in family_cells(row))
         lines.append(f"<tr>{cells}</tr>")
     lines.append("</tbody></table></div>")
+    return "\n".join(lines)
+
+
+def _featured_leaderboard(problem: dict, limit: int = 8) -> str:
+    """Compact, results-first view of the leading rows."""
+    ranked = list(problem.get("ranked") or [])
+    shown = ranked[:limit]
+    lines = [
+        '<div class="bench-scroll bench-leaderboard-wrap">',
+        '<table class="bench-leaderboard" data-bench="leaderboard">',
+        "<caption>Leading ranked methods. Lower PAR-2 is better.</caption>",
+        "<thead><tr><th>Rank</th><th>Code and method</th><th>Best run</th>"
+        "<th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>",
+    ]
+    has_missing = False
+    for index, row in enumerate(shown, start=1):
+        best = _format_number(row.get("min_calls")) or "—"
+        median = _format_number(row.get("median_calls")) or "—"
+        success = (
+            f"{100.0 * float(row['success_rate']):.1f}%"
+            if row.get("success_rate") is not None
+            else "—"
+        )
+        par2 = _format_number(row.get("par2_mean")) or "—"
+        has_missing = has_missing or "—" in {best, median, success, par2}
+        published = _format_number(row.get("published"))
+        width = max(18.0, 100.0 * (len(shown) - index + 1) / max(len(shown), 1))
+        lines.append(f'<tr data-rank="{index}">')
+        lines.append(f'<td class="num"><span class="bench-rank-badge">{index}</span></td>')
+        lines.append(
+            '<td class="bench-leader">'
+            f'<span class="bench-leader__name">{_cell(row.get("label") or "")}</span>'
+            f'<span class="bench-leader__family">{_cell(family_title(str(row.get("family") or "")))}</span>'
+            + (f'<span class="bench-leader__published">Published score {_cell(published)}</span>' if published else "")
+            + "</td>"
+        )
+        lines.append(f'<td class="num">{_cell(best)}</td>')
+        lines.append(f'<td class="num">{_cell(median)}</td>')
+        lines.append(f'<td class="num">{_cell(success)}</td>')
+        bar = (
+            f'<span class="bench-par2__bar" style="--rank-fill:{width:.2f}%"></span>'
+            if par2 != "—"
+            else ""
+        )
+        lines.append(
+            '<td class="num bench-par2">'
+            f"{bar}<strong>{_cell(par2)}</strong></td>"
+        )
+        lines.append("</tr>")
+    if not shown:
+        lines.append('<tr><td colspan="6">No ranked row.</td></tr>')
+    lines.append("</tbody></table></div>")
+    if has_missing:
+        lines.append(
+            '<p class="bench-note"><sup>*</sup> A dash marks a field the archived source does not record. '
+            "Archived rows are ordered by their published mean.</p>"
+        )
+    if len(ranked) > limit:
+        lines.append(
+            f'<p class="bench-table-count">Showing {limit} of {len(ranked)} ranked rows. '
+            "Open the full result tables below for every method.</p>"
+        )
     return "\n".join(lines)
 
 
@@ -1745,9 +1805,11 @@ def _table(
     if preamble:
         lines.append(preamble)
     lines.append(
-        "<p>Rows are ranked by cost inside each method family and on one overall table. "
-        "A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>"
+        '<div class="bench-section-head"><div><p class="bench-eyebrow">Current results</p>'
+        "<h2>Leaderboard</h2></div>"
+        '<p><a href="../../../methodology.html">PAR-2 methodology</a> · full-set, stock methods only</p></div>'
     )
+    lines.append(_featured_leaderboard(problem))
     lead = gap_paragraph(problem, unparsed)
     if lead:
         lines.append(lead)
@@ -1756,19 +1818,31 @@ def _table(
     from .site_pages import profile_worth_showing
 
     display = str(problem.get("title") or problem.get("id") or "")
+    chart_lines: list[str] = []
     for kind, label in (("profile", "Performance profile"), ("cost", "Cost and success")):
         name = f"{slug}-{kind}.svg"
         if kind == "profile" and not profile_worth_showing(problem):
             if problem.get("profile") or name in plots:
-                lines.append(
+                chart_lines.append(
                     "<p>A performance profile compares at least two codes. "
                     "This problem has fewer, so that plot is omitted.</p>"
                 )
             continue
         if name in plots:
-            lines.append(_plot_html(prefix, name, label, display))
+            chart_lines.append(_plot_html(prefix, name, label, display))
+    if chart_lines:
+        lines.append(
+            '<div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p>'
+            "<h2>Performance</h2></div><p>Charts are generated locally from committed results.</p></div>"
+        )
+        lines.append('<div class="bench-chart-grid">' + "\n".join(chart_lines) + "</div>")
     if problem.get("profile_gap") and f"{slug}-profile.svg" not in plots:
         lines.append(f'<p class="bench-gaps">{_cell(problem["profile_gap"])}</p>')
+    lines.append(
+        '<details class="bench-full-results"><summary><span>Full result tables</span>'
+        f"<small>{len(ranked)} ranked rows, grouped by method family</small></summary>"
+        '<div class="bench-full-results__body">'
+    )
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in ranked:
         grouped[str(row.get("family") or "")].append(row)
@@ -1806,6 +1880,7 @@ def _table(
             label = _safe_name(row) or str(row.get("entry") or row.get("path") or "")
             lines.append(f"<li>{_cell(label)}: {_cell(row.get('note') or '')}</li>")
         lines.append("</ul>")
+    lines.append("</div></details>")
     lines.append("</section>")
     return "\n".join(lines)
 
@@ -1838,6 +1913,46 @@ def _strip_private(document: dict) -> dict:
     }
 
 
+def _board_card(problem: dict, display_title: str = "") -> str:
+    """At-a-glance board card with a hidden verification table."""
+    ident = str(problem.get("id") or "")
+    suite, _, slug = ident.partition("/")
+    ranked = list(problem.get("ranked") or [])
+    top = ranked[0] if ranked else None
+    title = display_title or str(problem.get("title") or ident)
+    score = ""
+    score_label = "No ranked row"
+    leader = "No ranked row"
+    success = ""
+    if top:
+        score = _format_number(top.get("par2_mean"))
+        score_label = "PAR-2"
+        if not score:
+            score = _format_number(top.get("published"))
+            score_label = "Published mean"
+        score = score or "—"
+        leader = str(top.get("label") or "")
+        if top.get("success_rate") is not None:
+            success = f"{100.0 * float(top['success_rate']):.1f}% success"
+    href = f"generated/suites/{suite}/{slug}.html" if suite and slug else "#"
+    return (
+        f'<article class="bench-board-card" data-suite="{_cell(suite)}">'
+        f'<a class="bench-board-card__main" href="{_cell(href)}">'
+        f'<span class="bench-board-card__suite">{_cell(suite.replace("-", " "))}</span>'
+        f"<h3>{_cell(title)}</h3>"
+        '<div class="bench-board-card__score">'
+        f'<span>{_cell(score_label)}</span><strong>{_cell(score or "—")}</strong>'
+        "</div>"
+        f'<p title="{_cell(leader)}">{_cell(leader)}</p>'
+        f'<span class="bench-board-card__success">{_cell(success or "Archived result")}</span>'
+        '<span class="bench-card-link">Open leaderboard <span aria-hidden="true">→</span></span>'
+        "</a>"
+        '<div class="bench-source-table" aria-hidden="true">'
+        f"{headline_table(problem)}"
+        "</div></article>"
+    )
+
+
 def write_board(root: Path, output: Path) -> dict:
     """Write the leaderboard JSON, the plots, and the site include."""
     root = Path(root)
@@ -1867,25 +1982,55 @@ def write_board(root: Path, output: Path) -> dict:
             written_names.add(Path(path).name)
     ordered = sorted(document["problems"].values(), key=_problem_order)
     if ordered:
-        sections.append('<section class="bench" id="headlines">')
-        for problem in ordered:
-            sections.append(f"<h2>{_cell(problem.get('title') or problem['id'])}</h2>")
-            sections.append(headline_table(problem))
-        sections.append("</section>")
+        from .site_pages import human_title
+
+        source_problems = load_all(root / "problems")
+        by_slug: dict[str, list[dict]] = defaultdict(list)
+        for source_problem in source_problems.values():
+            by_slug[str(source_problem.get("problem") or "")].append(source_problem)
+        display_titles = {
+            ident: human_title(source_problem, by_slug)
+            for ident, source_problem in source_problems.items()
+        }
+        sections.append(
+            '<section class="bench bench-board" id="headlines">'
+            '<div class="bench-home-stats">'
+            f'<div><strong>{len(ordered)}</strong><span>Benchmark problems</span></div>'
+            f'<div><strong>{document["ranked_count"]}</strong><span>Ranked result rows</span></div>'
+            f'<div><strong>{sum(1 for problem in ordered if problem.get("profile"))}</strong>'
+            "<span>Performance profiles</span></div>"
+            '<div><a href="methodology.html">Scoring methodology <span aria-hidden="true">→</span></a></div>'
+            "</div>"
+            '<div class="bench-section-head"><div><p class="bench-eyebrow">All problems</p>'
+            "<h2>Current leaders</h2></div>"
+            "<p>Each card shows the lowest ranked cost for one problem.</p></div>"
+            '<div class="bench-board-grid">'
+        )
+        sections.extend(
+            _board_card(problem, display_titles.get(str(problem.get("id") or ""), ""))
+            for problem in ordered
+        )
+        sections.append("</div></section>")
     _drop_unwritten(plot_dir, written_names)
     if document["unparsed"]:
         items = [
             f"<li>{_cell(row.get('path') or row.get('entry'))}: {_cell(row.get('note') or '')}</li>"
             for row in document["unparsed"]
         ]
-        sections.append("<section id=\"unparsed\"><h2>Not scored</h2><ul>" + "".join(items) + "</ul></section>")
+        sections.append(
+            '<details class="bench-audit" id="unparsed"><summary>Files not scored</summary><ul>'
+            + "".join(items)
+            + "</ul></details>"
+        )
     if document["unmapped"]:
         items = [
             f"<li>{_cell(row.get('entry') or row.get('path'))}: {_cell(row.get('note') or '')}</li>"
             for row in document["unmapped"]
         ]
         sections.append(
-            "<section id=\"unmapped\"><h2>Not a problem template</h2><ul>" + "".join(items) + "</ul></section>"
+            '<details class="bench-audit" id="unmapped"><summary>Not a problem template</summary><ul>'
+            + "".join(items)
+            + "</ul></details>"
         )
     if site_plots != plot_dir and plot_dir.is_dir():
         site_plots.mkdir(parents=True, exist_ok=True)

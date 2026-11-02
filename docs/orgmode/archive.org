@@ -6,8 +6,8 @@ the oracle.
 Chill, Stevenson, Ruehle, Shang, Xiao, Farrell, Wales, and Henkelman
 set those problems in J. Chem. Theory Comput. 2014, 10, 5476-5482
 ([[https://doi.org/10.1021/ct5008718][doi:10.1021/ct5008718]]).
-A run in that archive counts as finished when it stops under 10000
-force calls.
+The [[file:methodology.org][methodology]] explains how these historical
+averages differ from current harness scores.
 
 Each problem below leads with its lowest-cost row.
 The full tables, including archived rows, are on the problem page.

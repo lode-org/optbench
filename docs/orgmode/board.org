@@ -1,10 +1,18 @@
 #+TITLE: Board
 #+OPTIONS: toc:nil num:nil author:nil
 
-Each row is one code, one version, and one stock method.
-The first row on this page is the lowest cost for that problem.
-The problem page ranks the same rows inside each method family and on one overall table.
-=uv run optbench board= writes this page from the committed results.
-It reads the committed results.
+#+begin_export rst
+.. raw:: html
+
+   <section class="bench-page-intro">
+   <p class="bench-eyebrow">Benchmark board</p>
+   <p class="bench-lede">One view of the current leader on every problem.
+   Open a card for ranked methods, run statistics, and performance charts.</p>
+   <div class="bench-page-intro__links">
+   <a href="methodology.html">Scoring methodology <span aria-hidden="true">→</span></a>
+   <span>Generated from committed results</span>
+   </div>
+   </section>
+#+end_export
 
 #+INCLUDE: "../include/v2-board.org"

@@ -416,7 +416,7 @@ def _format_rate(value: float | None) -> str:
 
 
 def code_summaries(problem: dict, ranked: list[dict], registry: list[dict]) -> list[dict]:
-    """Best and median ranked cost, and the success rate of the best row, per code."""
+    """The best ranked method and its run statistics, grouped by code."""
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in ranked:
         grouped[code_page_name(row, registry)].append(row)
@@ -432,8 +432,13 @@ def code_summaries(problem: dict, ranked: list[dict], registry: list[dict]) -> l
             {
                 "code": code,
                 "best": best_value,
-                "median": float(statistics.median(values)),
+                "median_score": float(statistics.median(values)),
+                "best_run": best_row.get("min_calls"),
+                "median": best_row.get("median_calls"),
                 "success": _success(best_row),
+                "par2": best_row.get("par2_mean"),
+                "published": best_row.get("published"),
+                "label": str(best_row.get("label") or ""),
                 "n": len(scored),
                 "problem": str(problem.get("id") or ""),
             }
@@ -496,95 +501,119 @@ def suite_tables(
     by_slug: dict[str, list[dict]],
     suite: str,
 ) -> tuple[str, list[dict]]:
-    """Problem table and per-code summary. The plot series is the second value."""
+    """Results-first suite summary. The plot series is the second value."""
     prepared: list[dict] = []
+    series: list[dict] = []
     for problem in group:
         view = (document.get("problems") or {}).get(problem["id"]) or {}
         runs, note = recorded_runs(root, problem, list(view.get("ranked") or []))
+        summaries = code_summaries(problem, list(view.get("ranked") or []), registry)
+        title = human_title(problem, by_slug)
+        series.extend({**item, "title": title} for item in summaries)
         prepared.append(
             {
                 "problem": problem,
-                "title": human_title(problem, by_slug),
+                "title": title,
                 "href": f"{suite}/{problem['problem']}.html",
                 "system": system_text(problem),
                 "atoms": atom_text(problem),
                 "runs": runs,
                 "note": note,
                 "view": view,
+                "summaries": summaries,
             }
         )
-    show_atoms = any(item["atoms"] for item in prepared)
-    show_runs = any(item["runs"] for item in prepared)
-    headers = ["Problem", "System"]
-    if show_atoms:
-        headers.append("Atoms")
-    if show_runs:
-        headers.append("Runs")
+
+    code_count = len({item["code"] for item in series})
+    ranked_count = sum(len(item["view"].get("ranked") or []) for item in prepared)
     lines = [
-        '<div class="bench-scroll">',
-        '<table class="bench-sortable" data-bench="problems">',
-        "<caption>Problems in this suite.</caption>",
-        "<thead><tr>" + "".join(f"<th>{header}</th>" for header in headers) + "</tr></thead><tbody>",
+        '<div class="bench-suite-lead">',
+        '<p class="bench-eyebrow">Suite overview</p>',
+        f"<p class=\"bench-lede\">Compare the leading recorded methods across "
+        f"{len(prepared)} benchmark {'problem' if len(prepared) == 1 else 'problems'}.</p>",
+        '<div class="bench-stat-grid bench-stat-grid--compact">',
+        f'<div class="bench-stat"><strong>{len(prepared)}</strong><span>Problems</span></div>',
+        f'<div class="bench-stat"><strong>{code_count}</strong><span>Codes ranked</span></div>',
+        f'<div class="bench-stat"><strong>{ranked_count}</strong><span>Result rows</span></div>',
+        '<div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>',
+        "</div></div>",
+        '<div class="bench-section-head">',
+        '<div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div>',
+        "<p>Top five codes per problem. Lower scores rank first.</p>",
+        "</div>",
+        '<div class="bench-scroll bench-leaderboard-wrap">',
+        '<table class="bench-sortable bench-leaderboard" data-bench="codes">',
+        "<caption>Best ranked method for each code. Select a heading to sort.</caption>",
+        "<thead><tr><th>Problem</th><th>Rank</th><th>Code</th><th>Best run</th>"
+        "<th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>",
     ]
-    missing_atoms = False
-    notes: list[str] = []
+    has_missing = False
     for item in prepared:
-        lines.append("<tr>")
-        lines.append(f'<th scope="row"><a href="{_cell(item["href"])}">{_cell(item["title"])}</a></th>')
-        lines.append(f"<td>{_cell(item['system'] or '—')}</td>")
-        if show_atoms:
-            if item["atoms"]:
-                lines.append(f'<td class="num">{_cell(item["atoms"])}</td>')
-            else:
-                missing_atoms = True
-                lines.append('<td class="num">—</td>')
-        if show_runs:
-            mark = ""
-            if item["note"]:
-                notes.append(item["note"])
-                mark = f"<sup>{len(notes)}</sup>"
-            lines.append(f'<td class="num">{_cell(item["runs"] or "—")}{mark}</td>')
-        lines.append("</tr>")
-    lines.append("</tbody></table></div>")
-    if missing_atoms:
-        lines.append("<p class=\"bench-note\">A dash means the problem file does not state an atom count.</p>")
-    for index, note in enumerate(notes, start=1):
-        lines.append(f'<p class="bench-note"><sup>{index}</sup> {_cell(note)}</p>')
-    lines.append("<h2>Results by code</h2>")
-    lines.append(
-        "<p>Best is the lowest cost for that code on that problem. "
-        "Median is the median of that code's costs. "
-        f"{PAR2_SENTENCE} "
-        "An archived row is ranked by the average it published. "
-        "The success rate is the share of runs that finished.</p>"
-    )
-    lines.append('<div class="bench-scroll">')
-    lines.append('<table class="bench-sortable" data-bench="codes">')
-    lines.append("<caption>One row per code on each problem.</caption>")
-    lines.append(
-        "<thead><tr><th>Problem</th><th>Code</th><th>Best</th><th>Median</th><th>Success rate</th><th>Rows</th></tr></thead><tbody>"
-    )
-    series: list[dict] = []
-    for problem in group:
-        view = (document.get("problems") or {}).get(problem["id"]) or {}
-        title = human_title(problem, by_slug)
-        for item in code_summaries(problem, list(view.get("ranked") or []), registry):
-            href = f"../codes/{_slug(item['code'])}.html"
-            lines.append("<tr>")
-            lines.append(f"<td>{_cell(title)}</td>")
-            lines.append(f'<td><a href="{_cell(href)}">{_cell(item["code"])}</a></td>')
-            best = _format_number(item["best"]) or "—"
-            median = _format_number(item["median"]) or "—"
-            rate = _format_rate(item["success"]) or "—"
-            lines.append(f'<td class="num">{_cell(best)}</td>')
+        for rank, summary in enumerate(item["summaries"][:5], start=1):
+            href = f"../codes/{_slug(summary['code'])}.html"
+            best_run = _format_number(summary["best_run"]) or "—"
+            median = _format_number(summary["median"]) or "—"
+            rate = _format_rate(summary["success"]) or "—"
+            par2 = _format_number(summary["par2"]) or "—"
+            has_missing = has_missing or "—" in {best_run, median, rate, par2}
+            detail = str(summary["label"])
+            published = _format_number(summary["published"])
+            if published:
+                detail += f" · Published score {published}"
+            lines.append(f'<tr data-problem="{_cell(summary["problem"])}">')
+            lines.append(
+                f'<th scope="row"><a href="{_cell(item["href"])}">{_cell(item["title"])}</a></th>'
+            )
+            lines.append(f'<td class="num"><span class="bench-rank-badge">{rank}</span></td>')
+            lines.append(
+                f'<td><a href="{_cell(href)}">{_cell(summary["code"])}</a>'
+                f'<small>{_cell(detail)}</small></td>'
+            )
+            lines.append(f'<td class="num">{_cell(best_run)}</td>')
             lines.append(f'<td class="num">{_cell(median)}</td>')
             lines.append(f'<td class="num">{_cell(rate)}</td>')
-            lines.append(f'<td class="num">{_cell(item["n"])}</td>')
+            lines.append(f'<td class="num"><strong>{_cell(par2)}</strong></td>')
             lines.append("</tr>")
-            series.append({**item, "title": title})
     if not series:
-        lines.append('<tr><td colspan="6">No ranked row.</td></tr>')
+        lines.append('<tr><td colspan="7">No ranked row.</td></tr>')
     lines.append("</tbody></table></div>")
+    if has_missing:
+        lines.append(
+            '<p class="bench-note"><sup>*</sup> A dash marks a field the archived result does not record. '
+            "Archived rows are ordered by their published mean; see the methodology.</p>"
+        )
+    lines.append("<!-- bench-suite-chart -->")
+
+    lines.extend(
+        [
+            '<div class="bench-section-head">',
+            '<div><p class="bench-eyebrow">Benchmark set</p><h2>Problems</h2></div>',
+            "<p>Open a problem for every ranked method, run details, and performance charts.</p>",
+            "</div>",
+            '<div class="bench-problem-grid">',
+        ]
+    )
+    for item in prepared:
+        leading = item["summaries"][0] if item["summaries"] else None
+        score = _format_number(leading["best"]) if leading else ""
+        meta = []
+        if item["atoms"]:
+            meta.append(f"{item['atoms']} atoms")
+        if item["runs"]:
+            meta.append(f"{item['runs']} runs")
+        lines.append(f'<a class="bench-problem-card" href="{_cell(item["href"])}">')
+        lines.append(f'<span class="bench-problem-card__system">{_cell(item["system"] or suite_name_for(suite))}</span>')
+        lines.append(f"<h3>{_cell(item['title'])}</h3>")
+        lines.append(f'<p>{_cell(" · ".join(meta) or "Recorded benchmark")}</p>')
+        if leading:
+            lines.append(
+                '<div class="bench-problem-card__result">'
+                f'<span>Leader <strong>{_cell(leading["code"])}</strong></span>'
+                f'<span>Score <strong>{_cell(score or "—")}</strong></span>'
+                "</div>"
+            )
+        lines.append('<span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>')
+    lines.append("</div>")
     return "\n".join(lines), series
 
 
@@ -749,29 +778,23 @@ def plot_figure(prefix: str, name: str, label: str) -> str:
     )
 
 
-def metric_html(problem: dict, primary: str | None) -> str:
-    """Metric names and a plain statement of the two scoring rules."""
-    lines = ["<h3>Metrics</h3>", f"<p>{_cell(PAR2_SENTENCE)}</p>"]
-    if primary:
-        lines.append(f"<p>The main metric is {_cell(metric_label(primary))}.</p>")
-    scoring = problem.get("scoring") or {}
-    if (scoring.get("half_even") or {}).get("rule"):
-        lines.append(f"<p>{_cell(ARCHIVE_SENTENCE)}</p>")
-    version2 = scoring.get("v2") or {}
-    if version2.get("success"):
-        success = str(version2["success"]).strip()
-        if success and success[-1] not in ".!?":
-            success += "."
-        lines.append(f"<p>A run counts as a success when {_cell(success)}</p>")
-    elif version2.get("cost"):
-        lines.append(f"<p>The cost is {_cell(version2['cost'])}.</p>")
+def metric_html(problem: dict, primary: str | None, methodology_href: str = "methodology.html") -> str:
+    """Compact metric context; scoring definitions live on one methodology page."""
     required = list((problem.get("metrics") or {}).get("required") or [])
-    if required:
-        lines.append("<ul>")
-        for key in required:
-            lines.append(f"<li>{_cell(metric_label(str(key)))}</li>")
-        lines.append("</ul>")
-    lines.append("<p>Select a column heading to sort the table.</p>")
+    secondary = [metric_label(str(key)) for key in required if key != primary and key != "nfailed"]
+    lines = [
+        '<div class="bench-metric-strip">',
+        '<div><span>Primary metric</span>'
+        f"<strong>{_cell(metric_label(primary or '') or 'Recorded score')}</strong></div>",
+    ]
+    if secondary:
+        shown = ", ".join(secondary[:3])
+        if len(secondary) > 3:
+            shown += f" +{len(secondary) - 3}"
+        lines.append(f"<p>Also records {_cell(shown)}</p>")
+    lines.append(
+        f'<a href="{_cell(methodology_href)}">How scoring works <span aria-hidden="true">→</span></a></div>'
+    )
     return "\n".join(lines)
 
 
@@ -827,7 +850,6 @@ def versions_html(pins: list[dict]) -> str:
     if not pins:
         return "<p>No registry pin.</p>"
     lines = [
-        "<h3>Versions</h3>",
         '<div class="bench-scroll"><table class="bench-sortable">',
         "<caption>Registry pins for this code.</caption>",
         "<thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>",

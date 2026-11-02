@@ -5,11 +5,18 @@
 .. raw:: html
 
    <section class="bench" id="code-pyamff">
-   <p>The registry has no pin for this code string. The rows below use the spelling on the archived file.</p>
-   <p>No registry pin.</p>
-   <h3>Results</h3>
-   <p>Ranked rows for this code, across every suite. One row is one version and one method. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published.</p>
-   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <div class="bench-code-lead">
+   <p class="bench-eyebrow">Code profile</p>
+   <p class="bench-lede">The registry has no pin for this code string. The rows below use the spelling on the archived file.</p>
+   <div class="bench-stat-grid bench-stat-grid--compact">
+   <div class="bench-stat"><strong>2</strong><span>Problems</span></div>
+   <div class="bench-stat"><strong>12</strong><span>Ranked rows</span></div>
+   <div class="bench-stat"><strong>0</strong><span>Registry pins</span></div>
+   <div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>
+   </div></div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Across all suites</p><h2>Results</h2></div>
+   <p>One row is one version and one stock method. Select a heading to sort.</p></div>
+   <div class="bench-scroll bench-leaderboard-wrap"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
    <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0">
@@ -193,5 +200,7 @@
    <td data-field="n">0</td>
    </tr>
    </tbody></table></div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Reproducibility</p><h2>Versions</h2></div></div>
+   <p>No registry pin.</p>
    </section>
 #+end_export

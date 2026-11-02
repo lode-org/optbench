@@ -6,8 +6,8 @@
 =integrate/batch-3= ranks the stock rows from the finished board branches.
 Each ranked row is one code, one version, and one stock method or preset.
 A finite-difference Hessian counts as one force call per coordinate.
-PAR-2 charges each failure twice the cap. hTST Al states no cap, so those
-rows leave =par2_mean= unset.
+The [[file:methodology.org][methodology]] defines PAR-2. hTST Al states no cap,
+so those rows leave =par2_mean= unset.
 
 eOn develop =500350d9= on =neb/Pt-heptamer=, 13 starts, 0 failures:
 

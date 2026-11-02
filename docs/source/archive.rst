@@ -8,8 +8,8 @@ the oracle.
 Chill, Stevenson, Ruehle, Shang, Xiao, Farrell, Wales, and Henkelman
 set those problems in J. Chem. Theory Comput. 2014, 10, 5476-5482
 (`doi:10.1021/ct5008718 <https://doi.org/10.1021/ct5008718>`_).
-A run in that archive counts as finished when it stops under 10000
-force calls.
+The `methodology <methodology.rst>`_ explains how these historical
+averages differ from current harness scores.
 
 Each problem below leads with its lowest-cost row.
 The full tables, including archived rows, are on the problem page.
@@ -229,5 +229,5 @@ The full tables, including archived rows, are on the problem page.
    <p><a href="generated/suites/accelerated-md/aladatom.html">Family tables, overall table, and performance profile</a>.</p>
    </section>
 
-The suite list in the sidebar is the board.
-This page keeps the 2014 provenance and the same problem links in the text.
+The sidebar lists the suites.
+This page keeps the 2014 provenance and links each problem in the text.

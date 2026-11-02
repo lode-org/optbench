@@ -1,0 +1,78 @@
+#+TITLE: Methodology
+#+OPTIONS: toc:nil num:nil author:nil
+
+#+begin_export rst
+.. raw:: html
+
+   <section class="bench-page-intro bench-method-intro">
+   <p class="bench-eyebrow">Read the numbers</p>
+   <p class="bench-lede">OptBench separates current harness scores from
+   historical published averages, and keeps missing fields visible.</p>
+   </section>
+
+   <section class="bench-method-grid" aria-label="Scoring definitions">
+   <article>
+   <span class="bench-method-grid__index">01</span>
+   <h2>PAR-2</h2>
+   <p>The mean penalized cost across all runs. A successful run contributes
+   the calls it used. A failed run contributes twice the problem cap.</p>
+   </article>
+   <article>
+   <span class="bench-method-grid__index">02</span>
+   <h2>Success rate</h2>
+   <p>The share of recorded runs that finish successfully under the problem
+   contract. Problem definitions state the convergence and cap rules.</p>
+   </article>
+   <article>
+   <span class="bench-method-grid__index">03</span>
+   <h2>Archived score</h2>
+   <p>The historical archive reports the average of runs that finished under
+   its cap. Failed runs are excluded, so this number is not PAR-2.</p>
+   </article>
+   <article>
+   <span class="bench-method-grid__index">04</span>
+   <h2>Ranked row</h2>
+   <p>One code, one version, and one stock method on the problem's full start
+   set. Short runs and adjusted methods stay off the ranked table.</p>
+   </article>
+   </section>
+
+   <section class="bench-method-detail">
+   <div>
+   <p class="bench-eyebrow">Comparison rules</p>
+   <h2>What the board ranks</h2>
+   </div>
+   <dl>
+   <div><dt>Current harness rows</dt><dd>Ranked by PAR-2 when a complete,
+   comparable per-start record is available.</dd></div>
+   <div><dt>Archived rows</dt><dd>Ranked by the published primary average.
+   Fields absent from the archive are shown as a dash.</dd></div>
+   <div><dt>Method families</dt><dd>Rows are ranked both overall and within
+   comparable families such as minimizers, minimum-mode methods, and bands.</dd></div>
+   <div><dt>Band methods</dt><dd>The ranked cost is the harness force-call
+   total across moving images. A per-image mean is shown when available.</dd></div>
+   </dl>
+   </section>
+
+   <section class="bench-method-detail">
+   <div>
+   <p class="bench-eyebrow">Charts</p>
+   <h2>Performance profiles</h2>
+   </div>
+   <div class="bench-method-copy">
+   <p>A Dolan–Moré profile compares methods on the same set of starts. At a
+   performance ratio of 1, the curve reports the fraction of starts on which a
+   method is best. Moving right shows the fraction solved within that multiple
+   of the best cost.</p>
+   <p>A profile is omitted when the ranked rows do not share a start set or
+   when fewer than two codes can be compared. Cost-and-success charts use only
+   committed run-level results.</p>
+   </div>
+   </section>
+
+   <aside class="bench-method-note">
+   <strong>About dashes</strong>
+   <p>A dash is deliberate: the underlying source does not state that value.
+   OptBench does not infer or fabricate missing benchmark data.</p>
+   </aside>
+#+end_export

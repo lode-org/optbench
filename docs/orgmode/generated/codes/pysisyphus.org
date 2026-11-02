@@ -5,21 +5,18 @@
 .. raw:: html
 
    <section class="bench" id="code-pysisyphus">
-   <p>pysisyphus is used for minimization and mode following. Commit a4ce10dd, 2025-10-29.</p>
-   <h3>Versions</h3>
-   <div class="bench-scroll"><table class="bench-sortable">
-   <caption>Registry pins for this code.</caption>
-   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
-   <tr>
-   <td>minimization and mode following</td>
-   <td>master</td>
-   <td>a4ce10dd6d7f</td>
-   <td><a href="https://github.com/eljost/pysisyphus">https://github.com/eljost/pysisyphus</a></td>
-   </tr>
-   </tbody></table></div>
-   <h3>Results</h3>
-   <p>Ranked rows for this code, across every suite. One row is one version and one method. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published.</p>
-   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <div class="bench-code-lead">
+   <p class="bench-eyebrow">Code profile</p>
+   <p class="bench-lede">pysisyphus is used for minimization and mode following. Commit a4ce10dd, 2025-10-29.</p>
+   <div class="bench-stat-grid bench-stat-grid--compact">
+   <div class="bench-stat"><strong>2</strong><span>Problems</span></div>
+   <div class="bench-stat"><strong>4</strong><span>Ranked rows</span></div>
+   <div class="bench-stat"><strong>1</strong><span>Registry pins</span></div>
+   <div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>
+   </div></div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Across all suites</p><h2>Results</h2></div>
+   <p>One row is one version and one stock method. Select a heading to sort.</p></div>
+   <div class="bench-scroll bench-leaderboard-wrap"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
    <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="lowest-eigenvector/lj38" data-label="pysisyphus (0.1.dev1) · Lanczos">
@@ -81,6 +78,17 @@
    <td data-field="fd_calls">0</td>
    <td data-field="failures">crash 0, divergence 0, cap 1000, wrong_stationary 0</td>
    <td data-field="n">1000</td>
+   </tr>
+   </tbody></table></div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Reproducibility</p><h2>Versions</h2></div></div>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
+   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
+   <tr>
+   <td>minimization and mode following</td>
+   <td>master</td>
+   <td>a4ce10dd6d7f</td>
+   <td><a href="https://github.com/eljost/pysisyphus">https://github.com/eljost/pysisyphus</a></td>
    </tr>
    </tbody></table></div>
    </section>

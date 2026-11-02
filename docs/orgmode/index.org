@@ -1,20 +1,24 @@
 #+TITLE: OptBench
 #+OPTIONS: toc:nil num:nil author:nil
 
-OptBench compares geometry optimizers, saddle searches, and global optimization.
+#+begin_export rst
+.. raw:: html
 
-Chill, Stevenson, Ruehle, Shang, Xiao, Farrell, Wales, and Henkelman
-set the problems in J. Chem. Theory Comput. 2014, 10, 5476-5482
-([[https://doi.org/10.1021/ct5008718][doi:10.1021/ct5008718]]).
-
-The score on each problem they set is PAR-2, the mean cost of the runs.
-A finished run counts as the calls it used, and a failed run counts as twice the cap.
-An archived row keeps the average it published, which leaves failed runs out.
+   <section class="bench-hero">
+   <p class="bench-eyebrow">Open scientific benchmarks</p>
+   <h2>Evidence for better optimizers.</h2>
+   <p>Compare geometry optimization, saddle-search, and global-optimization
+   methods on reproducible scientific problems.</p>
+   <div class="bench-hero__actions">
+   <a class="bench-button bench-button--primary" href="board.html">Explore the board <span aria-hidden="true">→</span></a>
+   <a class="bench-button" href="methodology.html">Read the methodology</a>
+   </div>
+   <p class="bench-hero__source">Based on the OptBench problems introduced in
+   <a href="https://doi.org/10.1021/ct5008718">J. Chem. Theory Comput. 2014, 10, 5476–5482</a>.</p>
+   </section>
+#+end_export
 
 #+INCLUDE: "../include/overview.org"
-
-The board page lists the lowest-cost row of every problem.
-The commands that write a new =benchmark.dat= are on the Run a score page.
 
 #+begin_export rst
 .. toctree::
@@ -40,6 +44,7 @@ The commands that write a new =benchmark.dat= are on the Run a score page.
 
    run
    board
+   methodology
    codes
    changelog
 

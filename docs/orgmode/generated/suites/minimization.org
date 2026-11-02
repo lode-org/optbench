@@ -5,319 +5,185 @@
 .. raw:: html
 
    <section class="bench">
-   <p>Minimization covers Lennard-Jones 38 clusters, Lennard-Jones 38 clusters with Gaussian force noise, and Morse bulk. The recorded metrics include Force calls, Most force calls, and Fewest force calls. Lennard-Jones 38 clusters has 1000 runs, Lennard-Jones 38 clusters with Gaussian force noise has 1000 runs, and Morse bulk has 100 runs. An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <div class="bench-scroll">
-   <table class="bench-sortable" data-bench="problems">
-   <caption>Problems in this suite.</caption>
-   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Runs</th></tr></thead><tbody>
-   <tr>
+   <div class="bench-suite-lead">
+   <p class="bench-eyebrow">Suite overview</p>
+   <p class="bench-lede">Compare the leading recorded methods across 3 benchmark problems.</p>
+   <div class="bench-stat-grid bench-stat-grid--compact">
+   <div class="bench-stat"><strong>3</strong><span>Problems</span></div>
+   <div class="bench-stat"><strong>14</strong><span>Codes ranked</span></div>
+   <div class="bench-stat"><strong>166</strong><span>Result rows</span></div>
+   <div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>
+   </div></div>
+   <div class="bench-section-head">
+   <div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div>
+   <p>Top five codes per problem. Lower scores rank first.</p>
+   </div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-sortable bench-leaderboard" data-bench="codes">
+   <caption>Best ranked method for each code. Select a heading to sort.</caption>
+   <thead><tr><th>Problem</th><th>Rank</th><th>Code</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-problem="minimization/lj38">
    <th scope="row"><a href="minimization/lj38.html">Lennard-Jones 38 clusters</a></th>
-   <td>Lennard-Jones</td>
-   <td class="num">38</td>
-   <td class="num">1000</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></th>
-   <td>Lennard-Jones</td>
-   <td class="num">38</td>
-   <td class="num">1000</td>
-   </tr>
-   <tr>
-   <th scope="row"><a href="minimization/morse-bulk.html">Morse bulk</a></th>
-   <td>Morse</td>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/unknown.html">unknown</a><small>Newtons Method maxstep=0.25 · Published score 79</small></td>
    <td class="num">—</td>
-   <td class="num">100</td>
+   <td class="num">—</td>
+   <td class="num">100.0%</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   </tbody></table></div>
-   <p class="bench-note">A dash means the problem file does not state an atom count.</p>
-   <h2>Results by code</h2>
-   <p>Best is the lowest cost for that code on that problem. Median is the median of that code's costs. PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap. An archived row is ranked by the average it published. The success rate is the share of runs that finished.</p>
-   <div class="bench-scroll">
-   <table class="bench-sortable" data-bench="codes">
-   <caption>One row per code on each problem.</caption>
-   <thead><tr><th>Problem</th><th>Code</th><th>Best</th><th>Median</th><th>Success rate</th><th>Rows</th></tr></thead><tbody>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/unknown.html">unknown</a></td>
-   <td class="num">79</td>
+   <tr data-problem="minimization/lj38">
+   <th scope="row"><a href="minimization/lj38.html">Lennard-Jones 38 clusters</a></th>
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td><a href="../codes/rgmin.html">rgmin</a><small>rgmin (0.4.0) · DOGLEG</small></td>
+   <td class="num">45</td>
    <td class="num">79</td>
    <td class="num">100.0%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>81.881</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/rgmin.html">rgmin</a></td>
-   <td class="num">81.881</td>
-   <td class="num">928.197</td>
+   <tr data-problem="minimization/lj38">
+   <th scope="row"><a href="minimization/lj38.html">Lennard-Jones 38 clusters</a></th>
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td><a href="../codes/tsase.html">TSASE</a><small>tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27; · Published score 166</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
    <td class="num">100.0%</td>
-   <td class="num">28</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/tsase.html">TSASE</a></td>
+   <tr data-problem="minimization/lj38">
+   <th scope="row"><a href="minimization/lj38.html">Lennard-Jones 38 clusters</a></th>
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td><a href="../codes/optim.html">OPTIM</a><small>OPTIM · L-BFGS · Published score 176</small></td>
+   <td class="num">—</td>
    <td class="num">166</td>
-   <td class="num">257.2</td>
    <td class="num">100.0%</td>
-   <td class="num">3</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/optim.html">OPTIM</a></td>
-   <td class="num">176</td>
-   <td class="num">223.171</td>
+   <tr data-problem="minimization/lj38">
+   <th scope="row"><a href="minimization/lj38.html">Lennard-Jones 38 clusters</a></th>
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td><a href="../codes/pele.html">pele</a><small>pele-lbfgs-M100-maxstep0.2 · Published score 179</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
    <td class="num">100.0%</td>
-   <td class="num">2</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/pele.html">pele</a></td>
-   <td class="num">179</td>
-   <td class="num">288.145</td>
+   <tr data-problem="minimization/lj38-noise">
+   <th scope="row"><a href="minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></th>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/rgmin.html">rgmin</a><small>rgmin (0.4.1) · DOGLEG</small></td>
+   <td class="num">45</td>
+   <td class="num">79</td>
    <td class="num">100.0%</td>
-   <td class="num">7</td>
+   <td class="num"><strong>81.881</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/eon.html">eOn</a></td>
-   <td class="num">180.137</td>
-   <td class="num">180.137</td>
-   <td class="num">100.0%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num">181</td>
-   <td class="num">635</td>
-   <td class="num">100.0%</td>
-   <td class="num">6</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/dl-find.html">DL-FIND</a></td>
-   <td class="num">231.908</td>
-   <td class="num">3048.62</td>
+   <tr data-problem="minimization/lj38-noise">
+   <th scope="row"><a href="minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></th>
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td><a href="../codes/dl-find.html">DL-FIND</a><small>DL-FIND (0.0.3) · L-BFGS</small></td>
+   <td class="num">99</td>
+   <td class="num">184</td>
    <td class="num">99.8%</td>
-   <td class="num">3</td>
+   <td class="num"><strong>231.908</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">301.399</td>
-   <td class="num">301.399</td>
-   <td class="num">99.7%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/ase.html">ASE</a></td>
-   <td class="num">355</td>
-   <td class="num">656</td>
+   <tr data-problem="minimization/lj38-noise">
+   <th scope="row"><a href="minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></th>
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td><a href="../codes/pele.html">pele</a><small>pele (0.1.2) · MYLBFGS</small></td>
+   <td class="num">127</td>
+   <td class="num">235</td>
    <td class="num">99.9%</td>
-   <td class="num">11</td>
+   <td class="num"><strong>268.036</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/vc-sqnm.html">vc-SQNM</a></td>
-   <td class="num">598.05</td>
-   <td class="num">598.05</td>
-   <td class="num">98.9%</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/sella.html">Sella</a></td>
-   <td class="num">710.089</td>
-   <td class="num">710.089</td>
-   <td class="num">100.0%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/lammps.html">LAMMPS</a></td>
-   <td class="num">1123.81</td>
-   <td class="num">4361.3</td>
-   <td class="num">99.7%</td>
-   <td class="num">5</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters</td>
-   <td><a href="../codes/pysisyphus.html">pysisyphus</a></td>
-   <td class="num">15124.7</td>
-   <td class="num">16094.8</td>
-   <td class="num">25.4%</td>
-   <td class="num">3</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
-   <td><a href="../codes/rgmin.html">rgmin</a></td>
-   <td class="num">81.881</td>
-   <td class="num">197.228</td>
-   <td class="num">100.0%</td>
-   <td class="num">5</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
-   <td><a href="../codes/dl-find.html">DL-FIND</a></td>
-   <td class="num">231.908</td>
-   <td class="num">2747.86</td>
-   <td class="num">99.8%</td>
-   <td class="num">3</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
-   <td><a href="../codes/pele.html">pele</a></td>
-   <td class="num">268.036</td>
-   <td class="num">1098.85</td>
-   <td class="num">99.9%</td>
-   <td class="num">4</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
-   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num">300.052</td>
-   <td class="num">300.052</td>
+   <tr data-problem="minimization/lj38-noise">
+   <th scope="row"><a href="minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></th>
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a><small>Eon svn (r2549) · LBFGS</small></td>
+   <td class="num">100</td>
+   <td class="num">189</td>
    <td class="num">99.5%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>300.052</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">301.399</td>
-   <td class="num">301.399</td>
+   <tr data-problem="minimization/lj38-noise">
+   <th scope="row"><a href="minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></th>
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td><a href="../codes/gmin.html">GMIN</a><small>GMIN (df8da5992675) · LBFGS</small></td>
+   <td class="num">100</td>
+   <td class="num">223</td>
    <td class="num">99.7%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>301.399</strong></td>
    </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
-   <td><a href="../codes/ase.html">ASE</a></td>
-   <td class="num">396.55</td>
-   <td class="num">555.614</td>
-   <td class="num">99.4%</td>
-   <td class="num">3</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
-   <td><a href="../codes/vc-sqnm.html">vc-SQNM</a></td>
-   <td class="num">598.05</td>
-   <td class="num">598.05</td>
-   <td class="num">98.9%</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
-   <td><a href="../codes/sella.html">Sella</a></td>
-   <td class="num">729.433</td>
-   <td class="num">729.433</td>
-   <td class="num">99.9%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Lennard-Jones 38 clusters with Gaussian force noise</td>
-   <td><a href="../codes/lammps.html">LAMMPS</a></td>
-   <td class="num">1123.81</td>
-   <td class="num">3138.21</td>
-   <td class="num">99.7%</td>
-   <td class="num">5</td>
-   </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/rgmin.html">rgmin</a></td>
-   <td class="num">8.35</td>
-   <td class="num">61.89</td>
-   <td class="num">100.0%</td>
-   <td class="num">28</td>
-   </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/tsase.html">TSASE</a></td>
-   <td class="num">19</td>
-   <td class="num">8812.68</td>
-   <td class="num">100.0%</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/sella.html">Sella</a></td>
-   <td class="num">28.89</td>
-   <td class="num">28.89</td>
-   <td class="num">100.0%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/ase.html">ASE</a></td>
-   <td class="num">28.91</td>
-   <td class="num">53.58</td>
-   <td class="num">100.0%</td>
-   <td class="num">10</td>
-   </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/gmin.html">GMIN</a></td>
-   <td class="num">34.4</td>
-   <td class="num">34.4</td>
-   <td class="num">100.0%</td>
-   <td class="num">1</td>
-   </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/vc-sqnm.html">vc-SQNM</a></td>
-   <td class="num">40.51</td>
-   <td class="num">44.62</td>
-   <td class="num">100.0%</td>
+   <tr data-problem="minimization/morse-bulk">
+   <th scope="row"><a href="minimization/morse-bulk.html">Morse bulk</a></th>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/rgmin.html">rgmin</a><small>rgmin (0.4.1) · NEWTON</small></td>
    <td class="num">4</td>
-   </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/optim.html">OPTIM</a></td>
-   <td class="num">46</td>
-   <td class="num">8727.4</td>
+   <td class="num">9</td>
    <td class="num">100.0%</td>
-   <td class="num">2</td>
+   <td class="num"><strong>8.35</strong></td>
    </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/pele.html">pele</a></td>
-   <td class="num">51</td>
-   <td class="num">92.06</td>
+   <tr data-problem="minimization/morse-bulk">
+   <th scope="row"><a href="minimization/morse-bulk.html">Morse bulk</a></th>
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td><a href="../codes/tsase.html">TSASE</a><small>tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27; · Published score 19</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
    <td class="num">100.0%</td>
-   <td class="num">5</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num">52</td>
-   <td class="num">106</td>
+   <tr data-problem="minimization/morse-bulk">
+   <th scope="row"><a href="minimization/morse-bulk.html">Morse bulk</a></th>
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td><a href="../codes/sella.html">Sella</a><small>Sella (2.6.0) · Sella</small></td>
+   <td class="num">20</td>
+   <td class="num">28</td>
    <td class="num">100.0%</td>
-   <td class="num">5</td>
+   <td class="num"><strong>28.89</strong></td>
    </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/eon.html">eOn</a></td>
-   <td class="num">54.18</td>
-   <td class="num">54.18</td>
+   <tr data-problem="minimization/morse-bulk">
+   <th scope="row"><a href="minimization/morse-bulk.html">Morse bulk</a></th>
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td><a href="../codes/ase.html">ASE</a><small>ASE (3.29.0) · BFGSLineSearch</small></td>
+   <td class="num">21</td>
+   <td class="num">28</td>
    <td class="num">100.0%</td>
-   <td class="num">1</td>
+   <td class="num"><strong>28.91</strong></td>
    </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/dl-find.html">DL-FIND</a></td>
-   <td class="num">13626.5</td>
-   <td class="num">16449.2</td>
-   <td class="num">32.0%</td>
-   <td class="num">3</td>
-   </tr>
-   <tr>
-   <td>Morse bulk</td>
-   <td><a href="../codes/lammps.html">LAMMPS</a></td>
-   <td class="num">17656.7</td>
-   <td class="num">19150.8</td>
-   <td class="num">12.0%</td>
-   <td class="num">5</td>
+   <tr data-problem="minimization/morse-bulk">
+   <th scope="row"><a href="minimization/morse-bulk.html">Morse bulk</a></th>
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td><a href="../codes/gmin.html">GMIN</a><small>GMIN (df8da5992675) · LBFGS</small></td>
+   <td class="num">21</td>
+   <td class="num">35</td>
+   <td class="num">100.0%</td>
+   <td class="num"><strong>34.4</strong></td>
    </tr>
    </tbody></table></div>
-   <figure class="bench-plot"><a href="../../_static/board/suite-minimization.svg"><picture><source srcset="../../_static/board/suite-minimization.webp" type="image/webp"><img src="../../_static/board/suite-minimization.png" alt="Minimization best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Minimization best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   <p class="bench-note"><sup>*</sup> A dash marks a field the archived result does not record. Archived rows are ordered by their published mean; see the methodology.</p>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Cost comparison</p><h2>Best ranked cost</h2></div><p>Generated locally from the committed result rows.</p></div><figure class="bench-plot"><a href="../../_static/board/suite-minimization.svg"><picture><source srcset="../../_static/board/suite-minimization.webp" type="image/webp"><img src="../../_static/board/suite-minimization.png" alt="Minimization best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Minimization best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-section-head">
+   <div><p class="bench-eyebrow">Benchmark set</p><h2>Problems</h2></div>
+   <p>Open a problem for every ranked method, run details, and performance charts.</p>
+   </div>
+   <div class="bench-problem-grid">
+   <a class="bench-problem-card" href="minimization/lj38.html">
+   <span class="bench-problem-card__system">Lennard-Jones</span>
+   <h3>Lennard-Jones 38 clusters</h3>
+   <p>38 atoms · 1000 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>unknown</strong></span><span>Score <strong>79</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="minimization/lj38-noise.html">
+   <span class="bench-problem-card__system">Lennard-Jones</span>
+   <h3>Lennard-Jones 38 clusters with Gaussian force noise</h3>
+   <p>38 atoms · 1000 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>rgmin</strong></span><span>Score <strong>81.881</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="minimization/morse-bulk.html">
+   <span class="bench-problem-card__system">Morse</span>
+   <h3>Morse bulk</h3>
+   <p>100 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>rgmin</strong></span><span>Score <strong>8.35</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   </div>
    </section>
 #+end_export
 

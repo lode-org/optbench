@@ -5,35 +5,100 @@
 .. raw:: html
 
    <section class="bench" id="lj38_2ts_separation" data-problem="double-ended-saddle-search/lj38_2ts_separation">
-   <dl class="bench-rule">
-   <dt>System</dt><dd>Lennard-Jones</dd>
-   <dt>Atoms</dt><dd>38</dd>
-   <dt>Task</dt><dd>Double-ended saddle search</dd>
-   <dt>Runs</dt><dd>51</dd>
-   <dt>Stop</dt><dd>L2 norm of the force at or below 0.001</dd>
-   <dt>Cap</dt><dd>250000 force calls</dd>
-   </dl>
-   <h3>Metrics</h3>
-   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
-   <p>The main metric is Force calls.</p>
-   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <ul>
-   <li>Force calls</li>
-   <li>Most force calls</li>
-   <li>Median force calls</li>
-   <li>Fewest force calls</li>
-   <li>Failed runs</li>
-   <li>Transition states</li>
-   </ul>
-   <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
+   <div class="bench-problem-lead">
+   <p class="bench-eyebrow">Benchmark problem</p>
+   <div class="bench-fact-grid">
+   <div class="bench-fact"><span>System</span><strong>Lennard-Jones</strong></div>
+   <div class="bench-fact"><span>Atoms</span><strong>38</strong></div>
+   <div class="bench-fact"><span>Runs</span><strong>51</strong></div>
+   <div class="bench-fact"><span>Cap</span><strong>250000 calls</strong></div>
+   </div>
+   <div class="bench-metric-strip">
+   <div><span>Primary metric</span><strong>Force calls</strong></div>
+   <p>Also records Most force calls, Median force calls, Fewest force calls +1</p>
+   <a href="../../../methodology.html">How scoring works <span aria-hidden="true">→</span></a></div>
+   </div>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div><p><a href="../../../methodology.html">PAR-2 methodology</a> · full-set, stock methods only</p></div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-leaderboard" data-bench="leaderboard">
+   <caption>Leading ranked methods. Lower PAR-2 is better.</caption>
+   <thead><tr><th>Rank</th><th>Code and method</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-rank="1">
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">Eon svn (r2549) · Lanczos improved L-BFGS</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">178</td>
+   <td class="num">418</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:100.00%"></span><strong>502.784</strong></td>
+   </tr>
+   <tr data-rank="2">
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">eOn (3.5.0) · Lanczos improved</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">169</td>
+   <td class="num">422</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:87.50%"></span><strong>520.333</strong></td>
+   </tr>
+   <tr data-rank="3">
+   <td class="num"><span class="bench-rank-badge">3</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">Eon svn (r2549) · Lanczos L-BFGS</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">213</td>
+   <td class="num">467</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:75.00%"></span><strong>524.667</strong></td>
+   </tr>
+   <tr data-rank="4">
+   <td class="num"><span class="bench-rank-badge">4</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">eOn (develop 500350d9) · Lanczos improved</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">169</td>
+   <td class="num">419</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:62.50%"></span><strong>536.667</strong></td>
+   </tr>
+   <tr data-rank="5">
+   <td class="num"><span class="bench-rank-badge">5</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">eOn (3.5.0) · Lanczos</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">212</td>
+   <td class="num">482</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:50.00%"></span><strong>564.647</strong></td>
+   </tr>
+   <tr data-rank="6">
+   <td class="num"><span class="bench-rank-badge">6</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">eOn (develop 500350d9) · Lanczos</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">212</td>
+   <td class="num">482</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:37.50%"></span><strong>573.745</strong></td>
+   </tr>
+   <tr data-rank="7">
+   <td class="num"><span class="bench-rank-badge">7</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">Eon svn (r2549) · Dimer L-BFGS</span><span class="bench-leader__family">Minimum mode</span></td>
+   <td class="num">184</td>
+   <td class="num">451</td>
+   <td class="num">100.0%</td>
+   <td class="num bench-par2"><span class="bench-par2__bar" style="--rank-fill:25.00%"></span><strong>681.784</strong></td>
+   </tr>
+   <tr data-rank="8">
+   <td class="num"><span class="bench-rank-badge">8</span></td>
+   <td class="bench-leader"><span class="bench-leader__name">OPTIM · DNEB + hybrid eigenvector following + Djikstra shortest path</span><span class="bench-leader__family">Connect / double-ended</span><span class="bench-leader__published">Published score 2885</span></td>
+   <td class="num">—</td>
+   <td class="num">2565</td>
+   <td class="num">—</td>
+   <td class="num bench-par2"><strong>—</strong></td>
+   </tr>
+   </tbody></table></div>
+   <p class="bench-note"><sup>*</sup> A dash marks a field the archived source does not record. Archived rows are ordered by their published mean.</p>
+   <p class="bench-table-count">Showing 8 of 38 ranked rows. Open the full result tables below for every method.</p>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-profile.svg"><picture><source srcset="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-profile.webp" type="image/webp"><img src="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-profile.png" alt="Performance profile for Lennard-Jones 38 transition-state separation" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
-   <figure class="bench-plot"><a href="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-cost.svg"><picture><source srcset="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-cost.webp" type="image/webp"><img src="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-cost.png" alt="Cost and success for Lennard-Jones 38 transition-state separation" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Run-level evidence</p><h2>Performance</h2></div><p>Charts are generated locally from committed results.</p></div>
+   <div class="bench-chart-grid"><figure class="bench-plot"><a href="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-profile.svg"><picture><source srcset="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-profile.webp" type="image/webp"><img src="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-profile.png" alt="Performance profile for Lennard-Jones 38 transition-state separation" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-cost.svg"><picture><source srcset="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-cost.webp" type="image/webp"><img src="../../../_static/board/double-ended-saddle-search-lj38_2ts_separation-cost.png" alt="Cost and success for Lennard-Jones 38 transition-state separation" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure></div>
+   <details class="bench-full-results"><summary><span>Full result tables</span><small>38 ranked rows, grouped by method family</small></summary><div class="bench-full-results__body">
    <h3>Band / NEB</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="band" data-problem="double-ended-saddle-search/lj38_2ts_separation">
-   <caption>Band / NEB. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Band / NEB. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">eOn (develop 500350d9) · energy-weighted CI-NEB</td><td data-field="rank_cost">15260.3</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">51</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">Sella (2.6.0) · Sella+NEB</td><td data-field="rank_cost">31447.3</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">51</td></tr>
@@ -63,7 +128,7 @@
    <h3>Minimum mode</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="min-mode" data-problem="double-ended-saddle-search/lj38_2ts_separation">
-   <caption>Minimum mode. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Minimum mode. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">Eon svn (r2549) · Lanczos improved L-BFGS</td><td data-field="rank_cost">502.784</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">51</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">eOn (3.5.0) · Lanczos improved</td><td data-field="rank_cost">520.333</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">51</td></tr>
@@ -78,7 +143,7 @@
    <h3>Connect / double-ended</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="connect" data-problem="double-ended-saddle-search/lj38_2ts_separation">
-   <caption>Connect / double-ended. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <caption>Connect / double-ended. One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability.</caption>
    <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">OPTIM · DNEB + hybrid eigenvector following + Djikstra shortest path</td><td data-field="rank_cost">2885</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">51</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">Eon svn (r2549) · LBFGS</td><td data-field="rank_cost">13384.9</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">51</td></tr>
@@ -89,7 +154,7 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="double-ended-saddle-search/lj38_2ts_separation">
-   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. The per-image mean divides the total by the number of moving images.</caption>
+   <caption>One row is one code, one version, and one method. A lower ranked cost is better. A dash marks a field the source does not record. See Methodology for scoring and archive comparability. The per-image mean divides the total by the number of moving images.</caption>
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">Eon svn (r2549) · Lanczos improved L-BFGS</td><td data-field="family">Minimum mode</td><td data-field="family_rank">1</td><td data-field="par2_mean">502.784</td><td data-field="published"></td><td data-field="median_calls">418</td><td data-field="mean_calls">502.784</td><td data-field="mean_per_image">100.557</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">51</td></tr>
    <tr><td data-field="label">eOn (3.5.0) · Lanczos improved</td><td data-field="family">Minimum mode</td><td data-field="family_rank">2</td><td data-field="par2_mean">520.333</td><td data-field="published"></td><td data-field="median_calls">422</td><td data-field="mean_calls">520.333</td><td data-field="mean_per_image">104.067</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">51</td></tr>
@@ -130,5 +195,6 @@
    <tr><td data-field="label">geodesic (1.0.0) · NEB-FIRE geodesic</td><td data-field="family">Band / NEB</td><td data-field="family_rank">23</td><td data-field="par2_mean">500000</td><td data-field="published"></td><td data-field="median_calls">10000</td><td data-field="mean_calls">10000</td><td data-field="mean_per_image">2000</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 51, wrong_stationary 0</td><td data-field="n">51</td></tr>
    <tr><td data-field="label">rgsaddle (0.2.2) · NEB</td><td data-field="family">Band / NEB</td><td data-field="family_rank">24</td><td data-field="par2_mean">500000</td><td data-field="published"></td><td data-field="median_calls">10000</td><td data-field="mean_calls">9773.86</td><td data-field="mean_per_image">1954.77</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 3, cap 45, wrong_stationary 3</td><td data-field="n">51</td></tr>
    </tbody></table></div>
+   </div></details>
    </section>
 #+end_export

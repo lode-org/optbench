@@ -5,56 +5,71 @@
 .. raw:: html
 
    <section class="bench">
-   <p>Harmonic transition state theory covers EAM aluminum and Pt heptamer island. The recorded metrics include Barrier force calls, Barrier jobs, Rate force calls, and Rate jobs. EAM aluminum has 639 runs and Pt heptamer island has 13 runs. An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
-   <div class="bench-scroll">
-   <table class="bench-sortable" data-bench="problems">
-   <caption>Problems in this suite.</caption>
-   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Runs</th></tr></thead><tbody>
-   <tr>
+   <div class="bench-suite-lead">
+   <p class="bench-eyebrow">Suite overview</p>
+   <p class="bench-lede">Compare the leading recorded methods across 2 benchmark problems.</p>
+   <div class="bench-stat-grid bench-stat-grid--compact">
+   <div class="bench-stat"><strong>2</strong><span>Problems</span></div>
+   <div class="bench-stat"><strong>2</strong><span>Codes ranked</span></div>
+   <div class="bench-stat"><strong>15</strong><span>Result rows</span></div>
+   <div class="bench-stat bench-stat--link"><a href="../../methodology.html">Scoring method <span aria-hidden="true">↗</span></a></div>
+   </div></div>
+   <div class="bench-section-head">
+   <div><p class="bench-eyebrow">Current results</p><h2>Leaderboard</h2></div>
+   <p>Top five codes per problem. Lower scores rank first.</p>
+   </div>
+   <div class="bench-scroll bench-leaderboard-wrap">
+   <table class="bench-sortable bench-leaderboard" data-bench="codes">
+   <caption>Best ranked method for each code. Select a heading to sort.</caption>
+   <thead><tr><th>Problem</th><th>Rank</th><th>Code</th><th>Best run</th><th>Median run</th><th>Success</th><th>PAR-2</th></tr></thead><tbody>
+   <tr data-problem="hTST/Al">
    <th scope="row"><a href="hTST/Al.html">EAM aluminum</a></th>
-   <td>EAM</td>
-   <td class="num">101</td>
-   <td class="num">639</td>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a><small>eOn (r2006) · Dimer-CG rotation: max=10 tol=1 · Published score 21070</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
-   <tr>
+   <tr data-problem="hTST/Pt">
    <th scope="row"><a href="hTST/Pt.html">Pt heptamer island</a></th>
-   <td>Morse</td>
-   <td class="num">343</td>
-   <td class="num">13</td>
+   <td class="num"><span class="bench-rank-badge">1</span></td>
+   <td><a href="../codes/tsase.html">TSASE</a><small>TSASE · quenchDimer+neb-QM · Published score 293200</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num"><strong>—</strong></td>
+   </tr>
+   <tr data-problem="hTST/Pt">
+   <th scope="row"><a href="hTST/Pt.html">Pt heptamer island</a></th>
+   <td class="num"><span class="bench-rank-badge">2</span></td>
+   <td><a href="../codes/eon-svn.html">Eon svn</a><small>Eon r2006 · Dimer-CG rotation: max=10, tol=1 · Published score 496000</small></td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num">—</td>
+   <td class="num"><strong>—</strong></td>
    </tr>
    </tbody></table></div>
-   <h2>Results by code</h2>
-   <p>Best is the lowest cost for that code on that problem. Median is the median of that code's costs. PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap. An archived row is ranked by the average it published. The success rate is the share of runs that finished.</p>
-   <div class="bench-scroll">
-   <table class="bench-sortable" data-bench="codes">
-   <caption>One row per code on each problem.</caption>
-   <thead><tr><th>Problem</th><th>Code</th><th>Best</th><th>Median</th><th>Success rate</th><th>Rows</th></tr></thead><tbody>
-   <tr>
-   <td>EAM aluminum</td>
-   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num">21070</td>
-   <td class="num">24970</td>
-   <td class="num">—</td>
-   <td class="num">2</td>
-   </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/tsase.html">TSASE</a></td>
-   <td class="num">293200</td>
-   <td class="num">3.239e+06</td>
-   <td class="num">—</td>
-   <td class="num">3</td>
-   </tr>
-   <tr>
-   <td>Pt heptamer island</td>
-   <td><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num">496000</td>
-   <td class="num">752950</td>
-   <td class="num">—</td>
-   <td class="num">8</td>
-   </tr>
-   </tbody></table></div>
-   <figure class="bench-plot"><a href="../../_static/board/suite-hTST.svg"><picture><source srcset="../../_static/board/suite-hTST.webp" type="image/webp"><img src="../../_static/board/suite-hTST.png" alt="Harmonic transition state theory best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Harmonic transition state theory best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   <p class="bench-note"><sup>*</sup> A dash marks a field the archived result does not record. Archived rows are ordered by their published mean; see the methodology.</p>
+   <div class="bench-section-head"><div><p class="bench-eyebrow">Cost comparison</p><h2>Best ranked cost</h2></div><p>Generated locally from the committed result rows.</p></div><figure class="bench-plot"><a href="../../_static/board/suite-hTST.svg"><picture><source srcset="../../_static/board/suite-hTST.webp" type="image/webp"><img src="../../_static/board/suite-hTST.png" alt="Harmonic transition state theory best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Harmonic transition state theory best ranked cost. Select the plot for the full SVG.</figcaption></figure>
+   <div class="bench-section-head">
+   <div><p class="bench-eyebrow">Benchmark set</p><h2>Problems</h2></div>
+   <p>Open a problem for every ranked method, run details, and performance charts.</p>
+   </div>
+   <div class="bench-problem-grid">
+   <a class="bench-problem-card" href="hTST/Al.html">
+   <span class="bench-problem-card__system">EAM</span>
+   <h3>EAM aluminum</h3>
+   <p>101 atoms · 639 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>Eon svn</strong></span><span>Score <strong>21070</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   <a class="bench-problem-card" href="hTST/Pt.html">
+   <span class="bench-problem-card__system">Morse</span>
+   <h3>Pt heptamer island</h3>
+   <p>343 atoms · 13 runs</p>
+   <div class="bench-problem-card__result"><span>Leader <strong>TSASE</strong></span><span>Score <strong>293200</strong></span></div>
+   <span class="bench-card-link">View results <span aria-hidden="true">→</span></span></a>
+   </div>
    </section>
 #+end_export
 
