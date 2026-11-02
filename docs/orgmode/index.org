@@ -50,3 +50,12 @@ The commands that write a new =benchmark.dat= are on the Run a score page.
 
    archive
 #+end_export
+
+* Contact
+
+Questions, bug reports, and requests for a new code or problem go to the GitHub issue tracker.
+The tracker is https://github.com/lode-org/optbench/issues.
+It is the one place to ask about this repository and the site.
+A report about a score helps most when it names the problem id and the template id.
+It should also attach the =benchmark.dat= that the run wrote.
+A report about a client build also needs the version line that the client prints.

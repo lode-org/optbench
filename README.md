@@ -243,3 +243,12 @@ OptBench uses the MIT License, named for the Massachusetts Institute of Technolo
 [LICENSE](LICENSE) contains the license text.
 The source distribution leaves out `softsaddle/upstream`, `codes/gmin`, and `archive/entries`.
 Those trees contain third-party files that carry other licenses in their headers or carry no license notice.
+
+## Contact
+
+Questions, bug reports, and requests for a new code or problem go to the GitHub issue tracker.
+The tracker is <https://github.com/lode-org/optbench/issues>.
+It is the one place to ask about this repository and the site.
+A report about a score helps most when it names the problem id and the template id.
+It should also attach the `benchmark.dat` that the run wrote.
+A report about a client build also needs the version line that the client prints.
