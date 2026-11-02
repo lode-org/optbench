@@ -5,7 +5,6 @@
 .. raw:: html
 
    <section class="bench" id="lj38-noise" data-problem="minimization/lj38-noise">
-   <h2>Lennard-Jones 38 clusters with Gaussian force noise</h2>
    <dl class="bench-rule">
    <dt>System</dt><dd>Lennard-Jones</dd>
    <dt>Atoms</dt><dd>38</dd>
@@ -15,29 +14,29 @@
    <dt>Cap</dt><dd>10000 force calls</dd>
    <dt>Starts</dt><dd>1000</dd>
    <dt>Potential</dt><dd>lennard-jones</dd>
-   <dt>v2</dt><dd>par2-bootstrap</dd>
    <dt>Note</dt><dd>Gaussian force noise on the clean Lennard-Jones energy. The harness campaigns use that rule. The quadratic sample is results/validation/statistics.json.</dd>
    </dl>
    <h3>Metrics</h3>
-   <p>The main metric is force calls.</p>
-   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
-   <p>harness force calls under the cap, the noisy force at the noise-aware stop, and when sigma is positive a clean-energy window whose span is at most max(energy_tol, kappa * sigma). The Hessian is the clean force. The index is vibrational: the six rigid modes are removed, and a curvature is negative only below -max(force_norm, 1e-8*||H||_F, 1e-6), with that force_norm the noise-aware stop. Energy and Kabsch RMSD are not applied: this file has no per-start reference.</p>
+   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
+   <p>The main metric is Force calls.</p>
+   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
+   <p>A run counts as a success when harness force calls under the cap, the noisy force at the noise-aware stop, and when sigma is positive a clean-energy window whose span is at most max(energy_tol, kappa * sigma). The Hessian is the clean force. The index is vibrational: the six rigid modes are removed, and a curvature is negative only below -max(force_norm, 1e-8*||H||_F, 1e-6), with that force_norm the noise-aware stop. Energy and Kabsch RMSD are not applied: this file has no per-start reference.</p>
    <ul>
-   <li>force calls</li>
-   <li>force calls max</li>
-   <li>force calls min</li>
-   <li>nfailed</li>
+   <li>Force calls</li>
+   <li>Most force calls</li>
+   <li>Fewest force calls</li>
+   <li>Failed runs</li>
    </ul>
    <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
+   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/minimization-lj38-noise-profile.svg"><picture><source srcset="../../../_static/board/minimization-lj38-noise-profile.webp" type="image/webp"><img src="../../../_static/board/minimization-lj38-noise-profile.png" alt="Dolan-More profile for minimization/lj38-noise" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
-   <figure class="bench-plot"><a href="../../../_static/board/minimization-lj38-noise-cost.svg"><picture><source srcset="../../../_static/board/minimization-lj38-noise-cost.webp" type="image/webp"><img src="../../../_static/board/minimization-lj38-noise-cost.png" alt="Cost versus success for minimization/lj38-noise" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../../_static/board/minimization-lj38-noise-profile.svg"><picture><source srcset="../../../_static/board/minimization-lj38-noise-profile.webp" type="image/webp"><img src="../../../_static/board/minimization-lj38-noise-profile.png" alt="Performance profile for Lennard-Jones 38 clusters with Gaussian force noise" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../../_static/board/minimization-lj38-noise-cost.svg"><picture><source srcset="../../../_static/board/minimization-lj38-noise-cost.webp" type="image/webp"><img src="../../../_static/board/minimization-lj38-noise-cost.png" alt="Cost and success for Lennard-Jones 38 clusters with Gaussian force noise" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
    <h3>Minimizers</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="minimize" data-problem="minimization/lj38-noise">
-   <caption>Minimizers. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
+   <caption>Minimizers. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">rgmin (0.4.1) · DOGLEG</td><td data-field="rank_cost">81.881</td><td data-field="hessian_calls">80.881</td><td data-field="fd_calls">9220.43</td><td data-field="n">1000</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">rgmin (0.4.1) · NEWTON</td><td data-field="rank_cost">166.337</td><td data-field="hessian_calls">65.649</td><td data-field="fd_calls">7483.99</td><td data-field="n">1000</td></tr>
    <tr><td data-field="family_rank">3</td><td data-field="label">rgmin (0.4.1) · LBFGS</td><td data-field="rank_cost">197.228</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">1000</td></tr>
@@ -67,8 +66,8 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="minimization/lj38-noise">
-   <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">rgmin (0.4.1) · DOGLEG</td><td data-field="family">Minimizers</td><td data-field="family_rank">1</td><td data-field="par2_mean">81.881</td><td data-field="published"></td><td data-field="median_calls">79</td><td data-field="mean_calls">81.881</td><td data-field="hessian_calls">80.881</td><td data-field="fd_calls">9220.43</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">1000</td></tr>
    <tr><td data-field="label">rgmin (0.4.1) · NEWTON</td><td data-field="family">Minimizers</td><td data-field="family_rank">2</td><td data-field="par2_mean">166.337</td><td data-field="published"></td><td data-field="median_calls">64</td><td data-field="mean_calls">66.649</td><td data-field="hessian_calls">65.649</td><td data-field="fd_calls">7483.99</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 5</td><td data-field="n">1000</td></tr>
    <tr><td data-field="label">rgmin (0.4.1) · LBFGS</td><td data-field="family">Minimizers</td><td data-field="family_rank">3</td><td data-field="par2_mean">197.228</td><td data-field="published"></td><td data-field="median_calls">170</td><td data-field="mean_calls">177.367</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 1</td><td data-field="n">1000</td></tr>

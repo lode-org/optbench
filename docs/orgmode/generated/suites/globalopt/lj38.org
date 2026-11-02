@@ -5,7 +5,6 @@
 .. raw:: html
 
    <section class="bench" id="lj38" data-problem="globalopt/lj38">
-   <h2>Lennard-Jones 38 global minimum</h2>
    <dl class="bench-rule">
    <dt>System</dt><dd>Lennard-Jones</dd>
    <dt>Atoms</dt><dd>38</dd>
@@ -13,33 +12,33 @@
    <dt>Runs</dt><dd>100</dd>
    <dt>Stop</dt><dd>within 0.001 of the known minimum</dd>
    <dt>Starts</dt><dd>100</dd>
-   <dt>v2</dt><dd>par2-bootstrap</dd>
    </dl>
    <h3>Metrics</h3>
-   <p>The main metric is force calls.</p>
-   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
+   <p>The main metric is Force calls.</p>
+   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
    <ul>
-   <li>force calls</li>
-   <li>force calls min</li>
-   <li>force calls max</li>
-   <li>nfailed</li>
+   <li>Force calls</li>
+   <li>Fewest force calls</li>
+   <li>Most force calls</li>
+   <li>Failed runs</li>
    </ul>
    <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj38-profile.svg"><picture><source srcset="../../../_static/board/globalopt-lj38-profile.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj38-profile.png" alt="Dolan-More profile for globalopt/lj38" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
-   <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj38-cost.svg"><picture><source srcset="../../../_static/board/globalopt-lj38-cost.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj38-cost.png" alt="Cost versus success for globalopt/lj38" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
+   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
+   <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj38-profile.svg"><picture><source srcset="../../../_static/board/globalopt-lj38-profile.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj38-profile.png" alt="Performance profile for Lennard-Jones 38 global minimum" loading="lazy" decoding="async"></picture></a><figcaption>Performance profile. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj38-cost.svg"><picture><source srcset="../../../_static/board/globalopt-lj38-cost.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj38-cost.png" alt="Cost and success for Lennard-Jones 38 global minimum" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
    <h3>Connect / double-ended</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="connect" data-problem="globalopt/lj38">
-   <caption>Connect / double-ended. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
+   <caption>Connect / double-ended. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">pele · hybrid eigenvector following</td><td data-field="rank_cost">521595</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
    </tbody></table></div>
    <h3>Basin hopping / global</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="global" data-problem="globalopt/lj38">
-   <caption>Basin hopping / global. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
+   <caption>Basin hopping / global. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">GMIN (df8da599) · basin-hopping with continuous symmetry measures</td><td data-field="rank_cost">5883.83</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">GMIN · basin-hopping with symmetrise csm moves</td><td data-field="rank_cost">6421</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
    <tr><td data-field="family_rank">3</td><td data-field="label">GMIN · basin-hopping with symmetrise moves</td><td data-field="rank_cost">22711</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
@@ -54,8 +53,8 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="globalopt/lj38">
-   <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">GMIN (df8da599) · basin-hopping with continuous symmetry measures</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">1</td><td data-field="par2_mean">5883.83</td><td data-field="published"></td><td data-field="median_calls">3980.5</td><td data-field="mean_calls">5883.83</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
    <tr><td data-field="label">GMIN · basin-hopping with symmetrise csm moves</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">2</td><td data-field="par2_mean"></td><td data-field="published">6421</td><td data-field="median_calls">4771</td><td data-field="mean_calls">6421</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
    <tr><td data-field="label">GMIN · basin-hopping with symmetrise moves</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">3</td><td data-field="par2_mean"></td><td data-field="published">22711</td><td data-field="median_calls">15998</td><td data-field="mean_calls">22711</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>

@@ -1417,7 +1417,7 @@ def _headers(problem: dict) -> list[str]:
     ]
     if _show_per_image(problem):
         headers.append("Per-image mean")
-    headers.extend(["Hessians", "FD calls", "Failures", "n"])
+    headers.extend(["Hessians", "FD calls", "Failures", "Runs"])
     return headers
 
 
@@ -1526,11 +1526,11 @@ def _safe_name(row: dict) -> str:
     return str(row.get("code") or "").strip()
 
 
-def _plot_html(prefix: str, name: str, label: str, problem_id: str) -> str:
+def _plot_html(prefix: str, name: str, label: str, display: str) -> str:
     """Lazy WebP thumbnail, PNG fallback, click-through to the full SVG."""
     stem = name[:-4] if name.endswith(".svg") else name
     svg_name = name if name.endswith(".svg") else f"{stem}.svg"
-    alt = f"{label} for {problem_id}"
+    alt = f"{label} for {display}"
     caption = f"{label}. Select the plot for the full SVG."
     return (
         '<figure class="bench-plot">'
@@ -1676,6 +1676,7 @@ def render_problem_section(
     section_id: str | None = None,
     unparsed: list[dict] | None = None,
     heading: str = "h2",
+    show_heading: bool = True,
 ) -> str:
     """Family tables, the overall table, and the performance-profile plot."""
     return _table(
@@ -1686,24 +1687,25 @@ def render_problem_section(
         section_id=section_id,
         unparsed=unparsed,
         heading=heading,
+        show_heading=show_heading,
     )
 
 
 def _caption(per_image: bool) -> str:
     caption = (
-        "A row is one code, one version, and one stock method. Lower cost is better. "
-        "PAR-2 is the harness total. An archived row uses its published primary number. "
+        "One row is one code, one version, and one method. A lower cost is better. "
+        "PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. "
+        "An archived row shows the average it published. "
         "Hessians is the mean analytic Hessian count. "
-        "FD calls is that count times one force call per coordinate. "
-        "No problem file states another multiplier."
+        "FD calls is that count times one force call per coordinate."
     )
     if per_image:
-        caption += " Per-image mean divides the harness total by the problem's moving images."
+        caption += " The per-image mean divides the total by the number of moving images."
     return caption
 
 
 def _family_table(problem: dict, family_id: str, rows: list[dict]) -> str:
-    headers = ["Rank", "Row", "Cost", "Hessians", "FD calls", "n"]
+    headers = ["Rank", "Row", "Cost", "Hessians", "FD calls", "Runs"]
     lines = [
         '<div class="bench-scroll">',
         (
@@ -1729,6 +1731,7 @@ def _table(
     section_id: str | None = None,
     unparsed: list[dict] | None = None,
     heading: str = "h2",
+    show_heading: bool = True,
 ) -> str:
     per_image = _show_per_image(problem)
     headers = _headers(problem)
@@ -1736,23 +1739,34 @@ def _table(
     ranked = list(problem.get("ranked") or [])
     lines = [
         f'<section class="bench" id="{_cell(ident)}" data-problem="{_cell(problem["id"])}">',
-        f"<{heading}>{_cell(problem['title'])}</{heading}>",
     ]
+    if show_heading:
+        lines.append(f"<{heading}>{_cell(problem['title'])}</{heading}>")
     if preamble:
         lines.append(preamble)
     lines.append(
         "<p>Rows are ranked by cost inside each method family and on one overall table. "
-        "A run short of the full set, or a run that is not the stock method, stays off the table.</p>"
+        "A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>"
     )
     lead = gap_paragraph(problem, unparsed)
     if lead:
         lines.append(lead)
     slug = _slug(problem["id"])
     prefix = asset_prefix.rstrip("/")
-    for kind, label in (("profile", "Dolan-More profile"), ("cost", "Cost versus success")):
+    from .site_pages import profile_worth_showing
+
+    display = str(problem.get("title") or problem.get("id") or "")
+    for kind, label in (("profile", "Performance profile"), ("cost", "Cost and success")):
         name = f"{slug}-{kind}.svg"
+        if kind == "profile" and not profile_worth_showing(problem):
+            if problem.get("profile") or name in plots:
+                lines.append(
+                    "<p>A performance profile compares at least two codes. "
+                    "This problem has fewer, so that plot is omitted.</p>"
+                )
+            continue
         if name in plots:
-            lines.append(_plot_html(prefix, name, label, str(problem["id"])))
+            lines.append(_plot_html(prefix, name, label, display))
     if problem.get("profile_gap") and f"{slug}-profile.svg" not in plots:
         lines.append(f'<p class="bench-gaps">{_cell(problem["profile_gap"])}</p>')
     grouped: dict[str, list[dict]] = defaultdict(list)
@@ -1777,7 +1791,7 @@ def _table(
     lines.append("</tbody></table></div>")
     held = _aside_rows(problem)
     if held:
-        lines.append("<h3>Not a harness score</h3><ul>")
+        lines.append("<h3>Off the ranked table</h3><ul>")
         for row in held:
             lines.append(
                 "<li>"

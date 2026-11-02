@@ -5,7 +5,6 @@
 .. raw:: html
 
    <section class="bench" id="lj150" data-problem="globalopt/lj150">
-   <h2>Lennard-Jones 150</h2>
    <dl class="bench-rule">
    <dt>System</dt><dd>Lennard-Jones</dd>
    <dt>Atoms</dt><dd>150</dd>
@@ -15,31 +14,30 @@
    <dt>Stop</dt><dd>within 0.001 of the known minimum</dd>
    <dt>Starts</dt><dd>100</dd>
    <dt>Potential</dt><dd>lennard-jones</dd>
-   <dt>v2</dt><dd>par2-bootstrap</dd>
    <dt>Note</dt><dd>Success is an energy at or below the Cambridge Cluster Database N=150 minimum plus 0.001. The start set is the 100 numbered coordinate files. The cap of 10000000 force calls is above the archived nosym energy-call mean 6.9596491e+05 plus ten times its standard deviation 5.8454129e+05.</dd>
-   <dt>Contract</dt><dd>The columns are the keys shared by every archived file.</dd>
    </dl>
    <h3>Metrics</h3>
-   <p>The main metric is basin hopping steps mean.</p>
-   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
+   <p>The main metric is Mean basin-hopping steps.</p>
+   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
    <ul>
-   <li>basin hopping steps mean</li>
-   <li>basin hopping steps stddev</li>
-   <li>cpu time mean</li>
-   <li>cpu time stddev</li>
-   <li>energy calls mean</li>
-   <li>energy calls stddev</li>
-   <li>nfailed</li>
+   <li>Mean basin-hopping steps</li>
+   <li>Basin-hopping step spread</li>
+   <li>Mean CPU time</li>
+   <li>CPU time spread</li>
+   <li>Mean energy calls</li>
+   <li>Energy-call spread</li>
+   <li>Failed runs</li>
    </ul>
    <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj150-profile.svg"><picture><source srcset="../../../_static/board/globalopt-lj150-profile.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj150-profile.png" alt="Dolan-More profile for globalopt/lj150" loading="lazy" decoding="async"></picture></a><figcaption>Dolan-More profile. Select the plot for the full SVG.</figcaption></figure>
-   <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj150-cost.svg"><picture><source srcset="../../../_static/board/globalopt-lj150-cost.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj150-cost.png" alt="Cost versus success for globalopt/lj150" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
+   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
+   <p>A performance profile compares at least two codes. This problem has fewer, so that plot is omitted.</p>
+   <figure class="bench-plot"><a href="../../../_static/board/globalopt-lj150-cost.svg"><picture><source srcset="../../../_static/board/globalopt-lj150-cost.webp" type="image/webp"><img src="../../../_static/board/globalopt-lj150-cost.png" alt="Cost and success for Lennard-Jones 150" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
    <h3>Basin hopping / global</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="global" data-problem="globalopt/lj150">
-   <caption>Basin hopping / global. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
+   <caption>Basin hopping / global. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">GMIN · core orbits symmetrisation scheme</td><td data-field="rank_cost">667.38</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">GMIN · no symmetrisation</td><td data-field="rank_cost">3280.89</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
    <tr><td data-field="family_rank">3</td><td data-field="label">GMIN (df8da599) · basin-hopping</td><td data-field="rank_cost">1.75804e+06</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">100</td></tr>
@@ -48,8 +46,8 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="globalopt/lj150">
-   <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">GMIN · core orbits symmetrisation scheme</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">667.38</td><td data-field="median_calls"></td><td data-field="mean_calls">667.38</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
    <tr><td data-field="label">GMIN · no symmetrisation</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">2</td><td data-field="par2_mean"></td><td data-field="published">3280.89</td><td data-field="median_calls"></td><td data-field="mean_calls">3280.89</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">100</td></tr>
    <tr><td data-field="label">GMIN (df8da599) · basin-hopping</td><td data-field="family">Basin hopping / global</td><td data-field="family_rank">3</td><td data-field="par2_mean">1.75804e+06</td><td data-field="published"></td><td data-field="median_calls">1.14412e+06</td><td data-field="mean_calls">1.65804e+06</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 0</td><td data-field="n">100</td></tr>

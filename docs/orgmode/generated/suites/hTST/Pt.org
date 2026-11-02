@@ -1,11 +1,10 @@
-#+TITLE: Pt
+#+TITLE: Pt heptamer island
 #+OPTIONS: toc:nil num:nil author:nil
 
 #+begin_export rst
 .. raw:: html
 
    <section class="bench" id="Pt" data-problem="hTST/Pt">
-   <h2>Pt</h2>
    <dl class="bench-rule">
    <dt>System</dt><dd>Morse</dd>
    <dt>Atoms</dt><dd>343</dd>
@@ -14,36 +13,35 @@
    <dt>Stop</dt><dd>norm of the force at or below 0.001 eV/Angstrom</dd>
    <dt>Starts</dt><dd>13</dd>
    <dt>Potential</dt><dd>morse (morse_pt)</dd>
-   <dt>v2</dt><dd>par2-bootstrap</dd>
    <dt>Note</dt><dd>A start is one barrier window. The window closes when each reference barrier below 1.3 eV has been matched once from the processtable. Force calls are sad-fcs. The stop is the maximum force on any atom. The potential is morse_pt.</dd>
-   <dt>Contract</dt><dd>The columns are the keys shared by every archived file.</dd>
    </dl>
    <h3>Metrics</h3>
-   <p>The main metric is barrier force calls.</p>
-   <p>2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
+   <p>The main metric is Barrier force calls.</p>
+   <p>An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
    <ul>
-   <li>barrier force calls</li>
-   <li>barrier jobs</li>
-   <li>rate force calls</li>
-   <li>rate jobs</li>
+   <li>Barrier force calls</li>
+   <li>Barrier jobs</li>
+   <li>Rate force calls</li>
+   <li>Rate jobs</li>
    </ul>
    <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
+   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
-   <figure class="bench-plot"><a href="../../../_static/board/hTST-Pt-cost.svg"><picture><source srcset="../../../_static/board/hTST-Pt-cost.webp" type="image/webp"><img src="../../../_static/board/hTST-Pt-cost.png" alt="Cost versus success for hTST/Pt" loading="lazy" decoding="async"></picture></a><figcaption>Cost versus success. Select the plot for the full SVG.</figcaption></figure>
+   <figure class="bench-plot"><a href="../../../_static/board/hTST-Pt-cost.svg"><picture><source srcset="../../../_static/board/hTST-Pt-cost.webp" type="image/webp"><img src="../../../_static/board/hTST-Pt-cost.png" alt="Cost and success for Pt heptamer island" loading="lazy" decoding="async"></picture></a><figcaption>Cost and success. Select the plot for the full SVG.</figcaption></figure>
    <p class="bench-gaps">No performance profile. The ranked rows have no per-start record.</p>
    <h3>Band / NEB</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="band" data-problem="hTST/Pt">
-   <caption>Band / NEB. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
+   <caption>Band / NEB. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">TSASE · quenchDimer+neb-QM</td><td data-field="rank_cost">293200</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">13</td></tr>
    </tbody></table></div>
    <h3>Minimum mode</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="min-mode" data-problem="hTST/Pt">
-   <caption>Minimum mode. A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>n</th></tr></thead><tbody>
+   <caption>Minimum mode. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="family_rank">1</td><td data-field="label">Eon r2006 · Dimer-CG rotation: max=10, tol=1</td><td data-field="rank_cost">496000</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">13</td></tr>
    <tr><td data-field="family_rank">2</td><td data-field="label">Eon r2006 · Lanczos-CG rotation: max=50, tol=0.05</td><td data-field="rank_cost">653000</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">13</td></tr>
    <tr><td data-field="family_rank">3</td><td data-field="label">Eon r2006 · Lanczos-CG rotation: max=10, tol=0.05</td><td data-field="rank_cost">673700</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="n">13</td></tr>
@@ -58,8 +56,8 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="hTST/Pt">
-   <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-field="label">TSASE · quenchDimer+neb-QM</td><td data-field="family">Band / NEB</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">293200</td><td data-field="median_calls"></td><td data-field="mean_calls">293200</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">13</td></tr>
    <tr><td data-field="label">Eon r2006 · Dimer-CG rotation: max=10, tol=1</td><td data-field="family">Minimum mode</td><td data-field="family_rank">1</td><td data-field="par2_mean"></td><td data-field="published">496000</td><td data-field="median_calls"></td><td data-field="mean_calls">496000</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">13</td></tr>
    <tr><td data-field="label">Eon r2006 · Lanczos-CG rotation: max=50, tol=0.05</td><td data-field="family">Minimum mode</td><td data-field="family_rank">2</td><td data-field="par2_mean"></td><td data-field="published">653000</td><td data-field="median_calls"></td><td data-field="mean_calls">653000</td><td data-field="hessian_calls">0</td><td data-field="fd_calls">0</td><td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-field="n">13</td></tr>

@@ -482,11 +482,13 @@ def _code_page_html(name: str, pins: list[dict], document: dict, registry: list[
 
     lines = [
         f'<section class="bench" id="code-{html.escape(_slug(name))}">',
-        f"<h2>{html.escape(name)}</h2>",
         f"<p>{html.escape(code_blurb(name, pins))}</p>",
         versions_html(pins),
         "<h3>Results</h3>",
-        "<p>Ranked rows for this code, across every suite. A row is one version and one stock method.</p>",
+        "<p>Ranked rows for this code, across every suite. "
+        "One row is one version and one method. "
+        "PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. "
+        "An archived row shows the average it published.</p>",
     ]
     found: list[tuple[dict, dict]] = []
     for problem in (document.get("problems") or {}).values():
@@ -643,7 +645,7 @@ def _problem_preamble(root: Path, problem: dict, note: str = "") -> str:
     runs = run_text(root, problem)
     if runs:
         bits.append(("Runs", runs))
-    bits.extend(_bits(problem))
+    bits.extend(bit for bit in _bits(problem) if bit[0] not in {"v2", "v2 cost", "Contract"})
     lines: list[str] = []
     if bits:
         lines.append('<dl class="bench-rule">')
@@ -659,7 +661,14 @@ def _problem_preamble(root: Path, problem: dict, note: str = "") -> str:
 def render(root: Path) -> None:
     """Write the site tables from the v2 scorer."""
     from .board import plot_names_for, render_problem_section, write_board
-    from .site_pages import human_title, plot_figure, suite_paragraph, suite_tables, write_suite_plot
+    from .site_pages import (
+        human_title,
+        plot_figure,
+        restyle_problem_plots,
+        suite_paragraph,
+        suite_tables,
+        write_suite_plot,
+    )
 
     root = Path(root)
     document = write_board(root, root / "results" / "board")
@@ -713,6 +722,7 @@ def render(root: Path) -> None:
                 preamble=_problem_preamble(root, problem, note),
                 section_id=name,
                 unparsed=pending.get(problem["id"]),
+                show_heading=False,
             )
             page = [
                 f"#+TITLE: {title}",
@@ -753,6 +763,42 @@ def render(root: Path) -> None:
             "",
         ]
         (suite_dir / f"{suite}.org").write_text("\n".join(body), encoding="utf-8")
+    titles = {problem["id"]: human_title(problem, by_slug) for problem in problems.values()}
+    restyle_problem_plots(document, root / "docs" / "source" / "_static" / "board", titles)
+    (include / "overview.org").write_text(_raw(_overview_html(order, by_suite, by_slug)), encoding="utf-8")
+
+
+def _overview_html(
+    order: list[str],
+    by_suite: dict[str, list[dict]],
+    by_slug: dict[str, list[dict]],
+) -> str:
+    from .site_pages import human_title
+
+    lines = [
+        '<section class="bench" id="suites">',
+        "<h2>Suites</h2>",
+        "<p>Each suite is one kind of task. The link opens its problems and the best cost of each code.</p>",
+        '<div class="bench-scroll"><table class="bench-sortable" data-bench="suites">',
+        "<caption>The suites on this site.</caption>",
+        "<thead><tr><th>Suite</th><th>Problems</th></tr></thead><tbody>",
+    ]
+    for suite in order:
+        group = by_suite.get(suite)
+        if not group:
+            continue
+        names = [human_title(problem, by_slug) for problem in sorted(group, key=lambda item: human_title(item, by_slug).lower())]
+        shown = ", ".join(names[:4])
+        if len(names) > 4:
+            shown += f", and {len(names) - 4} more"
+        lines.append("<tr>")
+        lines.append(
+            f'<th scope="row"><a href="generated/suites/{html.escape(suite)}.html">{html.escape(suite_title(suite))}</a></th>'
+        )
+        lines.append(f"<td>{html.escape(shown)}</td>")
+        lines.append("</tr>")
+    lines.append("</tbody></table></div></section>")
+    return "\n".join(lines)
 
 
 def main() -> None:

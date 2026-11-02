@@ -5,54 +5,52 @@
 .. raw:: html
 
    <section class="bench">
-   <p>Harmonic transition state theory covers Al and Pt. The recorded metrics include barrier force calls, barrier jobs, rate force calls, and rate jobs. Al has 639 runs and Pt has 13 runs. Archived means follow this rule: 2014 half-even mean of the starts under the cap. Failures are left out of that mean. The row keeps that mean as its published number.</p>
+   <p>Harmonic transition state theory covers EAM aluminum and Pt heptamer island. The recorded metrics include Barrier force calls, Barrier jobs, Rate force calls, and Rate jobs. EAM aluminum has 639 runs and Pt heptamer island has 13 runs. An archived score is the average of the runs that finished under the cap. A run that hit the cap is a failure and is left out of that average.</p>
    <div class="bench-scroll">
    <table class="bench-sortable" data-bench="problems">
    <caption>Problems in this suite.</caption>
-   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Task</th><th>Runs</th></tr></thead><tbody>
+   <thead><tr><th>Problem</th><th>System</th><th>Atoms</th><th>Runs</th></tr></thead><tbody>
    <tr>
-   <th scope="row"><a href="hTST/Al.html">Al</a></th>
+   <th scope="row"><a href="hTST/Al.html">EAM aluminum</a></th>
    <td>EAM</td>
    <td class="num">101</td>
-   <td>Harmonic transition state theory</td>
    <td class="num">639</td>
    </tr>
    <tr>
-   <th scope="row"><a href="hTST/Pt.html">Pt</a></th>
+   <th scope="row"><a href="hTST/Pt.html">Pt heptamer island</a></th>
    <td>Morse</td>
    <td class="num">343</td>
-   <td>Harmonic transition state theory</td>
    <td class="num">13</td>
    </tr>
    </tbody></table></div>
    <h2>Results by code</h2>
-   <p>Best is the lowest ranked cost for that code on that problem. Median is the median of that code's ranked costs. A harness row uses PAR-2. An archived row uses its published primary number. Success rate is the best row's rate, or the share of its runs that are not failures.</p>
+   <p>Best is the lowest cost for that code on that problem. Median is the median of that code's costs. PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap. An archived row is ranked by the average it published. The success rate is the share of runs that finished.</p>
    <div class="bench-scroll">
    <table class="bench-sortable" data-bench="codes">
    <caption>One row per code on each problem.</caption>
    <thead><tr><th>Problem</th><th>Code</th><th>Best</th><th>Median</th><th>Success rate</th><th>Rows</th></tr></thead><tbody>
    <tr>
-   <td>Al</td>
+   <td>EAM aluminum</td>
    <td><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num">21070</td>
    <td class="num">24970</td>
-   <td class="num"></td>
+   <td class="num">—</td>
    <td class="num">2</td>
    </tr>
    <tr>
-   <td>Pt</td>
+   <td>Pt heptamer island</td>
    <td><a href="../codes/tsase.html">TSASE</a></td>
    <td class="num">293200</td>
    <td class="num">3.239e+06</td>
-   <td class="num"></td>
+   <td class="num">—</td>
    <td class="num">3</td>
    </tr>
    <tr>
-   <td>Pt</td>
+   <td>Pt heptamer island</td>
    <td><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num">496000</td>
    <td class="num">752950</td>
-   <td class="num"></td>
+   <td class="num">—</td>
    <td class="num">8</td>
    </tr>
    </tbody></table></div>

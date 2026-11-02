@@ -5,7 +5,6 @@
 .. raw:: html
 
    <section class="bench" id="cuh2" data-problem="tsopt/cuh2">
-   <h2>H2 dissociation on a fixed Cu substrate</h2>
    <dl class="bench-rule">
    <dt>System</dt><dd>CuH2</dd>
    <dt>Task</dt><dd>Transition state optimization</dd>
@@ -16,21 +15,22 @@
    <dt>Potential</dt><dd>cuh2</dd>
    </dl>
    <h3>Metrics</h3>
-   <p>The main metric is force calls.</p>
+   <p>PAR-2 is the mean cost of the runs. A run that finishes counts as the calls it used. A run that fails counts as twice the cap.</p>
+   <p>The main metric is Force calls.</p>
    <ul>
-   <li>force calls</li>
-   <li>force calls min</li>
-   <li>force calls max</li>
-   <li>nfailed</li>
+   <li>Force calls</li>
+   <li>Fewest force calls</li>
+   <li>Most force calls</li>
+   <li>Failed runs</li>
    </ul>
    <p>Select a column heading to sort the table.</p>
-   <p>Rows are ranked by cost inside each method family and on one overall table. A run short of the full set, or a run that is not the stock method, stays off the table.</p>
+   <p>Rows are ranked by cost inside each method family and on one overall table. A run that used fewer starts than the full set, or that is not the standard method, stays off the table.</p>
    <p class="bench-gaps">No committed harness run.</p>
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="tsopt/cuh2">
-   <caption>A row is one code, one version, and one stock method. Lower cost is better. PAR-2 is the harness total. An archived row uses its published primary number. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate. No problem file states another multiplier.</caption>
-   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>n</th></tr></thead><tbody>
+   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td colspan="11">No ranked row.</td></tr>
    </tbody></table></div>
    </section>
