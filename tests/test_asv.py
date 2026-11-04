@@ -152,10 +152,8 @@ def test_optking_grid_is_seed_then_the_first_start():
 
 
 def test_pending_grid_is_every_problem_and_code():
-    from benchmarks.pending import Pending
+    from benchmarks import pending
 
-    assert Pending.param_names == ["problem", "code", "seed", "start"]
-    assert len(Pending.params[0]) == len(problem_ids())
     assert len(problem_ids()) >= 25
     assert code_ids() == [
         "eon",
@@ -189,8 +187,20 @@ def test_pending_grid_is_every_problem_and_code():
         "sella-0.1.1",
         "gpridge",
     ]
-    assert Pending.params[1] == code_ids()
-    assert Pending.track_force_calls.unit == "force calls"
+    covered = pending.covered()
+    grid = set()
+    classes = [value for name, value in vars(pending).items() if name.startswith("Pending")]
+    assert classes
+    for benchmark in classes:
+        assert benchmark.param_names == ["problem", "code", "seed", "start"]
+        problems, codes, seeds, starts = benchmark.params
+        assert len(codes) == 1 and seeds == ["0"] and starts == ["0"]
+        assert benchmark.track_force_calls.unit == "force calls"
+        cells = {(problem, codes[0]) for problem in problems}
+        assert not cells & covered
+        assert not cells & grid
+        grid |= cells
+    assert grid | covered == {(problem, code) for problem in problem_ids() for code in code_ids()}
 
 
 def test_statistics_refuses_to_invent_a_document(tmp_path: Path):

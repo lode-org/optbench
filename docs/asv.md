@@ -35,9 +35,29 @@ asv is the measurement store. A result file is keyed to the commit asv checked o
 9. Commit the new files under `results/asv`.
 10. Score with `asv.results.iter_results` and `Results.get_result_value`, then `score_v2`. `optbench.asv_score` does that for the quadratic sample. Parameter strings in the result JSON are wrapped in `repr` quotes; the reader unwraps them with `ast.literal_eval`. `uv run optbench statistics` refuses to write a document when those tracks are absent.
 
-`benchmarks/pending.py` is one skipped parameter for every problem id and every registry code, with `track_force_calls` and `time_search` only. `setup` raises `NotImplementedError`, which asv-runner stores as NaN. Replace that pair with a real class when the code runs. The Lennard-Jones classes in `benchmarks/bench_lj38.py` are separate: they call eonclient when `OPTBENCH_ASV_EON=1`. The default parameter list is one seed and the first geometry. `OPTBENCH_ASV_FULL=1` selects all 1000 starts, and it is read at import, so it has to be set in the process that launches asv.
+`benchmarks/pending.py` has one skipped class per registry code, named `Pending` and the code.
+Its problems are the ones that no class measures yet.
+Each pending class has `track_force_calls` and `time_search` only.
+`setup` raises `NotImplementedError`, which asv-runner stores as NaN.
+A pair leaves its pending class when a real class measures it, and `pending.covered` lists those pairs.
+The Lennard-Jones classes in `benchmarks/bench_lj38.py` are separate: they call eonclient when `OPTBENCH_ASV_EON=1`.
+The default parameter list is one seed and the first geometry.
+`OPTBENCH_ASV_FULL=1` selects all 1000 starts.
+It is read at import, so it has to be set in the process that launches asv.
 
 `benchmarks/bench_eon_develop.py` is the eOn develop entry. Counting is `HarnessCounter` through the `ext_pot` bridge, not the client's own tally. The default parameter list is one seed and the first start. `OPTBENCH_ASV_FULL=1` selects the campaign grid at import. The Pt-island AKMC classes default to one pass. A one-start file is not a published mean.
+
+`optbench.asv_engines` builds the classes for the campaign engines in `optbench/engines`.
+Each engine has one `benchmarks/bench_<engine>.py`.
+A class is one template on one problem.
+Its parameters are the seed and the campaign job name, which is the `start` field of the committed `.starts.jsonl`.
+The class runs the job that the engine's `plan` gives `optbench run`, alone in a spawned process.
+The default parameter list is the first start, and `OPTBENCH_ASV_FULL=1` selects every start.
+Each track runs in a fresh process.
+It reads the record that `time_search` stored under `OPTBENCH_ASV_CACHE`.
+When that record is missing, the track runs the search.
+The force-call cap ends every search, so the class timeout is unbounded.
+Run these classes with `--launch-method forkserver`, because the spawn launcher cannot wait without a bound.
 
 The quadratic sample is the run that `results/validation/statistics.json` scores. A subset of Lennard-Jones 38 is `results/validation/lj38-counter.dat` and it is not a published mean.
 

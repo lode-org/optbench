@@ -1,11 +1,12 @@
-"""One skipped benchmark for every problem and registry code.
+"""One skipped benchmark for every problem and registry code without a class.
 
 A real code copies ``benchmarks/quadratic.py`` and implements
-``measure``. This class is the placeholder so the grid exists. It has
-``track_force_calls`` and ``time_search`` only. The success and failure
-tracks are on the quadratic classes, which are the runs that produce
-numbers. Multiplying those tracks across every unimplemented pair
-would spawn a process per track.
+``measure``. These classes are the placeholder so the grid exists. There
+is one class per registry code, and its problems are the ones no class
+covers yet. They have ``track_force_calls`` and ``time_search`` only.
+The success and failure tracks are on the quadratic classes, which are
+the runs that produce numbers. Multiplying those tracks across every
+unimplemented pair would spawn a process per track.
 
 ``setup`` raises ``NotImplementedError``. asv-runner records that as a
 skip (NaN) and does not save an exit code. See ``docs/asv-gaps.md``.
@@ -17,6 +18,8 @@ import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# Engines whose cells are classes in benchmarks/bench_<engine>.py.
+ENGINE_CLASSES = ("compass",)
 
 
 def problem_ids() -> list[str]:
@@ -36,9 +39,28 @@ def code_ids() -> list[str]:
     return [row["id"] for row in data["code"]]
 
 
-class Pending:
+def covered() -> set[tuple[str, str]]:
+    """(problem, code) cells that a class in this directory measures."""
+    from optbench.asv_engines import cells
+
+    found = set()
+    for engine in ENGINE_CLASSES:
+        found.update((cell["problem_id"], cell["code"]) for cell in cells(ROOT, engine))
+    return found
+
+
+def pending_cells() -> dict[str, list[str]]:
+    """Problems without a class, per registry code, in registry order."""
+    done = covered()
+    problems = problem_ids()
+    return {
+        code: [problem for problem in problems if (problem, code) not in done]
+        for code in code_ids()
+    }
+
+
+class _Pending:
     param_names = ["problem", "code", "seed", "start"]
-    params = [problem_ids(), code_ids(), ["0"], ["0"]]
     repeat = 1
     rounds = 1
     number = 1
@@ -59,4 +81,22 @@ class Pending:
         raise NotImplementedError(problem)
 
 
-Pending.track_force_calls.unit = "force calls"
+_Pending.track_force_calls.unit = "force calls"
+
+
+def _class_name(code: str) -> str:
+    return "Pending" + "".join(part[:1].upper() + part[1:] for part in code.replace("_", "-").split("-"))
+
+
+def _bind(code: str, problems: list[str]):
+    class _Benchmark(_Pending):
+        params = [problems, [code], ["0"], ["0"]]
+
+    _Benchmark.__name__ = _class_name(code)
+    _Benchmark.__qualname__ = _Benchmark.__name__
+    return _Benchmark
+
+
+for _code, _problems in pending_cells().items():
+    if _problems:
+        globals()[_class_name(_code)] = _bind(_code, _problems)
