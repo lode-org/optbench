@@ -1075,10 +1075,9 @@ def install_benchmarks(family: str, namespace: dict) -> None:
     """Define one asv class per harness template in ``namespace``."""
     for template in _jobs(family):
         kind = str(template["kind"])
-        asv_full = bool(template.get("asv_full", True))
         seeds = [int(seed) for seed in template.get("seeds", [1])]
         starts = [str(start) for start in (template.get("starts") or default_starts(kind))]
-        if full_grid() and asv_full:
+        if full_grid():
             used_seeds, used_starts = seeds, starts
             passes = int(template.get("pass_limit") or 0)
         else:

@@ -45,7 +45,13 @@ The default parameter list is one seed and the first geometry.
 `OPTBENCH_ASV_FULL=1` selects all 1000 starts.
 It is read at import, so it has to be set in the process that launches asv.
 
-`benchmarks/bench_eon_develop.py` is the eOn develop entry. Counting is `HarnessCounter` through the `ext_pot` bridge, not the client's own tally. The default parameter list is one seed and the first start. `OPTBENCH_ASV_FULL=1` selects the campaign grid at import. The Pt-island AKMC classes default to one pass. A one-start file is not a published mean.
+`benchmarks/bench_eon_develop.py` is the eOn develop entry.
+Counting is `HarnessCounter` through the `ext_pot` bridge, not the client's own tally.
+The default parameter list is one seed and the first start.
+`OPTBENCH_ASV_FULL=1` selects the campaign grid at import, for every template.
+The Pt-island AKMC classes default to one pass.
+With `OPTBENCH_ASV_FULL=1` they run every pass up to the template's `pass_limit`.
+A one-start file is not a published mean.
 
 `optbench.asv_engines` builds the classes for the campaign engines in `optbench/engines`.
 Each engine has one `benchmarks/bench_<engine>.py`.

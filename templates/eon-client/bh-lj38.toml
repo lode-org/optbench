@@ -14,7 +14,6 @@ note = '''
 Basin hopping toward the LJ38 minimum. Temperature 8000, random_seed 314159, displacement 0.5, adjust_displacement true, target_ratio 0.3, steps 10000000, stop_energy -173.927427. The client writes termination_reason 0 when the step loop ends, including when the energy is still above the stop. Success is minimum_energy below the stop and harness calls under 2000000. The 2014 file stated no force cap. 2000000 is above the 2014 maximum of 1795901. The harness kernel is unshifted lj/cut with epsilon 1, sigma 1, and cutoff 40. The per-start wall budget is 21600 s so a start can reach that call cap. The call cap is unchanged.
 '''
 seeds = [314159]
-asv_full = false
 asv_timeout = 21600
 budget_seconds = 21600
 

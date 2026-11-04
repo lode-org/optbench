@@ -14,7 +14,6 @@ note = '''
 Minima hopping on the LJ38 starts. No 2014 eon minima-hopping ini is in the archive. steps 10000, move_method md, and decision_method npew are the r2549 defaults. target_energy is the basin-hopping stop, -173.927427. The job writes earr.dat and does not write results.dat. Success is the lowest earr energy below that target, with harness calls under 2000000. The harness kernel is unshifted lj/cut with epsilon 1, sigma 1, and cutoff 40.
 '''
 seeds = [314159]
-asv_full = false
 asv_timeout = 1800
 budget_seconds = 1200
 

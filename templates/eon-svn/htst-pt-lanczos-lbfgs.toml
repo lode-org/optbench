@@ -19,7 +19,6 @@ geometry = "website/hTST/Pt/eon-lanczos-lbfgs/states/0/reactant.con"
 pass_limit = 1
 workers = 1
 declare_partial = true
-asv_full = false
 asv_timeout = 3600
 budget_seconds = 2400
 

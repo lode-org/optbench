@@ -16,7 +16,6 @@ Parallel replica on the accelerated-md reactant. The 2014 archive has no ini for
 seeds = [1000]
 starts = ["reactant"]
 declare_partial = true
-asv_full = false
 asv_timeout = 3600
 budget_seconds = 2400
 

@@ -18,7 +18,6 @@ starts = ["pt-island"]
 pass_limit = 4
 workers = 1
 declare_partial = true
-asv_full = false
 asv_timeout = 3600
 budget_seconds = 2400
 
