@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 # Engines whose cells are classes in benchmarks/bench_<engine>.py.
-ENGINE_CLASSES = ("compass", "tsase")
+ENGINE_CLASSES = ("compass", "tsase", "partn")
 
 
 def problem_ids() -> list[str]:
