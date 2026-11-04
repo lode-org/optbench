@@ -168,6 +168,75 @@ def test_modern_eon_template_records_commit_and_each_start(tmp_path: Path):
     assert "cluster_0000.con" in starts[0]
 
 
+def test_run_stages_template_declared_inputs(tmp_path: Path):
+    geometries = tmp_path / "geometries"
+    geometries.mkdir()
+    (geometries / "cluster_0000.con").write_text("pos\n", encoding="utf-8")
+    aux = tmp_path / "aux"
+    aux.mkdir()
+    in_lammps = aux / "in.lammps"
+    in_lammps.write_text("pair_style lj/cut 40.0\n", encoding="utf-8")
+    pair_table = aux / "pair.table"
+    pair_table.write_text("PAIR TABLE\n", encoding="utf-8")
+    template = tmp_path / "template.toml"
+    template.write_text(
+        f"""
+id = "test/eon-aux"
+engine = "eon"
+problem = "minimization/lj38"
+
+[ini.Main]
+job = "minimization"
+
+[ini.Potential]
+potential = "ljcluster"
+
+[ini.Optimizer]
+opt_method = "lbfgs"
+convergence_metric = "norm"
+converged_force = 0.01
+max_iterations = 10000
+
+[[inputs]]
+source = "{in_lammps.as_posix()}"
+target = "in.lammps"
+
+[[inputs]]
+source = "{pair_table.as_posix()}"
+target = "potentials/pair.table"
+""".strip()
+        + "\n",
+        encoding="utf-8",
+    )
+    client = tmp_path / "client"
+    client.write_text(
+        "#!/usr/bin/env python3\n"
+        "from pathlib import Path\n"
+        "assert Path('in.lammps').read_text().strip() == 'pair_style lj/cut 40.0'\n"
+        "assert Path('potentials/pair.table').read_text().strip() == 'PAIR TABLE'\n"
+        "Path('results.dat').write_text('0 termination_reason\\n123 total_force_calls\\n')\n",
+        encoding="utf-8",
+    )
+    client.chmod(client.stat().st_mode | stat.S_IEXEC)
+    output = tmp_path / "benchmark.dat"
+    summary = run(
+        ROOT,
+        "minimization/lj38",
+        str(template),
+        client=client,
+        geometries=geometries,
+        output=output,
+        work=tmp_path / "work",
+    )
+    assert summary["starts"] == 1
+    fields = parse(output.read_text(encoding="utf-8"))
+    assert fields["force_calls"] == "123"
+    assert fields["nfailed"] == "0"
+    staged = tmp_path / "work" / "cluster_0000"
+    assert (staged / "in.lammps").read_text(encoding="utf-8").strip() == "pair_style lj/cut 40.0"
+    assert (staged / "potentials" / "pair.table").read_text(encoding="utf-8").strip() == "PAIR TABLE"
+
+
 def test_a_short_iteration_cap_is_refused():
     problem = resolve_problem(ROOT, "minimization/lj38")
     template = {"ini": {"Optimizer": {"max_iterations": 10, "converged_force": 0.01}}}
