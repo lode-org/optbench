@@ -2,8 +2,10 @@
 
 A real code copies ``benchmarks/quadratic.py`` and implements
 ``measure``. These classes are the placeholder so the grid exists. There
-is one class per registry code, and its problems are the ones no class
-covers yet. They have ``track_force_calls`` and ``time_search`` only.
+is one class per registry code. Its problems are the ones that no class
+in the modules named below covers. Classes in other modules, such as
+``bench_gmin_bh`` and ``bench_pele``, are not subtracted, so their cells
+are listed here too. They have ``track_force_calls`` and ``time_search`` only.
 The success and failure tracks are on the quadratic classes, which are
 the runs that produce numbers. Multiplying those tracks across every
 unimplemented pair would spawn a process per track.
