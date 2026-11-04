@@ -12,6 +12,19 @@ LAMMPS calculator that calls it. The harness has no EAM evaluator. hTST and
 accelerated-md problems state rates and barriers, not a force-call cap, so
 they are not given a force-call row.
 
+## Building the codes
+
+`codes/<code>/build.sh` fetches the code at its `codes/registry.toml` commit and refuses any other HEAD.
+It builds into the path that the engine module reads by default.
+The environment variable named in that module overrides that path.
+`codes/pin.py` reads the pin, so the registry is the only copy.
+The image default `cc` and `c++` can be a clang that finds no libstdc++.
+Any C++ link then fails with `cannot find -lstdc++`.
+`codes/checkout.sh` exports `CC=gcc`, `CXX=g++`, and `FC=gfortran` for every build.
+The LAMMPS CMake call names those compilers.
+The runner puts the dlfind and pysisyphus site-packages on its `sys.path`.
+Those venvs therefore keep the numpy and scipy of the harness interpreter.
+
 ## Rows on disk
 
 Failure classes are the v2 counts. They sum to `nfailed`. The median is the
