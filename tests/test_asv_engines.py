@@ -35,6 +35,7 @@ def test_every_engine_cell_is_a_class_with_the_campaign_shape():
         cells = asv_engines.cells(ROOT, engine)
         assert sorted(classes) == sorted(cell["class_name"] for cell in cells)
         for cell in cells:
+            assert cell["class_name"].isidentifier()
             benchmark = classes[cell["class_name"]]
             assert benchmark.param_names == ["seed", "start"]
             assert benchmark.params == [["0"], asv_engines.start_names(ROOT, cell["problem_id"])[:1]]

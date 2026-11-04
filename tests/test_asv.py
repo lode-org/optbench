@@ -192,6 +192,7 @@ def test_pending_grid_is_every_problem_and_code():
     classes = [value for name, value in vars(pending).items() if name.startswith("Pending")]
     assert classes
     for benchmark in classes:
+        assert benchmark.__name__.isidentifier()
         assert benchmark.param_names == ["problem", "code", "seed", "start"]
         problems, codes, seeds, starts = benchmark.params
         assert len(codes) == 1 and seeds == ["0"] and starts == ["0"]

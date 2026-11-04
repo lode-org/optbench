@@ -14,6 +14,7 @@ skip (NaN) and does not save an exit code. See ``docs/asv-gaps.md``.
 
 from __future__ import annotations
 
+import re
 import tomllib
 from pathlib import Path
 
@@ -85,7 +86,7 @@ _Pending.track_force_calls.unit = "force calls"
 
 
 def _class_name(code: str) -> str:
-    return "Pending" + "".join(part[:1].upper() + part[1:] for part in code.replace("_", "-").split("-"))
+    return "Pending" + "".join(part[:1].upper() + part[1:] for part in re.split(r"[^0-9A-Za-z]+", code))
 
 
 def _bind(code: str, problems: list[str]):
