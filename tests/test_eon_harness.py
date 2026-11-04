@@ -50,6 +50,22 @@ def test_svn_default_grid_is_one_start():
     assert EonSvnTsLj38DimerLjcut.template_name == "eon-svn/ts-lj38-dimer-ljcut"
 
 
+def test_f6817b53_classes_are_the_harness_templates_of_that_build():
+    assert os.environ.get("OPTBENCH_ASV_FULL") != "1"
+    from benchmarks import bench_eon_f6817b53
+    from optbench.eon_harness import _jobs
+
+    classes = {
+        value.template_name: value
+        for value in vars(bench_eon_f6817b53).values()
+        if isinstance(value, type) and getattr(value, "template_name", None)
+    }
+    assert sorted(classes) == sorted(template["id"] for template in _jobs("f6817b53"))
+    assert "eon/develop-f6817b53-de-lj38-cap" in classes
+    for benchmark in classes.values():
+        assert len(benchmark.params[0]) == 1 and len(benchmark.params[1]) == 1
+
+
 def test_client_default_grid_is_one_start():
     assert os.environ.get("OPTBENCH_ASV_FULL") != "1"
     from benchmarks.bench_eon_client import EonClientNebPtLbfgs

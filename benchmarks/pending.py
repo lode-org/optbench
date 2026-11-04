@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # Engines whose cells are classes in benchmarks/bench_<engine>.py.
 ENGINE_CLASSES = ("compass", "tsase", "partn", "lammps", "dlfind", "pysisyphus", "optim")
 # Registry code ids whose template classes are in benchmarks/bench_<module>.py.
-TEMPLATE_MODULES = (("airss", "airss"),)
+TEMPLATE_MODULES = (("airss", "airss"), ("eon-develop-f6817b53", "eon_f6817b53"))
 
 
 def problem_ids() -> list[str]:
