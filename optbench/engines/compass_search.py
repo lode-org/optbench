@@ -219,7 +219,8 @@ def _execute(job: dict) -> dict:
     return record
 
 
-def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
+    """The jobs ``run`` sends to ``run_jobs``, one per pair, in problem order."""
     reason = available()
     if reason:
         raise RuntimeError(reason)
@@ -233,7 +234,19 @@ def run(root: Path, problem_name: str, template_name: str, *, output: Path, work
             "COMPASS searches between two endpoints."
         )
     pairs = list(cached_pairs(root, problem, settings).values())
-    records = run_jobs([_job(pair, settings) for pair in pairs], _execute, workers)
+    return {
+        "problem": problem,
+        "template": template,
+        "settings": settings,
+        "jobs": [_job(pair, settings) for pair in pairs],
+        "execute": _execute,
+    }
+
+
+def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+    planned = plan(root, problem_name, template_name, output.parent / "work")
+    problem, template, settings = planned["problem"], planned["template"], planned["settings"]
+    records = run_jobs(planned["jobs"], planned["execute"], workers)
     comment = (
         "# counter harness. COMPASS calls the ASE calculator, and that calculator calls pes.evaluate.\n"
         "# forcetol, minimize_fmax, and both target distances are the problem force stop.\n"

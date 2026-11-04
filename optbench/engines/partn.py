@@ -423,11 +423,8 @@ def _point_job(start: dict, settings: dict, template: dict) -> dict:
     }
 
 
-def run_points(root: Path, problem: dict, template: dict, settings: dict, *, output: Path, workers: int) -> dict:
+def run_points(jobs: list[dict], problem: dict, template: dict, settings: dict, *, output: Path, workers: int) -> dict:
     """One ARTn search from each sample geometry."""
-    scratch = output.parent / "work" / template["id"].replace("/", "-")
-    starts = load_starts(root, problem, scratch)
-    jobs = [_point_job(start, settings, template) for start in starts]
     records = run_jobs(jobs, _execute, workers)
     section = _section(template)
     parameters = {
@@ -666,11 +663,10 @@ def _placed(saddle: np.ndarray, free: np.ndarray, free_flat: np.ndarray) -> np.n
     return out
 
 
-def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+def _resolved(root: Path, problem_name: str, template_name: str) -> tuple[dict, dict]:
     reason = available()
     if reason:
         raise RuntimeError(reason)
-    root = Path(root)
     from optbench.campaign import load_template, resolve_problem
 
     from .common import registry_pin, require_pin
@@ -683,6 +679,13 @@ def run(root: Path, problem_name: str, template_name: str, *, output: Path, work
     stated = template.get("problem")
     if stated and stated != problem["id"]:
         raise ValueError(f"{template_name} belongs to {stated}")
+    return problem, template
+
+
+def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
+    """The jobs ``run`` sends to ``run_jobs``. The Pt-island catalog is one walk and has none."""
+    root = Path(root)
+    problem, template = _resolved(root, problem_name, template_name)
     if problem.get("suite") in {"tsopt", "lowest-eigenvector"}:
         settings = point_settings(problem)
         if settings["cap"] is None:
@@ -695,13 +698,30 @@ def run(root: Path, problem_name: str, template_name: str, *, output: Path, work
             partn = dict(template.get("partn") or {})
             partn.setdefault("ninit", 0)
             template["partn"] = partn
-        return run_points(root, problem, template, settings, output=output, workers=workers)
+        scratch = Path(work) / template["id"].replace("/", "-")
+        jobs = [_point_job(start, settings, template) for start in load_starts(root, problem, scratch)]
+        return {"problem": problem, "template": template, "settings": settings, "jobs": jobs, "execute": _execute}
     if problem["id"] == "saddle-search/pt-island":
-        return run_catalog(root, problem, template, output=output, workers=workers)
+        raise RuntimeError(
+            f"{template_name} on {problem['id']} is one catalog walk. "
+            "Each search starts from the catalog the earlier searches built."
+        )
     problem, template, settings = prepared(root, problem_name, template_name, CODE)
     pairs = list(cached_pairs(root, problem, settings).values())
     jobs = [_job(pair, settings, template, "0") for pair in pairs]
-    records = run_jobs(jobs, _execute, workers)
+    return {"problem": problem, "template": template, "settings": settings, "jobs": jobs, "execute": _execute}
+
+
+def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+    root = Path(root)
+    problem, template = _resolved(root, problem_name, template_name)
+    if problem["id"] == "saddle-search/pt-island":
+        return run_catalog(root, problem, template, output=output, workers=workers)
+    planned = plan(root, problem_name, template_name, output.parent / "work")
+    problem, template, settings = planned["problem"], planned["template"], planned["settings"]
+    if "task" in settings:
+        return run_points(planned["jobs"], problem, template, settings, output=output, workers=workers)
+    records = run_jobs(planned["jobs"], planned["execute"], workers)
     for record in records:
         record["problem"] = problem["id"]
         record["template"] = template["id"]

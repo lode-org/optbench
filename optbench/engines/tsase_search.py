@@ -564,39 +564,83 @@ def search_named(root: Path, problem_name: str, template_name: str, start: str, 
     return record
 
 
-def _run_points(root, problem, template, settings, output: Path, workers: int, executor) -> dict:
-    scratch = output.parent / "work" / template["id"].replace("/", "-")
-    starts = load_starts(root, problem, scratch)
+def _minimize_jobs(starts: list[dict], settings: dict, template: dict) -> list[dict]:
+    section = dict(template.get("tsase") or {})
+    return [
+        {
+            "name": start["name"],
+            "positions": start["positions"],
+            "free": [not bool(flag) for flag in start["fixed"]],
+            "box": start["box"],
+            "kind": settings["potential"],
+            "cap": settings["cap"],
+            "force_norm": settings["force_norm"],
+            "method": str(section.get("method")),
+            "max_step": float(section.get("max_step", 0.2)),
+        }
+        for start in starts
+    ]
+
+
+def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
+    """The jobs ``run`` sends to ``run_jobs`` and the function that runs each one."""
+    reason = available()
+    if reason:
+        raise RuntimeError(reason)
+    root = Path(root)
+    from optbench.campaign import load_template, resolve_problem
+
+    from .common import registry_pin, require_pin
+
+    problem = resolve_problem(root, problem_name)
+    template = load_template(root, template_name)
+    require_pin(template, registry_pin(root, CODE))
+    if template["engine"] != ENGINE:
+        raise ValueError(f"{template_name} engine is {template['engine']}")
+    stated = template.get("problem")
+    if stated and stated != problem["id"]:
+        raise ValueError(f"{template_name} belongs to {stated}")
+    method = str((template.get("tsase") or {}).get("method", "ci"))
+    scratch = Path(work) / template["id"].replace("/", "-")
+    if method == "dimer":
+        settings = point_settings(problem)
+        if settings["cap"] is None:
+            raise ValueError(f"{problem['id']} has no force-call cap")
+        settings["task"] = "mode" if problem["suite"] == "lowest-eigenvector" else "saddle"
+        jobs = [_dimer_job(start, settings, template) for start in load_starts(root, problem, scratch)]
+        execute = _execute_dimer
+    elif method in {"lbfgs", "mdmin"}:
+        settings = point_settings(problem)
+        if settings["cap"] is None:
+            raise ValueError(f"{problem['id']} has no force-call cap")
+        settings["task"] = "minimize"
+        jobs = _minimize_jobs(load_starts(root, problem, scratch), settings, template)
+        execute = _execute_minimize
+    else:
+        problem, template, settings = prepared(root, problem_name, template_name, CODE)
+        if template["engine"] != ENGINE:
+            raise ValueError(f"{template_name} engine is {template['engine']}")
+        pairs = list(cached_pairs(root, problem, settings).values())
+        jobs = [_job(pair, settings, template, "0") for pair in pairs]
+        execute = _execute
+    return {"problem": problem, "template": template, "settings": settings, "jobs": jobs, "execute": execute}
+
+
+def _run_points(planned: dict, output: Path, workers: int) -> dict:
+    problem, template, settings = planned["problem"], planned["template"], planned["settings"]
     if settings["task"] == "minimize":
-        section = dict(template.get("tsase") or {})
-        jobs = []
-        for start in starts:
-            jobs.append(
-                {
-                    "name": start["name"],
-                    "positions": start["positions"],
-                    "free": [not bool(flag) for flag in start["fixed"]],
-                    "box": start["box"],
-                    "kind": settings["potential"],
-                    "cap": settings["cap"],
-                    "force_norm": settings["force_norm"],
-                    "method": str(section.get("method")),
-                    "max_step": float(section.get("max_step", 0.2)),
-                }
-            )
         comment = (
             "# counter harness. One force call is one ASE calculate.\n"
             "# The stop is the Euclidean force norm and Hessian index 0.\n"
             "# TSASE's own step counter is not this count."
         )
     else:
-        jobs = [_dimer_job(start, settings, template) for start in starts]
         comment = (
             "# counter harness. One force call is one ASE calculate inside the solid-state dimer.\n"
             "# TSASE forceCalls is not this count.\n"
             "# A mode success is the problem overlap. A saddle success is Hessian index 1."
         )
-    records = run_jobs(jobs, executor, workers)
+    records = run_jobs(planned["jobs"], planned["execute"], workers)
     parameters = {
         "potential": settings["potential"],
         "cap": settings["cap"],
@@ -619,41 +663,11 @@ def _run_points(root, problem, template, settings, output: Path, workers: int, e
 
 
 def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
-    reason = available()
-    if reason:
-        raise RuntimeError(reason)
-    root = Path(root)
-    from optbench.campaign import load_template, resolve_problem
-
-    from .common import registry_pin, require_pin
-
-    problem = resolve_problem(root, problem_name)
-    template = load_template(root, template_name)
-    require_pin(template, registry_pin(root, CODE))
-    if template["engine"] != ENGINE:
-        raise ValueError(f"{template_name} engine is {template['engine']}")
-    stated = template.get("problem")
-    if stated and stated != problem["id"]:
-        raise ValueError(f"{template_name} belongs to {stated}")
-    method = str((template.get("tsase") or {}).get("method", "ci"))
-    if method == "dimer":
-        settings = point_settings(problem)
-        if settings["cap"] is None:
-            raise ValueError(f"{problem['id']} has no force-call cap")
-        settings["task"] = "mode" if problem["suite"] == "lowest-eigenvector" else "saddle"
-        return _run_points(root, problem, template, settings, output, workers, _execute_dimer)
-    if method in {"lbfgs", "mdmin"}:
-        settings = point_settings(problem)
-        if settings["cap"] is None:
-            raise ValueError(f"{problem['id']} has no force-call cap")
-        settings["task"] = "minimize"
-        return _run_points(root, problem, template, settings, output, workers, _execute_minimize)
-    problem, template, settings = prepared(root, problem_name, template_name, CODE)
-    if template["engine"] != ENGINE:
-        raise ValueError(f"{template_name} engine is {template['engine']}")
-    pairs = list(cached_pairs(root, problem, settings).values())
-    jobs = [_job(pair, settings, template, "0") for pair in pairs]
-    records = run_jobs(jobs, _execute, workers)
+    planned = plan(root, problem_name, template_name, output.parent / "work")
+    if "task" in planned["settings"]:
+        return _run_points(planned, output, workers)
+    problem, template, settings = planned["problem"], planned["template"], planned["settings"]
+    records = run_jobs(planned["jobs"], planned["execute"], workers)
     for record in records:
         record["problem"] = problem["id"]
         record["template"] = template["id"]

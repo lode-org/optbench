@@ -404,6 +404,25 @@ def run_jobs(jobs: list[dict], execute, workers: int) -> list[dict]:
     return records
 
 
+def run_start(jobs: list[dict], execute, start: str) -> dict:
+    """The campaign job named ``start``, alone in a spawned process.
+
+    A campaign of more than one job gives each job a fresh spawned
+    process, so one start here sees the same process state.
+    """
+    import multiprocessing
+
+    chosen = [job for job in jobs if str(job["name"]) == str(start)]
+    if len(chosen) != 1:
+        raise KeyError(f"{len(chosen)} jobs are named {start}")
+    with ProcessPoolExecutor(
+        max_workers=1,
+        mp_context=multiprocessing.get_context("spawn"),
+        max_tasks_per_child=1,
+    ) as pool:
+        return pool.submit(execute, chosen[0]).result()
+
+
 def prepared(root: Path, problem_name: str, template_name: str, code_id: str) -> tuple[dict, dict, dict]:
     root = Path(root)
     problem = resolve_problem(root, problem_name)

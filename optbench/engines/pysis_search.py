@@ -395,7 +395,8 @@ def _collect(jobs: list[dict], workers: int) -> list[dict]:
     return records
 
 
-def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
+    """The jobs ``run`` sends to ``_collect``, one per archived start, in archive order."""
     reason = available()
     if reason:
         raise RuntimeError(reason)
@@ -416,23 +417,40 @@ def run(root: Path, problem_name: str, template_name: str, *, output: Path, work
     settings = point_settings(problem)
     if settings["cap"] is None:
         raise ValueError(f"{problem['id']} has no force-call cap")
-    scratch = output.parent / "work" / template["id"].replace("/", "-")
-    starts = load_starts(root, problem, scratch)
     if section["method"] == "lanczos":
         if problem.get("suite") != "lowest-eigenvector":
             raise RuntimeError(f"{problem['id']} is not a lowest-eigenvector problem")
-        comment = (
-            "# counter harness. pysisyphus Lanczos calls pes.evaluate.\n"
-            "# dx is 5e-3 and dl is 1e-2. A free cluster drops six rigid modes.\n"
-            "# The guess is seeded from the start name. Success is absolute overlap."
-        )
-        parameters = {"method": "lanczos", "dx": 5e-3, "dl": 1e-2, "max_cycles": 25, "counter": "harness"}
     elif section["method"] in _MINIMIZERS:
         if problem.get("suite") != "minimization":
             raise RuntimeError(
                 f"{problem['id']} is not a minimization. "
                 "The dimer and NEB are separate pysisyphus tasks."
             )
+    else:
+        raise RuntimeError(f"{template['id']} has no runner")
+    scratch = Path(work) / template["id"].replace("/", "-")
+    starts = load_starts(root, problem, scratch)
+    return {
+        "problem": problem,
+        "template": template,
+        "settings": settings,
+        "jobs": _jobs(starts, settings, template),
+        "execute": _execute,
+    }
+
+
+def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+    planned = plan(root, problem_name, template_name, output.parent / "work")
+    problem, template, settings = planned["problem"], planned["template"], planned["settings"]
+    section = _section(template)
+    if section["method"] == "lanczos":
+        comment = (
+            "# counter harness. pysisyphus Lanczos calls pes.evaluate.\n"
+            "# dx is 5e-3 and dl is 1e-2. A free cluster drops six rigid modes.\n"
+            "# The guess is seeded from the start name. Success is absolute overlap."
+        )
+        parameters = {"method": "lanczos", "dx": 5e-3, "dl": 1e-2, "max_cycles": 25, "counter": "harness"}
+    else:
         comment = (
             "# counter harness. The pysisyphus calculator calls pes.evaluate.\n"
             f"# method {section['method']}. Coordinates inside the optimizer are Bohr.\n"
@@ -445,9 +463,7 @@ def run(root: Path, problem_name: str, template_name: str, *, output: Path, work
             "coordinates": "bohr",
             "counter": "harness",
         }
-    else:
-        raise RuntimeError(f"{template['id']} has no runner")
-    records = _collect(_jobs(starts, settings, template), workers)
+    records = _collect(planned["jobs"], workers)
     return write_campaign(
         output,
         records,
