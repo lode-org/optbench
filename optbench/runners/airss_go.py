@@ -558,18 +558,16 @@ def _dat(summary: dict, template: dict, metrics: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
-def run_template(
+def plan(
     root: Path,
     problem: dict,
     template: dict,
     *,
     geometries: Path | None,
     output: Path,
-    workers: int,
     work: Path | None,
-) -> dict:
-    from optbench.campaign import write_starts
-
+) -> tuple[list[dict], float | None, float | None]:
+    """The jobs ``run_template`` runs, one per start, with the reference and tolerance."""
     stated = template.get("problem")
     if stated and stated != problem["id"]:
         raise ValueError(f"{template['id']} belongs to {stated}")
@@ -600,6 +598,23 @@ def run_template(
             raise ValueError(f"Wales file has {coords.shape[0]} atoms, template has {config['natoms']}")
         reference = reference_energy(coords)
     jobs = [_job(template, index, name, binary, reference, tolerance) for index, name in enumerate(names)]
+    return jobs, reference, tolerance
+
+
+def run_template(
+    root: Path,
+    problem: dict,
+    template: dict,
+    *,
+    geometries: Path | None,
+    output: Path,
+    workers: int,
+    work: Path | None,
+) -> dict:
+    from optbench.campaign import write_starts
+
+    config = _config(template)
+    jobs, reference, tolerance = plan(root, problem, template, geometries=geometries, output=output, work=work)
     if workers <= 1:
         records = []
         total = len(jobs)

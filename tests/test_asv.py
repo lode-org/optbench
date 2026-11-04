@@ -204,6 +204,30 @@ def test_pending_grid_is_every_problem_and_code():
     assert grid | covered == {(problem, code) for problem in problem_ids() for code in code_ids()}
 
 
+def test_template_modules_name_the_registry_code_of_their_templates():
+    import importlib
+    import tomllib
+
+    from benchmarks import pending
+    from optbench.campaign import load_template
+
+    names = {
+        row["id"]: row["name"]
+        for row in tomllib.loads((ROOT / "codes" / "registry.toml").read_text(encoding="utf-8"))["code"]
+    }
+    for code, module in pending.TEMPLATE_MODULES:
+        templates = [
+            getattr(value, "template_id", None) or getattr(value, "template_name", None)
+            for value in vars(importlib.import_module(f"benchmarks.bench_{module}")).values()
+            if isinstance(value, type)
+        ]
+        templates = [template for template in templates if template]
+        assert templates
+        for template in templates:
+            assert load_template(ROOT, template)["code"] == names[code]
+        assert {(problem, code) for problem in pending.template_problems(module)} <= pending.covered()
+
+
 def test_statistics_refuses_to_invent_a_document(tmp_path: Path):
     with pytest.raises(SystemExit):
         statistics_from_asv(ROOT, tmp_path)

@@ -21,6 +21,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # Engines whose cells are classes in benchmarks/bench_<engine>.py.
 ENGINE_CLASSES = ("compass", "tsase", "partn", "lammps", "dlfind", "pysisyphus", "optim")
+# Registry code ids whose template classes are in benchmarks/bench_<module>.py.
+TEMPLATE_MODULES = (("airss", "airss"),)
 
 
 def problem_ids() -> list[str]:
@@ -47,6 +49,22 @@ def covered() -> set[tuple[str, str]]:
     found = set()
     for engine in ENGINE_CLASSES:
         found.update((cell["problem_id"], cell["code"]) for cell in cells(ROOT, engine))
+    for code, module in TEMPLATE_MODULES:
+        found.update((problem, code) for problem in template_problems(module))
+    return found
+
+
+def template_problems(module: str) -> set[str]:
+    """Problems of the template classes in ``benchmarks/bench_<module>.py``."""
+    import importlib
+
+    from optbench.campaign import load_template
+
+    found = set()
+    for value in vars(importlib.import_module(f"benchmarks.bench_{module}")).values():
+        template = getattr(value, "template_id", None) or getattr(value, "template_name", None)
+        if isinstance(value, type) and template:
+            found.add(str(load_template(ROOT, str(template))["problem"]))
     return found
 
 

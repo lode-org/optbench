@@ -125,7 +125,8 @@ def test_template_pins_the_tarball_and_the_asv_grid_is_one_start(monkeypatch, tm
     assert AirssLj38.repeat == 1
     assert AirssLj38.track_force_calls.unit == "force calls"
     monkeypatch.setenv("OPTBENCH_ASV_FULL", "1")
-    assert selected_starts() == [str(index) for index in range(100)]
+    assert selected_starts("airss/lj38") == [str(index) for index in range(100)]
+    assert selected_starts("airss/lj75") == [str(index) for index in range(200)]
     monkeypatch.delenv("AIRSS_BUILDCELL", raising=False)
     import optbench.runners.airss_go as airss
 
@@ -133,6 +134,40 @@ def test_template_pins_the_tarball_and_the_asv_grid_is_one_start(monkeypatch, tm
     monkeypatch.setattr(airss.Path, "home", lambda: tmp_path)
     with pytest.raises(NotImplementedError):
         AirssLj38().setup("0", "0")
+
+
+def test_lj75_class_runs_the_campaign_job_and_every_track_has_its_value(tmp_path, monkeypatch):
+    import optbench.runners.airss_go as airss
+    from benchmarks.bench_airss import AirssLj75
+
+    seen = []
+
+    def fake(job):
+        seen.append(job)
+        return airss._capped(job, calls=100 + job["index"], energy=-300.0, structures=20)
+
+    monkeypatch.setattr(airss, "search_start", fake)
+    monkeypatch.setenv("AIRSS_BUILDCELL", "/bin/true")
+    monkeypatch.setenv("OPTBENCH_ASV_CACHE", str(tmp_path / "cache"))
+    assert AirssLj75.template_id == "airss/lj75"
+    assert AirssLj75.problem_id == "globalopt/lj75"
+    assert AirssLj75.params == [["0"], ["0"]]
+    timed = AirssLj75()
+    timed.setup("0", "3")
+    timed.time_search("0", "3")
+    assert seen[-1]["start"] == "coords.4"
+    tracks = [name for name in dir(AirssLj75) if name.startswith("track_")]
+    assert len(tracks) == 6
+    values = {}
+    for name in tracks:
+        fresh = AirssLj75()
+        fresh.setup("0", "3")
+        values[name] = getattr(fresh, name)("0", "3")
+    assert values["track_force_calls"] == 103.0
+    assert values["track_success"] == 0.0
+    assert values["track_failure_cap"] == 1.0
+    assert values["track_failure_crash"] == 0.0
+    assert len(seen) == 1
 
 
 def test_lj75_budget_writes_partial_rows(tmp_path, monkeypatch):
