@@ -399,6 +399,32 @@ def _failure_class(row: dict) -> str | None:
     return "divergence"
 
 
+def start_record(template: dict, problem: dict, row: dict) -> dict:
+    """The ``.starts.jsonl`` row of one repetition."""
+    failure = _failure_class(row)
+    record = {
+        "schema": "optbench.start/v2",
+        "start": f"rep-{row['repetition']}",
+        "geometry": f"rep-{row['repetition']}",
+        "force_calls": int(row.get("force_calls") or 0),
+        "counter": "client",
+        "comparable": False,
+        "success": failure is None,
+        "failure": failure,
+        "seed": row.get("seed"),
+        "rate": row.get("rate"),
+        "confidence": row.get("confidence"),
+        "repeats": row.get("repeats"),
+        "total_searches": row.get("total_searches"),
+        "seconds": row.get("seconds"),
+        "problem": problem["id"],
+        "template": template["id"],
+    }
+    if row.get("error"):
+        record["error"] = row["error"]
+    return record
+
+
 def _write_result(
     template: dict,
     problem: dict,
@@ -486,30 +512,7 @@ def _write_result(
         lines.append("partial true")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    start_rows = []
-    for row in rows:
-        success = _failure_class(row) is None
-        record = {
-            "schema": "optbench.start/v2",
-            "start": f"rep-{row['repetition']}",
-            "geometry": f"rep-{row['repetition']}",
-            "force_calls": int(row.get("force_calls") or 0),
-            "counter": "client",
-            "comparable": False,
-            "success": success,
-            "failure": _failure_class(row),
-            "seed": row.get("seed"),
-            "rate": row.get("rate"),
-            "confidence": row.get("confidence"),
-            "repeats": row.get("repeats"),
-            "total_searches": row.get("total_searches"),
-            "seconds": row.get("seconds"),
-            "problem": problem["id"],
-            "template": template["id"],
-        }
-        if row.get("error"):
-            record["error"] = row["error"]
-        start_rows.append(record)
+    start_rows = [start_record(template, problem, row) for row in rows]
     body = "".join(json.dumps(record, sort_keys=True) + "\n" for record in start_rows)
     jsonl = output.with_suffix(".starts.jsonl")
     jsonl.write_text(body, encoding="utf-8")
@@ -517,6 +520,54 @@ def _write_result(
     summary["template"] = template["id"]
     summary["problem"] = problem["id"]
     return summary
+
+
+def plan(root: Path, template_name: str) -> dict:
+    """The template, problem, pass limit, reactant, and catalogue of a campaign."""
+    template = load_template(root, template_name)
+    problem = resolve_problem(root, str(template["problem"]))
+    reactant_path = geometry_archive(
+        root,
+        {"id": problem["id"], "input": {"archive_path": problem["input"]["reactant"]}},
+    )
+    reactant, fixed = _load_geometry(reactant_path)
+    return {
+        "template": template,
+        "problem": problem,
+        "passes": int(template.get("pass_limit", 200)),
+        "reactant": reactant,
+        "mobile": mobile_indices(fixed),
+        "catalogue": [_load_geometry(path)[0] for path in _catalogue_paths(root, 24)],
+    }
+
+
+def run_repetition(
+    root: Path,
+    planned: dict,
+    client: Path,
+    work: Path,
+    workers: int,
+    repetition: int,
+    *,
+    on_pass=None,
+) -> dict:
+    """Repetition ``repetition``, counted from 1, with its campaign seed."""
+    row = _one_repetition(
+        root,
+        planned["template"],
+        planned["problem"],
+        client,
+        work,
+        20261018 + repetition - 1,
+        workers,
+        planned["catalogue"],
+        planned["reactant"],
+        planned["mobile"],
+        passes=planned["passes"],
+        on_pass=on_pass,
+    )
+    row["repetition"] = repetition
+    return row
 
 
 def run_amd(
@@ -531,20 +582,12 @@ def run_amd(
     """Run AKMC catalogues and write benchmark.dat after each one."""
     if workers <= 0:
         raise ValueError("workers must be positive")
-    template = load_template(root, template_name)
-    problem = resolve_problem(root, str(template["problem"]))
+    planned = plan(root, template_name)
+    template, problem = planned["template"], planned["problem"]
     if repetitions is None:
         repetitions = int(problem["sample"]["repetitions"])
     if repetitions <= 0:
         raise ValueError("repetitions must be positive")
-    passes = int(template.get("pass_limit", 200))
-    reactant_path = geometry_archive(
-        root,
-        {"id": problem["id"], "input": {"archive_path": problem["input"]["reactant"]}},
-    )
-    reactant, fixed = _load_geometry(reactant_path)
-    mobile = mobile_indices(fixed)
-    catalogue = [_load_geometry(path)[0] for path in _catalogue_paths(root, 24)]
     rows: list[dict] = []
     summary: dict = {}
     for index in range(repetitions):
@@ -562,21 +605,7 @@ def run_amd(
                 in_progress=True,
             )
 
-        row = _one_repetition(
-            root,
-            template,
-            problem,
-            client,
-            rep_dir,
-            20261018 + index,
-            workers,
-            catalogue,
-            reactant,
-            mobile,
-            passes=passes,
-            on_pass=_checkpoint,
-        )
-        row["repetition"] = repetition
+        row = run_repetition(root, planned, client, rep_dir, workers, repetition, on_pass=_checkpoint)
         rows.append(row)
         print(
             f"rep {repetition} reached={row.get('reached')} rate={row.get('rate')} "

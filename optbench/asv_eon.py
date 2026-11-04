@@ -1,19 +1,27 @@
 """asv classes for the eOn templates whose campaign count is the client's.
 
-Two campaign paths have no harness class. ``optbench run`` gives an
+Three campaign paths have no harness class. ``optbench run`` gives an
 ``eon`` or ``eon-client`` template without ``kind`` one client run per
 archived geometry, through ``campaign.client_jobs``. ``optbench eon-job``
 gives an ``eon_jobs.JOBS`` template one client run per minimum, pair,
-product, or initial geometry, through ``eon_jobs.plan``. A class calls
-the same function for its start and scores the run as the campaign file
-did, with ``campaign.client_record`` or ``eon_jobs.run_start``. The count
-is the one in ``results.dat``. It is not a harness count.
+product, or initial geometry, through ``eon_jobs.plan``. It gives an
+``amd`` job one AKMC catalogue per repetition, through ``eon_amd.plan``.
+A class calls the same function for its start and scores the run as the
+campaign file did, with ``campaign.client_record``,
+``eon_jobs.run_start``, or ``eon_amd.start_record``. The count is the
+client's: ``results.dat``, or sad-fcs plus mins-fcs for a catalogue. It
+is not a harness count.
 
 One class is one template. The parameters are the seed and the start.
-Seed ``0`` is the only value: neither path draws from it. The start is
-the geometry name of the campaign file, without ``.con``. The default
-grid is the first start. ``OPTBENCH_ASV_FULL=1`` at import selects every
-start.
+Seed ``0`` is the only value: no path draws from it, and a catalogue
+takes the seed ``run_amd`` gives its repetition. The start is the
+geometry name of the campaign file, without ``.con``, or ``rep-<n>`` for
+a catalogue. The default grid is the first start. ``OPTBENCH_ASV_FULL=1``
+at import selects every start.
+
+A catalogue runs with as many workers as the template's Communicator
+``num_jobs``. ``eon_amd`` writes that count of jobs per pass for any
+smaller worker count, so the config is the one the campaign wrote.
 
 The client is the build that ``clients`` gives the template prefix. A
 template under ``eon/`` is that build only when its ``commit`` is the
@@ -86,14 +94,17 @@ def cells(prefix: str, skip: frozenset[str] = frozenset()) -> list[dict]:
     from optbench.campaign import _EON_ENGINES, list_templates, resolve_problem
     from optbench.eon_jobs import JOBS, SPECS
 
-    jobs = {template: name for name, (template, fn) in JOBS.items() if fn in SPECS}
+    jobs = {template: (name, fn) for name, (template, fn) in JOBS.items()}
     found = []
     for template in list_templates(ROOT):
         ident = str(template["id"])
         if not ident.startswith(prefix) or ident in skip or client_of(template) is None:
             continue
-        if ident in jobs:
-            cell = {"path": "job", "job": jobs[ident], "problem_id": str(template["problem"])}
+        name, fn = jobs.get(ident, (None, None))
+        if fn in SPECS:
+            cell = {"path": "job", "job": name, "problem_id": str(template["problem"])}
+        elif fn == "amd":
+            cell = {"path": "amd", "job": name, "problem_id": str(template["problem"])}
         elif template.get("engine") in _EON_ENGINES and not template.get("kind"):
             problem_id = str(template.get("problem") or DEFAULT_PROBLEM)
             if not problem_id.startswith("minimization/"):
@@ -124,6 +135,9 @@ def start_names(cell: dict) -> list[str]:
         return _NAMES[key]
     from optbench.campaign import geometry_archive, resolve_problem
 
+    if cell["path"] == "amd":
+        repetitions = int(resolve_problem(ROOT, cell["problem_id"])["sample"]["repetitions"])
+        return [f"rep-{index + 1}" for index in range(repetitions)]
     key = ("client", cell["problem_id"])
     if key not in _NAMES:
         archive = geometry_archive(ROOT, resolve_problem(ROOT, cell["problem_id"]))
@@ -139,7 +153,7 @@ def cap_of(cell: dict) -> int:
     from optbench.campaign import _check_stop, load_template, resolve_problem
 
     template = load_template(ROOT, cell["template_id"])
-    if cell["path"] == "job":
+    if cell["path"] in ("job", "amd"):
         return int(template["failure_cap"])
     cap = _check_stop(resolve_problem(ROOT, cell["problem_id"]), template)
     if cap is None:
@@ -177,6 +191,16 @@ def search(cell: dict, client: str, start: str, work: Path) -> dict:
         from optbench.eon_jobs import plan, run_start
 
         return run_start(Path(client), plan(ROOT, cell["job"], work), start)
+    if cell["path"] == "amd":
+        from optbench.eon_amd import plan, run_repetition, start_record
+
+        planned = plan(ROOT, cell["template_id"])
+        if start not in start_names(cell):
+            raise KeyError(f"{cell['template_id']} has no start {start}")
+        workers = int(planned["template"]["ini"]["Communicator"]["num_jobs"])
+        repetition = int(start.removeprefix("rep-"))
+        row = run_repetition(ROOT, planned, Path(client), work / start, workers, repetition)
+        return start_record(planned["template"], planned["problem"], row)
     template = load_template(ROOT, cell["template_id"])
     problem = resolve_problem(ROOT, cell["problem_id"])
     jobs, cap, cons = client_jobs(

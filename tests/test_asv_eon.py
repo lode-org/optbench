@@ -83,6 +83,8 @@ def test_every_client_counted_board_row_is_a_class():
         ("eon/lj38-lbfgs-m100", "minimization/lj38"),
         ("eon/de-pt-lbfgs-m100", "double-ended-saddle-search/pt-island"),
         ("eon/ts-lj38-dimer", "tsopt/LJ38"),
+        ("eon/aladatom-akmc", "accelerated-md/aladatom"),
+        ("eon/standard-aladatom-akmc", "accelerated-md/standard_aladatom"),
     } <= wanted
     assert not {template for template, _problem in have} & lj38
 
@@ -175,6 +177,44 @@ def test_every_track_has_a_value_in_a_fresh_process(monkeypatch, tmp_path, prefi
         fresh.setup("0", start)
         assert getattr(fresh, name)("0", start) == expected[name]
     assert len(calls) == 2
+
+
+def test_a_catalogue_start_is_the_campaign_repetition(monkeypatch, tmp_path):
+    from optbench import eon_amd
+
+    cell = next(cell for cell in asv_eon.cells("eon/") if cell["template_id"] == "eon/aladatom-akmc")
+    assert cell["path"] == "amd"
+    assert asv_eon.start_names(cell) == ["rep-1"]
+    seen = {}
+
+    def repetition(root, planned, client, work, workers, repetition, *, on_pass=None):
+        seen.update(workers=workers, repetition=repetition, passes=planned["passes"])
+        return {
+            "repetition": repetition,
+            "seed": 20261018 + repetition - 1,
+            "force_calls": 108435,
+            "reached": True,
+            "rate": 855329109.89,
+            "confidence": 0.9523809523809523,
+            "repeats": 21,
+            "total_searches": 128,
+        }
+
+    monkeypatch.setattr(eon_amd, "run_repetition", repetition)
+    record = asv_eon.search(cell, "/stub/eonclient", "rep-1", tmp_path)
+    committed = json.loads(
+        (ROOT / "results" / "campaign" / "eon-3.6.0-aladatom-akmc.starts.jsonl").read_text(encoding="utf-8")
+    )
+    template = load_template(ROOT, "eon/aladatom-akmc")
+    assert seen == {
+        "workers": template["ini"]["Communicator"]["num_jobs"],
+        "repetition": 1,
+        "passes": template["pass_limit"],
+    }
+    for key in ("start", "geometry", "force_calls", "success", "failure", "seed", "counter", "template", "problem"):
+        assert record[key] == committed[key]
+    with pytest.raises(KeyError):
+        asv_eon.search(cell, "/stub/eonclient", "rep-2", tmp_path)
 
 
 def test_a_missing_client_is_a_skip(monkeypatch):
