@@ -6,12 +6,22 @@
 # GMIN -v prints the SVNREV file of the build directory, and this script
 # copies it there from the tree it builds. It also writes the tarball
 # sha256 to svn.tar.bz2.sha256 beside the binary.
+# GMIN_MPI=OFF builds the serial GMIN that optbench.runners.gmin_paper
+# runs. The archived globalopt data files have no MPI keyword, and the
+# MPI build's non-MPI path faults in mc.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 source "$ROOT/codes/checkout.sh"
 DEST="${1:-$(ob_root)/wales-src}"
-BUILD="${2:-$(ob_root)/gmin-build}"
+MPI="${GMIN_MPI:-ON}"
+if [[ "$MPI" == ON ]]; then
+  BUILD="${2:-$(ob_root)/gmin-build}"
+  FORTRAN=mpif90
+else
+  BUILD="${2:-$(ob_root)/gmin-serial}"
+  FORTRAN="$FC"
+fi
 TARBALL="$(wales_tarball "$DEST")"
 SHA256="$(wales_sha256 "$TARBALL")"
 wales_extract "$TARBALL" "$DEST"
@@ -109,8 +119,8 @@ cd "$BUILD"
 echo "$REVISION" > SVNREV
 wales_stamp . "$SHA256"
 rm -f display_version.f90
-FC=mpif90 cmake "$DEST/wales/GMIN/source" \
-  -DWITH_MPI=ON \
+FC="$FORTRAN" cmake "$DEST/wales/GMIN/source" \
+  -DWITH_MPI="$MPI" \
   -DWITH_ALIGN=OFF \
   -DWITH_MYBLAS=OFF \
   -DWITH_MYLAPACK=OFF \

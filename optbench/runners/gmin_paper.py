@@ -8,6 +8,15 @@ is GMIN's own, because ``OPTBENCH_POTPORT`` is unset. The archived score
 is the ``Target hit after`` line: quenches are field 5 and function calls
 are field 7, the same split as ``run_gmin.sh``.
 
+``codes/gmin/build-bh.sh`` with ``GMIN_MPI=OFF`` builds the binary and
+stamps it with its Wales snapshot. Each row's ``.dat`` opens with that
+``wales_sha256`` and ``wales_svnrev``, and every start record carries
+them. A stored start from another build is run again.
+
+GMIN stops with a ``STOP`` message on stderr and exit status 0 when it
+cannot read its data file. The record keeps that message as ``error``,
+as it does the stderr of a nonzero exit.
+
 ``cpu_time`` is the 2022 machine and is recorded, not gated.
 """
 
@@ -24,6 +33,7 @@ from pathlib import Path
 import numpy as np
 
 from optbench.campaign import geometry_archive
+from optbench.wales import header, same_build
 
 # Numbered starts that exist in the geometry tarball. lj98 and lj150
 # run.sh loops to 200 and names a directory that is not in the tarball.
@@ -155,8 +165,11 @@ def prepare_jobs(root: Path, row: dict, work: Path) -> list[dict]:
 def run_one(job: dict) -> dict:
     work = Path(job["work"])
     stored = work / "record.json"
+    wales = job.get("wales") or {}
     if job.get("resume") and stored.is_file():
-        return json.loads(stored.read_text(encoding="utf-8"))
+        record = json.loads(stored.read_text(encoding="utf-8"))
+        if same_build(record, wales):
+            return record
     if work.exists():
         shutil.rmtree(work)
     work.mkdir(parents=True)
@@ -186,8 +199,10 @@ def run_one(job: dict) -> dict:
         "quenches": parsed["quenches"],
         "success": int(parsed["success"]) if proc.returncode == 0 else 0,
         "seconds": parsed["seconds"],
+        **wales,
     }
-    if proc.returncode != 0:
+    stopped = any(line.startswith("STOP") for line in (proc.stderr or "").splitlines())
+    if proc.returncode != 0 or stopped:
         record["error"] = (proc.stderr or "")[-400:]
     stored.write_text(json.dumps(record), encoding="utf-8")
     for child in work.iterdir():
@@ -241,8 +256,9 @@ def summarize(records: list[dict], metric: str) -> dict[str, str]:
     return fields
 
 
-def write_dat(path: Path, fields: dict[str, str], row: dict) -> None:
+def write_dat(path: Path, fields: dict[str, str], row: dict, wales: dict) -> None:
     lines = [
+        *header(wales),
         "# exact archive data file, serial GMIN, internal potential",
         f"# entry globalopt/{row['problem']}/{row['entry']}",
         "# ncalls is the Target hit after function-call field",
@@ -254,7 +270,10 @@ def write_dat(path: Path, fields: dict[str, str], row: dict) -> None:
 
 
 def run_row(root: Path, row: dict, *, workers: int, work: Path, output: Path) -> dict[str, str]:
-    jobs = prepare_jobs(root, row, work)
+    from optbench.runners.gmin_go import binary_build
+
+    wales = binary_build(serial_binary())
+    jobs = [dict(job, wales=wales) for job in prepare_jobs(root, row, work)]
     if workers <= 1:
         records = []
         for done, job in enumerate(jobs, 1):
@@ -272,7 +291,7 @@ def run_row(root: Path, row: dict, *, workers: int, work: Path, output: Path) ->
                 records.append(future.result())
                 print(f"{row['problem']}/{row['entry']} {done}/{total}", flush=True)
     fields = summarize(records, row["metric"])
-    write_dat(output, fields, row)
+    write_dat(output, fields, row, wales)
     starts = output.with_suffix(".starts.jsonl")
     starts.write_text(
         "".join(json.dumps(record, sort_keys=True) + "\n" for record in sorted(records, key=lambda item: item["index"])),

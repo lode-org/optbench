@@ -35,6 +35,8 @@ It prints the sha256 of the tarball it used.
 `codes/gmin/build-bh.sh` copies the `SVNREV` into the build directory.
 GMIN's `display_version.sh` reads it there, and `GMIN -v` prints it.
 `codes/gmin/build-bh.sh` also writes the sha256 to `svn.tar.bz2.sha256` beside the binary.
+With `GMIN_MPI=OFF` the same script builds the serial GMIN that `optbench.runners.gmin_paper` runs.
+`OPTBENCH_GMIN_SERIAL` names that binary.
 `codes/optim/build.sh` writes the `SVNREV` and the sha256 beside `OPTIM`, because OPTIM does not print a revision.
 Each run writes both as `wales_sha256` and `wales_svnrev` at the top of its `.dat` raw log.
 Every per-start record carries them too.

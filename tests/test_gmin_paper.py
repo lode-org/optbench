@@ -1,6 +1,9 @@
 """The archived GMIN log line is the function-call counter."""
 
-from optbench.runners.gmin_paper import parse_log
+import json
+
+from optbench.runners.gmin_paper import ROWS, parse_log, run_one, write_dat
+from optbench.wales import header, snapshot
 
 
 def test_target_hit_line_matches_run_gmin():
@@ -20,3 +23,39 @@ def test_a_miss_is_a_failure():
     parsed = parse_log("mc> run finished without the target\n")
     assert parsed["success"] == 0
     assert parsed["ncalls"] is None
+
+
+def test_rows_record_the_wales_build(tmp_path):
+    found = snapshot("a" * 64, "5271791321b85779783debf84617812fd1b267a0")
+    other = snapshot("b" * 64, found["wales_svnrev"])
+    output = tmp_path / "row.dat"
+    write_dat(output, {"n": "1"}, ROWS[0], found)
+    assert output.read_text(encoding="utf-8").splitlines()[:2] == header(found)
+    binary = tmp_path / "GMIN"
+    binary.write_text(
+        "#!/bin/sh\necho 'gsaveit> Target hit after 7 quenches 70 function calls.'\n",
+        encoding="utf-8",
+    )
+    binary.chmod(0o755)
+    work = tmp_path / "start"
+    job = {"index": 0, "work": str(work), "data": "", "coords": "", "binary": str(binary), "resume": True}
+    work.mkdir()
+    (work / "record.json").write_text(json.dumps({"index": 0, "ncalls": 1, **other}), encoding="utf-8")
+    record = run_one(dict(job, wales=found))
+    assert record["ncalls"] == 70
+    assert {key: record[key] for key in found} == found
+    assert run_one(dict(job, wales=found)) == record
+
+
+def test_a_stop_on_the_data_file_is_an_error(tmp_path):
+    binary = tmp_path / "GMIN"
+    binary.write_text(
+        "#!/bin/sh\necho 'Starting serial execution'\necho 'STOP input> Error while trying to read integer' >&2\n",
+        encoding="utf-8",
+    )
+    binary.chmod(0o755)
+    job = {"index": 0, "work": str(tmp_path / "start"), "data": "", "coords": "", "binary": str(binary)}
+    record = run_one(job)
+    assert record["returncode"] == 0
+    assert record["success"] == 0
+    assert record["error"].startswith("STOP input>")
