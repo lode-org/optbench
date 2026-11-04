@@ -64,7 +64,7 @@ CACHE = Path(os.environ.get("OPTBENCH_ASV_CACHE", "/tmp/optbench-asv"))
 KERNEL = "problem-surface-2"
 SVN_COMMIT = "r2549"
 CLIENT_COMMIT = "4d8b34baf1ba8d2d980df29838bac1f969d1662c"
-_CLIENT_OK: set[str] = set()
+_CLIENT_OK: set[tuple[str, str]] = set()
 _EAM = None
 
 FAMILIES = {
@@ -377,13 +377,19 @@ def classify_akmc(*, calls, cap, reached, crashed) -> dict:
     return {"force_calls": float(count), "success": False, "failure": "cap"}
 
 
-def _client(family: str) -> str:
-    spec = FAMILIES[family]
+def client_file(spec: dict) -> str:
+    """The eonclient named by ``spec["env"]`` or its default, or ``""`` when neither is a file."""
     env = os.environ.get(spec["env"])
     path = env or (str(spec["default"]) if spec["default"].is_file() else "")
-    if not path or not Path(path).is_file():
-        raise RuntimeError(f"set {spec['env']} to the {family} eonclient")
-    if family not in _CLIENT_OK:
+    return path if path and Path(path).is_file() else ""
+
+
+def check_client(spec: dict, label: str) -> str:
+    """``client_file`` once its version flag has printed ``spec["token"]``."""
+    path = client_file(spec)
+    if not path:
+        raise RuntimeError(f"set {spec['env']} to the {label} eonclient")
+    if (path, spec["token"]) not in _CLIENT_OK:
         proc = subprocess.run(
             [path, spec["flag"]],
             check=False,
@@ -394,8 +400,12 @@ def _client(family: str) -> str:
         text = proc.stdout or ""
         if spec["token"] not in text:
             raise RuntimeError(f"{path} printed {text!r}, expected {spec['token']}")
-        _CLIENT_OK.add(family)
+        _CLIENT_OK.add((path, spec["token"]))
     return path
+
+
+def _client(family: str) -> str:
+    return check_client(FAMILIES[family], family)
 
 
 def _family_of(template: dict) -> str:

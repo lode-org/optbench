@@ -253,6 +253,65 @@ def write_starts(path: Path, rows: list[dict]) -> None:
     path.write_text(body + ("\n" if body else ""), encoding="utf-8")
 
 
+def client_jobs(
+    root: Path,
+    problem: dict,
+    template: dict,
+    client: Path,
+    *,
+    geometries: Path | None,
+    output: Path,
+    work: Path | None,
+) -> tuple[list[tuple[str, str, str, str]], int, list[Path]]:
+    """The eonclient jobs ``run`` gives a template without a ``kind``, the cap, and the geometries."""
+    cap = _check_stop(problem, template)
+    if cap is None:
+        raise ValueError(f"{problem['id']} has no force-call cap")
+    ini = format_ini(template["ini"])
+    if geometries is None:
+        archive = geometry_archive(root, problem)
+        dest = work or output.parent / "geometries"
+        dest.mkdir(parents=True, exist_ok=True)
+        with tarfile.open(archive) as packed:
+            packed.extractall(dest, filter="data")
+        cons = sorted(dest.rglob("*.con"))
+        if not cons:
+            raise FileNotFoundError(f"{archive} has no .con files")
+    else:
+        cons = iter_geometries(geometries)
+    scratch = work or output.parent / "work" / template["id"].replace("/", "-")
+    jobs = [
+        (str(client), ini, str(con), str(scratch / con.stem))
+        for con in cons
+    ]
+    return jobs, cap, cons
+
+
+def client_record(detail: dict, cap: int) -> dict:
+    """The asv record of one client job, scored the way ``run`` scores it.
+
+    ``force_calls`` is the count ``run`` writes to ``.starts.jsonl``. A
+    missing result or a nonzero termination reason counts at the cap. A
+    job with no result is a crash, and any other count at the cap is a cap
+    failure. ``client_calls`` and ``reason`` are what the client wrote.
+    """
+    calls = detail["force_calls"]
+    reason = detail["reason"]
+    counted = cap if _bad_termination(calls, reason) else calls
+    record = {
+        "force_calls": float(counted),
+        "success": counted < cap,
+        "failure": None,
+        "client_calls": calls,
+        "reason": reason,
+    }
+    if calls is None:
+        record["failure"] = "crash"
+    elif counted >= cap:
+        record["failure"] = "cap"
+    return record
+
+
 def run(
     root: Path,
     problem_name: str,
@@ -494,26 +553,7 @@ def run(
     if client is None:
         raise ValueError("eon-client run needs a client")
     problem = resolve_problem(root, problem_name)
-    cap = _check_stop(problem, template)
-    if cap is None:
-        raise ValueError(f"{problem['id']} has no force-call cap")
-    ini = format_ini(template["ini"])
-    if geometries is None:
-        archive = geometry_archive(root, problem)
-        dest = work or output.parent / "geometries"
-        dest.mkdir(parents=True, exist_ok=True)
-        with tarfile.open(archive) as packed:
-            packed.extractall(dest, filter="data")
-        cons = sorted(dest.rglob("*.con"))
-        if not cons:
-            raise FileNotFoundError(f"{archive} has no .con files")
-    else:
-        cons = iter_geometries(geometries)
-    scratch = work or output.parent / "work" / template["id"].replace("/", "-")
-    jobs = [
-        (str(client), ini, str(con), str(scratch / con.stem))
-        for con in cons
-    ]
+    jobs, cap, cons = client_jobs(root, problem, template, client, geometries=geometries, output=output, work=work)
     if workers <= 1:
         details = [_one(job) for job in jobs]
     else:

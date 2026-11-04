@@ -264,8 +264,7 @@ def _template(root: Path, name: str) -> tuple[dict, str]:
     return template, format_ini(template["ini"])
 
 
-def run_neb_pt(root: Path, template_name: str, client: Path, output: Path, work: Path, workers: int) -> dict:
-    template, ini = _template(root, template_name)
+def neb_pt_specs(root: Path, template: dict, work: Path) -> tuple[list[tuple], int]:
     images = int(template["ini"]["Nudged Elastic Band"]["images"])
     unpacked = _extract(_stored(root, "website/neb/Pt-heptamer/eon-lbfgs/minima.tgz"), work / "unpacked")
     minima = unpacked / "minima"
@@ -279,12 +278,17 @@ def run_neb_pt(root: Path, template_name: str, client: Path, output: Path, work:
                 "force_calls_neb",
             )
         )
+    return specs, images
+
+
+def run_neb_pt(root: Path, template_name: str, client: Path, output: Path, work: Path, workers: int) -> dict:
+    template, ini = _template(root, template_name)
+    specs, images = neb_pt_specs(root, template, work)
     rows = _run_specs(client, ini, specs, workers)
     return _finish(template, rows, output, images)
 
 
-def run_de_pt(root: Path, template_name: str, client: Path, output: Path, work: Path, workers: int) -> dict:
-    template, ini = _template(root, template_name)
+def de_pt_specs(root: Path, template: dict, work: Path) -> tuple[list[tuple], int]:
     unpacked = _extract(
         _stored(root, "website/double-ended-saddle-search/pt-island/pt-island-con.tgz"),
         work / "unpacked",
@@ -301,12 +305,17 @@ def run_de_pt(root: Path, template_name: str, client: Path, output: Path, work: 
                 "total_force_calls",
             )
         )
-    rows = _run_specs(client, ini, specs, workers)
-    return _finish(template, rows, output, 1)
+    return specs, 1
 
 
-def run_de_lj38(root: Path, template_name: str, client: Path, output: Path, work: Path, workers: int) -> dict:
+def run_de_pt(root: Path, template_name: str, client: Path, output: Path, work: Path, workers: int) -> dict:
     template, ini = _template(root, template_name)
+    specs, images = de_pt_specs(root, template, work)
+    rows = _run_specs(client, ini, specs, workers)
+    return _finish(template, rows, output, images)
+
+
+def de_lj38_specs(root: Path, template: dict, work: Path) -> tuple[list[tuple], int]:
     unpacked = _extract(
         _stored(root, "website/double-ended-saddle-search/lj38/coords-con.tgz"),
         work / "unpacked",
@@ -327,12 +336,17 @@ def run_de_lj38(root: Path, template_name: str, client: Path, output: Path, work
                 "total_force_calls",
             )
         )
-    rows = _run_specs(client, ini, specs, workers)
-    return _finish(template, rows, output, 1)
+    return specs, 1
 
 
-def run_ts_lj38(root: Path, template_name: str, client: Path, output: Path, work: Path, workers: int) -> dict:
+def run_de_lj38(root: Path, template_name: str, client: Path, output: Path, work: Path, workers: int) -> dict:
     template, ini = _template(root, template_name)
+    specs, images = de_lj38_specs(root, template, work)
+    rows = _run_specs(client, ini, specs, workers)
+    return _finish(template, rows, output, images)
+
+
+def ts_lj38_specs(root: Path, template: dict, work: Path) -> tuple[list[tuple], int]:
     unpacked = _extract(_stored(root, "website/tsopt/LJ38/coords-con.tar.gz"), work / "unpacked")
     folder = unpacked / "coords-con"
     specs = []
@@ -348,12 +362,17 @@ def run_ts_lj38(root: Path, template_name: str, client: Path, output: Path, work
                 "total_force_calls",
             )
         )
-    rows = _run_specs(client, ini, specs, workers)
-    return _finish(template, rows, output, 1)
+    return specs, 1
 
 
-def run_ts_pt(root: Path, template_name: str, client: Path, output: Path, work: Path, workers: int) -> dict:
+def run_ts_lj38(root: Path, template_name: str, client: Path, output: Path, work: Path, workers: int) -> dict:
     template, ini = _template(root, template_name)
+    specs, images = ts_lj38_specs(root, template, work)
+    rows = _run_specs(client, ini, specs, workers)
+    return _finish(template, rows, output, images)
+
+
+def ts_pt_specs(root: Path, template: dict, work: Path) -> tuple[list[tuple], int]:
     unpacked = _extract(_stored(root, "website/tsopt/pt-island/pt-island-con.tgz"), work / "unpacked")
     folder = unpacked / "pt-island-con"
     reactant = folder / "reactant.con"
@@ -369,8 +388,14 @@ def run_ts_pt(root: Path, template_name: str, client: Path, output: Path, work: 
                 "total_force_calls",
             )
         )
+    return specs, 1
+
+
+def run_ts_pt(root: Path, template_name: str, client: Path, output: Path, work: Path, workers: int) -> dict:
+    template, ini = _template(root, template_name)
+    specs, images = ts_pt_specs(root, template, work)
     rows = _run_specs(client, ini, specs, workers)
-    return _finish(template, rows, output, 1)
+    return _finish(template, rows, output, images)
 
 
 def _pair_count(rows: list[dict]) -> dict:
@@ -604,6 +629,52 @@ JOBS = {
     "aladatom-akmc": ("eon/aladatom-akmc", "amd"),
     "standard-aladatom-akmc": ("eon/standard-aladatom-akmc", "amd"),
 }
+
+
+SPECS = {
+    run_neb_pt: neb_pt_specs,
+    run_de_pt: de_pt_specs,
+    run_de_lj38: de_lj38_specs,
+    run_ts_lj38: ts_lj38_specs,
+    run_ts_pt: ts_pt_specs,
+}
+
+
+def plan(root: Path, name: str, work: Path) -> dict:
+    """The ``template``, ``ini``, per-start ``specs``, and ``images`` that ``run_named`` runs."""
+    template_name, fn = JOBS[name]
+    if fn not in SPECS:
+        raise ValueError(f"eon job {name} is not one client run per start")
+    template, ini = _template(root, template_name)
+    specs, images = SPECS[fn](root, template, work)
+    return {"template": template, "ini": ini, "specs": specs, "images": images}
+
+
+def start_name(spec: tuple) -> str:
+    """The ``geometry`` that ``_finish`` writes for the run of ``spec``."""
+    return Path(spec[0]).name
+
+
+def run_start(client: Path, planned: dict, start: str) -> dict:
+    """One start of a planned job, scored the way ``_finish`` scores it.
+
+    A run without the counter has no count and is a crash at the cap. A
+    count at or above the cap is a cap failure. A count under the cap with
+    a nonzero ``termination_reason`` is a failure with no class.
+    """
+    specs = [spec for spec in planned["specs"] if start_name(spec) == start]
+    if len(specs) != 1:
+        raise KeyError(f"{planned['template']['id']} has no start {start}")
+    work, copies, texts, count_key = specs[0]
+    row = _execute((str(client), planned["ini"], work, copies, texts, count_key))
+    cap = int(planned["template"]["failure_cap"])
+    raw, reason = row["raw"], row["reason"]
+    if raw is None:
+        return {"force_calls": float(cap), "success": False, "failure": "crash", "reason": reason}
+    if raw >= cap:
+        return {"force_calls": float(raw), "success": False, "failure": "cap", "reason": reason}
+    good = reason is None or reason == "0"
+    return {"force_calls": float(raw), "success": good, "failure": None, "reason": reason}
 
 
 def run_named(
