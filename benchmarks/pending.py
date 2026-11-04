@@ -22,7 +22,13 @@ ROOT = Path(__file__).resolve().parents[1]
 # Engines whose cells are classes in benchmarks/bench_<engine>.py.
 ENGINE_CLASSES = ("compass", "tsase", "partn", "lammps", "dlfind", "pysisyphus", "optim")
 # Registry code ids whose template classes are in benchmarks/bench_<module>.py.
-TEMPLATE_MODULES = (("airss", "airss"), ("eon-develop-f6817b53", "eon_f6817b53"))
+TEMPLATE_MODULES = (
+    ("airss", "airss"),
+    ("eon-develop-f6817b53", "eon_f6817b53"),
+    ("eon-svn", "eon_svn_counter"),
+    ("eon", "eon_client_counter"),
+    ("eon-main", "eon_main"),
+)
 
 
 def problem_ids() -> list[str]:
@@ -55,7 +61,11 @@ def covered() -> set[tuple[str, str]]:
 
 
 def template_problems(module: str) -> set[str]:
-    """Problems of the template classes in ``benchmarks/bench_<module>.py``."""
+    """Problems of the template classes in ``benchmarks/bench_<module>.py``.
+
+    A class with ``problem_id`` measures that problem. Any other class
+    measures the problem its template names.
+    """
     import importlib
 
     from optbench.campaign import load_template
@@ -64,7 +74,8 @@ def template_problems(module: str) -> set[str]:
     for value in vars(importlib.import_module(f"benchmarks.bench_{module}")).values():
         template = getattr(value, "template_id", None) or getattr(value, "template_name", None)
         if isinstance(value, type) and template:
-            found.add(str(load_template(ROOT, str(template))["problem"]))
+            problem = getattr(value, "problem_id", None) or load_template(ROOT, str(template))["problem"]
+            found.add(str(problem))
     return found
 
 
