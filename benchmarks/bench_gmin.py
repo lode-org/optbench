@@ -11,6 +11,8 @@ selects every archived start. It is read at import.
 call wrote. The force count is ``RgpotCounter.calculate`` on a
 ``HarnessCounter``. ``setup`` raises ``NotImplementedError`` when
 ``libgminlbfgs.so`` is absent, and asv-runner stores that parameter as NaN.
+A stored record names the ``wales_sha256`` and ``wales_svnrev`` of the
+library that ran it, and a record from another build is run again.
 """
 
 from __future__ import annotations
@@ -125,10 +127,13 @@ def _job(spec: dict, start: str) -> dict:
 def _compute(spec: dict, seed: str, start: str) -> dict:
     if str(seed) != SEED:
         raise ValueError(f"seed {seed} is not the archived-start seed {SEED}")
+    from optbench.gmin_lbfgs import build
     from optbench.runners.gmin_min import _minimize_job
 
+    wales = build()
     record = _minimize_job(_job(spec, start))
     record["seed"] = SEED
+    record.update(wales)
     path = _cache_path(spec["template_id"], SEED, str(int(start)))
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(".json.tmp")
@@ -140,7 +145,12 @@ def _compute(spec: dict, seed: str, start: str) -> dict:
 def _load(spec: dict, seed: str, start: str) -> dict:
     path = _cache_path(spec["template_id"], SEED, str(int(start)))
     if path.is_file():
-        return json.loads(path.read_text(encoding="utf-8"))
+        from optbench.gmin_lbfgs import build
+        from optbench.wales import same_build
+
+        record = json.loads(path.read_text(encoding="utf-8"))
+        if same_build(record, build()):
+            return record
     return _compute(spec, seed, start)
 
 

@@ -10,7 +10,7 @@ import pytest
 
 from optbench.campaign import _check_stop, list_templates, resolve_problem, run
 from optbench.engines import ENGINES, find, reasons
-from optbench.engines.optim_search import SHA256, available as optim_available
+from optbench.engines.optim_search import available as optim_available
 from optbench.engines.pykmc_search import available as pykmc_available
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,7 +40,7 @@ def test_named_engines_are_in_the_table():
 
         assert binary_path().is_file()
     else:
-        assert SHA256 in found["optim"]
+        assert "codes/optim/build.sh" in found["optim"]
     assert pykmc_available() == found["pykmc"]
     assert found["partn"] is None or "libartn" in found["partn"]
     assert found["tsase"] is None or "ssneb.py" in found["tsase"]
@@ -139,7 +139,7 @@ def test_pykmc_and_optim_write_nothing(tmp_path: Path):
     output = tmp_path / "benchmark.dat"
     with pytest.raises(RuntimeError, match="LBOMD"):
         run(ROOT, "neb/Pt-heptamer", "pykmc/lattice", output=output, workers=1)
-    with pytest.raises(RuntimeError, match="sha256"):
+    with pytest.raises(RuntimeError, match="writes nothing|codes/optim/build.sh"):
         run(ROOT, "neb/Pt-heptamer", "optim/unhooked", output=output, workers=1)
     assert not output.exists()
     assert not output.with_suffix(".starts.jsonl").exists()

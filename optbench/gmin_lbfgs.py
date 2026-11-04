@@ -25,9 +25,8 @@ from pathlib import Path
 import numpy as np
 
 from optbench.counter import ForceCallCap
+from optbench.wales import snapshot
 
-REVISION = "df8da599267534fbe43a250e578f7396a7946311"
-VERSION = REVISION[:12]
 DEFAULTS = {
     "m": 4,
     "maxbfgs": 0.4,
@@ -82,8 +81,12 @@ def _load() -> ctypes.CDLL:
             "libgminlbfgs.so is not installed. codes/gmin/build.sh writes /opt/gmin/lib/libgminlbfgs.so."
         )
     lib = ctypes.CDLL(str(path))
+    if not hasattr(lib, "gmin_tarball_sha256"):
+        raise RuntimeError(f"{path} has no gmin_tarball_sha256. Rebuild it with codes/gmin/build.sh.")
     lib.gmin_revision.argtypes = []
     lib.gmin_revision.restype = ctypes.c_char_p
+    lib.gmin_tarball_sha256.argtypes = []
+    lib.gmin_tarball_sha256.restype = ctypes.c_char_p
     lib.gmin_set_eval.argtypes = [c_void_p]
     lib.gmin_set_eval.restype = None
     lib.gmin_lbfgs_run.argtypes = [
@@ -113,11 +116,14 @@ def revision() -> str:
     return raw.decode("ascii")
 
 
-def require_revision(expected: str) -> str:
-    found = revision()
-    if found != expected:
-        raise RuntimeError(f"libgminlbfgs.so revision {found} is not {expected}")
-    return found
+def build() -> dict:
+    """``wales_sha256`` and ``wales_svnrev`` of the loaded library.
+
+    ``codes/gmin/build.sh`` compiles the tarball sha256 and the tree's
+    ``SVNREV`` into the library, and ``driver.f90`` returns them.
+    """
+    raw = _load().gmin_tarball_sha256()
+    return snapshot(raw.decode("ascii") if raw else "", revision())
 
 
 @_EVAL

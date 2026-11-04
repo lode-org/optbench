@@ -12,7 +12,9 @@ The default grid is seed ``0`` and archived start ``0``.
 ``OPTBENCH_ASV_CACHE``. asv runs each track in its own process, so a
 track reads that record, or runs the start when there is none. The
 record path includes a hash of the template and problem, so a record
-from another pin is not read.
+from another template is not read. A record also names the
+``wales_sha256`` and ``wales_svnrev`` of the binary that ran it, and a
+record from another build is run again.
 
 ``setup`` raises ``NotImplementedError`` when ``OPTBENCH_GMIN`` is unset
 and ``GMIN`` is not on ``PATH``. asv-runner stores that parameter as NaN.
@@ -110,7 +112,7 @@ def _compute(spec: dict, seed: str, start: str) -> dict:
     path = _cache_path(spec, start)
     path.unlink(missing_ok=True)
     work = _cache_dir() / "work" / spec["template_id"].replace("/", "-")
-    jobs, _passed = plan(
+    jobs, passed = plan(
         ROOT,
         resolve_problem(ROOT, spec["problem_id"]),
         load_template(ROOT, spec["template_id"]),
@@ -120,6 +122,8 @@ def _compute(spec: dict, seed: str, start: str) -> dict:
     if index < 0 or index >= len(jobs):
         raise IndexError(f"{spec['template_id']} start {start} is outside the archive")
     record = run_one(jobs[index])
+    record["wales_sha256"] = passed["wales_sha256"]
+    record["wales_svnrev"] = passed["wales_svnrev"]
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(".json.tmp")
     temporary.write_text(json.dumps(record), encoding="utf-8")
@@ -128,9 +132,14 @@ def _compute(spec: dict, seed: str, start: str) -> dict:
 
 
 def _load(spec: dict, seed: str, start: str) -> dict:
+    from optbench.runners.gmin_go import binary_build, gmin_binary
+    from optbench.wales import same_build
+
     path = _cache_path(spec, start)
     if str(seed) == SEED and path.is_file():
-        return json.loads(path.read_text(encoding="utf-8"))
+        record = json.loads(path.read_text(encoding="utf-8"))
+        if same_build(record, binary_build(gmin_binary())):
+            return record
     return _compute(spec, seed, start)
 
 

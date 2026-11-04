@@ -37,6 +37,7 @@ from optbench.potserver import RgpotCounter
 from optbench.score import score_v2, summarize_capped
 from optbench.stationary import curvature_tolerance, negative_index, vibrational_eigenvalues
 from optbench.v2 import collect_provenance, write_starts
+from optbench.wales import header
 
 _THREAD_VARS = (
     "OMP_NUM_THREADS",
@@ -484,7 +485,7 @@ def _drive_sella(job, x0, observed, potential, cap, clean_tol, energy_tol, compo
     return point, stopped
 
 
-def _dat(summary: dict, template: dict, metrics: dict, sigma: float) -> str:
+def _dat(summary: dict, template: dict, metrics: dict, sigma: float, wales: dict | None = None) -> str:
     rows = {
         "force_calls": summary.get("force_calls"),
         "force_calls_min": summary.get("force_calls_min"),
@@ -514,6 +515,7 @@ def _dat(summary: dict, template: dict, metrics: dict, sigma: float) -> str:
         "energy_max": summary.get("energy_max"),
     }
     lines = [
+        *(header(wales) if wales else []),
         "# counter harness. One force call is one clean energy and gradient.",
         "# Noise is added after the call. A repeated coordinate keeps that sample.",
         "# The index uses the clean Hessian. Six rigid modes are removed.",
@@ -565,13 +567,12 @@ def run_template(
         version = str(rgmin.__version__)
         if template.get("code_version") and version != str(template["code_version"]):
             raise RuntimeError(f"rgmin {version} does not match template {template['code_version']}")
+    wales = None
     if family == "gmin":
-        from optbench.gmin_lbfgs import require_revision
+        from optbench.gmin_lbfgs import build
 
-        found = require_revision(str(template.get("commit") or ""))
-        version = str(template.get("code_version") or "")
-        if version and not found.startswith(version):
-            raise RuntimeError(f"GMIN revision {found} does not match template {version}")
+        wales = build()
+        template = {**template, "code_version": wales["wales_svnrev"][:12], "commit": wales["wales_svnrev"]}
     if family == "vcsqnm":
         from optbench.runners.vcsqnm_min import assert_pin
         from optbench.vcsqnm_catalog import CODE_VERSION, COMMIT
@@ -641,6 +642,7 @@ def run_template(
     records.sort(key=lambda row: row["index"])
     for record in records:
         record.pop("index", None)
+        record.update(wales or {})
     legacy_counts = [cap if not record["converged"] else int(record["force_calls"]) for record in records]
     summary = summarize_capped(legacy_counts, cap)
     successes = [int(record["force_calls"]) for record in records if record["converged"]]
@@ -657,7 +659,7 @@ def run_template(
         ],
         cap,
     )
-    passed = {"sigma": sigma, "family": family, "method": method, "cap": cap, "energy_tol": energy_tol, **options}
+    passed = {"sigma": sigma, "family": family, "method": method, "cap": cap, "energy_tol": energy_tol, **options, **(wales or {})}
     provenance = collect_provenance(
         code=str(template.get("code")),
         code_version=str(template.get("code_version")),
@@ -701,7 +703,7 @@ def run_template(
         ],
     }
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(_dat(summary, template, metrics, sigma), encoding="utf-8")
+    output.write_text(_dat(summary, template, metrics, sigma, wales), encoding="utf-8")
     write_starts(output.with_suffix(".starts.jsonl"), records)
     output.with_suffix(".v2.json").write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     summary["starts"] = len(records)

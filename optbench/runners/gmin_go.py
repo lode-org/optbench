@@ -36,11 +36,10 @@ from optbench.gmin_pot import lennard_jones_compiled
 from optbench.potentials import lennard_jones, read_con
 from optbench.score import score_v2, summarize_capped
 from optbench.v2 import collect_provenance, write_starts
+from optbench.wales import header, snapshot, stamped_sha256
 
-TARBALL_SHA256 = "02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f"
-PIN_REF = "02aaf45245af"
-CODE_VERSION = "df8da599"
 CODE_NAME = "GMIN"
+_REVISION_LABEL = "SVN revision:"
 
 
 def gmin_binary() -> Path:
@@ -49,6 +48,30 @@ def gmin_binary() -> Path:
     if not path.is_file():
         raise RuntimeError("set OPTBENCH_GMIN to the GMIN binary built by codes/gmin/build-bh.sh")
     return path
+
+
+def binary_revision(binary: Path) -> str:
+    """The revision ``GMIN -v`` prints.
+
+    GMIN's ``display_version.sh`` compiles the ``SVNREV`` file of the build
+    directory into that line. ``codes/gmin/build-bh.sh`` copies it there from
+    the tarball, and the line is empty when no build did.
+    """
+    proc = subprocess.run([str(binary), "-v"], capture_output=True, text=True, check=False)
+    for line in (proc.stdout + "\n" + proc.stderr).splitlines():
+        _head, label, value = line.partition(_REVISION_LABEL)
+        if label:
+            return value.strip()
+    raise RuntimeError(f"{binary} -v printed no {_REVISION_LABEL} line")
+
+
+def binary_build(binary: Path) -> dict:
+    """``wales_sha256`` and ``wales_svnrev`` of ``binary``.
+
+    The revision is the line ``GMIN -v`` prints. The sha256 is the stamp
+    that ``codes/gmin/build-bh.sh`` writes beside the binary.
+    """
+    return snapshot(stamped_sha256(Path(binary).parent), binary_revision(Path(binary)))
 
 
 def reference_evaluation(root: Path, natoms: int) -> tuple[float, float]:
@@ -361,7 +384,7 @@ def _format_field(value: object) -> str:
     return str(value)
 
 
-def _dat(summary: dict, template: dict, metrics: dict, partial: bool) -> str:
+def _dat(summary: dict, template: dict, metrics: dict, partial: bool, wales: dict) -> str:
     rows = {
         "force_calls": summary.get("force_calls"),
         "force_calls_min": summary.get("force_calls_min"),
@@ -369,8 +392,8 @@ def _dat(summary: dict, template: dict, metrics: dict, partial: bool) -> str:
         "nfailed": metrics.get("nfailed"),
         "median": summary.get("median"),
         "code": CODE_NAME,
-        "code_version": CODE_VERSION,
-        "commit": TARBALL_SHA256,
+        "code_version": _code_version(wales),
+        "commit": wales["wales_sha256"],
         "algorithm": template.get("algorithm"),
         "template": template["id"],
         "tuning": template.get("tuning", ""),
@@ -392,8 +415,9 @@ def _dat(summary: dict, template: dict, metrics: dict, partial: bool) -> str:
     if partial:
         rows["partial"] = "true"
     lines = [
+        *header(wales),
         "# counter harness. One force call is one GMIN potential request to lennard_jones.",
-        "# The binary was built from the Wales tarball named by commit. The pin is that sha256.",
+        "# commit is the sha256 of the Wales tarball the binary was built from.",
         "# energy is the lowest quench at or below SLOPPYCONV. lowest_energy on each start is the lowest finite evaluation.",
     ]
     note = str(template.get("note") or "").strip()
@@ -406,11 +430,17 @@ def _dat(summary: dict, template: dict, metrics: dict, partial: bool) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _code_version(wales: dict) -> str:
+    return wales["wales_svnrev"][:8]
+
+
 def _write_result(output: Path, problem: dict, template: dict, records: list[dict], partial: bool, passed: dict) -> dict:
     cap = int(passed["cap"])
+    wales = snapshot(passed["wales_sha256"], passed["wales_svnrev"])
     ordered = sorted(records, key=lambda row: int(row["index"]))
     for record in ordered:
         record.pop("index", None)
+        record.update(wales)
     capped_counts = [cap if not record["success"] else int(record["force_calls"]) for record in ordered]
     summary = summarize_capped(capped_counts, cap)
     successes = [int(record["force_calls"]) for record in ordered if record["success"]]
@@ -435,8 +465,8 @@ def _write_result(output: Path, problem: dict, template: dict, records: list[dic
     )
     provenance = collect_provenance(
         code=CODE_NAME,
-        code_version=CODE_VERSION,
-        commit=TARBALL_SHA256,
+        code_version=_code_version(wales),
+        commit=wales["wales_sha256"],
         parameters=passed,
     )
     rule = (
@@ -458,8 +488,8 @@ def _write_result(output: Path, problem: dict, template: dict, records: list[dic
                 "entry": output.stem,
                 "code": CODE_NAME,
                 "algorithm": template.get("algorithm", ""),
-                "code_version": CODE_VERSION,
-                "commit": TARBALL_SHA256,
+                "code_version": _code_version(wales),
+                "commit": wales["wales_sha256"],
                 "tuning": template.get("tuning", ""),
                 "present_source": True,
                 "cap": cap,
@@ -471,7 +501,7 @@ def _write_result(output: Path, problem: dict, template: dict, records: list[dic
         ],
     }
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(_dat(summary, template, metrics, partial), encoding="utf-8")
+    output.write_text(_dat(summary, template, metrics, partial, wales), encoding="utf-8")
     write_starts(output.with_suffix(".starts.jsonl"), ordered)
     output.with_suffix(".v2.json").write_text(
         json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -495,10 +525,6 @@ def plan(
     resume: bool = False,
 ) -> tuple[list[dict], dict]:
     """The jobs ``run_template`` runs, one per archived start in archive order, and its parameters."""
-    if str(template.get("code_version") or "") != CODE_VERSION:
-        raise RuntimeError(f"{template['id']} code_version is not {CODE_VERSION}")
-    if str(template.get("commit") or "") != TARBALL_SHA256:
-        raise RuntimeError(f"{template['id']} commit is not the tarball sha256")
     stated = template.get("problem")
     if stated and stated != problem["id"]:
         raise ValueError(f"{template['id']} is for {stated}, not {problem['id']}")
@@ -516,6 +542,7 @@ def plan(
     if stated_cap is not None and int(stated_cap) != cap:
         raise ValueError("template failure_cap is not the problem max_force_calls")
     binary = gmin_binary()
+    wales = binary_build(binary)
     loaded = load_geometries(root, problem, scratch, center=bool(section.get("center", True)))
     if limit > 0:
         loaded = loaded[: int(limit)]
@@ -566,6 +593,7 @@ def plan(
         "save": int(section.get("save") or 2),
         "tfac": section.get("tfac"),
         "emit_seed": bool(section.get("emit_seed", True)),
+        **wales,
     }
     jobs = []
     lennard_jones_compiled(np.zeros((1, 3)))

@@ -1,27 +1,21 @@
 #!/bin/bash
 # Build GMIN from the Wales svn.tar.bz2 and the OptBench LJ hook.
-# The pin is the tarball sha256. The tree is not a git revision.
+# usage: build-bh.sh [DEST] [BUILD]
+# The upstream URL rolls daily, and this script fetches the latest snapshot
+# into DEST. WALES_TARBALL names a local copy to read instead.
+# GMIN -v prints the SVNREV file of the build directory, and this script
+# copies it there from the tree it builds. It also writes the tarball
+# sha256 to svn.tar.bz2.sha256 beside the binary.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-TARBALL="${1:-/tmp/wales-src/svn.tar.bz2}"
-DEST="${2:-/tmp/wales-src}"
-BUILD="${3:-/tmp/gmin-build}"
-EXPECTED="02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f"
-
-if [[ ! -f "$TARBALL" ]]; then
-  echo "missing tarball $TARBALL" >&2
-  exit 1
-fi
-got="$(sha256sum "$TARBALL" | awk '{print $1}')"
-if [[ "$got" != "$EXPECTED" ]]; then
-  echo "tarball sha256 $got" >&2
-  exit 1
-fi
-
-if [[ ! -f "$DEST/wales/GMIN/source/lj.F90" ]]; then
-  tar -xjf "$TARBALL" -C "$DEST"
-fi
+source "$ROOT/codes/checkout.sh"
+DEST="${1:-$(ob_root)/wales-src}"
+BUILD="${2:-$(ob_root)/gmin-build}"
+TARBALL="$(wales_tarball "$DEST")"
+SHA256="$(wales_sha256 "$TARBALL")"
+wales_extract "$TARBALL" "$DEST"
+REVISION="$(wales_svnrev "$DEST" GMIN)"
 
 rm -f "$DEST/wales/INTERFACES/optbench_pot.f90"
 cp "$ROOT/codes/gmin/optbench_pot.F90" "$DEST/wales/INTERFACES/optbench_pot.F90"
@@ -112,14 +106,17 @@ PY
 
 mkdir -p "$BUILD"
 cd "$BUILD"
-FC=mpif90 CC=gcc CXX=g++ cmake "$DEST/wales/GMIN/source" \
+echo "$REVISION" > SVNREV
+wales_stamp . "$SHA256"
+rm -f display_version.f90
+FC=mpif90 cmake "$DEST/wales/GMIN/source" \
   -DWITH_MPI=ON \
   -DWITH_ALIGN=OFF \
   -DWITH_MYBLAS=OFF \
   -DWITH_MYLAPACK=OFF \
   -DCOMPILER_SWITCH=gfortran \
   -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_C_COMPILER=gcc \
-  -DCMAKE_CXX_COMPILER=g++
+  -DCMAKE_C_COMPILER="$CC" \
+  -DCMAKE_CXX_COMPILER="$CXX"
 make -j"$(nproc)" GMIN
-echo "built $BUILD/GMIN"
+echo "built $BUILD/GMIN from svn.tar.bz2 sha256 $SHA256, SVNREV $REVISION"

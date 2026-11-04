@@ -25,6 +25,22 @@ The LAMMPS CMake call names those compilers.
 The runner puts the dlfind and pysisyphus site-packages on its `sys.path`.
 Those venvs therefore keep the numpy and scipy of the harness interpreter.
 
+GMIN, GMIN basin-hopping, and OPTIM build from the Wales `svn.tar.bz2` that the `gmin` registry row names.
+That URL serves a snapshot that rolls daily, and optbench takes the latest one.
+The `gmin`, `gmin-bh`, and `optim` rows therefore pin no sha256, and their `commit` is `latest`.
+`wales_tarball` in `codes/checkout.sh` fetches the tarball for each build, or reads the copy that `WALES_TARBALL` names.
+It prints the sha256 of the tarball it used.
+`codes/gmin/build.sh` compiles that sha256 and the tree's `GMIN/source/SVNREV` into `libgminlbfgs.so`.
+`gmin_tarball_sha256()` and `gmin_revision()` return them.
+`codes/gmin/build-bh.sh` copies the `SVNREV` into the build directory.
+GMIN's `display_version.sh` reads it there, and `GMIN -v` prints it.
+`codes/gmin/build-bh.sh` also writes the sha256 to `svn.tar.bz2.sha256` beside the binary.
+`codes/optim/build.sh` writes the `SVNREV` and the sha256 beside `OPTIM`, because OPTIM does not print a revision.
+Each run writes both as `wales_sha256` and `wales_svnrev` at the top of its `.dat` raw log.
+Every per-start record carries them too.
+Each asv class keeps them in the record it stores under `OPTBENCH_ASV_CACHE`.
+A stored record from another build is run again.
+
 ## Rows on disk
 
 Failure classes are the v2 counts. They sum to `nfailed`. The median is the
@@ -151,10 +167,10 @@ because the cap is raised before that geometry is stored. The class is cap.
 
 ## OPTIM and PATHSAMPLE
 
-Pin `optim`. The snapshot is `http://www-wales.ch.cam.ac.uk/svn.tar.bz2`,
-122743078 bytes, sha256
-`02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f`.
-There is no git commit. `OPTIM/source/py.f90` is the Paramonov–Yaliraki
+Registry row `optim` builds from the latest Wales snapshot at the URL in the `gmin` row.
+The rows and checks below ran on the snapshot fetched on 2026-10-18, which the URL no longer serves.
+That snapshot was 122743078 bytes, with sha256 `02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f`.
+`OPTIM/source/py.f90` is the Paramonov–Yaliraki
 ellipsoid potential, not a Python hook. The external hook is the ASE socket
 in `INTERFACES/pysocket/ase_interface.f90`. The tarball does not contain
 `fmlip_relay.py`. The harness server speaks that protocol: each `COMPUTE`

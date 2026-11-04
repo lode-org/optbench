@@ -1,10 +1,18 @@
 function gmin_revision() bind(c, name="gmin_revision") result(ptr)
    use iso_c_binding
    type(c_ptr) :: ptr
-   character(kind=c_char, len=41), target, save :: rev = &
-      "df8da599267534fbe43a250e578f7396a7946311" // c_null_char
+   include "svnrev.inc"
+   character(kind=c_char, len=len(svnrev) + 1), target, save :: rev = svnrev // c_null_char
    ptr = c_loc(rev)
 end function gmin_revision
+
+function gmin_tarball_sha256() bind(c, name="gmin_tarball_sha256") result(ptr)
+   use iso_c_binding
+   type(c_ptr) :: ptr
+   include "svnrev.inc"
+   character(kind=c_char, len=len(tarball_sha256) + 1), target, save :: sha = tarball_sha256 // c_null_char
+   ptr = c_loc(sha)
+end function gmin_tarball_sha256
 
 subroutine gmin_lbfgs_run(n, x, m, eps, itmax, maxbfgs_in, dguess_in, maxerise_in, &
       maxefall_in, mflag_out, energy, itdone, info) bind(c, name="gmin_lbfgs_run")

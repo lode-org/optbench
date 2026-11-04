@@ -8,19 +8,19 @@ from pathlib import Path
 import pytest
 
 from optbench.campaign import _check_stop, list_templates, resolve_problem, run
-from optbench.gmin_lbfgs import DEFAULTS, REVISION, VERSION
+from optbench.gmin_lbfgs import DEFAULTS
+from optbench.wales import LATEST
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_registry_pins_the_tarball_revision():
+def test_registry_takes_the_latest_snapshot():
     registry = tomllib.loads((ROOT / "codes" / "registry.toml").read_text(encoding="utf-8"))
-    pinned = next(row for row in registry["code"] if row["id"] == "gmin")
-    assert pinned["name"] == "GMIN"
-    assert pinned["commit"] == REVISION
-    assert pinned["committed"] == "2026-10-18"
-    assert "02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f" in pinned["note"]
-    assert "mymylbfgs" in pinned["note"]
+    row = next(row for row in registry["code"] if row["id"] == "gmin")
+    assert row["name"] == "GMIN"
+    assert row["commit"] == LATEST
+    assert "sha256" not in row
+    assert "mymylbfgs" in row["note"]
 
 
 def test_templates_use_the_keyword_defaults():
@@ -28,8 +28,8 @@ def test_templates_use_the_keyword_defaults():
     assert {row["id"] for row in found} == {"gmin/lj38-lbfgs", "gmin/morse-lbfgs"}
     for template in found:
         assert template["code"] == "GMIN"
-        assert template["code_version"] == VERSION
-        assert template["commit"] == REVISION
+        assert template["code_version"] == LATEST
+        assert template["commit"] == LATEST
         assert template["tuning"] == "default"
         assert template["gmin"]["m"] == DEFAULTS["m"]
         assert template["gmin"]["maxbfgs"] == DEFAULTS["maxbfgs"]
@@ -83,10 +83,10 @@ def test_quadratic_quench_counts_harness_calls():
     import numpy as np
 
     from optbench.counter import HarnessCounter
-    from optbench.gmin_lbfgs import minimize, revision
+    from optbench.gmin_lbfgs import build, minimize, revision
     from optbench.potserver import RgpotCounter
 
-    assert revision() == REVISION
+    assert revision() == build()["wales_svnrev"]
     counter = HarnessCounter(cache=True, cap=1000)
 
     def evaluate_raw(positions, _numbers=None, _box=None):

@@ -4,6 +4,9 @@ A template ``engine`` string selects a module in this package. The module
 exposes ``ENGINE``, ``available``, and ``run``. ``available`` returns
 ``None`` when a search can start, and a reason when it cannot. ``run``
 writes the campaign files or raises that reason. No row is invented.
+A module may also expose ``build_stamp``. It returns the ``wales_sha256``
+and ``wales_svnrev`` of the build, ``plan`` returns them as ``wales``, and
+the asv classes keep them in each record.
 
 Adding a code is three pieces: a module here, a pin in
 ``codes/registry.toml``, and templates under ``templates/``. The list in

@@ -10,6 +10,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from optbench.wales import LATEST
+
 SIGMAS = (0.0, 1e-4, 1e-3, 1e-2)
 HESSIAN_METHODS = frozenset({"newton", "dogleg", "rfo"})
 PROBLEM = "minimization/lj38-noise"
@@ -21,8 +23,8 @@ ASE_COMMIT = "f27c0005ae6a67ea419f996e728668865bfc1f86"
 ASE_VERSION = "3.29.0"
 SELLA_COMMIT = "6cfb60cdb100a146c3c6f0587d5308b247aa8010"
 SELLA_VERSION = "2.6.0"
-GMIN_COMMIT = "df8da599267534fbe43a250e578f7396a7946311"
-GMIN_VERSION = "df8da5992675"
+GMIN_COMMIT = LATEST
+GMIN_VERSION = LATEST
 PELE_COMMIT = "b7081b932a060be11342fbe8287ac35da8ada879"
 PELE_VERSION = "0.1.2"
 

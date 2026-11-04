@@ -50,6 +50,65 @@ checkout() {
   echo "$dest is $commit"
 }
 
+# The gmin row URL is a Wales svn.tar.bz2 snapshot that rolls daily, and no
+# sha256 is pinned. wales_tarball <dir> fetches whatever the URL serves to
+# <dir>/svn.tar.bz2 and prints that path. WALES_TARBALL names a local copy to
+# read instead, and then nothing is fetched. Either way the tarball sha256 goes
+# to stderr, and each build script writes it beside what it builds.
+wales_tarball() {
+  local tarball
+  if [[ -n "${WALES_TARBALL:-}" ]]; then
+    tarball=$WALES_TARBALL
+    if [[ ! -f "$tarball" ]]; then
+      echo "WALES_TARBALL=$tarball is not a file" >&2
+      return 1
+    fi
+    echo "svn.tar.bz2 read from WALES_TARBALL" >&2
+  else
+    mkdir -p "$1" || return 1
+    tarball=$1/svn.tar.bz2
+    curl -fsSL -o "$tarball" "$(pin gmin repository)" || return 1
+    echo "svn.tar.bz2 fetched from the gmin row URL" >&2
+  fi
+  echo "svn.tar.bz2 sha256 $(wales_sha256 "$tarball")" >&2
+  echo "$tarball"
+}
+
+wales_sha256() {
+  sha256sum "$1" | cut -d' ' -f1
+}
+
+# wales_stamp <dir> <sha256> writes <dir>/svn.tar.bz2.sha256.
+wales_stamp() {
+  printf '%s  svn.tar.bz2\n' "$2" > "$1/svn.tar.bz2.sha256"
+}
+
+# wales_extract <tarball> <dest> extracts <tarball> into <dest> and stamps
+# <dest> with its sha256. A <dest> stamped with that sha256 is reused, and any
+# other <dest>/wales is removed first, so one tree never mixes two snapshots.
+wales_extract() {
+  local sha
+  sha=$(wales_sha256 "$1")
+  if [[ -d "$2/wales" && -f "$2/svn.tar.bz2.sha256" ]] && [[ "$(cut -d' ' -f1 "$2/svn.tar.bz2.sha256")" == "$sha" ]]; then
+    return
+  fi
+  rm -rf "$2/wales" "$2/svn.tar.bz2.sha256"
+  mkdir -p "$2"
+  tar -xjf "$1" -C "$2"
+  wales_stamp "$2" "$sha"
+}
+
+# wales_svnrev <tree> <program> prints <tree>/wales/<program>/source/SVNREV.
+wales_svnrev() {
+  local got
+  got=$(tr -d '[:space:]' < "$1/wales/$2/source/SVNREV") || return 1
+  if [[ -z "$got" ]]; then
+    echo "$1/wales/$2/source/SVNREV is empty" >&2
+    return 1
+  fi
+  echo "$got"
+}
+
 # The venv site-packages go on the harness sys.path, so the venv keeps the
 # numpy and scipy the harness already imported.
 harness_pins() {

@@ -18,7 +18,9 @@ asv runs each track in its own process. ``time_search`` runs the search
 and stores its record under ``OPTBENCH_ASV_CACHE``. A track reads that
 record, or runs the search when there is none, so every track is the
 value of one search. The cache key includes the template, problem, and
-registry row, so a record from another pin is not read.
+registry row, so a record from another pin is not read. When the engine
+module has ``build_stamp``, each record names that build, and a record
+from another build is run again.
 
 The campaign has no wall-clock stop. The problem's force-call cap ends
 every search, so the class timeout is unbounded. asv's forkserver
@@ -186,6 +188,7 @@ def compute(cell: dict, seed: str, start: str) -> dict:
     path.unlink(missing_ok=True)
     planned = ENGINES[cell["engine"]].plan(ROOT, cell["problem_id"], cell["template_id"], cache_dir() / "work")
     record = run_start(planned["jobs"], planned["execute"], str(start))
+    record.update(planned.get("wales") or {})
     record.setdefault("problem", cell["problem_id"])
     record.setdefault("template", cell["template_id"])
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -198,7 +201,13 @@ def compute(cell: dict, seed: str, start: str) -> dict:
 def load(cell: dict, seed: str, start: str) -> dict:
     path = record_path(cell, SEED, str(start))
     if str(seed) == SEED and path.is_file():
-        return json.loads(path.read_text(encoding="utf-8"))
+        from optbench.engines import ENGINES
+        from optbench.wales import same_build
+
+        record = json.loads(path.read_text(encoding="utf-8"))
+        build_stamp = getattr(ENGINES[cell["engine"]], "build_stamp", None)
+        if build_stamp is None or same_build(record, build_stamp()):
+            return record
     return compute(cell, seed, start)
 
 

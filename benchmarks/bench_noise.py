@@ -3,6 +3,9 @@
 The default grid is seed ``0`` and start ``0``. ``OPTBENCH_ASV_FULL=1``
 selects every archived start. It is read at import. ``time_search`` is
 the minimization. Track methods read the record that call wrote.
+
+A GMIN record names the ``wales_sha256`` and ``wales_svnrev`` of the
+library that ran it, and a record from another build is run again.
 """
 
 from __future__ import annotations
@@ -111,14 +114,24 @@ def _compute(spec: dict, seed: str, start: str) -> dict:
         raise ValueError(f"seed {seed} is not the archived-start seed {SEED}")
     from optbench.runners.noise_min import _minimize_job
 
+    wales = _build(spec)
     record = _minimize_job(_job(spec, start))
     record["seed"] = SEED
+    record.update(wales or {})
     path = _cache_dir() / spec["template_id"].replace("/", "-") / f"{SEED}-{int(start)}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(".json.tmp")
     temporary.write_text(__import__("json").dumps(record), encoding="utf-8")
     temporary.replace(path)
     return record
+
+
+def _build(spec: dict) -> dict | None:
+    if spec["family"] != "gmin":
+        return None
+    from optbench.gmin_lbfgs import build
+
+    return build()
 
 
 class _NoiseSearch(TrackedSearch):
@@ -133,10 +146,13 @@ class _NoiseSearch(TrackedSearch):
     def _stored(self, seed, start) -> dict:
         if self.record is None:
             path = _cache_dir() / self.spec["template_id"].replace("/", "-") / f"{SEED}-{int(start)}.json"
-            if path.is_file():
-                self.record = __import__("json").loads(path.read_text(encoding="utf-8"))
-            else:
-                self.record = _compute(self.spec, seed, start)
+            stored = __import__("json").loads(path.read_text(encoding="utf-8")) if path.is_file() else None
+            if stored is not None and self.spec["family"] == "gmin":
+                from optbench.wales import same_build
+
+                if not same_build(stored, _build(self.spec)):
+                    stored = None
+            self.record = stored if stored is not None else _compute(self.spec, seed, start)
         return self.record
 
     def track_force_calls(self, seed, start) -> float:

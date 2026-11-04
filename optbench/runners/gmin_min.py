@@ -25,11 +25,12 @@ from pathlib import Path
 
 from optbench.counter import HarnessCounter
 from optbench.failures import classify_failure
-from optbench.gmin_lbfgs import DEFAULTS, VERSION, minimize, require_revision
+from optbench.gmin_lbfgs import DEFAULTS, build, minimize
 from optbench.potentials import lennard_jones, morse_bulk
 from optbench.potserver import RgpotCounter
 from optbench.score import score_v2, summarize_capped
 from optbench.v2 import collect_provenance, write_starts
+from optbench.wales import header
 
 _THREAD_VARS = (
     "OMP_NUM_THREADS",
@@ -216,7 +217,7 @@ def _format_field(value: object) -> str:
     return str(value)
 
 
-def _dat(summary: dict, template: dict, metrics: dict, commit: str, version: str, partial: bool) -> str:
+def _dat(summary: dict, template: dict, metrics: dict, commit: str, version: str, wales: dict, partial: bool) -> str:
     rows = {
         "force_calls": summary.get("force_calls"),
         "force_calls_min": summary.get("force_calls_min"),
@@ -245,6 +246,7 @@ def _dat(summary: dict, template: dict, metrics: dict, commit: str, version: str
         "partial": "true" if partial else None,
     }
     lines = [
+        *header(wales),
         "# counter harness. One force call is one RgpotCounter.calculate entry.",
         "# The quench is GMIN MYMYLBFGS. The Hessian index is analytic and is not a force call.",
         "# v2 success is under the cap, at the force stop, and Hessian index 0.",
@@ -280,11 +282,9 @@ def run_template(
     limit: int = 0,
 ) -> dict:
     _quiet_threads()
-    found = require_revision(str(template.get("commit") or ""))
-    version = str(template.get("code_version") or VERSION)
-    if not found.startswith(version):
-        raise RuntimeError(f"GMIN revision {found} does not match template {version}")
-    commit = str(template.get("commit") or "")
+    wales = build()
+    commit = wales["wales_svnrev"]
+    version = commit[:12]
     stated = template.get("problem")
     if stated and stated != problem["id"]:
         raise ValueError(f"{template['id']} is for {stated}, not {problem['id']}")
@@ -305,6 +305,7 @@ def run_template(
         work=work,
         version=version,
         commit=commit,
+        wales=wales,
         root=root,
         limit=int(limit),
     )
@@ -324,6 +325,7 @@ def _run(
     work,
     version,
     commit,
+    wales,
     root,
     limit,
 ) -> dict:
@@ -367,6 +369,7 @@ def _run(
     records.sort(key=lambda row: row["index"])
     for record in records:
         record.pop("index", None)
+        record.update(wales)
     legacy_counts = [cap if not record["converged"] else int(record["force_calls"]) for record in records]
     summary = summarize_capped(legacy_counts, cap)
     successes = [int(record["force_calls"]) for record in records if record["converged"]]
@@ -386,7 +389,7 @@ def _run(
         ],
         cap,
     )
-    passed = {"gtol": gtol, "maxiter": cap, **options}
+    passed = {"gtol": gtol, "maxiter": cap, **options, **wales}
     provenance = collect_provenance(
         code="GMIN",
         code_version=version,
@@ -430,7 +433,7 @@ def _run(
         ],
     }
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(_dat(summary, template, metrics, commit, version, partial), encoding="utf-8")
+    output.write_text(_dat(summary, template, metrics, commit, version, wales, partial), encoding="utf-8")
     write_starts(output.with_suffix(".starts.jsonl"), records)
     output.with_suffix(".v2.json").write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     summary["starts"] = len(records)

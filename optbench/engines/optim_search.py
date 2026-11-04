@@ -1,9 +1,12 @@
 """OPTIM L-BFGS through the ASE socket.
 
-The binary is the OPTIM target from the Wales snapshot
-``http://www-wales.ch.cam.ac.uk/svn.tar.bz2``. The pin is the sha256 of
-that file. The snapshot has no git commit. Each ``COMPUTE`` on the relay
-is one ``pes.evaluate``. OPTIM's own counter is not the score.
+The binary is the OPTIM target from the latest Wales snapshot, as
+``optbench.wales`` describes. OPTIM does not print the ``SVNREV`` it was
+built from, so ``codes/optim/build.sh`` writes the tarball's
+``OPTIM/source/SVNREV`` and sha256 beside the binary. ``build_stamp`` reads
+them, and every record and raw log of a run names both. Each ``COMPUTE``
+on the relay is one ``pes.evaluate``. OPTIM's own counter is not the
+score.
 
 ``optim/unhooked`` and every template that is not minimization L-BFGS
 raise before a file is written. Noise, saddle search, NEB, and PATHSAMPLE
@@ -21,13 +24,13 @@ from pathlib import Path
 
 import numpy as np
 
+from optbench.wales import REVISION_STAMP, header, snapshot, stamped_sha256
+
 from .common import judge_saddle, run_jobs, write_campaign
 from .geometries import load_starts, point_settings
 
 ENGINE = "optim"
 CODE = "optim"
-SNAPSHOT = "http://www-wales.ch.cam.ac.uk/svn.tar.bz2"
-SHA256 = "02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f"
 _RELAY = Path(__file__).with_name("fmlip_relay.py")
 
 
@@ -64,11 +67,19 @@ def available() -> str | None:
     missing = binary if not binary.is_file() else _RELAY
     return (
         "OPTIM has no harness potential in this tree. "
-        f"The pin is the sha256 {SHA256} of {SNAPSHOT} "
-        "(122743078 bytes). The archive is not a git commit. "
+        "codes/optim/build.sh builds it from the latest Wales snapshot. "
         f"{missing} is not present. "
         "OPTIM's own call count is not a score."
     )
+
+
+def build_stamp(binary: Path | None = None) -> dict:
+    """``wales_sha256`` and ``wales_svnrev`` that ``codes/optim/build.sh`` wrote beside ``binary``."""
+    folder = (binary or binary_path()).parent
+    revision_path = folder / REVISION_STAMP
+    if not revision_path.is_file():
+        raise RuntimeError(f"{revision_path} is missing. codes/optim/build.sh writes it.")
+    return snapshot(stamped_sha256(folder), revision_path.read_text(encoding="utf-8"))
 
 
 def _section(template: dict) -> dict:
@@ -81,7 +92,7 @@ def _section(template: dict) -> dict:
 
 def _unhooked(template_name: str) -> RuntimeError:
     return RuntimeError(
-        f"{template_name} writes nothing. The pin is the sha256 {SHA256}. "
+        f"{template_name} writes nothing. "
         "Only a minimization L-BFGS template calls the ASE socket. "
         "Noise, saddle search, NEB, tsopt, hTST, and PATHSAMPLE are not scored."
     )
@@ -285,6 +296,7 @@ def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
     reason = available()
     if reason:
         raise RuntimeError(reason)
+    wales = build_stamp()
     root = Path(root)
     from optbench.campaign import load_template, resolve_problem
 
@@ -308,15 +320,24 @@ def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
         raise ValueError(f"{problem['id']} has no force-call cap")
     scratch = Path(work) / template["id"].replace("/", "-")
     jobs = [_job(start, settings, template) for start in load_starts(root, problem, scratch)]
-    return {"problem": problem, "template": template, "settings": settings, "jobs": jobs, "execute": _execute}
+    return {
+        "problem": problem,
+        "template": template,
+        "settings": settings,
+        "jobs": jobs,
+        "execute": _execute,
+        "wales": wales,
+    }
 
 
 def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
     planned = plan(root, problem_name, template_name, output.parent / "work")
-    problem, template, settings = planned["problem"], planned["template"], planned["settings"]
+    problem, template, settings, wales = planned["problem"], planned["template"], planned["settings"], planned["wales"]
     section = _section(template)
-    records = run_jobs(planned["jobs"], planned["execute"], workers)
-    comment = (
+    records = [{**record, **wales} for record in run_jobs(planned["jobs"], planned["execute"], workers)]
+    template = {**template, "code_version": wales["wales_svnrev"][:12], "commit": wales["wales_sha256"]}
+    comment = "\n".join(header(wales)) + "\n" + (
+        "# commit is the sha256 of the Wales tarball the binary was built from.\n"
         "# counter harness. Each ASE COMPUTE is one pes.evaluate. "
         "OPTIM's own counter is not the score.\n"
         "# BFGSMIN RMS stop is the Euclidean force norm over sqrt(3N). "
@@ -330,6 +351,7 @@ def run(root: Path, problem_name: str, template_name: str, *, output: Path, work
         "maxstep": section["maxstep"],
         "counter": "harness",
         "socket": "ASE",
+        **wales,
     }
     return write_campaign(
         output,

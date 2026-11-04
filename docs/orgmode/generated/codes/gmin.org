@@ -13,13 +13,13 @@
    <tr>
    <td data-label="Role">minimization</td>
    <td data-label="Ref">svn.tar.bz2</td>
-   <td data-label="Commit">df8da5992675</td>
+   <td data-label="Commit">latest</td>
    <td data-label="Source"><a href="https://www-wales.ch.cam.ac.uk/svn.tar.bz2">https://www-wales.ch.cam.ac.uk/svn.tar.bz2</a></td>
    </tr>
    <tr>
    <td data-label="Role">global optimization</td>
-   <td data-label="Ref">02aaf45245af</td>
-   <td data-label="Commit">02aaf45245af</td>
+   <td data-label="Ref">svn.tar.bz2</td>
+   <td data-label="Commit">latest</td>
    <td data-label="Source"><a href="https://www-wales.ch.cam.ac.uk/svn.tar.bz2">https://www-wales.ch.cam.ac.uk/svn.tar.bz2</a></td>
    </tr>
    </tbody></table></div>

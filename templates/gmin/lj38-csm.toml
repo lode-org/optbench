@@ -2,12 +2,12 @@ id = "gmin/lj38-csm"
 engine = "gmin-bh"
 problem = "globalopt/lj38"
 code = "GMIN"
-code_version = "df8da599"
-commit = "02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f"
+code_version = "latest"
+commit = "latest"
 algorithm = "basin-hopping with continuous symmetry measures"
 tuning = "default"
 failure_cap = 2000000
-note = "The 06 Aug 2014 file names code wales-27058. That binary is not published. GMIN df8da599 has SYMMETRISECSM, so this row runs on df8da599. The deck is the archive data file: TEMPERATURE 3.0, NEWRESTART 30, AVOID 1.25 18, STEP 0.43 0.52, SLOPPYCONV 0.002, PERMDIST 0.005, MAXIT 1000 1000, STEPS 90000000 1.0, SAVE 1, SORT, and SYMMETRISECSM 1 CI 1.0D-6 30 1 50. RANSEED is unset. RADIUS is omitted and the coordinates are not translated before CENTRE. The problem file states no max_force_calls, so the campaign cap is the lj38 template budget 2000000. EDIFF is 0.001, the problem energy_above_minimum. The archive data file sets EDIFF 0.003. TARGET is the harness energy of codes/gmin/reference/lj38.points. The data file starts with MPI because the binary is the MPI build, and mpirun launches one replica."
+note = "The 06 Aug 2014 file names code wales-27058. That binary is not published. The Wales snapshot has SYMMETRISECSM, so this row runs on the latest one. The deck is the archive data file: TEMPERATURE 3.0, NEWRESTART 30, AVOID 1.25 18, STEP 0.43 0.52, SLOPPYCONV 0.002, PERMDIST 0.005, MAXIT 1000 1000, STEPS 90000000 1.0, SAVE 1, SORT, and SYMMETRISECSM 1 CI 1.0D-6 30 1 50. RANSEED is unset. RADIUS is omitted and the coordinates are not translated before CENTRE. The problem file states no max_force_calls, so the campaign cap is the lj38 template budget 2000000. EDIFF is 0.001, the problem energy_above_minimum. The archive data file sets EDIFF 0.003. TARGET is the harness energy of codes/gmin/reference/lj38.points. The data file starts with MPI because the binary is the MPI build, and mpirun launches one replica."
 
 [gmin]
 method = "bh"

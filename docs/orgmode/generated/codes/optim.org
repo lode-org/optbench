@@ -5,16 +5,16 @@
 .. raw:: html
 
    <section class="bench" id="code-optim">
-   <p>OPTIM is used for saddle search. No public git commit.</p>
+   <p>OPTIM is used for saddle search. Wales group OPTIM, from the same URL as gmin.</p>
    <h3>Versions</h3>
    <div class="bench-scroll"><table class="bench-sortable">
    <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td data-label="Role">saddle search</td>
-   <td data-label="Ref">svn-snapshot</td>
-   <td data-label="Commit">02aaf45245af</td>
-   <td data-label="Source"><a href="http://www-wales.ch.cam.ac.uk/svn.tar.bz2">http://www-wales.ch.cam.ac.uk/svn.tar.bz2</a></td>
+   <td data-label="Ref">svn.tar.bz2</td>
+   <td data-label="Commit">latest</td>
+   <td data-label="Source"><a href="https://www-wales.ch.cam.ac.uk/svn.tar.bz2">https://www-wales.ch.cam.ac.uk/svn.tar.bz2</a></td>
    </tr>
    </tbody></table></div>
    <h3>Best cost</h3>

@@ -20,6 +20,7 @@ module commons
    integer :: gthommet = 0
    integer :: qiter = 0
    integer :: ncore = 0
+   integer :: prtfrq = 1
    integer, allocatable :: nq(:)
    integer, allocatable :: dumpxyzunit(:)
    integer, allocatable :: dumpcartxyzunit(:)
@@ -35,6 +36,14 @@ module commons
    real(real64) :: napshiftrms = 0.0d0
    real(real64) :: ffenergy = 0.0d0
    real(real64) :: ffrms = 0.0d0
+   real(real64) :: dc_energy = 0.0d0
+   real(real64) :: dc_rms = 0.0d0
+   real(real64) :: ffenergy_ns = 0.0d0
+   real(real64) :: ffrms_ns = 0.0d0
+   real(real64) :: ffenergy_dc = 0.0d0
+   real(real64) :: ffrms_dc = 0.0d0
+   real(real64) :: ffenergy_nap_dc = 0.0d0
+   real(real64) :: ffrms_nap_dc = 0.0d0
    real(real64) :: guidesymconv = -1.0d0
    real(real64), allocatable :: celldata(:)
    real(real64), allocatable :: atmass(:)
@@ -56,6 +65,7 @@ module commons
    logical :: lmperr = .false.
    logical :: pycoldfusion = .false.
    logical :: usenapshift = .false.
+   logical :: usedipolarcoupling = .false.
    logical :: usefract = .false.
    logical :: periodic = .false.
    logical :: guidesymt = .false.
