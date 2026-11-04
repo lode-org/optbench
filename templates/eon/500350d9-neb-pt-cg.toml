@@ -8,9 +8,11 @@ algorithm = "CG"
 reducer = "harness"
 failure_cap = 10000
 kind = "neb-pt"
+kernel = "morse_cluster"
 seeds = [1]
+asv_class = "Eon500350d9NebPtCg"
 note = '''
-Stock ini of eon-client/neb-pt-cg. eOn develop 500350d9fae881f06c7ef194e5868da079c4be5a, no source patch. The harness counts every force() on ext_pot. failure_cap 10000 is neb/Pt-heptamer convergence.max_force_calls.
+Stock ini of eon-client/neb-pt-cg. eOn develop 500350d9fae881f06c7ef194e5868da079c4be5a, no source patch. The harness counts every force() on ext_pot. failure_cap 10000 is neb/Pt-heptamer convergence.max_force_calls. The harness kernel is morse_cluster, the rgpot MorsePot surface these rows were counted on.
 '''
 [ini.Main]
 job = "nudged_elastic_band"

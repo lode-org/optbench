@@ -25,6 +25,7 @@ ENGINE_CLASSES = ("compass", "tsase", "partn", "lammps", "dlfind", "pysisyphus",
 TEMPLATE_MODULES = (
     ("airss", "airss"),
     ("eon-develop-f6817b53", "eon_f6817b53"),
+    ("eon-develop-500350d9", "eon_500350d9"),
     ("eon-svn", "eon_svn_counter"),
     ("eon", "eon_client_counter"),
     ("eon-main", "eon_main"),

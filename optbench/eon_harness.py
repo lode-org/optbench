@@ -1,4 +1,4 @@
-"""Harness runs for eOn SVN r2549, the 3.5.0 source build, and develop f6817b53.
+"""Harness runs for eOn SVN r2549, the 3.5.0 source build, and develop f6817b53 and 500350d9.
 
 Each force evaluation is one ``HarnessCounter`` charge. eonclient is
 started with ``potential = ext_pot``. A small C program forwards
@@ -11,9 +11,17 @@ started with ``potential = ext_pot``. A small C program forwards
 * ``morse_shift`` is r2549 ``Morse::force``: the same depth, alpha, and
   r0, cutoff 9.5, pair energy shifted to zero at the cutoff, minimum
   image on the box diagonal.
+* ``morse_cluster`` is rgpot ``MorsePot`` through
+  ``bench_eon_develop.morse_cluster``: the same depth, alpha, r0, and
+  cutoff, pair energy shifted to zero at the cutoff, minimum image in
+  every direction of a non-zero orthogonal box.
 * ``eam`` calls the r2549 Aluminum Fortran ``force_`` in this process.
 * ``ljcluster`` is rgpot ``LJClusterPot``: u0 1, psi 1, cutoff 15, free
   boundary, pair energy shifted to zero at the cutoff.
+* ``lj_cut`` is the ``lj40`` surface with the parameters of the archived
+  ``in.lammps``, through ``bench_eon_develop.lj_cut``. That function sums
+  the pairs in its own order, so an NEB that is sensitive to the last
+  bit can take a different path than on ``lj40``.
 
 A tsopt success is a client stop under the cap, a free-atom Euclidean
 force norm at the problem stop, and Hessian index 1. That Hessian is
@@ -91,6 +99,14 @@ FAMILIES = {
         "flag": "--version",
         "token": "f6817b53",
         "cache": "f6817b53",
+    },
+    "500350d9": {
+        "prefix": ("eon/500350d9-", "eon/develop-500350d9-", "eon-client/de-2ts-500350d9-"),
+        "env": "EON_DEVELOP_500350D9",
+        "default": Path.home() / "opt" / "eon-500350d9" / "bin" / "eonclient",
+        "flag": "--version",
+        "token": "500350d9",
+        "cache": "500350d9",
     },
 }
 
@@ -326,8 +342,22 @@ def kernel_for(name: str):
         return morse_pt
     if name == "morse_shift":
         return morse_shift
+    if name == "morse_cluster":
+        from benchmarks.bench_eon_develop import morse_cluster
+
+        return morse_cluster
     if name == "eam":
         return eam_al
+    if name == "lj_cut":
+        from benchmarks.bench_eon_develop import lammps_lj_params, lj_cut
+
+        archived = ROOT / "archive/entries/double-ended-saddle-search/lj38/eon-ci-neb/in.lammps"
+        epsilon, sigma, cutoff = lammps_lj_params(archived)
+
+        def evaluate(positions, atomic_numbers=None, box=None):
+            return lj_cut(positions, atomic_numbers, box, epsilon=epsilon, sigma=sigma, cutoff=cutoff)
+
+        return evaluate
     raise ValueError(f"no harness kernel {name}")
 
 
@@ -408,11 +438,27 @@ def _client(family: str) -> str:
     return check_client(FAMILIES[family], family)
 
 
+def _prefixes(spec: dict) -> tuple[str, ...]:
+    prefix = spec["prefix"]
+    return (prefix,) if isinstance(prefix, str) else tuple(prefix)
+
+
 def _family_of(template: dict) -> str:
+    """The family with the longest prefix of the template id.
+
+    ``eon-client/de-2ts-500350d9-`` templates name commit 500350d9, so
+    the ``eon-client/`` prefix of the 3.5.0 build does not claim them.
+    """
     ident = str(template["id"])
-    for name, spec in FAMILIES.items():
-        if ident.startswith(spec["prefix"]) and template.get("kind"):
-            return name
+    if template.get("kind"):
+        found = [
+            (len(prefix), name)
+            for name, spec in FAMILIES.items()
+            for prefix in _prefixes(spec)
+            if ident.startswith(prefix)
+        ]
+        if found:
+            return max(found)[1]
     raise ValueError(f"{ident} is not a harness template")
 
 
@@ -914,10 +960,12 @@ def run_case(
 
 
 def _jobs(family: str) -> list[dict]:
-    prefix = FAMILIES[family]["prefix"]
+    prefixes = _prefixes(FAMILIES[family])
     found = []
     for template in list_templates(ROOT):
-        if str(template.get("id", "")).startswith(prefix) and template.get("kind"):
+        if not str(template.get("id", "")).startswith(prefixes) or not template.get("kind"):
+            continue
+        if _family_of(template) == family:
             found.append(load_template(ROOT, template["id"]))
     return found
 

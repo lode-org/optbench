@@ -8,9 +8,11 @@ algorithm = "Doubly nudged CI-NEB"
 reducer = "harness"
 failure_cap = 2500
 kind = "de-lj38"
+kernel = "lj_cut"
 seeds = [1]
+asv_class = "Eon500350d9DeLj38CiSwdneb"
 note = '''
-Stock ini of eon-client/de-lj38-ci-swdneb. eOn develop 500350d9fae881f06c7ef194e5868da079c4be5a, no source patch. The harness counts every force() on ext_pot. failure_cap 2500 is double-ended-saddle-search/lj38 convergence.max_force_calls.
+Stock ini of eon-client/de-lj38-ci-swdneb. eOn develop 500350d9fae881f06c7ef194e5868da079c4be5a, no source patch. The harness counts every force() on ext_pot. failure_cap 2500 is double-ended-saddle-search/lj38 convergence.max_force_calls. The harness kernel is lj_cut, the archived in.lammps lj/cut surface these rows were counted on.
 '''
 [ini.Main]
 job = "nudged_elastic_band"

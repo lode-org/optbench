@@ -10,6 +10,7 @@ reducer = "harness"
 failure_cap = 250000
 kind = "de-2ts"
 kernel = "ljcluster"
+asv_class = "EonDevelop500350d9De2ts"
 note = "Climbing-image NEB on all 51 pairs. Potential ljcluster, shifted cutoff 15, run through ext_pot. The harness kernel is that ljcluster. Five images, spring 5, L-BFGS memory 20, max_move 0.05, converged_force 0.001. The stop is the L2 norm. climbing_image_converged_only is true and the band slack is 10. ci_mmf is false and energy_weighted is false. Optimizer max_iterations, band max_iterations, and failure_cap are 250000. The binary is eOn develop 500350d9."
 
 [ini.Main]
