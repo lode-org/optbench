@@ -245,3 +245,62 @@ def test_asv_classes_import_with_one_start():
     for benchmark in classes:
         assert benchmark.params == [["0"], ["0"]]
         assert benchmark.cap == caps[benchmark.spec["template_id"]]
+
+
+def test_asv_full_grid_is_every_stated_start(monkeypatch):
+    import importlib
+
+    import benchmarks.bench_gmin_bh as bench
+
+    monkeypatch.setenv("OPTBENCH_ASV_FULL", "1")
+    try:
+        full = importlib.reload(bench)
+        for spec in full._specs():
+            stated = int(resolve_problem(ROOT, spec["problem_id"])["sample"]["starts"])
+            benchmark = getattr(full, spec["class_name"])
+            assert benchmark.params == [["0"], [str(index) for index in range(stated)]]
+    finally:
+        monkeypatch.delenv("OPTBENCH_ASV_FULL")
+        importlib.reload(bench)
+
+
+def test_asv_every_track_has_a_value_in_a_fresh_process(monkeypatch, tmp_path):
+    import math
+
+    import benchmarks.bench_gmin_bh as bench
+    from optbench.runners import gmin_go
+
+    calls = []
+    record = {"force_calls": 4321, "success": False, "failure": "cap"}
+
+    def plan(root, problem, template, *, scratch, limit=0, resume=False):
+        return [{"index": 0}, {"index": 1}], {}
+
+    def run_one(job):
+        calls.append(job["index"])
+        return dict(record)
+
+    monkeypatch.setenv("OPTBENCH_ASV_CACHE", str(tmp_path))
+    monkeypatch.setattr(bench, "_binary_ready", lambda: True)
+    monkeypatch.setattr(gmin_go, "plan", plan)
+    monkeypatch.setattr(gmin_go, "run_one", run_one)
+    benchmark = bench.GminLj75Bh
+    expected = {
+        "track_force_calls": 4321.0,
+        "track_success": 0.0,
+        "track_failure_cap": 1.0,
+        "track_failure_wrong_stationary": 0.0,
+        "track_failure_divergence": 0.0,
+        "track_failure_crash": 0.0,
+    }
+    for name, value in expected.items():
+        fresh = benchmark()
+        fresh.setup("0", "1")
+        got = getattr(fresh, name)("0", "1")
+        assert isinstance(got, float) and not math.isnan(got)
+        assert got == value
+    assert calls == [1]
+    timed = benchmark()
+    timed.setup("0", "1")
+    timed.time_search("0", "1")
+    assert calls == [1, 1]

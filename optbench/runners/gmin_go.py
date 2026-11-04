@@ -485,17 +485,16 @@ def _write_result(output: Path, problem: dict, template: dict, records: list[dic
     return summary
 
 
-def run_template(
+def plan(
     root: Path,
     problem: dict,
     template: dict,
     *,
-    output: Path,
-    workers: int,
-    work: Path | None,
+    scratch: Path,
     limit: int = 0,
     resume: bool = False,
-) -> dict:
+) -> tuple[list[dict], dict]:
+    """The jobs ``run_template`` runs, one per archived start in archive order, and its parameters."""
     if str(template.get("code_version") or "") != CODE_VERSION:
         raise RuntimeError(f"{template['id']} code_version is not {CODE_VERSION}")
     if str(template.get("commit") or "") != TARBALL_SHA256:
@@ -517,7 +516,6 @@ def run_template(
     if stated_cap is not None and int(stated_cap) != cap:
         raise ValueError("template failure_cap is not the problem max_force_calls")
     binary = gmin_binary()
-    scratch = work or output.parent / "work" / template["id"].replace("/", "-")
     loaded = load_geometries(root, problem, scratch, center=bool(section.get("center", True)))
     if limit > 0:
         loaded = loaded[: int(limit)]
@@ -614,6 +612,22 @@ def run_template(
                 "symmetrisecsm": passed["symmetrisecsm"],
             }
         )
+    return jobs, passed
+
+
+def run_template(
+    root: Path,
+    problem: dict,
+    template: dict,
+    *,
+    output: Path,
+    workers: int,
+    work: Path | None,
+    limit: int = 0,
+    resume: bool = False,
+) -> dict:
+    scratch = work or output.parent / "work" / template["id"].replace("/", "-")
+    jobs, passed = plan(root, problem, template, scratch=scratch, limit=limit, resume=resume)
     if workers <= 1:
         records = []
         for done, job in enumerate(jobs, 1):
@@ -632,7 +646,7 @@ def run_template(
                 print(f"{template['id']} {done}/{total}", flush=True)
     stated_n = (problem.get("sample") or {}).get("starts")
     complete = (
-        rule_stated
+        passed["rule_stated"]
         and stated_n is not None
         and len(records) == int(stated_n)
         and int(limit) <= 0
