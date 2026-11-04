@@ -32,6 +32,9 @@ TEMPLATE_MODULES = (
     ("eon", "eon_client_counter"),
     ("eon-main", "eon_main"),
 )
+# Registry code ids whose classes in benchmarks/bench_<module>.py state
+# problem_id and run no template.
+PROBLEM_MODULES = (("gmin", "gmin_paper"),)
 
 
 def problem_ids() -> list[str]:
@@ -60,7 +63,20 @@ def covered() -> set[tuple[str, str]]:
         found.update((cell["problem_id"], cell["code"]) for cell in cells(ROOT, engine))
     for code, module in TEMPLATE_MODULES:
         found.update((problem, code) for problem in template_problems(module))
+    for code, module in PROBLEM_MODULES:
+        found.update((problem, code) for problem in stated_problems(module))
     return found
+
+
+def stated_problems(module: str) -> set[str]:
+    """``problem_id`` of every class in ``benchmarks/bench_<module>.py``."""
+    import importlib
+
+    return {
+        str(value.problem_id)
+        for value in vars(importlib.import_module(f"benchmarks.bench_{module}")).values()
+        if isinstance(value, type) and getattr(value, "problem_id", None)
+    }
 
 
 def template_problems(module: str) -> set[str]:
