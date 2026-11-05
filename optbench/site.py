@@ -501,13 +501,13 @@ def _problem_titles(root: Path) -> dict[str, str]:
 
 
 def _code_page_html(name: str, pins: list[dict], document: dict, registry: list[dict], titles: dict[str, str]) -> str:
-    from .board import _headers, ranked_cells
+    from .board import _headers, board_rows, ranked_cells
     from .site_charts import cost_bars_svg
     from .site_pages import code_blurb, code_page_name, code_summaries, versions_html
 
     found: list[tuple[dict, dict]] = []
     for problem in (document.get("problems") or {}).values():
-        for row in problem.get("ranked") or []:
+        for row in board_rows(problem):
             if code_page_name(row, registry) == name:
                 found.append((problem, row))
     found.sort(
@@ -608,6 +608,7 @@ def _codes_index_html(contributor: str, order: list[str]) -> str:
 
 
 def _write_code_pages(root: Path, document: dict) -> None:
+    from .board import board_rows
     from .site_pages import code_page_name, group_pins
 
     contributor, pins = _registry_pins(root)
@@ -615,7 +616,7 @@ def _write_code_pages(root: Path, document: dict) -> None:
     order = [name for name, _pins in group_pins(pins)]
     titles = _problem_titles(root)
     for problem in (document.get("problems") or {}).values():
-        for row in problem.get("ranked") or []:
+        for row in board_rows(problem):
             name = code_page_name(row, pins)
             if name not in grouped:
                 grouped[name] = []

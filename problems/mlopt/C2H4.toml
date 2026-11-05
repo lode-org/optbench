@@ -42,3 +42,8 @@ required = [
   "n_divergence",
   "n_crash",
 ]
+
+[units]
+harness = "loss-gradient evaluations"
+archive = "epochs"
+source = "The archived mean_epoch is the benchmark website's Mean Epochs: mlrf0_optb.py -s averages the last epoch in each model's pyamff.log. optbench/n2p2_ml.py charges one loss-gradient evaluation before each Kalman epoch. No source equates a pyamff epoch with that count."

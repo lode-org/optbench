@@ -11,6 +11,7 @@ from .corrections import correction_errors
 from .counts import count_errors
 from .dat import normalize
 from .problems import load_all
+from .units import unit_errors
 
 # Public text, published board files, and path tokens. Schema fields inside
 # campaign records stay as written.
@@ -169,7 +170,11 @@ def check(problems_dir: Path, oracle_path: Path) -> int:
     rows = load_oracle(oracle_path)
     counts: dict[str, int] = {}
     root = oracle_path.resolve().parent.parent
-    structural: list[str] = correction_errors(root, rows) + count_errors(root, rows)
+    from .site import _primary
+
+    structural: list[str] = (
+        correction_errors(root, rows) + count_errors(root, rows) + unit_errors(problems, _primary)
+    )
     for row in rows:
         ident = f"{row['suite']}/{row['problem']}"
         counts[ident] = counts.get(ident, 0) + 1

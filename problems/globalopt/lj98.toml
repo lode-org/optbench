@@ -65,3 +65,7 @@ required = [
   "n_divergence",
   "n_crash",
 ]
+
+[units]
+archive = "quenches"
+source = "The archived basin_hopping_steps_mean is the benchmark website's mean Q. That page benchmarks these entries on the number of quenches [Q] and the number of energy steps [V]. The harness rows count force calls, and no source equates an energy step with a force call."

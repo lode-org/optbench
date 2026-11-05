@@ -123,3 +123,7 @@ required = [
   "n_divergence",
   "n_crash",
 ]
+
+[units]
+archive = "escape rate (1/s)"
+source = "The archived true_rate is the escape rate from the reactant. The benchmark website's escape-rate table heads it Escape rate(1/s)."

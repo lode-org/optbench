@@ -72,3 +72,7 @@ required = [
   "n_divergence",
   "n_crash",
 ]
+
+[units]
+archive = "lowest energy (epsilon)"
+source = "The archived avg_energy is the mean over runs of the lowest energy each run reached. The eon-basinhopping report.sh takes each run's minimum up to 2e6 calls, and the gmin getdata.py averages each run's lowest energy. The files record no force calls. Energies are in units of epsilon_AA = 1."

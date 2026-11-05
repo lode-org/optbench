@@ -10,9 +10,11 @@ from .board import (
     MissingAsvCommit,
     _registry,
     _show_per_image,
+    board_rows,
     build_board,
     family_cells,
     ranked_cells,
+    unit_per_image,
 )
 from .problems import load_all
 
@@ -58,7 +60,7 @@ def _check_code_rows(label: str, table: dict, document: dict) -> list[str]:
         if not problem_id:
             continue
         problem = (document.get("problems") or {}).get(problem_id)
-        ranked = list(problem.get("ranked") or []) if problem else []
+        ranked = board_rows(problem) if problem else []
         board_row = next((item for item in ranked if str(item.get("label") or "") == shown), None)
         got = _cell_map(row)
         if board_row is None:
@@ -142,6 +144,29 @@ def _check_ranked(label: str, table: dict, document: dict) -> list[str]:
             if got.get(field) != value:
                 errors.append(
                     f"{label} {problem_id} row {index} {field} is {got.get(field)!r}, board has {value!r}"
+                )
+    return errors
+
+
+def _check_unit(label: str, table: dict, document: dict) -> list[str]:
+    problem_id = table["attrs"].get("data-problem", "")
+    unit = table["attrs"].get("data-unit", "")
+    problem = (document.get("problems") or {}).get(problem_id) or {}
+    group = next((item for item in problem.get("other_units") or [] if item.get("unit") == unit), None)
+    if group is None:
+        return [f"{label} {problem_id} ranks {unit!r} and the board has no such unit table"]
+    rows = list(group.get("rows") or [])
+    body = _ranked_body(table)
+    if len(body) != len(rows):
+        return [f"{label} {problem_id} {unit} rows {len(body)} != board {len(rows)}"]
+    per_image = unit_per_image(group)
+    errors: list[str] = []
+    for index, (got_row, board_row) in enumerate(zip(body, rows), start=1):
+        got = _cell_map(got_row)
+        for field, value in ranked_cells(board_row, per_image):
+            if got.get(field) != value:
+                errors.append(
+                    f"{label} {problem_id} {unit} row {index} {field} is {got.get(field)!r}, board has {value!r}"
                 )
     return errors
 
@@ -236,6 +261,8 @@ def check_site(root: Path) -> list[str]:
                 errors.extend(_check_headline(label, table, document))
             elif kind == "family":
                 errors.extend(_check_family(label, table, document))
+            elif kind == "unit":
+                errors.extend(_check_unit(label, table, document))
             elif kind == "code-rows":
                 errors.extend(_check_code_rows(label, table, document))
                 for row in table["rows"]:
@@ -273,6 +300,14 @@ def check_site(root: Path) -> list[str]:
                 suite_label,
                 errors,
             )
+        for group in board_problem.get("other_units") or []:
+            _require(
+                suite,
+                f'data-board-table="unit" data-unit="{html.escape(str(group.get("unit") or ""))}" '
+                f'data-problem="{problem["id"]}"',
+                suite_label,
+                errors,
+            )
         for name in ("docs/include/sota.org", "docs/include/collection.org"):
             page = texts.get(name, "")
             if not page:
@@ -296,7 +331,7 @@ def check_site(root: Path) -> list[str]:
                 errors.append(f"{board_include} headline is missing {problem_id}")
 
     for problem_id, problem in (document.get("problems") or {}).items():
-        for row in problem.get("ranked") or []:
+        for row in board_rows(problem):
             key = (problem_id, str(row.get("label") or ""))
             if key not in seen_code:
                 errors.append(f"code page is missing {problem_id} {key[1]}")

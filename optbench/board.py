@@ -56,6 +56,7 @@ from .problems import load_all
 from .profile import performance_profile, profile_cost
 from .score import normalize_start, score_v2
 from .site import SUITE_ORDER, _float, _held, _primary, campaign_problem
+from .units import FORCE_CALL_FIELDS, rank_unit, row_unit, unit_source
 from .v2 import parse_repetitions
 
 BOARD_SCHEMA = "optbench.board/v2"
@@ -570,6 +571,7 @@ def _blank_row(**values) -> dict:
         "published": None,
         "rank_cost": None,
         "registry_match": False,
+        "unit": "",
         "call_unit": "",
         "mean_per_image": None,
         "median_per_image": None,
@@ -1064,6 +1066,7 @@ def _annotate_row(row: dict, problem: dict | None, registry: list[dict]) -> None
     if row.get("hessian_calls") is None:
         row["hessian_calls"] = 0.0
     row["fd_calls"] = finite_difference_calls(float(row["hessian_calls"]), coordinate_count(problem))
+    row["unit"] = row_unit(problem, str(row.get("origin") or "harness"))
     if row.get("origin") == "archive":
         row["rank_cost"] = row.get("published")
     else:
@@ -1162,6 +1165,10 @@ def _archive_rows(root: Path, problems: dict[str, dict], registry: list[dict], f
             nfailed = None
         own = entry_count(item, primary, counts) if primary else None
         stated = own if own is not None else full_n.get(ident)
+        if fields.get("force_calls"):
+            mean_calls = _float(fields.get("force_calls", ""))
+        else:
+            mean_calls = published if primary in FORCE_CALL_FIELDS else None
         row = _blank_row(
             problem=ident,
             entry=str(item.get("entry") or ""),
@@ -1175,7 +1182,7 @@ def _archive_rows(root: Path, problems: dict[str, dict], registry: list[dict], f
             method=method,
             scored=True,
             published=published,
-            mean_calls=_float(fields.get("force_calls", "")) if fields.get("force_calls") else published,
+            mean_calls=mean_calls,
             median_calls=_float(fields.get("force_calls_median", "")),
             nfailed=nfailed,
             n=stated or 0,
@@ -1183,6 +1190,27 @@ def _archive_rows(root: Path, problems: dict[str, dict], registry: list[dict], f
             note="archived score",
         )
         rows.append(row)
+    return rows
+
+
+def _unit_groups(rows: list[dict]) -> list[tuple[str, list[dict]]]:
+    """Rows of each other unit, ranked only among themselves."""
+    grouped: dict[str, list[dict]] = defaultdict(list)
+    for row in rows:
+        grouped[str(row.get("unit") or "")].append(row)
+    out = []
+    for name in sorted(grouped):
+        group = sorted(grouped[name], key=_rank_key)
+        _assign_family_ranks(group)
+        out.append((name, group))
+    return out
+
+
+def board_rows(problem: dict) -> list[dict]:
+    """Ranked rows, then the rows of each other unit."""
+    rows = list(problem.get("ranked") or [])
+    for group in problem.get("other_units") or []:
+        rows.extend(group.get("rows") or [])
     return rows
 
 
@@ -1199,7 +1227,7 @@ def rank_violations(document: dict) -> list[str]:
     errors: list[str] = []
     for problem in (document.get("problems") or {}).values():
         ident = str(problem.get("id") or "")
-        for row in problem.get("ranked") or []:
+        for row in board_rows(problem):
             label = str(row.get("label") or row.get("template") or row.get("entry") or "")
             if row.get("short"):
                 errors.append(f"short row {ident} {label}")
@@ -1274,14 +1302,22 @@ def build_board(root: Path) -> dict:
                 withheld.append(row)
             else:
                 ranked.append(row)
+        problem = problems.get(problem_id) or {}
+        unit = rank_unit(problem, ranked)
+        other_units = _unit_groups([row for row in ranked if row.get("unit") != unit])
+        ranked = [row for row in ranked if row.get("unit") == unit]
         ranked.sort(key=_rank_key)
         _assign_family_ranks(ranked)
-        problem = problems.get(problem_id) or {}
         problems_out[problem_id] = {
             "id": problem_id,
             "title": problem.get("title", problem_id),
             "full_n": full_n.get(problem_id),
+            "unit": unit,
+            "unit_source": unit_source(problem),
             "ranked": [_public(row) for row in ranked],
+            "other_units": [
+                {"unit": name, "rows": [_public(row) for row in rows]} for name, rows in other_units
+            ],
             "short": [_public(row) for row in held_short],
             "withheld": [_public(row) for row in held_adjusted],
             "not_comparable": [_public(row) for row in held_client],
@@ -1295,7 +1331,7 @@ def build_board(root: Path) -> dict:
         "unparsed": [_public(row) for row in unparsed],
         "unmapped": [_public(row) for row in unmapped],
         "not_comparable": [_public(row) for row in not_comparable],
-        "ranked_count": sum(len(item["ranked"]) for item in problems_out.values()),
+        "ranked_count": sum(len(board_rows(item)) for item in problems_out.values()),
         "_scored_rows": scored,
     }
 
@@ -1509,6 +1545,7 @@ def _headers(problem: dict) -> list[str]:
         "Row",
         "Family",
         "Family rank",
+        "Unit",
         "PAR-2",
         "Published",
         "Median calls",
@@ -1529,6 +1566,7 @@ def ranked_cells(row: dict, per_image: bool) -> list[tuple[str, str]]:
         ("label", str(row.get("label") or "")),
         ("family", family_title(str(row.get("family") or ""))),
         ("family_rank", "" if row.get("family_rank") is None else str(row.get("family_rank"))),
+        ("unit", str(row.get("unit") or "")),
         ("par2_mean", _format_number(row.get("par2_mean"))),
         ("published", _format_number(row.get("published"))),
         ("median_calls", _format_number(row.get("median_calls"))),
@@ -1549,6 +1587,7 @@ def family_cells(row: dict) -> list[tuple[str, str]]:
         ("family_rank", "" if row.get("family_rank") is None else str(row.get("family_rank"))),
         ("label", str(row.get("label") or "")),
         ("rank_cost", _format_number(row.get("rank_cost"))),
+        ("unit", str(row.get("unit") or "")),
         ("hessian_calls", _format_number(row.get("hessian_calls"))),
         ("fd_calls", _format_number(row.get("fd_calls"))),
         ("n", str(row.get("n"))),
@@ -1828,7 +1867,7 @@ def _caption(per_image: bool) -> str:
 
 
 def _family_table(problem: dict, family_id: str, rows: list[dict]) -> str:
-    headers = ["Rank", "Row", "Cost", "Hessians", "FD calls", "Runs"]
+    headers = ["Rank", "Row", "Cost", "Unit", "Hessians", "FD calls", "Runs"]
     lines = [
         '<div class="bench-scroll">',
         (
@@ -1844,6 +1883,40 @@ def _family_table(problem: dict, family_id: str, rows: list[dict]) -> str:
             for header, (field, value) in zip(headers, family_cells(row))
         )
         lines.append(f"<tr>{cells}</tr>")
+    lines.append("</tbody></table></div>")
+    return "\n".join(lines)
+
+
+def unit_per_image(group: dict) -> bool:
+    return any(row.get("mean_per_image") is not None for row in group.get("rows") or [])
+
+
+def _unit_table(problem: dict, group: dict) -> str:
+    unit = str(group.get("unit") or "")
+    rows = list(group.get("rows") or [])
+    per_image = unit_per_image(group)
+    headers = _headers({"ranked": rows})
+    lines = [
+        f"<h3>Ranked in {_cell(unit)}</h3>",
+        f"<p>These rows count {_cell(unit)}. The tables above count {_cell(problem.get('unit') or '')}, "
+        "so these rows are ranked only among themselves.</p>",
+    ]
+    source = str(problem.get("unit_source") or "")
+    if source:
+        lines.append(f'<p class="bench-aside">{_cell(source)}</p>')
+    lines.extend(
+        [
+            '<div class="bench-scroll">',
+            (
+                f'<table class="bench-sortable" data-board-table="unit" data-unit="{_cell(unit)}" '
+                f'data-problem="{_cell(problem["id"])}">'
+            ),
+            f"<caption>{_cell(_caption(per_image))}</caption>",
+            "<thead><tr>" + "".join(f"<th>{_cell(header)}</th>" for header in headers) + "</tr></thead><tbody>",
+        ]
+    )
+    for row in rows:
+        lines.append(f"<tr>{_row_cells(row, per_image)}</tr>")
     lines.append("</tbody></table></div>")
     return "\n".join(lines)
 
@@ -1949,6 +2022,10 @@ def _table(
     if not ranked:
         lines.append(f'<tr><td colspan="{len(headers)}">No ranked row.</td></tr>')
     lines.append("</tbody></table></div>")
+    if problem.get("other_units"):
+        lines.append("<p>A row that counts another unit is ranked in its own table after the overall table.</p>")
+    for group in problem.get("other_units") or []:
+        lines.append(_unit_table(problem, group))
     held = _aside_rows(problem)
     if held:
         lines.append("<h3>Off the ranked table</h3><ul>")

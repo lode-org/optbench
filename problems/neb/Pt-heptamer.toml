@@ -62,3 +62,8 @@ required = [
   "n_divergence",
   "n_crash",
 ]
+
+[units]
+harness = "force calls per band"
+archive = "force calls per image"
+source = "The harness counts every force call on the band. The eOn report.sh divides each band total by the 8 moving images and prints it with %.0f, and the GMAN opt.py divides by 8.0 and prints the mean with %d. J. Chem. Phys. 128, 134106 (2008) tabulates force calls per image. Eight times a rounded per-image mean differs from the band total, so the archived rows keep their own unit."

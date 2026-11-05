@@ -66,3 +66,8 @@ required = [
   "n_divergence",
   "n_crash",
 ]
+
+[units]
+harness = "force calls per search"
+archive = "force calls per campaign"
+source = "The cost in the v2 scoring table is one displacement search. The archived force_calls is the mean over campaigns of each campaign's total: done.py and get_data_for_web_benchmark.m add every search until the campaign ends, and the benchmark website's Nf is the total number of force calls. force_calls / total_searches is the mean cost of one search, but the archive states no per-search cap. The PAR-2 that ranks the harness rows needs one, so the archived rows keep their own unit."
