@@ -28,6 +28,8 @@ commands here gets a private file that holds only the entry it loads,
 and asv writes that one. The shared file is read under a shared
 ``flock`` on ``<file>.lock``. ``machine`` and ``update`` change the shared
 file, and they run under the exclusive lock. A bare ``asv`` takes no lock.
+The private entry has every field, so ``results/<machine>/machine.json``
+and each result's ``params`` do too, whoever wrote the shared entry.
 """
 
 from __future__ import annotations
@@ -183,13 +185,19 @@ def stored_entry(machines: dict, name: str | None) -> tuple[str, dict]:
 
 @contextmanager
 def own_machine_file(args: list[str]):
-    """Point asv at a private file that holds the one entry it loads."""
+    """Point asv at a private file that holds the one entry it loads.
+
+    A stored field the entry lacks is filled from detection, so an entry
+    that ``asv machine --machine NAME`` saved as just the name still gives
+    the run its ``arch``, ``cpu``, ``num_cpu``, ``os``, and ``ram``.
+    """
     from asv.machine import MachineCollection
 
     shared = machine_file()
     with locked(shared, fcntl.LOCK_SH):
         machines = read_machines(shared)
-    name, entry = stored_entry(machines, machine_name(args))
+    name, stored = stored_entry(machines, machine_name(args))
+    entry = machine_entry(stored, {"machine": str(stored.get("machine") or name)})
     original = MachineCollection.__dict__["get_machine_file_path"]
     with tempfile.TemporaryDirectory(prefix="optbench-asv-machine-") as directory:
         private = Path(directory) / shared.name

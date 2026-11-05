@@ -185,6 +185,10 @@ Look the entry up under the given `machine` option, so an existing entry keeps i
 Until then, `python -m optbench.asv_launch machine --yes --machine NAME` writes the whole entry.
 Each field is the given value, else the stored one, else the detected one.
 
+`python -m optbench.asv_launch run` also fills each field the stored entry lacks from detection.
+A run from an entry that `asv machine` saved as just the name then records every field, both in `results/<machine>/machine.json` and in each result's `params`.
+The asv workflow writes its entry with the launcher.
+
 ```bash
 uv run python docs/asv-gaps/machine_fields.py
 ```

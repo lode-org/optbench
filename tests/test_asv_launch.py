@@ -164,7 +164,7 @@ def test_each_command_gets_the_machine_file_it_needs(tmp_path: Path, monkeypatch
     for args in (["run", "--machine", "repro"], ["update"], ["machine"], ["publish"]):
         asv_launch.main(args)
     assert seen == {
-        "run": ("free", False, {"repro": machines["repro"], "version": 1}),
+        "run": ("free", False, {"repro": machine_entry(machines["repro"], {"machine": "repro"}), "version": 1}),
         "update": ("held", True, machines),
         "machine": ("held", True, machines),
         "publish": ("free", True, machines),
@@ -201,15 +201,31 @@ def test_concurrent_launched_runs_do_not_race_on_the_machine_file(tmp_path: Path
     assert sorted(key for key in final if key.startswith("w")) == sorted(f"w0-{step}" for step in range(50))
 
 
-def test_saved_run_records_the_whole_machine(tmp_path: Path):
+def test_a_run_fills_the_fields_a_stored_entry_lacks(tmp_path: Path, monkeypatch):
+    from asv.machine import Machine, MachineCollection
+
+    monkeypatch.setenv("HOME", str(tmp_path))
+    shared = tmp_path / ".asv-machine.json"
+    shared.write_text(json.dumps({"repro": {"machine": "repro", "cpu": "named by hand"}, "version": 1}), encoding="utf-8")
+    with asv_launch.own_machine_file(["run", "--machine", "repro"]):
+        loaded = Machine.load(machine_name="repro", interactive=False)
+        private = json.loads(Path(MachineCollection.get_machine_file_path()).read_text(encoding="utf-8"))
+    assert private["repro"] == {**Machine.get_defaults(), "machine": "repro", "cpu": "named by hand"}
+    assert {field: getattr(loaded, field) for field in MACHINE_FIELDS} == private["repro"]
+    assert json.loads(shared.read_text(encoding="utf-8"))["repro"] == {"machine": "repro", "cpu": "named by hand"}
+
+
+@pytest.mark.parametrize("writer", ["optbench.asv_launch", "asv"])
+def test_saved_run_records_the_whole_machine(tmp_path: Path, writer: str):
     """``asv run`` copies the entry into ``results/<machine>/machine.json``.
 
     asv writes its private copy of the machine file, not the shared one.
+    With ``asv`` as the writer the shared entry is just the name.
     """
     if not (ROOT / ".git").exists():
         pytest.skip("asv run needs this checkout's git history")
     home = tmp_path / "home"
-    _machine_command([sys.executable, "-m", "optbench.asv_launch"], home, "--yes", "--machine", "repro")
+    _machine_command([sys.executable, "-m", writer], home, "--yes", "--machine", "repro")
     shared = home / ".asv-machine.json"
     before = (shared.read_bytes(), shared.stat().st_mtime_ns)
     suite = tmp_path / "suite"
@@ -258,4 +274,9 @@ def test_saved_run_records_the_whole_machine(tmp_path: Path):
     assert done.returncode == 0, done.stdout + done.stderr
     recorded = json.loads((tmp_path / "results" / "repro" / "machine.json").read_text(encoding="utf-8"))
     assert set(MACHINE_FIELDS) <= set(recorded)
+    result = next(path for path in (tmp_path / "results" / "repro").glob("*.json") if path.name != "machine.json")
+    params = json.loads(result.read_text(encoding="utf-8"))["params"]
+    assert {field: params[field] for field in ("cpu", "os", "num_cpu")} == {
+        field: recorded[field] for field in ("cpu", "os", "num_cpu")
+    }
     assert (shared.read_bytes(), shared.stat().st_mtime_ns) == before

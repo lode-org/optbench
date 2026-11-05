@@ -39,7 +39,7 @@ jobs:
           init-command: >-
             uv python install 3.12 &&
             uv sync --frozen --group dev &&
-            uv run asv machine --yes
+            uv run python -m optbench.asv_launch machine --yes
           benchmark-command: >-
             uv run asv run --skip-existing --bench quadratic {sha}^!
           baseline: |
