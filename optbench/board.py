@@ -22,6 +22,7 @@ versions of one method are two rows.
 
 from __future__ import annotations
 
+import ast
 import html
 import json
 import math
@@ -48,7 +49,7 @@ from .families import (
     row_label,
     version_text,
 )
-from .pins import pin_gap
+from .pins import pin_gap, same_commit
 from .problems import load_all
 from .profile import performance_profile, profile_cost
 from .score import normalize_start, score_v2
@@ -224,6 +225,53 @@ def _template_at_commit(root: Path, commit: str, template_id: str) -> dict | Non
                 loaded = None
     cache[key] = loaded
     return loaded
+
+
+_FULL_COMMIT = re.compile(r"[0-9a-f]{40}")
+
+
+def _module_pin(root: Path, commit: str, module_name: str) -> str:
+    """The client build a benchmark module checked, as the module stood at ``commit``.
+
+    A module that refuses any other build names it in one top-level
+    ``*_COMMIT`` string. Its tracks ran on that build, whatever commit the
+    template it reads names.
+    """
+    cache = getattr(_module_pin, "_cache", None)
+    if cache is None:
+        cache = {}
+        setattr(_module_pin, "_cache", cache)
+    key = (str(root.resolve()), commit, module_name)
+    if key in cache:
+        return cache[key]
+    text = ""
+    if commit and module_name:
+        try:
+            text = subprocess.check_output(
+                ["git", "-C", str(root), "show", f"{commit}:benchmarks/{module_name}.py"],
+                stderr=subprocess.DEVNULL,
+                text=True,
+            )
+        except (subprocess.CalledProcessError, FileNotFoundError, OSError):
+            text = ""
+    try:
+        body = ast.parse(text).body if text else []
+    except SyntaxError:
+        body = []
+    named = {
+        node.value.value
+        for node in body
+        if isinstance(node, ast.Assign)
+        and len(node.targets) == 1
+        and isinstance(node.targets[0], ast.Name)
+        and node.targets[0].id.endswith("_COMMIT")
+        and isinstance(node.value, ast.Constant)
+        and isinstance(node.value.value, str)
+        and _FULL_COMMIT.fullmatch(node.value.value)
+    }
+    pin = named.pop() if len(named) == 1 else ""
+    cache[key] = pin
+    return pin
 
 
 def _geometry_key(start) -> str:
@@ -892,6 +940,11 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
             pin_note = "asv track_force_calls"
             if template_id and pinned is None:
                 pin_note = "asv track_force_calls; code pin is the working-tree template"
+            code_commit = str((source_template or {}).get("commit") or "")
+            built = _module_pin(root, str(result.commit_hash), module_name)
+            if built and not same_commit(code_commit, built):
+                code_commit = built
+                pin_note = "asv track_force_calls; code pin is the client build the benchmark module checks"
             try:
                 tracked = track_rows(result, class_name)
             except SystemExit as exc:
@@ -942,7 +995,7 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
                 template=template_id,
                 code=str((source_template or {}).get("code") or ""),
                 code_version=str((source_template or {}).get("code_version") or ""),
-                commit=str((source_template or {}).get("commit") or ""),
+                commit=code_commit,
                 tuning=str((source_template or {}).get("tuning") or (source_template or {}).get("profile") or ""),
                 entry=f"{module_name}.{class_name}",
                 source="asv",

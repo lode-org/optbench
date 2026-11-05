@@ -673,6 +673,51 @@ def test_a_campaign_record_and_an_asv_track_of_the_same_starts_share_one_par2(tm
     assert [(row["source"], row["n"], row["nfailed"]) for row in ranked] == [("campaign, asv", 3, 2)]
 
 
+def test_an_asv_row_carries_the_client_build_its_module_checks(tmp_path: Path, monkeypatch):
+    import subprocess
+
+    from optbench import board
+
+    _problem(tmp_path, starts=2, cap=10000)
+    _template(tmp_path)
+    _registry(tmp_path, PIN)
+    registry = tmp_path / "codes" / "registry.toml"
+    registry.write_text(
+        registry.read_text(encoding="utf-8") + f'[[code]]\nid = "toy-develop"\nname = "toy"\ncommit = "{OTHER}"\n',
+        encoding="utf-8",
+    )
+    module = tmp_path / "benchmarks" / "bench_toy.py"
+    module.parent.mkdir()
+    module.write_text(f'TOY_COMMIT = "{OTHER}"\nTOY_TOKEN = "{OTHER[:7]}"\n', encoding="utf-8")
+    git = ["git", "-C", str(tmp_path), "-c", "user.name=Board Test", "-c", "user.email=board@example.invalid"]
+    subprocess.run([*git, "init", "-q"], check=True)
+    subprocess.run([*git, "add", "-A"], check=True)
+    subprocess.run([*git, "commit", "-q", "-m", "toy pins"], check=True)
+    head = subprocess.run([*git, "rev-parse", "HEAD"], check=True, capture_output=True, text=True).stdout.strip()
+    monkeypatch.setattr(
+        board,
+        "_benchmark_index",
+        lambda: {
+            "bench_toy.ToyFast": {"template": "toy/fast", "problem": "minimization/toy", "cap": None},
+            "bench_other.ToyFast": {"template": "toy/fast", "problem": "minimization/toy", "cap": None},
+        },
+    )
+    _asv_track(tmp_path, "bench_toy.ToyFast", [12.0, 22.0], commit=head)
+
+    problems = board.load_all(tmp_path / "problems")
+    templates = {item["id"]: item for item in board.list_templates(tmp_path)}
+    (row,), _, _ = board._asv_rows(tmp_path, problems, templates)
+    assert row["commit"] == OTHER
+    assert row["note"].endswith("code pin is the client build the benchmark module checks")
+    assert board._registry_match(row, board._registry(tmp_path))
+
+    (tmp_path / "results" / "asv").rename(tmp_path / "asv-toy")
+    _asv_track(tmp_path, "bench_other.ToyFast", [12.0, 22.0], commit=head)
+    (row,), _, _ = board._asv_rows(tmp_path, problems, templates)
+    assert row["commit"] == PIN
+    assert row["note"] == "asv track_force_calls"
+
+
 def test_a_missing_asv_commit_is_not_pinned_from_the_working_tree(tmp_path: Path):
     import subprocess
 
