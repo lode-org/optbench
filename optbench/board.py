@@ -36,6 +36,7 @@ from pathlib import Path
 
 from .campaign import geometry_archive, list_templates
 from .corrections import corrected, load_corrections
+from .differences import difference_note, load_differences
 from .counts import entry_count, load_counts
 from .dat import DatError, parse_lenient
 from .failures import FAILURES
@@ -1186,6 +1187,7 @@ def _archive_rows(root: Path, problems: dict[str, dict], registry: list[dict], f
     if not path.is_file():
         return []
     corrections = load_corrections(root)
+    differences = load_differences(root)
     counts = load_counts(root)
     rows: list[dict] = []
     for item in load_oracle(path):
@@ -1232,6 +1234,9 @@ def _archive_rows(root: Path, problems: dict[str, dict], registry: list[dict], f
             note="archived score",
             _archived_max=_float(fields["force_calls_max"]) if fields.get("force_calls_max") else None,
         )
+        difference = difference_note(row["path"], fields, differences)
+        if difference:
+            row["difference"] = difference
         rows.append(row)
     return rows
 
@@ -1974,6 +1979,27 @@ def failure_paragraph(problem: dict) -> str:
     )
 
 
+def difference_rows(problem: dict) -> list[dict]:
+    """Shown archived rows that ``oracle/differences.toml`` labels."""
+    return [row for row in board_rows(problem) + list(problem.get("over_budget") or []) if row.get("difference")]
+
+
+def difference_text(row: dict) -> str:
+    return f"{row.get('label')} ({str(row['difference']).rstrip('.')})"
+
+
+def difference_paragraph(problem: dict) -> str:
+    rows = difference_rows(problem)
+    if not rows:
+        return ""
+    parts = "; ".join(difference_text(row) for row in rows)
+    return (
+        '<p class="bench-gaps" data-board-note="differences">'
+        "These archived rows differ from the table of J. Chem. Theory Comput. 10, 5476 (2014) that prints them, "
+        f"and each ranks on its archived values: {_cell(parts)}.</p>"
+    )
+
+
 def budget_per_image(problem: dict) -> bool:
     return any(row.get("mean_per_image") is not None for row in problem.get("over_budget") or [])
 
@@ -2115,6 +2141,9 @@ def _table(
     unscored = failure_paragraph(problem)
     if unscored:
         lines.append(unscored)
+    differs = difference_paragraph(problem)
+    if differs:
+        lines.append(differs)
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in ranked:
         grouped[str(row.get("family") or "")].append(row)

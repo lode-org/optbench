@@ -10,6 +10,7 @@ from pathlib import Path
 from .corrections import correction_errors
 from .counts import count_errors
 from .dat import normalize
+from .differences import difference_errors
 from .problems import load_all
 from .units import unit_errors
 
@@ -173,7 +174,10 @@ def check(problems_dir: Path, oracle_path: Path) -> int:
     from .site import _primary
 
     structural: list[str] = (
-        correction_errors(root, rows) + count_errors(root, rows) + unit_errors(problems, _primary)
+        correction_errors(root, rows)
+        + difference_errors(root, rows)
+        + count_errors(root, rows)
+        + unit_errors(problems, _primary)
     )
     for row in rows:
         ident = f"{row['suite']}/{row['problem']}"

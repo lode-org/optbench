@@ -13,6 +13,8 @@ from .board import (
     board_rows,
     budget_per_image,
     build_board,
+    difference_rows,
+    difference_text,
     family_cells,
     ranked_cells,
     unit_per_image,
@@ -319,6 +321,11 @@ def check_site(root: Path) -> list[str]:
             _require(suite, 'data-board-note="failures"', suite_label, errors)
         for row in unscored:
             _require(suite, html.escape(f"{row.get('label')} ({row['failure_note']})"), suite_label, errors)
+        differs = difference_rows(board_problem)
+        if differs:
+            _require(suite, 'data-board-note="differences"', suite_label, errors)
+        for row in differs:
+            _require(suite, html.escape(difference_text(row)), suite_label, errors)
         if board_problem.get("over_budget"):
             _require(suite, f'data-board-table="budget" data-problem="{problem["id"]}"', suite_label, errors)
         for group in board_problem.get("other_units") or []:

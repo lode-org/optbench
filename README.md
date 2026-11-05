@@ -238,6 +238,10 @@ Where `benchmark.dat` gives none, `oracle/counts.toml` gives the count, what was
 It gives the archived value, the value the board reads, and the source.
 The archived file stays as it is, and `check` fails when the archive no longer has the recorded value.
 
+`oracle/differences.toml` names an archived row whose values differ from the table of J. Chem. Theory Comput. 10, 5476 (2014) that prints them.
+It gives the archived and printed values, the note the board prints beside the row, and the evidence for that note.
+The row still ranks on its archived values, and `check` fails when the archive no longer has them or when they match the printed values.
+
 The front page is a result whose status is `sota` and whose commit is the present source in `codes/registry.toml`. The archive page is the 2014 scores plus later passes that do not meet that rule. A local `benchmark.dat` is a score whether or not it has been added to the front page. Adding it there means a `results/*.json` record with `optbench.result/v1`, the problem geometries, and the pinned commit.
 
 `uv run optbench import-archive ARCHIVE` rebuilds the oracle and the geometry store from a bare clone of the public GitLab project. It does not replace a problem file that already exists.

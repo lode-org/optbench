@@ -1,0 +1,39 @@
+# Archived rows whose values differ from the table of
+# J. Chem. Theory Comput. 10, 5476 (2014) that prints them.
+# The board prints note beside the row while the archive still has the
+# archived values. optbench check fails when it no longer has them, or when
+# printed and archived agree. The archived file stays as it is.
+
+[[difference]]
+path = "website/minimization/lj38/eon-fire/benchmark.dat"
+table = "Table 1, EON FIRE"
+note = "Table 1 prints 645, 207 and 2963 calls, this file has 731, 227 and 2918, and no archived file has the printed values. The cause is not established."
+evidence = "report.sh writes these fields in this order and averages the runs under 10000 calls. The file is dated 24 Jun 2013, the date of eon-cg, eon-qm and eon-sd, whose rows Table 1 prints. No benchmark.dat at archive commit 0f26b796 has 645 or 2963 as a force-call value, and no file under website/minimization/lj38 has either number. results/campaign/eon-client-fire.dat and results/campaign/eon-svn-fire.dat give 731, 227 and 2918, but neither has per-start records, so they do not check the archived values independently."
+
+[difference.archived]
+force_calls = "731"
+force_calls_min = "227"
+force_calls_max = "2918"
+
+[difference.printed]
+force_calls = "645"
+force_calls_min = "207"
+force_calls_max = "2963"
+
+[[difference]]
+path = "website/double-ended-saddle-search/pt-island/eon-lanczos/benchmark.dat"
+table = "Table 10, EON Lanczos"
+note = "Table 10 prints 165, 72 and 308 calls with 0 failed, this file has 325, 95 and 2660 with 5 failed, and no archived file has the printed values. It was written on 29 Aug 2013, six days after the files that match the other eOn rows of Table 10."
+evidence = "run.sh deletes runs/, runs the 59 starts and then calls report.sh, which writes the date. This file is dated 29 Aug 2013. eon-ci-neb-single, eon-dimer, eon-ci-neb and eon-ci-neb-5 are dated 23 Aug 2013, and their averages, minima and maxima are the ones Table 10 prints. No benchmark.dat at archive commit 0f26b796 has 165 or 308 as a force-call value. results/campaign/eon-svn-de-pt-lanczos.dat gives 222, 98 and 591 with 0 failed, and results/campaign/eon-client-de-pt-lanczos.dat gives 249, 97 and 747 with 0 failed. Both have per-start records in their .starts files, and neither gives either set."
+
+[difference.archived]
+force_calls = "325"
+force_calls_min = "95"
+force_calls_max = "2660"
+nfailed = "5"
+
+[difference.printed]
+force_calls = "165"
+force_calls_min = "72"
+force_calls_max = "308"
+nfailed = "0"
