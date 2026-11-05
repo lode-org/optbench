@@ -58,3 +58,5 @@ uv run asv compare COMMIT COMMIT
 ## CI
 
 `.github/workflows/asv.yml` checks out the history, installs Python 3.12, syncs the lockfile, and runs `HaoZeke/asv-perch@v1`. The benchmark command is `uv run asv run --skip-existing --bench quadratic {sha}^!`. That is the in-process sample, not the 1000-start eonclient grid. `post-comment` is true on a pull request and false on a push. A pull request whose base commit does not contain `benchmarks/quadratic.py` fails this job, because asv runs that commit. `check.yml` is still the oracle and pytest job.
+
+asv-spyglass `compare` exits 1 when any benchmark is worse by `--factor`. The default factor is 1.1. `HaoZeke/asv-perch@v1` does not ignore that status, so the step stops before `regression-threshold` is applied. A pull request compares two commits. A push compares a commit with itself, which is why those runs stay green. Quadratic timings move by about ten percent between two runs, and that is enough to exit 1. The workflow sets `regression-threshold` to 10 and passes `--factor 10`. A slowdown past that factor still fails the job.
