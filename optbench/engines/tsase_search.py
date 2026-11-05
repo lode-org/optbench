@@ -16,8 +16,10 @@ multiplies the spring constant by the image count; that factor is its own.
 
 from __future__ import annotations
 
+import ast
 import importlib.util
 import os
+import subprocess
 import sys
 import tempfile
 import types
@@ -46,6 +48,55 @@ def source_root() -> Path:
     if env:
         return Path(env)
     return Path("/tmp/src/tsase")
+
+
+def checkout_version(source: Path | None = None) -> dict[str, str]:
+    """Commit, ``setup.py`` version, and tracked local changes of a TSASE checkout.
+
+    ``bin/tsase`` has no version option. It is an interactive shell that
+    never reads its arguments, and under Python 3 it stops at ``raw_input``
+    with NameError. ``setup.py`` imports ``numpy.distutils``, so it is parsed
+    here, not run. Nothing from the checkout is executed.
+    """
+    source = Path(source) if source is not None else source_root()
+    found = {"commit": "", "version": "", "modified": ""}
+    git = ["git", "-C", str(source)]
+    try:
+        found["commit"] = subprocess.run(
+            [*git, "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+        ).stdout.strip()
+        status = subprocess.run(
+            [*git, "status", "--porcelain", "--untracked-files=no"], capture_output=True, text=True, check=True
+        ).stdout
+        found["modified"] = " ".join(line[3:] for line in status.splitlines() if line.strip())
+    except (OSError, subprocess.CalledProcessError):
+        pass
+    setup = source / "setup.py"
+    try:
+        tree = ast.parse(setup.read_text(encoding="utf-8"))
+    except (OSError, SyntaxError, UnicodeError):
+        tree = None
+    for node in ast.walk(tree) if tree else []:
+        name = getattr(getattr(node, "func", None), "id", None)
+        if not isinstance(node, ast.Call) or name != "setup":
+            continue
+        for keyword in node.keywords:
+            if keyword.arg == "version" and isinstance(keyword.value, ast.Constant):
+                found["version"] = str(keyword.value.value)
+    return found
+
+
+def require_checkout(template: dict) -> dict[str, str]:
+    """The checkout at ``TSASE_SRC`` is the template's commit and version, unmodified."""
+    found = checkout_version()
+    where = f"TSASE checkout {source_root()}"
+    if found["commit"] != str(template.get("commit") or ""):
+        raise RuntimeError(f"{where} is at {found['commit'] or 'no git commit'}, {template['id']} names {template.get('commit')}")
+    if found["version"] != str(template.get("code_version") or ""):
+        raise RuntimeError(f"{where} setup.py version is {found['version'] or 'unset'}, {template['id']} names {template.get('code_version')}")
+    if found["modified"]:
+        raise RuntimeError(f"{where} has local changes to {found['modified']}")
+    return found
 
 
 def available() -> str | None:
@@ -550,6 +601,7 @@ def search_named(root: Path, problem_name: str, template_name: str, start: str, 
     problem, template, settings = prepared(root, problem_name, template_name, CODE)
     if template["engine"] != ENGINE:
         raise ValueError(f"{template_name} engine is {template['engine']}")
+    require_checkout(template)
     pairs = cached_pairs(root, problem, settings)
     if start not in pairs:
         raise KeyError(f"{problem['id']} has no start {start}")
@@ -623,6 +675,7 @@ def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
         pairs = list(cached_pairs(root, problem, settings).values())
         jobs = [_job(pair, settings, template, "0") for pair in pairs]
         execute = _execute
+    require_checkout(template)
     return {"problem": problem, "template": template, "settings": settings, "jobs": jobs, "execute": execute}
 
 

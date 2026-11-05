@@ -212,6 +212,15 @@ are not built. SSNEB and the solid-state dimer are loaded without
 `tsase/__init__.py`. `ss` is false. A periodic all-free Hessian drops the
 three translations before the index is counted.
 
+`bin/tsase` has no version option.
+It is an interactive shell that never reads its arguments, and under Python 3 it stops at `raw_input` with NameError.
+The harness reads the version from the checkout at `TSASE_SRC` instead: `git rev-parse HEAD`, the `version` keyword of the `setup()` call, read from a parse of `setup.py` without executing it, and `git status` for tracked changes.
+A run stops before its first job when the commit or the version differs from the template's, or when a tracked file is modified.
+
+```bash
+uv run python -c "from optbench.engines.tsase_search import checkout_version; print(checkout_version())"
+```
+
 The LJ38 dimer hits the cap on every start. The Pt-island dimer and the
 climbing-image NEB on Pt-heptamer are the saddle rows. The plain NEB on
 that heptamer diverges on all 13 pairs. Morse bulk L-BFGS meets the force
