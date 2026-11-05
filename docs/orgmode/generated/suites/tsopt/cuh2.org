@@ -29,6 +29,9 @@
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td colspan="11">No ranked row.</td></tr>
    </tbody></table></div>
-   <p class="bench-note">Success on this problem: client force calls under the cap, a converged native search, fixed Cu atoms, max-norm H force at the stop on an independent RPC evaluation, and Hessian index 1 over the six H coordinates with no eigenvalue within 1e-6 of zero.</p>
+   <p class="bench-note">Success on this problem: the native search converges, the Cu atoms stay fixed, and the client force calls stay under the cap.</p>
+   <p class="bench-note">The maximum-norm hydrogen force meets the stop on an independent remote procedure call (RPC).</p>
+   <p class="bench-note">The Hessian index over the six hydrogen coordinates is 1, and no eigenvalue is left unresolved.</p>
+   <p class="bench-note">The check is <a href="https://github.com/lode-org/optbench/blob/main/optbench/gpridge_dimer.py">the dimer verification</a>.</p>
    </section>
 #+end_export

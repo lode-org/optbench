@@ -874,6 +874,13 @@ def success_note(problem: dict) -> str:
             lines.append(f'<p class="bench-note">Success on this problem: {_cell(sentence)}</p>')
         else:
             lines.append(f'<p class="bench-note">{_cell(sentence)}</p>')
+    verification = version2.get("verification") or {}
+    label = str(verification.get("label") or "").strip()
+    url = str(verification.get("url") or "").strip()
+    if label and url:
+        lines.append(
+            f'<p class="bench-note">The check is <a href="{html.escape(url, quote=True)}">{_cell(label)}</a>.</p>'
+        )
     return "\n".join(lines)
 
 
