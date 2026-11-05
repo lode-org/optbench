@@ -6,7 +6,8 @@ own OpenBLAS, so their two pools differ when one of them loads before the
 variables are set. The asv benchmark server imports numpy (asv-runner
 loads pympler, which imports numpy) before any benchmark module. A
 module-level ``os.environ`` setting then reaches scipy's pool and not
-numpy's.
+numpy's. ``optbench.asv_launch`` sets ``PINNED`` in the process that
+starts asv, which is the environment asv copies into its server.
 
 The pool sizes come from the loaded libraries, so they are what ran, not
 what was asked for. They are read from ``/proc/self/maps``, so the lists
@@ -28,6 +29,9 @@ VARIABLES = (
     "VECLIB_MAXIMUM_THREADS",
 )
 
+# One thread per process is what the committed campaign and asv rows ran with.
+PINNED = dict.fromkeys(VARIABLES, "1")
+
 _THREADS = (
     "scipy_openblas_get_num_threads64_",
     "scipy_openblas_get_num_threads",
@@ -40,6 +44,13 @@ _CONFIG = (
     "openblas_get_config64_",
     "openblas_get_config",
 )
+
+
+def pin(environ: dict | None = None) -> dict:
+    """Set every ``PINNED`` variable, replacing values already there."""
+    target = os.environ if environ is None else environ
+    target.update(PINNED)
+    return target
 
 
 def variables() -> dict[str, str | None]:

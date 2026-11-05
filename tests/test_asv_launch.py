@@ -142,6 +142,7 @@ def test_each_command_gets_the_machine_file_it_needs(tmp_path: Path, monkeypatch
 
     monkeypatch.setenv("HOME", str(tmp_path))
     monkeypatch.delenv("OPTBENCH_ASV_RECORD", raising=False)
+    monkeypatch.setattr(asv_launch.blas_threads, "pin", lambda environ=None: None)
     monkeypatch.setattr(asv_launch, "probe", lambda python: [])
     shared = tmp_path / ".asv-machine.json"
     machines = {"repro": {"machine": "repro", "cpu": "a"}, "other": {"machine": "other"}, "version": 1}

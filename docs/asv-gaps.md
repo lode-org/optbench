@@ -9,6 +9,7 @@ The local pieces that stay until then:
 - Failure classes are four `track_failure_*` floats, because a result file cannot store a per-parameter cause.
 - `cap` is a class attribute. The score records the cap it used in `results/validation/statistics.json`.
 - `optbench/asv_launch.py` writes the whole machine entry and gives each run its own machine file.
+- `optbench/asv_launch.py` also sets the BLAS thread variables before asv starts its server.
 
 ## 1. Track units other than seconds and bytes
 
@@ -241,4 +242,36 @@ uv run python docs/asv-gaps/machine_race.py
 a load writes the file: True
 same inode, so truncated in place: True
 asv run --machine -m: Use the given name to retrieve machine information.
+```
+
+## 11. The benchmark server loads NumPy before the suite
+
+`asv_runner.benchmarks` imports every benchmark type at import.
+`asv_runner/benchmarks/mem.py` imports `pympler.asizeof` at module level, and Pympler imports NumPy.
+The server imports that package before it imports any benchmark module.
+OpenBLAS sizes its thread pool once, when it loads.
+A benchmark module that sets `OPENBLAS_NUM_THREADS` at import is in time for SciPy's bundled OpenBLAS and too late for NumPy's.
+With the variables unset, NumPy's pool is one thread per core.
+
+The one `asv.conf.json` route to the server's environment is a matrix `env_nobuild` value.
+That value becomes part of the environment name, and so of every result file name.
+`-E existing` ignores the matrix.
+
+Upstream: `airspeed-velocity/asv_runner`, `asv_runner/benchmarks/mem.py`.
+Import `pympler.asizeof` inside `MemBenchmark` when a memory benchmark runs, so discovery leaves NumPy unloaded.
+`airspeed-velocity/asv`: an `asv.conf.json` key for variables that reach the server, that is not part of the environment name, and that an `existing` environment honors.
+
+Until then, `optbench/asv_launch.py` sets `optbench.blas_threads.PINNED` in the process that starts asv.
+`.github/workflows/asv.yml` sets the same variables on the job.
+
+```bash
+uv run python docs/asv-gaps/numpy_preimport.py
+```
+
+```
+numpy loaded before asv_runner.benchmarks: False
+numpy loaded by asv_runner.benchmarks: True
+pympler.asizeof loaded: True
+environment name with env_nobuild OPENBLAS_NUM_THREADS=1: uv-pip-py3.12-OPENBLAS_NUM_THREADS1
+existing environments ignore the matrix: True
 ```

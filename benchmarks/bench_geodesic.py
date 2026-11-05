@@ -13,6 +13,11 @@ are not the published store. The published numbers are the asv result
 file and the campaign files.
 
 A sidecar's ``blas`` is the BLAS pools its search ran with.
+
+The thread variables below come after the asv server has loaded numpy,
+so they reach scipy's BLAS and not numpy's. The starting path changes
+in its last bits with that split. Start asv with
+``python -m optbench.asv_launch``.
 """
 
 from __future__ import annotations

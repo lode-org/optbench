@@ -21,6 +21,15 @@ jobs:
   bench:
     name: asv-perch
     runs-on: ubuntu-latest
+    # asv copies its environment into the benchmark server, and the server loads numpy before any benchmark module.
+    # These are optbench.blas_threads.PINNED.
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      RAYON_NUM_THREADS: "1"
+      VECLIB_MAXIMUM_THREADS: "1"
     steps:
       - uses: actions/checkout@v5
         with:

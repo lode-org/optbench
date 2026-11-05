@@ -43,6 +43,8 @@ asv is the measurement store. A result file is keyed to the commit asv checked o
    Without `--machine`, asv names the machine after the host, and `asv run` writes a new folder beside `results/asv/xeon-8c`.
    The copy that is committed is `results/asv/xeon-8c/machine.json`.
 8. `uv run python -m optbench.asv_launch run --machine xeon-8c <commit>^! -b YourClass`.
+   The launcher pins BLAS to one thread before asv starts.
+   See Threads below.
    Leave out `--quick`.
    On asv 0.6.6 a quick run still writes `results/asv`.
    The help text says it does not.
@@ -106,6 +108,19 @@ Before asv starts, the launcher probes the server's import order in a fresh inte
 `OPTBENCH_ASV_RECORD=<file>` writes the thread variables, the probed pools, and the asv arguments as JSON.
 `results/ase-sella-full/summarize.py --run-env` reads that file.
 
+## Threads
+
+The asv-runner package loads Pympler, and Pympler imports NumPy.
+A benchmark module that sets `OPENBLAS_NUM_THREADS` at import is too late for NumPy's pool and in time for SciPy's.
+A bare `asv run` then gives NumPy one thread per core and SciPy one thread.
+On `sella/de-lj38-default` that moved 4 of the 50 starts, and one of them reached the cap.
+The geodesic starting path changes in its last bits.
+
+The launcher sets every variable in `optbench.blas_threads.PINNED` to 1 before it probes, and asv copies that environment into the server.
+One thread is what the committed rows ran with.
+The launch stops unless every probed BLAS pool runs one thread.
+Gap 11 in `docs/asv-gaps.md` says why `asv.conf.json` has no place for the variables.
+
 ## Machine file
 
 asv writes `~/.asv-machine.json` back in place at the start of every run, so two asv runs that start together can read it empty.
@@ -118,6 +133,7 @@ See gap 10 in `docs/asv-gaps.md`.
 
 `.github/workflows/asv.yml` fetches the full history, installs Python 3.12 and syncs the lockfile.
 It then runs `HaoZeke/asv-perch@v1`.
+The job sets the variables in `optbench.blas_threads.PINNED`, so the asv that the action starts already has them.
 The benchmark command is `uv run asv run --skip-existing --bench quadratic {sha}^!`.
 That is the in-process sample, not the 1000-start eonclient grid.
 The init command runs `asv machine --yes` without `--machine`, so CI names its machine after the runner.

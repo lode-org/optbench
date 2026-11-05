@@ -15,6 +15,13 @@ variables, the pools, and the asv arguments as JSON. That file is the
 ``--run-env`` of ``results/ase-sella-full/summarize.py``. asv then runs
 in this process with the same arguments.
 
+Before the probe, every variable in ``optbench.blas_threads.PINNED`` is
+set in this process, so the server starts with every BLAS pool at one
+thread. ``asv.conf.json`` cannot carry them. A matrix ``env_nobuild``
+value is part of the environment name, and so of every result file name,
+and ``-E existing`` ignores the matrix. The launch stops if any probed
+pool reports more than one thread.
+
 ``machine`` with ``--yes`` or with any field writes the whole entry
 itself. asv 0.6.6 stores only the fields that differ from the values it
 detects, so ``asv machine --yes --machine NAME`` leaves out ``arch``,
@@ -225,12 +232,16 @@ def main(argv: list[str] | None = None) -> None:
             entry = write_machine(given)
             print(json.dumps(entry, indent=4, sort_keys=True))
             return
+    blas_threads.pin()
     pools = probe(interpreter(args))
     record = {"variables": blas_threads.variables(), "blas": pools, "asv": args}
     print("optbench.asv_launch " + json.dumps(record, sort_keys=True), file=sys.stderr, flush=True)
     target = os.environ.get("OPTBENCH_ASV_RECORD")
     if target:
         Path(target).write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    wide = [pool for pool in pools if pool["threads"] != 1]
+    if wide:
+        raise SystemExit(f"optbench.asv_launch: BLAS runs more than one thread under {blas_threads.PINNED}: {wide}")
     if command in MACHINE_WRITERS:
         with locked(machine_file(), fcntl.LOCK_EX):
             run_asv(args)

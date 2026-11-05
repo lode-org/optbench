@@ -292,6 +292,7 @@ uv run asv publish
 `optbench statistics` reads the saved tracks.
 The saved file comes from `asv run` without `--quick`.
 `optbench.asv_launch` records the BLAS pools that the asv server starts with (`docs/asv.md`, Launcher).
+It also pins BLAS to one thread before asv loads NumPy (`docs/asv.md`, Threads).
 CI runs the quadratic suite with `HaoZeke/asv-perch@v1` (`.github/workflows/asv.yml`).
 
 ## Build the site
