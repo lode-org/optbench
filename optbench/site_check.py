@@ -16,6 +16,7 @@ from .board import (
     difference_rows,
     difference_text,
     family_cells,
+    inferred_rows,
     ranked_cells,
     unit_per_image,
 )
@@ -326,6 +327,8 @@ def check_site(root: Path) -> list[str]:
             _require(suite, 'data-board-note="differences"', suite_label, errors)
         for row in differs:
             _require(suite, html.escape(difference_text(row)), suite_label, errors)
+        if inferred_rows(board_problem):
+            _require(suite, 'data-board-note="inferred"', suite_label, errors)
         if board_problem.get("over_budget"):
             _require(suite, f'data-board-table="budget" data-problem="{problem["id"]}"', suite_label, errors)
         for group in board_problem.get("other_units") or []:

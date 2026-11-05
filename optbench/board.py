@@ -39,7 +39,7 @@ from .corrections import corrected, load_corrections
 from .differences import difference_note, load_differences
 from .counts import entry_count, load_counts
 from .dat import DatError, parse_lenient
-from .failures import FAILURES
+from .failures import FAILURES, failure_of
 from .families import (
     FAMILIES,
     coordinate_count,
@@ -425,6 +425,7 @@ def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dic
     if isinstance(reasons, list) and reasons:
         record["reasons"] = [str(item) for item in reasons]
         return record
+    record["failure_inferred"] = True
     if raw.get("error"):
         record["failure"] = "crash"
     elif cap is not None and calls >= cap:
@@ -642,6 +643,14 @@ def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
     row["mean_per_image"] = summary.get("mean_per_image")
     row["median_per_image"] = summary.get("median_per_image")
     row["failures"] = {name: summary[f"n_{name}"] for name in FAILURES}
+    inferred: dict[str, int] = defaultdict(int)
+    for record in records:
+        if record.get("failure_inferred"):
+            label = failure_of(record, row.get("cap"))
+            if label is not None:
+                inferred[label] += 1
+    if inferred:
+        row["failures_inferred"] = {name: inferred[name] for name in FAILURES if inferred[name]}
     hessians = [
         float(record["hessian_calls"])
         for record in records
@@ -729,6 +738,13 @@ def _collapse_run(group: list[dict]) -> dict:
     base["path"] = "; ".join(paths)
     if asv_commits:
         base["asv_commit"] = asv_commits[0]
+    tracked = [row for row in ordered if "asv" in _source_parts(row) and row.get("scored")]
+    if tracked:
+        base["failures"] = dict(tracked[0].get("failures") or {})
+        if tracked[0].get("failures_inferred"):
+            base["failures_inferred"] = dict(tracked[0]["failures_inferred"])
+        else:
+            base.pop("failures_inferred", None)
     # Same score means the asv track already applied the success rule.
     # The merged row is that track, so the missing-index mark does not stick.
     if any("asv" in _source_parts(row) for row in ordered):
@@ -1581,15 +1597,20 @@ def _format_number(value) -> str:
     return str(value)
 
 
-def _failure_text(failures: dict) -> str:
-    parts = [f"{name} {failures.get(name, 0)}" for name in FAILURES]
+def _failure_text(failures: dict, inferred: dict | None = None) -> str:
+    parts = []
+    for name in FAILURES:
+        part = f"{name} {failures.get(name, 0)}"
+        if (inferred or {}).get(name):
+            part += f" ({inferred[name]} inferred)"
+        parts.append(part)
     return ", ".join(parts)
 
 
 def failure_cell(row: dict) -> str:
     """Failure classes of a harness row. An archived entry records only a count."""
     if row.get("origin") != "archive":
-        return _failure_text(row.get("failures") or {})
+        return _failure_text(row.get("failures") or {}, row.get("failures_inferred"))
     nfailed = row.get("nfailed")
     if nfailed is None:
         return "not recorded"
@@ -1979,6 +2000,30 @@ def failure_paragraph(problem: dict) -> str:
     )
 
 
+INFERRED_RULE = (
+    "A failure class marked inferred comes from a start file that records no class. "
+    "A start with an error is crash, a start at or above the cap is cap, "
+    "and any other failure is divergence unless its force norm is at or below the stop, "
+    "which makes it wrong_stationary."
+)
+
+
+def inferred_rows(problem: dict) -> list[dict]:
+    """Shown rows with a failure class the board inferred."""
+    return [row for row in board_rows(problem) if row.get("failures_inferred")]
+
+
+def inferred_paragraph(problem: dict) -> str:
+    rows = inferred_rows(problem)
+    if not rows:
+        return ""
+    labels = "; ".join(str(row.get("label") or "") for row in rows)
+    return (
+        f'<p class="bench-gaps" data-board-note="inferred">{_cell(INFERRED_RULE)} '
+        f"Rows with an inferred class: {_cell(labels)}.</p>"
+    )
+
+
 def difference_rows(problem: dict) -> list[dict]:
     """Shown archived rows that ``oracle/differences.toml`` labels."""
     return [row for row in board_rows(problem) + list(problem.get("over_budget") or []) if row.get("difference")]
@@ -2144,6 +2189,9 @@ def _table(
     differs = difference_paragraph(problem)
     if differs:
         lines.append(differs)
+    guessed = inferred_paragraph(problem)
+    if guessed:
+        lines.append(guessed)
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in ranked:
         grouped[str(row.get("family") or "")].append(row)

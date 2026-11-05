@@ -501,7 +501,7 @@ def _problem_titles(root: Path) -> dict[str, str]:
 
 
 def _code_page_html(name: str, pins: list[dict], document: dict, registry: list[dict], titles: dict[str, str]) -> str:
-    from .board import _headers, board_rows, ranked_cells
+    from .board import INFERRED_RULE, _headers, board_rows, ranked_cells
     from .site_charts import cost_bars_svg
     from .site_pages import code_blurb, code_page_name, code_summaries, versions_html
 
@@ -557,6 +557,8 @@ def _code_page_html(name: str, pins: list[dict], document: dict, registry: list[
         "and its PAR-2 applies that rule to the failures the entry records. "
         '<a href="../../methodology.html">Scoring rules</a>.</p>'
     )
+    if any(row.get("failures_inferred") for _problem, row in found):
+        lines.append(f'<p data-board-note="inferred">{html.escape(INFERRED_RULE)}</p>')
     if found:
         headers = _headers({"ranked": []})
         lines.append('<div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">')
