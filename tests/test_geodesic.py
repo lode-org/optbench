@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -161,3 +163,19 @@ def test_fixed_atoms_stay_on_the_reactant(monkeypatch, tmp_path: Path):
     assert np.allclose(frames[:, ~free], reactant[~free])
     assert np.allclose(frames[0], reactant)
     assert np.allclose(frames[-1, free], product[free])
+
+
+def test_v2_score_keeps_the_failure_class_of_each_start(tmp_path: Path):
+    from optbench.failures import FAILURES
+    from optbench.rgsaddle_band import _settings, write_outputs
+
+    starts = ROOT / "results" / "campaign" / "geodesic-1.0.0-de-2ts-ci-neb.starts.jsonl"
+    records = [json.loads(line) for line in starts.read_text(encoding="utf-8").splitlines() if line.strip()]
+    template = load_template(ROOT, "geodesic/ci-neb")
+    problem = resolve_problem(ROOT, "double-ended-saddle-search/lj38_2ts_separation")
+    settings = _settings(template, problem, _registry(ROOT, "geodesic")["commit"])
+    write_outputs(tmp_path / "ci-neb.dat", records, template, settings, problem)
+    score = json.loads((tmp_path / "ci-neb.v2.json").read_text(encoding="utf-8"))["score"]
+    tally = Counter(row["failure"] for row in records if not row["success"])
+    assert tally["wrong_stationary"] == 4
+    assert {name: score[f"n_{name}"] for name in FAILURES} == {name: tally[name] for name in FAILURES}

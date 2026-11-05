@@ -1350,7 +1350,15 @@ def write_outputs(
             parameters=parameters,
         ),
         "score": score_v2(
-            [{"force_calls": row["force_calls"], "success": row["success"]} for row in records],
+            [
+                {
+                    "force_calls": row["force_calls"],
+                    "success": row["success"],
+                    "failure": row.get("failure"),
+                    "reasons": row.get("reasons") or [],
+                }
+                for row in records
+            ],
             settings["cap"],
         ),
         "success_mean": _success_mean(records),
