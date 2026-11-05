@@ -17,6 +17,7 @@ from .engines.common import registry_pin, require_pin, run_jobs, write_campaign
 from .failures import classify_failure
 from .gpridge_band import digest, frozen_arguments, run_search, runtime
 from .rgsaddle_band import vibrational_index
+from .stationary import curvature_tolerance
 
 
 def checked_files(directory: Path, hashes: dict) -> dict[str, str]:
@@ -206,9 +207,10 @@ def verify_positions(atoms, positions: np.ndarray, calculator, force_stop: float
         hessian = (hessian + hessian.T) / 2
         index = vibrational_index(hessian, positions[-2:], False)
         eigenvalues = np.linalg.eigvalsh(hessian).tolist()
+        tolerance = curvature_tolerance(force_stop, float(np.linalg.norm(hessian)))
         if index != 1:
             reasons.append("hessian_index")
-        if any(abs(value) <= 1e-6 for value in eigenvalues):
+        if any(abs(value) <= tolerance for value in eigenvalues):
             reasons.append("unresolved_mode")
     return {"energy": energy, "force_norm": force, "force_norm_kind": "linf",
             "hessian_index": index, "expected_index": 1, "verify_calls": calls,

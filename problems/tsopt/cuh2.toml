@@ -62,7 +62,7 @@ par_factor = 2
 bootstrap_resamples = 2000
 bootstrap_seed = 20261015
 counter = "client"
-success = "the native search converges, the Cu atoms stay fixed, and the client force calls stay under the cap. The maximum-norm hydrogen force meets the stop on an independent remote procedure call (RPC). The Hessian index over the six hydrogen coordinates is 1, and no eigenvalue is left unresolved."
+success = "the native search converges, the Cu atoms stay fixed, and the client force calls stay under the cap. The maximum-norm hydrogen force meets the stop on an independent remote procedure call (RPC). The Hessian index over the six hydrogen coordinates is 1. A hydrogen mode is unresolved when its absolute curvature is at most the largest of the force stop, the roundoff floor on the Frobenius norm, and the critical-point floor."
 required = [
   "schema",
   "counter",

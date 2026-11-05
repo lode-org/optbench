@@ -33,7 +33,8 @@
    </tbody></table></div>
    <p class="bench-note">Success on this problem: the native search converges, the Cu atoms stay fixed, and the client force calls stay under the cap.</p>
    <p class="bench-note">The maximum-norm hydrogen force meets the stop on an independent remote procedure call (RPC).</p>
-   <p class="bench-note">The Hessian index over the six hydrogen coordinates is 1, and no eigenvalue is left unresolved.</p>
+   <p class="bench-note">The Hessian index over the six hydrogen coordinates is 1.</p>
+   <p class="bench-note">A hydrogen mode is unresolved when its absolute curvature is at most the largest of the force stop, the roundoff floor on the Frobenius norm, and the critical-point floor.</p>
    <p class="bench-note">The check links <a href="https://github.com/lode-org/optbench/blob/main/optbench/gpridge_dimer.py">the dimer verification</a>.</p>
    </section>
 #+end_export
