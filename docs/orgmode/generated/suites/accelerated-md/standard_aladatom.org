@@ -39,19 +39,20 @@
    <p class="bench-note"><sup>2</sup> A dash in PAR-2 means that row has no PAR-2 score.</p>
    <p class="bench-note">The tables below list every ranked row, by method family and overall.</p>
    <p class="bench-gaps">eOn rows are not yet on the harness counter.</p>
+   <p class="bench-gaps" data-board-note="failures">These archived rows rank on the value each one published, which leaves out any failure. The failure rule has no score for them, for the reason given with each.</p><ul><li>eOn · parallel replica (the entry records no failure count)</li></ul>
    <h3>Minimizers</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="family" data-family="minimize" data-problem="accelerated-md/standard_aladatom">
-   <caption>Minimizers. One row is one code, one version, and one method. A lower cost is better.</caption>
-   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
-   <tr><td data-label="Rank" data-field="family_rank">1</td><td data-label="Row" data-field="label">eOn · parallel replica</td><td data-label="Cost" data-field="rank_cost">835900</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Runs" data-field="n">1</td></tr>
+   <caption>Minimizers. One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Rank</th><th>Row</th><th>Cost</th><th>Unit</th><th>Hessians</th><th>FD calls</th><th>Runs</th></tr></thead><tbody>
+   <tr><td data-label="Rank" data-field="family_rank">1</td><td data-label="Row" data-field="label">eOn · parallel replica</td><td data-label="Cost" data-field="rank_cost">835900</td><td data-label="Unit" data-field="unit">escape rate (1/s)</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Runs" data-field="n">1</td></tr>
    </tbody></table></div>
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="accelerated-md/standard_aladatom">
-   <caption>One row is one code, one version, and one method. A lower cost is better.</caption>
-   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr><td data-label="Row" data-field="label">eOn · parallel replica</td><td data-label="Family" data-field="family">Minimizers</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="PAR-2" data-field="par2_mean"></td><td data-label="Published" data-field="published">835900</td><td data-label="Median calls" data-field="median_calls"></td><td data-label="Mean calls" data-field="mean_calls">835900</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">1</td></tr>
+   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
+   <tr><td data-label="Row" data-field="label">eOn · parallel replica</td><td data-label="Family" data-field="family">Minimizers</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">escape rate (1/s)</td><td data-label="PAR-2" data-field="par2_mean"></td><td data-label="Published" data-field="published">835900</td><td data-label="Median calls" data-field="median_calls"></td><td data-label="Mean calls" data-field="mean_calls"></td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">not recorded</td><td data-label="Runs" data-field="n">1</td></tr>
    </tbody></table></div>
    <h3>Off the ranked table</h3><ul>
    <li>eOn (3.6.0) · AKMC dimer n=1, not yet on the harness counter.</li>

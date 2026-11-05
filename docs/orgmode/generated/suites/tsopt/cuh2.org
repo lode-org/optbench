@@ -27,9 +27,9 @@
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="tsopt/cuh2">
-   <caption>One row is one code, one version, and one method. A lower cost is better.</caption>
-   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr><td colspan="11">No ranked row.</td></tr>
+   <caption>One row is one code, one version, and one method. A lower cost is better. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. Hessians is the mean analytic Hessian count. FD calls is that count times one force call per coordinate.</caption>
+   <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
+   <tr><td colspan="12">No ranked row.</td></tr>
    </tbody></table></div>
    <p class="bench-note">Success on this problem: the native search converges, the Cu atoms stay fixed, and the client force calls stay under the cap.</p>
    <p class="bench-note">The maximum-norm hydrogen force meets the stop on an independent remote procedure call (RPC).</p>

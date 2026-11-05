@@ -19,18 +19,19 @@
    </tbody></table></div>
    <h3>Best cost</h3>
    <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-cost-bars-title" viewBox="0 0 680 292.0"><title id="lennard-jones-38-cost-bars-title">Best cost for Lennard-Jones 38</title><text class="group-label" x="0" y="18">Lennard-Jones 38</text><line class="axis" x1="168.00" y1="256.00" x2="584.00" y2="256.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="256.00"/><line class="axis" x1="168.00" y1="252.00" x2="168.00" y2="256.00"/><text class="num" x="168.00" y="270.00" text-anchor="middle">10¹</text><line class="grid" x1="272.00" y1="32.00" x2="272.00" y2="256.00"/><line class="axis" x1="272.00" y1="252.00" x2="272.00" y2="256.00"/><text class="num" x="272.00" y="270.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="256.00"/><line class="axis" x1="376.00" y1="252.00" x2="376.00" y2="256.00"/><text class="num" x="376.00" y="270.00" text-anchor="middle">10³</text><line class="grid" x1="480.00" y1="32.00" x2="480.00" y2="256.00"/><line class="axis" x1="480.00" y1="252.00" x2="480.00" y2="256.00"/><text class="num" x="480.00" y="270.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="256.00"/><line class="axis" x1="584.00" y1="252.00" x2="584.00" y2="256.00"/><text class="num" x="584.00" y="270.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="286.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Sella: 17.8</title><text class="code-label" x="156" y="46.00" text-anchor="end">Sella</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="26.0437" height="10"/><text class="num" x="592.00" y="46.00">17.8</text></g><g><title>OPTIM: 25</title><text class="code-label" x="156" y="68.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="59.00" width="41.3858" height="10"/><text class="num" x="592.00" y="68.00">25</text></g><g><title>pele: 25</title><text class="code-label" x="156" y="90.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="81.00" width="41.3858" height="10"/><text class="num" x="592.00" y="90.00">25</text></g><g><title>TSASE: 25</title><text class="code-label" x="156" y="112.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="103.00" width="41.3858" height="10"/><text class="num" x="592.00" y="112.00">25</text></g><g><title>rgsaddle: 26.12</title><text class="code-label" x="156" y="134.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="125.00" width="43.3652" height="10"/><text class="num" x="592.00" y="134.00">26.12</text></g><g><title>eOn: 26.385</title><text class="code-label" x="156" y="156.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="147.00" width="43.8211" height="10"/><text class="num" x="592.00" y="156.00">26.385</text></g><g><title>Eon svn: 26.385</title><text class="code-label" x="156" y="178.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="169.00" width="43.8211" height="10"/><text class="num" x="592.00" y="178.00">26.385</text></g><g><title>pARTn: 2619.84</title><text class="code-label" x="156" y="200.00" text-anchor="end">pARTn</text><rect class="suite-bar" x="168.00" y="191.00" width="251.5005" height="10"/><text class="num" x="592.00" y="200.00">2619.84</text></g><g><title>pysisyphus: 4017.14</title><text class="code-label" x="156" y="222.00" text-anchor="end">pysisyphus</text><rect class="suite-bar" x="168.00" y="213.00" width="270.8074" height="10"/><text class="num" x="592.00" y="222.00">4017.14</text></g><g><title>SoftSaddle: 18700.6</title><text class="code-label" x="156" y="244.00" text-anchor="end">SoftSaddle</text><rect class="suite-bar" x="168.00" y="235.00" width="340.2731" height="10"/><text class="num" x="592.00" y="244.00">18700.6</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="pt-heptamer-island-cost-bars-title" viewBox="0 0 680 182.0"><title id="pt-heptamer-island-cost-bars-title">Best cost for Pt heptamer island</title><text class="group-label" x="0" y="18">Pt heptamer island</text><line class="axis" x1="168.00" y1="146.00" x2="584.00" y2="146.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="146.00"/><line class="axis" x1="168.00" y1="142.00" x2="168.00" y2="146.00"/><text class="num" x="168.00" y="160.00" text-anchor="middle">10³</text><line class="grid" x1="237.33" y1="32.00" x2="237.33" y2="146.00"/><line class="axis" x1="237.33" y1="142.00" x2="237.33" y2="146.00"/><text class="num" x="237.33" y="160.00" text-anchor="middle">10⁴</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="146.00"/><line class="axis" x1="306.67" y1="142.00" x2="306.67" y2="146.00"/><text class="num" x="306.67" y="160.00" text-anchor="middle">10⁵</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="146.00"/><line class="axis" x1="376.00" y1="142.00" x2="376.00" y2="146.00"/><text class="num" x="376.00" y="160.00" text-anchor="middle">10⁶</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="146.00"/><line class="axis" x1="445.33" y1="142.00" x2="445.33" y2="146.00"/><text class="num" x="445.33" y="160.00" text-anchor="middle">10⁷</text><line class="grid" x1="514.67" y1="32.00" x2="514.67" y2="146.00"/><line class="axis" x1="514.67" y1="142.00" x2="514.67" y2="146.00"/><text class="num" x="514.67" y="160.00" text-anchor="middle">10⁸</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="146.00"/><line class="axis" x1="584.00" y1="142.00" x2="584.00" y2="146.00"/><text class="num" x="584.00" y="160.00" text-anchor="middle">10⁹</text><text class="axis-name" x="376.00" y="176.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Sella: 5201.62</title><text class="code-label" x="156" y="46.00" text-anchor="end">Sella</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="49.6523" height="10"/><text class="num" x="592.00" y="46.00">5201.62</text></g><g><title>SoftSaddle: 10124.2</title><text class="code-label" x="156" y="68.00" text-anchor="end">SoftSaddle</text><rect class="suite-bar" x="168.00" y="59.00" width="69.7051" height="10"/><text class="num" x="592.00" y="68.00">10124.2</text></g><g><title>rgsaddle: 10128</title><text class="code-label" x="156" y="90.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="81.00" width="69.7163" height="10"/><text class="num" x="592.00" y="90.00">10128</text></g><g><title>Eon svn: 1.34547e+06</title><text class="code-label" x="156" y="112.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="103.00" width="216.9352" height="10"/><text class="num" x="592.00" y="112.00">1.34547e+06</text></g><g><title>eOn: 2e+08</title><text class="code-label" x="156" y="134.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="125.00" width="367.5381" height="10"/><text class="num" x="592.00" y="134.00">2e+08</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="pt-heptamer-island-cost-bars-title" viewBox="0 0 680 160.0"><title id="pt-heptamer-island-cost-bars-title">Best cost for Pt heptamer island</title><text class="group-label" x="0" y="18">Pt heptamer island</text><line class="axis" x1="168.00" y1="124.00" x2="584.00" y2="124.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="124.00"/><line class="axis" x1="168.00" y1="120.00" x2="168.00" y2="124.00"/><text class="num" x="168.00" y="138.00" text-anchor="middle">10³</text><line class="grid" x1="237.33" y1="32.00" x2="237.33" y2="124.00"/><line class="axis" x1="237.33" y1="120.00" x2="237.33" y2="124.00"/><text class="num" x="237.33" y="138.00" text-anchor="middle">10⁴</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="124.00"/><line class="axis" x1="306.67" y1="120.00" x2="306.67" y2="124.00"/><text class="num" x="306.67" y="138.00" text-anchor="middle">10⁵</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="124.00"/><line class="axis" x1="376.00" y1="120.00" x2="376.00" y2="124.00"/><text class="num" x="376.00" y="138.00" text-anchor="middle">10⁶</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="124.00"/><line class="axis" x1="445.33" y1="120.00" x2="445.33" y2="124.00"/><text class="num" x="445.33" y="138.00" text-anchor="middle">10⁷</text><line class="grid" x1="514.67" y1="32.00" x2="514.67" y2="124.00"/><line class="axis" x1="514.67" y1="120.00" x2="514.67" y2="124.00"/><text class="num" x="514.67" y="138.00" text-anchor="middle">10⁸</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="124.00"/><line class="axis" x1="584.00" y1="120.00" x2="584.00" y2="124.00"/><text class="num" x="584.00" y="138.00" text-anchor="middle">10⁹</text><text class="axis-name" x="376.00" y="154.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Sella: 5201.62</title><text class="code-label" x="156" y="46.00" text-anchor="end">Sella</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="49.6523" height="10"/><text class="num" x="592.00" y="46.00">5201.62</text></g><g><title>SoftSaddle: 10124.2</title><text class="code-label" x="156" y="68.00" text-anchor="end">SoftSaddle</text><rect class="suite-bar" x="168.00" y="59.00" width="69.7051" height="10"/><text class="num" x="592.00" y="68.00">10124.2</text></g><g><title>rgsaddle: 10128</title><text class="code-label" x="156" y="90.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="81.00" width="69.7163" height="10"/><text class="num" x="592.00" y="90.00">10128</text></g><g><title>eOn: 2e+08</title><text class="code-label" x="156" y="112.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="103.00" width="367.5381" height="10"/><text class="num" x="592.00" y="112.00">2e+08</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <h3>Results</h3>
-   <p>Ranked rows for this code, one version and one method on each row. <a href="../../methodology.html">Scoring rules</a>.</p>
+   <p>Ranked rows for this code, one version and one method on each row. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. <a href="../../methodology.html">Scoring rules</a>.</p>
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
-   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="lowest-eigenvector/lj38" data-label="SoftSaddle (2019.04) · Lanczos">
    <td data-label="Suite">Lowest eigenvector</td>
    <td data-label="Problem"><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-label="Row" data-field="label">SoftSaddle (2019.04) · Lanczos</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
    <td data-label="Family rank" data-field="family_rank">22</td>
+   <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">18700.6</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">19</td>
@@ -46,6 +47,7 @@
    <td data-label="Row" data-field="label">SoftSaddle (2019.04) · Davidson</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
    <td data-label="Family rank" data-field="family_rank">23</td>
+   <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">18925.6</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">695</td>
@@ -61,6 +63,7 @@
    <td data-label="Row" data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Lanczos</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
    <td data-label="Family rank" data-field="family_rank">1</td>
+   <td data-label="Unit" data-field="unit">force calls per search</td>
    <td data-label="PAR-2" data-field="par2_mean">10124.2</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">389</td>
@@ -76,6 +79,7 @@
    <td data-label="Row" data-field="label">SoftSaddle (2019.04) · adaptive hypersphere LBFGS Davidson</td>
    <td data-label="Family" data-field="family">Single-ended saddle</td>
    <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Unit" data-field="unit">force calls per search</td>
    <td data-label="PAR-2" data-field="par2_mean">10128</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">1060</td>
@@ -90,45 +94,48 @@
    <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">SoftSaddle · adaptive_HSphere-lbfgs-davidson-sm50</td>
    <td data-label="Family" data-field="family">Single-ended saddle</td>
-   <td data-label="Family rank" data-field="family_rank">3</td>
+   <td data-label="Family rank" data-field="family_rank">1</td>
+   <td data-label="Unit" data-field="unit">force calls per campaign</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
    <td data-label="Published" data-field="published">423491</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls">423491</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-label="Runs" data-field="n">0</td>
+   <td data-label="Failures" data-field="failures">not recorded</td>
+   <td data-label="Runs" data-field="n">10</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="SoftSaddle · adaptive_HSphere-lbfgs-lanczos-sm50">
    <td data-label="Suite">Saddle search</td>
    <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">SoftSaddle · adaptive_HSphere-lbfgs-lanczos-sm50</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">6</td>
+   <td data-label="Family rank" data-field="family_rank">1</td>
+   <td data-label="Unit" data-field="unit">force calls per campaign</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
    <td data-label="Published" data-field="published">814519</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls">814519</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-label="Runs" data-field="n">0</td>
+   <td data-label="Failures" data-field="failures">not recorded</td>
+   <td data-label="Runs" data-field="n">10</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="SoftSaddle · adaptive_HSphere-lbfgs-lanczos-sm0">
    <td data-label="Suite">Saddle search</td>
    <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">SoftSaddle · adaptive_HSphere-lbfgs-lanczos-sm0</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">7</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Unit" data-field="unit">force calls per campaign</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
    <td data-label="Published" data-field="published">1.00343e+06</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls">1.00343e+06</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-label="Runs" data-field="n">0</td>
+   <td data-label="Failures" data-field="failures">not recorded</td>
+   <td data-label="Runs" data-field="n">10</td>
    </tr>
    </tbody></table></div>
    </section>

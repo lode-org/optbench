@@ -8,18 +8,19 @@
    <p>Machine learning optimization compares 2 problems.</p><ul class="suite-facts"><li>EMT Pt 38 nanoparticle</li><li>Ethene</li></ul>
    <div class="stat-row stat-row-2">
    <div class="stat"><span class="k">Problems</span><span class="v num">2</span></div>
-   <div class="stat"><span class="k">Codes</span><span class="v num">2</span></div>
+   <div class="stat"><span class="k">Codes</span><span class="v num">1</span></div>
    </div>
    <h2>Charts</h2>
    <div class="lead-charts">
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="emt-pt-38-nanoparticle-cost-bars-title" viewBox="0 0 680 116.0"><title id="emt-pt-38-nanoparticle-cost-bars-title">Best cost for EMT Pt 38 nanoparticle</title><text class="group-label" x="0" y="18">EMT Pt 38 nanoparticle</text><line class="axis" x1="168.00" y1="80.00" x2="584.00" y2="80.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="80.00"/><line class="axis" x1="168.00" y1="76.00" x2="168.00" y2="80.00"/><text class="num" x="168.00" y="94.00" text-anchor="middle">10¹</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="80.00"/><line class="axis" x1="584.00" y1="76.00" x2="584.00" y2="80.00"/><text class="num" x="584.00" y="94.00" text-anchor="middle">10²</text><text class="axis-name" x="376.00" y="110.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>n2p2: 25.02</title><text class="code-label" x="156" y="46.00" text-anchor="end">n2p2</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="165.6875" height="10"/><text class="num" x="592.00" y="46.00">25.02</text></g><g><title>Pyamff: 97.58</title><text class="code-label" x="156" y="68.00" text-anchor="end">Pyamff</text><rect class="suite-bar" x="168.00" y="59.00" width="411.5741" height="10"/><text class="num" x="592.00" y="68.00">97.58</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="ethene-cost-bars-title" viewBox="0 0 680 116.0"><title id="ethene-cost-bars-title">Best cost for Ethene</title><text class="group-label" x="0" y="18">Ethene</text><line class="axis" x1="168.00" y1="80.00" x2="584.00" y2="80.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="80.00"/><line class="axis" x1="168.00" y1="76.00" x2="168.00" y2="80.00"/><text class="num" x="168.00" y="94.00" text-anchor="middle">10²</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="80.00"/><line class="axis" x1="306.67" y1="76.00" x2="306.67" y2="80.00"/><text class="num" x="306.67" y="94.00" text-anchor="middle">10³</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="80.00"/><line class="axis" x1="445.33" y1="76.00" x2="445.33" y2="80.00"/><text class="num" x="445.33" y="94.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="80.00"/><line class="axis" x1="584.00" y1="76.00" x2="584.00" y2="80.00"/><text class="num" x="584.00" y="94.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="110.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Pyamff: 184.56</title><text class="code-label" x="156" y="46.00" text-anchor="end">Pyamff</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="36.9044" height="10"/><text class="num" x="592.00" y="46.00">184.56</text></g><g><title>n2p2: 17397.1</title><text class="code-label" x="156" y="68.00" text-anchor="end">n2p2</text><rect class="suite-bar" x="168.00" y="59.00" width="310.6795" height="10"/><text class="num" x="592.00" y="68.00">17397.1</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="emt-pt-38-nanoparticle-cost-bars-title" viewBox="0 0 680 94.0"><title id="emt-pt-38-nanoparticle-cost-bars-title">Best cost for EMT Pt 38 nanoparticle</title><text class="group-label" x="0" y="18">EMT Pt 38 nanoparticle</text><line class="axis" x1="168.00" y1="58.00" x2="584.00" y2="58.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="58.00"/><line class="axis" x1="168.00" y1="54.00" x2="168.00" y2="58.00"/><text class="num" x="168.00" y="72.00" text-anchor="middle">10¹</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="58.00"/><line class="axis" x1="584.00" y1="54.00" x2="584.00" y2="58.00"/><text class="num" x="584.00" y="72.00" text-anchor="middle">10²</text><text class="axis-name" x="376.00" y="88.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>n2p2: 25.02</title><text class="code-label" x="156" y="46.00" text-anchor="end">n2p2</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="165.6875" height="10"/><text class="num" x="592.00" y="46.00">25.02</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="ethene-cost-bars-title" viewBox="0 0 680 94.0"><title id="ethene-cost-bars-title">Best cost for Ethene</title><text class="group-label" x="0" y="18">Ethene</text><line class="axis" x1="168.00" y1="58.00" x2="584.00" y2="58.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="58.00"/><line class="axis" x1="168.00" y1="54.00" x2="168.00" y2="58.00"/><text class="num" x="168.00" y="72.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="58.00"/><line class="axis" x1="584.00" y1="54.00" x2="584.00" y2="58.00"/><text class="num" x="584.00" y="72.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="88.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>n2p2: 17397.1</title><text class="code-label" x="156" y="46.00" text-anchor="end">n2p2</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="100.0386" height="10"/><text class="num" x="592.00" y="46.00">17397.1</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <p class="chart-files"><a href="../../_static/board/suite-mlopt.svg">SVG file</a></p>
    <div class="bench-export">
    <figure class="bench-plot"><a href="../../_static/board/suite-mlopt.svg"><picture><source srcset="../../_static/board/suite-mlopt.webp" type="image/webp"><img src="../../_static/board/suite-mlopt.png" alt="Machine learning optimization best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Machine learning optimization best ranked cost. Select the plot for the full SVG.</figcaption></figure>
    </div>
    </div>
    <h2>Leaderboard</h2>
+   <p>An archived row is ranked by its PAR-2 when its entry counts its failures, and otherwise by the average it published.</p>
    <div class="bench-scroll">
    <table class="bench-sortable leader" data-bench="codes">
    <caption>A shorter bar is a lower cost on the log scale for that problem. Select a column heading to sort.</caption>
@@ -33,36 +34,16 @@
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">25.02</td>
    </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
-   <td class="problem" data-label="Problem"><a href="mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
-   <td class="code" data-label="Code"><a href="../codes/pyamff.html">Pyamff</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:98.9361%"><i></i></span><span class="bar-num">97.58</span></td>
-   <td class="num" data-label="Median">1406.02</td>
-   <td class="num" data-label="Success">—<sup>1</sup></td>
-   <td class="num" data-label="PAR-2">—<sup>2</sup></td>
-   </tr>
    <tr class="is-best group-start">
    <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
    <td class="problem" data-label="Problem"><a href="mlopt/C2H4.html">Ethene</a></td>
-   <td class="code" data-label="Code"><a href="../codes/pyamff.html">Pyamff</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:8.8713%"><i></i></span><span class="bar-num">184.56</span></td>
-   <td class="num" data-label="Median">8661.09</td>
-   <td class="num" data-label="Success">—<sup>1</sup></td>
-   <td class="num" data-label="PAR-2">—<sup>2</sup></td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
-   <td class="problem" data-label="Problem"><a href="mlopt/C2H4.html">Ethene</a></td>
    <td class="code" data-label="Code"><a href="../codes/n2p2.html">n2p2</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:74.6826%"><i></i></span><span class="bar-num">17397.1</span></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:24.0477%"><i></i></span><span class="bar-num">17397.1</span></td>
    <td class="num" data-label="Median">38698.6</td>
    <td class="num" data-label="Success">20.0%</td>
    <td class="num" data-label="PAR-2">17397.1</td>
    </tr>
    </tbody></table></div>
-   <p class="bench-note"><sup>1</sup> A dash in the success rate means that row did not record one.</p>
-   <p class="bench-note"><sup>2</sup> A dash in PAR-2 means that row has no PAR-2 score.</p>
    <h2>Problems</h2>
    <div class="bench-scroll">
    <table class="bench-sortable" data-bench="problems">

@@ -12,15 +12,16 @@
    </div>
    <h2>Charts</h2>
    <div class="lead-charts">
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-transition-state-separation-cost-bars-title" viewBox="0 0 680 314.0"><title id="lennard-jones-38-transition-state-separation-cost-bars-title">Best cost for Lennard-Jones 38 transition-state separation</title><text class="group-label" x="0" y="18">Lennard-Jones 38 transition-state separation</text><line class="axis" x1="168.00" y1="278.00" x2="584.00" y2="278.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="278.00"/><line class="axis" x1="168.00" y1="274.00" x2="168.00" y2="278.00"/><text class="num" x="168.00" y="292.00" text-anchor="middle">10²</text><line class="grid" x1="272.00" y1="32.00" x2="272.00" y2="278.00"/><line class="axis" x1="272.00" y1="274.00" x2="272.00" y2="278.00"/><text class="num" x="272.00" y="292.00" text-anchor="middle">10³</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="278.00"/><line class="axis" x1="376.00" y1="274.00" x2="376.00" y2="278.00"/><text class="num" x="376.00" y="292.00" text-anchor="middle">10⁴</text><line class="grid" x1="480.00" y1="32.00" x2="480.00" y2="278.00"/><line class="axis" x1="480.00" y1="274.00" x2="480.00" y2="278.00"/><text class="num" x="480.00" y="292.00" text-anchor="middle">10⁵</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="278.00"/><line class="axis" x1="584.00" y1="274.00" x2="584.00" y2="278.00"/><text class="num" x="584.00" y="292.00" text-anchor="middle">10⁶</text><text class="axis-name" x="376.00" y="308.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Eon svn: 502.784</title><text class="code-label" x="156" y="46.00" text-anchor="end">Eon svn</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="72.9437" height="10"/><text class="num" x="592.00" y="46.00">502.784</text></g><g><title>eOn: 520.333</title><text class="code-label" x="156" y="68.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="59.00" width="74.4933" height="10"/><text class="num" x="592.00" y="68.00">520.333</text></g><g><title>OPTIM: 2885</title><text class="code-label" x="156" y="90.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="81.00" width="151.8552" height="10"/><text class="num" x="592.00" y="90.00">2885</text></g><g><title>pele: 25022</title><text class="code-label" x="156" y="112.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="103.00" width="249.4255" height="10"/><text class="num" x="592.00" y="112.00">25022</text></g><g><title>Sella: 31447.3</title><text class="code-label" x="156" y="134.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="125.00" width="259.7487" height="10"/><text class="num" x="592.00" y="134.00">31447.3</text></g><g><title>COMPASS: 100831</title><text class="code-label" x="156" y="156.00" text-anchor="end">COMPASS</text><rect class="suite-bar" x="168.00" y="147.00" width="312.3738" height="10"/><text class="num" x="592.00" y="156.00">100831</text></g><g><title>rgsaddle: 266216</title><text class="code-label" x="156" y="178.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="169.00" width="356.2243" height="10"/><text class="num" x="592.00" y="178.00">266216</text></g><g><title>geodesic: 412102</title><text class="code-label" x="156" y="200.00" text-anchor="end">geodesic</text><rect class="suite-bar" x="168.00" y="191.00" width="375.9604" height="10"/><text class="num" x="592.00" y="200.00">412102</text></g><g><title>ASE: 444244</title><text class="code-label" x="156" y="222.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="213.00" width="379.3527" height="10"/><text class="num" x="592.00" y="222.00">444244</text></g><g><title>TSASE: 451753</title><text class="code-label" x="156" y="244.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="235.00" width="380.1097" height="10"/><text class="num" x="592.00" y="244.00">451753</text></g><g><title>LAMMPS: 451959</title><text class="code-label" x="156" y="266.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="257.00" width="380.1303" height="10"/><text class="num" x="592.00" y="266.00">451959</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-transition-state-separation-cost-bars-title" viewBox="0 0 680 314.0"><title id="lennard-jones-38-transition-state-separation-cost-bars-title">Best cost for Lennard-Jones 38 transition-state separation</title><text class="group-label" x="0" y="18">Lennard-Jones 38 transition-state separation</text><line class="axis" x1="168.00" y1="278.00" x2="584.00" y2="278.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="278.00"/><line class="axis" x1="168.00" y1="274.00" x2="168.00" y2="278.00"/><text class="num" x="168.00" y="292.00" text-anchor="middle">10²</text><line class="grid" x1="272.00" y1="32.00" x2="272.00" y2="278.00"/><line class="axis" x1="272.00" y1="274.00" x2="272.00" y2="278.00"/><text class="num" x="272.00" y="292.00" text-anchor="middle">10³</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="278.00"/><line class="axis" x1="376.00" y1="274.00" x2="376.00" y2="278.00"/><text class="num" x="376.00" y="292.00" text-anchor="middle">10⁴</text><line class="grid" x1="480.00" y1="32.00" x2="480.00" y2="278.00"/><line class="axis" x1="480.00" y1="274.00" x2="480.00" y2="278.00"/><text class="num" x="480.00" y="292.00" text-anchor="middle">10⁵</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="278.00"/><line class="axis" x1="584.00" y1="274.00" x2="584.00" y2="278.00"/><text class="num" x="584.00" y="292.00" text-anchor="middle">10⁶</text><text class="axis-name" x="376.00" y="308.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Eon svn: 502.784</title><text class="code-label" x="156" y="46.00" text-anchor="end">Eon svn</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="72.9437" height="10"/><text class="num" x="592.00" y="46.00">502.784</text></g><g><title>eOn: 520.333</title><text class="code-label" x="156" y="68.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="59.00" width="74.4933" height="10"/><text class="num" x="592.00" y="68.00">520.333</text></g><g><title>OPTIM: 2885</title><text class="code-label" x="156" y="90.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="81.00" width="151.8552" height="10"/><text class="num" x="592.00" y="90.00">2885</text></g><g><title>Sella: 31447.3</title><text class="code-label" x="156" y="112.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="103.00" width="259.7487" height="10"/><text class="num" x="592.00" y="112.00">31447.3</text></g><g><title>pele: 52961.9</title><text class="code-label" x="156" y="134.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="125.00" width="283.2922" height="10"/><text class="num" x="592.00" y="134.00">52961.9</text></g><g><title>COMPASS: 100831</title><text class="code-label" x="156" y="156.00" text-anchor="end">COMPASS</text><rect class="suite-bar" x="168.00" y="147.00" width="312.3738" height="10"/><text class="num" x="592.00" y="156.00">100831</text></g><g><title>rgsaddle: 266216</title><text class="code-label" x="156" y="178.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="169.00" width="356.2243" height="10"/><text class="num" x="592.00" y="178.00">266216</text></g><g><title>geodesic: 412102</title><text class="code-label" x="156" y="200.00" text-anchor="end">geodesic</text><rect class="suite-bar" x="168.00" y="191.00" width="375.9604" height="10"/><text class="num" x="592.00" y="200.00">412102</text></g><g><title>ASE: 444244</title><text class="code-label" x="156" y="222.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="213.00" width="379.3527" height="10"/><text class="num" x="592.00" y="222.00">444244</text></g><g><title>TSASE: 451753</title><text class="code-label" x="156" y="244.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="235.00" width="380.1097" height="10"/><text class="num" x="592.00" y="244.00">451753</text></g><g><title>LAMMPS: 451959</title><text class="code-label" x="156" y="266.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="257.00" width="380.1303" height="10"/><text class="num" x="592.00" y="266.00">451959</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lj38-double-ended-saddle-cost-bars-title" viewBox="0 0 680 314.0"><title id="lj38-double-ended-saddle-cost-bars-title">Best cost for LJ38 double-ended saddle</title><text class="group-label" x="0" y="18">LJ38 double-ended saddle</text><line class="axis" x1="168.00" y1="278.00" x2="584.00" y2="278.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="278.00"/><line class="axis" x1="168.00" y1="274.00" x2="168.00" y2="278.00"/><text class="num" x="168.00" y="292.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="278.00"/><line class="axis" x1="376.00" y1="274.00" x2="376.00" y2="278.00"/><text class="num" x="376.00" y="292.00" text-anchor="middle">10³</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="278.00"/><line class="axis" x1="584.00" y1="274.00" x2="584.00" y2="278.00"/><text class="num" x="584.00" y="292.00" text-anchor="middle">10⁴</text><text class="axis-name" x="376.00" y="308.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>OPTIM: 131</title><text class="code-label" x="156" y="46.00" text-anchor="end">OPTIM</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="24.3924" height="10"/><text class="num" x="592.00" y="46.00">131</text></g><g><title>Eon svn: 235.2</title><text class="code-label" x="156" y="68.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="59.00" width="77.2590" height="10"/><text class="num" x="592.00" y="68.00">235.2</text></g><g><title>eOn: 259.46</title><text class="code-label" x="156" y="90.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="81.00" width="86.1266" height="10"/><text class="num" x="592.00" y="90.00">259.46</text></g><g><title>pele: 293</title><text class="code-label" x="156" y="112.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="103.00" width="97.1085" height="10"/><text class="num" x="592.00" y="112.00">293</text></g><g><title>geodesic: 1208.42</title><text class="code-label" x="156" y="134.00" text-anchor="end">geodesic</text><rect class="suite-bar" x="168.00" y="125.00" width="225.1013" height="10"/><text class="num" x="592.00" y="134.00">1208.42</text></g><g><title>COMPASS: 1517.3</title><text class="code-label" x="156" y="156.00" text-anchor="end">COMPASS</text><rect class="suite-bar" x="168.00" y="147.00" width="245.6629" height="10"/><text class="num" x="592.00" y="156.00">1517.3</text></g><g><title>Sella: 2055.3</title><text class="code-label" x="156" y="178.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="169.00" width="273.0780" height="10"/><text class="num" x="592.00" y="178.00">2055.3</text></g><g><title>rgsaddle: 2145.72</title><text class="code-label" x="156" y="200.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="191.00" width="276.9672" height="10"/><text class="num" x="592.00" y="200.00">2145.72</text></g><g><title>TSASE: 3119.56</title><text class="code-label" x="156" y="222.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="213.00" width="310.7714" height="10"/><text class="num" x="592.00" y="222.00">3119.56</text></g><g><title>LAMMPS: 4526.2</title><text class="code-label" x="156" y="244.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="235.00" width="344.3926" height="10"/><text class="num" x="592.00" y="244.00">4526.2</text></g><g><title>ASE: 4912.84</title><text class="code-label" x="156" y="266.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="257.00" width="351.7972" height="10"/><text class="num" x="592.00" y="266.00">4912.84</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="pt-heptamer-island-cost-bars-title" viewBox="0 0 680 314.0"><title id="pt-heptamer-island-cost-bars-title">Best cost for Pt heptamer island</title><text class="group-label" x="0" y="18">Pt heptamer island</text><line class="axis" x1="168.00" y1="278.00" x2="584.00" y2="278.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="278.00"/><line class="axis" x1="168.00" y1="274.00" x2="168.00" y2="278.00"/><text class="num" x="168.00" y="292.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="278.00"/><line class="axis" x1="376.00" y1="274.00" x2="376.00" y2="278.00"/><text class="num" x="376.00" y="292.00" text-anchor="middle">10³</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="278.00"/><line class="axis" x1="584.00" y1="274.00" x2="584.00" y2="278.00"/><text class="num" x="584.00" y="292.00" text-anchor="middle">10⁴</text><text class="axis-name" x="376.00" y="308.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>OPTIM: 103</title><text class="code-label" x="156" y="46.00" text-anchor="end">OPTIM</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="2.6701" height="10"/><text class="num" x="592.00" y="46.00">103</text></g><g><title>Eon svn: 110</title><text class="code-label" x="156" y="68.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="59.00" width="8.6097" height="10"/><text class="num" x="592.00" y="68.00">110</text></g><g><title>pele: 255</title><text class="code-label" x="156" y="90.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="81.00" width="84.5604" height="10"/><text class="num" x="592.00" y="90.00">255</text></g><g><title>geodesic: 824.119</title><text class="code-label" x="156" y="112.00" text-anchor="end">geodesic</text><rect class="suite-bar" x="168.00" y="103.00" width="190.5259" height="10"/><text class="num" x="592.00" y="112.00">824.119</text></g><g><title>Sella: 921.847</title><text class="code-label" x="156" y="134.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="125.00" width="200.6491" height="10"/><text class="num" x="592.00" y="134.00">921.847</text></g><g><title>ASE: 926.475</title><text class="code-label" x="156" y="156.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="147.00" width="201.1014" height="10"/><text class="num" x="592.00" y="156.00">926.475</text></g><g><title>rgsaddle: 938.102</title><text class="code-label" x="156" y="178.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="169.00" width="202.2280" height="10"/><text class="num" x="592.00" y="178.00">938.102</text></g><g><title>COMPASS: 1078.12</title><text class="code-label" x="156" y="200.00" text-anchor="end">COMPASS</text><rect class="suite-bar" x="168.00" y="191.00" width="214.7946" height="10"/><text class="num" x="592.00" y="200.00">1078.12</text></g><g><title>TSASE: 2524.53</title><text class="code-label" x="156" y="222.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="213.00" width="291.6534" height="10"/><text class="num" x="592.00" y="222.00">2524.53</text></g><g><title>LAMMPS: 2668.64</title><text class="code-label" x="156" y="244.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="235.00" width="296.6685" height="10"/><text class="num" x="592.00" y="244.00">2668.64</text></g><g><title>eOn: 3080.19</title><text class="code-label" x="156" y="266.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="257.00" width="309.6240" height="10"/><text class="num" x="592.00" y="266.00">3080.19</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="pt-heptamer-island-cost-bars-title" viewBox="0 0 680 314.0"><title id="pt-heptamer-island-cost-bars-title">Best cost for Pt heptamer island</title><text class="group-label" x="0" y="18">Pt heptamer island</text><line class="axis" x1="168.00" y1="278.00" x2="584.00" y2="278.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="278.00"/><line class="axis" x1="168.00" y1="274.00" x2="168.00" y2="278.00"/><text class="num" x="168.00" y="292.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="278.00"/><line class="axis" x1="376.00" y1="274.00" x2="376.00" y2="278.00"/><text class="num" x="376.00" y="292.00" text-anchor="middle">10³</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="278.00"/><line class="axis" x1="584.00" y1="274.00" x2="584.00" y2="278.00"/><text class="num" x="584.00" y="292.00" text-anchor="middle">10⁴</text><text class="axis-name" x="376.00" y="308.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>OPTIM: 103</title><text class="code-label" x="156" y="46.00" text-anchor="end">OPTIM</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="2.6701" height="10"/><text class="num" x="592.00" y="46.00">103</text></g><g><title>Eon svn: 110</title><text class="code-label" x="156" y="68.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="59.00" width="8.6097" height="10"/><text class="num" x="592.00" y="68.00">110</text></g><g><title>pele: 449.746</title><text class="code-label" x="156" y="90.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="81.00" width="135.8172" height="10"/><text class="num" x="592.00" y="90.00">449.746</text></g><g><title>geodesic: 824.119</title><text class="code-label" x="156" y="112.00" text-anchor="end">geodesic</text><rect class="suite-bar" x="168.00" y="103.00" width="190.5259" height="10"/><text class="num" x="592.00" y="112.00">824.119</text></g><g><title>ASE: 926.475</title><text class="code-label" x="156" y="134.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="125.00" width="201.1014" height="10"/><text class="num" x="592.00" y="134.00">926.475</text></g><g><title>rgsaddle: 938.102</title><text class="code-label" x="156" y="156.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="147.00" width="202.2280" height="10"/><text class="num" x="592.00" y="156.00">938.102</text></g><g><title>Sella: 968.525</title><text class="code-label" x="156" y="178.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="169.00" width="205.1111" height="10"/><text class="num" x="592.00" y="178.00">968.525</text></g><g><title>COMPASS: 1078.12</title><text class="code-label" x="156" y="200.00" text-anchor="end">COMPASS</text><rect class="suite-bar" x="168.00" y="191.00" width="214.7946" height="10"/><text class="num" x="592.00" y="200.00">1078.12</text></g><g><title>TSASE: 2524.53</title><text class="code-label" x="156" y="222.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="213.00" width="291.6534" height="10"/><text class="num" x="592.00" y="222.00">2524.53</text></g><g><title>LAMMPS: 2668.64</title><text class="code-label" x="156" y="244.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="235.00" width="296.6685" height="10"/><text class="num" x="592.00" y="244.00">2668.64</text></g><g><title>eOn: 3080.19</title><text class="code-label" x="156" y="266.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="257.00" width="309.6240" height="10"/><text class="num" x="592.00" y="266.00">3080.19</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <p class="chart-files"><a href="../../_static/board/suite-double-ended-saddle-search.svg">SVG file</a></p>
    <div class="bench-export">
    <figure class="bench-plot"><a href="../../_static/board/suite-double-ended-saddle-search.svg"><picture><source srcset="../../_static/board/suite-double-ended-saddle-search.webp" type="image/webp"><img src="../../_static/board/suite-double-ended-saddle-search.png" alt="Double-ended saddle search best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Double-ended saddle search best ranked cost. Select the plot for the full SVG.</figcaption></figure>
    </div>
    </div>
    <h2>Leaderboard</h2>
+   <p>An archived row is ranked by its PAR-2 when its entry counts its failures, and otherwise by the average it published.</p>
    <div class="bench-scroll">
    <table class="bench-sortable leader" data-bench="codes">
    <caption>A shorter bar is a lower cost on the log scale for that problem. Select a column heading to sort.</caption>
@@ -30,7 +31,7 @@
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:17.5345%"><i></i></span><span class="bar-num">502.784</span></td>
-   <td class="num" data-label="Median">7033.36</td>
+   <td class="num" data-label="Median">681.784</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">502.784</td>
    </tr>
@@ -50,25 +51,25 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:36.5036%"><i></i></span><span class="bar-num">2885</span></td>
    <td class="num" data-label="Median">2885</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">2885</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/pele.html">pele</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:59.9581%"><i></i></span><span class="bar-num">25022</span></td>
-   <td class="num" data-label="Median">25022</td>
-   <td class="num" data-label="Success">94.1%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td class="code" data-label="Code"><a href="../codes/sella.html">Sella</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:62.4396%"><i></i></span><span class="bar-num">31447.3</span></td>
    <td class="num" data-label="Median">31447.3</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">31447.3</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/pele.html">pele</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:68.0991%"><i></i></span><span class="bar-num">52961.9</span></td>
+   <td class="num" data-label="Median">52961.9</td>
+   <td class="num" data-label="Success">94.1%</td>
+   <td class="num" data-label="PAR-2">52961.9</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
@@ -129,16 +130,16 @@
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td class="code" data-label="Code"><a href="../codes/optim.html">OPTIM</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:5.8636%"><i></i></span><span class="bar-num">131</span></td>
-   <td class="num" data-label="Median">458.5</td>
+   <td class="num" data-label="Median">131</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">131</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:18.5719%"><i></i></span><span class="bar-num">235.2</span></td>
-   <td class="num" data-label="Median">469.64</td>
+   <td class="num" data-label="Median">785.24</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">235.2</td>
    </tr>
@@ -158,7 +159,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:23.3434%"><i></i></span><span class="bar-num">293</span></td>
    <td class="num" data-label="Median">293</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">293</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
@@ -230,7 +231,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:0.6419%"><i></i></span><span class="bar-num">103</span></td>
    <td class="num" data-label="Median">211</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">103</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
@@ -239,16 +240,16 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:2.0696%"><i></i></span><span class="bar-num">110</span></td>
    <td class="num" data-label="Median">225.881</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">110</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/pele.html">pele</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:20.3270%"><i></i></span><span class="bar-num">255</span></td>
-   <td class="num" data-label="Median">255</td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:32.6484%"><i></i></span><span class="bar-num">449.746</span></td>
+   <td class="num" data-label="Median">449.746</td>
    <td class="num" data-label="Success">96.6%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">449.746</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
@@ -262,15 +263,6 @@
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
-   <td class="code" data-label="Code"><a href="../codes/sella.html">Sella</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:48.2330%"><i></i></span><span class="bar-num">921.847</span></td>
-   <td class="num" data-label="Median">921.847</td>
-   <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">921.847</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/ase.html">ASE</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:48.3417%"><i></i></span><span class="bar-num">926.475</span></td>
    <td class="num" data-label="Median">926.475</td>
@@ -278,13 +270,22 @@
    <td class="num" data-label="PAR-2">926.475</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">7</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/rgsaddle.html">rgsaddle</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:48.6125%"><i></i></span><span class="bar-num">938.102</span></td>
    <td class="num" data-label="Median">1070.44</td>
    <td class="num" data-label="Success">93.2%</td>
    <td class="num" data-label="PAR-2">938.102</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">7</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
+   <td class="code" data-label="Code"><a href="../codes/sella.html">Sella</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:49.3056%"><i></i></span><span class="bar-num">968.525</span></td>
+   <td class="num" data-label="Median">968.525</td>
+   <td class="num" data-label="Success">98.3%</td>
+   <td class="num" data-label="PAR-2">968.525</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">8</span></td>
@@ -323,7 +324,6 @@
    <td class="num" data-label="PAR-2">3080.19</td>
    </tr>
    </tbody></table></div>
-   <p class="bench-note"><sup>1</sup> A dash in PAR-2 means that row has no PAR-2 score.</p>
    <h2>Problems</h2>
    <div class="bench-scroll">
    <table class="bench-sortable" data-bench="problems">

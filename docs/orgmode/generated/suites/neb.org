@@ -8,17 +8,18 @@
    <p>Nudged elastic band compares 1 problem.</p><ul class="suite-facts"><li>Pt heptamer island</li></ul>
    <div class="stat-row stat-row-2">
    <div class="stat"><span class="k">Problems</span><span class="v num">1</span></div>
-   <div class="stat"><span class="k">Codes</span><span class="v num">9</span></div>
+   <div class="stat"><span class="k">Codes</span><span class="v num">8</span></div>
    </div>
    <h2>Charts</h2>
    <div class="lead-charts">
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="pt-heptamer-island-cost-bars-title" viewBox="0 0 680 270.0"><title id="pt-heptamer-island-cost-bars-title">Best cost for Pt heptamer island</title><text class="group-label" x="0" y="18">Pt heptamer island</text><line class="axis" x1="168.00" y1="234.00" x2="584.00" y2="234.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="234.00"/><line class="axis" x1="168.00" y1="230.00" x2="168.00" y2="234.00"/><text class="num" x="168.00" y="248.00" text-anchor="middle">10¹</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="234.00"/><line class="axis" x1="306.67" y1="230.00" x2="306.67" y2="234.00"/><text class="num" x="306.67" y="248.00" text-anchor="middle">10²</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="234.00"/><line class="axis" x1="445.33" y1="230.00" x2="445.33" y2="234.00"/><text class="num" x="445.33" y="248.00" text-anchor="middle">10³</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="234.00"/><line class="axis" x1="584.00" y1="230.00" x2="584.00" y2="234.00"/><text class="num" x="584.00" y="248.00" text-anchor="middle">10⁴</text><text class="axis-name" x="376.00" y="264.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Eon svn: 42</title><text class="code-label" x="156" y="46.00" text-anchor="end">Eon svn</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="86.4239" height="10"/><text class="num" x="592.00" y="46.00">42</text></g><g><title>Gman: 48</title><text class="code-label" x="156" y="68.00" text-anchor="end">Gman</text><rect class="suite-bar" x="168.00" y="59.00" width="94.4655" height="10"/><text class="num" x="592.00" y="68.00">48</text></g><g><title>geodesic: 318.923</title><text class="code-label" x="156" y="90.00" text-anchor="end">geodesic</text><rect class="suite-bar" x="168.00" y="81.00" width="208.5111" height="10"/><text class="num" x="592.00" y="90.00">318.923</text></g><g><title>eOn: 319.538</title><text class="code-label" x="156" y="112.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="103.00" width="208.6272" height="10"/><text class="num" x="592.00" y="112.00">319.538</text></g><g><title>COMPASS: 561.462</title><text class="code-label" x="156" y="134.00" text-anchor="end">COMPASS</text><rect class="suite-bar" x="168.00" y="125.00" width="242.5724" height="10"/><text class="num" x="592.00" y="134.00">561.462</text></g><g><title>ASE: 606.923</title><text class="code-label" x="156" y="156.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="147.00" width="247.2612" height="10"/><text class="num" x="592.00" y="156.00">606.923</text></g><g><title>rgsaddle: 732.462</title><text class="code-label" x="156" y="178.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="169.00" width="258.5835" height="10"/><text class="num" x="592.00" y="178.00">732.462</text></g><g><title>LAMMPS: 1398.46</title><text class="code-label" x="156" y="200.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="191.00" width="297.5302" height="10"/><text class="num" x="592.00" y="200.00">1398.46</text></g><g><title>TSASE: 1521.15</title><text class="code-label" x="156" y="222.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="213.00" width="302.5947" height="10"/><text class="num" x="592.00" y="222.00">1521.15</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="pt-heptamer-island-cost-bars-title" viewBox="0 0 680 248.0"><title id="pt-heptamer-island-cost-bars-title">Best cost for Pt heptamer island</title><text class="group-label" x="0" y="18">Pt heptamer island</text><line class="axis" x1="168.00" y1="212.00" x2="584.00" y2="212.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="212.00"/><line class="axis" x1="168.00" y1="208.00" x2="168.00" y2="212.00"/><text class="num" x="168.00" y="226.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="212.00"/><line class="axis" x1="376.00" y1="208.00" x2="376.00" y2="212.00"/><text class="num" x="376.00" y="226.00" text-anchor="middle">10³</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="212.00"/><line class="axis" x1="584.00" y1="208.00" x2="584.00" y2="212.00"/><text class="num" x="584.00" y="226.00" text-anchor="middle">10⁴</text><text class="axis-name" x="376.00" y="242.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>geodesic: 318.923</title><text class="code-label" x="156" y="46.00" text-anchor="end">geodesic</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="104.7667" height="10"/><text class="num" x="592.00" y="46.00">318.923</text></g><g><title>eOn: 319.538</title><text class="code-label" x="156" y="68.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="59.00" width="104.9408" height="10"/><text class="num" x="592.00" y="68.00">319.538</text></g><g><title>Eon svn: 336.769</title><text class="code-label" x="156" y="90.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="81.00" width="109.6851" height="10"/><text class="num" x="592.00" y="90.00">336.769</text></g><g><title>COMPASS: 561.462</title><text class="code-label" x="156" y="112.00" text-anchor="end">COMPASS</text><rect class="suite-bar" x="168.00" y="103.00" width="155.8586" height="10"/><text class="num" x="592.00" y="112.00">561.462</text></g><g><title>ASE: 606.923</title><text class="code-label" x="156" y="134.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="125.00" width="162.8918" height="10"/><text class="num" x="592.00" y="134.00">606.923</text></g><g><title>rgsaddle: 732.462</title><text class="code-label" x="156" y="156.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="147.00" width="179.8752" height="10"/><text class="num" x="592.00" y="156.00">732.462</text></g><g><title>LAMMPS: 1398.46</title><text class="code-label" x="156" y="178.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="169.00" width="238.2953" height="10"/><text class="num" x="592.00" y="178.00">1398.46</text></g><g><title>TSASE: 1521.15</title><text class="code-label" x="156" y="200.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="191.00" width="245.8920" height="10"/><text class="num" x="592.00" y="200.00">1521.15</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <p class="chart-files"><a href="../../_static/board/suite-neb.svg">SVG file</a></p>
    <div class="bench-export">
    <figure class="bench-plot"><a href="../../_static/board/suite-neb.svg"><picture><source srcset="../../_static/board/suite-neb.webp" type="image/webp"><img src="../../_static/board/suite-neb.png" alt="Nudged elastic band best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Nudged elastic band best ranked cost. Select the plot for the full SVG.</figcaption></figure>
    </div>
    </div>
    <h2>Leaderboard</h2>
+   <p>An archived row is ranked by its PAR-2 when its entry counts its failures, and otherwise by the average it published.</p>
    <div class="bench-scroll">
    <table class="bench-sortable leader" data-bench="codes">
    <caption>A shorter bar is a lower cost on the log scale for that problem. Select a column heading to sort.</caption>
@@ -26,87 +27,76 @@
    <tr class="is-best group-start">
    <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
    <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
-   <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:20.7750%"><i></i></span><span class="bar-num">42</span></td>
-   <td class="num" data-label="Median">250.385</td>
-   <td class="num" data-label="Success">—<sup>1</sup></td>
-   <td class="num" data-label="PAR-2">—<sup>2</sup></td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
-   <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
-   <td class="code" data-label="Code"><a href="../codes/gman.html">Gman</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:22.7080%"><i></i></span><span class="bar-num">48</span></td>
-   <td class="num" data-label="Median">48</td>
-   <td class="num" data-label="Success">—<sup>1</sup></td>
-   <td class="num" data-label="PAR-2">—<sup>2</sup></td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
-   <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/geodesic.html">geodesic</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:50.1229%"><i></i></span><span class="bar-num">318.923</span></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:25.1843%"><i></i></span><span class="bar-num">318.923</span></td>
    <td class="num" data-label="Median">543.538</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">318.923</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
    <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:50.1508%"><i></i></span><span class="bar-num">319.538</span></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:25.2262%"><i></i></span><span class="bar-num">319.538</span></td>
    <td class="num" data-label="Median">934.308</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">319.538</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
+   <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
+   <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:26.3666%"><i></i></span><span class="bar-num">336.769</span></td>
+   <td class="num" data-label="Median">804.154</td>
+   <td class="num" data-label="Success">100.0%</td>
+   <td class="num" data-label="PAR-2">336.769</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
    <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/compass.html">COMPASS</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:58.3107%"><i></i></span><span class="bar-num">561.462</span></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:37.4660%"><i></i></span><span class="bar-num">561.462</span></td>
    <td class="num" data-label="Median">561.462</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">561.462</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
    <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/ase.html">ASE</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:59.4378%"><i></i></span><span class="bar-num">606.923</span></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:39.1567%"><i></i></span><span class="bar-num">606.923</span></td>
    <td class="num" data-label="Median">606.923</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">606.923</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">7</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
    <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/rgsaddle.html">rgsaddle</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:62.1595%"><i></i></span><span class="bar-num">732.462</span></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:43.2392%"><i></i></span><span class="bar-num">732.462</span></td>
    <td class="num" data-label="Median">748.231</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">732.462</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">8</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">7</span></td>
    <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/lammps.html">LAMMPS</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:71.5217%"><i></i></span><span class="bar-num">1398.46</span></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:57.2825%"><i></i></span><span class="bar-num">1398.46</span></td>
    <td class="num" data-label="Median">2408.08</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">1398.46</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">9</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">8</span></td>
    <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/tsase.html">TSASE</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:72.7391%"><i></i></span><span class="bar-num">1521.15</span></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:59.1087%"><i></i></span><span class="bar-num">1521.15</span></td>
    <td class="num" data-label="Median">10760.6</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">1521.15</td>
    </tr>
    </tbody></table></div>
-   <p class="bench-note"><sup>1</sup> A dash in the success rate means that row did not record one.</p>
-   <p class="bench-note"><sup>2</sup> A dash in PAR-2 means that row has no PAR-2 score.</p>
    <h2>Problems</h2>
    <div class="bench-scroll">
    <table class="bench-sortable" data-bench="problems">

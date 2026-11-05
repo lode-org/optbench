@@ -18,19 +18,20 @@
    </tr>
    </tbody></table></div>
    <h3>Best cost</h3>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="ethene-cost-bars-title" viewBox="0 0 680 116.0"><title id="ethene-cost-bars-title">Best cost for Ethene</title><text class="group-label" x="0" y="18">Ethene</text><line class="axis" x1="168.00" y1="80.00" x2="584.00" y2="80.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="80.00"/><line class="axis" x1="168.00" y1="76.00" x2="168.00" y2="80.00"/><text class="num" x="168.00" y="94.00" text-anchor="middle">10²</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="80.00"/><line class="axis" x1="306.67" y1="76.00" x2="306.67" y2="80.00"/><text class="num" x="306.67" y="94.00" text-anchor="middle">10³</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="80.00"/><line class="axis" x1="445.33" y1="76.00" x2="445.33" y2="80.00"/><text class="num" x="445.33" y="94.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="80.00"/><line class="axis" x1="584.00" y1="76.00" x2="584.00" y2="80.00"/><text class="num" x="584.00" y="94.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="110.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Pyamff: 184.56</title><text class="code-label" x="156" y="46.00" text-anchor="end">Pyamff</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="36.9044" height="10"/><text class="num" x="592.00" y="46.00">184.56</text></g><g><title>n2p2: 17397.1</title><text class="code-label" x="156" y="68.00" text-anchor="end">n2p2</text><rect class="suite-bar" x="168.00" y="59.00" width="310.6795" height="10"/><text class="num" x="592.00" y="68.00">17397.1</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="emt-pt-38-nanoparticle-cost-bars-title" viewBox="0 0 680 116.0"><title id="emt-pt-38-nanoparticle-cost-bars-title">Best cost for EMT Pt 38 nanoparticle</title><text class="group-label" x="0" y="18">EMT Pt 38 nanoparticle</text><line class="axis" x1="168.00" y1="80.00" x2="584.00" y2="80.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="80.00"/><line class="axis" x1="168.00" y1="76.00" x2="168.00" y2="80.00"/><text class="num" x="168.00" y="94.00" text-anchor="middle">10¹</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="80.00"/><line class="axis" x1="584.00" y1="76.00" x2="584.00" y2="80.00"/><text class="num" x="584.00" y="94.00" text-anchor="middle">10²</text><text class="axis-name" x="376.00" y="110.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>n2p2: 25.02</title><text class="code-label" x="156" y="46.00" text-anchor="end">n2p2</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="165.6875" height="10"/><text class="num" x="592.00" y="46.00">25.02</text></g><g><title>Pyamff: 97.58</title><text class="code-label" x="156" y="68.00" text-anchor="end">Pyamff</text><rect class="suite-bar" x="168.00" y="59.00" width="411.5741" height="10"/><text class="num" x="592.00" y="68.00">97.58</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="ethene-cost-bars-title" viewBox="0 0 680 94.0"><title id="ethene-cost-bars-title">Best cost for Ethene</title><text class="group-label" x="0" y="18">Ethene</text><line class="axis" x1="168.00" y1="58.00" x2="584.00" y2="58.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="58.00"/><line class="axis" x1="168.00" y1="54.00" x2="168.00" y2="58.00"/><text class="num" x="168.00" y="72.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="58.00"/><line class="axis" x1="584.00" y1="54.00" x2="584.00" y2="58.00"/><text class="num" x="584.00" y="72.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="88.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>n2p2: 17397.1</title><text class="code-label" x="156" y="46.00" text-anchor="end">n2p2</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="100.0386" height="10"/><text class="num" x="592.00" y="46.00">17397.1</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="emt-pt-38-nanoparticle-cost-bars-title" viewBox="0 0 680 94.0"><title id="emt-pt-38-nanoparticle-cost-bars-title">Best cost for EMT Pt 38 nanoparticle</title><text class="group-label" x="0" y="18">EMT Pt 38 nanoparticle</text><line class="axis" x1="168.00" y1="58.00" x2="584.00" y2="58.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="58.00"/><line class="axis" x1="168.00" y1="54.00" x2="168.00" y2="58.00"/><text class="num" x="168.00" y="72.00" text-anchor="middle">10¹</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="58.00"/><line class="axis" x1="584.00" y1="54.00" x2="584.00" y2="58.00"/><text class="num" x="584.00" y="72.00" text-anchor="middle">10²</text><text class="axis-name" x="376.00" y="88.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>n2p2: 25.02</title><text class="code-label" x="156" y="46.00" text-anchor="end">n2p2</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="165.6875" height="10"/><text class="num" x="592.00" y="46.00">25.02</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <h3>Results</h3>
-   <p>Ranked rows for this code, one version and one method on each row. <a href="../../methodology.html">Scoring rules</a>.</p>
+   <p>Ranked rows for this code, one version and one method on each row. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. <a href="../../methodology.html">Scoring rules</a>.</p>
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
-   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="mlopt/C2H4" data-label="n2p2 (2.3.0) · Kalman energy">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-label="Row" data-field="label">n2p2 (2.3.0) · Kalman energy</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">6</td>
+   <td data-label="Family rank" data-field="family_rank">1</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">17397.1</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">10000</td>
@@ -45,7 +46,8 @@
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-label="Row" data-field="label">n2p2 (2.3.0) · Kalman force</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">8</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">60000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">30000</td>
@@ -61,6 +63,7 @@
    <td data-label="Row" data-field="label">n2p2 (2.3.0) · Kalman energy</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">1</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">25.02</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">14</td>
@@ -75,7 +78,8 @@
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-label="Row" data-field="label">n2p2 (2.3.0) · Kalman force</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">8</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">60000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">30000</td>

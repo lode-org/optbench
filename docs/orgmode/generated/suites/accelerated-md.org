@@ -20,6 +20,7 @@
    </div>
    </div>
    <h2>Leaderboard</h2>
+   <p>An archived row is ranked by its PAR-2 when its entry counts its failures, and otherwise by the average it published.</p>
    <div class="bench-scroll">
    <table class="bench-sortable leader" data-bench="codes">
    <caption>A shorter bar is a lower cost on the log scale for that problem. Select a column heading to sort.</caption>

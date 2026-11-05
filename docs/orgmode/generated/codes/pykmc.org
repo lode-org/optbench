@@ -18,7 +18,7 @@
    </tr>
    </tbody></table></div>
    <h3>Results</h3>
-   <p>Ranked rows for this code, one version and one method on each row. <a href="../../methodology.html">Scoring rules</a>.</p>
+   <p>Ranked rows for this code, one version and one method on each row. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. <a href="../../methodology.html">Scoring rules</a>.</p>
    <p>No ranked row.</p>
    </section>
 #+end_export

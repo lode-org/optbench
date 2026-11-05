@@ -19,6 +19,7 @@
    </div>
    </div>
    <h2>Leaderboard</h2>
+   <p>An archived row is ranked by its PAR-2 when its entry counts its failures, and otherwise by the average it published.</p>
    <div class="bench-scroll">
    <table class="bench-sortable leader" data-bench="codes">
    <caption>A shorter bar is a lower cost on the log scale for that problem. Select a column heading to sort.</caption>
@@ -39,7 +40,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:9.9485%"><i></i></span><span class="bar-num">25</span></td>
    <td class="num" data-label="Median">25</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">25</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
@@ -48,7 +49,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:9.9485%"><i></i></span><span class="bar-num">25</span></td>
    <td class="num" data-label="Median">25</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">25</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
@@ -57,7 +58,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:9.9485%"><i></i></span><span class="bar-num">25</span></td>
    <td class="num" data-label="Median">28</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">25</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
@@ -114,7 +115,6 @@
    <td class="num" data-label="PAR-2">18700.6</td>
    </tr>
    </tbody></table></div>
-   <p class="bench-note"><sup>1</sup> A dash in PAR-2 means that row has no PAR-2 score.</p>
    <h2>Problems</h2>
    <div class="bench-scroll">
    <table class="bench-sortable" data-bench="problems">

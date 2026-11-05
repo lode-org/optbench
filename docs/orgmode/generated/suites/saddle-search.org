@@ -8,17 +8,18 @@
    <p>Saddle search compares 1 problem.</p><ul class="suite-facts"><li>Pt heptamer island</li></ul>
    <div class="stat-row stat-row-2">
    <div class="stat"><span class="k">Problems</span><span class="v num">1</span></div>
-   <div class="stat"><span class="k">Codes</span><span class="v num">5</span></div>
+   <div class="stat"><span class="k">Codes</span><span class="v num">4</span></div>
    </div>
    <h2>Charts</h2>
    <div class="lead-charts">
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="pt-heptamer-island-cost-bars-title" viewBox="0 0 680 182.0"><title id="pt-heptamer-island-cost-bars-title">Best cost for Pt heptamer island</title><text class="group-label" x="0" y="18">Pt heptamer island</text><line class="axis" x1="168.00" y1="146.00" x2="584.00" y2="146.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="146.00"/><line class="axis" x1="168.00" y1="142.00" x2="168.00" y2="146.00"/><text class="num" x="168.00" y="160.00" text-anchor="middle">10³</text><line class="grid" x1="237.33" y1="32.00" x2="237.33" y2="146.00"/><line class="axis" x1="237.33" y1="142.00" x2="237.33" y2="146.00"/><text class="num" x="237.33" y="160.00" text-anchor="middle">10⁴</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="146.00"/><line class="axis" x1="306.67" y1="142.00" x2="306.67" y2="146.00"/><text class="num" x="306.67" y="160.00" text-anchor="middle">10⁵</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="146.00"/><line class="axis" x1="376.00" y1="142.00" x2="376.00" y2="146.00"/><text class="num" x="376.00" y="160.00" text-anchor="middle">10⁶</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="146.00"/><line class="axis" x1="445.33" y1="142.00" x2="445.33" y2="146.00"/><text class="num" x="445.33" y="160.00" text-anchor="middle">10⁷</text><line class="grid" x1="514.67" y1="32.00" x2="514.67" y2="146.00"/><line class="axis" x1="514.67" y1="142.00" x2="514.67" y2="146.00"/><text class="num" x="514.67" y="160.00" text-anchor="middle">10⁸</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="146.00"/><line class="axis" x1="584.00" y1="142.00" x2="584.00" y2="146.00"/><text class="num" x="584.00" y="160.00" text-anchor="middle">10⁹</text><text class="axis-name" x="376.00" y="176.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Sella: 5201.62</title><text class="code-label" x="156" y="46.00" text-anchor="end">Sella</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="49.6523" height="10"/><text class="num" x="592.00" y="46.00">5201.62</text></g><g><title>SoftSaddle: 10124.2</title><text class="code-label" x="156" y="68.00" text-anchor="end">SoftSaddle</text><rect class="suite-bar" x="168.00" y="59.00" width="69.7051" height="10"/><text class="num" x="592.00" y="68.00">10124.2</text></g><g><title>rgsaddle: 10128</title><text class="code-label" x="156" y="90.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="81.00" width="69.7163" height="10"/><text class="num" x="592.00" y="90.00">10128</text></g><g><title>Eon svn: 1.34547e+06</title><text class="code-label" x="156" y="112.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="103.00" width="216.9352" height="10"/><text class="num" x="592.00" y="112.00">1.34547e+06</text></g><g><title>eOn: 2e+08</title><text class="code-label" x="156" y="134.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="125.00" width="367.5381" height="10"/><text class="num" x="592.00" y="134.00">2e+08</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="pt-heptamer-island-cost-bars-title" viewBox="0 0 680 160.0"><title id="pt-heptamer-island-cost-bars-title">Best cost for Pt heptamer island</title><text class="group-label" x="0" y="18">Pt heptamer island</text><line class="axis" x1="168.00" y1="124.00" x2="584.00" y2="124.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="124.00"/><line class="axis" x1="168.00" y1="120.00" x2="168.00" y2="124.00"/><text class="num" x="168.00" y="138.00" text-anchor="middle">10³</text><line class="grid" x1="237.33" y1="32.00" x2="237.33" y2="124.00"/><line class="axis" x1="237.33" y1="120.00" x2="237.33" y2="124.00"/><text class="num" x="237.33" y="138.00" text-anchor="middle">10⁴</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="124.00"/><line class="axis" x1="306.67" y1="120.00" x2="306.67" y2="124.00"/><text class="num" x="306.67" y="138.00" text-anchor="middle">10⁵</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="124.00"/><line class="axis" x1="376.00" y1="120.00" x2="376.00" y2="124.00"/><text class="num" x="376.00" y="138.00" text-anchor="middle">10⁶</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="124.00"/><line class="axis" x1="445.33" y1="120.00" x2="445.33" y2="124.00"/><text class="num" x="445.33" y="138.00" text-anchor="middle">10⁷</text><line class="grid" x1="514.67" y1="32.00" x2="514.67" y2="124.00"/><line class="axis" x1="514.67" y1="120.00" x2="514.67" y2="124.00"/><text class="num" x="514.67" y="138.00" text-anchor="middle">10⁸</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="124.00"/><line class="axis" x1="584.00" y1="120.00" x2="584.00" y2="124.00"/><text class="num" x="584.00" y="138.00" text-anchor="middle">10⁹</text><text class="axis-name" x="376.00" y="154.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Sella: 5201.62</title><text class="code-label" x="156" y="46.00" text-anchor="end">Sella</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="49.6523" height="10"/><text class="num" x="592.00" y="46.00">5201.62</text></g><g><title>SoftSaddle: 10124.2</title><text class="code-label" x="156" y="68.00" text-anchor="end">SoftSaddle</text><rect class="suite-bar" x="168.00" y="59.00" width="69.7051" height="10"/><text class="num" x="592.00" y="68.00">10124.2</text></g><g><title>rgsaddle: 10128</title><text class="code-label" x="156" y="90.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="81.00" width="69.7163" height="10"/><text class="num" x="592.00" y="90.00">10128</text></g><g><title>eOn: 2e+08</title><text class="code-label" x="156" y="112.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="103.00" width="367.5381" height="10"/><text class="num" x="592.00" y="112.00">2e+08</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <p class="chart-files"><a href="../../_static/board/suite-saddle-search.svg">SVG file</a></p>
    <div class="bench-export">
    <figure class="bench-plot"><a href="../../_static/board/suite-saddle-search.svg"><picture><source srcset="../../_static/board/suite-saddle-search.webp" type="image/webp"><img src="../../_static/board/suite-saddle-search.png" alt="Saddle search best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Saddle search best ranked cost. Select the plot for the full SVG.</figcaption></figure>
    </div>
    </div>
    <h2>Leaderboard</h2>
+   <p>An archived row is ranked by its PAR-2 when its entry counts its failures, and otherwise by the average it published.</p>
    <div class="bench-scroll">
    <table class="bench-sortable leader" data-bench="codes">
    <caption>A shorter bar is a lower cost on the log scale for that problem. Select a column heading to sort.</caption>
@@ -37,7 +38,7 @@
    <td class="problem" data-label="Problem"><a href="saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/softsaddle.html">SoftSaddle</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:16.7560%"><i></i></span><span class="bar-num">10124.2</span></td>
-   <td class="num" data-label="Median">423491</td>
+   <td class="num" data-label="Median">10126.1</td>
    <td class="num" data-label="Success">0.0%</td>
    <td class="num" data-label="PAR-2">10124.2</td>
    </tr>
@@ -53,15 +54,6 @@
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
    <td class="problem" data-label="Problem"><a href="saddle-search/pt-island.html">Pt heptamer island</a></td>
-   <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:52.1479%"><i></i></span><span class="bar-num">1.34547e+06</span></td>
-   <td class="num" data-label="Median">3.34149e+06</td>
-   <td class="num" data-label="Success">—<sup>1</sup></td>
-   <td class="num" data-label="PAR-2">—<sup>2</sup></td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
-   <td class="problem" data-label="Problem"><a href="saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:88.3505%"><i></i></span><span class="bar-num">2e+08</span></td>
    <td class="num" data-label="Median">2e+08</td>
@@ -69,8 +61,6 @@
    <td class="num" data-label="PAR-2">2e+08</td>
    </tr>
    </tbody></table></div>
-   <p class="bench-note"><sup>1</sup> A dash in the success rate means that row did not record one.</p>
-   <p class="bench-note"><sup>2</sup> A dash in PAR-2 means that row has no PAR-2 score.</p>
    <h2>Problems</h2>
    <div class="bench-scroll">
    <table class="bench-sortable" data-bench="problems">

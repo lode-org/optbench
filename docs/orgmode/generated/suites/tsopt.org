@@ -20,6 +20,7 @@
    </div>
    </div>
    <h2>Leaderboard</h2>
+   <p>An archived row is ranked by its PAR-2 when its entry counts its failures, and otherwise by the average it published.</p>
    <div class="bench-scroll">
    <table class="bench-sortable leader" data-bench="codes">
    <caption>A shorter bar is a lower cost on the log scale for that problem. Select a column heading to sort.</caption>
@@ -40,7 +41,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:29.0342%"><i></i></span><span class="bar-num">145</span></td>
    <td class="num" data-label="Median">145</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">145</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
@@ -49,7 +50,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:32.0825%"><i></i></span><span class="bar-num">192</span></td>
    <td class="num" data-label="Median">192</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">192</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
@@ -58,7 +59,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:34.3687%"><i></i></span><span class="bar-num">237</span></td>
    <td class="num" data-label="Median">306.89</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">237</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
@@ -112,7 +113,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:24.1425%"><i></i></span><span class="bar-num">53</span></td>
    <td class="num" data-label="Median">63.6429</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">53</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
@@ -121,7 +122,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:28.3753%"><i></i></span><span class="bar-num">71</span></td>
    <td class="num" data-label="Median">71</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">71</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
@@ -130,7 +131,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:31.4828%"><i></i></span><span class="bar-num">88</span></td>
    <td class="num" data-label="Median">88</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">88</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
@@ -139,7 +140,7 @@
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:34.1769%"><i></i></span><span class="bar-num">106</span></td>
    <td class="num" data-label="Median">115.48</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">106</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
@@ -187,7 +188,6 @@
    <td class="num" data-label="PAR-2">1970.22</td>
    </tr>
    </tbody></table></div>
-   <p class="bench-note"><sup>1</sup> A dash in PAR-2 means that row has no PAR-2 score.</p>
    <h2>Problems</h2>
    <div class="bench-scroll">
    <table class="bench-sortable" data-bench="problems">
