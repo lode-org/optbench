@@ -640,7 +640,11 @@ def suite_tables(
                 }
             )
             series.append({**item, "title": title})
-    leaderboard = "<h2>Leaderboard</h2>\n" + leaderboard_html(board_items, show_problem=True, bench="codes")
+    archive_rule = (
+        "<p>An archived row is ranked by its PAR-2 when its entry counts its failures, "
+        "and otherwise by the average it published.</p>\n"
+    )
+    leaderboard = "<h2>Leaderboard</h2>\n" + archive_rule + leaderboard_html(board_items, show_problem=True, bench="codes")
     return leaderboard, problems_html, series
 
 

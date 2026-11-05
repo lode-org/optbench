@@ -1,6 +1,9 @@
 """A ranked row is one code, one version, and one stock method."""
 
+import tomllib
 from pathlib import Path
+
+import pytest
 
 from optbench.board import build_board, rank_violations
 from optbench.families import family_of, finite_difference_calls, method_name
@@ -63,7 +66,13 @@ def test_lj38_2ts_ranks_each_eon_method_and_keeps_tsase_split():
     assert "band" in families and "min-mode" in families
     archived = [row for row in problem["ranked"] if row["origin"] == "archive"]
     assert archived
-    assert all(row["par2_mean"] is None and row["published"] is not None for row in archived)
+    problem_file = ROOT / "problems" / "double-ended-saddle-search" / "lj38_2ts_separation.toml"
+    cap = tomllib.loads(problem_file.read_text(encoding="utf-8"))["convergence"]["max_force_calls"]
+    for row in archived:
+        n, nfailed = row["n"], row["nfailed"]
+        assert row["par2_mean"] == pytest.approx(((n - nfailed) * row["published"] + nfailed * 2 * cap) / n)
+        assert row["rank_cost"] == row["par2_mean"]
+    assert any(row["nfailed"] > 0 for row in archived)
     assert rank_violations(document) == []
 
 

@@ -552,6 +552,9 @@ def _code_page_html(name: str, pins: list[dict], document: dict, registry: list[
     lines.append("<h3>Results</h3>")
     lines.append(
         "<p>Ranked rows for this code, one version and one method on each row. "
+        "PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. "
+        "An archived row shows the average it published, "
+        "and its PAR-2 applies that rule to the failures the entry records. "
         '<a href="../../methodology.html">Scoring rules</a>.</p>'
     )
     if found:

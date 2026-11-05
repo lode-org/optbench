@@ -289,7 +289,11 @@ def check_site(root: Path) -> list[str]:
 
         if profile_worth_showing(board_problem):
             _require(suite, f"{slug}-profile.svg", suite_label, errors)
-        harness = [row for row in board_problem.get("ranked") or [] if row.get("par2_mean") is not None]
+        harness = [
+            row
+            for row in board_problem.get("ranked") or []
+            if row.get("par2_mean") is not None and row.get("success_rate") is not None
+        ]
         if harness:
             _require(suite, f"{slug}-cost.svg", suite_label, errors)
         families = {str(row.get("family") or "") for row in board_problem.get("ranked") or []}
@@ -300,6 +304,11 @@ def check_site(root: Path) -> list[str]:
                 suite_label,
                 errors,
             )
+        unscored = [row for row in board_rows(board_problem) if row.get("failure_note")]
+        if unscored:
+            _require(suite, 'data-board-note="failures"', suite_label, errors)
+        for row in unscored:
+            _require(suite, html.escape(f"{row.get('label')} ({row['failure_note']})"), suite_label, errors)
         for group in board_problem.get("other_units") or []:
             _require(
                 suite,

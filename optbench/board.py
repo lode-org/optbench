@@ -54,9 +54,9 @@ from .families import (
 from .pins import pin_gap, same_commit
 from .problems import load_all
 from .profile import performance_profile, profile_cost
-from .score import normalize_start, score_v2
+from .score import PAR_FACTOR, normalize_start, score_v2
 from .site import SUITE_ORDER, _float, _held, _primary, campaign_problem
-from .units import FORCE_CALL_FIELDS, rank_unit, row_unit, unit_source
+from .units import FORCE_CALL_FIELDS, harness_unit, rank_unit, row_unit, unit_source
 from .v2 import parse_repetitions
 
 BOARD_SCHEMA = "optbench.board/v2"
@@ -588,6 +588,7 @@ def _blank_row(**values) -> dict:
         "min_calls": None,
         "max_calls": None,
         "failures": {},
+        "failure_note": "",
         "cap": None,
         "scored": False,
         "note": "",
@@ -1057,6 +1058,36 @@ def _rank_key(row: dict) -> tuple:
     )
 
 
+def _archive_par2(row: dict, problem: dict | None) -> tuple[float | None, str]:
+    """PAR-2 of an archived mean, or why the harness failure rule cannot score it.
+
+    The half-even rule each problem file states leaves failures out of the
+    archived mean, so the finished runs sum to that mean times their count.
+    The reason is empty when the mean leaves nothing out.
+    """
+    published = row.get("published")
+    nfailed = row.get("nfailed")
+    if published is None:
+        return None, ""
+    if nfailed is None:
+        return None, "the entry records no failure count"
+    cap = _cap_of(problem, None, {})
+    if cap is None:
+        return None, "" if nfailed == 0 else "the problem states no cap"
+    harness = harness_unit(problem)
+    if row.get("unit") != harness:
+        return None, "" if nfailed == 0 else f"it counts {row.get('unit')}, and the cap counts {harness}"
+    most = row.get("_archived_max")
+    if most is not None and most > cap:
+        return None, f"its archived maximum, {_format_number(most)}, is above the cap of {cap}"
+    if nfailed == 0:
+        return float(published), ""
+    n = int(row.get("n") or 0)
+    if n < nfailed:
+        return None, f"the entry records {nfailed} failures and no count of {nfailed} or more runs"
+    return ((n - nfailed) * float(published) + nfailed * PAR_FACTOR * cap) / n, ""
+
+
 def _annotate_row(row: dict, problem: dict | None, registry: list[dict]) -> None:
     code = display_code(str(row.get("code") or ""), registry)
     version = version_text(str(row.get("code_version") or ""), str(row.get("commit") or ""))
@@ -1068,7 +1099,9 @@ def _annotate_row(row: dict, problem: dict | None, registry: list[dict]) -> None
     row["fd_calls"] = finite_difference_calls(float(row["hessian_calls"]), coordinate_count(problem))
     row["unit"] = row_unit(problem, str(row.get("origin") or "harness"))
     if row.get("origin") == "archive":
-        row["rank_cost"] = row.get("published")
+        par2, row["failure_note"] = _archive_par2(row, problem)
+        row["par2_mean"] = par2
+        row["rank_cost"] = par2 if par2 is not None else row.get("published")
     else:
         row["published"] = None
         row["rank_cost"] = row.get("par2_mean")
@@ -1188,6 +1221,7 @@ def _archive_rows(root: Path, problems: dict[str, dict], registry: list[dict], f
             n=stated or 0,
             hessian_calls=0.0,
             note="archived score",
+            _archived_max=_float(fields["force_calls_max"]) if fields.get("force_calls_max") else None,
         )
         rows.append(row)
     return rows
@@ -1531,6 +1565,18 @@ def _failure_text(failures: dict) -> str:
     return ", ".join(parts)
 
 
+def failure_cell(row: dict) -> str:
+    """Failure classes of a harness row. An archived entry records only a count."""
+    if row.get("origin") != "archive":
+        return _failure_text(row.get("failures") or {})
+    nfailed = row.get("nfailed")
+    if nfailed is None:
+        return "not recorded"
+    if nfailed == 0:
+        return "0 failed"
+    return f"{nfailed} failed, class not recorded"
+
+
 def _cell(value) -> str:
     return html.escape(str(value))
 
@@ -1576,7 +1622,7 @@ def ranked_cells(row: dict, per_image: bool) -> list[tuple[str, str]]:
         cells.append(("mean_per_image", _format_number(row.get("mean_per_image"))))
     cells.append(("hessian_calls", _format_number(row.get("hessian_calls"))))
     cells.append(("fd_calls", _format_number(row.get("fd_calls"))))
-    cells.append(("failures", _failure_text(row.get("failures") or {})))
+    cells.append(("failures", failure_cell(row)))
     cells.append(("n", str(row.get("n"))))
     return cells
 
@@ -1860,7 +1906,14 @@ def render_problem_section(
 
 
 def _caption(per_image: bool) -> str:
-    caption = "One row is one code, one version, and one method. A lower cost is better."
+    caption = (
+        "One row is one code, one version, and one method. A lower cost is better. "
+        "PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. "
+        "An archived row shows the average it published, "
+        "and its PAR-2 applies that rule to the failures the entry records. "
+        "Hessians is the mean analytic Hessian count. "
+        "FD calls is that count times one force call per coordinate."
+    )
     if per_image:
         caption += " The per-image mean divides the total by the number of moving images."
     return caption
@@ -1889,6 +1942,20 @@ def _family_table(problem: dict, family_id: str, rows: list[dict]) -> str:
 
 def unit_per_image(group: dict) -> bool:
     return any(row.get("mean_per_image") is not None for row in group.get("rows") or [])
+
+
+def failure_paragraph(problem: dict) -> str:
+    """Archived rows the harness failure rule cannot score, each with the reason."""
+    rows = [row for row in board_rows(problem) if row.get("failure_note")]
+    if not rows:
+        return ""
+    items = "".join("<li>" + _cell(f"{row.get('label')} ({row['failure_note']})") + "</li>" for row in rows)
+    return (
+        '<p class="bench-gaps" data-board-note="failures">'
+        "These archived rows rank on the value each one published, which leaves out any failure. "
+        "The failure rule has no score for them, for the reason given with each.</p>"
+        f"<ul>{items}</ul>"
+    )
 
 
 def _unit_table(problem: dict, group: dict) -> str:
@@ -2002,6 +2069,9 @@ def _table(
     lead = gap_paragraph(problem, unparsed)
     if lead:
         lines.append(lead)
+    unscored = failure_paragraph(problem)
+    if unscored:
+        lines.append(unscored)
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in ranked:
         grouped[str(row.get("family") or "")].append(row)

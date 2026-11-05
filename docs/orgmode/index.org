@@ -7,6 +7,8 @@ Scores for geometry optimizers, saddle searches, and global optimization.
 
 Chill, Stevenson, Ruehle, Shang, Xiao, Farrell, Wales, and Henkelman set the 2014 problems in J. Chem. Theory Comput. 2014, 10, 5476-5482 ([[https://doi.org/10.1021/ct5008718][doi:10.1021/ct5008718]]).
 
+When an archived entry counts its failed runs, each counts as twice the cap, and the row ranks on that PAR-2.
+
 #+begin_export rst
 .. toctree::
    :hidden:
