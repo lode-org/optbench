@@ -167,11 +167,11 @@ def write_asv(commit: str) -> Path:
 
     from optbench.failures import failure_of
 
-    machine = json.loads((ROOT / "results" / "asv" / "cursor" / "machine.json").read_text(encoding="utf-8"))
+    machine = json.loads((ROOT / "results" / "asv" / "xeon-8c-ci" / "machine.json").read_text(encoding="utf-8"))
     params = {
         "arch": machine.get("arch", "x86_64"),
         "cpu": machine.get("cpu", ""),
-        "machine": "cursor",
+        "machine": "xeon-8c-ci",
         "num_cpu": str(machine.get("num_cpu", "8")),
         "os": machine.get("os", ""),
         "ram": str(machine.get("ram", "")),
@@ -242,7 +242,7 @@ def write_asv(commit: str) -> Path:
     if wrote == 0:
         raise RuntimeError("no finished campaign to store")
     result.save(str(ROOT / "results" / "asv"))
-    dest = ROOT / "results" / "asv" / "cursor" / result._filename
+    dest = ROOT / "results" / "asv" / "xeon-8c-ci" / result._filename
     print(f"wrote {dest} classes {wrote}", flush=True)
     return dest
 

@@ -5,7 +5,7 @@
   "params": {
     "arch": "x86_64",
     "cpu": "Intel(R) Xeon(R) Processor",
-    "machine": "cursor",
+    "machine": "xeon-8c-ci",
     "num_cpu": "8",
     "os": "Linux 6.12.94+",
     "ram": "50526994432",

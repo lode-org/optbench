@@ -1,6 +1,6 @@
 {
   "svn_ref": "origin/entries/eon-svn-fortran",
-  "asv": "results/asv/cursor/06efc6dd-existing-py_workspace_.venv_bin_python.json",
+  "asv": "results/asv/xeon-8c-ci/06efc6dd-existing-py_workspace_.venv_bin_python.json",
   "pairs": [
     {
       "template": "eon/develop-ts-lj38-dimer",

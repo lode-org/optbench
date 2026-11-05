@@ -62,7 +62,7 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
     expected = len(specs())
     if len(groups) != expected:
         raise ValueError(f"expected {expected} noise campaigns, found {len(groups)}")
-    machine = json.loads((root / "results" / "asv" / "cursor" / "machine.json").read_text(encoding="utf-8"))
+    machine = json.loads((root / "results" / "asv" / "xeon-8c-ci" / "machine.json").read_text(encoding="utf-8"))
     params = {
         "arch": machine["arch"],
         "cpu": machine["cpu"],
@@ -115,6 +115,6 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
         "version": 2,
     }
     # The other result files use asv's short hash in the name and the full hash inside.
-    dest = root / "results" / "asv" / "cursor" / f"{commit[:8]}-uv-pip-py3.12.json"
+    dest = root / "results" / "asv" / "xeon-8c-ci" / f"{commit[:8]}-uv-pip-py3.12.json"
     dest.write_text(json.dumps(document, separators=(", ", ": ")), encoding="utf-8")
     return dest

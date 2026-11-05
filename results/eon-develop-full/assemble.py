@@ -32,8 +32,8 @@ def _load_specs():
 
 
 def _result_files(directory: Path) -> list[Path]:
-    cursor = directory / "results" / "cursor"
-    found = list(cursor.glob("*.json")) if cursor.is_dir() else list(directory.rglob("*.json"))
+    machine_dir = directory / "results" / "xeon-8c-ci"
+    found = list(machine_dir.glob("*.json")) if machine_dir.is_dir() else list(directory.rglob("*.json"))
     return [path for path in found if path.name not in {"machine.json", "benchmarks.json"}]
 
 
