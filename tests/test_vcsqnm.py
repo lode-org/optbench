@@ -53,6 +53,7 @@ def test_morse_cell_matches_the_orthorhombic_kernel():
         high, _grad, _deriv = morse_cell(frac @ up.T, up)
         low, _grad, _deriv = morse_cell(frac @ down.T, down)
         assert (high - low) / (2 * eps) == pytest.approx(deriv[index], abs=1e-4)
+    pytest.importorskip("ase")
     from ase.stress import full_3x3_to_voigt_6_stress, voigt_6_to_full_3x3_stress
 
     stress = voigt_6_to_full_3x3_stress(full_3x3_to_voigt_6_stress(cell_stress(deriv, cell)))
