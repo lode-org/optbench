@@ -31,7 +31,7 @@ asv is the measurement store. A result file is keyed to the commit asv checked o
 5. Set `repeat = 1`, `rounds = 1`, `number = 1`, `sample_time = 0`, `warmup_time = 0`. `repeat == 0` means up to ten repeats.
 6. Commit the benchmark. `asv run` installs that commit. Uncommitted edits are not the run.
 7. `uv run asv machine --yes`, then `uv run asv machine --yes --machine xeon-8c`, once on the machine. That writes `~/.asv-machine.json`. The committed machine is `xeon-8c`, and the copy that is committed is `results/asv/xeon-8c/machine.json`. Without `--machine`, asv names the machine after the host, and `asv run` writes a new folder beside `results/asv/xeon-8c`. The first command records the host's `os`, `arch`, `cpu`, `num_cpu` and `ram`. The second command copies that record to the name `xeon-8c`. When `~/.asv-machine.json` has no record for the host, `--machine` alone records only the name, and `asv run` writes that bare record over the committed `machine.json`.
-8. `uv run asv run --machine xeon-8c <commit>^! -b YourClass`. Do not pass `--quick`. On asv 0.6.6 a quick run still writes `results/asv`. The help text says it does not. That is `docs/asv-gaps.md`. The committed file is the run without `--quick`.
+8. `uv run python -m optbench.asv_launch run --machine xeon-8c <commit>^! -b YourClass`. Do not pass `--quick`. On asv 0.6.6 a quick run still writes `results/asv`. The help text says it does not. That is `docs/asv-gaps.md`. The committed file is the run without `--quick`.
 9. Commit the new files under `results/asv`.
 10. Score with `asv.results.iter_results` and `Results.get_result_value`, then `score_v2`. `optbench.asv_score` does that for the quadratic sample. Parameter strings in the result JSON are wrapped in `repr` quotes; the reader unwraps them with `ast.literal_eval`. `uv run optbench statistics` refuses to write a document when those tracks are absent.
 
@@ -73,14 +73,23 @@ The quadratic sample is the run that `results/validation/statistics.json` scores
 uv run asv check
 uv run asv machine --yes
 uv run asv machine --yes --machine xeon-8c
-uv run asv run --quick --machine xeon-8c
-uv run asv run --machine xeon-8c COMMIT^! -b quadratic
+uv run python -m optbench.asv_launch run --quick --machine xeon-8c
+uv run python -m optbench.asv_launch run --machine xeon-8c COMMIT^! -b quadratic
 uv run optbench statistics --output results/validation/statistics.json
 uv run asv publish
 uv run asv compare COMMIT COMMIT
 ```
 
 `asv check` imports the suite. `asv run --quick` is the gate before the saved run. Run it before the saved `asv run`, because asv 0.6.6 rewrites the result file. `asv compare` on one commit compares that commit with itself.
+
+## Launcher
+
+`python -m optbench.asv_launch <asv arguments>` runs asv in its own process with the same arguments.
+The benchmark server imports NumPy before any benchmark module, and OpenBLAS sizes its pool once, when it loads.
+NumPy's pool is therefore sized before the suite loads, and no asv result file records the pools.
+Before asv starts, the launcher probes the server's import order in a fresh interpreter under the same environment.
+`OPTBENCH_ASV_RECORD=<file>` writes the thread variables, the probed pools, and the asv arguments as JSON.
+`results/ase-sella-full/summarize.py --run-env` reads that file.
 
 ## CI
 
