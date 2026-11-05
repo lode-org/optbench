@@ -90,4 +90,4 @@ required = [
 
 [scoring.v2.verification]
 label = "the dimer verification"
-url = "https://github.com/lode-org/optbench/blob/818ba900bccd53c8198103472801f72da4446a72/optbench/gpridge_dimer.py"
+url = "https://github.com/lode-org/optbench/blob/1f3c2295a59eff9c2ab4e32769edac372e2119cf/optbench/gpridge_dimer.py"

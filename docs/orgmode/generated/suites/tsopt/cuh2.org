@@ -35,6 +35,6 @@
    <p class="bench-note">The maximum-norm hydrogen force meets the stop on an independent remote procedure call (RPC).</p>
    <p class="bench-note">The Hessian index over the six hydrogen coordinates is 1.</p>
    <p class="bench-note">A hydrogen mode is unresolved when its absolute curvature is at most the largest of the force stop, the roundoff floor on the Frobenius norm, and the critical-point floor.</p>
-   <p class="bench-note">The check links <a href="https://github.com/lode-org/optbench/blob/818ba900bccd53c8198103472801f72da4446a72/optbench/gpridge_dimer.py">the dimer verification</a>.</p>
+   <p class="bench-note">The check links <a href="https://github.com/lode-org/optbench/blob/1f3c2295a59eff9c2ab4e32769edac372e2119cf/optbench/gpridge_dimer.py">the dimer verification</a>.</p>
    </section>
 #+end_export
