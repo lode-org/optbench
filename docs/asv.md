@@ -30,8 +30,18 @@ asv is the measurement store. A result file is keyed to the commit asv checked o
 4. Inherit `optbench.asv_tracks.TrackedSearch`, or copy its methods. `track_*` returns a float. Set `.unit` on the function (`force calls`, `fraction`, `count`). A dict with `samples` and `number` is a timing result, and asv replaces the value. `time_search` is the wall clock.
 5. Set `repeat = 1`, `rounds = 1`, `number = 1`, `sample_time = 0`, `warmup_time = 0`. `repeat == 0` means up to ten repeats.
 6. Commit the benchmark. `asv run` installs that commit. Uncommitted edits are not the run.
-7. `uv run asv machine --yes`, then `uv run asv machine --yes --machine xeon-8c`, once on the machine. That writes `~/.asv-machine.json`. The committed machine is `xeon-8c`, and the copy that is committed is `results/asv/xeon-8c/machine.json`. Without `--machine`, asv names the machine after the host, and `asv run` writes a new folder beside `results/asv/xeon-8c`. The first command records the host's `os`, `arch`, `cpu`, `num_cpu` and `ram`. The second command copies that record to the name `xeon-8c`. When `~/.asv-machine.json` has no record for the host, `--machine` alone records only the name, and `asv run` writes that bare record over the committed `machine.json`.
-8. `uv run python -m optbench.asv_launch run --machine xeon-8c <commit>^! -b YourClass`. Do not pass `--quick`. On asv 0.6.6 a quick run still writes `results/asv`. The help text says it does not. That is `docs/asv-gaps.md`. The committed file is the run without `--quick`.
+7. `uv run python -m optbench.asv_launch machine --yes --machine xeon-8c` once on the machine.
+   The committed machine is `xeon-8c`.
+   That writes every field to `~/.asv-machine.json`.
+   Upstream `asv machine --yes --machine NAME` stores only the name (gap 9 in `docs/asv-gaps.md`).
+   Without `--machine`, asv names the machine after the host, and `asv run` writes a new folder beside `results/asv/xeon-8c`.
+   The copy that is committed is `results/asv/xeon-8c/machine.json`.
+8. `uv run python -m optbench.asv_launch run --machine xeon-8c <commit>^! -b YourClass`.
+   Leave out `--quick`.
+   On asv 0.6.6 a quick run still writes `results/asv`.
+   The help text says it does not.
+   That is `docs/asv-gaps.md`.
+   The committed file is the run without `--quick`.
 9. Commit the new files under `results/asv`.
 10. Score with `asv.results.iter_results` and `Results.get_result_value`, then `score_v2`. `optbench.asv_score` does that for the quadratic sample. Parameter strings in the result JSON are wrapped in `repr` quotes; the reader unwraps them with `ast.literal_eval`. `uv run optbench statistics` refuses to write a document when those tracks are absent.
 
@@ -71,8 +81,7 @@ The quadratic sample is the run that `results/validation/statistics.json` scores
 
 ```bash
 uv run asv check
-uv run asv machine --yes
-uv run asv machine --yes --machine xeon-8c
+uv run python -m optbench.asv_launch machine --yes --machine xeon-8c
 uv run python -m optbench.asv_launch run --quick --machine xeon-8c
 uv run python -m optbench.asv_launch run --machine xeon-8c COMMIT^! -b quadratic
 uv run optbench statistics --output results/validation/statistics.json

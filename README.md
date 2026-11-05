@@ -217,14 +217,13 @@ Pt-island cost is force calls in a repetition divided by the searches in that re
 The environment type is `uv-pip`, from `optbench.asv_uv`. It creates the environment with `uv venv` and installs with `uv pip`. The committed quadratic sample is that environment. eonclient is not part of it. The seven Lennard-Jones 38 classes in `benchmarks/bench_lj38.py` skip unless `OPTBENCH_ASV_EON=1`, and the default grid is one start unless `OPTBENCH_ASV_FULL=1`.
 
 ```bash
-uv run asv machine --yes
-uv run asv machine --yes --machine xeon-8c
+uv run python -m optbench.asv_launch machine --yes --machine xeon-8c
 uv run python -m optbench.asv_launch run --machine xeon-8c COMMIT^! -b quadratic
 uv run optbench statistics --output results/validation/statistics.json
 uv run asv publish
 ```
 
-`xeon-8c` is the machine of the committed results. Without `--machine`, `asv run` writes a new folder named after the host. Step 7 of `docs/asv.md` says why `asv machine` runs twice.
+`xeon-8c` is the machine of the committed results. Without `--machine`, `asv run` writes a new folder named after the host. Step 7 of `docs/asv.md` uses the launcher, which writes every field. Upstream `asv machine --yes --machine NAME` stores only the name.
 
 `optbench statistics` reads the saved tracks.
 The saved file comes from `asv run` without `--quick`.

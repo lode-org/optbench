@@ -8,6 +8,7 @@ The local pieces that stay until then:
 - `optbench/asv_score.py` reads track values with `asv.results` and calls `score_v2`. It does not patch `Results.save` or `compute_stats`.
 - Failure classes are four `track_failure_*` floats, because a result file cannot store a per-parameter cause.
 - `cap` is a class attribute. The score records the cap it used in `results/validation/statistics.json`.
+- `optbench/asv_launch.py` writes the whole machine entry.
 
 ## 1. Track units other than seconds and bytes
 
@@ -166,4 +167,29 @@ skip_save = dry_run or (
                             isinstance(env, environment.ExistingEnvironment)
                             and set_commit_hash is None
                         )
+```
+
+## 9. `asv machine --machine NAME` stores only the name
+
+`asv/commands/machine.py` passes `Machine.load` only the options that differ from `Machine.get_defaults()`.
+With any option given, the prompt is skipped and the defaults are never filled in.
+`Machine.load` starts from the entry stored under the hostname, or from the only entry in the file, and ignores the entry named by `--machine`.
+On a new machine file, `asv machine --yes --machine NAME` therefore stores `{"machine": NAME}`.
+`asv run --machine NAME` copies that entry into `results/<machine>/machine.json`, without `arch`, `cpu`, `num_cpu`, `os`, or `ram`.
+`asv machine --yes` with no option takes the prompt path and stores every field under the hostname.
+
+Upstream: `airspeed-velocity/asv`, `asv/machine.py`, `Machine.load`.
+When `use_defaults` is set, fill each field the entry lacks from `get_defaults()` after the given options are applied.
+Look the entry up under the given `machine` option, so an existing entry keeps its stored fields.
+
+Until then, `python -m optbench.asv_launch machine --yes --machine NAME` writes the whole entry.
+Each field is the given value, else the stored one, else the detected one.
+
+```bash
+uv run python docs/asv-gaps/machine_fields.py
+```
+
+```
+stored fields: ['machine']
+missing fields: ['arch', 'cpu', 'num_cpu', 'os', 'ram']
 ```
