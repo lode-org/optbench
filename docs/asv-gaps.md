@@ -8,7 +8,7 @@ The local pieces that stay until then:
 - `optbench/asv_score.py` reads track values with `asv.results` and calls `score_v2`. It does not patch `Results.save` or `compute_stats`.
 - Failure classes are four `track_failure_*` floats, because a result file cannot store a per-parameter cause.
 - `cap` is a class attribute. The score records the cap it used in `results/validation/statistics.json`.
-- `optbench/asv_launch.py` writes the whole machine entry.
+- `optbench/asv_launch.py` writes the whole machine entry and gives each run its own machine file.
 
 ## 1. Track units other than seconds and bytes
 
@@ -192,4 +192,49 @@ uv run python docs/asv-gaps/machine_fields.py
 ```
 stored fields: ['machine']
 missing fields: ['arch', 'cpu', 'num_cpu', 'os', 'ram']
+```
+
+## 10. Concurrent runs race on `~/.asv-machine.json`
+
+`asv run`, `asv continuous`, and `asv find` call `Machine.load`, and every load ends in `MachineCollection.save`.
+`save` reads the whole file, sets one entry, and writes the file back with `util.write_json`.
+`write_json` opens the file for writing, so it truncates the file in place.
+Another asv process that reads in that window sees an empty or half-written file.
+Its `Machine.load` logs the parse error and goes on with an empty entry, or its `save` fails with `UserError`.
+`asv run` loads with `interactive=True`, so off a console the empty entry fails with `UserError: Run asv at the console the first time to generate one, or run asv machine --yes.`
+On a console it starts the machine prompt instead.
+Two saves that overlap keep only the later file, so an entry that one of them added is lost.
+Two writes that overlap on the same open file can also leave it unparseable.
+Both the read and the write run unlocked.
+The machine file is always `~/.asv-machine.json`, and `Run.run` takes `_machine_file` only from Python.
+
+`docs/asv-gaps/machine_race_trials.py` starts eight processes together, each loading an existing entry 200 times, and repeats that in nine trials.
+On an eight-CPU machine, the loads alone failed a median of 1181 of 1600 times, with a range of 1162 to 1362.
+A ninth process added 50 entries with `asv machine --yes --machine NAME` during the loads.
+A median of 1285 loads then failed (986 to 1395), and a median of 1 of the 50 entries was missing at the end (0 to 3).
+When that process added the entries with `python -m optbench.asv_launch machine` instead, 1285 loads failed (1118 to 1414).
+A median of 48 of the 50 entries were missing (41 to 50), most of them because the merge read a truncated file.
+One of those nine trials left the machine file unparseable.
+With every load launched, no load or merge failed in any trial, and all 50 entries were kept.
+
+Upstream: `airspeed-velocity/asv`, `asv/util.py`, `write_json`.
+Write a temporary file in the same directory and `os.replace` it over the target, so a reader sees the old file or the new one.
+`asv/machine.py`: hold a lockfile around the read and the write in `MachineCollection.save`, and skip the save in `Machine.load` when the entry is unchanged.
+Add an `ASV_MACHINE_FILE` variable or a `--machine-file` option.
+Two runs that share a results directory also write `results/<machine>/machine.json` and `results/benchmarks.json` with `write_json`.
+Two runs of the same commit and environment load and save the same result file, and the later save drops the other run's results.
+
+Until then, `optbench/asv_launch.py` reads the shared file under a shared `flock` on `~/.asv-machine.json.lock`.
+Each launched `run`, `continuous`, or `find` gets a private file with only the entry it loads, and asv writes that one.
+A launched `machine` or `update` runs under the exclusive lock.
+A bare `asv` takes no lock.
+
+```bash
+uv run python docs/asv-gaps/machine_race.py
+```
+
+```
+a load writes the file: True
+same inode, so truncated in place: True
+asv run --machine -m: Use the given name to retrieve machine information.
 ```

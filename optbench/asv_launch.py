@@ -20,6 +20,14 @@ itself. asv 0.6.6 stores only the fields that differ from the values it
 detects, so ``asv machine --yes --machine NAME`` leaves out ``arch``,
 ``cpu``, ``num_cpu``, ``os``, and ``ram``. Each field here is the given
 value, else the stored one, else the one asv detects.
+
+``run``, ``continuous``, and ``find`` load one machine entry, and asv
+then writes the whole machine file back, truncating it first. A second
+asv that starts in that window reads an empty file. Each of these
+commands here gets a private file that holds only the entry it loads,
+and asv writes that one. The shared file is read under a shared
+``flock`` on ``<file>.lock``. ``machine`` and ``update`` change the shared
+file, and they run under the exclusive lock. A bare ``asv`` takes no lock.
 """
 
 from __future__ import annotations
@@ -37,6 +45,16 @@ from pathlib import Path
 from . import blas_threads
 
 MACHINE_FIELDS = ("machine", "os", "arch", "cpu", "num_cpu", "ram")
+MACHINE_READERS = ("run", "continuous", "find")
+MACHINE_WRITERS = ("machine", "update")
+
+
+def subcommand(args: list[str]) -> str | None:
+    """The asv subcommand, after asv's global options."""
+    index = 0
+    while index < len(args) and args[index].startswith("-"):
+        index += 2 if args[index] == "--config" else 1
+    return args[index] if index < len(args) else None
 
 
 def interpreter(args: list[str]) -> str:
@@ -139,10 +157,62 @@ def write_machine(given: dict[str, str], path: Path | None = None) -> dict[str, 
     return entry
 
 
+def machine_name(args: list[str]) -> str | None:
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("--machine", "-m")
+    known, _rest = parser.parse_known_args(args)
+    return known.machine
+
+
+def stored_entry(machines: dict, name: str | None) -> tuple[str, dict]:
+    """The entry ``MachineCollection.load`` returns for ``--machine name``."""
+    from asv.machine import Machine
+
+    entries = {key: value for key, value in machines.items() if key != "version"}
+    detected = Machine.get_unique_machine_name()
+    wanted = name or detected
+    if wanted in entries:
+        return wanted, entries[wanted]
+    if len(entries) == 1 and wanted == detected:
+        return next(iter(entries.items()))
+    raise SystemExit(
+        f"optbench.asv_launch: no machine entry {wanted!r}."
+        f" Run python -m optbench.asv_launch machine --yes --machine {wanted}."
+    )
+
+
+@contextmanager
+def own_machine_file(args: list[str]):
+    """Point asv at a private file that holds the one entry it loads."""
+    from asv.machine import MachineCollection
+
+    shared = machine_file()
+    with locked(shared, fcntl.LOCK_SH):
+        machines = read_machines(shared)
+    name, entry = stored_entry(machines, machine_name(args))
+    original = MachineCollection.__dict__["get_machine_file_path"]
+    with tempfile.TemporaryDirectory(prefix="optbench-asv-machine-") as directory:
+        private = Path(directory) / shared.name
+        write_machines(private, {name: entry, "version": 1})
+        MachineCollection.get_machine_file_path = staticmethod(lambda: str(private))
+        try:
+            yield private
+        finally:
+            MachineCollection.get_machine_file_path = original
+
+
+def run_asv(args: list[str]) -> None:
+    from asv.main import main as asv_main
+
+    sys.argv = ["asv", *args]
+    asv_main()
+
+
 def main(argv: list[str] | None = None) -> None:
     args = list(sys.argv[1:] if argv is None else argv)
-    if args[:1] == ["machine"]:
-        given = machine_fields(args[1:])
+    command = subcommand(args)
+    if command == "machine":
+        given = machine_fields(args)
         if given is not None:
             entry = write_machine(given)
             print(json.dumps(entry, indent=4, sort_keys=True))
@@ -153,10 +223,14 @@ def main(argv: list[str] | None = None) -> None:
     target = os.environ.get("OPTBENCH_ASV_RECORD")
     if target:
         Path(target).write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    from asv.main import main as asv_main
-
-    sys.argv = ["asv", *args]
-    asv_main()
+    if command in MACHINE_WRITERS:
+        with locked(machine_file(), fcntl.LOCK_EX):
+            run_asv(args)
+    elif command in MACHINE_READERS:
+        with own_machine_file(args):
+            run_asv(args)
+    else:
+        run_asv(args)
 
 
 if __name__ == "__main__":

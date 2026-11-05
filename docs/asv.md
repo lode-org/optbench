@@ -100,6 +100,14 @@ Before asv starts, the launcher probes the server's import order in a fresh inte
 `OPTBENCH_ASV_RECORD=<file>` writes the thread variables, the probed pools, and the asv arguments as JSON.
 `results/ase-sella-full/summarize.py --run-env` reads that file.
 
+## Machine file
+
+asv writes `~/.asv-machine.json` back in place at the start of every run, so two asv runs that start together can read it empty.
+Each launched `run`, `continuous`, or `find` gets a private file with only the entry it loads, and the shared file is read under a lock on `~/.asv-machine.json.lock`.
+A launched `machine` or `update` keeps that lock while it writes.
+Start concurrent runs through the launcher.
+See gap 10 in `docs/asv-gaps.md`.
+
 ## CI
 
 `.github/workflows/asv.yml` fetches the full history, installs Python 3.12 and syncs the lockfile.
