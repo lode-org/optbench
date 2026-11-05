@@ -329,6 +329,7 @@ def _asv_track(
     calls: list[float],
     *,
     commit: str = "c" * 40,
+    failures: list[str | None] | None = None,
     wrong: list[bool] | None = None,
 ) -> None:
     machine = root / "results" / "asv" / "testbox"
@@ -339,20 +340,19 @@ def _asv_track(
     )
     params = [["'0'"], [f"'{index}'" for index in range(len(calls))]]
     columns = ["result", "params", "version", "started_at", "duration"]
-    zeros = [0.0] * len(calls)
-    wrong_flags = list(wrong or [])
-    if len(wrong_flags) < len(calls):
-        wrong_flags.extend([False] * (len(calls) - len(wrong_flags)))
-    wrong_track = [1.0 if flag else 0.0 for flag in wrong_flags]
-    success = [0.0 if flag else 1.0 for flag in wrong_flags]
+    if failures is None:
+        outcomes: list[str | None] = [None] * len(calls)
+        for index, flag in enumerate(wrong or []):
+            if flag:
+                outcomes[index] = "wrong_stationary"
+    else:
+        outcomes = list(failures)
     tracks = {
         "track_force_calls": list(calls),
-        "track_success": success,
-        "track_failure_cap": zeros,
-        "track_failure_wrong_stationary": wrong_track,
-        "track_failure_divergence": zeros,
-        "track_failure_crash": zeros,
+        "track_success": [1.0 if failure is None else 0.0 for failure in outcomes],
     }
+    for name in ("cap", "wrong_stationary", "divergence", "crash"):
+        tracks[f"track_failure_{name}"] = [1.0 if failure == name else 0.0 for failure in outcomes]
     results = {f"{prefix}.{name}": [value, params, "v", 0, 0.1] for name, value in tracks.items()}
     payload = {
         "commit_hash": commit,
@@ -636,6 +636,41 @@ def test_a_campaign_and_its_asv_track_are_one_row(tmp_path: Path):
     assert ranked[0]["n"] == 2
     assert ranked[0]["mean_calls"] == 15
     assert ranked[0]["par2_mean"] == 15
+
+
+def test_a_campaign_record_and_an_asv_track_of_the_same_starts_share_one_par2(tmp_path: Path, monkeypatch):
+    from optbench import board
+
+    budget = 250000
+    _problem(tmp_path, starts=3, cap=budget)
+    _template(tmp_path)
+    template = tmp_path / "templates" / "toy" / "fast.toml"
+    template.write_text(template.read_text(encoding="utf-8") + "failure_cap = 10000\n", encoding="utf-8")
+    _registry(tmp_path)
+    monkeypatch.setattr(
+        board,
+        "_benchmark_index",
+        lambda: {"bench_toy.ToyFast": {"template": "toy/fast", "problem": "minimization/toy", "cap": 10000}},
+    )
+    _dat(tmp_path, "toy-fast", PIN)
+    _starts(
+        tmp_path,
+        "toy-fast",
+        [_row(100, True, "0"), _row(10000, False, "1", "cap"), _row(5007, False, "2", "divergence")],
+    )
+    _asv_track(tmp_path, "bench_toy.ToyFast", [100.0, 10000.0, 5007.0], failures=[None, "cap", "divergence"])
+
+    problems = board.load_all(tmp_path / "problems")
+    templates = {item["id"]: item for item in board.list_templates(tmp_path)}
+    campaign, _ = board._campaign_rows(tmp_path, problems, templates)
+    tracked, _, _ = board._asv_rows(tmp_path, problems, templates)
+    expected = (100 + 2 * (2 * budget)) / 3
+    assert [row["cap"] for row in campaign + tracked] == [budget, budget]
+    assert campaign[0]["par2_mean"] == pytest.approx(expected)
+    assert tracked[0]["par2_mean"] == campaign[0]["par2_mean"]
+
+    ranked = build_board(tmp_path)["problems"]["minimization/toy"]["ranked"]
+    assert [(row["source"], row["n"], row["nfailed"]) for row in ranked] == [("campaign, asv", 3, 2)]
 
 
 def test_a_missing_asv_commit_is_not_pinned_from_the_working_tree(tmp_path: Path):

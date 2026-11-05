@@ -295,6 +295,13 @@ def _commit_divides_band(root: Path, commit: str) -> bool:
 
 
 def _cap_of(problem: dict | None, template: dict | None, fields: dict[str, str]) -> int | None:
+    """The PAR-2 cap of a row from any source.
+
+    The problem's ``max_force_calls`` comes first, so a campaign file and an
+    asv track of the same starts get the same score. A template limit is
+    the cap only when the problem states none, and the result file's
+    ``cap`` field only when neither does.
+    """
     if problem is not None:
         stated = (problem.get("convergence") or {}).get("max_force_calls")
         if stated not in (None, ""):
@@ -887,9 +894,8 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
                 or ""
             )
             problem = problems.get(problem_id)
-            cap = described.get("cap")
-            if cap is None:
-                cap = _cap_of(problem, source_template or template, {})
+            class_cap = described.get("cap")
+            cap = _cap_of(problem, source_template or template, {} if class_cap is None else {"cap": str(class_cap)})
             pin_note = "asv track_force_calls"
             if template_id and pinned is None:
                 pin_note = "asv track_force_calls; code pin is the working-tree template"
