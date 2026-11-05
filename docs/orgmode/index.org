@@ -29,13 +29,25 @@ When an archived entry counts its failed runs, each counts as twice the cap, and
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Reference
+   :caption: How-to guides
 
    run
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Reference
+
    board
-   methodology
    codes
    changelog
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Explanation
+
+   methodology
 
 .. toctree::
    :hidden:
@@ -53,3 +65,21 @@ It is the one place to ask about this repository and the site.
 A report about a score helps most when it names the problem id and the template id.
 It should also attach the =benchmark.dat= that the run wrote.
 A report about a client build also needs the version line that the client prints.
+
+* Citation
+
+Cite the repository and the commit you used.
+Read the entry at [[https://github.com/lode-org/optbench/blob/main/CITATION.cff][CITATION.cff]].
+For the 2014 problems named in the synopsis on this page, cite that paper as well.
+The request covers the problems the synopsis already ties to the paper.
+Later suites stay outside that request.
+Surnames, the journal abbreviation, the year, the volume, and the pages in the entry match the synopsis.
+Given names, the article title, and the issue number sit outside the synopsis.
+The entry records those extra fields without a publisher check.
+The entry does not set a license key.
+The Massachusetts Institute of Technology (MIT) License already lives in [[https://github.com/lode-org/optbench/blob/main/LICENSE][LICENSE]].
+A score taken from the board also names its code, its version, and its template id.
+
+* Contributing
+
+[[https://github.com/lode-org/optbench/blob/main/CONTRIBUTING.md][CONTRIBUTING.md]] lists the checks that a pull request runs and where a newsfragment goes.

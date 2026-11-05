@@ -1,0 +1,45 @@
+cff-version: 1.2.0
+message: >-
+  Cite this repository with the commit you used. For suites the
+  repository synopsis already ties to the 2014 paper, cite that paper
+  too. Surnames, the journal abbreviation, the year, the volume, the
+  pages, and the identifier in the reference match that synopsis.
+  Given names, the article title, and the issue number sit outside the
+  synopsis. The file records those extra fields without a publisher
+  check. Later suites stay outside that claim.
+title: OptBench
+type: software
+authors:
+  - family-names: Goswami
+    given-names: Rohit
+repository-code: "https://github.com/lode-org/optbench"
+url: "https://lode-org.github.io/optbench/"
+references:
+  - type: article
+    title: >-
+      Benchmarks for Characterization of Minima, Transition States, and
+      Pathways in Atomic, Molecular, and Condensed Matter Systems
+    authors:
+      - family-names: Chill
+        given-names: Samuel T.
+      - family-names: Stevenson
+        given-names: Jacob
+      - family-names: Ruehle
+        given-names: Victor
+      - family-names: Shang
+        given-names: Cheng
+      - family-names: Xiao
+        given-names: Penghao
+      - family-names: Farrell
+        given-names: James D.
+      - family-names: Wales
+        given-names: David J.
+      - family-names: Henkelman
+        given-names: Graeme
+    journal: Journal of Chemical Theory and Computation
+    year: 2014
+    volume: 10
+    issue: 12
+    start: 5476
+    end: 5482
+    doi: 10.1021/ct5008718

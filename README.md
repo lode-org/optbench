@@ -322,3 +322,21 @@ It is the one place to ask about this repository and the site.
 A report about a score helps most when it names the problem id and the template id.
 It should also attach the `benchmark.dat` that the run wrote.
 A report about a client build also needs the version line that the client prints.
+
+## Citation
+
+Cite this repository and the commit you used.
+[CITATION.cff](CITATION.cff) records that entry, and GitHub shows it as "Cite this repository".
+For the 2014 suite named in the synopsis at the top of this file, cite J. Chem. Theory Comput. 2014, 10, 5476-5482 (doi:10.1021/ct5008718) as well.
+That request covers the suites the synopsis already ties to the paper.
+Later suites in this repository stay outside that request.
+Surnames, the journal abbreviation, the year, the volume, and the pages in `CITATION.cff` match the synopsis.
+Given names, the article title, and the issue number sit outside the synopsis.
+The file records those extra fields without a publisher check.
+`CITATION.cff` does not set a license key.
+The Massachusetts Institute of Technology (MIT) License already lives in [LICENSE](LICENSE).
+A score taken from the board also names its code, its version, and its template id.
+
+## Contributing
+
+[CONTRIBUTING.md](CONTRIBUTING.md) lists the checks that a pull request runs and where a newsfragment goes.
