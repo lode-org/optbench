@@ -234,6 +234,10 @@ An archive row's run count is the entry's own.
 An hTST `benchmark.dat` gives it on the `average over N` line after the ranked mean.
 Where `benchmark.dat` gives none, `oracle/counts.toml` gives the count, what was counted, and the entry script that states it, and `check` fails when a count names no entry or no source.
 
+`oracle/corrections.toml` names an archived field that the entry's own run script contradicts.
+It gives the archived value, the value the board reads, and the source.
+The archived file stays as it is, and `check` fails when the archive no longer has the recorded value.
+
 The front page is a result whose status is `sota` and whose commit is the present source in `codes/registry.toml`. The archive page is the 2014 scores plus later passes that do not meet that rule. A local `benchmark.dat` is a score whether or not it has been added to the front page. Adding it there means a `results/*.json` record with `optbench.result/v1`, the problem geometries, and the pinned commit.
 
 `uv run optbench import-archive ARCHIVE` rebuilds the oracle and the geometry store from a bare clone of the public GitLab project. It does not replace a problem file that already exists.
