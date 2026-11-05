@@ -14,11 +14,16 @@ writes Lennard-Jones atoms as ``A`` and platinum as ``Pt``. Neither
 symbol is in the initialiser radius table, so those atoms use the
 library fallback radius 1.5. Coordinates stay in the problem's units.
 The nudge inside the bisection is seeded with 0 for every pair.
+
+``OPTBENCH_GEODESIC_CACHE`` keeps each built path. Its key includes
+numpy's and scipy's BLAS library, version, and thread count, because the
+path changes in its last bits with the thread setup.
 """
 
 from __future__ import annotations
 
 import hashlib
+import json
 import logging
 import os
 import time
@@ -100,7 +105,8 @@ def geodesic_positions(
     if mask is not None and mask.shape != (reactant.shape[0],):
         raise ValueError("free mask does not match the atoms")
     target = _minimum_image(reactant, product, box, mask)
-    cached = _read_cache(reactant, target, symbols, n_interior, box, mask, seed)
+    setup = _blas_setup() if _cache_dir() is not None else None
+    cached = _read_cache(reactant, target, symbols, n_interior, box, mask, seed, setup)
     if cached is not None:
         if info is not None:
             info["seconds"] = 0.0
@@ -115,7 +121,7 @@ def geodesic_positions(
         restored, product_rmsd = _land_endpoints(path, reactant, target)
     restored = _snap_ends(restored, reactant, target, mask)
     elapsed = time.perf_counter() - started
-    _write_cache(restored, reactant, target, symbols, n_interior, box, mask, seed)
+    _write_cache(restored, reactant, target, symbols, n_interior, box, mask, seed, setup)
     if info is not None:
         info["seconds"] = elapsed
         info["cached"] = False
@@ -278,6 +284,22 @@ def _cache_dir() -> Path | None:
     return Path(raw)
 
 
+def _blas_setup() -> str | None:
+    """numpy's and scipy's BLAS pools: library, version, and threads.
+
+    The path changes in its last bits with the thread counts, so a cached
+    path is reused only under the pools that built it. ``None`` means the
+    pools could not be read, and then the cache is not used.
+    """
+    from .blas_threads import numpy_and_scipy
+
+    pools = numpy_and_scipy()
+    owners = {pool["owner"] for pool in pools}
+    if not ({"numpy", "scipy"} <= owners or "system" in owners):
+        return None
+    return json.dumps(pools, sort_keys=True)
+
+
 def _cache_key(
     reactant: np.ndarray,
     product: np.ndarray,
@@ -286,10 +308,12 @@ def _cache_key(
     box: np.ndarray | None,
     free: np.ndarray | None,
     seed: int,
+    setup: str,
 ) -> str:
     digest = hashlib.sha256()
-    digest.update(b"geodesic-path-v1")
+    digest.update(b"geodesic-path-v2")
     digest.update(COMMIT.encode())
+    digest.update(setup.encode())
     digest.update(str(n_interior).encode())
     digest.update(str(int(seed)).encode())
     digest.update(",".join(symbols).encode())
@@ -320,11 +344,12 @@ def _read_cache(
     box: np.ndarray | None,
     free: np.ndarray | None,
     seed: int,
+    setup: str | None,
 ) -> np.ndarray | None:
     directory = _cache_dir()
-    if directory is None:
+    if directory is None or setup is None:
         return None
-    path = directory / (_cache_key(reactant, product, symbols, n_interior, box, free, seed) + ".npy")
+    path = directory / (_cache_key(reactant, product, symbols, n_interior, box, free, seed, setup) + ".npy")
     if not path.is_file():
         return None
     found = np.load(path)
@@ -342,12 +367,13 @@ def _write_cache(
     box: np.ndarray | None,
     free: np.ndarray | None,
     seed: int,
+    setup: str | None,
 ) -> None:
     directory = _cache_dir()
-    if directory is None:
+    if directory is None or setup is None:
         return
     directory.mkdir(parents=True, exist_ok=True)
-    path = directory / (_cache_key(reactant, product, symbols, n_interior, box, free, seed) + ".npy")
+    path = directory / (_cache_key(reactant, product, symbols, n_interior, box, free, seed, setup) + ".npy")
     temporary = path.with_suffix(".tmp.npy")
     np.save(temporary, np.asarray(frames, dtype=np.float64))
     temporary.replace(path)

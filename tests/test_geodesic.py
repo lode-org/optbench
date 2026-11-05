@@ -93,6 +93,77 @@ def test_symbols_follow_the_potential():
         symbols_for("unknown", 1)
 
 
+def _pools(numpy_threads: int, scipy_threads: int) -> str:
+    return json.dumps(
+        [
+            {"owner": "numpy", "library": "libnumpy-blas.so", "version": "OpenBLAS 0.3.34", "threads": numpy_threads},
+            {"owner": "scipy", "library": "libscipy-blas.so", "version": "OpenBLAS 0.3.31", "threads": scipy_threads},
+        ],
+        sort_keys=True,
+    )
+
+
+def test_cached_path_is_reused_only_under_the_blas_setup_that_built_it(monkeypatch, tmp_path: Path):
+    import optbench.geodesic_path as geodesic_path
+
+    monkeypatch.setenv("OPTBENCH_GEODESIC_CACHE", str(tmp_path))
+    builds: list[int] = []
+
+    def build(reactant, target, symbols, n_interior, seed):
+        builds.append(1)
+        frames = np.linspace(reactant, target, n_interior + 2)
+        frames[1:-1, 0, 0] += 0.01 * len(builds)
+        return frames
+
+    monkeypatch.setattr(geodesic_path, "_interpolate", build)
+    reactant = np.array([[0.0, 0.0, 0.0], [1.1, 0.0, 0.0], [0.0, 1.1, 0.0]])
+    product = reactant + np.array([[0.2, 0.1, 0.0], [-0.1, 0.3, 0.1], [0.0, -0.2, 0.3]])
+    setup = {"pools": _pools(8, 1)}
+    monkeypatch.setattr(geodesic_path, "_blas_setup", lambda: setup["pools"])
+
+    def path() -> tuple[np.ndarray, bool]:
+        info: dict = {}
+        frames = geodesic_path.geodesic_positions(reactant, product, ["A"] * 3, 2, None, info=info)
+        return frames, info["cached"]
+
+    split, cached = path()
+    assert cached is False
+    again, cached = path()
+    assert cached is True
+    assert np.array_equal(again, split)
+
+    setup["pools"] = _pools(1, 1)
+    pinned, cached = path()
+    assert cached is False
+    assert len(builds) == 2
+    assert not np.allclose(pinned[1:-1], split[1:-1])
+
+    setup["pools"] = _pools(1, 1).replace("0.3.34", "0.3.30")
+    _, cached = path()
+    assert cached is False
+
+    setup["pools"] = None
+    files = sorted(tmp_path.iterdir())
+    _, cached = path()
+    assert cached is False
+    assert sorted(tmp_path.iterdir()) == files
+
+
+def test_blas_setup_names_both_pools():
+    from optbench.geodesic_path import _blas_setup
+
+    setup = _blas_setup()
+    if setup is None:
+        pytest.skip("no OpenBLAS pools readable in this process")
+    pools = json.loads(setup)
+    owners = {pool["owner"] for pool in pools}
+    assert {"numpy", "scipy"} <= owners or "system" in owners
+    for pool in pools:
+        assert pool["library"]
+        assert pool["version"]
+        assert pool["threads"] >= 1
+
+
 def test_path_keeps_endpoints_and_is_not_linear(monkeypatch, tmp_path: Path):
     pytest.importorskip("geodesic_interpolate")
     monkeypatch.setenv("OPTBENCH_GEODESIC_CACHE", str(tmp_path))
