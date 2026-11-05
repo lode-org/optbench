@@ -77,6 +77,15 @@ def _unwrap(value):
     return value
 
 
+def decoded_params(params: list) -> list[list]:
+    """The parameter axes of one result row, as the benchmark received them.
+
+    asv-runner saves each value as ``repr(value)``. A string parameter
+    ``min01`` is the JSON string ``"'min01'"``.
+    """
+    return [[_unwrap(value) for value in axis] for axis in params]
+
+
 def _count(value: float) -> int | float:
     number = float(value)
     if number.is_integer():

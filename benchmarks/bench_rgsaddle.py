@@ -264,6 +264,8 @@ def _asv_column(document: dict, benchmark: str, column: str):
 
 def verify_asv_tracks(document: dict) -> None:
     """Every rgsaddle ``track_*`` value equals the sidecar from that search."""
+    from optbench.asv_score import decoded_params
+
     for name in document["results"]:
         parts = name.split(".")
         if len(parts) < 2 or parts[-1] not in TRACKS:
@@ -272,7 +274,7 @@ def verify_asv_tracks(document: dict) -> None:
         if class_name not in CLASS_TEMPLATE:
             continue
         method = parts[-1]
-        params = _asv_column(document, name, "params")
+        params = decoded_params(_asv_column(document, name, "params"))
         values = _asv_column(document, name, "result")
         pairs = list(itertools.product(*params))
         if len(values) != len(pairs):
@@ -282,7 +284,9 @@ def verify_asv_tracks(document: dict) -> None:
             if value is None or value != value:
                 raise ValueError(f"{name}({seed}, {start}) has no result")
             record = json.loads(
-                sidecar_path(CLASS_PROBLEM[class_name], template_name, seed, start).read_text(encoding="utf-8")
+                sidecar_path(CLASS_PROBLEM[class_name], template_name, str(seed), str(start)).read_text(
+                    encoding="utf-8"
+                )
             )
             expected = _expected_track(record, method)
             if float(value) != expected:
@@ -294,6 +298,8 @@ def attach_wall_seconds(document: dict, directory: Path) -> int:
 
     The sample is asv's timed call. Returns how many sidecars were updated.
     """
+    from optbench.asv_score import decoded_params
+
     updated = 0
     for name, row in document["results"].items():
         parts = name.split(".")
@@ -305,7 +311,7 @@ def attach_wall_seconds(document: dict, directory: Path) -> int:
         index = document["result_columns"].index("result")
         if index >= len(row) or row[index] is None:
             raise KeyError(f"{name} has no result")
-        params = row[document["result_columns"].index("params")]
+        params = decoded_params(row[document["result_columns"].index("params")])
         values = row[index]
         template_name = CLASS_TEMPLATE[class_name]
         for (seed, start), value in zip(itertools.product(*params), values, strict=True):
@@ -318,7 +324,7 @@ def attach_wall_seconds(document: dict, directory: Path) -> int:
                 / f"{start}.json"
             )
             if not path.is_file():
-                path = sidecar_path(CLASS_PROBLEM[class_name], template_name, seed, start)
+                path = sidecar_path(CLASS_PROBLEM[class_name], template_name, str(seed), str(start))
             record = json.loads(path.read_text(encoding="utf-8"))
             record["wall_seconds"] = float(value)
             path.write_text(json.dumps(record, sort_keys=True) + "\n", encoding="utf-8")

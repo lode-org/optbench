@@ -239,6 +239,8 @@ def _asv_column(document: dict, benchmark: str, column: str):
 
 def verify_asv_tracks(document: dict) -> None:
     """Every LAMMPS ``track_*`` value equals the sidecar from that search."""
+    from optbench.asv_score import decoded_params
+
     for name in document["results"]:
         parts = name.split(".")
         if len(parts) < 2 or parts[-1] not in TRACKS:
@@ -247,7 +249,7 @@ def verify_asv_tracks(document: dict) -> None:
         if class_name not in CLASS_TEMPLATE:
             continue
         method = parts[-1]
-        params = _asv_column(document, name, "params")
+        params = decoded_params(_asv_column(document, name, "params"))
         values = _asv_column(document, name, "result")
         pairs = list(itertools.product(*params))
         if len(values) != len(pairs):
@@ -257,7 +259,9 @@ def verify_asv_tracks(document: dict) -> None:
             if value is None or value != value:
                 raise ValueError(f"{name}({seed}, {start}) has no result")
             record = json.loads(
-                sidecar_path(CLASS_PROBLEM[class_name], template_name, seed, start).read_text(encoding="utf-8")
+                sidecar_path(CLASS_PROBLEM[class_name], template_name, str(seed), str(start)).read_text(
+                    encoding="utf-8"
+                )
             )
             expected = _expected_track(record, method)
             if float(value) != expected:

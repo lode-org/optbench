@@ -304,7 +304,7 @@ def test_verify_asv_tracks_reads_the_sidecar(tmp_path: Path, monkeypatch):
         "results": {
             benchmark: [
                 [float(record["force_calls"])],
-                [["0"], [record["start"]]],
+                [["'0'"], [repr(record["start"])]],
             ]
         },
     }
