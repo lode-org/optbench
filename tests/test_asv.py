@@ -62,25 +62,33 @@ def test_asv_commands_name_the_committed_machine():
     assert len(records) == 1, records
     name = records[0].parent.name
     assert json.loads(records[0].read_text(encoding="utf-8"))["machine"] == name
-    named = f"uv run asv machine --yes --machine {name}"
+    launch = "uv run python -m optbench.asv_launch"
     documents = [ROOT / "README.md", *sorted((ROOT / "docs").rglob("*.md"))]
     checked = 0
     for path in documents:
         for block in _fenced_blocks(path.read_text(encoding="utf-8")):
-            machine = [line for line in block if line.startswith("uv run asv machine")]
-            runs = [line for line in block if line.startswith("uv run asv run")]
+            machine = [
+                line
+                for line in block
+                if line.startswith("uv run asv machine") or line.startswith(f"{launch} machine")
+            ]
+            runs = [
+                line
+                for line in block
+                if line.startswith("uv run asv run") or line.startswith(f"{launch} run")
+            ]
             if machine:
-                assert machine == ["uv run asv machine --yes", named], path
-                assert all(block.index(named) < block.index(line) for line in runs), path
+                assert machine == [f"{launch} machine --yes --machine {name}"], path
             for line in runs:
                 tokens = line.split()
                 assert "--machine" in tokens, (path, line)
                 assert tokens[tokens.index("--machine") + 1] == name, (path, line)
             checked += len(machine) + len(runs)
-    assert checked >= 8
+    assert checked >= 6
     steps = (ROOT / "docs" / "asv.md").read_text(encoding="utf-8")
-    assert f"7. `uv run asv machine --yes`, then `{named}`, once on the machine." in steps
-    assert f"8. `uv run asv run --machine {name} <commit>^! -b YourClass`." in steps
+    assert f"7. `{launch} machine --yes --machine {name}` once on the machine." in steps
+    assert f"The committed machine is `{name}`." in steps
+    assert f"8. `{launch} run --machine {name} <commit>^! -b YourClass`." in steps
 
 
 def test_rgsaddle_grid_is_seed_then_one_start_until_full(monkeypatch):
