@@ -2834,7 +2834,7 @@
   "machine": {
     "arch": "x86_64",
     "cpu": "Intel(R) Xeon(R) Processor",
-    "machine": "xeon-8c-ci",
+    "machine": "xeon-8c",
     "num_cpu": "8",
     "os": "Linux 6.12.94+",
     "python": "3.12",
@@ -2851,7 +2851,7 @@
     "asv_flags": [
       "--no-pull",
       "-m",
-      "xeon-8c-ci"
+      "xeon-8c"
     ],
     "commit": "ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
     "quick": false

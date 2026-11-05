@@ -1,7 +1,7 @@
 {
     "arch": "x86_64",
     "cpu": "Intel(R) Xeon(R) Processor",
-    "machine": "xeon-8c-ci",
+    "machine": "xeon-8c",
     "num_cpu": "8",
     "os": "Linux 6.12.94+",
     "ram": "50526994432",

@@ -66,7 +66,7 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
     missing = expected - set(groups)
     if missing:
         raise ValueError(f"missing pele campaigns: {sorted(missing)}")
-    machine = json.loads((root / "results" / "asv" / "xeon-8c-ci" / "machine.json").read_text(encoding="utf-8"))
+    machine = json.loads((root / "results" / "asv" / "xeon-8c" / "machine.json").read_text(encoding="utf-8"))
     params = {
         "arch": machine["arch"],
         "cpu": machine["cpu"],
@@ -118,6 +118,6 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
         "durations": {},
         "version": 2,
     }
-    dest = root / "results" / "asv" / "xeon-8c-ci" / f"{commit[:8]}-pele-uv-pip-py3.12.json"
+    dest = root / "results" / "asv" / "xeon-8c" / f"{commit[:8]}-pele-uv-pip-py3.12.json"
     dest.write_text(json.dumps(document, separators=(", ", ": ")), encoding="utf-8")
     return dest

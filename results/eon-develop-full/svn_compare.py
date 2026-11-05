@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 SVN_REF = "origin/entries/eon-svn-fortran"
-ASV = ROOT / "results/asv/xeon-8c-ci/06efc6dd-existing-py_workspace_.venv_bin_python.json"
+ASV = ROOT / "results/asv/xeon-8c/06efc6dd-existing-py_workspace_.venv_bin_python.json"
 CACHE = Path("/tmp/optbench-asv/harness-1/7095b23ac17d49f434a5e08ccb072897ceca698e")
 MATCHED = Path(__file__).resolve().parent / "matched-svn-ini"
 

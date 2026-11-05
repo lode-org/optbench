@@ -120,7 +120,7 @@ def write_asv(commit: str, dest: Path) -> None:
     from benchmarks.bench_eon_develop import EON_COMMIT
 
     sample = json.loads(
-        (ROOT / "results/asv/xeon-8c-ci/06efc6dd-existing-py_workspace_.venv_bin_python.json").read_text(
+        (ROOT / "results/asv/xeon-8c/06efc6dd-existing-py_workspace_.venv_bin_python.json").read_text(
             encoding="utf-8"
         )
     )
@@ -180,7 +180,7 @@ def main() -> None:
         commit = args[1]
         prefix = commit[:8]
         env = "existing-py_workspace_.venv_bin_python"
-        dest = ROOT / "results" / "asv" / "xeon-8c-ci" / f"{prefix}-{env}.json"
+        dest = ROOT / "results" / "asv" / "xeon-8c" / f"{prefix}-{env}.json"
         write_asv(commit, dest)
         return
     workers = int(os.environ.get("OPTBENCH_MATCHED_WORKERS", "8"))

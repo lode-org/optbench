@@ -1,6 +1,6 @@
 # rgsaddle 0.2.2 min-mode
 
-asv result `results/asv/xeon-8c-ci/a914203c-uv-pip-py3.12.json`, optbench commit `a914203cbb891442232aea2c92f960df9a48dc1d`.
+asv result `results/asv/xeon-8c/a914203c-uv-pip-py3.12.json`, optbench commit `a914203cbb891442232aea2c92f960df9a48dc1d`.
 rgsaddle `c0db2b8d333c557251635cb8bb7b3d81f0088a71` (0.2.2).
 Cost is `RgpotCounter.calculate` on `HarnessCounter(cache=True)`. Hessian checks are `verify_calls` and are not in `force_calls`.
 Seed is `0`. The grid is every start: 200 on LJ38, 49 on the Pt island. The success mean is half-even over successes. `par2_mean` charges a failure `2 * 10000`.

@@ -32,7 +32,7 @@ def _load_specs():
 
 
 def _result_files(directory: Path) -> list[Path]:
-    machine_dir = directory / "results" / "xeon-8c-ci"
+    machine_dir = directory / "results" / "xeon-8c"
     found = list(machine_dir.glob("*.json")) if machine_dir.is_dir() else list(directory.rglob("*.json"))
     return [path for path in found if path.name not in {"machine.json", "benchmarks.json"}]
 

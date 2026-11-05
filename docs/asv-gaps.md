@@ -149,7 +149,7 @@ OSError: Could not find 'uv' in /workspace/env/88db567784e3bd521507a26797493af6/
 
 Upstream: `airspeed-velocity/asv`, `asv/commands/run.py`. Set `skip_save` when `quick` is true, before `load_data` and `save`, so a quick run cannot rewrite a result file. The help text can stay.
 
-On this tree, `uv run asv run --quick` exited 0 after 149 benchmarks and rewrote `results/asv/xeon-8c-ci/d4513f42-uv-pip-py3.12.json`. sha256 before that command was `b94dd44605cdf3cccd91aa87e6de147bcbbae3c15c5d4a10fc8879b59c4a2df6`. sha256 after was `74836b8328cc1fc68b440fbf390c70b3e2186ce05a27005bee744b91d4ac9daa`. The force-call tracks were the same. `started_at` and `duration` were not. The file committed after that is a run without `--quick`.
+On this tree, `uv run asv run --quick` exited 0 after 149 benchmarks and rewrote `results/asv/xeon-8c/d4513f42-uv-pip-py3.12.json`. sha256 before that command was `b94dd44605cdf3cccd91aa87e6de147bcbbae3c15c5d4a10fc8879b59c4a2df6`. sha256 after was `74836b8328cc1fc68b440fbf390c70b3e2186ce05a27005bee744b91d4ac9daa`. The force-call tracks were the same. `started_at` and `duration` were not. The file committed after that is a run without `--quick`.
 
 ```bash
 uv run python docs/asv-gaps/quick_saves.py
