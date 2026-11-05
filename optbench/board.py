@@ -48,6 +48,7 @@ from .families import (
     row_label,
     version_text,
 )
+from .pins import pin_gap
 from .problems import load_all
 from .profile import performance_profile, profile_cost
 from .score import normalize_start, score_v2
@@ -126,18 +127,10 @@ def _registry_match(row: dict, registry: list[dict]) -> bool:
     Several registry entries share the name eOn. The commit selects which pin.
     """
     recorded = str(row.get("commit") or "")
-    code = str(row.get("code") or "").lower()
+    code = str(row.get("code") or "")
     if not recorded or not code:
         return False
-    for pin in registry:
-        names = {str(pin.get("id") or "").lower(), str(pin.get("name") or "").lower()}
-        names.discard("")
-        if code not in names:
-            continue
-        pinned = str(pin.get("commit") or "")
-        if pinned and (recorded.startswith(pinned) or pinned.startswith(recorded)):
-            return True
-    return False
+    return pin_gap(code, recorded, registry) is None
 
 
 class MissingAsvCommit(RuntimeError):
@@ -1168,6 +1161,7 @@ def build_board(root: Path) -> dict:
     campaign, unparsed = _campaign_rows(root, problems, templates)
     asv_rows, asv_unparsed, unmapped = _asv_rows(root, problems, templates)
     unparsed.extend(asv_unparsed)
+    scored = [_public(row) for row in campaign + asv_rows]
     rows = _dedup(campaign + asv_rows)
     full_n: dict[str, int | None] = {}
     for problem_id, problem in problems.items():
@@ -1243,6 +1237,7 @@ def build_board(root: Path) -> dict:
         "unmapped": [_public(row) for row in unmapped],
         "not_comparable": [_public(row) for row in not_comparable],
         "ranked_count": sum(len(item["ranked"]) for item in problems_out.values()),
+        "_scored_rows": scored,
     }
 
 

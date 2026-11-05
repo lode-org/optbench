@@ -204,11 +204,15 @@ def check(problems_dir: Path, oracle_path: Path) -> int:
                 print(f"- {line}")
         return 1
     from .board import build_board, rank_violations
+    from .campaign import list_templates
+    from .pins import pin_errors
     from .site_check import check_site
 
     root = oracle_path.resolve().parent.parent
     site_errors = check_site(root)
-    site_errors.extend(rank_violations(build_board(root)))
+    document = build_board(root)
+    site_errors.extend(rank_violations(document))
+    site_errors.extend(pin_errors(root, list_templates(root), document["_scored_rows"]))
     site_errors.extend(held_back_errors(root))
     site_errors.extend(banned_word_errors(root))
     if site_errors:

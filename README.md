@@ -16,7 +16,12 @@ uv run optbench check
 uv run optbench templates
 ```
 
-`uv run` reads `pyproject.toml`, installs the command-line library, and runs that command. `pytest` is the test runner. `check` exits 0 when every shared contract covers its archived rows and `oracle/archive_gaps.txt` matches the departures. `templates` prints every template id.
+`uv run` reads `pyproject.toml`, installs the command-line library, and runs that command.
+`pytest` is the test runner.
+`check` exits 0 when every shared contract covers its archived rows and `oracle/archive_gaps.txt` matches the departures.
+It also fails when a template's `code` and `commit` name no pin in `codes/registry.toml`.
+A committed campaign or asv row keeps the label it was recorded with, so `oracle/pin_gaps.txt` lists every such row whose label names no pin, and `check` fails when that list and the rows differ.
+`templates` prints every template id.
 
 `uv run optbench board` reads `results/campaign` and `results/asv` and writes `results/board` plus the v2 table on the Board page. It does not start a search. A band method is ranked on the harness force-call total across every image, and the per-image mean is a second column from that same total. A ranked row is one code, one version, and one stock method. Older full versions stay in the same tables. A run that is both a campaign file and an asv track is one row, with the source kept as a column. A row that used fewer starts than the problem's full set stays off the ranked table. An asv result that covers one start stays out of the ranked mean.
 
