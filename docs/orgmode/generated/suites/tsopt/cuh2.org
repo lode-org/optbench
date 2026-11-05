@@ -21,7 +21,7 @@
    <tr><td colspan="6">No ranked row.</td></tr>
    </tbody></table></div>
    <p class="bench-note">The tables below list every ranked row, by method family and overall.</p>
-   <p class="bench-gaps">No committed harness run.</p>
+   <p class="bench-gaps">No run is committed for this problem.</p>
    <h3>Overall</h3>
    <div class="bench-scroll">
    <table class="bench-sortable" data-board-table="ranked" data-problem="tsopt/cuh2">

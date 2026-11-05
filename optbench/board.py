@@ -1506,7 +1506,7 @@ def gap_paragraph(problem: dict, unparsed: list[dict] | None = None) -> str:
     if unparsed:
         bits.append("Files with no per-start harness record stay off the ranked table")
     if not bits and not problem.get("ranked"):
-        bits.append("No committed harness run")
+        bits.append("No run is committed for this problem")
     if not bits:
         return ""
     return "".join(f'<p class="bench-gaps">{_cell(bit)}.</p>' for bit in bits)

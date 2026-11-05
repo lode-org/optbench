@@ -167,7 +167,7 @@ The full tables, including archived rows, are on the problem page.
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td colspan="11">No ranked row.</td></tr>
    </tbody></table></div>
-   <p class="bench-gaps">No committed harness run.</p>
+   <p class="bench-gaps">No run is committed for this problem.</p>
    <p><a href="generated/suites/tsopt/cuh2.html">Family tables, overall table, and performance profile</a>.</p>
    <h3>Lennard-Jones 38</h3>
    <div class="winner"><p class="winner-name">Sella (2.6.0) · Sella</p><p class="winner-score"><small>PAR-2</small>68.74</p></div>
