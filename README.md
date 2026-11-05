@@ -218,10 +218,13 @@ The environment type is `uv-pip`, from `optbench.asv_uv`. It creates the environ
 
 ```bash
 uv run asv machine --yes
-uv run asv run COMMIT^! -b quadratic
+uv run asv machine --yes --machine xeon-8c
+uv run asv run --machine xeon-8c COMMIT^! -b quadratic
 uv run optbench statistics --output results/validation/statistics.json
 uv run asv publish
 ```
+
+`xeon-8c` is the machine of the committed results. Without `--machine`, `asv run` writes a new folder named after the host. Step 7 of `docs/asv.md` says why `asv machine` runs twice.
 
 `optbench statistics` reads the saved tracks. The saved file comes from `asv run` without `--quick`. CI runs the quadratic suite with `HaoZeke/asv-perch@v1` (`.github/workflows/asv.yml`).
 

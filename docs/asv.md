@@ -30,8 +30,8 @@ asv is the measurement store. A result file is keyed to the commit asv checked o
 4. Inherit `optbench.asv_tracks.TrackedSearch`, or copy its methods. `track_*` returns a float. Set `.unit` on the function (`force calls`, `fraction`, `count`). A dict with `samples` and `number` is a timing result, and asv replaces the value. `time_search` is the wall clock.
 5. Set `repeat = 1`, `rounds = 1`, `number = 1`, `sample_time = 0`, `warmup_time = 0`. `repeat == 0` means up to ten repeats.
 6. Commit the benchmark. `asv run` installs that commit. Uncommitted edits are not the run.
-7. `uv run asv machine --yes` once on the machine. That writes `~/.asv-machine.json`. The copy that is committed is `results/asv/<machine>/machine.json`.
-8. `uv run asv run <commit>^! -b YourClass`. Do not pass `--quick`. On asv 0.6.6 a quick run still writes `results/asv`. The help text says it does not. That is `docs/asv-gaps.md`. The committed file is the run without `--quick`.
+7. `uv run asv machine --yes`, then `uv run asv machine --yes --machine xeon-8c`, once on the machine. That writes `~/.asv-machine.json`. The committed machine is `xeon-8c`, and the copy that is committed is `results/asv/xeon-8c/machine.json`. Without `--machine`, asv names the machine after the host, and `asv run` writes a new folder beside `results/asv/xeon-8c`. The first command records the host's `os`, `arch`, `cpu`, `num_cpu` and `ram`. The second command copies that record to the name `xeon-8c`. When `~/.asv-machine.json` has no record for the host, `--machine` alone records only the name, and `asv run` writes that bare record over the committed `machine.json`.
+8. `uv run asv run --machine xeon-8c <commit>^! -b YourClass`. Do not pass `--quick`. On asv 0.6.6 a quick run still writes `results/asv`. The help text says it does not. That is `docs/asv-gaps.md`. The committed file is the run without `--quick`.
 9. Commit the new files under `results/asv`.
 10. Score with `asv.results.iter_results` and `Results.get_result_value`, then `score_v2`. `optbench.asv_score` does that for the quadratic sample. Parameter strings in the result JSON are wrapped in `repr` quotes; the reader unwraps them with `ast.literal_eval`. `uv run optbench statistics` refuses to write a document when those tracks are absent.
 
@@ -71,9 +71,10 @@ The quadratic sample is the run that `results/validation/statistics.json` scores
 
 ```bash
 uv run asv check
-uv run asv run --quick
 uv run asv machine --yes
-uv run asv run COMMIT^! -b quadratic
+uv run asv machine --yes --machine xeon-8c
+uv run asv run --quick --machine xeon-8c
+uv run asv run --machine xeon-8c COMMIT^! -b quadratic
 uv run optbench statistics --output results/validation/statistics.json
 uv run asv publish
 uv run asv compare COMMIT COMMIT
@@ -87,6 +88,8 @@ uv run asv compare COMMIT COMMIT
 It then runs `HaoZeke/asv-perch@v1`.
 The benchmark command is `uv run asv run --skip-existing --bench quadratic {sha}^!`.
 That is the in-process sample, not the 1000-start eonclient grid.
+The init command runs `asv machine --yes` without `--machine`, so CI names its machine after the runner.
+Those result files stay on the runner and are never committed.
 `post-comment` is true when the head branch of a pull request lives in this repository.
 It stays false on a push, on a manual run and on a pull request from a fork.
 A fork's run has a read-only token, so GitHub refuses its comment request.
