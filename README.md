@@ -230,6 +230,10 @@ The LJ38 minimization templates name `ljcluster` or `lj_cluster`. They do not pa
 
 `oracle/entries.jsonl` holds every `benchmark.dat` from branch `main` of <https://gitlab.com/optbench/optbench> at commit `0f26b796`. The archived LJ38 minimization mean counts every run under 10000 force calls as a success. A new run is a success only when the force norm is at or below the problem value and the call count is under the cap. Both rules are in `problems/minimization/lj38.toml`. The reference entry is `archive/entries/minimization/lj38/eon-cg`.
 
+An archive row's run count is the entry's own.
+An hTST `benchmark.dat` gives it on the `average over N` line after the ranked mean.
+Where `benchmark.dat` gives none, `oracle/counts.toml` gives the count, what was counted, and the entry script that states it, and `check` fails when a count names no entry or no source.
+
 The front page is a result whose status is `sota` and whose commit is the present source in `codes/registry.toml`. The archive page is the 2014 scores plus later passes that do not meet that rule. A local `benchmark.dat` is a score whether or not it has been added to the front page. Adding it there means a `results/*.json` record with `optbench.result/v1`, the problem geometries, and the pinned commit.
 
 `uv run optbench import-archive ARCHIVE` rebuilds the oracle and the geometry store from a bare clone of the public GitLab project. It does not replace a problem file that already exists.

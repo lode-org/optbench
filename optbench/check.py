@@ -8,6 +8,7 @@ import re
 from pathlib import Path
 
 from .corrections import correction_errors
+from .counts import count_errors
 from .dat import normalize
 from .problems import load_all
 
@@ -167,7 +168,8 @@ def check(problems_dir: Path, oracle_path: Path) -> int:
     problems = load_all(problems_dir)
     rows = load_oracle(oracle_path)
     counts: dict[str, int] = {}
-    structural: list[str] = correction_errors(oracle_path.resolve().parent.parent, rows)
+    root = oracle_path.resolve().parent.parent
+    structural: list[str] = correction_errors(root, rows) + count_errors(root, rows)
     for row in rows:
         ident = f"{row['suite']}/{row['problem']}"
         counts[ident] = counts.get(ident, 0) + 1
@@ -209,7 +211,6 @@ def check(problems_dir: Path, oracle_path: Path) -> int:
     from .pins import pin_errors
     from .site_check import check_site
 
-    root = oracle_path.resolve().parent.parent
     site_errors = check_site(root)
     document = build_board(root)
     site_errors.extend(rank_violations(document))

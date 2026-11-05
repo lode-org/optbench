@@ -1,0 +1,149 @@
+# How many runs an archived mean covers, where benchmark.dat does not say.
+# The board reads n from here. optbench check fails when an entry is
+# missing, counted twice, or states its own count.
+# Each source is a file in that entry's archive directory, or in the code
+# file the entry names. tests/test_counts.py reads those files again.
+
+[[count]]
+path = "website/saddle-search/pt-island/eon-dimer-cg-20-rotations/benchmark.dat"
+n = 9
+counted = "campaigns"
+source = "calc_benchmarks.py lists nine per-campaign values of force_calls, unique_saddles, fraction_connected and total_searches, and benchmark.dat holds their averages."
+
+[[count]]
+path = "website/saddle-search/pt-island/eon-dimer-cg-20-rotations-20-bowl_breakout/benchmark.dat"
+n = 9
+counted = "campaigns"
+source = "calc_benchmarks.py lists nine per-campaign values of force_calls, unique_saddles, fraction_connected and total_searches, and benchmark.dat holds their averages."
+
+[[count]]
+path = "website/saddle-search/pt-island/eon-dimer-cg-5-rotations-20-bowl_breakout/benchmark.dat"
+n = 9
+counted = "campaigns"
+source = "calc_benchmarks.py lists nine per-campaign values of force_calls, unique_saddles, fraction_connected and total_searches, and benchmark.dat holds their averages."
+
+[[count]]
+path = "website/saddle-search/pt-island/eon-dimer-lbfgs-20-rotations/benchmark.dat"
+n = 9
+counted = "campaigns"
+source = "calc_benchmarks.py lists nine per-campaign values of force_calls, unique_saddles, fraction_connected and total_searches, and benchmark.dat holds their averages."
+
+[[count]]
+path = "website/saddle-search/pt-island/eon-dimer-lbfgs-20-rotations-20-bowl_breakout/benchmark.dat"
+n = 9
+counted = "campaigns"
+source = "calc_benchmarks.py lists nine per-campaign values of force_calls, unique_saddles, fraction_connected and total_searches, and benchmark.dat holds their averages."
+
+[[count]]
+path = "website/saddle-search/pt-island/eon-dimer-lbfgs-5-rotations/benchmark.dat"
+n = 9
+counted = "campaigns"
+source = "calc_benchmarks.py lists nine per-campaign values of force_calls, unique_saddles, fraction_connected and total_searches, and benchmark.dat holds their averages."
+
+[[count]]
+path = "website/saddle-search/pt-island/eon-dimer-lbfgs-5-rotations-20-bowl_breakout/benchmark.dat"
+n = 9
+counted = "campaigns"
+source = "calc_benchmarks.py lists nine per-campaign values of force_calls, unique_saddles, fraction_connected and total_searches, and benchmark.dat holds their averages."
+
+[[count]]
+path = "website/saddle-search/pt-island/eon-dimer/benchmark.dat"
+n = 9
+counted = "campaigns"
+source = "run.sh starts run-1 to run-10. report.sh runs done.py only in run-? (run-1 to run-9) and averages run-*/benchmark.dat with awk, which prints six significant digits. done.py prints whole numbers, and of one to ten campaigns only nine fits both means: unique_saddles 109.222 is 983/9 and total_searches 11366.8 is 102301/9."
+
+[[count]]
+path = "website/saddle-search/pt-island/eon-md/benchmark.dat"
+n = 9
+counted = "campaigns"
+source = "run.sh starts run-1 to run-10. report.sh runs done.py only in run-? (run-1 to run-9) and averages run-*/benchmark.dat with awk, which prints six significant digits. done.py prints whole numbers, and of one to ten campaigns only nine fits both means: unique_saddles 51.6667 is 465/9 and total_searches 800.222 is 7202/9."
+
+[[count]]
+path = "website/saddle-search/pt-island/adaptive_HSphere-lbfgs-davidson-sm50/benchmark.dat"
+n = 10
+counted = "repetitions"
+source = "run.sh copies test_run/get_data_for_web_benchmark.m from the SoftSaddle code file into the run. That script sets n_repetitions = 10 and writes the means of those ten. The code file's iniConfig.m for adaptive_HSphere-lbfgs-davidson-sm50 sets n_repetition = 10. softsaddle/upstream keeps both files."
+
+[[count]]
+path = "website/saddle-search/pt-island/adaptive_HSphere-lbfgs-lanczos-sm0/benchmark.dat"
+n = 10
+counted = "repetitions"
+source = "run.sh copies test_run/get_data_for_web_benchmark.m from the SoftSaddle code file into the run. That script sets n_repetitions = 10 and writes the means of those ten. The code file's iniConfig.m for adaptive_HSphere-lbfgs-lanczos-sm0 sets n_repetition = 10. softsaddle/upstream keeps both files."
+
+[[count]]
+path = "website/saddle-search/pt-island/adaptive_HSphere-lbfgs-lanczos-sm50/benchmark.dat"
+n = 10
+counted = "repetitions"
+source = "run.sh copies test_run/get_data_for_web_benchmark.m from the SoftSaddle code file into the run. That script sets n_repetitions = 10 and writes the means of those ten. The code file's iniConfig.m for adaptive_HSphere-lbfgs-lanczos-sm50 sets n_repetition = 10. softsaddle/upstream keeps both files."
+
+[[count]]
+path = "website/mlopt/C2H4/pyamff-adam10-7-fcoeff0/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/C2H4/pyamff-adam10-7-fcoeff0_1/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/C2H4/pyamff-lbfgs10-7-fcoeff0/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/C2H4/pyamff-lbfgs10-7-fcoeff0_1/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/C2H4/pyamff-rprop10-7-fcoeff0/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/C2H4/pyamff-rprop10-7-fcoeff0_1/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/emt-pt38/pyamff-adam10-7-fcoeff0/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/emt-pt38/pyamff-adam10-7-fcoeff0_1/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/emt-pt38/pyamff-lbfgs10-7-fcoeff0/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/emt-pt38/pyamff-lbfgs10-7-fcoeff0_1/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/emt-pt38/pyamff-rprop10-7-fcoeff0/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."
+
+[[count]]
+path = "website/mlopt/emt-pt38/pyamff-rprop10-7-fcoeff0_1/benchmark.dat"
+n = 50
+counted = "initializations"
+source = "run.sh runs mlrf0_optb.py 50, which sets up 50 model directories. mlrf0_optb.py -s averages the last epoch of every directory into mean_epoch."

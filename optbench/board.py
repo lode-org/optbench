@@ -36,6 +36,7 @@ from pathlib import Path
 
 from .campaign import geometry_archive, list_templates
 from .corrections import corrected, load_corrections
+from .counts import entry_count, load_counts
 from .dat import DatError, parse_lenient
 from .failures import FAILURES
 from .families import (
@@ -88,12 +89,12 @@ def _json_lines(path: Path) -> list[dict]:
 def stated_full_n(root: Path, problem: dict) -> int | None:
     """How many starts the problem file calls a complete score.
 
-    ``sample.starts`` or ``sample.pairs`` wins. A minimization archive
-    with no sample count uses the number of ``.con`` files, which is
-    the Morse bulk set.
+    ``sample.starts``, ``pairs``, ``repetitions`` or ``initializations``
+    wins. A minimization archive with no sample count uses the number of
+    ``.con`` files, which is the Morse bulk set.
     """
     sample = problem.get("sample") or {}
-    for key in ("starts", "pairs", "repetitions"):
+    for key in ("starts", "pairs", "repetitions", "initializations"):
         value = sample.get(key)
         if value not in (None, "", 0, "0"):
             return int(value)
@@ -1140,6 +1141,7 @@ def _archive_rows(root: Path, problems: dict[str, dict], registry: list[dict], f
     if not path.is_file():
         return []
     corrections = load_corrections(root)
+    counts = load_counts(root)
     rows: list[dict] = []
     for item in load_oracle(path):
         ident = f"{item['suite']}/{item['problem']}"
@@ -1158,7 +1160,8 @@ def _archive_rows(root: Path, problems: dict[str, dict], registry: list[dict], f
             nfailed = int(float(nfailed_raw)) if nfailed_raw not in (None, "") else None
         except ValueError:
             nfailed = None
-        stated = full_n.get(ident)
+        own = entry_count(item, primary, counts) if primary else None
+        stated = own if own is not None else full_n.get(ident)
         row = _blank_row(
             problem=ident,
             entry=str(item.get("entry") or ""),
