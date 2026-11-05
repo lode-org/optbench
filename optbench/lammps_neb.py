@@ -20,6 +20,10 @@ start total sums both stages on every replica, including the
 endpoints. The harness then judges the climbing replica: free-atom
 gradient at the problem norm, and Hessian index 1. Finite-difference
 probes are ``verify_calls`` and are not part of the search cost.
+
+A search without ``work`` runs in a temporary directory that is removed
+on return. ``OPTBENCH_LAMMPS_KEEP=1`` or ``cleanup=False`` keeps it and
+prints its path on stderr.
 """
 
 from __future__ import annotations
@@ -31,6 +35,7 @@ import shutil
 import signal
 import statistics
 import subprocess
+import sys
 import tempfile
 import tomllib
 from pathlib import Path
@@ -542,10 +547,11 @@ def search_geometry(
         raise ValueError(f"{name} endpoints do not match")
     if int(np.count_nonzero(mask)) < 1:
         raise ValueError(f"{name} has no free atoms")
-    owned: tempfile.TemporaryDirectory[str] | None = None
+    owned: Path | None = None
     if work is None:
-        owned = tempfile.TemporaryDirectory(prefix="lammpsneb-")
-        work = Path(owned.name)
+        # TemporaryDirectory deletes itself when collected, after the return.
+        owned = Path(tempfile.mkdtemp(prefix="lammpsneb-"))
+        work = owned
     else:
         work.mkdir(parents=True, exist_ok=True)
     n_images = int(settings["n_images"])
@@ -606,8 +612,11 @@ def search_geometry(
             returncode=returncode,
         )
     finally:
-        if owned is not None and cleanup and os.environ.get("OPTBENCH_LAMMPS_KEEP") != "1":
-            owned.cleanup()
+        if owned is not None:
+            if cleanup and os.environ.get("OPTBENCH_LAMMPS_KEEP") != "1":
+                shutil.rmtree(owned, ignore_errors=True)
+            else:
+                print(f"{name}: LAMMPS work directory kept at {owned}", file=sys.stderr)
 
 
 def _logged_calls(work: Path, n_images: int) -> tuple[int, int, bool]:

@@ -1,6 +1,7 @@
 """LAMMPS climbing-image NEB templates, call counts, and the spec potential."""
 
 import os
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -163,6 +164,45 @@ def test_lammps_pair_matches_the_harness_on_lj_and_morse():
     harness_energy, harness_grad = evaluate("morse_pt", moved, slab.box)
     assert morse_energy == pytest.approx(harness_energy, abs=1e-8)
     assert np.allclose(morse_grad, harness_grad, atol=1e-8)
+
+
+@pytest.mark.parametrize("keep", ["1", None], ids=["keep", "default"])
+def test_keep_leaves_the_temporary_work_directory(monkeypatch, capsys, keep):
+    import optbench.lammps_neb as lammps_neb
+
+    launched = []
+
+    def stopped(binary, work, n_images, timeout):
+        launched.append(work)
+        (work / "log.lammps").write_text("ERROR: stopped before the band\n", encoding="utf-8")
+        return 1
+
+    monkeypatch.setattr(lammps_neb, "_launch_neb", stopped)
+    monkeypatch.setattr(lammps_neb, "lammps_executable", lambda: Path("lmp"))
+    if keep is None:
+        monkeypatch.delenv("OPTBENCH_LAMMPS_KEEP", raising=False)
+    else:
+        monkeypatch.setenv("OPTBENCH_LAMMPS_KEEP", keep)
+    record = search_named(
+        ROOT,
+        "double-ended-saddle-search/lj38",
+        "lammpsneb/ci-quickmin",
+        "pair_00",
+        n1=2,
+        n2=2,
+    )
+    assert record["failure"] == "crash"
+    assert record["error"] == "ERROR: stopped before the band"
+    assert len(launched) == 1
+    work = launched[0]
+    if keep is None:
+        assert not work.exists()
+        assert "kept" not in capsys.readouterr().err
+    else:
+        assert (work / "in.neb").is_file()
+        assert (work / "log.lammps").is_file()
+        assert str(work) in capsys.readouterr().err
+        shutil.rmtree(work)
 
 
 @pytest.mark.skipif(BINARY is None, reason="LAMMPS binary is not available")
