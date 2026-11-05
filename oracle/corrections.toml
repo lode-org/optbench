@@ -1,0 +1,64 @@
+# Archived fields that the entry's own run script contradicts.
+# The board reads value where the archive has was. optbench check fails
+# when the archive no longer has was.
+#
+# The eight GMAN NEB files all say algorithm lbfgs. Each opt.py runs one
+# optimizer. The names are the rows of Table I in D. Sheppard, R. Terrell
+# and G. Henkelman, J. Chem. Phys. 128, 134106 (2008), which every GMAN
+# comments.txt cites.
+
+[[correction]]
+path = "website/neb/Pt-heptamer/gman-sd/benchmark.dat"
+field = "algorithm"
+was = "lbfgs"
+value = "SD"
+source = "opt.py runs Gopt.sd(). J. Chem. Phys. 128, 134106 (2008), Table I, SD: steepest descent."
+
+[[correction]]
+path = "website/neb/Pt-heptamer/gman-qm/benchmark.dat"
+field = "algorithm"
+was = "lbfgs"
+value = "QM"
+source = "opt.py runs Gopt.qm(). J. Chem. Phys. 128, 134106 (2008), Table I, QM: quick-min."
+
+[[correction]]
+path = "website/neb/Pt-heptamer/gman-fire/benchmark.dat"
+field = "algorithm"
+was = "lbfgs"
+value = "FIRE"
+source = "opt.py runs Gopt.fire(). J. Chem. Phys. 128, 134106 (2008), Table I, FIRE: fast inertial relaxation engine."
+
+[[correction]]
+path = "website/neb/Pt-heptamer/gman-cg/benchmark.dat"
+field = "algorithm"
+was = "lbfgs"
+value = "CG"
+source = "opt.py runs Gopt.cg(). J. Chem. Phys. 128, 134106 (2008), Table I, CG: conjugate gradient."
+
+[[correction]]
+path = "website/neb/Pt-heptamer/gman-lbfgs-line/benchmark.dat"
+field = "algorithm"
+was = "lbfgs"
+value = "L-BFGS(line)"
+source = "opt.py runs Gopt.lbfgs() with min='line'. J. Chem. Phys. 128, 134106 (2008), Table I, L-BFGS(line)."
+
+[[correction]]
+path = "website/neb/Pt-heptamer/gman-lbfgs-hess/benchmark.dat"
+field = "algorithm"
+was = "lbfgs"
+value = "L-BFGS(Hess)"
+source = "opt.py runs Gopt.lbfgs() with min='hess'. J. Chem. Phys. 128, 134106 (2008), Table I, L-BFGS(Hess)."
+
+[[correction]]
+path = "website/neb/Pt-heptamer/gman-glbfgs-line/benchmark.dat"
+field = "algorithm"
+was = "lbfgs"
+value = "GL-BFGS(line)"
+source = "opt.py runs Gopt.glbfgs() with min='line'. J. Chem. Phys. 128, 134106 (2008), Table I, GL-BFGS(line): global L-BFGS(line)."
+
+[[correction]]
+path = "website/neb/Pt-heptamer/gman-glbfgs-hess/benchmark.dat"
+field = "algorithm"
+was = "lbfgs"
+value = "GL-BFGS(Hess)"
+source = "opt.py runs Gopt.glbfgs() with min='hess'. J. Chem. Phys. 128, 134106 (2008), Table I, GL-BFGS(Hess): global L-BFGS(Hess)."

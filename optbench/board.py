@@ -35,6 +35,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from .campaign import geometry_archive, list_templates
+from .corrections import corrected, load_corrections
 from .dat import DatError, parse_lenient
 from .failures import FAILURES
 from .families import (
@@ -1138,6 +1139,7 @@ def _archive_rows(root: Path, problems: dict[str, dict], registry: list[dict], f
     path = root / "oracle" / "entries.jsonl"
     if not path.is_file():
         return []
+    corrections = load_corrections(root)
     rows: list[dict] = []
     for item in load_oracle(path):
         ident = f"{item['suite']}/{item['problem']}"
@@ -1145,6 +1147,7 @@ def _archive_rows(root: Path, problems: dict[str, dict], registry: list[dict], f
         if problem is None:
             continue
         fields, _renamed = normalize(item["fields"])
+        fields = corrected(str(item.get("path") or ""), fields, corrections)
         if _held(fields):
             continue
         primary = _primary(problem)

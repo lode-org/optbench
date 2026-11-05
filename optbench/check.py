@@ -7,6 +7,7 @@ import os
 import re
 from pathlib import Path
 
+from .corrections import correction_errors
 from .dat import normalize
 from .problems import load_all
 
@@ -166,7 +167,7 @@ def check(problems_dir: Path, oracle_path: Path) -> int:
     problems = load_all(problems_dir)
     rows = load_oracle(oracle_path)
     counts: dict[str, int] = {}
-    structural: list[str] = []
+    structural: list[str] = correction_errors(oracle_path.resolve().parent.parent, rows)
     for row in rows:
         ident = f"{row['suite']}/{row['problem']}"
         counts[ident] = counts.get(ident, 0) + 1
