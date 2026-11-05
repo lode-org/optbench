@@ -12,6 +12,7 @@ cell = [15.3456, 21.702, 100.0]
 [sample]
 starts = 4
 displacements = [0.02, 0.3, 1.0, 3.0]
+starts_basis = "The pinned input inputs/gpridge/cuh2/params.toml sets sepDists to 0.02, 0.3, 1.0 and 3.0."
 
 [input]
 directory = "inputs/gpridge/cuh2"
@@ -43,6 +44,8 @@ norm = "linf"
 force_norm = 0.01
 force_unit = "eV/Angstrom"
 max_force_calls = 10000
+stop_basis = "The pinned input inputs/gpridge/cuh2/params.toml sets finalConvergenceForce to 0.01 and convergenceForceNorm to linfNorm."
+cap_basis = "The pinned GPRidge input sets no force-call cap. This acceptance cap copies max_iterations from archive/entries/minimization/lj38/eon-cg/config.ini."
 call_limit_enforcement = "acceptance"
 note = "The force-call threshold rejects an over-budget result; the native outer-iteration and wall-time limits bound execution."
 

@@ -81,12 +81,29 @@ def _bits(problem: dict) -> list[tuple[str, str]]:
     convergence = problem.get("convergence") or {}
     if "force_norm" in convergence:
         unit = convergence.get("force_unit", "")
-        kind = "L2 norm" if str(convergence.get("norm", "")).lower() == "l2" else "norm"
-        bits.append(("Stop", f"{kind} of the force at or below {convergence['force_norm']} {unit}".strip()))
+        norm = str(convergence.get("norm", "")).lower()
+        value = convergence["force_norm"]
+        if norm == "l2":
+            stop = f"L2 norm of the force at or below {value} {unit}".strip()
+        elif norm in {"linf", "linfnorm"}:
+            stop = (
+                "largest Cartesian force component (the L-infinity norm) "
+                f"at or below {value} {unit}"
+            ).strip()
+        else:
+            stop = f"norm of the force at or below {value} {unit}".strip()
+        basis = str(convergence.get("stop_basis") or "").strip()
+        if basis:
+            stop = f"{stop}. {basis}"
+        bits.append(("Stop", stop))
     if "gradient_norm" in convergence:
         bits.append(("Stop", f"gradient norm below {convergence['gradient_norm']}"))
     if "max_force_calls" in convergence:
-        bits.append(("Cap", f"{convergence['max_force_calls']} force calls"))
+        cap = f"{convergence['max_force_calls']} force calls"
+        basis = str(convergence.get("cap_basis") or "").strip()
+        if basis:
+            cap = f"{cap}. {basis}"
+        bits.append(("Cap", cap))
     if "energy_above_minimum" in convergence:
         bits.append(("Stop", f"within {convergence['energy_above_minimum']} of the known minimum"))
     if "max_epochs" in convergence:
@@ -100,7 +117,11 @@ def _bits(problem: dict) -> list[tuple[str, str]]:
         bits.append(("Goal", text))
     sample = problem.get("sample") or {}
     if sample.get("starts"):
-        bits.append(("Starts", str(sample["starts"])))
+        starts = str(sample["starts"])
+        basis = str(sample.get("starts_basis") or "").strip()
+        if basis:
+            starts = f"{starts}. {basis}"
+        bits.append(("Starts", starts))
     potential = problem.get("potential") or {}
     if potential.get("kind"):
         label = str(potential["kind"])
@@ -720,6 +741,13 @@ def _problem_preamble(root: Path, problem: dict, ranked: list[dict], note: str =
         lines.append(f'<p class="bench-note"><sup>{index}</sup> {html.escape(text)}</p>')
     if note:
         lines.append(f'<p class="bench-aside">{html.escape(note)}</p>')
+    convergence = problem.get("convergence") or {}
+    sample = problem.get("sample") or {}
+    for label, text in _bits(problem):
+        if label == "Stop" and str(convergence.get("stop_basis") or "").strip():
+            lines.append(f'<p class="bench-note">{html.escape(text)}</p>')
+        if label == "Starts" and str(sample.get("starts_basis") or "").strip():
+            lines.append(f'<p class="bench-note">{html.escape(text)}</p>')
     return "\n".join(lines)
 
 

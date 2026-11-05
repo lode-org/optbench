@@ -9,8 +9,10 @@
    <div class="stat"><span class="k">System</span><span class="v">CuH2</span></div>
    <div class="stat"><span class="k">Atoms</span><span class="v num">—<sup>1</sup></span></div>
    <div class="stat"><span class="k">Runs</span><span class="v num">4</span></div>
-   <div class="stat"><span class="k">Cap</span><span class="v">10000 force calls</span></div>
+   <div class="stat"><span class="k">Cap</span><span class="v">10000 force calls. The pinned GPRidge input sets no force-call cap. This acceptance cap copies max_iterations from archive/entries/minimization/lj38/eon-cg/config.ini.</span></div>
    </div>
+   <p class="bench-note">largest Cartesian force component (the L-infinity norm) at or below 0.01 eV/Angstrom. The pinned input inputs/gpridge/cuh2/params.toml sets finalConvergenceForce to 0.01 and convergenceForceNorm to linfNorm.</p>
+   <p class="bench-note">4. The pinned input inputs/gpridge/cuh2/params.toml sets sepDists to 0.02, 0.3, 1.0 and 3.0.</p>
    <p class="bench-note"><sup>1</sup> The problem file does not state an atom count.</p>
    <p class="metric-line">The main metric is Force calls. <a href="../../../methodology.html">Scoring rules</a>.</p>
    <h2>Leaderboard</h2>
@@ -32,6 +34,6 @@
    <p class="bench-note">Success on this problem: the native search converges, the Cu atoms stay fixed, and the client force calls stay under the cap.</p>
    <p class="bench-note">The maximum-norm hydrogen force meets the stop on an independent remote procedure call (RPC).</p>
    <p class="bench-note">The Hessian index over the six hydrogen coordinates is 1, and no eigenvalue is left unresolved.</p>
-   <p class="bench-note">The check is <a href="https://github.com/lode-org/optbench/blob/main/optbench/gpridge_dimer.py">the dimer verification</a>.</p>
+   <p class="bench-note">The check links <a href="https://github.com/lode-org/optbench/blob/main/optbench/gpridge_dimer.py">the dimer verification</a>.</p>
    </section>
 #+end_export
