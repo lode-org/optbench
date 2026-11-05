@@ -46,6 +46,17 @@ committed = "2026-10-20"
 note = "develop 500350d9fae881f06c7ef194e5868da079c4be5a built from that commit with no source patch. eonclient --version prints 3.6.0 (500350d9). The Pt-heptamer and LJ38 band rows on this commit use the harness force counter. EON SVN r2549 is a different code."
 
 [[code]]
+id = "eon-develop-6d9d629a"
+name = "eOn"
+aliases = ["eOn (develop 500350d9)"]
+role = "minimization and saddle search"
+repository = "https://github.com/TheochemUI/eon"
+ref = "fix/develop-regressions-vs-350"
+commit = "6d9d629a086080f85687a6ca0a0220cdc3b084e4"
+committed = "2026-10-20"
+note = "fix/develop-regressions-vs-350 at 6d9d629a086080f85687a6ca0a0220cdc3b084e4, built with no source patch. Its one commit after 500350d9 adds client/unit_tests/data/systems/lj13_saddle/pos.con and changes no source file, so eonclient builds from the 500350d9 sources. The hTST Al dimer campaign ran this checkout under the label eOn (develop 500350d9)."
+
+[[code]]
 id = "eon-develop-f6817b53"
 name = "eOn (develop f6817b53)"
 page = "eOn"
