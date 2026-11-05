@@ -32,6 +32,17 @@ That run also writes `docs/include/v2-board.org`.
 
 The harness does not contain eOn, pele, or Sella. Those are installed separately, and the commands below say which release produced the files in `results/campaign/`.
 
+The rgmin and rgsaddle codes are built from source at the commits in `codes/registry.toml`.
+Both `Cargo.toml` files set `edition = "2024"` and `rust-version = "1.88"`, so the build needs Rust 1.88 or newer.
+Cargo 1.83 stops at the manifest with ``feature `edition2024` is required``.
+The Python packages of both are nanobind extensions built by `scikit-build-core`.
+That build also needs the Python development headers, `Python.h`, from `python3.12-dev` on Ubuntu for Python 3.12.
+Without them CMake stops with `Could NOT find Python (missing: Development.Module Development.SABIModule)`.
+It needs a C++17 compiler and CMake 3.15 or newer as well.
+The harness imports `rgmin` as that Python package.
+It loads rgsaddle as `librgsaddle.so` from `cargo build --release`, which needs only Rust.
+The band runs read the library path from `RGSADDLE_LIBRARY`, and the minimum-mode runs read it from `RGSADDLE_LIB`.
+
 ## Lennard-Jones 38 L-BFGS mean
 
 `results/campaign/eon-client-lbfgs-m100.dat` is:
