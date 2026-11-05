@@ -122,6 +122,10 @@ def test_unresolved_mode_follows_the_curvature_tolerance(shallow, rejected):
     assert "hessian_index" not in result["reasons"]
 
 
+def test_hydrogen_hessian_step_is_the_machine_epsilon_cube_root():
+    assert native.hydrogen_hessian_step() == pytest.approx(6.055454452393343e-6)
+
+
 def test_force_failure_stops_before_the_hessian_and_counts_the_evaluation():
     atoms = slab()
     positions = atoms.positions.copy()

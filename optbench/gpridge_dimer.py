@@ -19,6 +19,23 @@ from .gpridge_band import digest, frozen_arguments, run_search, runtime
 from .rgsaddle_band import vibrational_index
 from .stationary import curvature_tolerance
 
+# Nocedal and Wright, Numerical Optimization, 2nd ed., Springer, 2006,
+# section 8.1, equation 8.7, derive the cube-root step for a
+# central-difference gradient from function values. Truncation and
+# roundoff balance at the cube root of machine epsilon, times a typical
+# magnitude of the variable. Each column of this Hessian is a central
+# difference of forces, and the same balance sets its step. Machine
+# epsilon is numpy finfo(float64).eps, about 2.2e-16. The coordinates
+# are stored in Angstroms, so the length scale is one Angstrom. That
+# length is an explicit choice.
+_COORDINATE_SCALE_ANGSTROM = 1.0
+
+
+def hydrogen_hessian_step() -> float:
+    """Central-difference step, in Angstrom, for the six hydrogen modes."""
+    machine_epsilon = float(np.finfo(np.float64).eps)
+    return _COORDINATE_SCALE_ANGSTROM * machine_epsilon ** (1.0 / 3.0)
+
 
 def checked_files(directory: Path, hashes: dict) -> dict[str, str]:
     directory = directory.resolve(strict=True)
@@ -195,7 +212,7 @@ def verify_positions(atoms, positions: np.ndarray, calculator, force_stop: float
     if force > force_stop:
         reasons.append("force_norm")
     else:
-        step = 1e-4
+        step = hydrogen_hessian_step()
         hessian = np.empty((6, 6))
         for column in range(6):
             upper, lower = positions.copy(), positions.copy()
