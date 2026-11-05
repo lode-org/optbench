@@ -1,5 +1,11 @@
+import hashlib
 import json
+import os
+import shutil
+import subprocess
 from pathlib import Path
+
+import pytest
 
 from optbench.board import ranked_cells
 from optbench.check import load_oracle
@@ -69,6 +75,49 @@ def test_a_verification_link_renders_without_a_success_rule():
     assert 'href="https://example.invalid/bare"' in bare_html
 
 
+def _git(*args: str) -> bytes:
+    return subprocess.run(["git", "-C", str(ROOT), *args], capture_output=True, check=True).stdout
+
+
+def _checkout_state() -> tuple[bytes, str]:
+    status = _git("status", "--porcelain=v1", "-z", "--untracked-files=all")
+    return status, hashlib.sha256(_git("diff", "--binary", "HEAD")).hexdigest()
+
+
+@pytest.fixture(autouse=True)
+def _checkout_untouched():
+    """No test here writes into the checkout, so a clean tree stays clean."""
+    if not (ROOT / ".git").exists():
+        yield
+        return
+    before = _checkout_state()
+    yield
+    assert _checkout_state() == before
+
+
+@pytest.fixture(scope="module")
+def site(tmp_path_factory) -> Path:
+    """The working tree's files, rendered, with this checkout's git objects.
+
+    The board reads the template pin of each asv result at its commit, so
+    the copy shares the object store through ``objects/info/alternates``.
+    """
+    if not (ROOT / ".git").exists():
+        pytest.skip("the site tests copy a git checkout")
+    root = tmp_path_factory.mktemp("site")
+    for raw in _git("ls-files", "-z", "--cached", "--others", "--exclude-standard").split(b"\0"):
+        source = ROOT / os.fsdecode(raw)
+        if raw and source.is_file():
+            target = root / os.fsdecode(raw)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, target)
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    objects = (ROOT / os.fsdecode(_git("rev-parse", "--git-common-dir").strip())).resolve() / "objects"
+    (root / ".git" / "objects" / "info" / "alternates").write_text(f"{objects}\n", encoding="utf-8")
+    render(root)
+    return root
+
+
 def test_nav_pages_have_titles_and_the_suites_fold_under_archive():
     org = ROOT / "docs" / "orgmode"
     for name in ("index.org", "run.org", "archive.org", "codes.org", "board.org"):
@@ -90,34 +139,33 @@ def test_nav_pages_have_titles_and_the_suites_fold_under_archive():
     assert '"globaltoc_expand_depth": 0' in conf
 
 
-def test_suite_pages_name_problems_and_fold_code_spellings():
-    render(ROOT)
-    mlopt = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "mlopt.org").read_text(encoding="utf-8")
+def test_suite_pages_name_problems_and_fold_code_spellings(site: Path):
+    mlopt = (site / "docs" / "orgmode" / "generated" / "suites" / "mlopt.org").read_text(encoding="utf-8")
     assert "Each problem is its own page." not in mlopt
     assert "data-bench=\"problems\"" in mlopt
     assert "data-bench=\"codes\"" in mlopt
     assert "EMT Pt 38 nanoparticle" in mlopt
     assert "suite-mlopt.svg" in mlopt
-    globalopt = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "globalopt.org").read_text(encoding="utf-8")
+    globalopt = (site / "docs" / "orgmode" / "generated" / "suites" / "globalopt.org").read_text(encoding="utf-8")
     assert "Lennard-Jones 150" in globalopt
     assert "TIP4P, N=10" in globalopt
     assert ">lj150<" not in globalopt
     assert ">tip4p10<" not in globalopt
-    assert ">pt-island<" not in (ROOT / "docs" / "orgmode" / "generated" / "suites" / "double-ended-saddle-search.org").read_text(encoding="utf-8")
-    codes = (ROOT / "docs" / "include" / "codes.org").read_text(encoding="utf-8")
+    assert ">pt-island<" not in (site / "docs" / "orgmode" / "generated" / "suites" / "double-ended-saddle-search.org").read_text(encoding="utf-8")
+    codes = (site / "docs" / "include" / "codes.org").read_text(encoding="utf-8")
     assert 'href="generated/codes/eon-r2006.html"' not in codes
     assert 'href="generated/codes/eon--develop-f6817b53.html"' not in codes
     assert 'href="generated/codes/eon--svn-r2549.html"' not in codes
     assert 'href="generated/codes/eon--develop-500350d9.html"' not in codes
     assert 'href="generated/codes/unknown.html"' in codes
-    assert not (ROOT / "docs" / "orgmode" / "generated" / "codes" / "eon-r2006.org").exists()
-    eon_svn = (ROOT / "docs" / "orgmode" / "generated" / "codes" / "eon-svn.org").read_text(encoding="utf-8")
+    assert not (site / "docs" / "orgmode" / "generated" / "codes" / "eon-r2006.org").exists()
+    eon_svn = (site / "docs" / "orgmode" / "generated" / "codes" / "eon-svn.org").read_text(encoding="utf-8")
     assert "Eon r2006" in eon_svn
     assert "EON (SVN r2549)" in eon_svn
-    unknown = (ROOT / "docs" / "orgmode" / "generated" / "codes" / "unknown.org").read_text(encoding="utf-8")
+    unknown = (site / "docs" / "orgmode" / "generated" / "codes" / "unknown.org").read_text(encoding="utf-8")
     assert "Newtons Method" in unknown
     assert "ase-BFGS" not in unknown
-    problem = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "mlopt" / "emt-pt38.org").read_text(encoding="utf-8")
+    problem = (site / "docs" / "orgmode" / "generated" / "suites" / "mlopt" / "emt-pt38.org").read_text(encoding="utf-8")
     assert "The main metric is" in problem
     assert "bench-sortable" in problem
 
@@ -154,12 +202,11 @@ def _headline_cell(text: str, problem_id: str, field: str, value: str) -> str:
     return text[start : text.index(cell, start) + len(cell)]
 
 
-def test_rendered_pages_use_the_board_rank():
-    render(ROOT)
-    document = json.loads((ROOT / "results" / "board" / "index.json").read_text(encoding="utf-8"))
+def test_rendered_pages_use_the_board_rank(site: Path):
+    document = json.loads((site / "results" / "board" / "index.json").read_text(encoding="utf-8"))
     lj38 = document["problems"]["minimization/lj38"]["ranked"][0]
     cells = dict(ranked_cells(lj38, False))
-    sota = (ROOT / "docs" / "include" / "sota.org").read_text(encoding="utf-8")
+    sota = (site / "docs" / "include" / "sota.org").read_text(encoding="utf-8")
     assert 'data-board-table="headline" data-problem="minimization/lj38"' in sota
     assert 'data-field="current"' not in sota
     assert cells["label"] in sota
@@ -167,10 +214,10 @@ def test_rendered_pages_use_the_board_rank():
     assert "Present sources. The cell is the record." not in sota
     assert "rgmin-lbfgs-0.3.0" not in sota
     assert "eon-3.5.0-lbfgs-m100" not in sota
-    collection = (ROOT / "docs" / "include" / "collection.org").read_text(encoding="utf-8")
+    collection = (site / "docs" / "include" / "collection.org").read_text(encoding="utf-8")
     assert "Morse bulk" in collection
     assert "No present run is recorded." not in collection
-    minimization = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "minimization" / "lj38.org").read_text(
+    minimization = (site / "docs" / "orgmode" / "generated" / "suites" / "minimization" / "lj38.org").read_text(
         encoding="utf-8"
     )
     assert 'data-board-table="ranked" data-problem="minimization/lj38"' in minimization
@@ -190,53 +237,52 @@ def test_rendered_pages_use_the_board_rank():
     assert "<details" not in minimization
     assert "eOn (r2025) · Conjugate Gradients" in minimization
     assert "Present runs. Fewer force calls first." not in minimization
-    neb_page = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "neb" / "Pt-heptamer.org").read_text(
+    neb_page = (site / "docs" / "orgmode" / "generated" / "suites" / "neb" / "Pt-heptamer.org").read_text(
         encoding="utf-8"
     )
     assert "not yet on the harness counter" in neb_page
-    tsopt = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "tsopt" / "LJ38.org").read_text(encoding="utf-8")
+    tsopt = (site / "docs" / "orgmode" / "generated" / "suites" / "tsopt" / "LJ38.org").read_text(encoding="utf-8")
     assert "Sella (0.1.1)" in tsopt
     assert "tsopt-LJ38-profile.svg" in tsopt
-    saddle = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "saddle-search" / "pt-island.org").read_text(
+    saddle = (site / "docs" / "orgmode" / "generated" / "suites" / "saddle-search" / "pt-island.org").read_text(
         encoding="utf-8"
     )
     assert 'data-board-table="ranked" data-problem="saddle-search/pt-island"' in saddle
     assert "rgsaddle/saddle-dimer-rotskip-tuned" not in saddle
     assert "No full harness row." not in saddle
     assert "Per-search cost" not in saddle
-    board = (ROOT / "docs" / "include" / "v2-board.org").read_text(encoding="utf-8")
+    board = (site / "docs" / "include" / "v2-board.org").read_text(encoding="utf-8")
     assert 'data-board-table="headline" data-problem="minimization/lj38"' in board
     assert 'data-board-table="summary"' not in board
-    assert "min-width: 40rem" not in (ROOT / "docs" / "source" / "_static" / "optbench.css").read_text(encoding="utf-8")
-    codes = (ROOT / "docs" / "include" / "codes.org").read_text(encoding="utf-8")
+    assert "min-width: 40rem" not in (site / "docs" / "source" / "_static" / "optbench.css").read_text(encoding="utf-8")
+    codes = (site / "docs" / "include" / "codes.org").read_text(encoding="utf-8")
     assert "Rohit Goswami" in codes
-    eon = (ROOT / "docs" / "orgmode" / "generated" / "codes" / "eon.org").read_text(encoding="utf-8")
+    eon = (site / "docs" / "orgmode" / "generated" / "codes" / "eon.org").read_text(encoding="utf-8")
     assert "4d8b34baf1ba" in eon
     assert "1d71c9445018" in eon
     assert 'data-board-table="code-rows"' in eon
-    rgmin = (ROOT / "docs" / "orgmode" / "generated" / "codes" / "rgmin.org").read_text(encoding="utf-8")
+    rgmin = (site / "docs" / "orgmode" / "generated" / "codes" / "rgmin.org").read_text(encoding="utf-8")
     assert "f15726f1c798" in rgmin
-    rgsaddle = (ROOT / "docs" / "orgmode" / "generated" / "codes" / "rgsaddle.org").read_text(encoding="utf-8")
+    rgsaddle = (site / "docs" / "orgmode" / "generated" / "codes" / "rgsaddle.org").read_text(encoding="utf-8")
     assert "c0db2b8d333c" in rgsaddle
-    assert not (ROOT / "docs" / "include" / "featured.org").exists()
-    assert not (ROOT / "docs" / "include" / "terra-pass.org").exists()
+    assert not (site / "docs" / "include" / "featured.org").exists()
+    assert not (site / "docs" / "include" / "terra-pass.org").exists()
     for problem in document["problems"].values():
         if problem.get("ranked") and not problem.get("profile"):
             suite, _, name = problem["id"].partition("/")
-            page = (ROOT / "docs" / "orgmode" / "generated" / "suites" / suite / f"{name}.org").read_text(
+            page = (site / "docs" / "orgmode" / "generated" / "suites" / suite / f"{name}.org").read_text(
                 encoding="utf-8"
             )
             assert problem["profile_gap"]
             assert problem["profile_gap"] in page
-    assert check_site(ROOT) == []
+    assert check_site(site) == []
 
 
-def test_a_stale_summary_number_fails_the_check():
-    render(ROOT)
-    document = json.loads((ROOT / "results" / "board" / "index.json").read_text(encoding="utf-8"))
+def test_a_stale_summary_number_fails_the_check(site: Path):
+    document = json.loads((site / "results" / "board" / "index.json").read_text(encoding="utf-8"))
     top = document["problems"]["minimization/lj38"]["ranked"][0]
     par2 = dict(ranked_cells(top, False))["par2_mean"]
-    path = ROOT / "docs" / "include" / "v2-board.org"
+    path = site / "docs" / "include" / "v2-board.org"
     original = path.read_text(encoding="utf-8")
     needle = f'data-field="par2_mean">{par2}<'
     assert _headline_cell(original, "minimization/lj38", "par2_mean", par2)
@@ -244,25 +290,24 @@ def test_a_stale_summary_number_fails_the_check():
     pos = original.index(needle, start)
     path.write_text(original[:pos] + 'data-field="par2_mean">1<' + original[pos + len(needle) :], encoding="utf-8")
     try:
-        errors = check_site(ROOT)
+        errors = check_site(site)
         assert errors
         assert any("par2" in line and "minimization/lj38" in line for line in errors)
     finally:
         path.write_text(original, encoding="utf-8")
 
 
-def test_a_stale_ranked_number_fails_the_check():
-    render(ROOT)
-    document = json.loads((ROOT / "results" / "board" / "index.json").read_text(encoding="utf-8"))
+def test_a_stale_ranked_number_fails_the_check(site: Path):
+    document = json.loads((site / "results" / "board" / "index.json").read_text(encoding="utf-8"))
     top = document["problems"]["minimization/lj38"]["ranked"][0]
     par2 = dict(ranked_cells(top, False))["par2_mean"]
-    path = ROOT / "docs" / "orgmode" / "generated" / "suites" / "minimization" / "lj38.org"
+    path = site / "docs" / "orgmode" / "generated" / "suites" / "minimization" / "lj38.org"
     original = path.read_text(encoding="utf-8")
     needle = f'data-field="par2_mean">{par2}<'
     assert needle in original
     path.write_text(original.replace(needle, 'data-field="par2_mean">1<', 1), encoding="utf-8")
     try:
-        errors = check_site(ROOT)
+        errors = check_site(site)
         assert errors
         assert any("par2_mean" in line and "minimization/lj38" in line for line in errors)
     finally:
