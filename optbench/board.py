@@ -2270,10 +2270,18 @@ def _strip_private(document: dict) -> dict:
     }
 
 
-def write_board(root: Path, output: Path) -> dict:
-    """Write the leaderboard JSON, the plots, and the site include."""
+def write_board(root: Path, output: Path, *, site: bool | None = None) -> dict:
+    """Write the leaderboard JSON, the plots, and the Board page include.
+
+    With ``site`` true, the plots are also copied to the site and the include
+    is the Board page under ``root/docs``. Otherwise every file goes under
+    ``output``. ``site`` left as None is true only when ``output`` is the
+    checkout's ``results/board``.
+    """
     root = Path(root)
     output = Path(output)
+    if site is None:
+        site = output.resolve() == (root / "results" / "board").resolve()
     document = build_board(root)
     output.mkdir(parents=True, exist_ok=True)
     plot_dir = output / "plots"
@@ -2327,7 +2335,7 @@ def write_board(root: Path, output: Path) -> dict:
         sections.append(
             "<section id=\"unmapped\"><h2>Not a problem template</h2><ul>" + "".join(items) + "</ul></section>"
         )
-    if site_plots != plot_dir and plot_dir.is_dir():
+    if site and site_plots != plot_dir and plot_dir.is_dir():
         site_plots.mkdir(parents=True, exist_ok=True)
         for path in plot_dir.iterdir():
             if path.is_file():
@@ -2345,7 +2353,7 @@ def write_board(root: Path, output: Path) -> dict:
             json.dumps(problem, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
         )
-    include = root / "docs" / "include" / "v2-board.org"
+    include = root / "docs" / "include" / "v2-board.org" if site else output / "v2-board.org"
     include.parent.mkdir(parents=True, exist_ok=True)
     html = "\n".join(sections) if sections else "<p>No committed results.</p>"
     include.write_text(_org_html(html), encoding="utf-8")

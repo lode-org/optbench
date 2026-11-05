@@ -773,7 +773,7 @@ def render(root: Path) -> None:
     )
 
     root = Path(root)
-    document = write_board(root, root / "results" / "board")
+    document = write_board(root, root / "results" / "board", site=True)
     problems = load_all(root / "problems")
     by_slug = _by_slug(problems)
     smoke = _smoke_note(root)

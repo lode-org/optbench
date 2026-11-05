@@ -1,6 +1,8 @@
 """Behaviour of the v2 board built from committed result files."""
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -424,7 +426,7 @@ def test_profile_lines_up_the_same_starts(tmp_path: Path):
     _starts(tmp_path, "cheap", [_row(2, True, "cluster_0000.con"), _row(2, True, "cluster_0001.con")])
     _starts(tmp_path, "dear", [_row(4, True, "0"), _row(4, True, "1")])
 
-    written = write_board(tmp_path, tmp_path / "board")
+    written = write_board(tmp_path, tmp_path / "board", site=True)
     problem = written["problems"]["minimization/toy"]
     rho = problem["profile"]["rho"]
     cheap = next(label for label in rho if "toy/cheap" in label)
@@ -485,7 +487,7 @@ def test_a_partial_problem_drops_a_plot_left_from_an_earlier_run(tmp_path: Path)
     site_webp = site / "minimization-toy-profile.webp"
     site_webp.write_bytes(b"stale-webp")
 
-    written = write_board(tmp_path, tmp_path / "board")
+    written = write_board(tmp_path, tmp_path / "board", site=True)
 
     assert written["problems"]["minimization/toy"]["ranked"] == []
     assert not stale.exists()
@@ -980,3 +982,60 @@ def test_a_campaign_row_without_a_hessian_index_loses_to_asv(tmp_path: Path):
     assert (campaign / "ase-lj38-fire-default.starts.jsonl").is_file()
     assert (campaign / "ase-lj38-bfgs-default.starts.jsonl").is_file()
     assert (campaign / "ase-lj38-lbfgs-default.starts.jsonl").is_file()
+
+
+def _git(root: Path, *args: str) -> str:
+    return subprocess.run(["git", "-C", str(root), *args], capture_output=True, text=True, check=True).stdout
+
+
+def _checkout(root: Path) -> None:
+    _problem(root, starts=2, cap=100)
+    _template(root, "toy/cheap")
+    _template(root, "toy/dear")
+    _registry(root)
+    _dat(root, "cheap", PIN, template="toy/cheap")
+    _dat(root, "dear", PIN, template="toy/dear")
+    _starts(root, "cheap", [_row(2, True, "cluster_0000.con"), _row(2, True, "cluster_0001.con")])
+    _starts(root, "dear", [_row(4, True, "0"), _row(4, True, "1")])
+    site = root / "docs" / "source" / "_static" / "board"
+    site.mkdir(parents=True)
+    for name in ("minimization-toy-profile.svg", "minimization-toy-cost.svg"):
+        (site / name).write_text("tracked\n", encoding="utf-8")
+    include = root / "docs" / "include" / "v2-board.org"
+    include.parent.mkdir(parents=True)
+    include.write_text("tracked\n", encoding="utf-8")
+    _git(root, "init", "-q")
+    _git(root, "add", "-A")
+    _git(root, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "toy")
+
+
+def test_board_output_leaves_the_checkout_clean(tmp_path: Path):
+    root = tmp_path / "checkout"
+    output = tmp_path / "out"
+    _checkout(root)
+    subprocess.run(
+        [sys.executable, "-m", "optbench", "board", "--root", str(root), "--output", str(output)],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert _git(root, "status", "--porcelain", "--untracked-files=all") == ""
+    assert (output / "index.json").is_file()
+    assert (output / "plots" / "minimization-toy-profile.svg").read_text(encoding="utf-8") != "tracked\n"
+    assert "PAR-2" in (output / "v2-board.org").read_text(encoding="utf-8")
+
+
+def test_the_default_output_still_updates_the_board_page(tmp_path: Path):
+    root = tmp_path / "checkout"
+    _checkout(root)
+    subprocess.run(
+        [sys.executable, "-m", "optbench", "board", "--root", str(root)],
+        cwd=root,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    changed = set(_git(root, "status", "--porcelain", "--untracked-files=all").split())
+    assert "docs/include/v2-board.org" in changed
+    assert "docs/source/_static/board/minimization-toy-profile.svg" in changed
+    assert not (root / "results" / "board" / "v2-board.org").exists()

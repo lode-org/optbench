@@ -25,6 +25,11 @@ A committed campaign or asv row keeps the label it was recorded with, so `oracle
 
 `uv run optbench board` reads `results/campaign` and `results/asv` and writes `results/board` plus the v2 table on the Board page. It does not start a search. A band method is ranked on the harness force-call total across every image, and the per-image mean is a second column from that same total. A ranked row is one code, one version, and one stock method. Older full versions stay in the same tables. A run that is both a campaign file and an asv track is one row, with the source kept as a column. A row that used fewer starts than the problem's full set stays off the ranked table. An asv result that covers one start stays out of the ranked mean.
 
+`uv run optbench board --output DIR` writes the JSON, the plots, and the Board page include `v2-board.org` under `DIR`.
+It leaves `docs/` as it was.
+Only the default output, `results/board`, also copies the plots to `docs/source/_static/board`.
+That run also writes `docs/include/v2-board.org`.
+
 The harness does not contain eOn, pele, or Sella. Those are installed separately, and the commands below say which release produced the files in `results/campaign/`.
 
 ## Lennard-Jones 38 L-BFGS mean
