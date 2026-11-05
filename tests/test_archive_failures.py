@@ -5,6 +5,7 @@ from pathlib import Path
 
 from optbench import board
 from optbench.board import build_board, failure_cell, failure_paragraph, ranked_cells
+from optbench.site_check import _check_budget, _parse_tables
 
 ROOT = Path(__file__).resolve().parents[1]
 PIN = "a" * 40
@@ -92,7 +93,6 @@ def test_an_archived_failure_costs_twice_the_cap(tmp_path: Path):
             ("failed", {"force_calls": "10", "nfailed": "1"}),
             ("clean", {"force_calls": "20", "nfailed": "0"}),
             ("uncounted", {"force_calls": "5"}),
-            ("over", {"force_calls": "30", "nfailed": "0", "force_calls_max": "150"}),
         ],
     )
     rows = {row["entry"] or row["origin"]: row for row in problem["ranked"]}
@@ -100,8 +100,8 @@ def test_an_archived_failure_costs_twice_the_cap(tmp_path: Path):
     assert rows["failed"]["par2_mean"] == (3 * 10 + 1 * 2 * 100) / 4
     assert rows["clean"]["par2_mean"] == 20.0
     assert rows["toy-fast"]["par2_mean"] == 50.0
-    assert [row["entry"] for row in problem["ranked"]] == ["uncounted", "clean", "over", "toy-fast", "failed"]
-    assert [row["rank_cost"] for row in problem["ranked"]] == [5.0, 20.0, 30.0, 50.0, 57.5]
+    assert [row["entry"] for row in problem["ranked"]] == ["uncounted", "clean", "toy-fast", "failed"]
+    assert [row["rank_cost"] for row in problem["ranked"]] == [5.0, 20.0, 50.0, 57.5]
 
     assert failure_cell(rows["failed"]) == "1 failed, class not recorded"
     assert failure_cell(rows["clean"]) == "0 failed"
@@ -113,13 +113,54 @@ def test_an_archived_failure_costs_twice_the_cap(tmp_path: Path):
     assert rows["failed"]["failure_note"] == ""
     assert rows["clean"]["failure_note"] == ""
     assert rows["uncounted"]["failure_note"] == "the entry records no failure count"
-    assert rows["over"]["failure_note"] == "its archived maximum, 150, is above the cap of 100"
     text = failure_paragraph(problem)
     assert text.startswith('<p class="bench-gaps" data-board-note="failures">')
     assert f"<li>{rows['uncounted']['label']} (the entry records no failure count)</li>" in text
-    assert f"<li>{rows['over']['label']} (its archived maximum, 150, is above the cap of 100)</li>" in text
     assert rows["failed"]["label"] not in text
     assert text in board.render_problem_section(problem, set())
+
+
+def test_an_archived_run_above_the_cap_is_held_as_another_budget(tmp_path: Path):
+    problem = _toy(
+        tmp_path,
+        [
+            ("over", {"force_calls": "30", "nfailed": "0", "force_calls_max": "150"}),
+            ("under", {"force_calls": "30", "nfailed": "0", "force_calls_max": "100"}),
+        ],
+    )
+
+    assert [row["entry"] for row in problem["ranked"]] == ["under", "toy-fast"]
+    (row,) = problem["over_budget"]
+    assert (row["entry"], row["par2_mean"], row["rank_cost"]) == ("over", None, 30.0)
+    assert row["failure_note"] == "its archived maximum, 150, is above the cap of 100"
+    assert failure_paragraph(problem) == ""
+
+    html = board.render_problem_section(problem, set())
+    assert "<h3>Run under a different budget</h3>" in html
+    assert f"{row['label']} (its archived maximum, 150, is above the cap of 100)" in html
+    table = next(item for item in _parse_tables(html) if item["attrs"].get("data-board-table") == "budget")
+    document = {"problems": {"minimization/toy": problem}}
+    assert _check_budget("page", table, document) == []
+    head, marker, tail = html.partition('data-board-table="budget"')
+    tampered = head + marker + tail.replace('<td data-label="Published" data-field="published">30</td>', '<td data-label="Published" data-field="published">31</td>')
+    table = next(item for item in _parse_tables(tampered) if item["attrs"].get("data-board-table") == "budget")
+    assert _check_budget("page", table, document) == [
+        "page minimization/toy budget row 1 published is '31', board has '30'"
+    ]
+
+
+def test_only_the_two_lj38_band_rows_ran_above_the_cap():
+    problems = board.load_all(ROOT / "problems")
+    registry = board._registry(ROOT)
+    full_n = {ident: board.stated_full_n(ROOT, problem) for ident, problem in problems.items()}
+    rows = board._archive_rows(ROOT, problems, registry, full_n)
+    for row in rows:
+        board._annotate_row(row, problems[row["problem"]], registry)
+    held = sorted((row["problem"], row["entry"], row["_archived_max"]) for row in rows if row["_over_budget"])
+    assert held == [
+        ("double-ended-saddle-search/lj38", "eon-lanczos", 2794.0),
+        ("double-ended-saddle-search/lj38", "optim-cl-string", 2792.0),
+    ]
 
 
 def test_no_archived_failure_count_renders_as_zero():

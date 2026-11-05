@@ -11,6 +11,7 @@ from .board import (
     _registry,
     _show_per_image,
     board_rows,
+    budget_per_image,
     build_board,
     family_cells,
     ranked_cells,
@@ -148,6 +149,19 @@ def _check_ranked(label: str, table: dict, document: dict) -> list[str]:
     return errors
 
 
+def _check_rows(where: str, table: dict, rows: list[dict], per_image: bool) -> list[str]:
+    body = _ranked_body(table)
+    if len(body) != len(rows):
+        return [f"{where} rows {len(body)} != board {len(rows)}"]
+    errors: list[str] = []
+    for index, (got_row, board_row) in enumerate(zip(body, rows), start=1):
+        got = _cell_map(got_row)
+        for field, value in ranked_cells(board_row, per_image):
+            if got.get(field) != value:
+                errors.append(f"{where} row {index} {field} is {got.get(field)!r}, board has {value!r}")
+    return errors
+
+
 def _check_unit(label: str, table: dict, document: dict) -> list[str]:
     problem_id = table["attrs"].get("data-problem", "")
     unit = table["attrs"].get("data-unit", "")
@@ -155,20 +169,14 @@ def _check_unit(label: str, table: dict, document: dict) -> list[str]:
     group = next((item for item in problem.get("other_units") or [] if item.get("unit") == unit), None)
     if group is None:
         return [f"{label} {problem_id} ranks {unit!r} and the board has no such unit table"]
-    rows = list(group.get("rows") or [])
-    body = _ranked_body(table)
-    if len(body) != len(rows):
-        return [f"{label} {problem_id} {unit} rows {len(body)} != board {len(rows)}"]
-    per_image = unit_per_image(group)
-    errors: list[str] = []
-    for index, (got_row, board_row) in enumerate(zip(body, rows), start=1):
-        got = _cell_map(got_row)
-        for field, value in ranked_cells(board_row, per_image):
-            if got.get(field) != value:
-                errors.append(
-                    f"{label} {problem_id} {unit} row {index} {field} is {got.get(field)!r}, board has {value!r}"
-                )
-    return errors
+    return _check_rows(f"{label} {problem_id} {unit}", table, list(group.get("rows") or []), unit_per_image(group))
+
+
+def _check_budget(label: str, table: dict, document: dict) -> list[str]:
+    problem_id = table["attrs"].get("data-problem", "")
+    problem = (document.get("problems") or {}).get(problem_id) or {}
+    rows = list(problem.get("over_budget") or [])
+    return _check_rows(f"{label} {problem_id} budget", table, rows, budget_per_image(problem))
 
 
 def _check_headline(label: str, table: dict, document: dict) -> list[str]:
@@ -263,6 +271,8 @@ def check_site(root: Path) -> list[str]:
                 errors.extend(_check_family(label, table, document))
             elif kind == "unit":
                 errors.extend(_check_unit(label, table, document))
+            elif kind == "budget":
+                errors.extend(_check_budget(label, table, document))
             elif kind == "code-rows":
                 errors.extend(_check_code_rows(label, table, document))
                 for row in table["rows"]:
@@ -309,6 +319,8 @@ def check_site(root: Path) -> list[str]:
             _require(suite, 'data-board-note="failures"', suite_label, errors)
         for row in unscored:
             _require(suite, html.escape(f"{row.get('label')} ({row['failure_note']})"), suite_label, errors)
+        if board_problem.get("over_budget"):
+            _require(suite, f'data-board-table="budget" data-problem="{problem["id"]}"', suite_label, errors)
         for group in board_problem.get("other_units") or []:
             _require(
                 suite,

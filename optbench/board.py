@@ -1058,6 +1058,15 @@ def _rank_key(row: dict) -> tuple:
     )
 
 
+def _over_budget(row: dict, problem: dict | None) -> bool:
+    """An archived run above the problem cap with no failure for it ran under a larger cap."""
+    most = row.get("_archived_max")
+    cap = _cap_of(problem, None, {})
+    if row.get("origin") != "archive" or most is None or cap is None:
+        return False
+    return row.get("unit") == harness_unit(problem) and most > cap
+
+
 def _archive_par2(row: dict, problem: dict | None) -> tuple[float | None, str]:
     """PAR-2 of an archived mean, or why the harness failure rule cannot score it.
 
@@ -1077,9 +1086,8 @@ def _archive_par2(row: dict, problem: dict | None) -> tuple[float | None, str]:
     harness = harness_unit(problem)
     if row.get("unit") != harness:
         return None, "" if nfailed == 0 else f"it counts {row.get('unit')}, and the cap counts {harness}"
-    most = row.get("_archived_max")
-    if most is not None and most > cap:
-        return None, f"its archived maximum, {_format_number(most)}, is above the cap of {cap}"
+    if _over_budget(row, problem):
+        return None, f"its archived maximum, {_format_number(row['_archived_max'])}, is above the cap of {cap}"
     if nfailed == 0:
         return float(published), ""
     n = int(row.get("n") or 0)
@@ -1100,6 +1108,7 @@ def _annotate_row(row: dict, problem: dict | None, registry: list[dict]) -> None
     row["unit"] = row_unit(problem, str(row.get("origin") or "harness"))
     if row.get("origin") == "archive":
         par2, row["failure_note"] = _archive_par2(row, problem)
+        row["_over_budget"] = _over_budget(row, problem)
         row["par2_mean"] = par2
         row["rank_cost"] = par2 if par2 is not None else row.get("published")
     else:
@@ -1318,12 +1327,14 @@ def build_board(root: Path) -> dict:
     short: list[dict] = []
     withheld: list[dict] = []
     not_comparable: list[dict] = []
+    over_budget: list[dict] = []
     for problem_id in sorted(by_problem):
         group = by_problem[problem_id]
         ranked = []
         held_short = []
         held_adjusted = []
         held_client = []
+        held_budget = []
         for row in group:
             if row.get("short"):
                 held_short.append(row)
@@ -1334,6 +1345,9 @@ def build_board(root: Path) -> dict:
             elif is_adjusted(row):
                 held_adjusted.append(row)
                 withheld.append(row)
+            elif row.get("_over_budget"):
+                held_budget.append(row)
+                over_budget.append(row)
             else:
                 ranked.append(row)
         problem = problems.get(problem_id) or {}
@@ -1355,6 +1369,7 @@ def build_board(root: Path) -> dict:
             "short": [_public(row) for row in held_short],
             "withheld": [_public(row) for row in held_adjusted],
             "not_comparable": [_public(row) for row in held_client],
+            "over_budget": [_public(row) for row in sorted(held_budget, key=_rank_key)],
             "_ranked_rows": ranked,
         }
     return {
@@ -1365,6 +1380,7 @@ def build_board(root: Path) -> dict:
         "unparsed": [_public(row) for row in unparsed],
         "unmapped": [_public(row) for row in unmapped],
         "not_comparable": [_public(row) for row in not_comparable],
+        "over_budget": [_public(row) for row in over_budget],
         "ranked_count": sum(len(board_rows(item)) for item in problems_out.values()),
         "_scored_rows": scored,
     }
@@ -1958,6 +1974,33 @@ def failure_paragraph(problem: dict) -> str:
     )
 
 
+def budget_per_image(problem: dict) -> bool:
+    return any(row.get("mean_per_image") is not None for row in problem.get("over_budget") or [])
+
+
+def _budget_table(problem: dict) -> str:
+    rows = list(problem.get("over_budget") or [])
+    if not rows:
+        return ""
+    per_image = budget_per_image(problem)
+    headers = _headers({"ranked": rows})
+    reasons = "; ".join(f"{row.get('label')} ({row.get('failure_note')})" for row in rows)
+    lines = [
+        "<h3>Run under a different budget</h3>",
+        "<p>These archived rows record a run above this problem's cap and no failure for it, "
+        "so they ran under a larger cap. This table keeps them apart from the ranking above: "
+        f"{_cell(reasons)}.</p>",
+        '<div class="bench-scroll">',
+        f'<table class="bench-sortable" data-board-table="budget" data-problem="{_cell(problem["id"])}">',
+        f"<caption>{_cell(_caption(per_image))}</caption>",
+        "<thead><tr>" + "".join(f"<th>{_cell(header)}</th>" for header in headers) + "</tr></thead><tbody>",
+    ]
+    for row in rows:
+        lines.append(f"<tr>{_row_cells(row, per_image)}</tr>")
+    lines.append("</tbody></table></div>")
+    return "\n".join(lines)
+
+
 def _unit_table(problem: dict, group: dict) -> str:
     unit = str(group.get("unit") or "")
     rows = list(group.get("rows") or [])
@@ -2096,6 +2139,9 @@ def _table(
         lines.append("<p>A row that counts another unit is ranked in its own table after the overall table.</p>")
     for group in problem.get("other_units") or []:
         lines.append(_unit_table(problem, group))
+    budget = _budget_table(problem)
+    if budget:
+        lines.append(budget)
     held = _aside_rows(problem)
     if held:
         lines.append("<h3>Off the ranked table</h3><ul>")
