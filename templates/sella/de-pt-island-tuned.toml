@@ -10,7 +10,7 @@ profile = "adjusted"
 reducer = "capped"
 ranked = true
 parameter_source = "archive"
-note = "Sella refines the highest-energy image of this problem's tuned ASE band. Archived Sella trust region: eta 1e-6, gamma 0.4, delta0 1.3e-3, rho_inc 1.035, rho_dec 5, sigma_inc 1.15, sigma_dec 0.65. The band stops at 80 percent of the call cap and both stages share one harness counter. v0 is unset: a free cluster drops rigid modes, so a full Cartesian mode has the wrong length. Archive eon-ci-neb uses 3 intermediate images, climbing image, and LBFGS. The config does not set a spring, so the spring stays 0.1. The problem file does not state a force cap; this row caps the harness total at 10000."
+note = "Sella refines the highest-energy image of this problem's tuned ASE band. Archived Sella trust region: eta 1e-6, gamma 0.4, delta0 1.3e-3, rho_inc 1.035, rho_dec 5, sigma_inc 1.15, sigma_dec 0.65. The band stops at 80 percent of the call cap and both stages share one harness counter. v0 is unset: a free cluster drops rigid modes, so a full Cartesian mode has the wrong length. Archive eon-ci-neb uses 3 intermediate images, climbing image, and LBFGS. The config does not set a spring, so the spring stays 0.1. The problem cap is 3000 force calls. The harness total stops at 10000, and the board scores this row at the problem cap."
 
 [optimizer]
 name = "Sella"

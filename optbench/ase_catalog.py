@@ -490,7 +490,8 @@ def _neb_specs() -> list[dict]:
             "tuned_note": (
                 "Archive eon-ci-neb uses 3 intermediate images, climbing image, "
                 "and LBFGS. The config does not set a spring, so the spring stays 0.1. "
-                "The problem file does not state a force cap; this row caps the harness total at 10000."
+                "The problem cap is 3000 force calls. "
+                "The harness total stops at 10000, and the board scores this row at the problem cap."
             ),
             "default_note": (
                 "ASE NEB defaults on the same endpoints: 3 intermediate images, "
