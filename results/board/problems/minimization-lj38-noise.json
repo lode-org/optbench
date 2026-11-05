@@ -2,6 +2,8 @@
   "client_counter": [],
   "full_n": 1000,
   "id": "minimization/lj38-noise",
+  "other_units": [],
+  "over_budget": [],
   "profile": {
     "area_log10": {
       "ASE (3.29.0) \u00b7 BFGS": 0.3777926445582964,
@@ -252,6 +254,7 @@
       "commit": "9a2e7ff11fa65826f9e847856bee10d3d70b7156",
       "counter": "harness",
       "entry": "noise-rgmin-dogleg-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -291,7 +294,8 @@
       "source": "campaign, asv",
       "success_rate": 1.0,
       "template": "noise/rgmin-dogleg-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "4a7894fd6e77fd6a5a7153c63fa2bf27210674e8",
@@ -302,6 +306,7 @@
       "commit": "9a2e7ff11fa65826f9e847856bee10d3d70b7156",
       "counter": "harness",
       "entry": "noise-rgmin-newton-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -341,7 +346,8 @@
       "source": "campaign, asv",
       "success_rate": 0.995,
       "template": "noise/rgmin-newton-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "4a7894fd6e77fd6a5a7153c63fa2bf27210674e8",
@@ -352,6 +358,7 @@
       "commit": "9a2e7ff11fa65826f9e847856bee10d3d70b7156",
       "counter": "harness",
       "entry": "noise-rgmin-lbfgs-m100-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -391,7 +398,8 @@
       "source": "campaign, asv",
       "success_rate": 0.999,
       "template": "noise/rgmin-lbfgs-m100-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -402,6 +410,7 @@
       "commit": "4167998d16d8dac4a484ba9305f27d6325a7a28d",
       "counter": "harness",
       "entry": "dlfind-0.0.3-minimization-lj38-noise--dlfind-lbfgs-lj38-noise-s0",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -441,7 +450,8 @@
       "source": "campaign",
       "success_rate": 0.998,
       "template": "dlfind/lbfgs-lj38-noise-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "52ce661f309ef267b070534a1e52e4a15fed6d11",
@@ -452,6 +462,7 @@
       "commit": "b7081b932a060be11342fbe8287ac35da8ada879",
       "counter": "harness",
       "entry": "noise-pele-mylbfgs-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -491,7 +502,8 @@
       "source": "campaign, asv",
       "success_rate": 0.999,
       "template": "noise/pele-mylbfgs-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "52ce661f309ef267b070534a1e52e4a15fed6d11",
@@ -502,6 +514,7 @@
       "commit": "b7081b932a060be11342fbe8287ac35da8ada879",
       "counter": "harness",
       "entry": "noise-pele-lbfgs-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -541,7 +554,8 @@
       "source": "campaign, asv",
       "success_rate": 0.998,
       "template": "noise/pele-lbfgs-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "c1ecf607a10f7ab78d1615e4cbf9af030bebcdbf",
@@ -552,6 +566,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-r2549-lj38-noise-0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -591,7 +606,8 @@
       "source": "campaign, asv",
       "success_rate": 0.995,
       "template": "eon-svn/lj38-noise-0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "1999eab667e0b9e0e4108c2d59c0fb9d9a6fadec",
@@ -602,6 +618,7 @@
       "commit": "df8da599267534fbe43a250e578f7396a7946311",
       "counter": "harness",
       "entry": "noise-gmin-lbfgs-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -641,7 +658,8 @@
       "source": "campaign, asv",
       "success_rate": 0.997,
       "template": "noise/gmin-lbfgs-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "4a7894fd6e77fd6a5a7153c63fa2bf27210674e8",
@@ -652,6 +670,7 @@
       "commit": "f27c0005ae6a67ea419f996e728668865bfc1f86",
       "counter": "harness",
       "entry": "noise-ase-lbfgs-s0",
+      "failure_note": "",
       "failures": {
         "cap": 5,
         "crash": 0,
@@ -691,7 +710,8 @@
       "source": "campaign, asv",
       "success_rate": 0.994,
       "template": "noise/ase-lbfgs-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "4a7894fd6e77fd6a5a7153c63fa2bf27210674e8",
@@ -702,6 +722,7 @@
       "commit": "f27c0005ae6a67ea419f996e728668865bfc1f86",
       "counter": "harness",
       "entry": "noise-ase-bfgs-s0",
+      "failure_note": "",
       "failures": {
         "cap": 4,
         "crash": 0,
@@ -741,7 +762,8 @@
       "source": "campaign, asv",
       "success_rate": 0.995,
       "template": "noise/ase-bfgs-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "739fce9b10553193c9e8d49c56a7226020617bf5",
@@ -752,6 +774,7 @@
       "commit": "4241692173cccb42a9ae05974bfd62285ec2cd7b",
       "counter": "harness",
       "entry": "noise-vcsqnm-ase-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -791,7 +814,8 @@
       "source": "campaign, asv",
       "success_rate": 0.989,
       "template": "noise/vcsqnm-ase-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "739fce9b10553193c9e8d49c56a7226020617bf5",
@@ -802,6 +826,7 @@
       "commit": "4241692173cccb42a9ae05974bfd62285ec2cd7b",
       "counter": "harness",
       "entry": "noise-vcsqnm-sqnm-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -841,7 +866,8 @@
       "source": "campaign, asv",
       "success_rate": 0.989,
       "template": "noise/vcsqnm-sqnm-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "4a7894fd6e77fd6a5a7153c63fa2bf27210674e8",
@@ -852,6 +878,7 @@
       "commit": "9a2e7ff11fa65826f9e847856bee10d3d70b7156",
       "counter": "harness",
       "entry": "noise-rgmin-cg-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -891,7 +918,8 @@
       "source": "campaign, asv",
       "success_rate": 0.996,
       "template": "noise/rgmin-cg-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "4a7894fd6e77fd6a5a7153c63fa2bf27210674e8",
@@ -902,6 +930,7 @@
       "commit": "6cfb60cdb100a146c3c6f0587d5308b247aa8010",
       "counter": "harness",
       "entry": "noise-sella-min-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -941,7 +970,8 @@
       "source": "campaign, asv",
       "success_rate": 0.999,
       "template": "noise/sella-min-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "4a7894fd6e77fd6a5a7153c63fa2bf27210674e8",
@@ -952,6 +982,7 @@
       "commit": "9a2e7ff11fa65826f9e847856bee10d3d70b7156",
       "counter": "harness",
       "entry": "noise-rgmin-fire-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -991,7 +1022,8 @@
       "source": "campaign, asv",
       "success_rate": 0.997,
       "template": "noise/rgmin-fire-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "4a7894fd6e77fd6a5a7153c63fa2bf27210674e8",
@@ -1002,6 +1034,7 @@
       "commit": "f27c0005ae6a67ea419f996e728668865bfc1f86",
       "counter": "harness",
       "entry": "noise-ase-fire-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1041,7 +1074,8 @@
       "source": "campaign, asv",
       "success_rate": 0.995,
       "template": "noise/ase-fire-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1052,6 +1086,7 @@
       "commit": "8de817dd79bfe4525d5d39246a212d833e6dee07",
       "counter": "harness",
       "entry": "lammps-30Sep2026-minimization-lj38-noise--lammps-hftn-lj38-noise-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1091,7 +1126,8 @@
       "source": "campaign",
       "success_rate": 0.997,
       "template": "lammps/hftn-lj38-noise-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "52ce661f309ef267b070534a1e52e4a15fed6d11",
@@ -1102,6 +1138,7 @@
       "commit": "b7081b932a060be11342fbe8287ac35da8ada879",
       "counter": "harness",
       "entry": "noise-pele-fire-s1em3",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1141,7 +1178,8 @@
       "source": "campaign, asv",
       "success_rate": 0.941,
       "template": "noise/pele-fire-s1em3",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1152,6 +1190,7 @@
       "commit": "8de817dd79bfe4525d5d39246a212d833e6dee07",
       "counter": "harness",
       "entry": "lammps-30Sep2026-minimization-lj38-noise--lammps-cg-lj38-noise-s1em3",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1191,7 +1230,8 @@
       "source": "campaign",
       "success_rate": 0.997,
       "template": "lammps/cg-lj38-noise-s1em3",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1202,6 +1242,7 @@
       "commit": "4167998d16d8dac4a484ba9305f27d6325a7a28d",
       "counter": "harness",
       "entry": "dlfind-0.0.3-minimization-lj38-noise--dlfind-cg-lj38-noise-s1em2",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1241,7 +1282,8 @@
       "source": "campaign",
       "success_rate": 0.956,
       "template": "dlfind/cg-lj38-noise-s1em2",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1252,6 +1294,7 @@
       "commit": "4167998d16d8dac4a484ba9305f27d6325a7a28d",
       "counter": "harness",
       "entry": "dlfind-0.0.3-minimization-lj38-noise--dlfind-sd-lj38-noise-s1em3",
+      "failure_note": "",
       "failures": {
         "cap": 3,
         "crash": 0,
@@ -1291,7 +1334,8 @@
       "source": "campaign",
       "success_rate": 0.996,
       "template": "dlfind/sd-lj38-noise-s1em3",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1302,6 +1346,7 @@
       "commit": "8de817dd79bfe4525d5d39246a212d833e6dee07",
       "counter": "harness",
       "entry": "lammps-30Sep2026-minimization-lj38-noise--lammps-quickmin-lj38-noise-s0",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1341,7 +1386,8 @@
       "source": "campaign",
       "success_rate": 0.991,
       "template": "lammps/quickmin-lj38-noise-s0",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1352,6 +1398,7 @@
       "commit": "8de817dd79bfe4525d5d39246a212d833e6dee07",
       "counter": "harness",
       "entry": "lammps-30Sep2026-minimization-lj38-noise--lammps-fire-lj38-noise-s1em4",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1391,7 +1438,8 @@
       "source": "campaign",
       "success_rate": 0.729,
       "template": "lammps/fire-lj38-noise-s1em4",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1402,6 +1450,7 @@
       "commit": "8de817dd79bfe4525d5d39246a212d833e6dee07",
       "counter": "harness",
       "entry": "lammps-30Sep2026-minimization-lj38-noise--lammps-sd-lj38-noise-s1em2",
+      "failure_note": "",
       "failures": {
         "cap": 227,
         "crash": 0,
@@ -1441,7 +1490,8 @@
       "source": "campaign",
       "success_rate": 0.698,
       "template": "lammps/sd-lj38-noise-s1em2",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "52ce661f309ef267b070534a1e52e4a15fed6d11",
@@ -1452,6 +1502,7 @@
       "commit": "b7081b932a060be11342fbe8287ac35da8ada879",
       "counter": "harness",
       "entry": "noise-pele-sd-s1em2",
+      "failure_note": "",
       "failures": {
         "cap": 980,
         "crash": 0,
@@ -1491,11 +1542,14 @@
       "source": "campaign, asv",
       "success_rate": 0.002,
       "template": "noise/pele-sd-s1em2",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     }
   ],
   "short": [],
   "title": "Lennard-Jones 38 clusters with Gaussian force noise",
+  "unit": "force calls",
+  "unit_source": "",
   "withheld": [
     {
       "asv_commit": "",
@@ -1506,6 +1560,7 @@
       "commit": "f15726f1c7983b3656c5dbc2f812e2394e144500",
       "counter": "harness",
       "entry": "rgmin-0.4.1-minimization-lj38-noise--rgmin-lj38-noise-lbfgs-s0-tuned",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1545,7 +1600,8 @@
       "source": "campaign",
       "success_rate": 0.996,
       "template": "rgmin/lj38-noise-lbfgs-s0-tuned",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1556,6 +1612,7 @@
       "commit": "f15726f1c7983b3656c5dbc2f812e2394e144500",
       "counter": "harness",
       "entry": "rgmin-0.4.1-minimization-lj38-noise--rgmin-lj38-noise-lbfgs-s1em2-tuned",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1595,7 +1652,8 @@
       "source": "campaign",
       "success_rate": 0.884,
       "template": "rgmin/lj38-noise-lbfgs-s1em2-tuned",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1606,6 +1664,7 @@
       "commit": "f15726f1c7983b3656c5dbc2f812e2394e144500",
       "counter": "harness",
       "entry": "rgmin-0.4.1-minimization-lj38-noise--rgmin-lj38-noise-lbfgs-s1em3-tuned",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1645,7 +1704,8 @@
       "source": "campaign",
       "success_rate": 0.989,
       "template": "rgmin/lj38-noise-lbfgs-s1em3-tuned",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1656,6 +1716,7 @@
       "commit": "f15726f1c7983b3656c5dbc2f812e2394e144500",
       "counter": "harness",
       "entry": "rgmin-0.4.1-minimization-lj38-noise--rgmin-lj38-noise-lbfgs-s1em4-tuned",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1695,7 +1756,8 @@
       "source": "campaign",
       "success_rate": 0.994,
       "template": "rgmin/lj38-noise-lbfgs-s1em4-tuned",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     }
   ]
 }

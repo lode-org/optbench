@@ -2,6 +2,8 @@
   "client_counter": [],
   "full_n": 639,
   "id": "hTST/Al",
+  "other_units": [],
+  "over_budget": [],
   "profile": {
     "area_log10": {
       "EON (SVN r2549) (r2549) \u00b7 Dimer-CG rotation: max=50 tol=1": 1.0517206030044413,
@@ -45,6 +47,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-dimer-cg2",
+      "failure_note": "the entry records no failure count",
       "failures": {},
       "family": "min-mode",
       "family_rank": 1,
@@ -63,7 +66,7 @@
       "median_per_image": null,
       "method": "Dimer-CG rotation: max=10 tol=1",
       "min_calls": null,
-      "n": 639,
+      "n": 432,
       "nfailed": null,
       "note": "archived score",
       "origin": "archive",
@@ -79,7 +82,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -90,6 +94,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-dimer-cg",
+      "failure_note": "the entry records no failure count",
       "failures": {},
       "family": "min-mode",
       "family_rank": 2,
@@ -124,7 +129,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -135,6 +141,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-r2549-htst-al-dimer",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -167,14 +174,15 @@
       "problem": "hTST/Al",
       "published": null,
       "rank_cost": null,
-      "registry_match": false,
+      "registry_match": true,
       "scored": true,
       "short": false,
       "short_reason": "",
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-svn-r2549/htst-al-dimer",
-      "tuning": "Dimer-CG rotation: max=50 tol=1"
+      "tuning": "Dimer-CG rotation: max=50 tol=1",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -185,6 +193,7 @@
       "commit": "6d9d629a086080f85687a6ca0a0220cdc3b084e4",
       "counter": "harness",
       "entry": "eon-develop-htst-al-dimer",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -217,14 +226,15 @@
       "problem": "hTST/Al",
       "published": null,
       "rank_cost": null,
-      "registry_match": false,
+      "registry_match": true,
       "scored": true,
       "short": false,
       "short_reason": "",
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-develop/htst-al-dimer",
-      "tuning": "Dimer-CG rotation: max=50 tol=1"
+      "tuning": "Dimer-CG rotation: max=50 tol=1",
+      "unit": "force calls"
     }
   ],
   "short": [
@@ -237,6 +247,7 @@
       "commit": "4d8b34baf1ba8d2d980df29838bac1f969d1662c",
       "counter": "harness",
       "entry": "eon-client-htst-al-dimer-cg",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -276,7 +287,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-client/htst-al-dimer-cg",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -287,6 +299,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-htst-al-dimer-cg",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -326,9 +339,12 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-svn/htst-al-dimer-cg",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     }
   ],
   "title": "Al",
+  "unit": "force calls",
+  "unit_source": "",
   "withheld": []
 }

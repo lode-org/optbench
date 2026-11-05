@@ -2,6 +2,8 @@
   "client_counter": [],
   "full_n": 100,
   "id": "globalopt/lj38",
+  "other_units": [],
+  "over_budget": [],
   "profile": {
     "area_log10": {
       "AIRSS (0.9.4) \u00b7 random structure search": 0.2769475960108627,
@@ -81,6 +83,7 @@
       "commit": "02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f",
       "counter": "harness",
       "entry": "gmin-df8da599-lj38-csm",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -120,7 +123,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "gmin/lj38-csm",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -131,6 +135,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "gmin-csm",
+      "failure_note": "",
       "failures": {},
       "family": "global",
       "family_rank": 2,
@@ -165,7 +170,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -176,6 +182,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "gmin-symmetrise",
+      "failure_note": "",
       "failures": {},
       "family": "global",
       "family_rank": 3,
@@ -210,7 +217,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -221,6 +229,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "gmin-nosym",
+      "failure_note": "",
       "failures": {},
       "family": "global",
       "family_rank": 4,
@@ -255,7 +264,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -266,6 +276,7 @@
       "commit": "02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f",
       "counter": "harness",
       "entry": "gmin-02aaf45245af-lj38-bh",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -305,7 +316,8 @@
       "source": "campaign",
       "success_rate": 0.99,
       "template": "gmin/lj38-bh",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -316,6 +328,7 @@
       "commit": "4d8b34baf1ba8d2d980df29838bac1f969d1662c",
       "counter": "harness",
       "entry": "eon-client-bh-lj38",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -355,7 +368,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-client/bh-lj38",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -366,6 +380,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-basinhopping",
+      "failure_note": "the entry records no failure count",
       "failures": {},
       "family": "global",
       "family_rank": 7,
@@ -400,7 +415,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -411,6 +427,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "pele-basinhopping",
+      "failure_note": "",
       "failures": {},
       "family": "connect",
       "family_rank": 1,
@@ -445,7 +462,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -456,6 +474,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-bh-lj38",
+      "failure_note": "",
       "failures": {
         "cap": 2,
         "crash": 0,
@@ -495,7 +514,8 @@
       "source": "campaign",
       "success_rate": 0.98,
       "template": "eon-svn/bh-lj38",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -506,6 +526,7 @@
       "commit": "02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f",
       "counter": "harness",
       "entry": "gmin-02aaf45245af-lj38-bhpt",
+      "failure_note": "",
       "failures": {
         "cap": 6,
         "crash": 0,
@@ -545,7 +566,8 @@
       "source": "campaign",
       "success_rate": 0.94,
       "template": "gmin/lj38-bhpt",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -556,6 +578,7 @@
       "commit": "5593cc4ee360d998764fceb188284fdf0ef781d206754176dcb360c65103ddaa",
       "counter": "harness",
       "entry": "airss-0.9.4-lj38",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -595,10 +618,13 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "airss/lj38",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     }
   ],
   "short": [],
   "title": "Lennard-Jones 38 global minimum",
+  "unit": "force calls",
+  "unit_source": "",
   "withheld": []
 }

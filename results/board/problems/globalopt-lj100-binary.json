@@ -2,6 +2,8 @@
   "client_counter": [],
   "full_n": 100,
   "id": "globalopt/lj100-binary",
+  "other_units": [],
+  "over_budget": [],
   "profile_gap": "No performance profile. The ranked rows have no per-start record.",
   "ranked": [
     {
@@ -13,6 +15,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "gmin",
+      "failure_note": "the entry records no failure count",
       "failures": {},
       "family": "global",
       "family_rank": 1,
@@ -22,7 +25,7 @@
       "kind": "",
       "label": "GMIN \u00b7 basin-hopping",
       "max_calls": null,
-      "mean_calls": -589.507,
+      "mean_calls": null,
       "mean_per_image": null,
       "median": null,
       "median_calls": null,
@@ -47,7 +50,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "lowest energy (epsilon)"
     },
     {
       "asv_commit": "",
@@ -58,6 +62,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-basinhopping",
+      "failure_note": "the entry records no failure count",
       "failures": {},
       "family": "global",
       "family_rank": 2,
@@ -67,7 +72,7 @@
       "kind": "",
       "label": "eOn (r2156) \u00b7 eon-basinhopping",
       "max_calls": null,
-      "mean_calls": -584.579,
+      "mean_calls": null,
       "mean_per_image": null,
       "median": null,
       "median_calls": null,
@@ -92,10 +97,13 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "lowest energy (epsilon)"
     }
   ],
   "short": [],
   "title": "Binary Lennard-Jones 100",
+  "unit": "lowest energy (epsilon)",
+  "unit_source": "The archived avg_energy is the mean over runs of the lowest energy each run reached. The eon-basinhopping report.sh takes each run's minimum up to 2e6 calls, and the gmin getdata.py averages each run's lowest energy. The files record no force calls. Energies are in units of epsilon_AA = 1.",
   "withheld": []
 }

@@ -2,6 +2,8 @@
   "client_counter": [],
   "full_n": 200,
   "id": "globalopt/lj75",
+  "other_units": [],
+  "over_budget": [],
   "profile_gap": "No performance profile. One start has no finite cost.",
   "ranked": [
     {
@@ -13,6 +15,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "gmin",
+      "failure_note": "",
       "failures": {},
       "family": "global",
       "family_rank": 1,
@@ -35,7 +38,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 60692.0,
       "path": "website/globalopt/lj75/gmin/benchmark.dat",
       "problem": "globalopt/lj75",
       "published": 60692.0,
@@ -47,7 +50,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -58,6 +62,7 @@
       "commit": "02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f",
       "counter": "harness",
       "entry": "gmin-02aaf45245af-lj75-bhpt",
+      "failure_note": "",
       "failures": {
         "cap": 196,
         "crash": 0,
@@ -97,7 +102,8 @@
       "source": "campaign",
       "success_rate": 0.02,
       "template": "gmin/lj75-bhpt",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -108,6 +114,7 @@
       "commit": "02aaf45245af7b521b5792fa77ffa364f67d756327ea9e4ecf580c4b6f83e24f",
       "counter": "harness",
       "entry": "gmin-02aaf45245af-lj75-bh",
+      "failure_note": "",
       "failures": {
         "cap": 199,
         "crash": 0,
@@ -147,7 +154,8 @@
       "source": "campaign",
       "success_rate": 0.005,
       "template": "gmin/lj75-bh",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -158,6 +166,7 @@
       "commit": "f27c0005ae6a67ea419f996e728668865bfc1f86",
       "counter": "harness",
       "entry": "ase-3.29.0-lj75-basinhopping",
+      "failure_note": "",
       "failures": {
         "cap": 200,
         "crash": 0,
@@ -197,7 +206,8 @@
       "source": "campaign",
       "success_rate": 0.0,
       "template": "ase-globalopt/lj75-basinhopping",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     }
   ],
   "short": [
@@ -210,6 +220,7 @@
       "commit": "5593cc4ee360d998764fceb188284fdf0ef781d206754176dcb360c65103ddaa",
       "counter": "harness",
       "entry": "airss-0.9.4-lj75",
+      "failure_note": "",
       "failures": {
         "cap": 200,
         "crash": 0,
@@ -249,9 +260,12 @@
       "source": "campaign",
       "success_rate": 0.0,
       "template": "airss/lj75",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     }
   ],
   "title": "lj75",
+  "unit": "force calls",
+  "unit_source": "",
   "withheld": []
 }

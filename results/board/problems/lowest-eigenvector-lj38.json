@@ -2,6 +2,8 @@
   "client_counter": [],
   "full_n": 200,
   "id": "lowest-eigenvector/lj38",
+  "other_units": [],
+  "over_budget": [],
   "profile": {
     "area_log10": {
       "Eon svn (r2549) \u00b7 Dimer CG": 0.9632959861247398,
@@ -180,6 +182,7 @@
       "commit": "0.1.1",
       "counter": "harness",
       "entry": "sella-0.1.1-lj38-loweig",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -219,7 +222,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "sella-0.1.1/lj38-loweig",
-      "tuning": "archive"
+      "tuning": "archive",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -230,6 +234,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "sella",
+      "failure_note": "",
       "failures": {},
       "family": "single-ended",
       "family_rank": 1,
@@ -252,7 +257,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 17.8,
       "path": "website/lowest-eigenvector/lj38/sella/benchmark.dat",
       "problem": "lowest-eigenvector/lj38",
       "published": 17.8,
@@ -264,7 +269,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -275,6 +281,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "optim-first-order",
+      "failure_note": "",
       "failures": {},
       "family": "connect",
       "family_rank": 1,
@@ -297,7 +304,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 25.0,
       "path": "website/lowest-eigenvector/lj38/optim-first-order/benchmark.dat",
       "problem": "lowest-eigenvector/lj38",
       "published": 25.0,
@@ -309,7 +316,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -320,6 +328,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "tsase-lanczos",
+      "failure_note": "",
       "failures": {},
       "family": "min-mode",
       "family_rank": 2,
@@ -342,7 +351,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 25.0,
       "path": "website/lowest-eigenvector/lj38/tsase-lanczos/benchmark.dat",
       "problem": "lowest-eigenvector/lj38",
       "published": 25.0,
@@ -354,7 +363,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -365,6 +375,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "pele-first-order",
+      "failure_note": "",
       "failures": {},
       "family": "connect",
       "family_rank": 2,
@@ -387,7 +398,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 25.0,
       "path": "website/lowest-eigenvector/lj38/pele-first-order/benchmark.dat",
       "problem": "lowest-eigenvector/lj38",
       "published": 25.0,
@@ -399,7 +410,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "a914203cbb891442232aea2c92f960df9a48dc1d",
@@ -410,6 +422,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-mode-lanczos-loweig",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -449,7 +462,8 @@
       "source": "campaign, asv",
       "success_rate": 1.0,
       "template": "rgsaddle/mode-lanczos",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -460,6 +474,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-low-lj38-lanczos-ljcut",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -499,7 +514,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-svn/low-lj38-lanczos-ljcut",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -510,6 +526,7 @@
       "commit": "4d8b34baf1ba8d2d980df29838bac1f969d1662c",
       "counter": "harness",
       "entry": "eon-client-low-lj38-lanczos",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -549,7 +566,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-client/low-lj38-lanczos",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "06efc6dd8ad69a707789c55bfe2f012e8503f05c",
@@ -560,6 +578,7 @@
       "commit": "7095b23ac17d49f434a5e08ccb072897ceca698e",
       "counter": "harness",
       "entry": "bench_eon_develop.EonDevelopLowLj38Lanczos",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -599,7 +618,8 @@
       "source": "asv",
       "success_rate": 1.0,
       "template": "eon/develop-low-lj38-lanczos",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -610,6 +630,7 @@
       "commit": "f6817b537ec1d1563420023fb45fbd0e5b75e7fd",
       "counter": "harness",
       "entry": "eon-develop-f6817b53-low-lj38-lanczos",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -649,7 +670,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon/develop-f6817b53-low-lj38-lanczos",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -660,6 +682,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "tsase-dimer-bfgs",
+      "failure_note": "",
       "failures": {},
       "family": "min-mode",
       "family_rank": 8,
@@ -682,7 +705,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 27.0,
       "path": "website/lowest-eigenvector/lj38/tsase-dimer-bfgs/benchmark.dat",
       "problem": "lowest-eigenvector/lj38",
       "published": 27.0,
@@ -694,7 +717,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -705,6 +729,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-dimer-lbfgs",
+      "failure_note": "",
       "failures": {},
       "family": "min-mode",
       "family_rank": 9,
@@ -727,7 +752,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 28.0,
       "path": "website/lowest-eigenvector/lj38/eon-dimer-lbfgs/benchmark.dat",
       "problem": "lowest-eigenvector/lj38",
       "published": 28.0,
@@ -739,7 +764,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -750,6 +776,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-lanczos",
+      "failure_note": "",
       "failures": {},
       "family": "min-mode",
       "family_rank": 10,
@@ -772,7 +799,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 28.0,
       "path": "website/lowest-eigenvector/lj38/eon-lanczos/benchmark.dat",
       "problem": "lowest-eigenvector/lj38",
       "published": 28.0,
@@ -784,7 +811,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -795,6 +823,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-low-lj38-dimer-lbfgs",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -834,7 +863,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-svn/low-lj38-dimer-lbfgs",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -845,6 +875,7 @@
       "commit": "4d8b34baf1ba8d2d980df29838bac1f969d1662c",
       "counter": "harness",
       "entry": "eon-client-low-lj38-dimer-lbfgs",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -884,7 +915,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-client/low-lj38-dimer-lbfgs",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -895,6 +927,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "tsase-dimer-cg",
+      "failure_note": "",
       "failures": {},
       "family": "min-mode",
       "family_rank": 13,
@@ -917,7 +950,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 29.0,
       "path": "website/lowest-eigenvector/lj38/tsase-dimer-cg/benchmark.dat",
       "problem": "lowest-eigenvector/lj38",
       "published": 29.0,
@@ -929,7 +962,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -940,6 +974,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-dimer-cg",
+      "failure_note": "",
       "failures": {},
       "family": "min-mode",
       "family_rank": 14,
@@ -962,7 +997,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 30.0,
       "path": "website/lowest-eigenvector/lj38/eon-dimer-cg/benchmark.dat",
       "problem": "lowest-eigenvector/lj38",
       "published": 30.0,
@@ -974,7 +1009,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -985,6 +1021,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-low-lj38-dimer-cg",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1024,7 +1061,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-svn/low-lj38-dimer-cg",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1035,6 +1073,7 @@
       "commit": "4d8b34baf1ba8d2d980df29838bac1f969d1662c",
       "counter": "harness",
       "entry": "eon-client-low-lj38-dimer-cg",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1074,7 +1113,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-client/low-lj38-dimer-cg",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "06efc6dd8ad69a707789c55bfe2f012e8503f05c",
@@ -1085,6 +1125,7 @@
       "commit": "7095b23ac17d49f434a5e08ccb072897ceca698e",
       "counter": "harness",
       "entry": "bench_eon_develop.EonDevelopLowLj38Dimer",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1124,7 +1165,8 @@
       "source": "asv",
       "success_rate": 1.0,
       "template": "eon/develop-low-lj38-dimer",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "a914203cbb891442232aea2c92f960df9a48dc1d",
@@ -1135,6 +1177,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-mode-dimer-loweig",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1174,7 +1217,8 @@
       "source": "campaign, asv",
       "success_rate": 1.0,
       "template": "rgsaddle/mode-dimer",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1185,6 +1229,7 @@
       "commit": "98aac60b5d9905e81ee4e6b8c385f169258d0218",
       "counter": "harness",
       "entry": "tsase-1.0-lowest-eigenvector-lj38--tsase-mode-lj38",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1224,7 +1269,8 @@
       "source": "campaign",
       "success_rate": 0.89,
       "template": "tsase/mode-lj38",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1235,6 +1281,7 @@
       "commit": "9b753517c6c0eccae51425b83eb4e04ef554550b",
       "counter": "harness",
       "entry": "artn-1.1.0-lowest-eigenvector-lj38--partn-mode-lj38",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1274,7 +1321,8 @@
       "source": "campaign",
       "success_rate": 0.87,
       "template": "partn/mode-lj38",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1285,6 +1333,7 @@
       "commit": "a4ce10dd6d7fdcb3d813f1c730eb365d29041999",
       "counter": "harness",
       "entry": "pysisyphus-0.1.dev1-lowest-eigenvector-lj38--pysisyphus-lanczos-lj38",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1324,7 +1373,8 @@
       "source": "campaign",
       "success_rate": 0.8,
       "template": "pysisyphus/lanczos-lj38",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "8cb1889ce716ee3b227e40eb83ba7395d4179564",
@@ -1335,6 +1385,7 @@
       "commit": "5a00aeede06fd822ef302624ec4c9bc7889d21fc0b5804b701a5785695c68d16",
       "counter": "harness",
       "entry": "softsaddle-2019.04-mode-lanczos-loweig",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1374,7 +1425,8 @@
       "source": "campaign, asv",
       "success_rate": 0.065,
       "template": "softsaddle/mode-lanczos",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "8cb1889ce716ee3b227e40eb83ba7395d4179564",
@@ -1385,6 +1437,7 @@
       "commit": "5a00aeede06fd822ef302624ec4c9bc7889d21fc0b5804b701a5785695c68d16",
       "counter": "harness",
       "entry": "softsaddle-2019.04-mode-davidson-loweig",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1424,7 +1477,8 @@
       "source": "campaign, asv",
       "success_rate": 0.055,
       "template": "softsaddle/mode-davidson",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     }
   ],
   "short": [
@@ -1437,6 +1491,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-r2549-low-lj38-dimer",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1476,7 +1531,8 @@
       "source": "campaign, asv",
       "success_rate": 1.0,
       "template": "eon-svn/low-lj38-dimer",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "c1ecf607a10f7ab78d1615e4cbf9af030bebcdbf",
@@ -1487,6 +1543,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-r2549-low-lj38-lanczos",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1526,7 +1583,8 @@
       "source": "campaign, asv",
       "success_rate": 1.0,
       "template": "eon-svn/low-lj38-lanczos",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "773f8e16a8c96df68d7a05af605491f9b7272596",
@@ -1537,6 +1595,7 @@
       "commit": "7095b23ac17d49f434a5e08ccb072897ceca698e",
       "counter": "harness",
       "entry": "bench_eon_develop.EonDevelopLowLj38Dimer",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1576,7 +1635,8 @@
       "source": "asv",
       "success_rate": 1.0,
       "template": "eon/develop-low-lj38-dimer",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "773f8e16a8c96df68d7a05af605491f9b7272596",
@@ -1587,6 +1647,7 @@
       "commit": "7095b23ac17d49f434a5e08ccb072897ceca698e",
       "counter": "harness",
       "entry": "bench_eon_develop.EonDevelopLowLj38Lanczos",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1626,10 +1687,13 @@
       "source": "asv",
       "success_rate": 1.0,
       "template": "eon/develop-low-lj38-lanczos",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     }
   ],
   "title": "lj38",
+  "unit": "force calls",
+  "unit_source": "",
   "withheld": [
     {
       "asv_commit": "a914203cbb891442232aea2c92f960df9a48dc1d",
@@ -1640,6 +1704,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-mode-dimer-tuned-loweig",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1679,7 +1744,8 @@
       "source": "campaign, asv",
       "success_rate": 1.0,
       "template": "rgsaddle/mode-dimer-tuned",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "a914203cbb891442232aea2c92f960df9a48dc1d",
@@ -1690,6 +1756,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-mode-lanczos-tuned-loweig",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1729,7 +1796,8 @@
       "source": "campaign, asv",
       "success_rate": 1.0,
       "template": "rgsaddle/mode-lanczos-tuned",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "8cb1889ce716ee3b227e40eb83ba7395d4179564",
@@ -1740,6 +1808,7 @@
       "commit": "5a00aeede06fd822ef302624ec4c9bc7889d21fc0b5804b701a5785695c68d16",
       "counter": "harness",
       "entry": "softsaddle-2019.04-mode-davidson-tuned-loweig",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1779,7 +1848,8 @@
       "source": "campaign, asv",
       "success_rate": 0.855,
       "template": "softsaddle/mode-davidson-tuned",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "8cb1889ce716ee3b227e40eb83ba7395d4179564",
@@ -1790,6 +1860,7 @@
       "commit": "5a00aeede06fd822ef302624ec4c9bc7889d21fc0b5804b701a5785695c68d16",
       "counter": "harness",
       "entry": "softsaddle-2019.04-mode-lanczos-tuned-loweig",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1829,7 +1900,8 @@
       "source": "campaign, asv",
       "success_rate": 1.0,
       "template": "softsaddle/mode-lanczos-tuned",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     }
   ]
 }

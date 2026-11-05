@@ -9,11 +9,15 @@
       "commit": "1d71c944501832bfafb955ffe13b9aae50c8efd4",
       "counter": "",
       "entry": "eon-main-de-pt-lbfgs-m100",
+      "failure_note": "",
       "failures": {
         "cap": 29,
         "crash": 0,
         "divergence": 0,
         "wrong_stationary": 0
+      },
+      "failures_inferred": {
+        "cap": 29
       },
       "family": "connect",
       "family_rank": null,
@@ -48,7 +52,8 @@
       "source": "campaign",
       "success_rate": 0.5084745762711864,
       "template": "eon/de-pt-lbfgs-m100",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -59,11 +64,15 @@
       "commit": "1d71c944501832bfafb955ffe13b9aae50c8efd4",
       "counter": "",
       "entry": "eon-main-de-pt-lbfgs",
+      "failure_note": "",
       "failures": {
         "cap": 27,
         "crash": 0,
         "divergence": 0,
         "wrong_stationary": 0
+      },
+      "failures_inferred": {
+        "cap": 27
       },
       "family": "connect",
       "family_rank": null,
@@ -98,11 +107,14 @@
       "source": "campaign",
       "success_rate": 0.5423728813559322,
       "template": "eon/de-pt-lbfgs",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     }
   ],
   "full_n": 59,
   "id": "double-ended-saddle-search/pt-island",
+  "other_units": [],
+  "over_budget": [],
   "profile": {
     "area_log10": {
       "ASE (3.29.0) \u00b7 NEB-FIRE": 0.4949137216848504,
@@ -115,7 +127,7 @@
       "Eon svn (r2549) \u00b7 Lanczos improved L-BFGS": 1.1505468478343688,
       "LAMMPS (30 Sep 2026) \u00b7 CI-NEB-fire": 0.1479638961738213,
       "LAMMPS (30 Sep 2026) \u00b7 CI-NEB-quickmin": 0.01020440663267733,
-      "Sella (2.6.0) \u00b7 Sella+NEB": 0.4668516034449878,
+      "Sella (2.6.0) \u00b7 Sella+NEB": 0.4643005017868185,
       "TSASE (1.0) \u00b7 CI-NEB": 0.43368728188878647,
       "TSASE (1.0) \u00b7 NEB": 0.0,
       "eOn (3.6.0) \u00b7 LBFGS": 0.16071940446466793,
@@ -205,7 +217,7 @@
         0.0,
         0.3220338983050847,
         0.7288135593220338,
-        1.0
+        0.9830508474576272
       ],
       "TSASE (1.0) \u00b7 CI-NEB": [
         0.0,
@@ -303,7 +315,7 @@
       "Eon svn (r2549) \u00b7 Lanczos improved L-BFGS": 1.0,
       "LAMMPS (30 Sep 2026) \u00b7 CI-NEB-fire": 0.7457627118644068,
       "LAMMPS (30 Sep 2026) \u00b7 CI-NEB-quickmin": 0.4067796610169492,
-      "Sella (2.6.0) \u00b7 Sella+NEB": 1.0,
+      "Sella (2.6.0) \u00b7 Sella+NEB": 0.9830508474576272,
       "TSASE (1.0) \u00b7 CI-NEB": 0.6440677966101694,
       "TSASE (1.0) \u00b7 NEB": 0.0,
       "eOn (3.6.0) \u00b7 LBFGS": 0.6440677966101694,
@@ -335,6 +347,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "optim",
+      "failure_note": "",
       "failures": {},
       "family": "connect",
       "family_rank": 1,
@@ -357,7 +370,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 103.0,
       "path": "website/double-ended-saddle-search/pt-island/optim/benchmark.dat",
       "problem": "double-ended-saddle-search/pt-island",
       "published": 103.0,
@@ -369,7 +382,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -380,6 +394,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-ci-neb-single",
+      "failure_note": "",
       "failures": {},
       "family": "band",
       "family_rank": 1,
@@ -402,7 +417,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 110.0,
       "path": "website/double-ended-saddle-search/pt-island/eon-ci-neb-single/benchmark.dat",
       "problem": "double-ended-saddle-search/pt-island",
       "published": 110.0,
@@ -414,7 +429,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -425,6 +441,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-de-pt-lanczos-improved",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -464,7 +481,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-svn/de-pt-lanczos-improved",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -475,6 +493,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-dimer",
+      "failure_note": "",
       "failures": {},
       "family": "min-mode",
       "family_rank": 2,
@@ -497,7 +516,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 182.0,
       "path": "website/double-ended-saddle-search/pt-island/eon-dimer/benchmark.dat",
       "problem": "double-ended-saddle-search/pt-island",
       "published": 182.0,
@@ -509,7 +528,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -520,6 +540,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-de-pt-dimer",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -559,7 +580,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-svn/de-pt-dimer",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -570,6 +592,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-de-pt-lanczos",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -609,52 +632,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-svn/de-pt-lanczos",
-      "tuning": ""
-    },
-    {
-      "asv_commit": "",
-      "call_unit": "",
-      "cap": null,
-      "code": "Eon",
-      "code_version": "r2156",
-      "commit": "",
-      "counter": "archive",
-      "entry": "eon-lanczos-improved",
-      "failures": {},
-      "family": "min-mode",
-      "family_rank": 5,
-      "fd_calls": 0.0,
-      "full_n": 59,
-      "hessian_calls": 0.0,
-      "kind": "",
-      "label": "eOn (r2156) \u00b7 eon-lanczos-improved",
-      "max_calls": null,
-      "mean_calls": 222.0,
-      "mean_per_image": null,
-      "median": null,
-      "median_calls": 157.0,
-      "median_high": null,
-      "median_low": null,
-      "median_per_image": null,
-      "method": "eon-lanczos-improved",
-      "min_calls": null,
-      "n": 59,
-      "nfailed": 8,
-      "note": "archived score",
-      "origin": "archive",
-      "par2_mean": null,
-      "path": "website/double-ended-saddle-search/pt-island/eon-lanczos-improved/benchmark.dat",
-      "problem": "double-ended-saddle-search/pt-island",
-      "published": 222.0,
-      "rank_cost": 222.0,
-      "registry_match": false,
-      "scored": true,
-      "short": false,
-      "short_reason": "",
-      "source": "archive",
-      "success_rate": null,
-      "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -665,6 +644,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-de-pt-ci-neb",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -704,7 +684,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-svn/de-pt-ci-neb",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "c1ecf607a10f7ab78d1615e4cbf9af030bebcdbf",
@@ -715,6 +696,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-r2549-de-pt-ci",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -754,7 +736,8 @@
       "source": "campaign, asv",
       "success_rate": 1.0,
       "template": "eon-svn/de-pt-ci",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -765,6 +748,7 @@
       "commit": "r2549",
       "counter": "harness",
       "entry": "eon-svn-de-pt-ci-swdneb",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -804,7 +788,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-svn/de-pt-ci-swdneb",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -815,6 +800,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-ci-neb",
+      "failure_note": "",
       "failures": {},
       "family": "band",
       "family_rank": 4,
@@ -837,7 +823,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 248.0,
       "path": "website/double-ended-saddle-search/pt-island/eon-ci-neb/benchmark.dat",
       "problem": "double-ended-saddle-search/pt-island",
       "published": 248.0,
@@ -849,52 +835,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
-    },
-    {
-      "asv_commit": "",
-      "call_unit": "",
-      "cap": null,
-      "code": "pele",
-      "code_version": "",
-      "commit": "",
-      "counter": "archive",
-      "entry": "pele",
-      "failures": {},
-      "family": "connect",
-      "family_rank": 3,
-      "fd_calls": 0.0,
-      "full_n": 59,
-      "hessian_calls": 0.0,
-      "kind": "",
-      "label": "pele \u00b7 hybrid eigenvector following",
-      "max_calls": null,
-      "mean_calls": 255.0,
-      "mean_per_image": null,
-      "median": null,
-      "median_calls": 244.0,
-      "median_high": null,
-      "median_low": null,
-      "median_per_image": null,
-      "method": "hybrid eigenvector following",
-      "min_calls": null,
-      "n": 59,
-      "nfailed": 2,
-      "note": "archived score",
-      "origin": "archive",
-      "par2_mean": null,
-      "path": "website/double-ended-saddle-search/pt-island/pele/benchmark.dat",
-      "problem": "double-ended-saddle-search/pt-island",
-      "published": 255.0,
-      "rank_cost": 255.0,
-      "registry_match": false,
-      "scored": true,
-      "short": false,
-      "short_reason": "",
-      "source": "archive",
-      "success_rate": null,
-      "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -905,6 +847,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-ci-swdneb",
+      "failure_note": "",
       "failures": {},
       "family": "band",
       "family_rank": 5,
@@ -927,7 +870,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 256.0,
       "path": "website/double-ended-saddle-search/pt-island/eon-ci-swdneb/benchmark.dat",
       "problem": "double-ended-saddle-search/pt-island",
       "published": 256.0,
@@ -939,7 +882,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -950,9 +894,10 @@
       "commit": "",
       "counter": "archive",
       "entry": "optim-cl-string",
+      "failure_note": "",
       "failures": {},
       "family": "connect",
-      "family_rank": 4,
+      "family_rank": 3,
       "fd_calls": 0.0,
       "full_n": 59,
       "hessian_calls": 0.0,
@@ -972,7 +917,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 319.0,
       "path": "website/double-ended-saddle-search/pt-island/optim-cl-string/benchmark.dat",
       "problem": "double-ended-saddle-search/pt-island",
       "published": 319.0,
@@ -984,52 +929,8 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
-    },
-    {
-      "asv_commit": "",
-      "call_unit": "",
-      "cap": null,
-      "code": "Eon",
-      "code_version": "r2156",
-      "commit": "",
-      "counter": "archive",
-      "entry": "eon-lanczos",
-      "failures": {},
-      "family": "min-mode",
-      "family_rank": 6,
-      "fd_calls": 0.0,
-      "full_n": 59,
-      "hessian_calls": 0.0,
-      "kind": "",
-      "label": "eOn (r2156) \u00b7 eon-lanczos",
-      "max_calls": null,
-      "mean_calls": 325.0,
-      "mean_per_image": null,
-      "median": null,
-      "median_calls": 207.5,
-      "median_high": null,
-      "median_low": null,
-      "median_per_image": null,
-      "method": "eon-lanczos",
-      "min_calls": null,
-      "n": 59,
-      "nfailed": 5,
-      "note": "archived score",
-      "origin": "archive",
-      "par2_mean": null,
-      "path": "website/double-ended-saddle-search/pt-island/eon-lanczos/benchmark.dat",
-      "problem": "double-ended-saddle-search/pt-island",
-      "published": 325.0,
-      "rank_cost": 325.0,
-      "registry_match": false,
-      "scored": true,
-      "short": false,
-      "short_reason": "",
-      "source": "archive",
-      "success_rate": null,
-      "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1040,6 +941,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-ci-neb-5",
+      "failure_note": "",
       "failures": {},
       "family": "band",
       "family_rank": 6,
@@ -1062,7 +964,7 @@
       "nfailed": 0,
       "note": "archived score",
       "origin": "archive",
-      "par2_mean": null,
+      "par2_mean": 391.0,
       "path": "website/double-ended-saddle-search/pt-island/eon-ci-neb-5/benchmark.dat",
       "problem": "double-ended-saddle-search/pt-island",
       "published": 391.0,
@@ -1074,7 +976,103 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
+    },
+    {
+      "asv_commit": "",
+      "call_unit": "",
+      "cap": null,
+      "code": "pele",
+      "code_version": "",
+      "commit": "",
+      "counter": "archive",
+      "entry": "pele",
+      "failure_note": "",
+      "failures": {},
+      "family": "connect",
+      "family_rank": 4,
+      "fd_calls": 0.0,
+      "full_n": 59,
+      "hessian_calls": 0.0,
+      "kind": "",
+      "label": "pele \u00b7 hybrid eigenvector following",
+      "max_calls": null,
+      "mean_calls": 255.0,
+      "mean_per_image": null,
+      "median": null,
+      "median_calls": 244.0,
+      "median_high": null,
+      "median_low": null,
+      "median_per_image": null,
+      "method": "hybrid eigenvector following",
+      "min_calls": null,
+      "n": 59,
+      "nfailed": 2,
+      "note": "archived score",
+      "origin": "archive",
+      "par2_mean": 449.7457627118644,
+      "path": "website/double-ended-saddle-search/pt-island/pele/benchmark.dat",
+      "problem": "double-ended-saddle-search/pt-island",
+      "published": 255.0,
+      "rank_cost": 449.7457627118644,
+      "registry_match": false,
+      "scored": true,
+      "short": false,
+      "short_reason": "",
+      "source": "archive",
+      "success_rate": null,
+      "template": "",
+      "tuning": "",
+      "unit": "force calls"
+    },
+    {
+      "asv_commit": "",
+      "call_unit": "",
+      "cap": null,
+      "code": "Eon",
+      "code_version": "r2156",
+      "commit": "",
+      "counter": "archive",
+      "difference": "Table 10 prints 165, 72 and 308 calls with 0 failed, this file has 325, 95 and 2660 with 5 failed, and no archived file has the printed values. It was written on 29 Aug 2013, six days after the files that match the other eOn rows of Table 10.",
+      "entry": "eon-lanczos",
+      "failure_note": "",
+      "failures": {},
+      "family": "min-mode",
+      "family_rank": 5,
+      "fd_calls": 0.0,
+      "full_n": 59,
+      "hessian_calls": 0.0,
+      "kind": "",
+      "label": "eOn (r2156) \u00b7 eon-lanczos",
+      "max_calls": null,
+      "mean_calls": 325.0,
+      "mean_per_image": null,
+      "median": null,
+      "median_calls": 207.5,
+      "median_high": null,
+      "median_low": null,
+      "median_per_image": null,
+      "method": "eon-lanczos",
+      "min_calls": null,
+      "n": 59,
+      "nfailed": 5,
+      "note": "archived score",
+      "origin": "archive",
+      "par2_mean": 805.9322033898305,
+      "path": "website/double-ended-saddle-search/pt-island/eon-lanczos/benchmark.dat",
+      "problem": "double-ended-saddle-search/pt-island",
+      "published": 325.0,
+      "rank_cost": 805.9322033898305,
+      "registry_match": false,
+      "scored": true,
+      "short": false,
+      "short_reason": "",
+      "source": "archive",
+      "success_rate": null,
+      "template": "",
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "21ca7a8cdb95342b07929c946488380ef3d90bfb",
@@ -1085,6 +1083,7 @@
       "commit": "476aa041f562d37d5fb4121b86817a52d75e4c5d",
       "counter": "harness",
       "entry": "geodesic-1.0.0-ase-de-pt-default",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -1124,60 +1123,11 @@
       "source": "campaign, asv",
       "success_rate": 0.9830508474576272,
       "template": "geodesic/ase-de-pt-default",
-      "tuning": "ablation"
+      "tuning": "ablation",
+      "unit": "force calls"
     },
     {
       "asv_commit": "ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
-      "call_unit": "total",
-      "cap": 10000,
-      "code": "Sella",
-      "code_version": "2.6.0",
-      "commit": "6cfb60cdb100a146c3c6f0587d5308b247aa8010",
-      "counter": "harness",
-      "entry": "bench_ase_sella.SellaDePtIslandDefault",
-      "failures": {
-        "cap": 0,
-        "crash": 0,
-        "divergence": 0,
-        "wrong_stationary": 0
-      },
-      "family": "band",
-      "family_rank": 8,
-      "fd_calls": 0.0,
-      "full_n": 59,
-      "hessian_calls": 0.0,
-      "kind": "",
-      "label": "Sella (2.6.0) \u00b7 Sella+NEB",
-      "max_calls": 3246.0,
-      "mean_calls": 921.8474576271186,
-      "mean_per_image": 307.28248587570624,
-      "median": 756.0,
-      "median_calls": 756.0,
-      "median_high": 836.0,
-      "median_low": 688.0,
-      "median_per_image": 252.0,
-      "method": "Sella+NEB",
-      "min_calls": 307.0,
-      "n": 59,
-      "nfailed": 0,
-      "note": "asv track_force_calls",
-      "origin": "harness",
-      "par2_mean": 921.8474576271186,
-      "path": "results/asv/ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
-      "problem": "double-ended-saddle-search/pt-island",
-      "published": null,
-      "rank_cost": 921.8474576271186,
-      "registry_match": true,
-      "scored": true,
-      "short": false,
-      "short_reason": "",
-      "source": "asv",
-      "success_rate": 1.0,
-      "template": "sella/de-pt-island-default",
-      "tuning": "default"
-    },
-    {
-      "asv_commit": "",
       "call_unit": "total",
       "cap": 3000,
       "code": "ASE",
@@ -1185,14 +1135,15 @@
       "commit": "f27c0005ae6a67ea419f996e728668865bfc1f86",
       "counter": "harness",
       "entry": "ase-3.29.0-de-pt-island-default",
+      "failure_note": "",
       "failures": {
-        "cap": 1,
+        "cap": 0,
         "crash": 0,
-        "divergence": 0,
+        "divergence": 1,
         "wrong_stationary": 0
       },
       "family": "band",
-      "family_rank": 9,
+      "family_rank": 8,
       "fd_calls": 0.0,
       "full_n": 59,
       "hessian_calls": 0.0,
@@ -1213,7 +1164,7 @@
       "note": "starts.jsonl",
       "origin": "harness",
       "par2_mean": 926.4745762711865,
-      "path": "results/campaign/ase-3.29.0-de-pt-island-default.dat",
+      "path": "results/campaign/ase-3.29.0-de-pt-island-default.dat; results/asv/ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
       "problem": "double-ended-saddle-search/pt-island",
       "published": null,
       "rank_cost": 926.4745762711865,
@@ -1221,10 +1172,11 @@
       "scored": true,
       "short": false,
       "short_reason": "",
-      "source": "campaign",
+      "source": "campaign, asv",
       "success_rate": 0.9830508474576272,
       "template": "ase/de-pt-island-default",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -1235,6 +1187,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-ew-ci-neb",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1242,7 +1195,7 @@
         "wrong_stationary": 2
       },
       "family": "band",
-      "family_rank": 10,
+      "family_rank": 9,
       "fd_calls": 0.0,
       "full_n": 59,
       "hessian_calls": 0.0,
@@ -1274,7 +1227,63 @@
       "source": "campaign, asv",
       "success_rate": 0.9322033898305084,
       "template": "rgsaddle/ew-ci-neb",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
+    },
+    {
+      "asv_commit": "ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
+      "call_unit": "total",
+      "cap": 3000,
+      "code": "Sella",
+      "code_version": "2.6.0",
+      "commit": "6cfb60cdb100a146c3c6f0587d5308b247aa8010",
+      "counter": "harness",
+      "entry": "bench_ase_sella.SellaDePtIslandDefault",
+      "failure_note": "",
+      "failures": {
+        "cap": 1,
+        "crash": 0,
+        "divergence": 0,
+        "wrong_stationary": 0
+      },
+      "failures_inferred": {
+        "cap": 1
+      },
+      "family": "band",
+      "family_rank": 10,
+      "fd_calls": 0.0,
+      "full_n": 59,
+      "hessian_calls": 0.0,
+      "kind": "",
+      "label": "Sella (2.6.0) \u00b7 Sella+NEB",
+      "max_calls": 3246.0,
+      "mean_calls": 921.8474576271186,
+      "mean_per_image": 307.28248587570624,
+      "median": 756.0,
+      "median_calls": 756.0,
+      "median_high": 836.0,
+      "median_low": 688.0,
+      "median_per_image": 252.0,
+      "method": "Sella+NEB",
+      "min_calls": 307.0,
+      "n": 59,
+      "nfailed": 1,
+      "note": "asv track_force_calls",
+      "origin": "harness",
+      "par2_mean": 968.5254237288135,
+      "path": "results/asv/ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
+      "problem": "double-ended-saddle-search/pt-island",
+      "published": null,
+      "rank_cost": 968.5254237288135,
+      "registry_match": true,
+      "scored": true,
+      "short": false,
+      "short_reason": "",
+      "source": "asv",
+      "success_rate": 0.9830508474576272,
+      "template": "sella/de-pt-island-default",
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -1285,6 +1294,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-oci-neb",
+      "failure_note": "",
       "failures": {
         "cap": 3,
         "crash": 0,
@@ -1324,7 +1334,55 @@
       "source": "campaign, asv",
       "success_rate": 0.9491525423728814,
       "template": "rgsaddle/oci-neb",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
+    },
+    {
+      "asv_commit": "",
+      "call_unit": "",
+      "cap": null,
+      "code": "Eon",
+      "code_version": "r2156",
+      "commit": "",
+      "counter": "archive",
+      "entry": "eon-lanczos-improved",
+      "failure_note": "",
+      "failures": {},
+      "family": "min-mode",
+      "family_rank": 6,
+      "fd_calls": 0.0,
+      "full_n": 59,
+      "hessian_calls": 0.0,
+      "kind": "",
+      "label": "eOn (r2156) \u00b7 eon-lanczos-improved",
+      "max_calls": null,
+      "mean_calls": 222.0,
+      "mean_per_image": null,
+      "median": null,
+      "median_calls": 157.0,
+      "median_high": null,
+      "median_low": null,
+      "median_per_image": null,
+      "method": "eon-lanczos-improved",
+      "min_calls": null,
+      "n": 59,
+      "nfailed": 8,
+      "note": "archived score",
+      "origin": "archive",
+      "par2_mean": 1005.457627118644,
+      "path": "website/double-ended-saddle-search/pt-island/eon-lanczos-improved/benchmark.dat",
+      "problem": "double-ended-saddle-search/pt-island",
+      "published": 222.0,
+      "rank_cost": 1005.457627118644,
+      "registry_match": false,
+      "scored": true,
+      "short": false,
+      "short_reason": "",
+      "source": "archive",
+      "success_rate": null,
+      "template": "",
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -1335,6 +1393,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-idpp-ci-neb",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1374,7 +1433,8 @@
       "source": "campaign, asv",
       "success_rate": 0.9152542372881356,
       "template": "rgsaddle/idpp-ci-neb",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1385,6 +1445,7 @@
       "commit": "22da7bd5f69cbd64d59853c8f8d7f8d44c2d18df",
       "counter": "harness",
       "entry": "compass-1.0.0-double-ended-saddle-search-pt-island--compass-sqnm",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -1424,7 +1485,8 @@
       "source": "campaign",
       "success_rate": 0.9830508474576272,
       "template": "compass/sqnm",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -1435,6 +1497,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-ci-neb",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1474,7 +1537,8 @@
       "source": "campaign, asv",
       "success_rate": 0.9152542372881356,
       "template": "rgsaddle/ci-neb",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "21ca7a8cdb95342b07929c946488380ef3d90bfb",
@@ -1485,6 +1549,7 @@
       "commit": "476aa041f562d37d5fb4121b86817a52d75e4c5d",
       "counter": "harness",
       "entry": "geodesic-1.0.0-de-pt-ci-neb-lbfgs",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1524,7 +1589,8 @@
       "source": "campaign, asv",
       "success_rate": 0.847457627118644,
       "template": "geodesic/ci-neb-lbfgs",
-      "tuning": "ablation"
+      "tuning": "ablation",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -1535,6 +1601,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-sidpp-ci-neb",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -1574,7 +1641,8 @@
       "source": "campaign, asv",
       "success_rate": 0.8983050847457628,
       "template": "rgsaddle/sidpp-ci-neb",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "21ca7a8cdb95342b07929c946488380ef3d90bfb",
@@ -1585,6 +1653,7 @@
       "commit": "476aa041f562d37d5fb4121b86817a52d75e4c5d",
       "counter": "harness",
       "entry": "geodesic-1.0.0-de-pt-ci-neb",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1624,7 +1693,8 @@
       "source": "campaign, asv",
       "success_rate": 0.847457627118644,
       "template": "geodesic/ci-neb",
-      "tuning": "ablation"
+      "tuning": "ablation",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1635,6 +1705,7 @@
       "commit": "98aac60b5d9905e81ee4e6b8c385f169258d0218",
       "counter": "harness",
       "entry": "tsase-1.0-double-ended-saddle-search-pt-island--tsase-ci-neb",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -1674,7 +1745,8 @@
       "source": "campaign",
       "success_rate": 0.6440677966101694,
       "template": "tsase/ci-neb",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "de7400eba879167cc6caa0b22c8c8a4313e04981",
@@ -1685,6 +1757,7 @@
       "commit": "8de817dd79bfe4525d5d39246a212d833e6dee07",
       "counter": "harness",
       "entry": "lammps-30Sep2026-double-ended-saddle-search-pt-island-ci-fire",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1724,7 +1797,8 @@
       "source": "campaign, asv",
       "success_rate": 0.7457627118644068,
       "template": "lammpsneb/ci-fire",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "06efc6dd8ad69a707789c55bfe2f012e8503f05c",
@@ -1735,6 +1809,7 @@
       "commit": "7095b23ac17d49f434a5e08ccb072897ceca698e",
       "counter": "harness",
       "entry": "bench_eon_develop.EonDevelopDePtOci",
+      "failure_note": "",
       "failures": {
         "cap": 21,
         "crash": 0,
@@ -1774,7 +1849,8 @@
       "source": "asv",
       "success_rate": 0.6440677966101694,
       "template": "eon/develop-de-pt-oci",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "de7400eba879167cc6caa0b22c8c8a4313e04981",
@@ -1785,6 +1861,7 @@
       "commit": "8de817dd79bfe4525d5d39246a212d833e6dee07",
       "counter": "harness",
       "entry": "lammps-30Sep2026-double-ended-saddle-search-pt-island-ci-quickmin",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -1824,7 +1901,8 @@
       "source": "campaign, asv",
       "success_rate": 0.4067796610169492,
       "template": "lammpsneb/ci-quickmin",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1835,6 +1913,7 @@
       "commit": "98aac60b5d9905e81ee4e6b8c385f169258d0218",
       "counter": "harness",
       "entry": "tsase-1.0-double-ended-saddle-search-pt-island--tsase-neb",
+      "failure_note": "",
       "failures": {
         "cap": 3,
         "crash": 0,
@@ -1874,7 +1953,8 @@
       "source": "campaign",
       "success_rate": 0.0,
       "template": "tsase/neb",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -1885,6 +1965,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-neb",
+      "failure_note": "",
       "failures": {
         "cap": 3,
         "crash": 0,
@@ -1924,7 +2005,8 @@
       "source": "campaign, asv",
       "success_rate": 0.0,
       "template": "rgsaddle/neb",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     }
   ],
   "short": [
@@ -1937,6 +2019,7 @@
       "commit": "4d8b34baf1ba8d2d980df29838bac1f969d1662c",
       "counter": "harness",
       "entry": "eon-client-de-pt-ci-neb",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -1976,7 +2059,8 @@
       "source": "campaign",
       "success_rate": 0.9830508474576272,
       "template": "eon-client/de-pt-ci-neb",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -1987,6 +2071,7 @@
       "commit": "4d8b34baf1ba8d2d980df29838bac1f969d1662c",
       "counter": "harness",
       "entry": "eon-client-de-pt-ci-swdneb",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -2026,7 +2111,8 @@
       "source": "campaign",
       "success_rate": 0.9830508474576272,
       "template": "eon-client/de-pt-ci-swdneb",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -2037,6 +2123,7 @@
       "commit": "4d8b34baf1ba8d2d980df29838bac1f969d1662c",
       "counter": "harness",
       "entry": "eon-client-de-pt-dimer",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2076,7 +2163,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-client/de-pt-dimer",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -2087,6 +2175,7 @@
       "commit": "4d8b34baf1ba8d2d980df29838bac1f969d1662c",
       "counter": "harness",
       "entry": "eon-client-de-pt-lanczos-improved",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2126,7 +2215,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-client/de-pt-lanczos-improved",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "",
@@ -2137,6 +2227,7 @@
       "commit": "4d8b34baf1ba8d2d980df29838bac1f969d1662c",
       "counter": "harness",
       "entry": "eon-client-de-pt-lanczos",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2176,7 +2267,8 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon-client/de-pt-lanczos",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "e172a4b674067643a20f44d30d9ca4a93025acac",
@@ -2187,6 +2279,7 @@
       "commit": "7095b23ac17d49f434a5e08ccb072897ceca698e",
       "counter": "harness",
       "entry": "bench_eon_develop.EonDevelopDePtEw",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -2226,7 +2319,8 @@
       "source": "asv",
       "success_rate": 0.0,
       "template": "eon/develop-de-pt-ew",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "e172a4b674067643a20f44d30d9ca4a93025acac",
@@ -2237,6 +2331,7 @@
       "commit": "7095b23ac17d49f434a5e08ccb072897ceca698e",
       "counter": "harness",
       "entry": "bench_eon_develop.EonDevelopDePtOci",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -2276,17 +2371,19 @@
       "source": "asv",
       "success_rate": 0.0,
       "template": "eon/develop-de-pt-oci",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "806ecaca75a456ba67e7f95621c51ab84e94adaf",
       "call_unit": "total",
-      "cap": 10000,
+      "cap": 3000,
       "code": "ASE",
       "code_version": "3.29.0",
       "commit": "f27c0005ae6a67ea419f996e728668865bfc1f86",
       "counter": "harness",
       "entry": "bench_ase_sella.AseDePtIslandTuned",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2326,17 +2423,19 @@
       "source": "asv",
       "success_rate": 1.0,
       "template": "ase/de-pt-island-tuned",
-      "tuning": "tuned"
+      "tuning": "tuned",
+      "unit": "force calls"
     },
     {
       "asv_commit": "806ecaca75a456ba67e7f95621c51ab84e94adaf",
       "call_unit": "total",
-      "cap": 10000,
+      "cap": 3000,
       "code": "Sella",
       "code_version": "2.6.0",
       "commit": "6cfb60cdb100a146c3c6f0587d5308b247aa8010",
       "counter": "harness",
       "entry": "bench_ase_sella.SellaDePtIslandDefault",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2376,17 +2475,19 @@
       "source": "asv",
       "success_rate": 1.0,
       "template": "sella/de-pt-island-default",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "806ecaca75a456ba67e7f95621c51ab84e94adaf",
       "call_unit": "total",
-      "cap": 10000,
+      "cap": 3000,
       "code": "Sella",
       "code_version": "2.6.0",
       "commit": "6cfb60cdb100a146c3c6f0587d5308b247aa8010",
       "counter": "harness",
       "entry": "bench_ase_sella.SellaDePtIslandTuned",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2426,17 +2527,19 @@
       "source": "asv",
       "success_rate": 1.0,
       "template": "sella/de-pt-island-tuned",
-      "tuning": "tuned"
+      "tuning": "tuned",
+      "unit": "force calls"
     },
     {
       "asv_commit": "806ecaca75a456ba67e7f95621c51ab84e94adaf",
       "call_unit": "total",
-      "cap": 10000,
+      "cap": 3000,
       "code": "ASE",
       "code_version": "3.29.0",
       "commit": "f27c0005ae6a67ea419f996e728668865bfc1f86",
       "counter": "harness",
       "entry": "bench_ase_sella.AseDePtIslandDefault",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2476,7 +2579,8 @@
       "source": "asv",
       "success_rate": 1.0,
       "template": "ase/de-pt-island-default",
-      "tuning": "default"
+      "tuning": "default",
+      "unit": "force calls"
     },
     {
       "asv_commit": "773f8e16a8c96df68d7a05af605491f9b7272596",
@@ -2487,6 +2591,7 @@
       "commit": "7095b23ac17d49f434a5e08ccb072897ceca698e",
       "counter": "harness",
       "entry": "bench_eon_develop.EonDevelopDePtEw",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -2526,7 +2631,8 @@
       "source": "asv",
       "success_rate": 0.0,
       "template": "eon/develop-de-pt-ew",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     },
     {
       "asv_commit": "773f8e16a8c96df68d7a05af605491f9b7272596",
@@ -2537,6 +2643,7 @@
       "commit": "7095b23ac17d49f434a5e08ccb072897ceca698e",
       "counter": "harness",
       "entry": "bench_eon_develop.EonDevelopDePtOci",
+      "failure_note": "",
       "failures": {
         "cap": 1,
         "crash": 0,
@@ -2576,13 +2683,16 @@
       "source": "asv",
       "success_rate": 0.0,
       "template": "eon/develop-de-pt-oci",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     }
   ],
   "title": "pt-island",
+  "unit": "force calls",
+  "unit_source": "",
   "withheld": [
     {
-      "asv_commit": "",
+      "asv_commit": "ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
       "call_unit": "total",
       "cap": 3000,
       "code": "ASE",
@@ -2590,10 +2700,11 @@
       "commit": "f27c0005ae6a67ea419f996e728668865bfc1f86",
       "counter": "harness",
       "entry": "ase-3.29.0-de-pt-island-tuned",
+      "failure_note": "",
       "failures": {
-        "cap": 5,
+        "cap": 0,
         "crash": 0,
-        "divergence": 0,
+        "divergence": 5,
         "wrong_stationary": 0
       },
       "family": "band",
@@ -2618,7 +2729,7 @@
       "note": "starts.jsonl",
       "origin": "harness",
       "par2_mean": 847.6779661016949,
-      "path": "results/campaign/ase-3.29.0-de-pt-island-tuned.dat",
+      "path": "results/campaign/ase-3.29.0-de-pt-island-tuned.dat; results/asv/ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
       "problem": "double-ended-saddle-search/pt-island",
       "published": null,
       "rank_cost": 847.6779661016949,
@@ -2626,10 +2737,11 @@
       "scored": true,
       "short": false,
       "short_reason": "",
-      "source": "campaign",
+      "source": "campaign, asv",
       "success_rate": 0.9152542372881356,
       "template": "ase/de-pt-island-tuned",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "21ca7a8cdb95342b07929c946488380ef3d90bfb",
@@ -2640,6 +2752,7 @@
       "commit": "476aa041f562d37d5fb4121b86817a52d75e4c5d",
       "counter": "harness",
       "entry": "geodesic-1.0.0-ase-de-pt-tuned",
+      "failure_note": "",
       "failures": {
         "cap": 2,
         "crash": 0,
@@ -2679,7 +2792,8 @@
       "source": "campaign, asv",
       "success_rate": 0.9661016949152542,
       "template": "geodesic/ase-de-pt-tuned",
-      "tuning": "ablation"
+      "tuning": "ablation",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -2690,6 +2804,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-ci-neb-lbfgs",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2729,7 +2844,8 @@
       "source": "campaign, asv",
       "success_rate": 0.9152542372881356,
       "template": "rgsaddle/ci-neb-lbfgs",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -2740,6 +2856,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-ew-ci-neb-lbfgs",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2779,7 +2896,8 @@
       "source": "campaign, asv",
       "success_rate": 0.9661016949152542,
       "template": "rgsaddle/ew-ci-neb-lbfgs",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -2790,6 +2908,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-idpp-ci-neb-lbfgs",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2829,7 +2948,8 @@
       "source": "campaign, asv",
       "success_rate": 0.9152542372881356,
       "template": "rgsaddle/idpp-ci-neb-lbfgs",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -2840,6 +2960,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-neb-lbfgs",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2879,7 +3000,8 @@
       "source": "campaign, asv",
       "success_rate": 0.0,
       "template": "rgsaddle/neb-lbfgs",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -2890,6 +3012,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-oci-neb-lbfgs",
+      "failure_note": "",
       "failures": {
         "cap": 4,
         "crash": 0,
@@ -2929,7 +3052,8 @@
       "source": "campaign, asv",
       "success_rate": 0.9322033898305084,
       "template": "rgsaddle/oci-neb-lbfgs",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "19e5e5f275cc59e67893ae3e761f1fb0097841f2",
@@ -2940,6 +3064,7 @@
       "commit": "c0db2b8d333c557251635cb8bb7b3d81f0088a71",
       "counter": "harness",
       "entry": "rgsaddle-0.2.2-double-ended-saddle-search-pt-island--rgsaddle-sidpp-ci-neb-lbfgs",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -2979,72 +3104,27 @@
       "source": "campaign, asv",
       "success_rate": 0.9152542372881356,
       "template": "rgsaddle/sidpp-ci-neb-lbfgs",
-      "tuning": "adjusted"
+      "tuning": "adjusted",
+      "unit": "force calls"
     },
     {
       "asv_commit": "ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
       "call_unit": "total",
-      "cap": 10000,
-      "code": "ASE",
-      "code_version": "3.29.0",
-      "commit": "f27c0005ae6a67ea419f996e728668865bfc1f86",
-      "counter": "harness",
-      "entry": "bench_ase_sella.AseDePtIslandTuned",
-      "failures": {
-        "cap": 0,
-        "crash": 0,
-        "divergence": 5,
-        "wrong_stationary": 0
-      },
-      "family": "band",
-      "family_rank": null,
-      "fd_calls": 0.0,
-      "full_n": 59,
-      "hessian_calls": 0.0,
-      "kind": "",
-      "label": "ASE (3.29.0) \u00b7 NEB-LBFGS",
-      "max_calls": 3005.0,
-      "mean_calls": 593.8644067796611,
-      "mean_per_image": 197.954802259887,
-      "median": 374.0,
-      "median_calls": 374.0,
-      "median_high": 398.0,
-      "median_low": 344.0,
-      "median_per_image": 124.66666666666667,
-      "method": "NEB-LBFGS",
-      "min_calls": 173.0,
-      "n": 59,
-      "nfailed": 5,
-      "note": "asv track_force_calls",
-      "origin": "harness",
-      "par2_mean": 2034.1186440677966,
-      "path": "results/asv/ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
-      "problem": "double-ended-saddle-search/pt-island",
-      "published": null,
-      "rank_cost": 2034.1186440677966,
-      "registry_match": true,
-      "scored": true,
-      "short": false,
-      "short_reason": "",
-      "source": "asv",
-      "success_rate": 0.9152542372881356,
-      "template": "ase/de-pt-island-tuned",
-      "tuning": "tuned"
-    },
-    {
-      "asv_commit": "ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
-      "call_unit": "total",
-      "cap": 10000,
+      "cap": 3000,
       "code": "Sella",
       "code_version": "2.6.0",
       "commit": "6cfb60cdb100a146c3c6f0587d5308b247aa8010",
       "counter": "harness",
       "entry": "bench_ase_sella.SellaDePtIslandTuned",
+      "failure_note": "",
       "failures": {
-        "cap": 0,
+        "cap": 5,
         "crash": 0,
         "divergence": 0,
         "wrong_stationary": 0
+      },
+      "failures_inferred": {
+        "cap": 5
       },
       "family": "band",
       "family_rank": null,
@@ -3064,22 +3144,23 @@
       "method": "Sella+NEB",
       "min_calls": 187.0,
       "n": 59,
-      "nfailed": 0,
+      "nfailed": 5,
       "note": "asv track_force_calls",
       "origin": "harness",
-      "par2_mean": 615.1525423728814,
+      "par2_mean": 849.3220338983051,
       "path": "results/asv/ade7c5132e47bb4008b9d4c8ddb26492e9e7287d",
       "problem": "double-ended-saddle-search/pt-island",
       "published": null,
-      "rank_cost": 615.1525423728814,
+      "rank_cost": 849.3220338983051,
       "registry_match": true,
       "scored": true,
       "short": false,
       "short_reason": "",
       "source": "asv",
-      "success_rate": 1.0,
+      "success_rate": 0.9152542372881356,
       "template": "sella/de-pt-island-tuned",
-      "tuning": "tuned"
+      "tuning": "tuned",
+      "unit": "force calls"
     }
   ]
 }

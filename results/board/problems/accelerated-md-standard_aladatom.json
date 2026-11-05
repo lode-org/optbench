@@ -9,6 +9,7 @@
       "commit": "1d71c944501832bfafb955ffe13b9aae50c8efd4",
       "counter": "client",
       "entry": "eon-3.6.0-standard-aladatom-akmc",
+      "failure_note": "",
       "failures": {
         "cap": 0,
         "crash": 0,
@@ -48,11 +49,14 @@
       "source": "campaign",
       "success_rate": 1.0,
       "template": "eon/standard-aladatom-akmc",
-      "tuning": ""
+      "tuning": "",
+      "unit": "force calls"
     }
   ],
   "full_n": 1,
   "id": "accelerated-md/standard_aladatom",
+  "other_units": [],
+  "over_budget": [],
   "profile_gap": "No performance profile. The ranked rows have no per-start record.",
   "ranked": [
     {
@@ -64,6 +68,7 @@
       "commit": "",
       "counter": "archive",
       "entry": "eon-md-langevin",
+      "failure_note": "the entry records no failure count",
       "failures": {},
       "family": "minimize",
       "family_rank": 1,
@@ -73,7 +78,7 @@
       "kind": "",
       "label": "eOn \u00b7 parallel replica",
       "max_calls": null,
-      "mean_calls": 835900.0,
+      "mean_calls": null,
       "mean_per_image": null,
       "median": null,
       "median_calls": null,
@@ -98,10 +103,13 @@
       "source": "archive",
       "success_rate": null,
       "template": "",
-      "tuning": ""
+      "tuning": "",
+      "unit": "escape rate (1/s)"
     }
   ],
   "short": [],
   "title": "Al adatom on Al(100) at 150 K",
+  "unit": "escape rate (1/s)",
+  "unit_source": "The archived true_rate is the escape rate from the reactant. The benchmark website's escape-rate table heads it Escape rate(1/s).",
   "withheld": []
 }
