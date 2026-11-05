@@ -167,7 +167,38 @@ uv run optbench pairs \
 
 `eon-ci-swdneb` is the doubly nudged row. A start at or above 2500 force calls is left out of the mean. The climbing-image mean is 809 with 2 failures. The doubly nudged mean is 708 with 5 failures.
 
-The Henkelman client is revision 2549 of <https://theory.cm.utexas.edu/svn/eon>. A checkout of older revisions fails where historical paths are gone. Export revision 2549. That tree still names a QSC potential whose sources are not in the revision, so the QSC references have to come out of the build or the link fails. The binary should report `r2549`. The minimization templates under `templates/eon-svn/` use `lj_cluster`. The harness rows for the other problems name `ljcluster`, `lj_cut`, `lammps`, or `morse_pt` and run through `ext_pot`. The 3.5.0 templates use `ljcluster`.
+The Henkelman client is revision 2549 of <https://theory.cm.utexas.edu/svn/eon>.
+A checkout of older revisions fails where historical paths are gone.
+A whole-tree `svn export` of revision 2549 stops on E175013 (HTTP 403) at a different file on each try, and it leaves incomplete `svn-XXXXXX` files in the tree.
+Single-file requests at the revision succeed.
+`codes/eon-svn/fetch.sh` fetches the revision that way, one file per request.
+It checks each file's size and sha256 against `codes/eon-svn/r2549.manifest` and sets the svn:executable mode.
+A file that already matches is kept, so a second run resumes.
+The manifest lists all 1037 files of the revision.
+It was built from `svn list -R -r 2549` and one request per file, and every size and the server's own sha1 and md5 for each file agree.
+No file sets svn:keywords or svn:eol-style, so those are the bytes an export writes.
+The manifest's seven `POTCAR` files are VASP pseudopotentials under the VASP license.
+They are inputs of the VASP examples and of the `client/tests/vasp` test, not of the build.
+`fetch.sh` leaves them out unless it is given `--with-potcar`, and the check below skips them too.
+The fetched tree has no `.svn` metadata.
+`client/version.sh` takes the version from `svnversion`, so there it writes `Unversioned directory`, or `unknown` without svn.
+Write `client/version.h` by hand and keep it with `make -o version.h`:
+
+```bash
+codes/eon-svn/fetch.sh "$SRC"
+grep -v '^#' codes/eon-svn/r2549.manifest | awk '$4 !~ /(^|\/)POTCAR$/ {print $1 "  " $4}' | (cd "$SRC" && sha256sum -c --quiet)
+cd "$SRC/client"
+printf 'static const char VERSION[] = "2549";\nstatic const char BUILD_DATE[] = "%s";\n' "$(date)" > version.h
+make -o version.h
+./eonclient -v
+```
+
+That tree still names a quantum Sutton-Chen (QSC) potential whose sources are not in the revision, so the QSC references have to come out of the build or the link fails.
+The `svn:externals` entry on `client/potentials` points QSC at <https://theory.cm.utexas.edu/svn/qsc/c> with no revision, and the manifest leaves it out.
+The binary should report `r2549`.
+Minimization templates under `templates/eon-svn/` use `lj_cluster`.
+The harness rows for the other problems name `ljcluster`, `lj_cut`, `lammps`, or `morse_pt` and run through `ext_pot`.
+The 3.5.0 templates use `ljcluster`.
 
 A problem has one potential. Rows on another potential stay off the ranked table. `problems/tsopt/LJ38.toml` lines 8–13 and `problems/lowest-eigenvector/lj38.toml` lines 8–13 are Lennard-Jones, epsilon 1, sigma 1, cutoff 40, with periodic boundaries off. `problems/double-ended-saddle-search/lj38.toml` line 20 and `problems/double-ended-saddle-search/lj38_2ts_separation.toml` line 18 set `potential = "lj"`, which is that same unshifted cutoff. The lane rows on those problems use that kernel and stay ranked. The published `ljcluster` rows (shifted, cutoff 15) on `tsopt/LJ38`, `lowest-eigenvector/lj38`, and `lj38_2ts_separation` are unranked. The published `de-lj38` rows use the archived `lj/cut` cutoff 40 and stay ranked; their max iteration count is 8000, and the lane climbing-image rows use 1000. `problems/tsopt/pt-island.toml` lines 8–15 and `problems/saddle-search/pt-island.toml` lines 8–15 are `morse/smooth/linear`, cutoff 9.5, periodic in x and y. The lane rows match that and stay ranked. The published Pt tsopt rows use r2549 `Morse::force` and are unranked. `problems/double-ended-saddle-search/pt-island.toml` line 17 and `problems/neb/Pt-heptamer.toml` line 17 set `potential = "morse_pt"`. That name is the shifted Morse in `optbench/pes.py` lines 3–6 and 45–67: cutoff 9.5, pair energy zero at the cutoff. The lane double-ended and NEB templates were rerun on r2549 `Morse::force` with the Fortran binary. Against the smooth-linear starts, 35, 43, 48, 49, and 52 of the 59 Pt double-ended starts changed for climbing-image NEB, doubly nudged climbing image, dimer, Lanczos, and improved Lanczos. One, one, three, and one of the 13 NEB pairs changed for CG, FIRE, L-BFGS, and QuickMin. Both hTST Pt passes changed. They were not pooled with the published ids. The published climbing-image rows set spring 5 and `climbing_image_converged_only`, and the lane rows do not, so the starts are different methods. The 3.5.0 rows that still use `morse/smooth/linear` on those two problems are unranked variants. `hTST/Pt` has no potential block; the archive ini sets `morse_pt`, and those lane rows were rerun on `Morse::force`. They stay off the ranked table because success is one qualifying saddle. `hTST/Al` and the accelerated-md rows use the r2549 Aluminum EAM and stay off the ranked table. `globalopt/lj38.toml` has no potential block. The 2014 `in.lammps` is `lj/cut/opt` cutoff 40, which is the lane kernel. Basin hopping, seed 314159, has all 100 starts. The per-start wall budget is 21600 s. The force-call cap is still 2000000. Ninety-eight r2549 starts reached -173.928427. Starts 69 and 72 stopped at that cap. The success-only mean is 529113 and the PAR-2 mean is 598530. The 3.5.0 basin-hopping row has 100 starts, all below the stop. Its success-only mean and PAR-2 mean are 503146. This r2549 binary links libgfortran and the Fortran potentials, including Aluminum, Lenosky, SW, and EDIP. It is not a NO_FORTRAN build. LAMMPS is not linked. The 3.5.0 lane rows use commit 4d8b34baf1ba8d2d980df29838bac1f969d1662c. The conda binary that prints 3.5.0 (7ec1840) was not used. Hyperdynamics bond boost uses bb_dvmax 0. The bounded AKMC rows stop after 4 passes and do not reach 27 good saddles, so the PAR-2 of that incomplete catalogue is the cap penalty and the harness calls stay in the start file. The minimization rows stay as recorded. mlopt is neural-network training and was left out. tip4p has no harness kernel. lj100-binary has no binary-LJ kernel. lj75, lj98, and lj150 have no stated minimum or force-call success rule. standard_aladatom has no geometry, cap, or success rule beyond rate metrics. Minima hopping start 0 used 2000000 harness calls in 3600 s and did not reach -173.927427. The lowest monitoring energy was -173.25238. That run is not scored.
 
