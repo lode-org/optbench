@@ -6,6 +6,7 @@ code_version = "r2549"
 commit = "r2549"
 algorithm = "Lanczos"
 reducer = "harness"
+kernel = "ljcluster"
 failure_cap = 10000
 tuning = "default"
 note = """Lanczos minimum mode and conjugate-gradient translation, same stops as eon/develop-ts-lj38-lanczos. Lanczos tolerance 0.02, 15 iterations, quit_early true. Optimizer max_move 0.35, max_iterations 1000, converged_force 0.001. Potential ljcluster. client_displace_type load. direction.dat is Python random.Random(index). Main random_seed is 1. The run swaps the potential for ext_pot. The harness kernel is the develop kernel for this potential name. The 2014 table used r2156. The binary is SVN r2549, the registry pin. Export of the 2014 revision is forbidden, so this row is r2549."""

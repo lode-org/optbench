@@ -3,6 +3,7 @@ engine = "eon-client"
 code = "Eon svn"
 code_version = "r2549"
 algorithm = "QuickMin"
+kernel = "client"
 
 [ini.Main]
 job = "minimization"

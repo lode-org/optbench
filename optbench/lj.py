@@ -10,13 +10,18 @@ from __future__ import annotations
 
 import os
 from collections.abc import Sequence
+from fractions import Fraction
 
 
 def lj_shift(u0: float, psi: float, cutoff: float) -> float:
-    """Potential at the cutoff. Subtracting it makes that point zero."""
+    """Potential at the cutoff. Subtracting it makes that point zero.
+
+    ``(psi / cutoff)^6`` is rounded once from its exact rational value,
+    so no libm ``pow`` chosen by CPU can change it.
+    """
     if cutoff <= 0.0:
         raise ValueError("cutoff must be positive")
-    ratio = (psi / cutoff) ** 6
+    ratio = float(Fraction(psi / cutoff) ** 6)
     return 4.0 * u0 * ratio * (ratio - 1.0)
 
 

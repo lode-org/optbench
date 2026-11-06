@@ -6,6 +6,7 @@ code_version = "3.6.0"
 commit = "7095b23ac17d49f434a5e08ccb072897ceca698e"
 algorithm = "LBFGS"
 reducer = "report-capped"
+kernel = "lj_cut"
 failure_cap = 2500
 note = "Climbing-image NEB with energy-weighted springs on the 50 LJ38 pairs. energy_weighted true, ew_trigger 10, ew_ksp_min 0.972, ew_ksp_max 9.72, ci_mmf false. Otherwise the eon/de-lj38-lbfgs stops: L-BFGS memory 20, max_move 0.05, max_iterations 1000, five images. Potential lammps with the archived in.lammps. The mean keeps total_force_calls under 2500. Main random_seed is 1."
 

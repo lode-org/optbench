@@ -4,6 +4,7 @@ problem = "minimization/morse-bulk"
 code = "eOn"
 code_version = "3.5.0"
 algorithm = "LBFGS"
+kernel = "client"
 
 [ini.Main]
 job = "minimization"

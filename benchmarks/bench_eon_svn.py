@@ -2,10 +2,11 @@
 
 The client is ``EON_SVN_CLIENT`` or ``~/opt/eon-svn/bin/eonclient``. It
 must print ``r2549``. Every force evaluation goes through ``ExtPot`` and
-``HarnessCounter``. Lennard-Jones kernels match the develop harness.
-``morse_pt`` is r2549 ``Morse::force``: cutoff 9.5, the pair energy
-shifted to zero at the cutoff, and the minimum image on the box
-diagonal. The develop harness Morse has no cutoff and ignores the box.
+``HarnessCounter``, with the kernel the template names. The Lennard-Jones
+kernels are the develop harness ones. ``morse_shift`` is r2549
+``Morse::force``: cutoff 9.5, the pair energy shifted to zero at the
+cutoff, and the minimum image on the box diagonal. The develop harness
+Morse has no cutoff and ignores the box.
 r2549 reads L-BFGS keys from ``[Optimizer]``. It does not read
 ``energy_weighted``, ``ci_mmf``, or the modern L-BFGS catalog.
 
@@ -31,8 +32,6 @@ from benchmarks.bench_eon_develop import (
     classify_akmc,
     classify_client,
     kept_lowest,
-    lammps_lj_params,
-    lj_cut,
     selected,
 )
 from benchmarks.bench_eon_develop import MORSE_A, MORSE_D, MORSE_RE
@@ -156,39 +155,18 @@ def _morse_fast(positions, atomic_numbers=None, box=None):
     return float(energy.value), tuple(forces)
 
 
-def _evaluate(potential: str):
-    from optbench.lj import lj_cluster
-
-    if potential == "ljcluster":
-        return lambda positions, numbers, box: lj_cluster(positions, numbers, box)
-    if potential == "morse_pt":
-        return _morse_fast
-    if potential == "lammps":
-        lammps = ROOT / "archive/entries/double-ended-saddle-search/lj38/eon-ci-neb/in.lammps"
-        epsilon, sigma, cutoff = lammps_lj_params(lammps)
-
-        def _lj(positions, numbers, box, epsilon=epsilon, sigma=sigma, cutoff=cutoff):
-            return lj_cut(positions, numbers, box, epsilon=epsilon, sigma=sigma, cutoff=cutoff)
-
-        return _lj
-    if potential == "lj_cut":
-        return lambda positions, numbers, box: lj_cut(
-            positions, numbers, box, epsilon=1.0, sigma=1.0, cutoff=40.0
-        )
-    raise ValueError(f"no harness kernel for potential {potential}")
-
-
 class _Bridge:
-    def __init__(self, potential: str, cap: int, evaluate=None):
-        self.potential = potential
+    def __init__(self, kernel: str, cap: int, evaluate=None):
+        self.kernel = kernel
         self.cap = cap
         self.evaluate = evaluate
         self.server = None
 
     def __enter__(self):
+        from optbench.eon_harness import kernel_for
         from optbench.potserver import PotServer
 
-        function = self.evaluate or _evaluate(self.potential)
+        function = self.evaluate or kernel_for(self.kernel)
         self.server = PotServer(function, cap=self.cap).start()
         os.environ["OPTBENCH_POTSERVER"] = self.server.endpoint()
         return self.server, _bridge()
@@ -231,6 +209,7 @@ def _stamp(template: dict, record: dict, seed, start, seconds: float) -> dict:
     record["commit"] = str(template.get("commit") or "")
     record["tuning"] = str(template.get("tuning") or "")
     record["potential"] = template["ini"]["Potential"]["potential"]
+    record["kernel"] = str(template["kernel"])
     return record
 
 
@@ -252,12 +231,13 @@ def _noise_files(start: str, work: Path):
 
 
 def _noise_evaluate(template: dict, start: str):
-    """Clean lj/cut energy, Gaussian force noise, and the problem window.
+    """Clean kernel energy, Gaussian force noise, and the problem window.
 
     The client stops on a force norm. A sample under the threshold is
     scaled back above it until the clean-energy window is met, so one
     lucky draw does not end the search. Sigma 0 is the clean force.
     """
+    from optbench.eon_harness import kernel_for
     from optbench.noise import WINDOW, energy_span, stop_threshold
     from optbench.quadratic import ENERGY_TOL
 
@@ -272,7 +252,7 @@ def _noise_evaluate(template: dict, start: str):
     threshold = stop_threshold(clean_tol, sigma, components, kappa)
     energy_tol = max(ENERGY_TOL, kappa * sigma)
     energies: list[float] = []
-    kernel = _evaluate("lj_cut")
+    kernel = kernel_for(str(template["kernel"]))
 
     def evaluate(positions, numbers, box):
         energy, forces = kernel(positions, numbers, box)
@@ -376,6 +356,7 @@ def _run_lowest(template: dict, seed: int, start: str, work: Path, server, wrapp
     )
     record["client_calls"] = found.get("raw")
     record["client_reason"] = found.get("reason")
+    record.update(found["cap"])
     record["k"] = chosen["attempt"] if reached else None
     record["overlap"] = overlap
     return _guard(record)
@@ -429,7 +410,7 @@ def run_case(template_name: str, kind: str, seed: int, start: str, *, passes: in
     from optbench.potserver import remote_count
 
     template = load_template(ROOT, template_name)
-    potential = template["ini"]["Potential"]["potential"]
+    kernel = str(template["kernel"])
     cap = int(template["failure_cap"])
     started = time.monotonic()
     work = Path(tempfile.mkdtemp(prefix="optbench-eon-svn-"))
@@ -437,7 +418,7 @@ def run_case(template_name: str, kind: str, seed: int, start: str, *, passes: in
     if kind == "noise":
         noise_eval, _threshold, _energy_tol = _noise_evaluate(template, start)
     try:
-        with _Bridge(potential, cap, noise_eval) as (server, wrapper):
+        with _Bridge(kernel, cap, noise_eval) as (server, wrapper):
             if kind == "lowest":
                 record = _run_lowest(template, seed, start, work, server, wrapper, cap)
             elif kind == "akmc":
@@ -466,6 +447,7 @@ def run_case(template_name: str, kind: str, seed: int, start: str, *, passes: in
                 record["client_calls"] = found.get("raw")
                 record["client_reason"] = found.get("reason")
                 record["extrema"] = found.get("extrema")
+                record.update(found["cap"])
                 if kind == "noise" and record["success"]:
                     # MinimizationJob writes the relaxed geometry to min.con.
                     # pos.con is the start and is not a stationary point.

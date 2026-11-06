@@ -11,7 +11,7 @@ the energy and the radial force are both zero at ``rc``.
 from __future__ import annotations
 
 import hashlib
-import math
+import os
 import subprocess
 import tempfile
 from pathlib import Path
@@ -94,11 +94,17 @@ def lennard_jones(
     cell: Array | None = None,
     pbc: tuple[bool, bool, bool] = (False, False, False),
 ) -> tuple[float, Array]:
-    """Energy and ``dE/dx`` for a cutoff Lennard-Jones cluster."""
+    """Energy and ``dE/dx`` for a cutoff Lennard-Jones cluster.
+
+    The squared distance is ``(x² + z²) + y²``, the order
+    ``np.einsum("ija,ija->ij")`` used when the committed rows were made.
+    ``(σ/r)^6`` is ``shared_pow``, the value ``ratio**6`` has on hosts
+    where NumPy runs its AVX-512 power loop.
+    """
     pos = np.asarray(positions, dtype=np.float64)
     count = len(pos)
     delta = minimum_image(pos[:, None, :] - pos[None, :, :], cell if cell is not None else np.zeros(3), pbc)
-    distance2 = np.einsum("ija,ija->ij", delta, delta)
+    distance2 = (delta[..., 0] * delta[..., 0] + delta[..., 2] * delta[..., 2]) + delta[..., 1] * delta[..., 1]
     upper = np.triu_indices(count, k=1)
     pair2 = distance2[upper]
     cutoff2 = cutoff * cutoff
@@ -109,7 +115,7 @@ def lennard_jones(
     radius2 = pair2[chosen]
     radius = np.sqrt(radius2)
     ratio = sigma / radius
-    sixth = ratio**6
+    sixth = shared_pow(ratio, 6.0)
     twelfth = sixth * sixth
     energy = float(4.0 * epsilon * np.sum(twelfth - sixth))
     slope = 24.0 * epsilon / radius * (sixth - 2.0 * twelfth)
@@ -119,6 +125,112 @@ def lennard_jones(
     np.add.at(gradient, left, vector)
     np.add.at(gradient, right, -vector)
     return energy, gradient
+
+
+# x86-64-v2 is the x86-64 psABI micro-architecture level of SSE3, SSSE3,
+# SSE4.1, SSE4.2, POPCNT, CMPXCHG16B and LAHF-SAHF, with no AVX or FMA
+# (psABI section 3.1.1, table 3.1; GCC x86 Options, -march). Every host
+# at that level runs the same instructions. -ffp-contract=off keeps
+# a*b+c two rounded operations and -fno-fast-math keeps IEEE order and
+# rounding (GCC Optimize Options).
+NATIVE_FLAGS = (
+    "-std=c99",
+    "-march=x86-64-v2",
+    "-O2",
+    "-ffp-contract=off",
+    "-fno-fast-math",
+    "-fPIC",
+    "-shared",
+)
+_NATIVE_SOURCES = ("morse_pair.c", "svml_exp.c", "svml_pow.c")
+_NATIVE_HEADERS = ("svml_exp.h", "svml_pow.h")
+_NATIVE_LIB = None
+
+
+def native_library():
+    """The Morse pair loop, and the exp and pow the surfaces share.
+
+    The Morse loop and its NumPy reference call this exp, and the
+    Lennard-Jones surface calls this pow, so a compiler is required:
+    np.exp, np.power and libm pick a code path by CPU and give different
+    last bits.
+    """
+    global _NATIVE_LIB
+    if _NATIVE_LIB is not None:
+        return _NATIVE_LIB
+    import ctypes
+
+    here = Path(__file__).parent
+    sources = [here / name for name in _NATIVE_SOURCES]
+    digest = hashlib.sha256(" ".join(NATIVE_FLAGS).encode())
+    for path in [*sources, *(here / name for name in _NATIVE_HEADERS)]:
+        digest.update(path.read_bytes())
+    library = Path(tempfile.gettempdir()) / f"optbench-surfaces-{digest.hexdigest()[:16]}.so"
+    if not library.is_file():
+        partial = library.with_name(f"{library.name}.{os.getpid()}.tmp")
+        try:
+            subprocess.run(
+                ["gcc", *NATIVE_FLAGS, "-o", str(partial), *map(str, sources), "-lm"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+        except FileNotFoundError as error:
+            raise RuntimeError("the surfaces need gcc to build their exp, pow and Morse pair loop") from error
+        except subprocess.CalledProcessError as error:
+            raise RuntimeError(f"gcc could not build the surface library: {error.stderr.strip()}") from error
+        partial.replace(library)
+    loaded = ctypes.CDLL(str(library))
+    double = ctypes.c_double
+    pointer = ctypes.POINTER(double)
+    loaded.optbench_exp.restype = double
+    loaded.optbench_exp.argtypes = [double]
+    loaded.optbench_exp_array.restype = None
+    loaded.optbench_exp_array.argtypes = [pointer, pointer, ctypes.c_long]
+    loaded.optbench_pow_scalar_array.restype = None
+    loaded.optbench_pow_scalar_array.argtypes = [pointer, double, pointer, ctypes.c_long]
+    loaded.morse_pair_energy.restype = ctypes.c_int
+    loaded.morse_pair_energy.argtypes = [
+        pointer,
+        pointer,
+        ctypes.c_int,
+        *[double] * 7,
+        *[ctypes.c_int] * 3,
+        pointer,
+    ]
+    _NATIVE_LIB = loaded
+    return loaded
+
+
+def shared_exp(values: Array) -> Array:
+    """``exp`` of a float64 array with the pair loop's routine."""
+    import ctypes
+
+    given = np.ascontiguousarray(values, dtype=np.float64)
+    out = np.empty_like(given)
+    pointer = ctypes.POINTER(ctypes.c_double)
+    native_library().optbench_exp_array(
+        given.ctypes.data_as(pointer), out.ctypes.data_as(pointer), given.size
+    )
+    return out
+
+
+def shared_pow(values: Array, exponent: float) -> Array:
+    """``values ** exponent`` for a float64 array and a scalar exponent.
+
+    The result is NumPy's float64 power loop on AVX-512 hosts, on every
+    host: its fast paths for exponents -1, 0, 0.5, 1 and 2, and the SVML
+    power routine otherwise.
+    """
+    import ctypes
+
+    given = np.ascontiguousarray(values, dtype=np.float64)
+    out = np.empty_like(given)
+    pointer = ctypes.POINTER(ctypes.c_double)
+    native_library().optbench_pow_scalar_array(
+        given.ctypes.data_as(pointer), float(exponent), out.ctypes.data_as(pointer), given.size
+    )
+    return out
 
 
 def _morse_numpy(
@@ -131,15 +243,18 @@ def _morse_numpy(
     cell: Array | None = None,
     pbc: tuple[bool, bool, bool] = (False, False, False),
 ) -> tuple[float, Array]:
-    """NumPy pair sum. The compiled loop is the same formula."""
+    """NumPy pair sum, the reference the compiled loop equals bit for bit.
+
+    The squared distance is summed as ``(x² + z²) + y²``, the order
+    ``np.einsum("ija,ija->ij")`` used when the committed rows were made.
+    """
     pos = np.asarray(positions, dtype=np.float64)
     count = len(pos)
-    alpha_dr = -alpha * (cutoff - r0)
-    at_cut = math.exp(alpha_dr)
+    at_cut = float(native_library().optbench_exp(-alpha * (cutoff - r0)))
     offset = depth * (at_cut * at_cut - 2.0 * at_cut)
     der_cut = -2.0 * alpha * depth * (at_cut * at_cut - at_cut)
     delta = minimum_image(pos[:, None, :] - pos[None, :, :], cell if cell is not None else np.zeros(3), pbc)
-    distance2 = np.einsum("ija,ija->ij", delta, delta)
+    distance2 = (delta[..., 0] * delta[..., 0] + delta[..., 2] * delta[..., 2]) + delta[..., 1] * delta[..., 1]
     upper = np.triu_indices(count, k=1)
     pair2 = distance2[upper]
     chosen = (pair2 > 0.0) & (pair2 < cutoff * cutoff)
@@ -147,7 +262,7 @@ def _morse_numpy(
     if not np.any(chosen):
         return 0.0, gradient
     radius = np.sqrt(pair2[chosen])
-    decay = np.exp(-alpha * (radius - r0))
+    decay = shared_exp(-alpha * (radius - r0))
     morse = depth * (decay * decay - 2.0 * decay)
     energy = float(np.sum(morse - offset - (radius - cutoff) * der_cut))
     slope = -2.0 * alpha * depth * (decay * decay - decay) - der_cut
@@ -157,64 +272,6 @@ def _morse_numpy(
     np.add.at(gradient, left, vector)
     np.add.at(gradient, right, -vector)
     return energy, gradient
-
-
-_MORSE_LIB = None
-_MORSE_TRIED = False
-
-
-def _morse_library():
-    """Compile the pair loop once. A missing compiler keeps the NumPy sum."""
-    global _MORSE_LIB, _MORSE_TRIED
-    if _MORSE_TRIED:
-        return _MORSE_LIB
-    _MORSE_TRIED = True
-    source = Path(__file__).with_name("morse_pair.c")
-    if not source.is_file():
-        return None
-    flags = "-O3 -march=native -fPIC -shared"
-    digest = hashlib.sha256(source.read_bytes() + flags.encode()).hexdigest()[:16]
-    library = Path(tempfile.gettempdir()) / f"optbench-morse-{digest}.so"
-    if not library.is_file():
-        try:
-            subprocess.check_call(
-                [
-                    "gcc",
-                    "-O3",
-                    "-march=native",
-                    "-fPIC",
-                    "-shared",
-                    "-o",
-                    str(library),
-                    str(source),
-                    "-lm",
-                ],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-        except (OSError, subprocess.CalledProcessError):
-            return None
-    import ctypes
-
-    loaded = ctypes.CDLL(str(library))
-    loaded.morse_pair_energy.restype = ctypes.c_double
-    loaded.morse_pair_energy.argtypes = [
-        ctypes.POINTER(ctypes.c_double),
-        ctypes.POINTER(ctypes.c_double),
-        ctypes.c_int,
-        ctypes.c_double,
-        ctypes.c_double,
-        ctypes.c_double,
-        ctypes.c_double,
-        ctypes.c_double,
-        ctypes.c_double,
-        ctypes.c_double,
-        ctypes.c_int,
-        ctypes.c_int,
-        ctypes.c_int,
-    ]
-    _MORSE_LIB = loaded
-    return loaded
 
 
 def morse_smooth_linear(
@@ -237,17 +294,13 @@ def morse_smooth_linear(
     pos = np.ascontiguousarray(positions, dtype=np.float64)
     if pos.ndim != 2 or pos.shape[1] != 3:
         raise ValueError("positions must have shape (n, 3)")
-    library = _morse_library()
-    if library is None:
-        return _morse_numpy(
-            pos, depth=depth, alpha=alpha, r0=r0, cutoff=cutoff, cell=cell, pbc=pbc
-        )
+    import ctypes
+
     count = int(pos.shape[0])
     gradient = np.zeros_like(pos)
     lengths = np.zeros(3, dtype=np.float64) if cell is None else np.asarray(cell, dtype=np.float64)
-    import ctypes
-
-    energy = library.morse_pair_energy(
+    energy = ctypes.c_double()
+    status = native_library().morse_pair_energy(
         pos.ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
         gradient.ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
         count,
@@ -261,8 +314,11 @@ def morse_smooth_linear(
         int(bool(pbc[0])),
         int(bool(pbc[1])),
         int(bool(pbc[2])),
+        ctypes.byref(energy),
     )
-    return float(energy), gradient
+    if status != 0:
+        raise MemoryError("the Morse pair loop could not allocate its pair buffers")
+    return float(energy.value), gradient
 
 
 def load_con(path: Path) -> tuple[Array, Array, Array]:

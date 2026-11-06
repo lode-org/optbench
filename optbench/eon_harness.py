@@ -3,9 +3,11 @@
 Each force evaluation is one ``HarnessCounter`` charge. eonclient is
 started with ``potential = ext_pot``. A small C program forwards
 ``from_eon_to_extpot`` to ``PotServer``. The template still names the
-2014 potential. The kernel is the problem surface:
+2014 potential. Its ``kernel`` key names the problem surface the
+harness computes, and the campaign files record it:
 
-* ``lj40`` is unshifted ``lj/cut`` with epsilon 1, sigma 1, cutoff 40.
+* ``lj40`` is unshifted ``lj/cut`` with epsilon 1, sigma 1, cutoff 40,
+  summed by ``optbench.surfaces.lennard_jones``.
 * ``morse`` is LAMMPS ``morse/smooth/linear`` (D 0.7102, alpha 1.6047,
   r0 2.897, cutoff 9.5) with periodic boundaries in x and y.
 * ``morse_shift`` is r2549 ``Morse::force``: the same depth, alpha, and
@@ -22,6 +24,8 @@ started with ``potential = ext_pot``. A small C program forwards
   ``in.lammps``, through ``bench_eon_develop.lj_cut``. That function sums
   the pairs in its own order, so an NEB that is sensitive to the last
   bit can take a different path than on ``lj40``.
+
+A template whose client computes its own forces declares ``client``.
 
 A tsopt success is a client stop under the cap, a free-atom Euclidean
 force norm at the problem stop, and Hessian index 1. That Hessian is
@@ -62,7 +66,7 @@ from .campaign import (
     resolve_problem,
     write_starts,
 )
-from .eon_jobs import _client_env, _numpy_direction, _read_dat, _seeded_mode
+from .eon_jobs import _client_env, _numpy_direction, _read_dat, _seeded_mode, cap_report
 from .eon_parse import abs_overlap, flat_floats, xyz_to_con
 from .stationary import negative_index, vibrational_eigenvalues
 from .surfaces import lennard_jones, morse_smooth_linear, read_con
@@ -109,6 +113,8 @@ FAMILIES = {
         "cache": "500350d9",
     },
 }
+CLIENT_KERNEL = "client"
+KERNELS = frozenset({"lj40", "lj_cut", "ljcluster", "morse", "morse_shift", "morse_cluster", "eam"})
 
 
 class BudgetExceeded(Exception):
@@ -358,6 +364,8 @@ def kernel_for(name: str):
             return lj_cut(positions, atomic_numbers, box, epsilon=epsilon, sigma=sigma, cutoff=cutoff)
 
         return evaluate
+    if name == CLIENT_KERNEL:
+        raise ValueError("a client kernel template computes its forces in the client")
     raise ValueError(f"no harness kernel {name}")
 
 
@@ -662,7 +670,7 @@ def _run_client(client: str, ini: str, dest: Path, copies, texts, timeout: int |
         timeout=timeout,
     )
     fields = _read_dat(dest / "results.dat")
-    return {"returncode": proc.returncode, "fields": fields, "stderr": proc.stderr or ""}
+    return {"returncode": proc.returncode, "fields": fields, "stderr": proc.stderr or "", "cap": cap_report(dest)}
 
 
 def _guard(record: dict, client_calls) -> dict:
@@ -774,6 +782,7 @@ def _run_lowest(template, seed, start, work, server, wrapper, cap, client) -> di
     )
     record["client_calls"] = chosen["found"].get("raw")
     record["client_reason"] = chosen["found"].get("reason")
+    record.update(chosen["found"]["cap"])
     record["k"] = chosen["attempt"] if reached else None
     record["overlap"] = chosen["overlap"]
     return _guard(record, record.get("client_calls"))
@@ -930,6 +939,7 @@ def run_case(
                 raw_text = fields.get("total_force_calls") or fields.get("force_calls_neb")
                 record["client_calls"] = int(float(raw_text)) if raw_text is not None else None
                 record["client_reason"] = fields.get("termination_reason")
+                record.update(found["cap"])
                 record = _guard(record, record.get("client_calls"))
         finally:
             server.stop()
@@ -998,6 +1008,8 @@ def _start_row(seed: int, start: str, record: dict) -> dict:
         "seconds",
         "client_calls",
         "client_reason",
+        "client_calls_at_cap",
+        "client_stop_at_cap",
         "overlap",
         "k",
         "minimum_energy",

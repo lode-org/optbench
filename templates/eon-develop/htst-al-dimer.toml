@@ -6,6 +6,7 @@ code_version = "500350d9"
 commit = "6d9d629a086080f85687a6ca0a0220cdc3b084e4"
 algorithm = "Dimer-CG rotation: max=50 tol=1"
 reducer = "harness-htst"
+kernel = "client"
 pass_limit = 8000
 note = "Stock unpatched eOn, https://github.com/TheochemUI/eon branch fix/develop-regressions-vs-350 at 6d9d629a, which contains 500350d9 and the per-image count fix 44931a78. Built with gfortran. This is not the SVN code. No dimer patch and no parameter search. The ranked cost sums saddle images, minimizations, and prefactor evaluations. On this binary those columns matched HarnessCounter, 43262 and 43262, across 64 searches. The 639 windows use the client eam_al. finite_difference is omitted, so the client default 0.01 stands. convergence_metric is max_atom because the archive stop is the maximum force on one atom and an unset metric is the Euclidean norm. Optimizer converged_force is 0.001 and max_iterations is 5000, so the saddle stop inherits both. Dimer opt_method and improved are omitted: the client default rotation is conjugate gradient and improved is on. rotations_max is 50 and converged_angle is 1. displace_atom_list is 384, the adatom. On this server -1 means every free atom, which is not the archived last-atom displacement. Radius 3.3, magnitude 0.5, listed weight 1. Temperature 300 K, seed 42, confidence 1.95. Prefactor default_value is 1.2e12. A start is one barrier window."
 

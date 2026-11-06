@@ -28,7 +28,10 @@ from pathlib import Path
 
 import numpy as np
 
+from .connection import ProcessTable, per_atom_max, periodic_lengths, tolerances
+from .connection import connected as endpoints_connected
 from .counter import HarnessCounter
+from .displacement import displace, neighbours
 from .failures import classify_failure
 from .potserver import RgpotCounter
 from .score import half_even, score_v2
@@ -38,11 +41,6 @@ from .v2 import collect_provenance, write_starts
 
 ABI_MAJOR = 1
 ABI_MINOR = 16
-# Endpoint minimizations sit outside the climb cap. One min-mode step can
-# finish after the climb counter has crossed max_iterations, so the
-# per-search PAR-2 cap leaves room for that step.
-_SADDLE_ENDPOINT_BUDGET = 2000
-_SADDLE_CLIMB_OVERSHOOT = 64
 OK = 0
 METHOD_FIRE = 0
 METHOD_LBFGS = 1
@@ -74,6 +72,9 @@ def _assert_source_commit(expected: str) -> None:
 
 
 _LIB = None
+
+# Repetition ``rep`` of the saddle-search catalog draws from seed CATALOG_SEED + rep.
+CATALOG_SEED = 20261015
 
 
 def _load():
@@ -575,6 +576,7 @@ def _run_minmode(spec: dict) -> dict:
         rotations = 0
         library_evals = 0
         steps = 0
+        step_calls_max = 0
         converged = False
         solver_rc = OK
         final_mode = None
@@ -652,11 +654,13 @@ def _run_minmode(spec: dict) -> dict:
             # unmoved guess is recorded and does not decide success.
             return record
         report = None
-        while potential.calls < cap:
+        max_steps = spec.get("max_steps")
+        while potential.calls < cap and (max_steps is None or steps < int(max_steps)):
             before = potential.calls
             report = _blank_report(lib)
             rc = lib.rgsaddle_minmode_step(session, callback, None, ctypes.byref(report))
             steps += 1
+            step_calls_max = max(step_calls_max, int(potential.calls - before))
             if rc != OK:
                 solver_rc = rc
                 break
@@ -713,6 +717,7 @@ def _run_minmode(spec: dict) -> dict:
             "rotations": rotations,
             "library_evaluations": library_evals,
             "steps": steps,
+            "step_calls_max": step_calls_max,
             "curvature": float(report.curvature) if report is not None else None,
             "solver_rc": int(solver_rc),
         }
@@ -844,6 +849,23 @@ def _dispatch(spec: dict) -> dict:
     return _run_minmode(spec)
 
 
+def _step_ceiling(saddle: dict) -> int:
+    """Most force calls one ``MinModeSession::step`` can spend.
+
+    rgsaddle 0.2.2 ``src/minmode.rs``: a step evaluates the centre at
+    most once, estimates the mode, lets the solver re-read its start and
+    take one trial (L-BFGS ``Accept::Step``, FIRE), evaluates the
+    accepted point when the trial is not it, and estimates the mode
+    again to confirm a point under the force stop. An estimate is at
+    most ``1 + max_rotations`` dimer actions or ``krylov_dim`` Lanczos
+    actions. An action is one gradient forward and two central.
+    """
+    kind = str(saddle.get("min_mode_method", "dimer"))
+    actions = int(saddle.get("krylov_dim", 12)) if kind == "lanczos" else 1 + int(saddle.get("max_rotations", 20))
+    per_action = 2 if str(saddle.get("difference", "forward")) == "central" else 1
+    return 4 + 2 * actions * per_action
+
+
 def _geometries(root: Path, problem: dict, work: Path) -> list[dict]:
     archive_path = (problem.get("input") or {}).get("archive_path")
     if not archive_path:
@@ -966,8 +988,20 @@ def _summarize(records: list[dict], template: dict, cap: int, problem_id: str) -
     return "\n".join(lines) + "\n", metrics
 
 
-def run_template(root: Path, problem: dict, template: dict, *, output: Path, workers: int = 1, work: Path | None = None) -> dict:
-    """Run one rgsaddle template on every geometry of ``problem``."""
+def run_template(
+    root: Path,
+    problem: dict,
+    template: dict,
+    *,
+    output: Path,
+    workers: int = 1,
+    work: Path | None = None,
+    repetition: int | None = None,
+) -> dict:
+    """Run one rgsaddle template on every geometry of ``problem``.
+
+    ``repetition`` selects one repetition of the saddle-search catalog.
+    """
     from .campaign import _check_stop
 
     _assert_source_commit(str(template.get("commit", "")))
@@ -978,7 +1012,11 @@ def run_template(root: Path, problem: dict, template: dict, *, output: Path, wor
     scratch = work or output.parent / "work" / template["id"].replace("/", "-")
     scratch.mkdir(parents=True, exist_ok=True)
     if problem["id"] == "saddle-search/pt-island":
-        return _run_saddle_search(root, problem, template, output=output, cap=cap, force_tol=force_tol, work=scratch)
+        return _run_saddle_search(
+            root, problem, template, output=output, force_tol=force_tol, work=scratch, repetition=repetition
+        )
+    if repetition is not None:
+        raise RuntimeError(f"{problem['id']} has no repetitions to select")
     rows = _geometries(root, problem, scratch)
     expected = int((problem.get("sample") or {}).get("starts") or len(rows))
     if len(rows) != expected:
@@ -1024,12 +1062,6 @@ def run_template(root: Path, problem: dict, template: dict, *, output: Path, wor
         "median": metrics["median"],
         "records": records,
     }
-
-
-def _cartesian_rmsd(moved: np.ndarray, reference: np.ndarray) -> float:
-    """RMSD in the substrate frame. Fixed atoms pin the orientation."""
-    delta = np.asarray(moved, dtype=np.float64) - np.asarray(reference, dtype=np.float64)
-    return float(np.sqrt(np.mean(np.sum(delta * delta, axis=-1))))
 
 
 def _lbfgs_minimize(potential: HarnessSurface, x0: np.ndarray, force_tol: float, budget: int) -> tuple[np.ndarray, bool]:
@@ -1141,14 +1173,34 @@ def _append_partial(path: Path, record: dict) -> None:
         handle.flush()
 
 
-def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Path, cap: int, force_tol: float, work: Path) -> dict:
+def _run_saddle_search(
+    root: Path,
+    problem: dict,
+    template: dict,
+    *,
+    output: Path,
+    force_tol: float,
+    work: Path,
+    repetition: int | None = None,
+) -> dict:
     """Displace the Pt island until the goal count of connected index-1 saddles.
 
     Each search has its own harness count: the min-mode calls plus the
     two endpoint minimizations. The repetition total also includes the
     initial minimization. Hessian calls stay in ``verify_calls``.
-    Connection uses Cartesian RMSD of the free atoms. The substrate
-    fixes the frame, so the endpoints are not Kabsch-aligned.
+    A search starts from ``optbench.displacement`` off the minimized
+    reactant. The link and the repeat test are ``optbench.connection``, with the
+    problem's ``[connection]`` tolerances. Only a connected saddle
+    enters the process table.
+
+    The 2014 eOn bounds a climb by ``[Saddle Search] max_iterations``
+    min-mode steps and each minimization by ``[Optimizer]
+    max_iterations`` steps of one force call. It starts the endpoint
+    minimizations ``[Optimizer] max_move`` along the mode on either side
+    (``processSearchMinimizationOffset = optMaxMove``), and a search
+    whose minimization does not converge is ``STATUS_BAD_MINIMA``. The
+    per-search cap is the climb steps at ``_step_ceiling`` calls each
+    plus both endpoint budgets, so no search can spend more.
     ``work`` is unused; the searches do not extract an archive.
     """
     del work
@@ -1163,14 +1215,30 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
     repetitions = int(search.get("repetitions", 1))
     listed = [int(part) for part in str(search.get("displace_atoms", "0,1,2,3,4,5,6")).split(",") if part.strip()]
     magnitude = float(search.get("displace_magnitude", 0.1))
-    connect_rmsd = float(search.get("rmsd_connect", 0.5))
+    radius = float(search["displace_radius"])
+    distance_difference, energy_difference = tolerances(problem)
+    lengths = periodic_lengths(cell, (problem.get("potential") or {}).get("pbc"))
     max_searches = int(search.get("max_searches", 20000))
+    saddle_settings = _section(template, "SaddleSearch")
+    optimizer_settings = _section(template, "Optimizer")
+    climb_steps = int(saddle_settings["max_iterations"])
+    minimize_budget = int(optimizer_settings["max_iterations"])
+    offset = float(optimizer_settings["max_move"])
+    step_ceiling = _step_ceiling(saddle_settings)
+    climb_cap = climb_steps * step_ceiling
+    search_cap = climb_cap + 2 * minimize_budget
     free = np.flatnonzero(~fixed)
+    pinned = [atom for atom in listed if fixed[atom]]
+    if pinned:
+        raise RuntimeError(f"displace atoms {pinned} are frozen")
+    if repetition is not None and not 1 <= repetition <= repetitions:
+        raise RuntimeError(f"{template['id']} has repetitions 1 to {repetitions}, not {repetition}")
     raw = potential_from_problem(problem)
     comments = []
+    summaries = []
     all_records = []
     failed_reps = 0
-    for rep in range(1, repetitions + 1):
+    for rep in [repetition] if repetition is not None else range(1, repetitions + 1):
         header_path, partial_path = _checkpoint_paths(output)
         header = json.loads(header_path.read_text(encoding="utf-8")) if header_path.is_file() else None
         saved = _load_partial(partial_path) if header and header.get("template") == template["id"] and int(header.get("rep", 0)) == rep else []
@@ -1182,10 +1250,14 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
             min_ok = bool(header["min_ok"])
             resumed_outer = minimize_calls + sum(int(row.get("endpoint_calls") or 0) for row in saved)
             search_calls = sum(int(row.get("climb_calls") or 0) for row in saved)
-            found = [np.asarray(row["saddle_x"], dtype=np.float64) for row in saved if row.get("saddle_x") is not None]
+            found = ProcessTable(lengths, distance_difference, energy_difference)
+            for row in saved:
+                if row.get("saddle_x") is not None:
+                    found.add(row["saddle_x"], float(row["barrier"]))
+            not_connected = sum(1 for row in saved if "not_connected" in (row.get("reasons") or []))
             connected = sum(1 for row in saved if row.get("success"))
             searches = len(saved)
-            rng = _rng_restore(saved[-1]["rng_state"]) if saved else np.random.default_rng(20261015 + rep)
+            rng = _rng_restore(saved[-1]["rng_state"]) if saved else np.random.default_rng(CATALOG_SEED + rep)
             for row in saved:
                 kept = {key: value for key, value in row.items() if key not in {"rng_state", "saddle_x", "climb_calls"}}
                 all_records.append(kept)
@@ -1195,12 +1267,13 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
             )
         else:
             potential = HarnessSurface(_bind(raw, positions, free, cell))
-            minimum, min_ok = _lbfgs_minimize(potential, positions[free].reshape(-1).copy(), force_tol, 5000)
+            minimum, min_ok = _lbfgs_minimize(potential, positions[free].reshape(-1).copy(), force_tol, minimize_budget)
             min_energy, _min_grad = potential.energy_forces(minimum)
             minimize_calls = int(potential.calls)
             resumed_outer = 0
-            rng = np.random.default_rng(20261015 + rep)
-            found = []
+            rng = np.random.default_rng(CATALOG_SEED + rep)
+            found = ProcessTable(lengths, distance_difference, energy_difference)
+            not_connected = 0
             connected = 0
             searches = 0
             search_calls = 0
@@ -1219,19 +1292,14 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
                 encoding="utf-8",
             )
             partial_path.unlink(missing_ok=True)
+        reactant = positions.copy()
+        reactant[free] = minimum.reshape(-1, 3)
+        near = neighbours(reactant, lengths, radius, listed)
         while connected < goal and searches < max_searches:
             searches += 1
-            atom = int(listed[int(rng.integers(0, len(listed)))])
-            slots = np.flatnonzero(free == atom)
-            if len(slots) != 1:
-                raise RuntimeError(f"displace atom {atom} is not one free atom")
-            slot = int(slots[0])
-            direction = rng.normal(size=3)
-            direction = direction / np.linalg.norm(direction)
-            x0 = minimum.copy()
-            x0[3 * slot : 3 * slot + 3] += magnitude * direction
-            kick = np.zeros_like(x0)
-            kick[3 * slot : 3 * slot + 3] = direction
+            epicenter, shift, seed = displace(rng, ~fixed, listed, near, magnitude)
+            x0 = minimum + shift[free].reshape(-1)
+            kick = seed[free].reshape(-1)
             moved = positions.copy()
             moved[free] = x0.reshape(-1, 3)
             spec = {
@@ -1248,7 +1316,8 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
                 "saddle": _section(template, "SaddleSearch"),
                 "optimizer": _section(template, "Optimizer"),
                 "sella": _section(template, "Sella"),
-                "cap": cap,
+                "cap": climb_cap,
+                "max_steps": climb_steps,
                 "force_tol": force_tol,
                 "reactant": None,
                 "file_mode": kick,
@@ -1259,6 +1328,8 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
             before_outer = potential.calls
             outcome = _dispatch(spec)
             climb = int(outcome.get("calls", outcome.get("force_calls", 0)))
+            if int(outcome.get("step_calls_max") or 0) > step_ceiling or climb > climb_cap:
+                raise RuntimeError(f"{spec['name']} climbed past the step ceiling {step_ceiling} or the cap {climb_cap}")
             record = {
                 "schema": "optbench.start/v2",
                 "start": spec["name"],
@@ -1266,9 +1337,13 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
                 "comparable": True,
                 "success": False,
                 "reasons": ["force_norm"],
+                "epicenter": epicenter,
+                "displaced_atoms": int(np.count_nonzero(np.any(shift != 0.0, axis=1))),
                 "converged": bool(outcome.get("converged", False)),
                 "rotations": int(outcome.get("rotations") or 0),
                 "library_evaluations": int(outcome.get("library_evaluations") or 0),
+                "steps": int(outcome.get("steps") or 0),
+                "step_calls_max": int(outcome.get("step_calls_max") or 0),
                 "curvature": outcome.get("curvature"),
                 "hessian_index": None,
             }
@@ -1290,36 +1365,36 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
                     saddle_x = np.asarray(outcome["x"], dtype=np.float64)
                     climb_mode = outcome.get("mode")
                     axis = _unit(np.asarray(climb_mode if climb_mode is not None else kick, dtype=np.float64))
-                    plus, _plus_ok = _lbfgs_minimize(
-                        potential, saddle_x + 0.1 * axis, force_tol, _SADDLE_ENDPOINT_BUDGET
-                    )
-                    minus, _minus_ok = _lbfgs_minimize(
-                        potential, saddle_x - 0.1 * axis, force_tol, _SADDLE_ENDPOINT_BUDGET
-                    )
-                    plus_rmsd = _cartesian_rmsd(plus.reshape(-1, 3), minimum.reshape(-1, 3))
-                    minus_rmsd = _cartesian_rmsd(minus.reshape(-1, 3), minimum.reshape(-1, 3))
-                    links = (plus_rmsd <= connect_rmsd) ^ (minus_rmsd <= connect_rmsd)
-                    novel = all(
-                        _cartesian_rmsd(saddle_x.reshape(-1, 3), old.reshape(-1, 3)) > connect_rmsd for old in found
-                    )
                     barrier = float(outcome["energy"] - min_energy)
                     record["barrier"] = barrier
-                    record["rmsd_plus"] = plus_rmsd
-                    record["rmsd_minus"] = minus_rmsd
-                    record["reasons"] = []
-                    if novel:
-                        found.append(saddle_x)
-                        saved_point = saddle_x
-                    if links and novel and barrier < barrier_max:
-                        connected += 1
-                        record["success"] = True
+                    minus, minus_ok = _lbfgs_minimize(potential, saddle_x - offset * axis, force_tol, minimize_budget)
+                    plus, plus_ok = (
+                        _lbfgs_minimize(potential, saddle_x + offset * axis, force_tol, minimize_budget)
+                        if minus_ok
+                        else (None, False)
+                    )
+                    if not (minus_ok and plus_ok):
+                        record["reasons"] = ["bad_minima"]
                     else:
-                        if not links:
-                            record["reasons"].append("not_connected")
-                        if not novel:
-                            record["reasons"].append("duplicate")
-                        if barrier >= barrier_max:
-                            record["reasons"].append("barrier")
+                        links = endpoints_connected(minimum, plus, minus, lengths, distance_difference)
+                        novel = links and not found.repeat(saddle_x, barrier)
+                        record["per_atom_plus"] = per_atom_max(plus, minimum, lengths)
+                        record["per_atom_minus"] = per_atom_max(minus, minimum, lengths)
+                        record["reasons"] = []
+                        if novel:
+                            found.add(saddle_x, barrier)
+                            saved_point = saddle_x
+                        if links and novel and barrier < barrier_max:
+                            connected += 1
+                            record["success"] = True
+                        else:
+                            if not links:
+                                not_connected += 1
+                                record["reasons"].append("not_connected")
+                            elif not novel:
+                                record["reasons"].append("duplicate")
+                            if barrier >= barrier_max:
+                                record["reasons"].append("barrier")
                 else:
                     record["reasons"] = ["hessian_index"] if index != 1 else ["force_norm"]
             else:
@@ -1329,7 +1404,7 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
                     record["reasons"] = [str(item) for item in (outcome.get("reasons") or ["solver"])]
                 elif not finite:
                     record["reasons"] = ["divergence"]
-                elif climb >= int(cap):
+                elif int(outcome.get("steps") or 0) >= climb_steps:
                     record["reasons"] = ["cap", "force_norm"]
             endpoint_calls = int(potential.calls - before_outer)
             record["force_calls"] = climb + endpoint_calls
@@ -1354,30 +1429,38 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
         total_calls = int(resumed_outer + potential.calls + search_calls)
         if connected < goal:
             failed_reps += 1
-        fraction = connected / searches if searches else 0.0
+        # done.py: the share of searches that were not "Not Connected".
+        fraction = (searches - not_connected) / searches if searches else 0.0
+        summaries.append(
+            {
+                "repetition": rep,
+                "seed": CATALOG_SEED + rep,
+                "force_calls": total_calls,
+                "unique_saddles": len(found),
+                "fraction_connected": fraction,
+                "total_searches": searches,
+                "connected": connected,
+                "goal": goal,
+                "reached": connected >= goal,
+                "minimize_calls": minimize_calls,
+                "minimum_converged": bool(min_ok),
+            }
+        )
         comments.append(
             f"# rep {rep} force_calls {total_calls} unique_saddles {len(found)} "
             f"fraction_connected {fraction} total_searches {searches} "
             f"connected {connected} minimize_calls {minimize_calls} "
-            f"minimum_converged {int(min_ok)} seed {20261015 + rep}"
+            f"minimum_converged {int(min_ok)} seed {CATALOG_SEED + rep}"
         )
-    totals = []
-    for line in comments:
-        parts = line.split()
-        totals.append(int(parts[parts.index("force_calls") + 1]))
+    totals = [summary["force_calls"] for summary in summaries]
     text = "\n".join(comments) + "\n"
     if totals:
         text += f"force_calls {statistics.fmean(totals)}\n"
         text += f"force_calls_min {min(totals)}\n"
         text += f"force_calls_max {max(totals)}\n"
-    search_cap = int(cap) + _SADDLE_CLIMB_OVERSHOOT + 2 * _SADDLE_ENDPOINT_BUDGET
-    over = [
-        record["start"]
-        for record in all_records
-        if record.get("success") and int(record["force_calls"]) >= search_cap
-    ]
+    over = [record["start"] for record in all_records if int(record["force_calls"]) > search_cap]
     if over:
-        raise RuntimeError(f"{template['id']} success {over[0]} spent {search_cap} or more force calls")
+        raise RuntimeError(f"{template['id']} search {over[0]} spent more than the cap {search_cap}")
     metrics = score_v2(
         [
             {
@@ -1428,8 +1511,9 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
             "bootstrap_resamples": 2000,
             "bootstrap_seed": 20261015,
             "note": (
-                "One row is one displacement search. The cap is the climb budget, "
-                "one step of overshoot, and the two endpoint minimizations. "
+                "One row is one displacement search. The cap is SaddleSearch.max_iterations "
+                "min-mode steps at the most force calls one step can spend, and two endpoint "
+                "minimizations of Optimizer.max_iterations calls. "
                 "The initial minimization is not in that count."
             ),
             "runs": [
@@ -1461,4 +1545,5 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
         "template": template["id"],
         "problem": problem["id"],
         "records": all_records,
+        "repetitions": summaries,
     }

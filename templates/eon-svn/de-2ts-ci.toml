@@ -6,6 +6,7 @@ code_version = "r2549"
 commit = "r2549"
 algorithm = "LBFGS"
 reducer = "harness"
+kernel = "ljcluster"
 failure_cap = 10000
 tuning = "default"
 note = """Climbing-image NEB on all 51 pairs, same optimizer and band settings as eon/develop-de-2ts. Five images, L-BFGS memory 20, max_move 0.05, max_iterations 2000. The develop template failure_cap is 250000. This file's failure_cap is 10000. Potential ljcluster. Main random_seed is 1. r2549 does not read energy_weighted, ci_mmf, climbing_image_band_slack, setup_mmf_peaks, or the develop L-BFGS catalog past memory, inverse curvature, max inverse curvature, auto scale, and the two resets. Those keys are omitted. The keys it does read sit in [Optimizer]. The run swaps the potential for ext_pot. The harness kernel is the develop kernel for this potential name. The 2014 table used r2156. The binary is SVN r2549, the registry pin. Export of the 2014 revision is forbidden, so this row is r2549."""

@@ -6,6 +6,7 @@ code_version = "r2549"
 commit = "r2549"
 algorithm = "Lanczos"
 reducer = "harness"
+kernel = "morse_shift"
 failure_cap = 100000000
 tuning = "default"
 note = """AKMC on the Pt island until 27 good saddles below 1.5 eV. Same thermostat, displacement list, prefactor, and L-BFGS translation as eon/develop-saddle-pt-lanczos. The minimum mode is Lanczos, tolerance 0.001, max_iterations 20, quit_early true. Seeds are 1000 and 1001. pass_limit 250. r2549 does not read energy_weighted, ci_mmf, climbing_image_band_slack, setup_mmf_peaks, or the develop L-BFGS catalog past memory, inverse curvature, max inverse curvature, auto scale, and the two resets. Those keys are omitted. The keys it does read sit in [Optimizer]. The run swaps the potential for ext_pot. The harness kernel is r2549 Morse::force: cutoff 9.5, pair energy shifted to zero at the cutoff, minimum image on the box diagonal. The 2014 saddle table has no Lanczos eOn row. The binary is SVN r2549, the registry pin. Export of the 2014 revision is forbidden, so this row is r2549."""

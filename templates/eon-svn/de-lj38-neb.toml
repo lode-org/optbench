@@ -6,6 +6,7 @@ code_version = "r2549"
 commit = "r2549"
 algorithm = "LBFGS"
 reducer = "harness"
+kernel = "lj_cut"
 failure_cap = 2500
 tuning = "default"
 note = """Plain NEB. Same settings as eon-svn/de-lj38-ci with climbing_image_method false. r2549 has no energy-weighted springs and no ci_mmf. The run swaps the potential for ext_pot. The harness kernel is the develop kernel for this potential name. The 2014 table used r2156. The binary is SVN r2549, the registry pin. Export of the 2014 revision is forbidden, so this row is r2549."""

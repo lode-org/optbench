@@ -6,6 +6,7 @@ code_version = "3.6.0"
 commit = "1d71c944501832bfafb955ffe13b9aae50c8efd4"
 algorithm = "LBFGS"
 reducer = "report-capped"
+kernel = "client"
 failure_cap = 10000
 note = "Default L-BFGS dimer on the 49 Pt-island starts. Memory 20 is the struct default. Potential morse_pt. pos.con is reactant.con. displacement.con is initial_N.con for N from 0 to 48. direction.dat is that displacement minus the reactant, divided by its norm. client_displace_type is load. The mean keeps total_force_calls under 10000. Dimer improved is the binary default."
 

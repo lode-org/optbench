@@ -6,6 +6,7 @@ code_version = "r2549"
 commit = "r2549"
 algorithm = "Lanczos"
 reducer = "harness"
+kernel = "morse_shift"
 failure_cap = 10000
 tuning = "default"
 note = """Same Lanczos and conjugate-gradient settings as eon/develop-ts-pt-lanczos. Potential morse_pt. max_move 0.35. The mode is the normalized displacement from the reactant. Main random_seed is 1. The run swaps the potential for ext_pot. The harness kernel is the develop kernel for this potential name. morse_pt here is r2549 Morse::force: cutoff 9.5, pair energy shifted to zero at the cutoff, minimum image on the box diagonal. The develop harness Morse has no cutoff and ignores the box, and that form ends every Pt saddle search above max_energy 5. The 2014 table used r2156. The binary is SVN r2549, the registry pin. Export of the 2014 revision is forbidden, so this row is r2549."""

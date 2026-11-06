@@ -6,6 +6,7 @@ code_version = "r2549"
 commit = "r2549"
 algorithm = "LBFGS"
 reducer = "harness"
+kernel = "ljcluster"
 failure_cap = 10000
 tuning = "default"
 note = """Plain NEB. Same settings as eon-svn/de-2ts-ci with climbing_image_method false. The harness cap is the problem cap, 10000. The run swaps the potential for ext_pot. The harness kernel is the develop kernel for this potential name. The 2014 table used r2156. The binary is SVN r2549, the registry pin. Export of the 2014 revision is forbidden, so this row is r2549."""

@@ -20,9 +20,13 @@ from pathlib import Path
 NATIVE = Path(__file__).resolve().parent / "native"
 _KERNEL_SRC = NATIVE / "kernels.c"
 _BRIDGE_SRC = NATIVE / "extpot_bridge.c"
+# The x86-64-v2 psABI baseline with no FMA contraction, as
+# optbench.surfaces.NATIVE_FLAGS: the pair loops are the same
+# instructions on every host.
 _CFLAGS = [
     "-std=c11",
-    "-O3",
+    "-march=x86-64-v2",
+    "-O2",
     "-ffp-contract=off",
     "-fno-fast-math",
     "-fno-builtin",
@@ -36,8 +40,9 @@ def enabled() -> bool:
 
 
 def _stamp(source: Path) -> str:
-    data = source.read_bytes()
-    return hashlib.sha256(data).hexdigest()[:16]
+    digest = hashlib.sha256(" ".join(_CFLAGS).encode())
+    digest.update(source.read_bytes())
+    return digest.hexdigest()[:16]
 
 
 def _build_dir() -> Path:

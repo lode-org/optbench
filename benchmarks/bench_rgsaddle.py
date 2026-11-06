@@ -21,6 +21,11 @@ and the first geometry. ``OPTBENCH_ASV_FULL=1`` at import selects every
 start (200 on LJ38, 49 on the Pt island). Counting is
 ``RgpotCounter.calculate`` on a ``HarnessCounter``. A missing
 ``RGSADDLE_LIB`` is a ``RuntimeError``. Nonlinear CG is not a row.
+
+Catalog classes run one ``saddle-search/pt-island`` repetition per
+parameter, at every grid size, and track the AKMC catalog numbers as
+well: unique saddles, the connected fraction, searches, and the
+connected count toward the goal.
 """
 
 from __future__ import annotations
@@ -498,3 +503,147 @@ _ROWS = [
 
 for _class_name, _template_id, _problem_id, _starts, _timeout in _ROWS:
     globals()[_class_name] = _bind_minmode(_class_name, _template_id, _problem_id, _starts, _timeout)
+
+
+def _catalog_call_bound(template: dict) -> int:
+    """Most harness calls one catalog repetition can spend.
+
+    The initial minimization is ``Optimizer.max_iterations`` calls and one
+    energy call. Each of at most ``Search.max_searches`` searches is
+    bounded by the per-search cap of ``_run_saddle_search``.
+    """
+    from optbench.rgsaddle_minmode import _step_ceiling
+
+    ini = template["ini"]
+    minimize = int(ini["Optimizer"]["max_iterations"])
+    search_cap = int(ini["SaddleSearch"]["max_iterations"]) * _step_ceiling(ini["SaddleSearch"]) + 2 * minimize
+    return minimize + 1 + int(ini["Search"].get("max_searches", 20000)) * search_cap
+
+
+def _catalog_paths(template_id: str, seed: str) -> tuple[Path, Path]:
+    folder = CACHE / RUNNER_REVISION / template_id.replace("/", "-")
+    return folder / f"catalog__seed{seed}.json", folder / f"catalog__seed{seed}" / "catalog.dat"
+
+
+def _execute_catalog(template_id: str, seed: str) -> dict:
+    os.environ["RAYON_NUM_THREADS"] = "1"
+    _require_library()
+    from optbench.campaign import load_template, resolve_problem
+    from optbench.rgsaddle_minmode import CATALOG_SEED, run_template
+
+    template = load_template(ROOT, template_id)
+    problem = resolve_problem(ROOT, template["problem"])
+    path, output = _catalog_paths(template_id, seed)
+    result = run_template(ROOT, problem, template, output=output, repetition=int(seed) - CATALOG_SEED)
+    (summary,) = result["repetitions"]
+    if str(summary["seed"]) != seed:
+        raise RuntimeError(f"{template_id} ran seed {summary['seed']}, not {seed}")
+    record = dict(summary)
+    record["success"] = bool(summary["reached"])
+    # A repetition short of the goal spent Search.max_searches.
+    record["failure"] = None if record["success"] else "cap"
+    record["template"] = template_id
+    record["problem"] = problem["id"]
+    temporary = path.with_suffix(".tmp")
+    temporary.write_text(json.dumps(record, sort_keys=True), encoding="utf-8")
+    temporary.replace(path)
+    return record
+
+
+def _load_catalog(template_id: str, seed: str) -> dict:
+    path, _output = _catalog_paths(template_id, seed)
+    if path.is_file():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return _execute_catalog(template_id, seed)
+
+
+def _bind_catalog(class_name: str, template_id: str):
+    """One repetition of the saddle-search/pt-island catalog per seed.
+
+    The seed parameter is the repetition's draw, ``CATALOG_SEED`` plus
+    the repetition number, and the start is the one island. The
+    repetition runs until ``[goal] connected_saddles`` connected saddles
+    or ``Search.max_searches`` searches, as the eOn AKMC rows.
+    ``force_calls`` is the repetition total, with the initial
+    minimization. The timeout is one second per call of the
+    repetition's call bound, so asv never ends a repetition before the
+    problem's own stop on any host.
+    """
+    from optbench.campaign import load_template
+    from optbench.rgsaddle_minmode import CATALOG_SEED
+
+    template = load_template(ROOT, template_id)
+    repetitions = int(template["ini"]["Search"].get("repetitions", 1))
+
+    class _Benchmark(_TrackedSearch):
+        param_names = ["seed", "start"]
+        params = [[str(CATALOG_SEED + rep) for rep in range(1, repetitions + 1)], ["pt-island"]]
+        timeout = float(_catalog_call_bound(template))
+
+        def setup(self, seed, start):
+            _require_library()
+
+        def time_search(self, seed, start):
+            self.record = _execute_catalog(template_id, seed)
+
+        def track_force_calls(self, seed, start) -> float:
+            return float(_load_catalog(template_id, seed)["force_calls"])
+
+        def track_success(self, seed, start) -> float:
+            return 1.0 if _load_catalog(template_id, seed)["success"] else 0.0
+
+        def track_failure_cap(self, seed, start) -> float:
+            return 1.0 if _load_catalog(template_id, seed)["failure"] == "cap" else 0.0
+
+        def track_failure_wrong_stationary(self, seed, start) -> float:
+            return 0.0
+
+        def track_failure_divergence(self, seed, start) -> float:
+            return 0.0
+
+        def track_failure_crash(self, seed, start) -> float:
+            return 0.0
+
+        def track_unique_saddles(self, seed, start) -> float:
+            return float(_load_catalog(template_id, seed)["unique_saddles"])
+
+        def track_fraction_connected(self, seed, start) -> float:
+            return float(_load_catalog(template_id, seed)["fraction_connected"])
+
+        def track_total_searches(self, seed, start) -> float:
+            return float(_load_catalog(template_id, seed)["total_searches"])
+
+        def track_connected_saddles(self, seed, start) -> float:
+            return float(_load_catalog(template_id, seed)["connected"])
+
+        track_force_calls.unit = "force calls"
+        track_success.unit = "fraction"
+        track_failure_cap.unit = "count"
+        track_failure_wrong_stationary.unit = "count"
+        track_failure_divergence.unit = "count"
+        track_failure_crash.unit = "count"
+        track_unique_saddles.unit = "saddles"
+        track_fraction_connected.unit = "fraction"
+        track_total_searches.unit = "searches"
+        track_connected_saddles.unit = "saddles"
+
+    _Benchmark.__name__ = class_name
+    _Benchmark.__qualname__ = class_name
+    _Benchmark.template_id = template_id
+    _Benchmark.problem_id = str(template["problem"])
+    return _Benchmark
+
+
+_CATALOG_ROWS = [
+    ("RgsaddleSaddlePtDimerLbfgs", "rgsaddle/saddle-dimer-lbfgs"),
+    ("RgsaddleSaddlePtDimerLbfgsTuned", "rgsaddle/saddle-dimer-lbfgs-tuned"),
+    ("RgsaddleSaddlePtDimerFire", "rgsaddle/saddle-dimer-fire"),
+    ("RgsaddleSaddlePtDimerFireTuned", "rgsaddle/saddle-dimer-fire-tuned"),
+    ("RgsaddleSaddlePtLanczos", "rgsaddle/saddle-lanczos"),
+    ("RgsaddleSaddlePtLanczosTuned", "rgsaddle/saddle-lanczos-tuned"),
+    ("RgsaddleSaddlePtDimerRotskip", "rgsaddle/saddle-dimer-rotskip"),
+    ("RgsaddleSaddlePtDimerRotskipTuned", "rgsaddle/saddle-dimer-rotskip-tuned"),
+]
+
+for _class_name, _template_id in _CATALOG_ROWS:
+    globals()[_class_name] = _bind_catalog(_class_name, _template_id)

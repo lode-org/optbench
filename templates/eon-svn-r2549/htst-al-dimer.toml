@@ -6,6 +6,7 @@ code_version = "r2549"
 commit = "r2549"
 algorithm = "Dimer-CG rotation: max=50 tol=1"
 reducer = "harness-htst"
+kernel = "client"
 pass_limit = 8000
 note = "Stock unpatched EON at SVN r2549, the henkelmangroup/eon mirror of f817a3f, built with gfortran. QSC sources are absent at this revision, so the link drops QSC. No dimer patch. The ranked cost sums saddle images, minimizations, and prefactor evaluations. On this binary those columns matched HarnessCounter, 2087 and 2087, across 4 searches. The archived config.ini is copied onto the keys this server accepts. finite_difference is omitted, so the client default 0.01 stands. convergence_metric is max_atom because the archive stop is the maximum force on one atom and an unset r2549 metric is the Euclidean norm. Optimizer converged_force is 0.001 and max_iterations is 5000, so the saddle stop inherits both. Dimer opt_method and improved are omitted: the client defaults are conjugate gradient and improved. rotations_max is 50 and converged_angle is 1. displace_atom_list is 384, the adatom. The archive value -1 selected that atom; this parser does not. Radius 3.3, magnitude 0.5, listed weight 1. Temperature 300 K, seed 42, confidence 1.95. Prefactor default_value is 1.2e12. A start is one barrier window."
 

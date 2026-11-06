@@ -24,12 +24,12 @@ from pathlib import Path
 
 import cyclopts
 import numpy as np
-from ase.calculators.lj import LennardJones
 from ase.io import read
 from sella import Sella
 
 # The script's own environment does not install this repository.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from optbench.ase_lj import LennardJones
 from optbench.counter import attach_ase_counter
 
 MAXITER = 1000

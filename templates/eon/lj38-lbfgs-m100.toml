@@ -6,6 +6,7 @@ code_version = "3.6.0"
 commit = "1d71c944501832bfafb955ffe13b9aae50c8efd4"
 algorithm = "LBFGS"
 reducer = "harness-capped"
+kernel = "client"
 note = "Tuned L-BFGS. Memory 100 is the setting that scored 181 on eOn 3.5.0. Every other key matches eon/lj38-lbfgs."
 
 [ini.Main]

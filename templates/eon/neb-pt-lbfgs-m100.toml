@@ -6,6 +6,7 @@ code_version = "3.6.0"
 commit = "1d71c944501832bfafb955ffe13b9aae50c8efd4"
 algorithm = "LBFGS"
 reducer = "report-neb"
+kernel = "morse_cluster"
 failure_cap = 10000
 note = "Tuned L-BFGS climbing-image NEB. Memory 100 is the only change from eon/neb-pt-lbfgs. force_calls is the force_calls_neb band total across the 8 images. force_calls_per_image divides that total by 8."
 

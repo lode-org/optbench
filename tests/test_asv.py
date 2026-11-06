@@ -95,7 +95,9 @@ def test_rgsaddle_grid_is_seed_then_one_start_until_full(monkeypatch):
     classes = [
         value
         for value in vars(bench_rgsaddle).values()
-        if isinstance(value, type) and getattr(value, "template_id", "").startswith("rgsaddle/")
+        if isinstance(value, type)
+        and getattr(value, "template_id", "").startswith("rgsaddle/")
+        and value.problem_id != "saddle-search/pt-island"
     ]
     assert len(classes) == 22
     for benchmark in classes:
@@ -126,6 +128,36 @@ def test_rgsaddle_grid_is_seed_then_one_start_until_full(monkeypatch):
     monkeypatch.delenv("RGSADDLE_LIB", raising=False)
     with pytest.raises(RuntimeError):
         RgsaddleLj38DimerLbfgs().setup("0", "0000")
+
+
+def test_rgsaddle_catalog_grid_is_each_repetition_seed_on_the_island(monkeypatch):
+    from optbench.campaign import load_template
+    from optbench.rgsaddle_minmode import CATALOG_SEED
+
+    classes = [
+        value
+        for value in vars(bench_rgsaddle).values()
+        if isinstance(value, type) and getattr(value, "problem_id", "") == "saddle-search/pt-island"
+    ]
+    assert sorted(benchmark.template_id for benchmark in classes) == sorted(
+        f"rgsaddle/{path.stem}" for path in (ROOT / "templates" / "rgsaddle").glob("saddle-*.toml")
+    )
+    for benchmark in classes:
+        template = load_template(ROOT, benchmark.template_id)
+        repetitions = int(template["ini"]["Search"]["repetitions"])
+        assert benchmark.param_names == ["seed", "start"]
+        assert benchmark.params == [[str(CATALOG_SEED + rep) for rep in range(1, repetitions + 1)], ["pt-island"]]
+        assert benchmark.timeout == float(bench_rgsaddle._catalog_call_bound(template))
+        assert benchmark.repeat == 1
+        assert benchmark.track_unique_saddles.unit == "saddles"
+        assert benchmark.track_fraction_connected.unit == "fraction"
+        assert benchmark.track_total_searches.unit == "searches"
+        assert issubclass(benchmark, bench_rgsaddle._TrackedSearch)
+    template = load_template(ROOT, "rgsaddle/saddle-dimer-lbfgs")
+    assert bench_rgsaddle._catalog_call_bound(template) == 1000 + 1 + 20000 * 48000
+    monkeypatch.delenv("RGSADDLE_LIB", raising=False)
+    with pytest.raises(RuntimeError):
+        bench_rgsaddle.RgsaddleSaddlePtDimerLbfgs().setup(str(CATALOG_SEED + 1), "pt-island")
 
 
 def test_each_lj38_start_is_one_asv_parameter(monkeypatch):

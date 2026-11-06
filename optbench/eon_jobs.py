@@ -91,6 +91,30 @@ def _read_dat(path: Path) -> dict[str, str]:
     return found
 
 
+CAP_REPORT = "optbench-extpot-cap"
+
+
+def cap_report(work: Path) -> dict:
+    """What ``extpot_bridge.c`` recorded about a client it stopped at the cap.
+
+    ``client_calls_at_cap`` is the number of exchanges that client finished,
+    which is its own force-call counter when it was killed. The refused call
+    is not in it. ``client_stop_at_cap`` is the refusal the client never
+    read. The dict is empty when the bridge stopped no client in ``work``.
+    """
+    path = Path(work) / CAP_REPORT
+    if not path.is_file():
+        return {}
+    found: dict = {}
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        name, _, value = line.partition(" ")
+        if name == "calls" and value.strip().isdigit():
+            found["client_calls_at_cap"] = int(value)
+        elif name == "stop" and value.strip():
+            found["client_stop_at_cap"] = value.strip()
+    return found
+
+
 def _client_env(client: str) -> dict[str, str]:
     env = os.environ.copy()
     binary = Path(client).resolve()
@@ -137,6 +161,7 @@ def _execute(spec: tuple) -> dict:
         "reason": base["reason"] if fields else None,
         "count_key": count_key,
         "extrema": extrema,
+        "cap": cap_report(dest),
     }
 
 
@@ -471,6 +496,7 @@ def _numpy_direction() -> str:
 def _lowest_once(client: str, ini: str, work: str, con: str, direction: str) -> dict:
     dest = Path(work)
     dest.mkdir(parents=True, exist_ok=True)
+    (dest / CAP_REPORT).unlink(missing_ok=True)
     (dest / "config.ini").write_text(ini, encoding="utf-8")
     shutil.copy(con, dest / "pos.con")
     shutil.copy(con, dest / "displacement.con")
@@ -495,6 +521,7 @@ def _lowest_once(client: str, ini: str, work: str, con: str, direction: str) -> 
         "raw": raw,
         "reason": fields.get("termination_reason"),
         "mode_text": mode_text,
+        "cap": cap_report(dest),
     }
 
 

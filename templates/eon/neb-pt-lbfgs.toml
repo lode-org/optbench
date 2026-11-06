@@ -6,6 +6,7 @@ code_version = "3.6.0"
 commit = "1d71c944501832bfafb955ffe13b9aae50c8efd4"
 algorithm = "LBFGS"
 reducer = "report-neb"
+kernel = "morse_cluster"
 failure_cap = 10000
 note = "Default L-BFGS climbing-image NEB on the 13 Pt-heptamer bands. Memory 20 is the struct default. force_calls is the force_calls_neb band total across the 8 images. force_calls_per_image divides that total by 8. A value under 10000 stays in the mean. nfailed counts termination_reason other than 0. climbing_image_converged_only and setup_mmf_peaks are the binary defaults at this commit."
 

@@ -16,7 +16,9 @@ the float64 gradient. Status 0 is a result, 1 is the force-call cap
 from __future__ import annotations
 
 import ctypes
+import hashlib
 import math
+import os
 import socket
 import struct
 import subprocess
@@ -206,12 +208,16 @@ def lennard_jones_compiled(coords: np.ndarray) -> tuple[float, np.ndarray]:
     """
     global _LJ40
     if _LJ40 is None:
+        from optbench.surfaces import NATIVE_FLAGS
+
         source = Path(__file__).resolve().parents[1] / "codes" / "gmin" / "lj40.c"
-        library = Path(tempfile.gettempdir()) / "optbench-lj40.so"
-        if not library.is_file() or library.stat().st_mtime < source.stat().st_mtime:
-            subprocess.check_call(
-                ["gcc", "-O3", "-shared", "-fPIC", str(source), "-o", str(library)],
-            )
+        digest = hashlib.sha256(" ".join(NATIVE_FLAGS).encode())
+        digest.update(source.read_bytes())
+        library = Path(tempfile.gettempdir()) / f"optbench-lj40-{digest.hexdigest()[:16]}.so"
+        if not library.is_file():
+            partial = library.with_name(f"{library.name}.{os.getpid()}.tmp")
+            subprocess.check_call(["gcc", *NATIVE_FLAGS, str(source), "-o", str(partial)])
+            partial.replace(library)
         loaded = ctypes.CDLL(str(library))
         loaded.optbench_lj40.argtypes = [
             ctypes.c_int,
