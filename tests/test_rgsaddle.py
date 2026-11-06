@@ -169,7 +169,7 @@ def test_templates_name_the_registry_commit():
         assert loaded["commit"] == registry["commit"]
         assert loaded["code_version"] == "0.2.2"
         assert "ini" in loaded
-    assert len(found) == 12
+    assert len(found) == 6
     assert {name for _prefix, name in TEMPLATES} == set(found)
 
 

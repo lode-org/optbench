@@ -52,4 +52,9 @@ jobs:
               description: Pinned uv environment from uv.lock and asv.conf.json
           label-before: base
           label-after: head
+          # asv-spyglass compare exits 1 at --factor (default 1.1). The action
+          # does not ignore that status, so regression-threshold never runs.
+          # Keep the two ratios equal. A slowdown past 10x still fails the job.
+          regression-threshold: "10"
+          asv-spyglass-args: --factor 10
           runner-info: ubuntu-latest

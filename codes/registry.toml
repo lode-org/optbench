@@ -430,26 +430,10 @@ task = "neb"
 ranked = true
 
 [[template]]
-id = "ase/de-lj38-tuned"
-code = "ase"
-problem = "double-ended-saddle-search/lj38"
-profile = "tuned"
-task = "neb"
-ranked = true
-
-[[template]]
 id = "ase/de-pt-island-default"
 code = "ase"
 problem = "double-ended-saddle-search/pt-island"
 profile = "default"
-task = "neb"
-ranked = true
-
-[[template]]
-id = "ase/de-pt-island-tuned"
-code = "ase"
-problem = "double-ended-saddle-search/pt-island"
-profile = "tuned"
 task = "neb"
 ranked = true
 
@@ -462,26 +446,10 @@ task = "neb"
 ranked = true
 
 [[template]]
-id = "ase/de-lj38-2ts-tuned"
-code = "ase"
-problem = "double-ended-saddle-search/lj38_2ts_separation"
-profile = "tuned"
-task = "neb"
-ranked = true
-
-[[template]]
 id = "sella/de-lj38-default"
 code = "sella"
 problem = "double-ended-saddle-search/lj38"
 profile = "default"
-task = "sella-neb"
-ranked = true
-
-[[template]]
-id = "sella/de-lj38-tuned"
-code = "sella"
-problem = "double-ended-saddle-search/lj38"
-profile = "tuned"
 task = "sella-neb"
 ranked = true
 
@@ -494,26 +462,10 @@ task = "sella-neb"
 ranked = true
 
 [[template]]
-id = "sella/de-pt-island-tuned"
-code = "sella"
-problem = "double-ended-saddle-search/pt-island"
-profile = "tuned"
-task = "sella-neb"
-ranked = true
-
-[[template]]
 id = "sella/de-lj38-2ts-default"
 code = "sella"
 problem = "double-ended-saddle-search/lj38_2ts_separation"
 profile = "default"
-task = "sella-neb"
-ranked = true
-
-[[template]]
-id = "sella/de-lj38-2ts-tuned"
-code = "sella"
-problem = "double-ended-saddle-search/lj38_2ts_separation"
-profile = "tuned"
 task = "sella-neb"
 ranked = true
 
