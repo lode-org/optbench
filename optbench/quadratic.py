@@ -2,7 +2,7 @@
 
 This is not a campaign. The bowl and the saddle are analytic, the
 optimizers are a few lines, and the force calls are harness counts.
-Lennard-Jones campaigns stay on rg.terra.
+Lennard-Jones campaigns stay on ``workstation-a``.
 """
 
 from __future__ import annotations

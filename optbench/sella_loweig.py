@@ -165,18 +165,10 @@ def write_asv(commit: str) -> Path:
 
     from asv.results import Results
 
+    from optbench.asv_machine import machine_dir, machine_record
     from optbench.failures import failure_of
 
-    machine = json.loads((ROOT / "results" / "asv" / "xeon-8c" / "machine.json").read_text(encoding="utf-8"))
-    params = {
-        "arch": machine.get("arch", "x86_64"),
-        "cpu": machine.get("cpu", ""),
-        "machine": "xeon-8c",
-        "num_cpu": str(machine.get("num_cpu", "8")),
-        "os": machine.get("os", ""),
-        "ram": str(machine.get("ram", "")),
-        "python": "3.12",
-    }
+    params = {**machine_record(), "python": "3.12"}
     result = Results(params, {}, commit, int(time.time() * 1000), "3.12", "uv-pip-py3.12", {})
     tracks = (
         "track_force_calls",
@@ -241,8 +233,9 @@ def write_asv(commit: str) -> Path:
         wrote += 1
     if wrote == 0:
         raise RuntimeError("no finished campaign to store")
+    folder = machine_dir(ROOT / "results" / "asv")
     result.save(str(ROOT / "results" / "asv"))
-    dest = ROOT / "results" / "asv" / "xeon-8c" / result._filename
+    dest = folder / result._filename
     print(f"wrote {dest} classes {wrote}", flush=True)
     return dest
 

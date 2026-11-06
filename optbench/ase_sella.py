@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import json
 import os
-import socket
 import statistics
 import tarfile
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -24,6 +23,7 @@ os.environ["NUMEXPR_NUM_THREADS"] = "1"
 from .campaign import load_template, resolve_problem
 from .counter import HarnessCounter, attach_ase_counter
 from .score import score_v2, summarize_all, summarize_capped, summarize_divided
+from .v2 import host_label
 
 CONTRIBUTOR = "Rohit Goswami"
 
@@ -1406,6 +1406,7 @@ def _write_dat(
     *,
     starts: int,
     partial: bool,
+    host: str,
     scored: dict | None = None,
 ) -> None:
     method = {
@@ -1456,7 +1457,7 @@ def _write_dat(
         ("parameter_source", template.get("parameter_source", "")),
         ("method", json.dumps(_jsonable(method), sort_keys=True, separators=(",", ":"))),
         ("note", note),
-        ("host", socket.gethostname()),
+        ("host", host),
         ("date", date.today().isoformat()),
         ("contributor", CONTRIBUTOR),
     ]
@@ -1506,6 +1507,7 @@ def run_template(
     cache: Path | None = None,
 ) -> dict:
     """Run one ASE or Sella template and write benchmark.dat plus per-start rows."""
+    host = host_label()
     template = load_template(root, template_name)
     if template["engine"] not in {"ase", "sella"} and not _geodesic_ase(template):
         raise ValueError(f"{template_name} is not an ASE or Sella template")
@@ -1608,6 +1610,7 @@ def run_template(
         parameters,
         starts=len(ordered),
         partial=limit > 0,
+        host=host,
         scored=scored,
     )
     summary["starts"] = len(ordered)
@@ -1705,6 +1708,7 @@ def write_rows(root: Path, template_name: str, rows: list[dict], output: Path) -
         parameters,
         starts=len(rows),
         partial=False,
+        host=host_label(),
         scored=scored,
     )
     summary["starts"] = len(rows)
@@ -1811,7 +1815,7 @@ def write_problem_record(root: Path, campaign: Path, dest: Path, problem: str, s
         "problem": problem,
         "submitter": CONTRIBUTOR,
         "date": date.today().isoformat(),
-        "host": socket.gethostname(),
+        "host": host_label(),
         "runs": runs,
     }
     dest.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")

@@ -13,6 +13,7 @@ import time
 from pathlib import Path
 
 from benchmarks.bench_noise import _class_name
+from optbench.asv_machine import machine_dir, machine_record
 
 TRACKS = (
     "time_search",
@@ -62,16 +63,7 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
     expected = len(specs())
     if len(groups) != expected:
         raise ValueError(f"expected {expected} noise campaigns, found {len(groups)}")
-    machine = json.loads((root / "results" / "asv" / "xeon-8c" / "machine.json").read_text(encoding="utf-8"))
-    params = {
-        "arch": machine["arch"],
-        "cpu": machine["cpu"],
-        "machine": machine["machine"],
-        "num_cpu": machine["num_cpu"],
-        "os": machine["os"],
-        "ram": machine["ram"],
-        "python": "3.12",
-    }
+    params = {**machine_record(), "python": "3.12"}
     now = int(time.time() * 1000) if started_at is None else int(started_at)
     seeds = [_quote("0")]
     starts = [_quote(str(index)) for index in range(1000)]
@@ -115,6 +107,6 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
         "version": 2,
     }
     # The other result files use asv's short hash in the name and the full hash inside.
-    dest = root / "results" / "asv" / "xeon-8c" / f"{commit[:8]}-uv-pip-py3.12.json"
+    dest = machine_dir(root / "results" / "asv") / f"{commit[:8]}-uv-pip-py3.12.json"
     dest.write_text(json.dumps(document, separators=(", ", ": ")), encoding="utf-8")
     return dest

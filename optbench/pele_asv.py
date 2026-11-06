@@ -12,6 +12,7 @@ import time
 from pathlib import Path
 
 from benchmarks.bench_pele import _class_name
+from optbench.asv_machine import machine_dir, machine_record
 
 TRACKS = (
     "time_search",
@@ -66,16 +67,7 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
     missing = expected - set(groups)
     if missing:
         raise ValueError(f"missing pele campaigns: {sorted(missing)}")
-    machine = json.loads((root / "results" / "asv" / "xeon-8c" / "machine.json").read_text(encoding="utf-8"))
-    params = {
-        "arch": machine["arch"],
-        "cpu": machine["cpu"],
-        "machine": machine["machine"],
-        "num_cpu": machine["num_cpu"],
-        "os": machine["os"],
-        "ram": machine["ram"],
-        "python": "3.12",
-    }
+    params = {**machine_record(), "python": "3.12"}
     now = int(time.time() * 1000) if started_at is None else int(started_at)
     columns = ["result", "params", "version", "started_at", "duration"]
     results = {}
@@ -118,6 +110,6 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
         "durations": {},
         "version": 2,
     }
-    dest = root / "results" / "asv" / "xeon-8c" / f"{commit[:8]}-pele-uv-pip-py3.12.json"
+    dest = machine_dir(root / "results" / "asv") / f"{commit[:8]}-pele-uv-pip-py3.12.json"
     dest.write_text(json.dumps(document, separators=(", ", ": ")), encoding="utf-8")
     return dest

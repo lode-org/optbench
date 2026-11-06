@@ -15,8 +15,10 @@ asv is the measurement store. A result file is keyed to the commit asv checked o
 | `environments/eon-svn.yml` | Python pin for the eOn SVN r2549 source build. Not a conda eOn package |
 | `environments/vcsqnm.yml` | Python pin for the vc-SQNM v1.3 source build. Not a conda package |
 | `benchmarks/` | The suite asv-runner imports |
-| `results/asv/<machine>/machine.json` | The machine record asv wrote |
-| `results/asv/<machine>/<commit[:8]>-<env>.json` | Track values for that commit |
+| `results/asv/<label>/machine.json` | The machine record for one `BENCH_HOST_LABEL` value. `machine` is the label and `os`, `arch`, `cpu`, `num_cpu`, and `ram` are `unspecified` |
+| `results/asv/<label>/<commit[:8]>-<env>.json` | Track values for that commit on that machine |
+
+`results/asv` has one directory per machine label. The archived directory `results/asv/xeon-8c` keeps the 8-core Xeon machine record. A result inside a directory has to name the same machine as its `machine.json`, or asv skips it, so those archived results stay in `xeon-8c`.
 
 `html_dir` stays `.asv/html` and is not committed. `asv publish` rebuilds it from `results/asv`.
 
@@ -42,6 +44,10 @@ asv is the measurement store. A result file is keyed to the commit asv checked o
    Upstream `asv machine --yes --machine NAME` stores only the name (gap 9 in `docs/asv-gaps.md`).
    Without `--machine`, asv names the machine after the host, and `asv run` writes a new folder beside `results/asv/xeon-8c`.
    The copy that is committed is `results/asv/xeon-8c/machine.json`.
+   A new result that is not that archive sets `BENCH_HOST_LABEL` and runs `uv run optbench asv-machine`.
+   Campaign runs set `BENCH_HOST_LABEL=workstation-a`.
+   That entry names the machine with the label and sets `os`, `arch`, `cpu`, `num_cpu`, and `ram` to `unspecified`.
+   Use it in place of `asv machine --yes`, which on asv 0.6.6 fills every field from the host and names the machine after the host.
 8. `uv run python -m optbench.asv_launch run --machine xeon-8c <commit>^! -b YourClass`.
    The launcher pins BLAS to one thread before asv starts.
    See Threads below.
@@ -50,8 +56,10 @@ asv is the measurement store. A result file is keyed to the commit asv checked o
    The help text says it does not.
    That is `docs/asv-gaps.md`.
    The committed file is the run without `--quick`.
-9. Commit the new files under `results/asv`.
-10. Score with `asv.results.iter_results` and `Results.get_result_value`, then `score_v2`. `optbench.asv_score` does that for the quadratic sample. Parameter strings in the result JSON are wrapped in `repr` quotes; the reader unwraps them with `ast.literal_eval`. `uv run optbench statistics` refuses to write a document when those tracks are absent.
+   A new label passes the same label to `asv run --machine` and writes `results/asv/<label>/`.
+   It does not replace `results/asv/xeon-8c`.
+9. Commit the new files under `results/asv`. The run writes them to `results/asv/<label>/` and updates `results/asv/benchmarks.json`.
+10. Score with `asv.results.iter_results` and `Results.get_result_value`, then `score_v2`. `optbench.asv_score` does that for the quadratic sample. Parameter strings in the result JSON are wrapped in `repr` quotes; the reader unwraps them with `ast.literal_eval`. `uv run optbench statistics` refuses to write a document when those tracks are absent. It also refuses when `--machine` is not given and more than one machine directory has quadratic tracks, and the machine directory it reads has to hold one quadratic result.
 
 `benchmarks/pending.py` has one skipped class per registry code, named `Pending` and the code.
 Its problems are the ones that no class measures yet.
@@ -88,16 +96,26 @@ The quadratic sample is the run that `results/validation/statistics.json` scores
 ## Commands
 
 ```bash
+export BENCH_HOST_LABEL=workstation-a
 uv run asv check
+uv run optbench asv-machine
 uv run python -m optbench.asv_launch machine --yes --machine xeon-8c
 uv run python -m optbench.asv_launch run --quick --machine xeon-8c
 uv run python -m optbench.asv_launch run --machine xeon-8c COMMIT^! -b quadratic
 uv run optbench statistics --output results/validation/statistics.json
 uv run asv publish
-uv run asv compare COMMIT COMMIT
+uv run asv compare --machine xeon-8c COMMIT COMMIT
 ```
 
-`asv check` imports the suite. `asv run --quick` is the gate before the saved run. Run it before the saved `asv run`, because asv 0.6.6 rewrites the result file. `asv compare` on one commit compares that commit with itself.
+`asv check` imports the suite. `optbench asv-machine` prints the entry it stored:
+
+```text
+machine=workstation-a os=unspecified arch=unspecified cpu=unspecified num_cpu=unspecified ram=unspecified
+```
+
+`asv run --quick` is the gate before the saved run. Run it before the saved `asv run`, because asv 0.6.6 rewrites the result file. `asv compare` on one commit compares that commit with itself. With two machine directories, `asv compare` stops and asks for `--machine`. The compare above names `xeon-8c`, the committed archive. A new run passes `BENCH_HOST_LABEL` to `--machine` instead, and that directory is not `results/asv/xeon-8c`.
+
+For asv params, `collect_provenance` takes the label from `BENCH_HOST_LABEL`, so a statistics run records the label of the machine that scored it. The record leaves out the name of an older directory. The `params` of a result written by `optbench asv-machine` are the label, `unspecified` for the five machine fields, and `python` `3.12`.
 
 ## Launcher
 
@@ -132,12 +150,13 @@ See gap 10 in `docs/asv-gaps.md`.
 ## CI
 
 `.github/workflows/asv.yml` fetches the full history, installs Python 3.12 and syncs the lockfile.
-It then runs `HaoZeke/asv-perch@v1`.
+It runs `uv run optbench asv-machine`, then `HaoZeke/asv-perch@v1`.
+CI does not set `BENCH_HOST_LABEL`, so the entry is `unspecified`.
 The job sets the variables in `optbench.blas_threads.PINNED`, so the asv that the action starts already has them.
-The benchmark command is `uv run asv run --skip-existing --bench quadratic {sha}^!`.
+The benchmark command is `uv run asv run --machine unspecified --skip-existing --bench quadratic {sha}^!`.
 That is the in-process sample, not the 1000-start eonclient grid.
-The init command runs `asv machine --yes` without `--machine`, so CI names its machine after the runner.
 Those result files stay on the runner and are never committed.
+They are not written into `results/asv/xeon-8c`.
 `post-comment` is true when the head branch of a pull request lives in this repository.
 It stays false on a push, on a manual run and on a pull request from a fork.
 A fork's run has a read-only token, so GitHub refuses its comment request.

@@ -794,8 +794,7 @@ def render(root: Path) -> None:
         _raw(_collection_html(order, by_suite, document, pending, [], by_slug)),
         encoding="utf-8",
     )
-    for stale in ("featured.org", "terra-pass.org"):
-        path = include / stale
+    for path in [include / "featured.org", *include.glob("*-pass.org")]:
         if path.exists():
             path.unlink()
 

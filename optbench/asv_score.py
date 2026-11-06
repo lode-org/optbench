@@ -156,8 +156,13 @@ def track_rows(result, class_name: str) -> list[dict]:
     return rows
 
 
-def load_quadratic_result(results_dir: Path):
-    """The one result file that holds ``QuadraticDisplacement`` tracks."""
+def load_quadratic_result(results_dir: Path, machine: str | None = None):
+    """The one result file that holds ``QuadraticDisplacement`` tracks.
+
+    ``results_dir`` has one directory per asv machine name. ``machine``
+    picks one of them. Without it the tracks have to be under a single
+    machine. Either way that machine holds one quadratic result.
+    """
     from asv.results import iter_results
 
     found = []
@@ -170,6 +175,16 @@ def load_quadratic_result(results_dir: Path):
             f"{results_dir} has no QuadraticDisplacement tracks. "
             "Run asv run without --quick on the commit that contains benchmarks/quadratic.py."
         )
+    machines = sorted({result.params.get("machine", "") for result in found})
+    if machine:
+        found = [result for result in found if result.params.get("machine") == machine]
+        if not found:
+            raise SystemExit(
+                f"{results_dir} has no QuadraticDisplacement tracks for machine {machine}. "
+                f"Machines with them: {machines}"
+            )
+    elif len(machines) != 1:
+        raise SystemExit(f"quadratic tracks are under machines {machines}. Pass --machine with one of them.")
     commits = {result.commit_hash for result in found}
     if len(commits) != 1 or len(found) != 1:
         raise SystemExit(
@@ -212,12 +227,12 @@ def _failure_classes(module) -> list[type]:
     return [by_kind[kind] for kind in FAILURE_ORDER]
 
 
-def statistics_from_asv(root: Path, results_dir: Path) -> dict:
+def statistics_from_asv(root: Path, results_dir: Path, machine: str | None = None) -> dict:
     """Build the validation document from saved asv tracks."""
     root = Path(root)
     results_dir = Path(results_dir)
     module = _quadratic(root)
-    result = load_quadratic_result(results_dir)
+    result = load_quadratic_result(results_dir, machine)
     displacement_rows = track_rows(result, "QuadraticDisplacement")
     dimer_rows = track_rows(result, "QuadraticDimer")
     if len(displacement_rows) != DISPLACEMENT_SAMPLES or len(dimer_rows) != DIMER_SAMPLES:
@@ -384,10 +399,12 @@ def statistics_from_asv(root: Path, results_dir: Path) -> dict:
     }
 
 
-def write_statistics_from_asv(path, root: Path = Path("."), results_dir: Path | None = None) -> dict:
+def write_statistics_from_asv(
+    path, root: Path = Path("."), results_dir: Path | None = None, machine: str | None = None
+) -> dict:
     root = Path(root)
     dest_results = Path(results_dir) if results_dir is not None else root / "results" / "asv"
-    document = statistics_from_asv(root, dest_results)
+    document = statistics_from_asv(root, dest_results, machine)
     dest = Path(path)
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
