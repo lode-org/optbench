@@ -64,8 +64,9 @@ def _prepare_import() -> None:
 def run_index(coords: Path, index: int) -> int:
     """Force calls for one archived structure, using the 2019 script."""
     import numpy as np
-    from ase.calculators.lj import LennardJones
     from ase.io import read
+
+    from optbench.ase_lj import LennardJones
 
     _prepare_import()
     from sella import PESWrapper

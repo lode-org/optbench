@@ -1,11 +1,12 @@
 """The Lennard-Jones kernels give the same bits on any host.
 
-``surfaces.lennard_jones`` takes ``(σ/r)^6`` from the vendored SVML
-power routine instead of ``np.power``, which NumPy dispatches by CPU.
-The pair loops and the GMIN kernel are plain IEEE operations built for
-the x86-64-v2 baseline with no FMA contraction. The digests are each
-kernel's energy and gradient on every committed LJ38 start, so a host
-or a CPU path that changes a bit fails here.
+``surfaces.lennard_jones`` and ``ase_lj.LennardJones`` take their powers
+from the vendored SVML power routine instead of ``np.power``, which
+NumPy dispatches by CPU. The pair loops and the GMIN kernel are plain
+IEEE operations built for the x86-64-v2 baseline with no FMA
+contraction. The digests are each kernel's energy and gradient on every
+committed LJ38 start, so a host or a CPU path that changes a bit fails
+here.
 """
 
 from __future__ import annotations
@@ -24,7 +25,7 @@ import numpy as np
 import pytest
 
 from benchmarks.bench_eon_develop import _lj_cut_python, lj_cut
-from optbench import fastpot, gmin_pot, lj, pes, potentials, surfaces
+from optbench import ase_lj, fastpot, gmin_pot, lj, pes, potentials, surfaces
 from optbench.campaign import geometry_archive
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,6 +39,16 @@ XYZ_ARCHIVES = (
     "website/double-ended-saddle-search/lj38_2ts_separation/coords.tgz",
 )
 STARTS = 1602
+
+
+def _ase(calculator, positions: np.ndarray) -> tuple[float, np.ndarray]:
+    from ase import Atoms
+
+    atoms = Atoms(symbols=["Ar"] * len(positions), positions=positions, pbc=False)
+    atoms.calc = calculator(epsilon=1.0, sigma=1.0, rc=40.0)
+    return atoms.get_potential_energy(), atoms.get_forces()
+
+
 KERNELS = {
     "surfaces.lennard_jones": lambda pos: surfaces.lennard_jones(pos),
     "potentials.lennard_jones": lambda pos: potentials.lennard_jones(pos),
@@ -45,6 +56,7 @@ KERNELS = {
     "lj.lj_cluster": lambda pos: lj.lj_cluster(pos.ravel().tolist()),
     "lj_cut": lambda pos: lj_cut(pos.ravel().tolist(), epsilon=1.0, sigma=1.0, cutoff=40.0),
     "gmin_pot.lennard_jones_compiled": lambda pos: gmin_pot.lennard_jones_compiled(pos),
+    "ase_lj.LennardJones": lambda pos: _ase(ase_lj.LennardJones, pos),
 }
 DIGESTS = {
     "surfaces.lennard_jones": "6cd5812079be60f4918f3a59c59fea0d7129cee15d22033a3e4b184f373840bc",
@@ -53,6 +65,7 @@ DIGESTS = {
     "lj.lj_cluster": "9cee6a3369f8b989f2bf9860f2245bb4001860d6b8c31890fa582d8802ac86cf",
     "lj_cut": "2b612182fff31f3ad18f7253930580cd3679e1fa78416618c8a002695a6584ce",
     "gmin_pot.lennard_jones_compiled": "418d146ecfe93531de15acc7ce19e343ba69029a95a63caf4f63d81a46c8fd63",
+    "ase_lj.LennardJones": "9a8344edbf249ec7b04314097fc62a6f143a8ad403e101946d14660b3d2e76da",
 }
 # rgpot LJClusterPot cutoff 15 and the other cutoffs the harness passes.
 SHIFTS = {
@@ -152,6 +165,29 @@ def test_shared_pow_is_numpy_power_where_numpy_runs_svml():
     for exponent in (-1.0, 0.0, 0.5, 1.0, 2.0, 3.0, 6.0, 12.0, -6.0, 2.5):
         differ += int((surfaces.shared_pow(values, exponent) != np.power(values, exponent)).sum())
     assert differ == 0
+
+
+def test_the_ase_calculator_is_ase_where_numpy_runs_svml():
+    if not _numpy_power_is_svml():
+        pytest.skip("np.power runs SVML only on AVX-512 hosts with the X86_V4 dispatch")
+    from ase.calculators.lj import LennardJones
+
+    differ = [
+        name
+        for name, positions in _starts()
+        if _bits(*_ase(ase_lj.LennardJones, positions)) != _bits(*_ase(LennardJones, positions))
+    ]
+    assert differ == []
+
+
+@pytest.mark.parametrize("change", ["smooth", "pbc"])
+def test_the_ase_calculator_refuses_what_it_does_not_reproduce(change):
+    from ase import Atoms
+
+    atoms = Atoms("Ar2", positions=[[0.0, 0.0, 0.0], [1.1, 0.0, 0.0]], cell=[10.0] * 3, pbc=change == "pbc")
+    atoms.calc = ase_lj.LennardJones(rc=3.0, smooth=change == "smooth")
+    with pytest.raises(NotImplementedError):
+        atoms.get_forces()
 
 
 def _dispatch_targets() -> str:

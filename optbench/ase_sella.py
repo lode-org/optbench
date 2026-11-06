@@ -588,7 +588,7 @@ def _morse_arrays(positions, cell, pbc, D, alpha, r0, rc, form):
 
 def _inner_calculator(potential: dict):
     if potential["kind"] == "lennard-jones":
-        from ase.calculators.lj import LennardJones
+        from optbench.ase_lj import LennardJones
 
         return LennardJones(
             epsilon=float(potential["epsilon"]),

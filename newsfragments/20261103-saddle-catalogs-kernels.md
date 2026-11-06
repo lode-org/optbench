@@ -54,3 +54,13 @@ The fastpot and GMIN `lj40.c` kernels now build with `-march=x86-64-v2 -O2 -ffp-
 Their build cache key now includes the flags.
 The fastpot cutoff shift, `lj_shift`, now rounds `(psi/cutoff)^6` once from its exact value instead of calling libm `pow`.
 That gives the same bits for every cutoff the harness uses.
+
+The Atomic Simulation Environment (ASE) has a `LennardJones` calculator that takes each pair's `(σ²/r²)^3` from `np.power`.
+With the AVX-512 loops of NumPy off, its energies and forces changed on 1534 of the 1602 committed LJ38 starts.
+The new `optbench.ase_lj.LennardJones` gives the ASE and Sella Lennard-Jones runs the same bits on every x86-64-v2 host.
+It does the operations of ASE in the same order.
+It takes the power from `optbench/svml_pow.c` and rounds the cutoff shift once from its exact value.
+It equals ASE bit for bit wherever NumPy runs the SVML power routine.
+Its bits stay the same with glibc and NumPy CPU dispatch off.
+The `sella_lj38` and `sella_loweig` runners use it, as do the `minimization/lj38` ASE runner and the ASE Sella templates.
+It raises for the smooth cutoff and for periodic cells, which no template uses.

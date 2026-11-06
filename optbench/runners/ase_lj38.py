@@ -35,9 +35,9 @@ def read_con(text: str) -> np.ndarray:
 
 def minimize_one(positions: np.ndarray):
     from ase import Atoms
-    from ase.calculators.lj import LennardJones
     from ase.optimize import FIRE
 
+    from optbench.ase_lj import LennardJones
     from optbench.counter import attach_ase_counter
 
     atoms = Atoms(symbols=["H"] * len(positions), positions=positions, pbc=False)
