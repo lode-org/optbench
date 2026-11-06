@@ -1,0 +1,188 @@
+#+TITLE: Tutorial: score two optimizers
+#+OPTIONS: toc:nil num:nil author:nil
+
+This tutorial runs two optimizers from the Atomic Simulation Environment (ASE) on the first 100 starts of the 38-atom Lennard-Jones cluster problem (LJ38).
+It scores both runs the way the board does and draws the figures on this page from those runs.
+You need git, uv, and Python 3.11 or newer.
+No compiled client is involved, because ASE and the force-call counter both run inside Python.
+On an eight-core Linux machine each run took under 30 seconds with four workers.
+
+The two optimizers are limited-memory Broyden-Fletcher-Goldfarb-Shanno (L-BFGS) and the fast inertial relaxation engine (FIRE).
+The problem is from the 2014 suite of Chill, Stevenson, Ruehle, Shang, Xiao, Farrell, Wales, and Henkelman, J. Chem. Theory Comput. 2014, 10, 5476-5482 ([[https://doi.org/10.1021/ct5008718][doi:10.1021/ct5008718]]).
+
+#+begin_export rst
+.. figure:: _static/tutorial/flow.svg
+   :alt: The problem file, the template, and the stored geometries go into optbench run, which writes a benchmark.dat and a per-start file. optbench score and figures.py read the per-start file.
+
+   The files this tutorial reads and writes. The source is ``docs/source/_static/tutorial/flow.dot``.
+#+end_export
+
+* Get optbench
+
+#+begin_src sh
+git clone https://github.com/lode-org/optbench
+cd optbench
+#+end_src
+
+The geometries are already in the clone under =inputs/=.
+The first =uv run= installs the Python packages, and nothing else is downloaded.
+
+* Read the problem and the template
+
+The problem file owns the start set, the stop, and the cap.
+These lines are from =problems/minimization/lj38.toml=:
+
+#+begin_src toml
+[sample]
+starts = 1000
+
+[convergence]
+norm = "l2"
+force_norm = 0.01
+max_force_calls = 10000
+#+end_src
+
+A start is finished when the Euclidean norm of the force is at or below 0.01.
+Each start may spend at most 10000 force calls.
+This tutorial keeps that cap.
+
+Within those force calls, a template sets the optimizer and its parameters.
+=templates/ase/lj38-lbfgs-default.toml= is ASE 3.29.0 L-BFGS with =maxstep= 0.1, and its =note= says why that is not the constructor value.
+=templates/ase/lj38-fire-default.toml= is FIRE at the constructor defaults.
+
+* Run both templates
+
+#+begin_src sh
+uv run --group campaign optbench run minimization/lj38 ase/lj38-lbfgs-default \
+  --limit 100 --workers 4 --output tutorial/lbfgs.dat
+uv run --group campaign optbench run minimization/lj38 ase/lj38-fire-default \
+  --limit 100 --workers 4 --output tutorial/fire.dat
+#+end_src
+
+=--group campaign= installs ASE.
+=--limit 100= takes the first 100 starts in name order, =cluster_0000.con= to =cluster_0099.con=.
+A rerun gives the same counts, because neither optimizer draws random numbers.
+Every per-start record carries seed 0.
+The last line of each run is:
+
+#+begin_example
+minimization/lj38 ase/lj38-lbfgs-default force_calls=261 nfailed=1 starts=100
+minimization/lj38 ase/lj38-fire-default force_calls=694 nfailed=2 starts=100
+#+end_example
+
+* Read benchmark.dat
+
+Each run writes the =.dat= file and a =.starts.jsonl= file next to it.
+These lines are from =tutorial/lbfgs.dat=:
+
+#+begin_example
+force_calls 261
+nfailed 1
+starts 100
+counter harness
+par2_mean 458.1
+par2_median 246.5
+success_rate 0.99
+#+end_example
+
+=force_calls= is the 2014 number.
+It is the mean over the finished starts, rounded half to even, and it leaves failures out.
+=par2_mean= is the number the board ranks.
+The penalised average runtime with factor 2 (PAR-2) charges each failed start twice the cap, 20000 calls, and averages over every start.
+One failure in 100 starts moves the L-BFGS mean from 261 to 458.1.
+=counter harness= means the harness counted the calls at the potential, not ASE.
+The file also flags a run on fewer than the problem's 1000 starts, and such a run never enters the ranked table.
+
+| Field             | L-BFGS |    FIRE |
+|-------------------+--------+---------|
+| =force_calls=     |    261 |     694 |
+| =nfailed=         |      1 |       2 |
+| =par2_mean=       |  458.1 | 1079.86 |
+| =par2_median=     |  246.5 |   594.5 |
+
+* Find the failed starts
+
+#+begin_src sh
+uv run python - <<'EOF'
+import json
+
+for name in ("lbfgs", "fire"):
+    for line in open(f"tutorial/{name}.starts.jsonl"):
+        row = json.loads(line)
+        if not row["success"]:
+            print(name, row["start"], row["force_calls"], row["reasons"], row.get("hessian_index"))
+EOF
+#+end_src
+
+#+begin_example
+lbfgs cluster_0073.con 10000 ['cap', 'force_norm'] None
+fire cluster_0025.con 456 ['hessian_index'] 1
+fire cluster_0057.con 966 ['hessian_index'] 1
+#+end_example
+
+L-BFGS on =cluster_0073.con= spent the whole cap, and the force norm at the end was about 4.8e6.
+FIRE on =cluster_0025.con= and =cluster_0057.con= met the force stop.
+The Hessian at both points has one negative curvature, so they are first-order saddle points and not minima.
+optbench computes the Hessian index only for a start that meets the force stop under the cap.
+A stop at a saddle point or a maximum counts as a failure.
+
+* Score the per-start file
+
+#+begin_src sh
+uv run optbench score tutorial/lbfgs.starts.jsonl --cap 10000 --output tutorial/lbfgs-score.json
+uv run optbench score tutorial/fire.starts.jsonl --cap 10000 --output tutorial/fire-score.json
+#+end_src
+
+#+begin_example
+successes=99/100 par2_mean=458.1 median=246.5
+successes=98/100 par2_mean=1079.86 median=594.5
+#+end_example
+
+=optbench score= reduces the same records as the run.
+The JavaScript Object Notation (JSON) file adds the failure classes and a bootstrap interval on the median, with 2000 resamples and seed 20261015.
+The L-BFGS file lists one cap failure, with a median interval of 232 to 270.
+Both FIRE failures are wrong stationary points, and the FIRE interval is wider, from 547 to 690.5.
+
+* Draw the figures
+
+#+begin_src sh
+uv run --group campaign python docs/source/_static/tutorial/figures.py
+#+end_src
+
+The script reads the two per-start files.
+It then replays =cluster_0000.con= with each template and records the force norm after every step.
+It exits with an error when the replayed count differs from the run's record.
+The replay gave 214 calls for L-BFGS and 726 for FIRE, the same as the records.
+
+#+begin_export rst
+.. figure:: _static/tutorial/calls.svg
+   :alt: Step curves of the fraction of starts finished against harness force calls. L-BFGS rises between about 170 and 540 calls. FIRE rises between about 230 and 1970 calls.
+
+   Fraction of the 100 starts finished against harness force calls.
+   Each curve stops short of 1 by its failed starts.
+
+.. figure:: _static/tutorial/convergence.svg
+   :alt: Force norm on a log scale against harness force calls for cluster_0000.con. Both curves fall from above ten to the fifth. L-BFGS reaches the dashed stop line at 214 calls and FIRE at 726.
+
+   Force norm after each step on ``cluster_0000.con``.
+   The dashed line is the stop.
+#+end_export
+
+The first geometry has a closest pair at 0.497 sigma, inside the repulsive wall, so the force norm starts near 6.7e5.
+Both optimizers are below a force norm of 100 by call 25.
+L-BFGS then uses curvature from earlier steps and reaches the stop at 214 calls.
+FIRE spends 576 of its 726 calls at force norms between 0.1 and 10.
+
+* Compare with the board
+
+The ranked rows on the minimization page use all 1000 starts, so a 100-start run is not a published score.
+The ranked FIRE row is =results/campaign/ase-3.29.0-lj38-fire-default.dat=.
+Its per-start file has the same force calls as this run on all 100 starts.
+Its records carry no Hessian index, so it counts =cluster_0025.con= and =cluster_0057.con= as finished.
+The committed L-BFGS campaign file used =maxstep= 0.2, so its counts are a different run.
+
+* Next steps
+
+- @@rst::doc:`Run a score <run>`@@ has the commands for eOn, pele, and Sella.
+- [[https://github.com/lode-org/optbench/blob/main/docs/v2.md][docs/v2.md]] defines the counter and the PAR-2 score.
+- [[https://github.com/lode-org/optbench/blob/main/docs/harness.md][docs/harness.md]] defines one start and its success test.
