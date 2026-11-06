@@ -11,7 +11,7 @@ kind = "htst"
 kernel = "morse_shift"
 tuning = "stock"
 note = '''
-Stock TSASE 1.0 at 98aac60 quench dimer-QM on the quench_dimer-qm reactant. Temperature 700, seed 42, confidence 1.1, prefactor 1.2e12, optimizer qm, converged_force 0.001, max_iterations 5000, time_step 0.3, minimize_first false, displace weight 1, radius 3.3, magnitude 0.3, dimer rotations_max 100, converged_angle 5, max step 0.1. The 1.0 SSDimer constructor has no alpha argument, so the call does not pass one. The harness potential is morse_shift. The ranked cost is the PotServer total at the stop. Sad-fcs in per-batch wuid order are stored beside that total. The archive communicator buffer is 1000 jobs on 2 CPUs; this score used local batches of 8.
+Stock TSASE 1.0 at 98aac60 quench dimer-QM on the quench_dimer-qm reactant. Temperature 700, seed 42, confidence 1.1, prefactor 1.2e12, optimizer qm, converged_force 0.001, max_iterations 5000, time_step 0.3, minimize_first false, displace weight 1, radius 3.3, magnitude 0.3, dimer rotations_max 100, converged_angle 5, max step 0.1. The 1.0 SSDimer constructor has no alpha argument, so the call does not pass one. The harness potential is morse_shift. The ranked cost is the PotServer total at the confirmation stop. Sad-fcs in per-batch wuid order are stored beside that total. The archive communicator buffer is 1000 jobs on 2 CPUs; this score used local batches of 8. hTST/Pt caps a start at 20000000 force calls and calls a complete window sample 13 barrier windows. This template is the confirmation, one stop where a barrier window and a rate window have both closed. It is not that window sample, so the template sample is one start. PAR-2 uses the problem cap. The stored total is under the cap.
 '''
 seeds = [42]
 starts = ["pt"]
@@ -20,6 +20,9 @@ pass_limit = 1
 workers = 8
 asv_full = false
 budget_seconds = 7200
+
+[sample]
+starts = 1
 
 [tsase]
 method = "quench-dimer"
