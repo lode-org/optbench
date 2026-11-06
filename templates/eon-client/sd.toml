@@ -3,6 +3,7 @@ engine = "eon-client"
 code = "eOn"
 code_version = "3.5.0"
 algorithm = "SD"
+kernel = "client"
 
 [ini.Main]
 job = "minimization"

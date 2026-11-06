@@ -3,9 +3,11 @@
 Each force evaluation is one ``HarnessCounter`` charge. eonclient is
 started with ``potential = ext_pot``. A small C program forwards
 ``from_eon_to_extpot`` to ``PotServer``. The template still names the
-2014 potential. The kernel is the problem surface:
+2014 potential. Its ``kernel`` key names the problem surface the
+harness computes, and the campaign files record it:
 
-* ``lj40`` is unshifted ``lj/cut`` with epsilon 1, sigma 1, cutoff 40.
+* ``lj40`` is unshifted ``lj/cut`` with epsilon 1, sigma 1, cutoff 40,
+  summed by ``optbench.surfaces.lennard_jones``.
 * ``morse`` is LAMMPS ``morse/smooth/linear`` (D 0.7102, alpha 1.6047,
   r0 2.897, cutoff 9.5) with periodic boundaries in x and y.
 * ``morse_shift`` is r2549 ``Morse::force``: the same depth, alpha, and
@@ -22,6 +24,8 @@ started with ``potential = ext_pot``. A small C program forwards
   ``in.lammps``, through ``bench_eon_develop.lj_cut``. That function sums
   the pairs in its own order, so an NEB that is sensitive to the last
   bit can take a different path than on ``lj40``.
+
+A template whose client computes its own forces declares ``client``.
 
 A tsopt success is a client stop under the cap, a free-atom Euclidean
 force norm at the problem stop, and Hessian index 1. That Hessian is
@@ -109,6 +113,8 @@ FAMILIES = {
         "cache": "500350d9",
     },
 }
+CLIENT_KERNEL = "client"
+KERNELS = frozenset({"lj40", "lj_cut", "ljcluster", "morse", "morse_shift", "morse_cluster", "eam"})
 
 
 class BudgetExceeded(Exception):
@@ -358,6 +364,8 @@ def kernel_for(name: str):
             return lj_cut(positions, atomic_numbers, box, epsilon=epsilon, sigma=sigma, cutoff=cutoff)
 
         return evaluate
+    if name == CLIENT_KERNEL:
+        raise ValueError("a client kernel template computes its forces in the client")
     raise ValueError(f"no harness kernel {name}")
 
 

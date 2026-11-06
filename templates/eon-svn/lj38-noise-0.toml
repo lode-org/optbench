@@ -6,6 +6,7 @@ code_version = "r2549"
 commit = "r2549"
 algorithm = "LBFGS"
 reducer = "harness"
+kernel = "lj_cut"
 failure_cap = 10000
 tuning = "default"
 note = """L-BFGS memory 20 on the 1000 LJ38 starts at force sigma 0. Settings match eon-svn/lbfgs-m20 except the potential: unshifted lj/cut, epsilon 1, sigma 1, cutoff 40, which is the problem potential, not lj_cluster. converged_force in this file is the clean tolerance 0.01. The run sets the client tolerance to max(0.01, 3 * sigma * sqrt(114)). When sigma is positive, a force sample under that threshold is held above it until the clean energy over the last 5 evaluations spans at most max(1e-10, 3 * sigma). The seed for start i is 20261016 + i. Success also requires a clean vibrational Hessian index of 0, with the six rigid modes removed. Energy and Kabsch RMSD are not applied: the problem file has no per-start reference. r2549 does not read energy_weighted, ci_mmf, climbing_image_band_slack, setup_mmf_peaks, or the develop L-BFGS catalog past memory, inverse curvature, max inverse curvature, auto scale, and the two resets. Those keys are omitted. The keys it does read sit in [Optimizer]. The binary is SVN r2549, the registry pin. Export of the 2014 revision is forbidden, so this row is r2549."""

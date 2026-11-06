@@ -6,6 +6,7 @@ code_version = "3.6.0"
 commit = "1d71c944501832bfafb955ffe13b9aae50c8efd4"
 algorithm = "AKMC dimer"
 reducer = "amd-catalogue"
+kernel = "client"
 failure_cap = 1000000000
 pass_limit = 400
 note = "AKMC on the 151-atom Al adatom with the built-in eam_al potential at 250 K. The run stays on the reactant. eOn confidence is 1.1 with the old scheme, so akmc() does not take a KMC step. The harness stops when the old-scheme repeat confidence reaches 0.95 and the thermal-window rate is positive. Prefactor default_value 1e12 skips the Hessian. Force calls are sad-fcs plus mins-fcs. Prefactor calls are not included. Classic dimer, improved false, rotations_max 20, converged_angle 5. Optimizer L-BFGS, max_move 0.2, max_iterations 1000, converged_force 0.001. The displacement epicenter is atom 150, the adatom, with radius 3.3 and magnitude 0.3. A displacement of every free atom walks the search into a high-energy or disconnected saddle. Thermal window 20 kT. Seed is 20261018 plus the repetition index. Communicator num_jobs 8. pass_limit 400 stops a repetition that has not reached confidence."

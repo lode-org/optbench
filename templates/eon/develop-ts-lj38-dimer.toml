@@ -7,6 +7,7 @@ commit = "7095b23ac17d49f434a5e08ccb072897ceca698e"
 algorithm = "LBFGS"
 tuning = "r2549-ini"
 reducer = "report-capped"
+kernel = "ljcluster"
 failure_cap = 10000
 note = "Develop binary 7095b23 with the r2549 ini. Improved dimer, max_move 0.1, max_iterations 3000, converged_force 0.001, converged_angle 0.1, rotations_max 20, improved true. Potential ljcluster. client_displace_type load. direction.dat is Python random.Random(index). Main random_seed is 1. The L-BFGS keys r2549 reads sit in [Optimizer]: memory 20, inverse curvature 0.01, max inverse curvature 0, auto scale, angle reset, and distance reset. The develop [LBFGS] catalog is omitted, including lbfgs_accept, so the generated SSOT default none stays in place. The energy line-search row is eon/develop-ts-lj38-dimer-accept-energy."
 

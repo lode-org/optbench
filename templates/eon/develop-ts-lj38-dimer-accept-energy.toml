@@ -7,6 +7,7 @@ commit = "7095b23ac17d49f434a5e08ccb072897ceca698e"
 algorithm = "LBFGS"
 tuning = "accept-energy"
 reducer = "report-capped"
+kernel = "ljcluster"
 failure_cap = 10000
 note = "Improved dimer on develop, same stops as eon/ts-lj38-dimer. Memory 20, translation L-BFGS max_move 0.1, max_iterations 3000, converged_force 0.001. Dimer rotation is conjugate gradient, converged_angle 0.1, rotations_max 20, improved true. Potential ljcluster. client_displace_type load. direction.dat is Python random.Random(index). Main random_seed is 1. The 1d71c94 row did not set a seed. The mean keeps total_force_calls under 10000. The energy line-search variant. lbfgs_accept is energy. The r2549-equivalent ini, with that key omitted, is eon/develop-ts-lj38-dimer."
 

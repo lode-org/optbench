@@ -6,6 +6,7 @@ code_version = "3.6.0"
 commit = "7095b23ac17d49f434a5e08ccb072897ceca698e"
 algorithm = "LBFGS"
 reducer = "report-capped"
+kernel = "morse_cluster"
 failure_cap = 3000
 note = "OCI-NEB on the 59 Pt-island pairs. ci_mmf true, ci_mmf_after 0.5, ci_mmf_nsteps 1000, energy_weighted false. Otherwise the eon/de-pt-lbfgs stops: three images, max_move 0.2, max_iterations 1000, memory 20. Potential morse_pt. The mean keeps total_force_calls under 3000. Main random_seed is 1."
 

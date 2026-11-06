@@ -4,6 +4,7 @@ problem = "minimization/morse-bulk"
 code = "Eon svn"
 code_version = "r2549"
 algorithm = "FIRE"
+kernel = "client"
 
 [ini.Main]
 job = "minimization"

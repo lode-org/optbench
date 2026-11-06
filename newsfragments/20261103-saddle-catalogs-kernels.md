@@ -64,3 +64,13 @@ It equals ASE bit for bit wherever NumPy runs the SVML power routine.
 Its bits stay the same with glibc and NumPy CPU dispatch off.
 The `sella_lj38` and `sella_loweig` runners use it, as do the `minimization/lj38` ASE runner and the ASE Sella templates.
 It raises for the smooth cutoff and for periodic cells, which no template uses.
+
+Every eOn template now names the force kernel of the harness in a `kernel` key.
+The ini still names the 2014 potential `lammps`, and the harness ran that name as two kernels.
+The harness families run 42 of their 43 `lammps` templates as `lj40`.
+The `bench_eon_develop` and `bench_eon_svn` modules ran `lammps` as `lj_cut`.
+The two kernels differ in the last bits.
+The 81 templates without a key now name the kernel their runner already used, so no run changes.
+Each template whose client computes its own forces names `client`.
+The campaign files now write a `kernel` line.
+The develop and svn modules also store the kernel in their per-start records.

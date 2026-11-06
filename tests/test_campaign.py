@@ -109,6 +109,7 @@ def test_run_writes_one_benchmark_dat(tmp_path: Path):
         "code_version r2549\n"
         "algorithm LBFGS\n"
         "template eon-svn/lbfgs-m100\n"
+        "kernel client\n"
     )
     fields = parse(text)
     assert fields["force_calls"] == "181"

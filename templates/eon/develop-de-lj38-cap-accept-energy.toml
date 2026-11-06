@@ -7,6 +7,7 @@ commit = "7095b23ac17d49f434a5e08ccb072897ceca698e"
 algorithm = "LBFGS"
 tuning = "accept-energy"
 reducer = "report-capped"
+kernel = "lj_cut"
 failure_cap = 2500
 note = "Same climbing-image NEB as eon/de-lj38-lbfgs, with max_iterations 8000 on the optimizer and the band. The force budget is 2500, the LJ38 double-ended cap. The harness refuses the call that would pass it, and that run is a cap failure. Energy-weighted springs and ci_mmf stay off. Potential lammps with the archived in.lammps. Main random_seed is 1. The energy line-search variant. lbfgs_accept is energy. The r2549-equivalent ini, with that key omitted, is eon/develop-de-lj38-cap."
 

@@ -6,6 +6,7 @@ code_version = "r2549"
 commit = "r2549"
 algorithm = "LBFGS"
 reducer = "harness"
+kernel = "morse_shift"
 failure_cap = 3000
 tuning = "default"
 note = """Plain NEB. Same settings as eon-svn/de-pt-ci with climbing_image_method false. The run swaps the potential for ext_pot. The harness kernel is r2549 Morse::force: cutoff 9.5, pair energy shifted to zero at the cutoff, minimum image on the box diagonal. The 2014 table used r2156. The binary is SVN r2549, the registry pin. Export of the 2014 revision is forbidden, so this row is r2549."""

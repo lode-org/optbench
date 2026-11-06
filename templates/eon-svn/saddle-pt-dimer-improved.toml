@@ -6,6 +6,7 @@ code_version = "r2549"
 commit = "r2549"
 algorithm = "Dimer"
 reducer = "harness"
+kernel = "morse_shift"
 failure_cap = 100000000
 tuning = "default"
 note = """Same AKMC settings as eon-svn/saddle-pt-dimer with Dimer improved true, which is the r2549 default. Rotation stays steepest descent, rotations_max 20. Seeds are 1000 through 1009. pass_limit 800. The run swaps the potential for ext_pot. The harness kernel is r2549 Morse::force: cutoff 9.5, pair energy shifted to zero at the cutoff, minimum image on the box diagonal. The 2014 improved-dimer rows are r2213. The binary is SVN r2549, the registry pin. Export of the 2014 revision is forbidden, so this row is r2549."""

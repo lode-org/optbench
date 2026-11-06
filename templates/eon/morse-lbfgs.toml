@@ -6,6 +6,7 @@ code_version = "3.6.0"
 commit = "1d71c944501832bfafb955ffe13b9aae50c8efd4"
 algorithm = "LBFGS"
 reducer = "harness-capped"
+kernel = "client"
 note = "Default L-BFGS on the Morse bulk stop. Memory 20 and lbfgs_accept energy are the struct defaults at this commit."
 
 [ini.Main]

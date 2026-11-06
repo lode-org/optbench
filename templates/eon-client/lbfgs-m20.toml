@@ -3,6 +3,7 @@ engine = "eon-client"
 code = "eOn"
 code_version = "3.5.0"
 algorithm = "LBFGS"
+kernel = "client"
 tuning = "default"
 
 [ini.Main]

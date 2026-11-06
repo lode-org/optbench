@@ -243,6 +243,8 @@ def benchmark_text(summary: dict, template: dict) -> str:
         lines.append(f"problem {template['problem']}")
     if template.get("reducer"):
         lines.append(f"reducer {template['reducer']}")
+    if template.get("kernel"):
+        lines.append(f"kernel {template['kernel']}")
     return "\n".join(lines) + "\n"
 
 

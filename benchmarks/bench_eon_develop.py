@@ -324,24 +324,6 @@ def _client() -> str:
     return path
 
 
-def _evaluate(potential: str):
-    from optbench.lj import lj_cluster
-
-    if potential == "ljcluster":
-        return lambda positions, numbers, box: lj_cluster(positions, numbers, box)
-    if potential == "morse_pt":
-        return morse_cluster
-    if potential == "lammps":
-        lammps = ROOT / "archive/entries/double-ended-saddle-search/lj38/eon-ci-neb/in.lammps"
-        epsilon, sigma, cutoff = lammps_lj_params(lammps)
-
-        def _lj(positions, numbers, box, epsilon=epsilon, sigma=sigma, cutoff=cutoff):
-            return lj_cut(positions, numbers, box, epsilon=epsilon, sigma=sigma, cutoff=cutoff)
-
-        return _lj
-    raise ValueError(f"no harness kernel for potential {potential}")
-
-
 def _write_wrapper(path: Path) -> None:
     from optbench.fastpot import bridge_executable
 
@@ -368,19 +350,20 @@ def _write_wrapper(path: Path) -> None:
 
 
 class _Bridge:
-    def __init__(self, potential: str, cap: int):
-        self.potential = potential
+    def __init__(self, kernel: str, cap: int):
+        self.kernel = kernel
         self.cap = cap
         self.server = None
         self.directory = None
 
     def __enter__(self):
+        from optbench.eon_harness import kernel_for
         from optbench.potserver import PotServer
 
         self.directory = Path(tempfile.mkdtemp(prefix="optbench-extpot-"))
         wrapper = self.directory / "extpot-bridge"
         _write_wrapper(wrapper)
-        self.server = PotServer(_evaluate(self.potential), cap=self.cap).start()
+        self.server = PotServer(kernel_for(self.kernel), cap=self.cap).start()
         os.environ["OPTBENCH_POTSERVER"] = self.server.endpoint()
         os.environ["OPTBENCH_ROOT"] = str(ROOT)
         return self.server, wrapper
@@ -665,11 +648,12 @@ def run_case(template_name: str, kind: str, seed: int, start: str, *, passes: in
 
     template = load_template(ROOT, template_name)
     potential = template["ini"]["Potential"]["potential"]
+    kernel = str(template["kernel"])
     cap = int(template["failure_cap"])
     started = time.monotonic()
     work = Path(tempfile.mkdtemp(prefix="optbench-eon-"))
     try:
-        with _Bridge(potential, cap) as (server, wrapper):
+        with _Bridge(kernel, cap) as (server, wrapper):
             if kind == "lowest":
                 record = _run_lowest(template, seed, start, work, server, wrapper, cap)
             elif kind == "akmc":
@@ -695,6 +679,7 @@ def run_case(template_name: str, kind: str, seed: int, start: str, *, passes: in
                 record = _guard_uncounted(record)
         record["seconds"] = time.monotonic() - started
         record["potential"] = potential
+        record["kernel"] = kernel
         record["counter"] = "harness"
         return record
     finally:
