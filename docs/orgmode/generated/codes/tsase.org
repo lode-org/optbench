@@ -117,6 +117,20 @@
    <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-field="n">13</td>
    </tr>
+   <tr data-problem="hTST/Pt" data-label="TSASE (1.0 (98aac60)) · quenchDimer+neb-QM">
+   <td>Pt</td>
+   <td data-field="label">TSASE (1.0 (98aac60)) · quenchDimer+neb-QM</td>
+   <td data-field="family">Band / NEB</td>
+   <td data-field="family_rank">2</td>
+   <td data-field="par2_mean">1.7121e+06</td>
+   <td data-field="published"></td>
+   <td data-field="median_calls">1.7121e+06</td>
+   <td data-field="mean_calls">1.7121e+06</td>
+   <td data-field="hessian_calls">0</td>
+   <td data-field="fd_calls">0</td>
+   <td data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-field="n">1</td>
+   </tr>
    <tr data-problem="hTST/Pt" data-label="TSASE · Dimer-QM rotation: max=50, tol=5">
    <td>Pt</td>
    <td data-field="label">TSASE · Dimer-QM rotation: max=50, tol=5</td>

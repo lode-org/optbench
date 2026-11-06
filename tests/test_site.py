@@ -118,12 +118,29 @@ def test_rendered_pages_use_the_board_rank():
     entries.extend(row.get("entry") for row in document.get("withheld", []))
     assert "eon-3.5.0-saddle-pt-dimer" in entries
     assert "not yet on the harness counter" in saddle
-    htst_ranked = {row["template"] for row in document["problems"]["hTST/Pt"]["ranked"]}
-    assert "eon-client/htst-pt-dimer-lbfgs" in htst_ranked
-    assert "eon-client/htst-pt-lanczos-lbfgs" in htst_ranked
+    htst_ranked = document["problems"]["hTST/Pt"]["ranked"]
+    by_template = {row["template"]: row for row in htst_ranked}
+    assert "eon-client/htst-pt-dimer-lbfgs" in by_template
+    assert "eon-client/htst-pt-lanczos-lbfgs" in by_template
+    assert "tsase/htst-pt-quench-stock" in by_template
+    quench = by_template["tsase/htst-pt-quench-stock"]
+    assert quench["code"] == "tsase"
+    assert quench["n"] == 1
+    assert quench["nfailed"] == 0
+    assert quench["full_n"] == 1
+    assert quench["par2_mean"] == 1712105
+    assert quench["median"] == 1712105
+    assert quench["cap"] == 20000000
+    assert quench["short"] is False
     htst_page = (ROOT / "docs" / "orgmode" / "generated" / "suites" / "hTST" / "Pt.org").read_text(encoding="utf-8")
     assert "Dimer L-BFGS" in htst_page
     assert "Lanczos L-BFGS" in htst_page
+    assert "TSASE (1.0 (98aac60)) · quenchDimer+neb-QM" in htst_page
+    assert 'data-field="par2_mean">1.7121e+06<' in htst_page
+    ranked_html = htst_page.split('data-board-table="ranked" data-problem="hTST/Pt"', 1)[1].split("</table>", 1)[0]
+    assert "quenchDimer+neb-QM" in ranked_html
+    assert "Dimer L-BFGS" in ranked_html
+    assert "Lanczos L-BFGS" in ranked_html
     assert "Per-search cost" not in saddle
     board = (ROOT / "docs" / "include" / "v2-board.org").read_text(encoding="utf-8")
     assert 'data-board-table="headline" data-problem="minimization/lj38"' in board
