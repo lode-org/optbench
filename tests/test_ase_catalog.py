@@ -27,20 +27,8 @@ def test_catalog_covers_every_problem_and_both_profiles():
     for spec in specs:
         by_problem.setdefault(spec["problem"], set()).add(spec["profile"])
     assert set(by_problem) == PROBLEMS
-    for problem, profiles in by_problem.items():
-        if problem in {
-            "minimization/lj38",
-            "minimization/morse-bulk",
-            "tsopt/LJ38",
-            "tsopt/pt-island",
-            "saddle-search/pt-island",
-            "double-ended-saddle-search/lj38",
-            "double-ended-saddle-search/lj38_2ts_separation",
-            "double-ended-saddle-search/pt-island",
-        }:
-            assert profiles == {"default"}
-        else:
-            assert profiles == {"default", "tuned"}
+    for profiles in by_problem.values():
+        assert profiles == {"default"}
     lj = [spec for spec in specs if spec["problem"] == "minimization/lj38"]
     assert {spec["algorithm"] for spec in lj} == set(OPTIMIZERS) | {"Sella"}
     dimer = [spec for spec in specs if spec["problem"] == "saddle-search/pt-island"]
