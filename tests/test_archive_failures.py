@@ -149,7 +149,7 @@ def test_an_archived_run_above_the_cap_is_held_as_another_budget(tmp_path: Path)
     ]
 
 
-def test_only_the_two_lj38_band_rows_ran_above_the_cap():
+def test_archived_rows_above_the_stated_cap():
     problems = board.load_all(ROOT / "problems")
     registry = board._registry(ROOT)
     full_n = {ident: board.stated_full_n(ROOT, problem) for ident, problem in problems.items()}
@@ -160,6 +160,7 @@ def test_only_the_two_lj38_band_rows_ran_above_the_cap():
     assert held == [
         ("double-ended-saddle-search/lj38", "eon-lanczos", 2794.0),
         ("double-ended-saddle-search/lj38", "optim-cl-string", 2792.0),
+        ("globalopt/lj38", "pele-basinhopping", 2533900.0),
     ]
 
 

@@ -297,7 +297,7 @@ CAUSE_TEXT = {
         "The deck is the archive data file: TEMPERATURE 3.0, NEWRESTART 30, AVOID 1.25 18, "
         "STEP 0.43 0.52, SLOPPYCONV 0.002, PERMDIST 0.005, MAXIT 1000 1000, STEPS 90000000 1.0, "
         "SAVE 1, SORT, and SYMMETRISECSM 1 CI 1.0D-6 30 1 50. RANSEED is unset. "
-        "The problem file states no max_force_calls, so the campaign cap is the lj38 template budget 2000000."
+        "The cap and MAX_NPCALL are problems/globalopt/lj38.toml convergence.max_force_calls, 2000000."
     ),
     "gmin_quench_count": (
         "The 03 Oct 2022 files and the serial df8da599 run use the same data file and SDPRND seed 0. "
