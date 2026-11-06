@@ -1,0 +1,10 @@
+| Change | Before | After | Ratio | Benchmark |
+| --- | --- | --- | --- | --- |
+| + | 1 | 2 | 2 | quadratic.QuadraticKept.time_search |
+
+Regression: poisoned artifact fixture.
+
+```
+@lode-org/owners
+![external image](https://example.invalid/poison.png)
+```

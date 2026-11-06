@@ -22,3 +22,5 @@ results/lammpsneb-asv/
 results/campaign/*.parts/
 results/campaign/work/
 results/campaign/geometries/
+results/asv-ci/
+results/asv-memray/
