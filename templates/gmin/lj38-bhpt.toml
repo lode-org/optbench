@@ -7,7 +7,7 @@ commit = "latest"
 algorithm = "parallel tempering basin-hopping"
 tuning = "default"
 failure_cap = 2000000
-note = "Parallel tempering basin-hopping. Four replicas, temperatures geometric from 0.1 to 1, exchange probability 0.1. Quenches are L-BFGS with SLOPPYCONV 0.005, TIGHTCONV 0.001, MAXIT 600 and 500. STEP is 0.40 and ASTEP is 0.51. The container radius is 50 and the coordinates are translated to the origin, so the archived start is inside the container. CENTRE keeps the cluster at the origin. The random seed is 20261018 plus the start index. The failure cap is 2000000 harness calls. The problem file leaves max_force_calls unset. TARGET is the harness energy of codes/gmin/reference/lj38.points. EDIFF is 0.001. lj38 states energy_above_minimum 0.001, and EDIFF is that tolerance. The data file starts with MPI because the binary is the MPI build, and mpirun launches it, including the one-replica run."
+note = "Parallel tempering basin-hopping. Four replicas, temperatures geometric from 0.1 to 1, exchange probability 0.1. Quenches are L-BFGS with SLOPPYCONV 0.005, TIGHTCONV 0.001, MAXIT 600 and 500. STEP is 0.40 and ASTEP is 0.51. The container radius is 50 and the coordinates are translated to the origin, so the archived start is inside the container. CENTRE keeps the cluster at the origin. The random seed is 20261018 plus the start index. The failure cap is 2000000 harness calls, which is globalopt/lj38 max_force_calls. TARGET is the harness energy of codes/gmin/reference/lj38.points. EDIFF is 0.001. lj38 states energy_above_minimum 0.001, and EDIFF is that tolerance. The data file starts with MPI because the binary is the MPI build, and mpirun launches it, including the one-replica run."
 
 [gmin]
 method = "bhpt"

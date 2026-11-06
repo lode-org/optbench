@@ -347,13 +347,13 @@ def test_problem_files_use_the_fetched_cambridge_energies():
         assert energy_tolerance(problem) == 0.001
         assert int(problem["sample"]["starts"]) > 0
         assert problem["input"]["archive_path"]
-        if ident != "globalopt/lj38":
-            assert force_cap(problem) > 0
+        assert force_cap(problem) > 0
     binary = problems["globalopt/lj100-binary"]
     assert binary["potential"]["n_A"] == 42
     assert binary["potential"]["n_B"] == 58
     assert round(reference_energy(binary), 6) == pytest.approx(binary["potential"]["energy_minimum"])
     assert problems["globalopt/lj75"]["sample"]["starts"] == 200
+    assert problems["globalopt/lj38"]["convergence"]["max_force_calls"] == 2000000
     assert problems["globalopt/lj75"]["convergence"]["max_force_calls"] == 1000000
     water = problems["globalopt/tip4p10"]
     assert "TIP4P-water.html" in water["reference"]["page"]

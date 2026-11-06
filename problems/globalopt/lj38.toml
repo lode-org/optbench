@@ -4,12 +4,14 @@ suite = "globalopt"
 problem = "lj38"
 contract = "stated"
 entry_count = 5
+remark = "Success is an energy at or below the Cambridge Cluster Database N=38 minimum plus 0.001. The cap of 2000000 force calls is the cap the ranked eOn and GMIN rows already record. The 2014 eOn config states no force-call cap, and its benchmark.dat records an observed force_calls_max of 1795901."
 
 [sample]
 starts = 100
 
 [convergence]
 energy_above_minimum = 0.001
+max_force_calls = 2000000
 
 [reference]
 energy = -173.928427
