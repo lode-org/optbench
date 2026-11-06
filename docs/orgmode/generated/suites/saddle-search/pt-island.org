@@ -128,7 +128,9 @@
    <li>eOn (3.5.0) n=10, not yet on the harness counter.</li>
    <li>eOn (3.5.0) n=10, not yet on the harness counter.</li>
    </ul>
-   <p class="bench-note">Success on this problem: index 1 at eigenvalue tolerance 1e-6, force norm at the stop, barrier below 1.5 eV, and exactly one endpoint within Cartesian RMSD 0.5 of the minimized minimum.</p>
-   <p class="bench-note">The substrate pins the frame, so the RMSD is Cartesian.</p>
+   <p class="bench-note">Success on this problem: index 1 at eigenvalue tolerance 1e-6, force norm at the stop, barrier below 1.5 eV, and exactly one minimized endpoint the same structure as the minimized minimum.</p>
+   <p class="bench-note">Two structures are the same when every atom is closer than distance_difference to its own position in the other (minimum image, atoms by index), as eOn Matter::compare.</p>
+   <p class="bench-note">A connected saddle within energy_difference of the barrier of a connected saddle already found, and the same structure as it, is a repeat (eOn AKMCState.find_repeat).</p>
+   <p class="bench-note">Only connected saddles enter that table.</p>
    </section>
 #+end_export

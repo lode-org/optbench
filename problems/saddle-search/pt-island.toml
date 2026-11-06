@@ -18,6 +18,14 @@ pbc = [true, true, false]
 connected_saddles = 27
 barrier_below_eV = 1.5
 
+# The goal is a count of eOn processes: done.py counts good results, and
+# eOn judges a result with its [Structure Comparison] defaults. Those are
+# distance_difference 0.1 angstrom and energy_difference 0.01 eV. The
+# archived config.ini sets neither, so the defaults are the problem's.
+[connection]
+distance_difference = 0.1
+energy_difference = 0.01
+
 [convergence]
 norm = "l2"
 force_norm = 1.0e-3
@@ -39,7 +47,7 @@ rule = "2014 half-even mean of the starts under the cap. Failures are left out o
 [scoring.v2]
 version = "par2-bootstrap"
 cost = "one displacement search: the climb plus the two endpoint minimizations"
-success = "index 1 at eigenvalue tolerance 1e-6, force norm at the stop, barrier below 1.5 eV, and exactly one endpoint within Cartesian RMSD 0.5 of the minimized minimum. The substrate pins the frame, so the RMSD is Cartesian."
+success = "index 1 at eigenvalue tolerance 1e-6, force norm at the stop, barrier below 1.5 eV, and exactly one minimized endpoint the same structure as the minimized minimum. Two structures are the same when every atom is closer than distance_difference to its own position in the other (minimum image, atoms by index), as eOn Matter::compare. A connected saddle within energy_difference of the barrier of a connected saddle already found, and the same structure as it, is a repeat (eOn AKMCState.find_repeat). Only connected saddles enter that table."
 note = "The result file stores the cap: climb budget 1000, 64 calls of overshoot, and two endpoint budgets of 2000. The initial minimization is outside that count. An index-1 saddle that misses the link, the novelty test, or the barrier is a failure, and those reasons fall through to divergence. An archived file that records only a campaign ratio has no per-search cap, so PAR-2 is not applied to that ratio."
 counter = "harness"
 required = [
