@@ -31,6 +31,7 @@ import numpy as np
 from .connection import ProcessTable, per_atom_max, periodic_lengths, tolerances
 from .connection import connected as endpoints_connected
 from .counter import HarnessCounter
+from .displacement import displace, neighbours
 from .failures import classify_failure
 from .potserver import RgpotCounter
 from .score import half_even, score_v2
@@ -1143,7 +1144,8 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
     Each search has its own harness count: the min-mode calls plus the
     two endpoint minimizations. The repetition total also includes the
     initial minimization. Hessian calls stay in ``verify_calls``.
-    The link and the repeat test are ``optbench.connection``, with the
+    A search starts from ``optbench.displacement`` off the minimized
+    reactant. The link and the repeat test are ``optbench.connection``, with the
     problem's ``[connection]`` tolerances. Only a connected saddle
     enters the process table.
     ``work`` is unused; the searches do not extract an archive.
@@ -1160,10 +1162,14 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
     repetitions = int(search.get("repetitions", 1))
     listed = [int(part) for part in str(search.get("displace_atoms", "0,1,2,3,4,5,6")).split(",") if part.strip()]
     magnitude = float(search.get("displace_magnitude", 0.1))
+    radius = float(search["displace_radius"])
     distance_difference, energy_difference = tolerances(problem)
     lengths = periodic_lengths(cell, (problem.get("potential") or {}).get("pbc"))
     max_searches = int(search.get("max_searches", 20000))
     free = np.flatnonzero(~fixed)
+    pinned = [atom for atom in listed if fixed[atom]]
+    if pinned:
+        raise RuntimeError(f"displace atoms {pinned} are frozen")
     raw = potential_from_problem(problem)
     comments = []
     all_records = []
@@ -1222,19 +1228,14 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
                 encoding="utf-8",
             )
             partial_path.unlink(missing_ok=True)
+        reactant = positions.copy()
+        reactant[free] = minimum.reshape(-1, 3)
+        near = neighbours(reactant, lengths, radius, listed)
         while connected < goal and searches < max_searches:
             searches += 1
-            atom = int(listed[int(rng.integers(0, len(listed)))])
-            slots = np.flatnonzero(free == atom)
-            if len(slots) != 1:
-                raise RuntimeError(f"displace atom {atom} is not one free atom")
-            slot = int(slots[0])
-            direction = rng.normal(size=3)
-            direction = direction / np.linalg.norm(direction)
-            x0 = minimum.copy()
-            x0[3 * slot : 3 * slot + 3] += magnitude * direction
-            kick = np.zeros_like(x0)
-            kick[3 * slot : 3 * slot + 3] = direction
+            epicenter, shift, seed = displace(rng, ~fixed, listed, near, magnitude)
+            x0 = minimum + shift[free].reshape(-1)
+            kick = seed[free].reshape(-1)
             moved = positions.copy()
             moved[free] = x0.reshape(-1, 3)
             spec = {
@@ -1269,6 +1270,8 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
                 "comparable": True,
                 "success": False,
                 "reasons": ["force_norm"],
+                "epicenter": epicenter,
+                "displaced_atoms": int(np.count_nonzero(np.any(shift != 0.0, axis=1))),
                 "converged": bool(outcome.get("converged", False)),
                 "rotations": int(outcome.get("rotations") or 0),
                 "library_evaluations": int(outcome.get("library_evaluations") or 0),
