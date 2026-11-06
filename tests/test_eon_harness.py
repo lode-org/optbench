@@ -1,12 +1,28 @@
 """Bridge and grid checks for the r2549 harness."""
 
 import os
+import shutil
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
+
+import pytest
 
 from optbench.extpot import format_extpot
 from optbench.potserver import PotServer
 
 ROOT = Path(__file__).resolve().parents[1]
+
+_BUILD_AND_RUN = """
+import subprocess, sys
+from optbench.eon_harness import bridge_binary
+print("ready", flush=True)
+sys.stdin.readline()
+path = bridge_binary()
+subprocess.run([str(path)], cwd=sys.argv[1], capture_output=True)
+print(path, flush=True)
+"""
 
 
 def test_c_bridge_matches_the_python_reply(tmp_path, monkeypatch):
@@ -31,8 +47,6 @@ def test_c_bridge_matches_the_python_reply(tmp_path, monkeypatch):
         ]
     )
     (tmp_path / "from_eon_to_extpot").write_text(request + "\n", encoding="utf-8")
-    import subprocess
-
     proc = subprocess.run([str(bridge_binary())], cwd=tmp_path, check=False, text=True, capture_output=True)
     server.stop()
     assert proc.returncode == 0, proc.stderr
@@ -41,6 +55,54 @@ def test_c_bridge_matches_the_python_reply(tmp_path, monkeypatch):
     got = [[float(part) for part in line.split()] for line in reply.splitlines() if line.strip()]
     want = [[float(part) for part in line.split()] for line in expected.splitlines() if line.strip()]
     assert got == want
+
+
+def test_bridge_binary_follows_tmpdir(tmp_path, monkeypatch):
+    from optbench.eon_harness import bridge_binary
+
+    if shutil.which("cc") is None:
+        pytest.skip("cc is not installed")
+    monkeypatch.setenv("TMPDIR", str(tmp_path))
+    monkeypatch.setattr(tempfile, "tempdir", None)
+    path = bridge_binary()
+    assert path.is_relative_to(tmp_path)
+    assert os.access(path, os.X_OK)
+
+
+def test_concurrent_bridge_builds_do_not_collide(tmp_path):
+    """Eight cold builds start together, half under each of two ``TMPDIR`` values."""
+    if shutil.which("cc") is None:
+        pytest.skip("cc is not installed")
+    roots = [tmp_path / "a", tmp_path / "b"]
+    for root in roots:
+        root.mkdir()
+    workers = []
+    for index in range(8):
+        env = {**os.environ, "TMPDIR": str(roots[index % 2])}
+        env.pop("OPTBENCH_POTSERVER", None)
+        workers.append(
+            subprocess.Popen(
+                [sys.executable, "-c", _BUILD_AND_RUN, str(tmp_path)],
+                cwd=ROOT,
+                env=env,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+        )
+    for worker in workers:
+        assert worker.stdout.readline().strip() == "ready", worker.stderr.read()
+    for worker in workers:
+        worker.stdin.write("\n")
+        worker.stdin.flush()
+    results = [worker.communicate(timeout=120) for worker in workers]
+    failures = [err for worker, (_out, err) in zip(workers, results) if worker.returncode != 0]
+    assert not failures, failures[0]
+    paths = {Path(out.strip()) for out, _err in results}
+    for path in paths:
+        assert [entry.name for entry in path.parent.iterdir()] == [path.name]
+        assert os.access(path, os.X_OK)
 
 
 def test_svn_default_grid_is_one_start():

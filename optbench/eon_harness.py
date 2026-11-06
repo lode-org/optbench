@@ -131,22 +131,30 @@ def _on_alarm(signum, frame):
 
 
 def bridge_binary() -> Path:
-    """Compile the C ext_pot forwarder once per source hash."""
+    """Compile the C ext_pot forwarder once per source hash.
+
+    The binary is ``optbench-extpot-bridge/<hash>/extpot-bridge`` under
+    ``tempfile.gettempdir()``, so ``TMPDIR`` moves it.
+    Each build links in its own scratch directory beside the binary and is
+    renamed into place, so concurrent callers never write, rename, or run a
+    partial file.
+    """
     source = Path(__file__).with_name("extpot_bridge.c")
     digest = hashlib.sha256(source.read_bytes()).hexdigest()[:16]
-    dest = Path("/tmp/optbench-extpot-bridge") / digest / "extpot-bridge"
+    dest = Path(tempfile.gettempdir()) / "optbench-extpot-bridge" / digest / "extpot-bridge"
     if dest.is_file():
         return dest
     dest.parent.mkdir(parents=True, exist_ok=True)
-    temporary = dest.with_suffix(".tmp")
-    subprocess.run(
-        ["cc", "-O2", "-o", str(temporary), str(source)],
-        check=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
-    temporary.replace(dest)
+    with tempfile.TemporaryDirectory(prefix=".extpot-bridge.", dir=dest.parent) as scratch:
+        built = Path(scratch) / dest.name
+        subprocess.run(
+            ["cc", "-O2", "-o", str(built), str(source)],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        os.replace(built, dest)
     return dest
 
 
