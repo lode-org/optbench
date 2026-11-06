@@ -20,6 +20,7 @@ max_iterations = 1000
 
 [ini.SaddleSearch]
 min_mode_method = "dimer"
+max_iterations = 1000
 dr = 0.001
 rotation_tol = 0.001
 max_rotations = 10

@@ -14,3 +14,12 @@ A search draws one listed atom and moves it and every free atom closer than `dis
 The min-mode seed is a second draw on the same atoms, as the 2014 `random_mode` default.
 The searches used to kick one listed atom by 0.1 Å along the seed.
 Each search record stores its epicenter and the number of displaced atoms.
+
+An rgsaddle `saddle-search/pt-island` climb stops after `SaddleSearch.max_iterations` min-mode steps, 1000 as the archived eOn `[Saddle Search] max_iterations`.
+It used to stop at 1000 force calls, which comes to about 45 dimer steps.
+The endpoint minimizations start `Optimizer.max_move` along the mode on either side, as eOn `processSearchMinimizationOffset`, and each gets `Optimizer.max_iterations` calls.
+A search fails with `bad_minima` when an endpoint minimization fails to converge.
+After the minus side fails, the search skips the plus side.
+The per-search cap is the step bound times the most force calls one rgsaddle 0.2.2 step can spend, plus both endpoint budgets.
+That cap comes to 48000 for the default dimer templates and 30000 for Lanczos.
+Each search records its steps and its largest per-step call count, and a step over that ceiling stops the run.

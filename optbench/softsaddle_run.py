@@ -26,8 +26,6 @@ from .connection import connected as endpoints_connected
 from .failures import classify_failure
 from .rgsaddle_minmode import (
     HarnessSurface,
-    _SADDLE_CLIMB_OVERSHOOT,
-    _SADDLE_ENDPOINT_BUDGET,
     _bind,
     _finite_point,
     _geometries,
@@ -62,6 +60,11 @@ INITIAL_USER = 2
 INITIAL_PREVIOUS = 3
 
 CLIMB_BUDGET = 1000
+# Endpoint minimizations sit outside the climb cap. One min-mode step can
+# finish after the climb counter has crossed max_iterations, so the
+# per-search PAR-2 cap leaves room for that step.
+_SADDLE_ENDPOINT_BUDGET = 2000
+_SADDLE_CLIMB_OVERSHOOT = 64
 HYPER_SOURCE = "eb78f6d9cde1e9aae308e3f8ecec777fdb655e3432e356c9da339b950bd3267a"
 _LIBS: dict[str, ctypes.CDLL] = {}
 
