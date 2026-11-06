@@ -155,6 +155,15 @@ def _class_name(template_id: str) -> str:
     return "Airss" + "".join(part.capitalize() for part in slug.replace("_", "-").split("-"))
 
 
+def _stated_cap(problem_id: str) -> int | None:
+    from optbench.campaign import resolve_problem
+
+    stated = (resolve_problem(ROOT, problem_id).get("convergence") or {}).get("max_force_calls")
+    if stated in (None, ""):
+        return None
+    return int(stated)
+
+
 def _benchmark(template: dict):
     bound = template
 
@@ -162,6 +171,7 @@ def _benchmark(template: dict):
         params = [[SEED], selected_starts(str(bound["id"]))]
         template_id = str(bound["id"])
         problem_id = str(bound["problem"])
+        cap = _stated_cap(str(bound["problem"]))
 
     name = _class_name(str(template["id"]))
     _Benchmark.__name__ = name
