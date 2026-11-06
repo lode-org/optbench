@@ -23,3 +23,16 @@ After the minus side fails, the search skips the plus side.
 The per-search cap is the step bound times the most force calls one rgsaddle 0.2.2 step can spend, plus both endpoint budgets.
 That cap comes to 48000 for the default dimer templates and 30000 for Lanczos.
 Each search records its steps and its largest per-step call count, and a step over that ceiling stops the run.
+
+The Morse surface gives the same bits on every x86-64-v2 host.
+Its pair loop now builds with `-march=x86-64-v2 -O2 -ffp-contract=off -fno-fast-math` instead of `-O3 -march=native`.
+With the old flags, gcc took an Advanced Vector Extensions (AVX) path on AVX2 hosts.
+That path used Fused Multiply Add (FMA) and four-lane sums.
+Without that path, the loop runs the operations of the NumPy reference in its order.
+That order is `(x² + z²) + y²`, NumPy's pairwise sum for the energy, and the two `np.add.at` passes for the gradient.
+The loop and the reference both call `optbench/svml_exp.c`, a scalar transcription of NumPy's AVX-512 exp.
+Neither glibc nor NumPy can then pick a different exp for the loop by CPU.
+On the 112 committed Morse starts, the loop differed from the reference in every gradient, by up to 1.7e-14.
+It now equals the reference bit for bit.
+The reference equals the NumPy code behind the committed rows wherever `np.exp` runs its AVX-512 loop.
+Without `gcc`, the surfaces now raise an error, because the reference needs the same exp.

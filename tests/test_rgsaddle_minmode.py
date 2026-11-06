@@ -131,7 +131,7 @@ def test_morse_smooth_linear_is_flat_at_the_cutoff():
     assert np.linalg.norm(gradient) == pytest.approx(0.0, abs=1e-10)
 
 
-def test_morse_pair_loop_matches_the_numpy_sum():
+def test_morse_pair_loop_equals_the_numpy_sum():
     from optbench.surfaces import _morse_numpy
 
     positions = np.array(
@@ -150,21 +150,13 @@ def test_morse_pair_loop_matches_the_numpy_sum():
         cell=np.array([12.0, 11.0, 8.0]),
         pbc=(True, True, False),
     )
-    energy, gradient = morse_smooth_linear(positions, **kwargs)
-    reference_energy, reference_gradient = _morse_numpy(positions, **kwargs)
-    assert energy == pytest.approx(reference_energy, abs=1e-9, rel=1e-12)
-    assert gradient == pytest.approx(reference_gradient, abs=1e-9)
     shifted = positions.copy()
-    shifted[1] += np.array([0.05, -0.02, 0.01])
-    energy, gradient = morse_smooth_linear(shifted, **kwargs)
-    reference_energy, reference_gradient = _morse_numpy(shifted, **kwargs)
-    assert energy == pytest.approx(reference_energy, abs=1e-9, rel=1e-12)
-    assert gradient == pytest.approx(reference_gradient, abs=1e-9)
-    shifted[0] += np.array([1.4, -0.8, 0.6])
-    energy, gradient = morse_smooth_linear(shifted, **kwargs)
-    reference_energy, reference_gradient = _morse_numpy(shifted, **kwargs)
-    assert energy == pytest.approx(reference_energy, abs=1e-9, rel=1e-12)
-    assert gradient == pytest.approx(reference_gradient, abs=1e-9)
+    for move in ([0, 0.0, 0.0, 0.0], [1, 0.05, -0.02, 0.01], [0, 1.4, -0.8, 0.6]):
+        shifted[int(move[0])] += np.array(move[1:])
+        energy, gradient = morse_smooth_linear(shifted, **kwargs)
+        reference_energy, reference_gradient = _morse_numpy(shifted, **kwargs)
+        assert np.float64(energy).tobytes() == np.float64(reference_energy).tobytes()
+        assert gradient.tobytes() == reference_gradient.tobytes()
 
 
 def test_read_con_marks_fixed_atoms_and_the_box():
