@@ -46,14 +46,30 @@ def _build_dir() -> Path:
     return root
 
 
+def _link(command: list[str], dest: Path, **run) -> subprocess.CompletedProcess:
+    """Run ``command -o <scratch>`` and move a clean build onto ``dest``.
+
+    Each call writes into its own directory beside ``dest``, so concurrent
+    builders never share a file and ``dest`` only ever holds a complete
+    build. ``run`` goes to ``subprocess.run``.
+    """
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix=f".{dest.name}.", dir=dest.parent) as scratch:
+        built = Path(scratch) / "out"
+        result = subprocess.run([*command, "-o", str(built)], **run)
+        if result.returncode == 0:
+            built.chmod(built.stat().st_mode | 0o755)
+            os.replace(built, dest)
+    return result
+
+
 def _compile(source: Path, dest: Path, extra: list[str]) -> bool:
     gcc = shutil.which("gcc")
     if gcc is None or not source.is_file():
         return False
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    temporary = dest.with_suffix(dest.suffix + ".tmp")
-    result = subprocess.run(
-        [gcc, * _CFLAGS, *extra, "-o", str(temporary), str(source), "-lm"],
+    result = _link(
+        [gcc, *_CFLAGS, *extra, str(source), "-lm"],
+        dest,
         check=False,
         capture_output=True,
         text=True,
@@ -61,11 +77,8 @@ def _compile(source: Path, dest: Path, extra: list[str]) -> bool:
     log = dest.with_suffix(dest.suffix + ".log")
     if result.returncode != 0:
         log.write_text(result.stderr, encoding="utf-8")
-        temporary.unlink(missing_ok=True)
         return False
     log.unlink(missing_ok=True)
-    temporary.replace(dest)
-    dest.chmod(dest.stat().st_mode | 0o755)
     return True
 
 

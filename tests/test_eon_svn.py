@@ -1,11 +1,22 @@
 """eOn SVN templates stay on the r2549 pin and the problem grids."""
 
+import ctypes
+import threading
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import tomllib
 
 from benchmarks.bench_eon_develop import lj_cut
-from benchmarks.bench_eon_svn import MORSE_A, MORSE_CUTOFF, MORSE_D, MORSE_RE, SPECS, _morse_fast
+from benchmarks.bench_eon_svn import (
+    MORSE_A,
+    MORSE_CUTOFF,
+    MORSE_D,
+    MORSE_RE,
+    SPECS,
+    _morse_fast,
+    _morse_path,
+)
 from optbench.campaign import _check_stop, load_template, resolve_problem
 from optbench.potentials import lennard_jones
 
@@ -70,6 +81,23 @@ def test_c_morse_matches_r2549_morse():
         assert abs(left - right) < 1e-8
     bare, _bare_forces = _morse_fast(positions)
     assert abs(bare - _eon_morse(positions)[0]) < 1e-9
+
+
+def test_concurrent_morse_builds_share_one_library(tmp_path, monkeypatch):
+    monkeypatch.setenv("OPTBENCH_FASTPOT_DIR", str(tmp_path))
+    workers = 6
+    gate = threading.Barrier(workers)
+
+    def build(_index):
+        gate.wait()
+        return _morse_path()
+
+    with ThreadPoolExecutor(workers) as pool:
+        paths = set(pool.map(build, range(workers)))
+    assert len(paths) == 1
+    (library,) = paths
+    assert [entry.name for entry in tmp_path.iterdir()] == [library.name]
+    assert ctypes.CDLL(str(library)).morse_eon_flat
 
 
 def test_lj_cut_matches_the_noise_kernel():

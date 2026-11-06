@@ -163,6 +163,24 @@ _MORSE_LIB = None
 _MORSE_TRIED = False
 
 
+def _morse_path(source: Path) -> Path:
+    """``morse_pair.c`` built once per source and flags, published whole."""
+    from optbench.fastpot import _link
+
+    flags = "-O3 -march=native -fPIC -shared"
+    digest = hashlib.sha256(source.read_bytes() + flags.encode()).hexdigest()[:16]
+    library = Path(tempfile.gettempdir()) / f"optbench-morse-{digest}.so"
+    if not library.is_file():
+        _link(
+            ["gcc", *flags.split(), str(source), "-lm"],
+            library,
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    return library
+
+
 def _morse_library():
     """Compile the pair loop once. A missing compiler keeps the NumPy sum."""
     global _MORSE_LIB, _MORSE_TRIED
@@ -172,28 +190,10 @@ def _morse_library():
     source = Path(__file__).with_name("morse_pair.c")
     if not source.is_file():
         return None
-    flags = "-O3 -march=native -fPIC -shared"
-    digest = hashlib.sha256(source.read_bytes() + flags.encode()).hexdigest()[:16]
-    library = Path(tempfile.gettempdir()) / f"optbench-morse-{digest}.so"
-    if not library.is_file():
-        try:
-            subprocess.check_call(
-                [
-                    "gcc",
-                    "-O3",
-                    "-march=native",
-                    "-fPIC",
-                    "-shared",
-                    "-o",
-                    str(library),
-                    str(source),
-                    "-lm",
-                ],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-        except (OSError, subprocess.CalledProcessError):
-            return None
+    try:
+        library = _morse_path(source)
+    except (OSError, subprocess.CalledProcessError):
+        return None
     import ctypes
 
     loaded = ctypes.CDLL(str(library))

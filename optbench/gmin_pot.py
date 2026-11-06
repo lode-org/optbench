@@ -16,11 +16,10 @@ the float64 gradient. Status 0 is a result, 1 is the force-call cap
 from __future__ import annotations
 
 import ctypes
+import hashlib
 import math
 import socket
 import struct
-import subprocess
-import tempfile
 import threading
 from collections.abc import Callable
 from pathlib import Path
@@ -195,6 +194,23 @@ class GminServer:
 
 
 _LJ40 = None
+_LJ40_FLAGS = ("-O3", "-shared", "-fPIC")
+
+
+def _lj40_path() -> Path:
+    """``codes/gmin/lj40.c`` built once per source and flags.
+
+    The library sits in the fastpot build directory under a hash of both,
+    so another checkout's kernel is never loaded.
+    """
+    from optbench.fastpot import _build_dir, _link
+
+    source = Path(__file__).resolve().parents[1] / "codes" / "gmin" / "lj40.c"
+    digest = hashlib.sha256(source.read_bytes() + " ".join(_LJ40_FLAGS).encode()).hexdigest()[:16]
+    library = _build_dir() / f"lj40-{digest}.so"
+    if not library.is_file():
+        _link(["gcc", *_LJ40_FLAGS, str(source)], library, check=True)
+    return library
 
 
 def lennard_jones_compiled(coords: np.ndarray) -> tuple[float, np.ndarray]:
@@ -206,13 +222,7 @@ def lennard_jones_compiled(coords: np.ndarray) -> tuple[float, np.ndarray]:
     """
     global _LJ40
     if _LJ40 is None:
-        source = Path(__file__).resolve().parents[1] / "codes" / "gmin" / "lj40.c"
-        library = Path(tempfile.gettempdir()) / "optbench-lj40.so"
-        if not library.is_file() or library.stat().st_mtime < source.stat().st_mtime:
-            subprocess.check_call(
-                ["gcc", "-O3", "-shared", "-fPIC", str(source), "-o", str(library)],
-            )
-        loaded = ctypes.CDLL(str(library))
+        loaded = ctypes.CDLL(str(_lj40_path()))
         loaded.optbench_lj40.argtypes = [
             ctypes.c_int,
             ctypes.POINTER(ctypes.c_double),

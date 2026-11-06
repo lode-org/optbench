@@ -15,6 +15,7 @@ The default asv grid is one start. The campaign lists are
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import os
@@ -79,14 +80,32 @@ def _bridge() -> Path:
     if not stale:
         return _BRIDGE
     if not dest.is_file() or (source.is_file() and dest.stat().st_mtime < source.stat().st_mtime):
-        temporary = dest.with_suffix(".tmp")
-        subprocess.run(["gcc", "-O2", "-o", str(temporary), str(source)], check=True)
-        temporary.replace(dest)
+        from optbench.fastpot import _link
+
+        _link(["gcc", "-O2", str(source)], dest, check=True)
     _BRIDGE = dest
     return dest
 
 
 MORSE_CUTOFF = 9.5
+_MORSE_FLAGS = ("-O2", "-shared", "-fPIC")
+
+
+def _morse_path() -> Path:
+    """The compiled ``morse_cluster.c``, built once per source and flags.
+
+    The name carries a hash of both, so another checkout's kernel is never
+    loaded. Each build links in its own directory and is renamed into
+    place, so a concurrent run never opens a partial file.
+    """
+    from optbench.fastpot import _build_dir, _link
+
+    source = ROOT / "optbench" / "morse_cluster.c"
+    digest = hashlib.sha256(source.read_bytes() + " ".join(_MORSE_FLAGS).encode()).hexdigest()[:16]
+    dest = _build_dir() / f"eon-svn-morse-{digest}.so"
+    if not dest.is_file():
+        _link(["gcc", *_MORSE_FLAGS, str(source), "-lm"], dest, check=True)
+    return dest
 
 
 def _morse_lib():
@@ -100,16 +119,7 @@ def _morse_lib():
     global _MORSE_LIB
     if _MORSE_LIB is not None:
         return _MORSE_LIB
-    source = ROOT / "optbench" / "morse_cluster.c"
-    dest = Path(tempfile.gettempdir()) / "optbench-eon-svn-morse.so"
-    if not dest.is_file() or dest.stat().st_mtime < source.stat().st_mtime:
-        temporary = dest.with_suffix(".so.tmp")
-        subprocess.run(
-            ["gcc", "-O2", "-shared", "-fPIC", "-o", str(temporary), str(source), "-lm"],
-            check=True,
-        )
-        temporary.replace(dest)
-    lib = ctypes.CDLL(str(dest))
+    lib = ctypes.CDLL(str(_morse_path()))
     lib.morse_eon_flat.argtypes = [
         ctypes.c_int,
         ctypes.POINTER(ctypes.c_double),
