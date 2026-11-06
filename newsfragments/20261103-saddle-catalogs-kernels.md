@@ -43,3 +43,14 @@ These match the fields of the eOn Adaptive Kinetic Monte Carlo (AKMC) rows.
 One parameter of a class is one catalog repetition, named by the seed of its displacements.
 A cap failure is a repetition with fewer than 27 connected saddles.
 The `run_template` function takes `repetition` to run one repetition of the catalog.
+
+The Lennard-Jones kernels give the same bits on every x86-64-v2 host.
+The harness `lj40` kernel, `surfaces.lennard_jones`, took `(σ/r)^6` from `np.power`, which NumPy dispatches by CPU.
+With the AVX-512 loops of NumPy off, that kernel changed on 1549 of the 1602 committed LJ38 starts.
+It now calls `optbench/svml_pow.c`, a scalar transcription of the Short Vector Math Library (SVML) power routine in NumPy.
+Its output matches `np.power` wherever NumPy runs that routine.
+Its squared distance follows the einsum order, `(x² + z²) + y²`.
+The fastpot and GMIN `lj40.c` kernels now build with `-march=x86-64-v2 -O2 -ffp-contract=off -fno-fast-math`.
+Their build cache key now includes the flags.
+The fastpot cutoff shift, `lj_shift`, now rounds `(psi/cutoff)^6` once from its exact value instead of calling libm `pow`.
+That gives the same bits for every cutoff the harness uses.

@@ -94,11 +94,17 @@ def lennard_jones(
     cell: Array | None = None,
     pbc: tuple[bool, bool, bool] = (False, False, False),
 ) -> tuple[float, Array]:
-    """Energy and ``dE/dx`` for a cutoff Lennard-Jones cluster."""
+    """Energy and ``dE/dx`` for a cutoff Lennard-Jones cluster.
+
+    The squared distance is ``(x² + z²) + y²``, the order
+    ``np.einsum("ija,ija->ij")`` used when the committed rows were made.
+    ``(σ/r)^6`` is ``shared_pow``, the value ``ratio**6`` has on hosts
+    where NumPy runs its AVX-512 power loop.
+    """
     pos = np.asarray(positions, dtype=np.float64)
     count = len(pos)
     delta = minimum_image(pos[:, None, :] - pos[None, :, :], cell if cell is not None else np.zeros(3), pbc)
-    distance2 = np.einsum("ija,ija->ij", delta, delta)
+    distance2 = (delta[..., 0] * delta[..., 0] + delta[..., 2] * delta[..., 2]) + delta[..., 1] * delta[..., 1]
     upper = np.triu_indices(count, k=1)
     pair2 = distance2[upper]
     cutoff2 = cutoff * cutoff
@@ -109,7 +115,7 @@ def lennard_jones(
     radius2 = pair2[chosen]
     radius = np.sqrt(radius2)
     ratio = sigma / radius
-    sixth = ratio**6
+    sixth = shared_pow(ratio, 6.0)
     twelfth = sixth * sixth
     energy = float(4.0 * epsilon * np.sum(twelfth - sixth))
     slope = 24.0 * epsilon / radius * (sixth - 2.0 * twelfth)
@@ -136,16 +142,18 @@ NATIVE_FLAGS = (
     "-fPIC",
     "-shared",
 )
-_NATIVE_SOURCES = ("morse_pair.c", "svml_exp.c")
-_NATIVE_HEADERS = ("svml_exp.h",)
+_NATIVE_SOURCES = ("morse_pair.c", "svml_exp.c", "svml_pow.c")
+_NATIVE_HEADERS = ("svml_exp.h", "svml_pow.h")
 _NATIVE_LIB = None
 
 
 def native_library():
-    """The Morse pair loop and the exp it shares with the NumPy reference.
+    """The Morse pair loop, and the exp and pow the surfaces share.
 
-    Both surfaces call this exp, so a compiler is required: np.exp and
-    libm exp pick a code path by CPU and give different last bits.
+    The Morse loop and its NumPy reference call this exp, and the
+    Lennard-Jones surface calls this pow, so a compiler is required:
+    np.exp, np.power and libm pick a code path by CPU and give different
+    last bits.
     """
     global _NATIVE_LIB
     if _NATIVE_LIB is not None:
@@ -157,7 +165,7 @@ def native_library():
     digest = hashlib.sha256(" ".join(NATIVE_FLAGS).encode())
     for path in [*sources, *(here / name for name in _NATIVE_HEADERS)]:
         digest.update(path.read_bytes())
-    library = Path(tempfile.gettempdir()) / f"optbench-morse-{digest.hexdigest()[:16]}.so"
+    library = Path(tempfile.gettempdir()) / f"optbench-surfaces-{digest.hexdigest()[:16]}.so"
     if not library.is_file():
         partial = library.with_name(f"{library.name}.{os.getpid()}.tmp")
         try:
@@ -168,9 +176,9 @@ def native_library():
                 text=True,
             )
         except FileNotFoundError as error:
-            raise RuntimeError("the Morse surface needs gcc to build its pair loop") from error
+            raise RuntimeError("the surfaces need gcc to build their exp, pow and Morse pair loop") from error
         except subprocess.CalledProcessError as error:
-            raise RuntimeError(f"gcc could not build the Morse pair loop: {error.stderr.strip()}") from error
+            raise RuntimeError(f"gcc could not build the surface library: {error.stderr.strip()}") from error
         partial.replace(library)
     loaded = ctypes.CDLL(str(library))
     double = ctypes.c_double
@@ -179,6 +187,8 @@ def native_library():
     loaded.optbench_exp.argtypes = [double]
     loaded.optbench_exp_array.restype = None
     loaded.optbench_exp_array.argtypes = [pointer, pointer, ctypes.c_long]
+    loaded.optbench_pow_scalar_array.restype = None
+    loaded.optbench_pow_scalar_array.argtypes = [pointer, double, pointer, ctypes.c_long]
     loaded.morse_pair_energy.restype = ctypes.c_int
     loaded.morse_pair_energy.argtypes = [
         pointer,
@@ -201,6 +211,24 @@ def shared_exp(values: Array) -> Array:
     pointer = ctypes.POINTER(ctypes.c_double)
     native_library().optbench_exp_array(
         given.ctypes.data_as(pointer), out.ctypes.data_as(pointer), given.size
+    )
+    return out
+
+
+def shared_pow(values: Array, exponent: float) -> Array:
+    """``values ** exponent`` for a float64 array and a scalar exponent.
+
+    The result is NumPy's float64 power loop on AVX-512 hosts, on every
+    host: its fast paths for exponents -1, 0, 0.5, 1 and 2, and the SVML
+    power routine otherwise.
+    """
+    import ctypes
+
+    given = np.ascontiguousarray(values, dtype=np.float64)
+    out = np.empty_like(given)
+    pointer = ctypes.POINTER(ctypes.c_double)
+    native_library().optbench_pow_scalar_array(
+        given.ctypes.data_as(pointer), float(exponent), out.ctypes.data_as(pointer), given.size
     )
     return out
 
