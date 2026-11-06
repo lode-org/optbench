@@ -2,39 +2,7 @@
   "client_counter": [],
   "full_n": 13,
   "id": "hTST/Pt",
-  "profile": {
-    "area_log10": {
-      "eOn (3.6.0) \u00b7 Dimer L-BFGS": 1.0651830615802411,
-      "eOn (3.6.0) \u00b7 Lanczos L-BFGS": 1.0767611383365483
-    },
-    "rho": {
-      "eOn (3.6.0) \u00b7 Dimer L-BFGS": [
-        0.5384615384615384,
-        0.7692307692307693,
-        1.0,
-        1.0,
-        1.0
-      ],
-      "eOn (3.6.0) \u00b7 Lanczos L-BFGS": [
-        0.46153846153846156,
-        0.8461538461538461,
-        1.0,
-        1.0,
-        1.0
-      ]
-    },
-    "solved": {
-      "eOn (3.6.0) \u00b7 Dimer L-BFGS": 1.0,
-      "eOn (3.6.0) \u00b7 Lanczos L-BFGS": 1.0
-    },
-    "taus": [
-      1.0,
-      2.0,
-      4.0,
-      8.0,
-      16.0
-    ]
-  },
+  "profile_gap": "No performance profile. The ranked rows do not share one start set.",
   "ranked": [
     {
       "asv_commit": "",
@@ -540,6 +508,56 @@
       "success_rate": null,
       "template": "",
       "tuning": ""
+    },
+    {
+      "asv_commit": "",
+      "call_unit": "total",
+      "cap": 20000000,
+      "code": "tsase",
+      "code_version": "1.0 (98aac60)",
+      "commit": "98aac60b5d9905e81ee4e6b8c385f169258d0218",
+      "counter": "harness",
+      "entry": "tsase-98aac60-htst-pt-quench-stock",
+      "failures": {
+        "cap": 0,
+        "crash": 0,
+        "divergence": 0,
+        "wrong_stationary": 0
+      },
+      "family": "band",
+      "family_rank": 2,
+      "fd_calls": 0.0,
+      "full_n": 1,
+      "hessian_calls": 0.0,
+      "kind": "htst",
+      "label": "TSASE (1.0 (98aac60)) \u00b7 quenchDimer+neb-QM",
+      "max_calls": 1712105.0,
+      "mean_calls": 1712105.0,
+      "mean_per_image": null,
+      "median": 1712105.0,
+      "median_calls": 1712105.0,
+      "median_high": 1712105.0,
+      "median_low": 1712105.0,
+      "median_per_image": null,
+      "method": "quenchDimer+neb-QM",
+      "min_calls": 1712105.0,
+      "n": 1,
+      "nfailed": 0,
+      "note": "starts",
+      "origin": "harness",
+      "par2_mean": 1712105.0,
+      "path": "results/campaign/tsase-98aac60-htst-pt-quench-stock.dat",
+      "problem": "hTST/Pt",
+      "published": null,
+      "rank_cost": 1712105.0,
+      "registry_match": true,
+      "scored": true,
+      "short": false,
+      "short_reason": "",
+      "source": "campaign",
+      "success_rate": 1.0,
+      "template": "tsase/htst-pt-quench-stock",
+      "tuning": "stock"
     },
     {
       "asv_commit": "",
