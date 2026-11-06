@@ -73,6 +73,9 @@ def _assert_source_commit(expected: str) -> None:
 
 _LIB = None
 
+# Repetition ``rep`` of the saddle-search catalog draws from seed CATALOG_SEED + rep.
+CATALOG_SEED = 20261015
+
 
 def _load():
     import ctypes
@@ -985,8 +988,20 @@ def _summarize(records: list[dict], template: dict, cap: int, problem_id: str) -
     return "\n".join(lines) + "\n", metrics
 
 
-def run_template(root: Path, problem: dict, template: dict, *, output: Path, workers: int = 1, work: Path | None = None) -> dict:
-    """Run one rgsaddle template on every geometry of ``problem``."""
+def run_template(
+    root: Path,
+    problem: dict,
+    template: dict,
+    *,
+    output: Path,
+    workers: int = 1,
+    work: Path | None = None,
+    repetition: int | None = None,
+) -> dict:
+    """Run one rgsaddle template on every geometry of ``problem``.
+
+    ``repetition`` selects one repetition of the saddle-search catalog.
+    """
     from .campaign import _check_stop
 
     _assert_source_commit(str(template.get("commit", "")))
@@ -997,7 +1012,11 @@ def run_template(root: Path, problem: dict, template: dict, *, output: Path, wor
     scratch = work or output.parent / "work" / template["id"].replace("/", "-")
     scratch.mkdir(parents=True, exist_ok=True)
     if problem["id"] == "saddle-search/pt-island":
-        return _run_saddle_search(root, problem, template, output=output, force_tol=force_tol, work=scratch)
+        return _run_saddle_search(
+            root, problem, template, output=output, force_tol=force_tol, work=scratch, repetition=repetition
+        )
+    if repetition is not None:
+        raise RuntimeError(f"{problem['id']} has no repetitions to select")
     rows = _geometries(root, problem, scratch)
     expected = int((problem.get("sample") or {}).get("starts") or len(rows))
     if len(rows) != expected:
@@ -1154,7 +1173,16 @@ def _append_partial(path: Path, record: dict) -> None:
         handle.flush()
 
 
-def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Path, force_tol: float, work: Path) -> dict:
+def _run_saddle_search(
+    root: Path,
+    problem: dict,
+    template: dict,
+    *,
+    output: Path,
+    force_tol: float,
+    work: Path,
+    repetition: int | None = None,
+) -> dict:
     """Displace the Pt island until the goal count of connected index-1 saddles.
 
     Each search has its own harness count: the min-mode calls plus the
@@ -1203,11 +1231,14 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
     pinned = [atom for atom in listed if fixed[atom]]
     if pinned:
         raise RuntimeError(f"displace atoms {pinned} are frozen")
+    if repetition is not None and not 1 <= repetition <= repetitions:
+        raise RuntimeError(f"{template['id']} has repetitions 1 to {repetitions}, not {repetition}")
     raw = potential_from_problem(problem)
     comments = []
+    summaries = []
     all_records = []
     failed_reps = 0
-    for rep in range(1, repetitions + 1):
+    for rep in [repetition] if repetition is not None else range(1, repetitions + 1):
         header_path, partial_path = _checkpoint_paths(output)
         header = json.loads(header_path.read_text(encoding="utf-8")) if header_path.is_file() else None
         saved = _load_partial(partial_path) if header and header.get("template") == template["id"] and int(header.get("rep", 0)) == rep else []
@@ -1226,7 +1257,7 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
             not_connected = sum(1 for row in saved if "not_connected" in (row.get("reasons") or []))
             connected = sum(1 for row in saved if row.get("success"))
             searches = len(saved)
-            rng = _rng_restore(saved[-1]["rng_state"]) if saved else np.random.default_rng(20261015 + rep)
+            rng = _rng_restore(saved[-1]["rng_state"]) if saved else np.random.default_rng(CATALOG_SEED + rep)
             for row in saved:
                 kept = {key: value for key, value in row.items() if key not in {"rng_state", "saddle_x", "climb_calls"}}
                 all_records.append(kept)
@@ -1240,7 +1271,7 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
             min_energy, _min_grad = potential.energy_forces(minimum)
             minimize_calls = int(potential.calls)
             resumed_outer = 0
-            rng = np.random.default_rng(20261015 + rep)
+            rng = np.random.default_rng(CATALOG_SEED + rep)
             found = ProcessTable(lengths, distance_difference, energy_difference)
             not_connected = 0
             connected = 0
@@ -1400,16 +1431,28 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
             failed_reps += 1
         # done.py: the share of searches that were not "Not Connected".
         fraction = (searches - not_connected) / searches if searches else 0.0
+        summaries.append(
+            {
+                "repetition": rep,
+                "seed": CATALOG_SEED + rep,
+                "force_calls": total_calls,
+                "unique_saddles": len(found),
+                "fraction_connected": fraction,
+                "total_searches": searches,
+                "connected": connected,
+                "goal": goal,
+                "reached": connected >= goal,
+                "minimize_calls": minimize_calls,
+                "minimum_converged": bool(min_ok),
+            }
+        )
         comments.append(
             f"# rep {rep} force_calls {total_calls} unique_saddles {len(found)} "
             f"fraction_connected {fraction} total_searches {searches} "
             f"connected {connected} minimize_calls {minimize_calls} "
-            f"minimum_converged {int(min_ok)} seed {20261015 + rep}"
+            f"minimum_converged {int(min_ok)} seed {CATALOG_SEED + rep}"
         )
-    totals = []
-    for line in comments:
-        parts = line.split()
-        totals.append(int(parts[parts.index("force_calls") + 1]))
+    totals = [summary["force_calls"] for summary in summaries]
     text = "\n".join(comments) + "\n"
     if totals:
         text += f"force_calls {statistics.fmean(totals)}\n"
@@ -1502,4 +1545,5 @@ def _run_saddle_search(root: Path, problem: dict, template: dict, *, output: Pat
         "template": template["id"],
         "problem": problem["id"],
         "records": all_records,
+        "repetitions": summaries,
     }

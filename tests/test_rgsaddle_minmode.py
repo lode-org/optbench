@@ -112,6 +112,25 @@ def test_an_island_climb_step_stays_under_its_ceiling(name):
     assert outcome["calls"] <= outcome["steps"] * ceiling
 
 
+@pytest.mark.skipif(not os.environ.get("RGSADDLE_LIB"), reason="RGSADDLE_LIB is not set")
+def test_one_catalog_repetition_reports_its_own_totals(tmp_path):
+    import copy
+
+    from optbench.rgsaddle_minmode import CATALOG_SEED, run_template
+
+    problem = resolve_problem(ROOT, "saddle-search/pt-island")
+    template = copy.deepcopy(load_template(ROOT, "rgsaddle/saddle-dimer-rotskip"))
+    template["ini"]["Search"]["max_searches"] = 2
+    result = run_template(ROOT, problem, template, output=tmp_path / "catalog.dat", repetition=1)
+    (summary,) = result["repetitions"]
+    assert summary["seed"] == CATALOG_SEED + 1
+    assert summary["total_searches"] == len(result["records"]) == 2
+    assert summary["force_calls"] == summary["minimize_calls"] + sum(row["force_calls"] for row in result["records"])
+    assert summary["reached"] is (summary["connected"] >= summary["goal"])
+    with pytest.raises(RuntimeError, match="repetitions 1 to 1"):
+        run_template(ROOT, problem, template, output=tmp_path / "other.dat", repetition=2)
+
+
 def test_lennard_jones_minimum_is_minus_one():
     distance = 2.0 ** (1.0 / 6.0)
     energy, gradient = lennard_jones(np.array([[0.0, 0.0, 0.0], [distance, 0.0, 0.0]]))

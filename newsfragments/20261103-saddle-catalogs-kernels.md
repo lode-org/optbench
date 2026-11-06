@@ -36,3 +36,10 @@ On the 112 committed Morse starts, the loop differed from the reference in every
 It now equals the reference bit for bit.
 The reference equals the NumPy code behind the committed rows wherever `np.exp` runs its AVX-512 loop.
 Without `gcc`, the surfaces now raise an error, because the reference needs the same exp.
+
+`bench_rgsaddle` has one airspeed velocity (asv) class per rgsaddle `saddle-search/pt-island` template, such as `RgsaddleSaddlePtDimerLbfgs`.
+Each class tracks force calls, success, unique saddles, the connected fraction, total searches, and connected saddles.
+These match the fields of the eOn Adaptive Kinetic Monte Carlo (AKMC) rows.
+One parameter of a class is one catalog repetition, named by the seed of its displacements.
+A cap failure is a repetition with fewer than 27 connected saddles.
+The `run_template` function takes `repetition` to run one repetition of the catalog.
