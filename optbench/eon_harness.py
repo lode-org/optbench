@@ -66,7 +66,7 @@ from .campaign import (
     resolve_problem,
     write_starts,
 )
-from .eon_jobs import _client_env, _numpy_direction, _read_dat, _seeded_mode
+from .eon_jobs import _client_env, _numpy_direction, _read_dat, _seeded_mode, cap_report
 from .eon_parse import abs_overlap, flat_floats, xyz_to_con
 from .stationary import negative_index, vibrational_eigenvalues
 from .surfaces import lennard_jones, morse_smooth_linear, read_con
@@ -670,7 +670,7 @@ def _run_client(client: str, ini: str, dest: Path, copies, texts, timeout: int |
         timeout=timeout,
     )
     fields = _read_dat(dest / "results.dat")
-    return {"returncode": proc.returncode, "fields": fields, "stderr": proc.stderr or ""}
+    return {"returncode": proc.returncode, "fields": fields, "stderr": proc.stderr or "", "cap": cap_report(dest)}
 
 
 def _guard(record: dict, client_calls) -> dict:
@@ -782,6 +782,7 @@ def _run_lowest(template, seed, start, work, server, wrapper, cap, client) -> di
     )
     record["client_calls"] = chosen["found"].get("raw")
     record["client_reason"] = chosen["found"].get("reason")
+    record.update(chosen["found"]["cap"])
     record["k"] = chosen["attempt"] if reached else None
     record["overlap"] = chosen["overlap"]
     return _guard(record, record.get("client_calls"))
@@ -938,6 +939,7 @@ def run_case(
                 raw_text = fields.get("total_force_calls") or fields.get("force_calls_neb")
                 record["client_calls"] = int(float(raw_text)) if raw_text is not None else None
                 record["client_reason"] = fields.get("termination_reason")
+                record.update(found["cap"])
                 record = _guard(record, record.get("client_calls"))
         finally:
             server.stop()
@@ -1006,6 +1008,8 @@ def _start_row(seed: int, start: str, record: dict) -> dict:
         "seconds",
         "client_calls",
         "client_reason",
+        "client_calls_at_cap",
+        "client_stop_at_cap",
         "overlap",
         "k",
         "minimum_energy",

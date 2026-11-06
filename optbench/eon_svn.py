@@ -90,6 +90,8 @@ def _public_row(row: dict) -> dict:
     for name in (
         "client_calls",
         "client_reason",
+        "client_calls_at_cap",
+        "client_stop_at_cap",
         "hessian_index",
         "overlap",
         "k",

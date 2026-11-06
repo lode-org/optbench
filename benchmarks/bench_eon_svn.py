@@ -356,6 +356,7 @@ def _run_lowest(template: dict, seed: int, start: str, work: Path, server, wrapp
     )
     record["client_calls"] = found.get("raw")
     record["client_reason"] = found.get("reason")
+    record.update(found["cap"])
     record["k"] = chosen["attempt"] if reached else None
     record["overlap"] = overlap
     return _guard(record)
@@ -446,6 +447,7 @@ def run_case(template_name: str, kind: str, seed: int, start: str, *, passes: in
                 record["client_calls"] = found.get("raw")
                 record["client_reason"] = found.get("reason")
                 record["extrema"] = found.get("extrema")
+                record.update(found["cap"])
                 if kind == "noise" and record["success"]:
                     # MinimizationJob writes the relaxed geometry to min.con.
                     # pos.con is the start and is not a stationary point.

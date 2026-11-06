@@ -74,3 +74,11 @@ The 81 templates without a key now name the kernel their runner already used, so
 Each template whose client computes its own forces names `client`.
 The campaign files now write a `kernel` line.
 The develop and svn modules also store the kernel in their per-start records.
+
+The C ext_pot bridge now records two values when it stops a start at the harness cap.
+The killed eonclient can no longer write either of them.
+The first, `client_calls_at_cap`, is the number of force calls that client finished.
+That number equals its own force-call counter at the kill.
+The second, `client_stop_at_cap`, is the refusal the bridge received in place of the next call.
+The bridge keeps the tally in `optbench-extpot-calls` and writes both values to `optbench-extpot-cap` just before the kill.
+The harness force count stays the same, as do the failure class, the success bit, and every field that the board and `score_v2` read.
