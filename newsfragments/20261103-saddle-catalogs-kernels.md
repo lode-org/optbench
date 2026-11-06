@@ -82,3 +82,10 @@ That number equals its own force-call counter at the kill.
 The second, `client_stop_at_cap`, is the refusal the bridge received in place of the next call.
 The bridge keeps the tally in `optbench-extpot-calls` and writes both values to `optbench-extpot-cap` just before the kill.
 The harness force count stays the same, as do the failure class, the success bit, and every field that the board and `score_v2` read.
+
+The ASE and Sella starts now run on one OpenBLAS thread under asv as well.
+The module `optbench.ase_sella` sets `OPENBLAS_NUM_THREADS=1` at import.
+OpenBLAS reads that variable only when it loads, and the asv runner imports NumPy before any benchmark.
+NumPy's OpenBLAS then ran one thread per CPU.
+With asv launched without the variable, `sella_lj38` changed on 6 of its 200 committed starts.
+Each start now sets every OpenBLAS in the process to one thread through the library's own `set_num_threads`.

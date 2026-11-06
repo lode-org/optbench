@@ -21,6 +21,7 @@ os.environ["OPENBLAS_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["NUMEXPR_NUM_THREADS"] = "1"
 
+from .blas import pin_one_thread
 from .campaign import load_template, resolve_problem
 from .counter import HarnessCounter, attach_ase_counter
 from .score import score_v2, summarize_all, summarize_capped, summarize_divided
@@ -1237,6 +1238,7 @@ def _run_start(payload: dict) -> dict:
     import time
     import warnings
 
+    pin_one_thread()
     warnings.filterwarnings("ignore", message="The system is likely too small")
     began = time.perf_counter()
     logging.getLogger("sella").setLevel(logging.ERROR)
