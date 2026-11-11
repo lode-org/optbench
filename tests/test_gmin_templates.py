@@ -177,7 +177,7 @@ def test_lj98_cap_is_the_problem_cap_and_the_data_file_uses_it():
 
 def test_lj38_csm_uses_the_archive_deck_on_the_latest_snapshot():
     problem = resolve_problem(ROOT, "globalopt/lj38")
-    assert problem["convergence"].get("max_force_calls") is None
+    assert problem["convergence"]["max_force_calls"] == 2_000_000
     template = next(item for item in list_templates(ROOT) if item["id"] == "gmin/lj38-csm")
     assert template["code_version"] == LATEST
     assert int(template["failure_cap"]) == 2_000_000

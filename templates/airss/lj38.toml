@@ -6,7 +6,7 @@ code_version = "0.9.4"
 commit = "5593cc4ee360d998764fceb188284fdf0ef781d206754176dcb360c65103ddaa"
 algorithm = "random structure search"
 tuning = "default"
-note = "AIRSS 0.9.4 example 1.4 scaled from sigma 2 to sigma 1. buildcell draws each cell with POSAMP 1.875, MINSEP 0.75, SYMMOPS 2-5, NFORM 1 and a cubic box of side 100. The seed is eight integers from the archived start index and the structure index. Relaxation is the pp3 two-point step, two passes, energy tolerance 1e-10, at most 9999 steps a pass, on optbench.potentials.lennard_jones. A start stops when that energy is at or below the harness energy of the Wales LJ38 coordinates plus 0.001."
+note = "AIRSS 0.9.4 example 1.4 scaled from sigma 2 to sigma 1. buildcell draws each cell with POSAMP 1.875, MINSEP 0.75, SYMMOPS 2-5, NFORM 1 and a cubic box of side 100. The seed is eight integers from the archived start index and the structure index. Relaxation is the pp3 two-point step, two passes, energy tolerance 1e-10, at most 9999 steps a pass, on optbench.potentials.lennard_jones. A start stops when that energy is at or below the harness energy of the Wales LJ38 coordinates plus 0.001, or when the harness count reaches the problem max_force_calls."
 
 [airss]
 natoms = 38
