@@ -114,6 +114,8 @@ def site(tmp_path_factory) -> Path:
     subprocess.run(["git", "init", "-q", str(root)], check=True)
     objects = (ROOT / os.fsdecode(_git("rev-parse", "--git-common-dir").strip())).resolve() / "objects"
     (root / ".git" / "objects" / "info" / "alternates").write_text(f"{objects}\n", encoding="utf-8")
+    (root / "docs" / "include").mkdir(parents=True, exist_ok=True)
+    (root / "docs" / "include" / "retired-pass.org").write_text("old include\n", encoding="utf-8")
     render(root)
     return root
 
@@ -266,7 +268,7 @@ def test_rendered_pages_use_the_board_rank(site: Path):
     rgsaddle = (site / "docs" / "orgmode" / "generated" / "codes" / "rgsaddle.org").read_text(encoding="utf-8")
     assert "c0db2b8d333c" in rgsaddle
     assert not (site / "docs" / "include" / "featured.org").exists()
-    assert not (site / "docs" / "include" / "terra-pass.org").exists()
+    assert not list((site / "docs" / "include").glob("*-pass.org"))
     for problem in document["problems"].values():
         if problem.get("ranked") and not problem.get("profile"):
             suite, _, name = problem["id"].partition("/")

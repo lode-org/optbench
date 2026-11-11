@@ -289,11 +289,16 @@ def statistics(
     root: Path = Path("."),
     results: Path = Path("results/asv"),
     commit: str = "",
+    machine: str = "",
 ) -> None:
-    """Score the quadratic sample from saved asv tracks."""
+    """Score the quadratic sample from saved asv tracks.
+
+    ``--machine`` picks the asv machine directory when more than one
+    holds quadratic tracks.
+    """
     from optbench.asv_score import write_statistics_from_asv
 
-    document = write_statistics_from_asv(output, root=root, results_dir=root / results)
+    document = write_statistics_from_asv(output, root=root, results_dir=root / results, machine=machine or None)
     recorded = document["provenance"]["commit"]
     if commit and not recorded.startswith(commit):
         raise SystemExit(f"asv results are commit {recorded}, not {commit}")
@@ -304,6 +309,20 @@ def statistics(
         f"dimer_median={dimer['median']} "
         f"displacement_failed={displacement['nfailed']} dimer_failed={dimer['nfailed']}"
     )
+
+
+@app.command
+def asv_machine() -> None:
+    """Store the asv machine entry for ``BENCH_HOST_LABEL`` in ``~/.asv-machine.json``.
+
+    The entry is named by the label, or ``unspecified`` when the variable
+    is unset, and its other fields are ``unspecified``. Pass the same
+    label to ``asv run --machine``.
+    """
+    from optbench.asv_machine import write_machine_file
+
+    record = write_machine_file()
+    print(" ".join(f"{key}={value}" for key, value in record.items()))
 
 
 @app.command
@@ -373,6 +392,12 @@ def validate_counter(
 
 
 def main(argv: list[str] | None = None) -> None:
+    from optbench.v2 import host_label
+
+    try:
+        host_label()
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from None
     app(argv)
 
 

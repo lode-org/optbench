@@ -22,6 +22,7 @@ from pathlib import Path
 from optbench.asv_score import TRACKS, _count, _key, _missing, _unwrap, track_rows
 from optbench.failures import FAILURES
 from optbench.score import score_v2
+from optbench.v2 import relabel_machine
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -338,7 +339,7 @@ def build_document(
         "env_name": result._env_name,
         "python_result": result._python,
         "date": result.date,
-        "machine": dict(result.params),
+        "machine": relabel_machine(dict(result.params)),
         "versions": _versions(python),
         "run_env": run_env or {},
         "classes": classes,

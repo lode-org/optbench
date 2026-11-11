@@ -8,7 +8,9 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import platform
+import re
 import tomllib
 from collections.abc import Callable, Sequence
 from pathlib import Path
@@ -46,6 +48,51 @@ V2_KEYS = (
 )
 
 
+HOST_LABEL_ENV = "BENCH_HOST_LABEL"
+UNSPECIFIED = "unspecified"
+_LABEL = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*")
+
+
+def check_label(value: str, source: str = HOST_LABEL_ENV) -> str:
+    """``value`` when it is a usable machine label, else ``ValueError``.
+
+    A label is one line of a ``benchmark.dat`` file and the name of a
+    directory under ``results/asv``. A newline or another control
+    character would add a field, and a space or a slash would split the
+    value or the path, so only letters, digits, ``.``, ``_`` and ``-``
+    are allowed, and the first character is a letter or a digit.
+    """
+    if not _LABEL.fullmatch(value):
+        raise ValueError(
+            f"{source} is {value!r}. A machine label is letters, digits, '.', '_' and '-', "
+            "and it starts with a letter or a digit."
+        )
+    return value
+
+
+def host_label() -> str:
+    """The machine label for a new result.
+
+    ``BENCH_HOST_LABEL`` without surrounding whitespace, or
+    ``unspecified`` when it is unset or blank. ``check_label`` rejects
+    any other value. The machine's own name is never read, so a result
+    file does not publish it.
+    """
+    value = os.environ.get(HOST_LABEL_ENV, "").strip()
+    return check_label(value) if value else UNSPECIFIED
+
+
+def relabel_machine(fields: dict) -> dict:
+    """``fields`` without ``node``, and with ``machine`` set to ``host_label()``.
+
+    The params of an asv result name the machine asv was told about,
+    which is the host name when asv was left to its defaults.
+    """
+    recorded = {key: value for key, value in fields.items() if key != "node"}
+    recorded["machine"] = host_label()
+    return recorded
+
+
 def collect_provenance(
     *,
     code: str,
@@ -56,14 +103,16 @@ def collect_provenance(
 ) -> dict:
     """Code, version, commit, parameters, and machine.
 
-    A string ``machine`` replaces the node name and keeps the rest of
-    this process. A mapping is stored as given.
+    A string ``machine`` replaces the node label from ``host_label`` and
+    keeps the rest of this process. A mapping, such as the params of an
+    asv result, goes through ``relabel_machine``, so a machine name
+    stored in that mapping is not copied.
     """
     if isinstance(machine, dict):
-        recorded = dict(machine)
+        recorded = relabel_machine(machine)
     else:
         recorded = {
-            "node": machine or platform.node(),
+            "node": check_label(machine, "machine") if machine else host_label(),
             "system": platform.system(),
             "machine": platform.machine(),
             "python": platform.python_version(),

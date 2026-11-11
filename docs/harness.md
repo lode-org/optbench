@@ -1,6 +1,21 @@
 # Harness
 
-The harness is this repository. `uv run pytest` and `uv run optbench check` are the hosted checks. A published Lennard-Jones or Pt-island campaign is run on rg.terra, not in CI.
+The harness is this repository. `uv run pytest` and `uv run optbench check` are the hosted checks. A published Lennard-Jones or Pt-island campaign is run on `workstation-a`, not in CI. A new result records the machine from `BENCH_HOST_LABEL`, or `unspecified` when that is unset, and never reads the machine's own name. Campaign runs set `BENCH_HOST_LABEL=workstation-a`. The machine label section below lists where the label goes.
+
+## Machine label
+
+`BENCH_HOST_LABEL` names the machine in a new result. Surrounding whitespace is dropped, and an unset or blank value is `unspecified`. A label is letters, digits, `.`, `_`, and `-`, and starts with a letter or a digit. Any other value, such as one with a newline, a space, or a slash, stops the command with an error that names the variable. Every `optbench` command checks the label before it starts, and an ASE or Sella template run reads it again before the first search.
+
+| Where | What is written |
+| --- | --- |
+| `benchmark.dat` from the ASE and Sella runner | the `host` line |
+| the result document from `write_problem_record` | `host` |
+| `provenance.machine` from `collect_provenance` | `node`, or `machine` for asv params |
+| `machine` in `results/ase-sella-full/summarize.py` output | `machine` |
+| `~/.asv-machine.json` from `optbench asv-machine` | the entry named by the label |
+| `results/asv/<label>/` | `machine.json` and the result files of `asv run --machine` |
+
+asv's machine fields `os`, `arch`, `cpu`, `num_cpu`, and `ram` are `unspecified` in that entry and in `machine.json`. `optbench.pele_asv`, `optbench.noise_asv`, `optbench.eon_svn`, and `optbench.sella_loweig` write their asv results with the same record into the same directory. Files written before the label keep the machine name they were written with. The archived asv directory is `results/asv/xeon-8c`.
 
 ## Where the files are
 
@@ -23,7 +38,7 @@ uv run optbench validate-counter --limit 3 --output results/validation/lj38-coun
 uv run optbench statistics --output results/validation/statistics.json
 ```
 
-`optbench statistics` reads asv tracks in `results/asv`. It reads the sample asv already stored. `docs/asv.md` is the run that produces those files.
+`optbench statistics` reads asv tracks in `results/asv`. It reads the sample asv already stored. When more than one machine directory has that sample, `--machine` picks one. `docs/asv.md` is the run that produces those files.
 
 `validate-counter` needs `eonclient` on `PATH`. The output is a subset. A published Lennard-Jones 38 mean still uses all 1000 starts.
 
@@ -49,7 +64,7 @@ One point uses the Cartesian distance, because centering a single point would re
 
 If the problem states no cap and every record is a success, `par_applied` is false and the mean is the mean of the recorded costs. That is how the ten Pt-island repetitions are summarised: each cost is `force_calls / total_searches` from the `# rep` line. The recorded `force_calls` value remains the mean of the campaign totals.
 
-`tuning` is `default` or `adjusted`. The previous spelling of an adjusted row names the same class and is still rejected from the ranked table. Provenance is the code, version, commit, parameters, and machine. `collect_provenance` fills the machine from the process when the caller does not pass one.
+Each record, campaign or repetition, has a `tuning` of `default` or `adjusted`. The previous spelling of an adjusted row names the same class and is still rejected from the ranked table. Provenance is the code, version, commit, parameters, and machine. `collect_provenance` takes the machine label from `BENCH_HOST_LABEL` when the caller does not pass one, and the system, architecture, and Python version from the process. Given the params of an asv result, it keeps their fields and replaces the asv machine name with the label.
 
 ## Quadratic sample
 

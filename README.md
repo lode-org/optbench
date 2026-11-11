@@ -275,28 +275,29 @@ A v2 success is under the cap, at the force stop, and, when a reference is suppl
 
 Pt-island cost is force calls in a repetition divided by the searches in that repetition. `eon-client/lbfgs-m20` is `tuning` `default`. `eon-client/lbfgs-m100` is `tuning` `adjusted`.
 
-`uv run optbench quadratic` writes `results/quadratic/quadratic.json`. That file is a quadratic check of the counter and the score. It is not a Lennard-Jones campaign. Those campaigns stay on rg.terra.
+`uv run optbench quadratic` writes `results/quadratic/quadratic.json`. That file is a quadratic check of the counter and the score. It is not a Lennard-Jones campaign. Those campaigns stay on `workstation-a` and run with `BENCH_HOST_LABEL=workstation-a`, the label a new result records as its machine. Without it the label is `unspecified`. `docs/harness.md` lists where the label is written.
 
 ## Statistics
 
-`benchmark.dat` keeps the rounded mean, because that is the 2014 record. A v2 measurement is an asv track. Force calls, the success bit, and the four failure classes are `track_*` values. Wall time is `time_*`. The parameters are the seed and the start. `results/asv` is asv's result tree, one file per commit and environment, with `machine.json` beside it. `uv.lock` pins `asv==0.6.6` and `asv-runner==0.3.1`. `environments/eon-3.5.0.yml` pins the conda-forge eOn binary. `docs/asv.md` is how another unit adds a code. `docs/asv-gaps.md` is the upstream list.
+`benchmark.dat` keeps the rounded mean, because that is the 2014 record. A v2 measurement is an asv track. Force calls, the success bit, and the four failure classes are `track_*` values. Wall time is `time_*`. The parameters are the seed and the start. `results/asv` is asv's result tree, one directory per machine label with `machine.json` in it, and one file per commit and environment in that directory. `uv.lock` pins `asv==0.6.6` and `asv-runner==0.3.1`. `environments/eon-3.5.0.yml` pins the conda-forge eOn binary. `docs/asv.md` is how another unit adds a code. `docs/asv-gaps.md` is the upstream list.
 
 The environment type is `uv-pip`, from `optbench.asv_uv`. It creates the environment with `uv venv` and installs with `uv pip`. The committed quadratic sample is that environment. eonclient is not part of it. The seven Lennard-Jones 38 classes in `benchmarks/bench_lj38.py` skip unless `OPTBENCH_ASV_EON=1`, and the default grid is one start unless `OPTBENCH_ASV_FULL=1`.
 
 ```bash
+export BENCH_HOST_LABEL=workstation-a
+uv run optbench asv-machine
 uv run python -m optbench.asv_launch machine --yes --machine xeon-8c
 uv run python -m optbench.asv_launch run --machine xeon-8c COMMIT^! -b quadratic
 uv run optbench statistics --output results/validation/statistics.json
 uv run asv publish
 ```
 
-`xeon-8c` is the machine of the committed results. Without `--machine`, `asv run` writes a new folder named after the host. Step 7 of `docs/asv.md` uses the launcher, which writes every field. Upstream `asv machine --yes --machine NAME` stores only the name.
+`xeon-8c` is the machine of the committed results under `results/asv/xeon-8c`. Without `--machine`, `asv run` writes a new folder named after the host. Step 7 of `docs/asv.md` uses the launcher, which writes every field of that archive machine. Upstream `asv machine --yes --machine NAME` stores only the name.
 
-`optbench statistics` reads the saved tracks.
-The saved file comes from `asv run` without `--quick`.
+`optbench asv-machine` stores `BENCH_HOST_LABEL` for a new result and sets every other machine field to `unspecified`. Campaign runs set `BENCH_HOST_LABEL=workstation-a`. With `--machine`, asv uses that label instead of the host name, and the new files go under `results/asv/<label>/`. They do not replace the `xeon-8c` archive. `optbench statistics` reads the saved tracks. When more than one machine directory has quadratic tracks, `--machine` picks one. The saved file comes from `asv run` without `--quick`.
 `optbench.asv_launch` records the BLAS pools that the asv server starts with (`docs/asv.md`, Launcher).
 It also pins BLAS to one thread before asv loads NumPy (`docs/asv.md`, Threads).
-CI runs the quadratic suite with `HaoZeke/asv-perch@v1` (`.github/workflows/asv.yml`).
+CI runs `uv run optbench asv-machine` and `asv run --machine unspecified`, then the quadratic suite with `HaoZeke/asv-perch@v1` (`.github/workflows/asv.yml`).
 
 ## Build the site
 

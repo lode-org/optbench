@@ -48,9 +48,9 @@ jobs:
           init-command: >-
             uv python install 3.12 &&
             uv sync --frozen --group dev &&
-            uv run python -m optbench.asv_launch machine --yes
+            uv run optbench asv-machine
           benchmark-command: >-
-            uv run asv run --skip-existing --bench quadratic {sha}^!
+            uv run asv run --machine unspecified --skip-existing --bench quadratic {sha}^!
           baseline: |
             label: base
             sha: ${{ github.event.pull_request.base.sha || github.sha }}
