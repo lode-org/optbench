@@ -1,0 +1,26 @@
+// dot -Tsvg docs/source/_static/tutorial/flow.dot -o docs/source/_static/tutorial/flow.svg
+digraph flow {
+  rankdir=TB;
+  bgcolor="transparent";
+  nodesep=0.3;
+  ranksep=0.35;
+  node [shape=box, style="rounded", fontname="sans-serif", fontsize=12];
+  edge [color="#555555"];
+
+  problem [label="problem file\nstop, cap, starts"];
+  template [label="template\noptimizer"];
+  inputs [label="inputs/\ngeometries"];
+  run [label="optbench run", shape=ellipse, style="filled", fillcolor="#e8eefb"];
+  dat [label="lbfgs.dat\nhalf-even and penalised means"];
+  starts [label="lbfgs.starts.jsonl\none record per start"];
+  score [label="optbench score", shape=ellipse, style="filled", fillcolor="#e8eefb"];
+  figures [label="figures.py", shape=ellipse, style="filled", fillcolor="#e8eefb"];
+  scorejson [label="lbfgs-score.json"];
+  svg [label="calls.svg\nconvergence.svg"];
+
+  {problem template inputs} -> run;
+  run -> {dat starts};
+  starts -> {score figures};
+  score -> scorejson;
+  figures -> svg;
+}

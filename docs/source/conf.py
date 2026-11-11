@@ -44,6 +44,7 @@ html_theme_options = {
     "open_in_claude": False,
     "ethical_ads_publisher": "",
     "nav_links": [
+        {"title": "Tutorial", "url": "tutorial"},
         {
             "title": "Suites",
             "url": "index",

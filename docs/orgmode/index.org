@@ -6,10 +6,18 @@ Scores for geometry optimizers, saddle searches, and global optimization.
 #+INCLUDE: "../include/overview.org"
 
 Chill, Stevenson, Ruehle, Shang, Xiao, Farrell, Wales, and Henkelman set the 2014 problems in J. Chem. Theory Comput. 2014, 10, 5476-5482 ([[https://doi.org/10.1021/ct5008718][doi:10.1021/ct5008718]]).
+The tutorial page scores two optimizers on 100 starts from a fresh clone.
 
 When an archived entry counts its failed runs, each counts as twice the cap, and the row ranks on that PAR-2.
 
 #+begin_export rst
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Tutorial
+
+   tutorial
+
 .. toctree::
    :hidden:
    :maxdepth: 1

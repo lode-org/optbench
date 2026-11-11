@@ -23,6 +23,9 @@ It also fails when a template's `code` and `commit` name no pin in `codes/regist
 A committed campaign or asv row keeps the label it was recorded with, so `oracle/pin_gaps.txt` lists every such row whose label names no pin, and `check` fails when that list and the rows differ.
 `templates` prints every template id.
 
+For a first command, `docs/orgmode/tutorial.org` runs without a compiled client: two Atomic Simulation Environment (ASE) optimizers on 100 Lennard-Jones 38 starts, scored and plotted.
+It is the Tutorial page on the site.
+
 `uv run optbench board` reads `results/campaign` and `results/asv` and writes `results/board` plus the v2 table on the Board page. It does not start a search. A band method is ranked on the harness force-call total across every image, and the per-image mean is a second column from that same total. A ranked row is one code, one version, and one stock method. Older full versions stay in the same tables. A run that is both a campaign file and an asv track is one row, with the source kept as a column. A row that used fewer starts than the problem's full set stays off the ranked table. An asv result that covers one start stays out of the ranked mean.
 
 `uv run optbench board --output DIR` writes the JSON, the plots, and the Board page include `v2-board.org` under `DIR`.
