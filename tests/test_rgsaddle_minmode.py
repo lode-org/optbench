@@ -253,7 +253,7 @@ def test_rgsaddle_templates_match_their_problem_stop():
         problem = resolve_problem(ROOT, template["problem"])
         cap = _check_stop(problem, template)
         assert cap >= 1000
-        assert template["commit"] == "38c3137f62ce1436d662bb37188a8d7cd2d789b8"
+        assert template["commit"] == "2db34b42e6e029ebcf5b9868b94fcdf969103c9f"
         assert template["engine"] == "rgsaddle"
     assert "rgsaddle/dimer-lbfgs" in found
     assert "rgsaddle/prfo" in found

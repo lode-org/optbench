@@ -1,0 +1,25 @@
+force_calls 597
+force_calls_min 75
+force_calls_median 355
+force_calls_max 6544
+nfailed 1
+par2_mean 694.1000000000
+successes 199
+wilson_low 0.9722262956
+wilson_high 0.9991168313
+par2_median 359.5000000000
+n_cap 1
+n_wrong_stationary 0
+n_divergence 0
+n_crash 0
+counter harness
+code rgsaddle
+code_version 0.2.2
+commit 2db34b42e6e029ebcf5b9868b94fcdf969103c9f
+algorithm Lanczos L-BFGS
+tuning default
+template rgsaddle/lanczos
+problem tsopt/LJ38
+rotation_steps 110468
+library_evaluations 128630
+harness_calls 128829
