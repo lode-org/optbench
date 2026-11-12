@@ -57,9 +57,10 @@
       "AIRSS (0.9.4) \u00b7 random structure search": 0.2769475960108627,
       "Eon svn (r2549) \u00b7 Basin hopping": 0.04364934937127728,
       "GMIN (df8da599) \u00b7 basin-hopping": 0.10987594841735314,
-      "GMIN (df8da599) \u00b7 basin-hopping with continuous symmetry measures": 1.1800375830028063,
+      "GMIN (df8da599) \u00b7 basin-hopping with continuous symmetry measures": 1.1770272830461666,
       "GMIN (df8da599) \u00b7 parallel tempering basin-hopping": 0.0722471989593555,
-      "eOn (3.5.0) \u00b7 Basin hopping": 0.06622659904607586
+      "eOn (3.5.0) \u00b7 Basin hopping": 0.06622659904607586,
+      "pele (0.1.2) \u00b7 basin hopping": 0.08579354876423465
     },
     "rho": {
       "AIRSS (0.9.4) \u00b7 random structure search": [
@@ -84,7 +85,7 @@
         0.24
       ],
       "GMIN (df8da599) \u00b7 basin-hopping with continuous symmetry measures": [
-        0.92,
+        0.9,
         0.97,
         0.99,
         1.0,
@@ -103,6 +104,13 @@
         0.02,
         0.11,
         0.15
+      ],
+      "pele (0.1.2) \u00b7 basin hopping": [
+        0.02,
+        0.04,
+        0.05,
+        0.1,
+        0.17
       ]
     },
     "solved": {
@@ -111,7 +119,8 @@
       "GMIN (df8da599) \u00b7 basin-hopping": 0.99,
       "GMIN (df8da599) \u00b7 basin-hopping with continuous symmetry measures": 1.0,
       "GMIN (df8da599) \u00b7 parallel tempering basin-hopping": 0.94,
-      "eOn (3.5.0) \u00b7 Basin hopping": 1.0
+      "eOn (3.5.0) \u00b7 Basin hopping": 1.0,
+      "pele (0.1.2) \u00b7 basin hopping": 0.96
     },
     "taus": [
       1.0,
@@ -522,6 +531,61 @@
       "asv_commit": "",
       "call_unit": "total",
       "cap": 2000000,
+      "code": "pele",
+      "code_version": "0.1.2",
+      "commit": "b7081b932a060be11342fbe8287ac35da8ada879",
+      "counter": "harness",
+      "entry": "pele-b7081b93-lj38-basinhopping",
+      "failure_note": "",
+      "failures": {
+        "cap": 4,
+        "crash": 0,
+        "divergence": 0,
+        "wrong_stationary": 0
+      },
+      "failures_inferred": {
+        "cap": 4
+      },
+      "family": "global",
+      "family_rank": 9,
+      "fd_calls": 0.0,
+      "full_n": 100,
+      "hessian_calls": 0.0,
+      "kind": "",
+      "label": "pele (0.1.2) \u00b7 basin hopping",
+      "max_calls": 2765495.0,
+      "mean_calls": 528657.52,
+      "mean_per_image": null,
+      "median": 385463.5,
+      "median_calls": 385463.5,
+      "median_high": 436270.5,
+      "median_low": 306421.45,
+      "median_per_image": null,
+      "method": "basin hopping",
+      "min_calls": 6208.0,
+      "n": 100,
+      "nfailed": 4,
+      "note": "starts.jsonl",
+      "origin": "harness",
+      "par2_mean": 597627.42,
+      "path": "results/campaign/pele-b7081b93-lj38-basinhopping.dat",
+      "problem": "globalopt/lj38",
+      "published": null,
+      "rank_cost": 597627.42,
+      "registry_match": true,
+      "scored": true,
+      "short": false,
+      "short_reason": "",
+      "source": "campaign",
+      "success_rate": 0.96,
+      "template": "pele/lj38-basinhopping",
+      "tuning": "default",
+      "unit": "force calls"
+    },
+    {
+      "asv_commit": "",
+      "call_unit": "total",
+      "cap": 2000000,
       "code": "Eon svn",
       "code_version": "r2549",
       "commit": "r2549",
@@ -535,7 +599,7 @@
         "wrong_stationary": 0
       },
       "family": "global",
-      "family_rank": 9,
+      "family_rank": 10,
       "fd_calls": 0.0,
       "full_n": 100,
       "hessian_calls": 0.0,
@@ -587,7 +651,7 @@
         "wrong_stationary": 0
       },
       "family": "global",
-      "family_rank": 10,
+      "family_rank": 11,
       "fd_calls": 0.0,
       "full_n": 100,
       "hessian_calls": 0.0,

@@ -15,6 +15,8 @@ Archived rows that spell the same code are on that page.
 
    generated/codes/eon
    generated/codes/eon-svn
+   generated/codes/eon--svn-r2549
+   generated/codes/eon--develop-80e94f88
    generated/codes/rgmin
    generated/codes/rgsaddle
    generated/codes/geodesic
@@ -35,8 +37,11 @@ Archived rows that spell the same code are on that page.
    generated/codes/airss
    generated/codes/vc-sqnm
    generated/codes/softsaddle
-   generated/codes/gpridge
-   generated/codes/unknown
+   generated/codes/ogolem
    generated/codes/pyamff
+   generated/codes/geometric
+   generated/codes/gpridge
+   generated/codes/eon--develop-b0bd4d5a
+   generated/codes/unknown
    generated/codes/gman
 #+end_export

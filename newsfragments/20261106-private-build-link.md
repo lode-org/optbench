@@ -1,1 +1,1 @@
-Shared native builds link in a private directory and replace the destination only when the file is complete. The ASE catalog rewrite uses the same replace, so a concurrent reader never sees a partial template or registry.
+Shared native builds link in a private directory and replace the destination only when the file is complete. The ASE catalog rewrite uses the same replace, so a concurrent reader never sees a half-written template or registry.

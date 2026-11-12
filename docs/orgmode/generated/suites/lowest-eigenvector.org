@@ -12,7 +12,7 @@
    </div>
    <h2>Charts</h2>
    <div class="lead-charts">
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-cost-bars-title" viewBox="0 0 680 292.0"><title id="lennard-jones-38-cost-bars-title">Best cost for Lennard-Jones 38</title><text class="group-label" x="0" y="18">Lennard-Jones 38</text><line class="axis" x1="168.00" y1="256.00" x2="584.00" y2="256.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="256.00"/><line class="axis" x1="168.00" y1="252.00" x2="168.00" y2="256.00"/><text class="num" x="168.00" y="270.00" text-anchor="middle">10¹</text><line class="grid" x1="272.00" y1="32.00" x2="272.00" y2="256.00"/><line class="axis" x1="272.00" y1="252.00" x2="272.00" y2="256.00"/><text class="num" x="272.00" y="270.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="256.00"/><line class="axis" x1="376.00" y1="252.00" x2="376.00" y2="256.00"/><text class="num" x="376.00" y="270.00" text-anchor="middle">10³</text><line class="grid" x1="480.00" y1="32.00" x2="480.00" y2="256.00"/><line class="axis" x1="480.00" y1="252.00" x2="480.00" y2="256.00"/><text class="num" x="480.00" y="270.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="256.00"/><line class="axis" x1="584.00" y1="252.00" x2="584.00" y2="256.00"/><text class="num" x="584.00" y="270.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="286.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Sella: 17.8</title><text class="code-label" x="156" y="46.00" text-anchor="end">Sella</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="26.0437" height="10"/><text class="num" x="592.00" y="46.00">17.8</text></g><g><title>OPTIM: 25</title><text class="code-label" x="156" y="68.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="59.00" width="41.3858" height="10"/><text class="num" x="592.00" y="68.00">25</text></g><g><title>pele: 25</title><text class="code-label" x="156" y="90.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="81.00" width="41.3858" height="10"/><text class="num" x="592.00" y="90.00">25</text></g><g><title>TSASE: 25</title><text class="code-label" x="156" y="112.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="103.00" width="41.3858" height="10"/><text class="num" x="592.00" y="112.00">25</text></g><g><title>rgsaddle: 26.12</title><text class="code-label" x="156" y="134.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="125.00" width="43.3652" height="10"/><text class="num" x="592.00" y="134.00">26.12</text></g><g><title>eOn: 26.385</title><text class="code-label" x="156" y="156.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="147.00" width="43.8211" height="10"/><text class="num" x="592.00" y="156.00">26.385</text></g><g><title>Eon svn: 26.385</title><text class="code-label" x="156" y="178.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="169.00" width="43.8211" height="10"/><text class="num" x="592.00" y="178.00">26.385</text></g><g><title>pARTn: 2619.84</title><text class="code-label" x="156" y="200.00" text-anchor="end">pARTn</text><rect class="suite-bar" x="168.00" y="191.00" width="251.5005" height="10"/><text class="num" x="592.00" y="200.00">2619.84</text></g><g><title>pysisyphus: 4017.14</title><text class="code-label" x="156" y="222.00" text-anchor="end">pysisyphus</text><rect class="suite-bar" x="168.00" y="213.00" width="270.8074" height="10"/><text class="num" x="592.00" y="222.00">4017.14</text></g><g><title>SoftSaddle: 18700.6</title><text class="code-label" x="156" y="244.00" text-anchor="end">SoftSaddle</text><rect class="suite-bar" x="168.00" y="235.00" width="340.2731" height="10"/><text class="num" x="592.00" y="244.00">18700.6</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-cost-bars-title" viewBox="0 0 680 292.0"><title id="lennard-jones-38-cost-bars-title">Best cost for Lennard-Jones 38</title><text class="group-label" x="0" y="18">Lennard-Jones 38</text><line class="axis" x1="168.00" y1="256.00" x2="584.00" y2="256.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="256.00"/><line class="axis" x1="168.00" y1="252.00" x2="168.00" y2="256.00"/><text class="num" x="168.00" y="270.00" text-anchor="middle">10¹</text><line class="grid" x1="272.00" y1="32.00" x2="272.00" y2="256.00"/><line class="axis" x1="272.00" y1="252.00" x2="272.00" y2="256.00"/><text class="num" x="272.00" y="270.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="256.00"/><line class="axis" x1="376.00" y1="252.00" x2="376.00" y2="256.00"/><text class="num" x="376.00" y="270.00" text-anchor="middle">10³</text><line class="grid" x1="480.00" y1="32.00" x2="480.00" y2="256.00"/><line class="axis" x1="480.00" y1="252.00" x2="480.00" y2="256.00"/><text class="num" x="480.00" y="270.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="256.00"/><line class="axis" x1="584.00" y1="252.00" x2="584.00" y2="256.00"/><text class="num" x="584.00" y="270.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="286.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>rgsaddle: 17.585</title><text class="code-label" x="156" y="46.00" text-anchor="end">rgsaddle</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="25.4948" height="10"/><text class="num" x="592.00" y="46.00">17.585</text></g><g><title>Sella: 17.8</title><text class="code-label" x="156" y="68.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="59.00" width="26.0437" height="10"/><text class="num" x="592.00" y="68.00">17.8</text></g><g><title>OPTIM: 25</title><text class="code-label" x="156" y="90.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="81.00" width="41.3858" height="10"/><text class="num" x="592.00" y="90.00">25</text></g><g><title>pele: 25</title><text class="code-label" x="156" y="112.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="103.00" width="41.3858" height="10"/><text class="num" x="592.00" y="112.00">25</text></g><g><title>TSASE: 25</title><text class="code-label" x="156" y="134.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="125.00" width="41.3858" height="10"/><text class="num" x="592.00" y="134.00">25</text></g><g><title>eOn: 26.385</title><text class="code-label" x="156" y="156.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="147.00" width="43.8211" height="10"/><text class="num" x="592.00" y="156.00">26.385</text></g><g><title>Eon svn: 26.385</title><text class="code-label" x="156" y="178.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="169.00" width="43.8211" height="10"/><text class="num" x="592.00" y="178.00">26.385</text></g><g><title>pARTn: 2619.84</title><text class="code-label" x="156" y="200.00" text-anchor="end">pARTn</text><rect class="suite-bar" x="168.00" y="191.00" width="251.5005" height="10"/><text class="num" x="592.00" y="200.00">2619.84</text></g><g><title>pysisyphus: 4017.14</title><text class="code-label" x="156" y="222.00" text-anchor="end">pysisyphus</text><rect class="suite-bar" x="168.00" y="213.00" width="270.8074" height="10"/><text class="num" x="592.00" y="222.00">4017.14</text></g><g><title>SoftSaddle: 18700.6</title><text class="code-label" x="156" y="244.00" text-anchor="end">SoftSaddle</text><rect class="suite-bar" x="168.00" y="235.00" width="340.2731" height="10"/><text class="num" x="592.00" y="244.00">18700.6</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <p class="chart-files"><a href="../../_static/board/suite-lowest-eigenvector.svg">SVG file</a></p>
    <div class="bench-export">
    <figure class="bench-plot"><a href="../../_static/board/suite-lowest-eigenvector.svg"><picture><source srcset="../../_static/board/suite-lowest-eigenvector.webp" type="image/webp"><img src="../../_static/board/suite-lowest-eigenvector.png" alt="Lowest eigenvector best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Lowest eigenvector best ranked cost. Select the plot for the full SVG.</figcaption></figure>
@@ -27,6 +27,15 @@
    <tr class="is-best group-start">
    <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
    <td class="problem" data-label="Problem"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
+   <td class="code" data-label="Code"><a href="../codes/rgsaddle.html">rgsaddle</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:6.1286%"><i></i></span><span class="bar-num">17.585</span></td>
+   <td class="num" data-label="Median">24.4925</td>
+   <td class="num" data-label="Success">100.0%</td>
+   <td class="num" data-label="PAR-2">17.585</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
+   <td class="problem" data-label="Problem"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/sella.html">Sella</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:6.2605%"><i></i></span><span class="bar-num">17.8</span></td>
    <td class="num" data-label="Median">17.8</td>
@@ -34,7 +43,7 @@
    <td class="num" data-label="PAR-2">17.8</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
    <td class="problem" data-label="Problem"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/optim.html">OPTIM</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:9.9485%"><i></i></span><span class="bar-num">25</span></td>
@@ -43,7 +52,7 @@
    <td class="num" data-label="PAR-2">25</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
    <td class="problem" data-label="Problem"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/pele.html">pele</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:9.9485%"><i></i></span><span class="bar-num">25</span></td>
@@ -52,7 +61,7 @@
    <td class="num" data-label="PAR-2">25</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
    <td class="problem" data-label="Problem"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/tsase.html">TSASE</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:9.9485%"><i></i></span><span class="bar-num">25</span></td>
@@ -61,20 +70,11 @@
    <td class="num" data-label="PAR-2">25</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
-   <td class="problem" data-label="Problem"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
-   <td class="code" data-label="Code"><a href="../codes/rgsaddle.html">rgsaddle</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:10.4243%"><i></i></span><span class="bar-num">26.12</span></td>
-   <td class="num" data-label="Median">28.76</td>
-   <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">26.12</td>
-   </tr>
-   <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
    <td class="problem" data-label="Problem"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:10.5339%"><i></i></span><span class="bar-num">26.385</span></td>
-   <td class="num" data-label="Median">27.3575</td>
+   <td class="num" data-label="Median">28.12</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">26.385</td>
    </tr>

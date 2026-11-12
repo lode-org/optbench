@@ -23,9 +23,9 @@
    <figure class="paper-figure"><img src="../../_static/paper/history-minimization-morse-bulk-rgmin-5bf9.svg" alt="rgmin on Morse bulk. Each point is one recorded version of one method. Versions run left to right in numeric order. PAR-2 is omitted where that row has none. No line is drawn across a missing value." loading="lazy" decoding="async"><figcaption>rgmin on Morse bulk. Each point is one recorded version of one method. Versions run left to right in numeric order. PAR-2 is omitted where that row has none. No line is drawn across a missing value. <a href="../../_static/paper/history-minimization-morse-bulk-rgmin-5bf9.pdf">PDF</a>.</figcaption></figure>
    </div>
    <h3>Best cost</h3>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-clusters-cost-bars-title" viewBox="0 0 680 380.0"><title id="lennard-jones-38-clusters-cost-bars-title">Best cost for Lennard-Jones 38 clusters</title><text class="group-label" x="0" y="18">Lennard-Jones 38 clusters</text><line class="axis" x1="168.00" y1="344.00" x2="584.00" y2="344.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="344.00"/><line class="axis" x1="168.00" y1="340.00" x2="168.00" y2="344.00"/><text class="num" x="168.00" y="358.00" text-anchor="middle">10¹</text><line class="grid" x1="272.00" y1="32.00" x2="272.00" y2="344.00"/><line class="axis" x1="272.00" y1="340.00" x2="272.00" y2="344.00"/><text class="num" x="272.00" y="358.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="344.00"/><line class="axis" x1="376.00" y1="340.00" x2="376.00" y2="344.00"/><text class="num" x="376.00" y="358.00" text-anchor="middle">10³</text><line class="grid" x1="480.00" y1="32.00" x2="480.00" y2="344.00"/><line class="axis" x1="480.00" y1="340.00" x2="480.00" y2="344.00"/><text class="num" x="480.00" y="358.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="344.00"/><line class="axis" x1="584.00" y1="340.00" x2="584.00" y2="344.00"/><text class="num" x="584.00" y="358.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="374.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>unknown: 79</title><text class="code-label" x="156" y="46.00" text-anchor="end">unknown</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="93.3532" height="10"/><text class="num" x="592.00" y="46.00">79</text></g><g><title>rgmin: 81.881</title><text class="code-label" x="156" y="68.00" text-anchor="end">rgmin</text><rect class="suite-bar" x="168.00" y="59.00" width="94.9710" height="10"/><text class="num" x="592.00" y="68.00">81.881</text></g><g><title>TSASE: 166</title><text class="code-label" x="156" y="90.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="81.00" width="126.8912" height="10"/><text class="num" x="592.00" y="90.00">166</text></g><g><title>OPTIM: 176</title><text class="code-label" x="156" y="112.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="103.00" width="129.5333" height="10"/><text class="num" x="592.00" y="112.00">176</text></g><g><title>pele: 179</title><text class="code-label" x="156" y="134.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="125.00" width="130.2967" height="10"/><text class="num" x="592.00" y="134.00">179</text></g><g><title>eOn: 180.137</title><text class="code-label" x="156" y="156.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="147.00" width="130.5827" height="10"/><text class="num" x="592.00" y="156.00">180.137</text></g><g><title>Eon svn: 181</title><text class="code-label" x="156" y="178.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="169.00" width="130.7986" height="10"/><text class="num" x="592.00" y="178.00">181</text></g><g><title>DL-FIND: 231.908</title><text class="code-label" x="156" y="200.00" text-anchor="end">DL-FIND</text><rect class="suite-bar" x="168.00" y="191.00" width="141.9928" height="10"/><text class="num" x="592.00" y="200.00">231.908</text></g><g><title>GMIN: 301.399</title><text class="code-label" x="156" y="222.00" text-anchor="end">GMIN</text><rect class="suite-bar" x="168.00" y="213.00" width="153.8307" height="10"/><text class="num" x="592.00" y="222.00">301.399</text></g><g><title>ASE: 374.645</title><text class="code-label" x="156" y="244.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="235.00" width="163.6565" height="10"/><text class="num" x="592.00" y="244.00">374.645</text></g><g><title>vc-SQNM: 598.05</title><text class="code-label" x="156" y="266.00" text-anchor="end">vc-SQNM</text><rect class="suite-bar" x="168.00" y="257.00" width="184.7807" height="10"/><text class="num" x="592.00" y="266.00">598.05</text></g><g><title>Sella: 710.089</title><text class="code-label" x="156" y="288.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="279.00" width="192.5365" height="10"/><text class="num" x="592.00" y="288.00">710.089</text></g><g><title>LAMMPS: 1123.81</title><text class="code-label" x="156" y="310.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="301.00" width="213.2722" height="10"/><text class="num" x="592.00" y="310.00">1123.81</text></g><g><title>pysisyphus: 15124.7</title><text class="code-label" x="156" y="332.00" text-anchor="end">pysisyphus</text><rect class="suite-bar" x="168.00" y="323.00" width="330.6874" height="10"/><text class="num" x="592.00" y="332.00">15124.7</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-clusters-with-gaussian-force-noise-cost-bars-title" viewBox="0 0 680 270.0"><title id="lennard-jones-38-clusters-with-gaussian-force-noise-cost-bars-title">Best cost for Lennard-Jones 38 clusters with Gaussian force noise</title><text class="group-label" x="0" y="18">Lennard-Jones 38 clusters with Gaussian force noise</text><line class="axis" x1="168.00" y1="234.00" x2="584.00" y2="234.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="234.00"/><line class="axis" x1="168.00" y1="230.00" x2="168.00" y2="234.00"/><text class="num" x="168.00" y="248.00" text-anchor="middle">10¹</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="234.00"/><line class="axis" x1="306.67" y1="230.00" x2="306.67" y2="234.00"/><text class="num" x="306.67" y="248.00" text-anchor="middle">10²</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="234.00"/><line class="axis" x1="445.33" y1="230.00" x2="445.33" y2="234.00"/><text class="num" x="445.33" y="248.00" text-anchor="middle">10³</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="234.00"/><line class="axis" x1="584.00" y1="230.00" x2="584.00" y2="234.00"/><text class="num" x="584.00" y="248.00" text-anchor="middle">10⁴</text><text class="axis-name" x="376.00" y="264.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>rgmin: 81.881</title><text class="code-label" x="156" y="46.00" text-anchor="end">rgmin</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="126.6281" height="10"/><text class="num" x="592.00" y="46.00">81.881</text></g><g><title>DL-FIND: 231.908</title><text class="code-label" x="156" y="68.00" text-anchor="end">DL-FIND</text><rect class="suite-bar" x="168.00" y="59.00" width="189.3238" height="10"/><text class="num" x="592.00" y="68.00">231.908</text></g><g><title>pele: 268.036</title><text class="code-label" x="156" y="90.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="81.00" width="198.0428" height="10"/><text class="num" x="592.00" y="90.00">268.036</text></g><g><title>Eon svn: 300.052</title><text class="code-label" x="156" y="112.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="103.00" width="204.8379" height="10"/><text class="num" x="592.00" y="112.00">300.052</text></g><g><title>GMIN: 301.399</title><text class="code-label" x="156" y="134.00" text-anchor="end">GMIN</text><rect class="suite-bar" x="168.00" y="125.00" width="205.1077" height="10"/><text class="num" x="592.00" y="134.00">301.399</text></g><g><title>ASE: 396.55</title><text class="code-label" x="156" y="156.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="147.00" width="221.6306" height="10"/><text class="num" x="592.00" y="156.00">396.55</text></g><g><title>vc-SQNM: 598.05</title><text class="code-label" x="156" y="178.00" text-anchor="end">vc-SQNM</text><rect class="suite-bar" x="168.00" y="169.00" width="246.3743" height="10"/><text class="num" x="592.00" y="178.00">598.05</text></g><g><title>Sella: 729.433</title><text class="code-label" x="156" y="200.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="191.00" width="258.3340" height="10"/><text class="num" x="592.00" y="200.00">729.433</text></g><g><title>LAMMPS: 1123.81</title><text class="code-label" x="156" y="222.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="213.00" width="284.3630" height="10"/><text class="num" x="592.00" y="222.00">1123.81</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="morse-bulk-cost-bars-title" viewBox="0 0 680 336.0"><title id="morse-bulk-cost-bars-title">Best cost for Morse bulk</title><text class="group-label" x="0" y="18">Morse bulk</text><line class="axis" x1="168.00" y1="300.00" x2="584.00" y2="300.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="300.00"/><line class="axis" x1="168.00" y1="296.00" x2="168.00" y2="300.00"/><text class="num" x="168.00" y="314.00" text-anchor="middle">10⁰</text><line class="grid" x1="251.20" y1="32.00" x2="251.20" y2="300.00"/><line class="axis" x1="251.20" y1="296.00" x2="251.20" y2="300.00"/><text class="num" x="251.20" y="314.00" text-anchor="middle">10¹</text><line class="grid" x1="334.40" y1="32.00" x2="334.40" y2="300.00"/><line class="axis" x1="334.40" y1="296.00" x2="334.40" y2="300.00"/><text class="num" x="334.40" y="314.00" text-anchor="middle">10²</text><line class="grid" x1="417.60" y1="32.00" x2="417.60" y2="300.00"/><line class="axis" x1="417.60" y1="296.00" x2="417.60" y2="300.00"/><text class="num" x="417.60" y="314.00" text-anchor="middle">10³</text><line class="grid" x1="500.80" y1="32.00" x2="500.80" y2="300.00"/><line class="axis" x1="500.80" y1="296.00" x2="500.80" y2="300.00"/><text class="num" x="500.80" y="314.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="300.00"/><line class="axis" x1="584.00" y1="296.00" x2="584.00" y2="300.00"/><text class="num" x="584.00" y="314.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="330.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>rgmin: 8.35</title><text class="code-label" x="156" y="46.00" text-anchor="end">rgmin</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="76.6843" height="10"/><text class="num" x="592.00" y="46.00">8.35</text></g><g><title>TSASE: 19</title><text class="code-label" x="156" y="68.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="59.00" width="106.3923" height="10"/><text class="num" x="592.00" y="68.00">19</text></g><g><title>Sella: 28.89</title><text class="code-label" x="156" y="90.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="81.00" width="121.5342" height="10"/><text class="num" x="592.00" y="90.00">28.89</text></g><g><title>ASE: 28.91</title><text class="code-label" x="156" y="112.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="103.00" width="121.5592" height="10"/><text class="num" x="592.00" y="112.00">28.91</text></g><g><title>GMIN: 34.4</title><text class="code-label" x="156" y="134.00" text-anchor="end">GMIN</text><rect class="suite-bar" x="168.00" y="125.00" width="127.8417" height="10"/><text class="num" x="592.00" y="134.00">34.4</text></g><g><title>vc-SQNM: 40.51</title><text class="code-label" x="156" y="156.00" text-anchor="end">vc-SQNM</text><rect class="suite-bar" x="168.00" y="147.00" width="133.7492" height="10"/><text class="num" x="592.00" y="156.00">40.51</text></g><g><title>OPTIM: 46</title><text class="code-label" x="156" y="178.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="169.00" width="138.3415" height="10"/><text class="num" x="592.00" y="178.00">46</text></g><g><title>pele: 51</title><text class="code-label" x="156" y="200.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="191.00" width="142.0698" height="10"/><text class="num" x="592.00" y="200.00">51</text></g><g><title>Eon svn: 52</title><text class="code-label" x="156" y="222.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="213.00" width="142.7715" height="10"/><text class="num" x="592.00" y="222.00">52</text></g><g><title>eOn: 54.18</title><text class="code-label" x="156" y="244.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="235.00" width="144.2554" height="10"/><text class="num" x="592.00" y="244.00">54.18</text></g><g><title>DL-FIND: 13626.5</title><text class="code-label" x="156" y="266.00" text-anchor="end">DL-FIND</text><rect class="suite-bar" x="168.00" y="257.00" width="343.9807" height="10"/><text class="num" x="592.00" y="266.00">13626.5</text></g><g><title>LAMMPS: 17656.7</title><text class="code-label" x="156" y="288.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="279.00" width="353.3428" height="10"/><text class="num" x="592.00" y="288.00">17656.7</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-clusters-cost-bars-title" viewBox="0 0 680 402.0"><title id="lennard-jones-38-clusters-cost-bars-title">Best cost for Lennard-Jones 38 clusters</title><text class="group-label" x="0" y="18">Lennard-Jones 38 clusters</text><line class="axis" x1="168.00" y1="366.00" x2="584.00" y2="366.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="366.00"/><line class="axis" x1="168.00" y1="362.00" x2="168.00" y2="366.00"/><text class="num" x="168.00" y="380.00" text-anchor="middle">10¹</text><line class="grid" x1="272.00" y1="32.00" x2="272.00" y2="366.00"/><line class="axis" x1="272.00" y1="362.00" x2="272.00" y2="366.00"/><text class="num" x="272.00" y="380.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="366.00"/><line class="axis" x1="376.00" y1="362.00" x2="376.00" y2="366.00"/><text class="num" x="376.00" y="380.00" text-anchor="middle">10³</text><line class="grid" x1="480.00" y1="32.00" x2="480.00" y2="366.00"/><line class="axis" x1="480.00" y1="362.00" x2="480.00" y2="366.00"/><text class="num" x="480.00" y="380.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="366.00"/><line class="axis" x1="584.00" y1="362.00" x2="584.00" y2="366.00"/><text class="num" x="584.00" y="380.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="396.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>unknown: 79</title><text class="code-label" x="156" y="46.00" text-anchor="end">unknown</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="93.3532" height="10"/><text class="num" x="592.00" y="46.00">79</text></g><g><title>rgmin: 81.881</title><text class="code-label" x="156" y="68.00" text-anchor="end">rgmin</text><rect class="suite-bar" x="168.00" y="59.00" width="94.9710" height="10"/><text class="num" x="592.00" y="68.00">81.881</text></g><g><title>TSASE: 166</title><text class="code-label" x="156" y="90.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="81.00" width="126.8912" height="10"/><text class="num" x="592.00" y="90.00">166</text></g><g><title>OPTIM: 176</title><text class="code-label" x="156" y="112.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="103.00" width="129.5333" height="10"/><text class="num" x="592.00" y="112.00">176</text></g><g><title>pele: 179</title><text class="code-label" x="156" y="134.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="125.00" width="130.2967" height="10"/><text class="num" x="592.00" y="134.00">179</text></g><g><title>eOn: 180.137</title><text class="code-label" x="156" y="156.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="147.00" width="130.5827" height="10"/><text class="num" x="592.00" y="156.00">180.137</text></g><g><title>Eon svn: 181</title><text class="code-label" x="156" y="178.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="169.00" width="130.7986" height="10"/><text class="num" x="592.00" y="178.00">181</text></g><g><title>DL-FIND: 231.908</title><text class="code-label" x="156" y="200.00" text-anchor="end">DL-FIND</text><rect class="suite-bar" x="168.00" y="191.00" width="141.9928" height="10"/><text class="num" x="592.00" y="200.00">231.908</text></g><g><title>GMIN: 301.399</title><text class="code-label" x="156" y="222.00" text-anchor="end">GMIN</text><rect class="suite-bar" x="168.00" y="213.00" width="153.8307" height="10"/><text class="num" x="592.00" y="222.00">301.399</text></g><g><title>ASE: 374.645</title><text class="code-label" x="156" y="244.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="235.00" width="163.6565" height="10"/><text class="num" x="592.00" y="244.00">374.645</text></g><g><title>geomeTRIC: 507.683</title><text class="code-label" x="156" y="266.00" text-anchor="end">geomeTRIC</text><rect class="suite-bar" x="168.00" y="257.00" width="177.3816" height="10"/><text class="num" x="592.00" y="266.00">507.683</text></g><g><title>vc-SQNM: 598.05</title><text class="code-label" x="156" y="288.00" text-anchor="end">vc-SQNM</text><rect class="suite-bar" x="168.00" y="279.00" width="184.7807" height="10"/><text class="num" x="592.00" y="288.00">598.05</text></g><g><title>Sella: 710.089</title><text class="code-label" x="156" y="310.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="301.00" width="192.5365" height="10"/><text class="num" x="592.00" y="310.00">710.089</text></g><g><title>LAMMPS: 1123.81</title><text class="code-label" x="156" y="332.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="323.00" width="213.2722" height="10"/><text class="num" x="592.00" y="332.00">1123.81</text></g><g><title>pysisyphus: 15124.7</title><text class="code-label" x="156" y="354.00" text-anchor="end">pysisyphus</text><rect class="suite-bar" x="168.00" y="345.00" width="330.6874" height="10"/><text class="num" x="592.00" y="354.00">15124.7</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-clusters-with-gaussian-force-noise-cost-bars-title" viewBox="0 0 680 292.0"><title id="lennard-jones-38-clusters-with-gaussian-force-noise-cost-bars-title">Best cost for Lennard-Jones 38 clusters with Gaussian force noise</title><text class="group-label" x="0" y="18">Lennard-Jones 38 clusters with Gaussian force noise</text><line class="axis" x1="168.00" y1="256.00" x2="584.00" y2="256.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="256.00"/><line class="axis" x1="168.00" y1="252.00" x2="168.00" y2="256.00"/><text class="num" x="168.00" y="270.00" text-anchor="middle">10¹</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="256.00"/><line class="axis" x1="306.67" y1="252.00" x2="306.67" y2="256.00"/><text class="num" x="306.67" y="270.00" text-anchor="middle">10²</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="256.00"/><line class="axis" x1="445.33" y1="252.00" x2="445.33" y2="256.00"/><text class="num" x="445.33" y="270.00" text-anchor="middle">10³</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="256.00"/><line class="axis" x1="584.00" y1="252.00" x2="584.00" y2="256.00"/><text class="num" x="584.00" y="270.00" text-anchor="middle">10⁴</text><text class="axis-name" x="376.00" y="286.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>rgmin: 81.881</title><text class="code-label" x="156" y="46.00" text-anchor="end">rgmin</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="126.6281" height="10"/><text class="num" x="592.00" y="46.00">81.881</text></g><g><title>DL-FIND: 231.908</title><text class="code-label" x="156" y="68.00" text-anchor="end">DL-FIND</text><rect class="suite-bar" x="168.00" y="59.00" width="189.3238" height="10"/><text class="num" x="592.00" y="68.00">231.908</text></g><g><title>pele: 268.036</title><text class="code-label" x="156" y="90.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="81.00" width="198.0428" height="10"/><text class="num" x="592.00" y="90.00">268.036</text></g><g><title>Eon svn: 300.052</title><text class="code-label" x="156" y="112.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="103.00" width="204.8379" height="10"/><text class="num" x="592.00" y="112.00">300.052</text></g><g><title>GMIN: 301.399</title><text class="code-label" x="156" y="134.00" text-anchor="end">GMIN</text><rect class="suite-bar" x="168.00" y="125.00" width="205.1077" height="10"/><text class="num" x="592.00" y="134.00">301.399</text></g><g><title>ASE: 396.55</title><text class="code-label" x="156" y="156.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="147.00" width="221.6306" height="10"/><text class="num" x="592.00" y="156.00">396.55</text></g><g><title>geomeTRIC: 488.502</title><text class="code-label" x="156" y="178.00" text-anchor="end">geomeTRIC</text><rect class="suite-bar" x="168.00" y="169.00" width="234.1895" height="10"/><text class="num" x="592.00" y="178.00">488.502</text></g><g><title>vc-SQNM: 598.05</title><text class="code-label" x="156" y="200.00" text-anchor="end">vc-SQNM</text><rect class="suite-bar" x="168.00" y="191.00" width="246.3743" height="10"/><text class="num" x="592.00" y="200.00">598.05</text></g><g><title>Sella: 729.433</title><text class="code-label" x="156" y="222.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="213.00" width="258.3340" height="10"/><text class="num" x="592.00" y="222.00">729.433</text></g><g><title>LAMMPS: 1123.81</title><text class="code-label" x="156" y="244.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="235.00" width="284.3630" height="10"/><text class="num" x="592.00" y="244.00">1123.81</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="morse-bulk-cost-bars-title" viewBox="0 0 680 358.0"><title id="morse-bulk-cost-bars-title">Best cost for Morse bulk</title><text class="group-label" x="0" y="18">Morse bulk</text><line class="axis" x1="168.00" y1="322.00" x2="584.00" y2="322.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="322.00"/><line class="axis" x1="168.00" y1="318.00" x2="168.00" y2="322.00"/><text class="num" x="168.00" y="336.00" text-anchor="middle">10⁰</text><line class="grid" x1="251.20" y1="32.00" x2="251.20" y2="322.00"/><line class="axis" x1="251.20" y1="318.00" x2="251.20" y2="322.00"/><text class="num" x="251.20" y="336.00" text-anchor="middle">10¹</text><line class="grid" x1="334.40" y1="32.00" x2="334.40" y2="322.00"/><line class="axis" x1="334.40" y1="318.00" x2="334.40" y2="322.00"/><text class="num" x="334.40" y="336.00" text-anchor="middle">10²</text><line class="grid" x1="417.60" y1="32.00" x2="417.60" y2="322.00"/><line class="axis" x1="417.60" y1="318.00" x2="417.60" y2="322.00"/><text class="num" x="417.60" y="336.00" text-anchor="middle">10³</text><line class="grid" x1="500.80" y1="32.00" x2="500.80" y2="322.00"/><line class="axis" x1="500.80" y1="318.00" x2="500.80" y2="322.00"/><text class="num" x="500.80" y="336.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="322.00"/><line class="axis" x1="584.00" y1="318.00" x2="584.00" y2="322.00"/><text class="num" x="584.00" y="336.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="352.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>rgmin: 8.35</title><text class="code-label" x="156" y="46.00" text-anchor="end">rgmin</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="76.6843" height="10"/><text class="num" x="592.00" y="46.00">8.35</text></g><g><title>TSASE: 19</title><text class="code-label" x="156" y="68.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="59.00" width="106.3923" height="10"/><text class="num" x="592.00" y="68.00">19</text></g><g><title>Sella: 28.89</title><text class="code-label" x="156" y="90.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="81.00" width="121.5342" height="10"/><text class="num" x="592.00" y="90.00">28.89</text></g><g><title>ASE: 28.91</title><text class="code-label" x="156" y="112.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="103.00" width="121.5592" height="10"/><text class="num" x="592.00" y="112.00">28.91</text></g><g><title>GMIN: 34.4</title><text class="code-label" x="156" y="134.00" text-anchor="end">GMIN</text><rect class="suite-bar" x="168.00" y="125.00" width="127.8417" height="10"/><text class="num" x="592.00" y="134.00">34.4</text></g><g><title>vc-SQNM: 40.51</title><text class="code-label" x="156" y="156.00" text-anchor="end">vc-SQNM</text><rect class="suite-bar" x="168.00" y="147.00" width="133.7492" height="10"/><text class="num" x="592.00" y="156.00">40.51</text></g><g><title>geomeTRIC: 43.96</title><text class="code-label" x="156" y="178.00" text-anchor="end">geomeTRIC</text><rect class="suite-bar" x="168.00" y="169.00" width="136.7024" height="10"/><text class="num" x="592.00" y="178.00">43.96</text></g><g><title>OPTIM: 46</title><text class="code-label" x="156" y="200.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="191.00" width="138.3415" height="10"/><text class="num" x="592.00" y="200.00">46</text></g><g><title>pele: 51</title><text class="code-label" x="156" y="222.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="213.00" width="142.0698" height="10"/><text class="num" x="592.00" y="222.00">51</text></g><g><title>Eon svn: 52</title><text class="code-label" x="156" y="244.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="235.00" width="142.7715" height="10"/><text class="num" x="592.00" y="244.00">52</text></g><g><title>eOn: 54.18</title><text class="code-label" x="156" y="266.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="257.00" width="144.2554" height="10"/><text class="num" x="592.00" y="266.00">54.18</text></g><g><title>DL-FIND: 13626.5</title><text class="code-label" x="156" y="288.00" text-anchor="end">DL-FIND</text><rect class="suite-bar" x="168.00" y="279.00" width="343.9807" height="10"/><text class="num" x="592.00" y="288.00">13626.5</text></g><g><title>LAMMPS: 17656.7</title><text class="code-label" x="156" y="310.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="301.00" width="353.3428" height="10"/><text class="num" x="592.00" y="310.00">17656.7</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <h3>Results</h3>
    <p>Ranked rows for this code, one version and one method on each row. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. <a href="../../methodology.html">Scoring rules</a>.</p>
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
@@ -132,7 +132,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · BB</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">29</td>
+   <td data-label="Family rank" data-field="family_rank">30</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">639.474</td>
    <td data-label="Published" data-field="published"></td>
@@ -148,7 +148,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · BB</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">30</td>
+   <td data-label="Family rank" data-field="family_rank">31</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">639.474</td>
    <td data-label="Published" data-field="published"></td>
@@ -164,7 +164,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · CG</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">32</td>
+   <td data-label="Family rank" data-field="family_rank">33</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">669.237</td>
    <td data-label="Published" data-field="published"></td>
@@ -180,7 +180,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · CG</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">33</td>
+   <td data-label="Family rank" data-field="family_rank">34</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">669.237</td>
    <td data-label="Published" data-field="published"></td>
@@ -196,7 +196,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · FIRE</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">39</td>
+   <td data-label="Family rank" data-field="family_rank">40</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">769.36</td>
    <td data-label="Published" data-field="published"></td>
@@ -212,7 +212,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · FIRE</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">40</td>
+   <td data-label="Family rank" data-field="family_rank">41</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">769.36</td>
    <td data-label="Published" data-field="published"></td>
@@ -228,7 +228,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · FIRE2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">42</td>
+   <td data-label="Family rank" data-field="family_rank">43</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">845.947</td>
    <td data-label="Published" data-field="published"></td>
@@ -244,7 +244,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · FIRE2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">43</td>
+   <td data-label="Family rank" data-field="family_rank">44</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">845.947</td>
    <td data-label="Published" data-field="published"></td>
@@ -260,7 +260,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · BFGS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">44</td>
+   <td data-label="Family rank" data-field="family_rank">45</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">1010.45</td>
    <td data-label="Published" data-field="published"></td>
@@ -276,7 +276,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · BFGS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">45</td>
+   <td data-label="Family rank" data-field="family_rank">46</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">1010.45</td>
    <td data-label="Published" data-field="published"></td>
@@ -292,7 +292,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · QUICKMIN</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">48</td>
+   <td data-label="Family rank" data-field="family_rank">50</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">1933</td>
    <td data-label="Published" data-field="published"></td>
@@ -308,7 +308,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · QUICKMIN</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">49</td>
+   <td data-label="Family rank" data-field="family_rank">51</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">1933</td>
    <td data-label="Published" data-field="published"></td>
@@ -324,7 +324,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · DIIS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">50</td>
+   <td data-label="Family rank" data-field="family_rank">52</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">1967.42</td>
    <td data-label="Published" data-field="published"></td>
@@ -340,7 +340,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · SR1</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">52</td>
+   <td data-label="Family rank" data-field="family_rank">54</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">2185.66</td>
    <td data-label="Published" data-field="published"></td>
@@ -356,7 +356,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · SR2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">53</td>
+   <td data-label="Family rank" data-field="family_rank">55</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">2298.44</td>
    <td data-label="Published" data-field="published"></td>
@@ -372,7 +372,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · SD</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">62</td>
+   <td data-label="Family rank" data-field="family_rank">64</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">8392.75</td>
    <td data-label="Published" data-field="published"></td>
@@ -388,7 +388,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · SD</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">63</td>
+   <td data-label="Family rank" data-field="family_rank">65</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">8392.75</td>
    <td data-label="Published" data-field="published"></td>
@@ -404,7 +404,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · ADAM</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">64</td>
+   <td data-label="Family rank" data-field="family_rank">66</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">13835.7</td>
    <td data-label="Published" data-field="published"></td>
@@ -420,7 +420,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · ADAM</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">68</td>
+   <td data-label="Family rank" data-field="family_rank">70</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">16420.2</td>
    <td data-label="Published" data-field="published"></td>
@@ -436,7 +436,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · SR1</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">69</td>
+   <td data-label="Family rank" data-field="family_rank">71</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">19908.9</td>
    <td data-label="Published" data-field="published"></td>
@@ -452,7 +452,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · DIIS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">70</td>
+   <td data-label="Family rank" data-field="family_rank">72</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">19945</td>
    <td data-label="Published" data-field="published"></td>
@@ -468,7 +468,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · SR2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">74</td>
+   <td data-label="Family rank" data-field="family_rank">76</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">20000</td>
    <td data-label="Published" data-field="published"></td>
@@ -532,7 +532,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · CG</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">13</td>
+   <td data-label="Family rank" data-field="family_rank">14</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">669.237</td>
    <td data-label="Published" data-field="published"></td>
@@ -548,7 +548,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38-noise.html">Lennard-Jones 38 clusters with Gaussian force noise</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · FIRE</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">15</td>
+   <td data-label="Family rank" data-field="family_rank">16</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">769.36</td>
    <td data-label="Published" data-field="published"></td>
@@ -676,7 +676,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · CG</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">19</td>
+   <td data-label="Family rank" data-field="family_rank">20</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">50.49</td>
    <td data-label="Published" data-field="published"></td>
@@ -692,7 +692,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · BFGS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">25</td>
+   <td data-label="Family rank" data-field="family_rank">26</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">54.04</td>
    <td data-label="Published" data-field="published"></td>
@@ -708,7 +708,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · BFGS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">26</td>
+   <td data-label="Family rank" data-field="family_rank">27</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">54.04</td>
    <td data-label="Published" data-field="published"></td>
@@ -724,7 +724,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · CG</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">28</td>
+   <td data-label="Family rank" data-field="family_rank">29</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">54.72</td>
    <td data-label="Published" data-field="published"></td>
@@ -740,7 +740,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · SR2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">29</td>
+   <td data-label="Family rank" data-field="family_rank">30</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">59.53</td>
    <td data-label="Published" data-field="published"></td>
@@ -756,7 +756,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · SR1</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">31</td>
+   <td data-label="Family rank" data-field="family_rank">32</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">61.53</td>
    <td data-label="Published" data-field="published"></td>
@@ -772,7 +772,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · QUICKMIN</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">32</td>
+   <td data-label="Family rank" data-field="family_rank">33</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">61.75</td>
    <td data-label="Published" data-field="published"></td>
@@ -788,7 +788,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · QUICKMIN</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">33</td>
+   <td data-label="Family rank" data-field="family_rank">34</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">62.03</td>
    <td data-label="Published" data-field="published"></td>
@@ -804,7 +804,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · SD</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">35</td>
+   <td data-label="Family rank" data-field="family_rank">36</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">90.48</td>
    <td data-label="Published" data-field="published"></td>
@@ -820,7 +820,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · SD</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">38</td>
+   <td data-label="Family rank" data-field="family_rank">39</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">96.59</td>
    <td data-label="Published" data-field="published"></td>
@@ -836,7 +836,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · FIRE</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">40</td>
+   <td data-label="Family rank" data-field="family_rank">41</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">113.19</td>
    <td data-label="Published" data-field="published"></td>
@@ -852,7 +852,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · FIRE</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">42</td>
+   <td data-label="Family rank" data-field="family_rank">43</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">116.19</td>
    <td data-label="Published" data-field="published"></td>
@@ -868,7 +868,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · FIRE2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">44</td>
+   <td data-label="Family rank" data-field="family_rank">45</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">121.85</td>
    <td data-label="Published" data-field="published"></td>
@@ -884,7 +884,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · FIRE2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">45</td>
+   <td data-label="Family rank" data-field="family_rank">46</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">121.85</td>
    <td data-label="Published" data-field="published"></td>
@@ -900,7 +900,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · ADAM</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">49</td>
+   <td data-label="Family rank" data-field="family_rank">52</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">219.34</td>
    <td data-label="Published" data-field="published"></td>
@@ -916,7 +916,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · ADAM</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">50</td>
+   <td data-label="Family rank" data-field="family_rank">53</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">285.73</td>
    <td data-label="Published" data-field="published"></td>
@@ -932,7 +932,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · SR2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">51</td>
+   <td data-label="Family rank" data-field="family_rank">54</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">341.13</td>
    <td data-label="Published" data-field="published"></td>
@@ -948,7 +948,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · NEWTON</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">53</td>
+   <td data-label="Family rank" data-field="family_rank">56</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">396.69</td>
    <td data-label="Published" data-field="published"></td>
@@ -964,7 +964,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · SR1</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">54</td>
+   <td data-label="Family rank" data-field="family_rank">57</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">566.31</td>
    <td data-label="Published" data-field="published"></td>
@@ -980,7 +980,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · BB</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">56</td>
+   <td data-label="Family rank" data-field="family_rank">60</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">15606.6</td>
    <td data-label="Published" data-field="published"></td>
@@ -996,7 +996,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · DIIS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">57</td>
+   <td data-label="Family rank" data-field="family_rank">61</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">16153.4</td>
    <td data-label="Published" data-field="published"></td>

@@ -1,24 +1,34 @@
-#+TITLE: Pyamff
+#+TITLE: PyAMFF
 #+OPTIONS: toc:nil num:nil author:nil
 
 #+begin_export rst
 .. raw:: html
 
    <section class="bench" id="code-pyamff">
-   <p>The registry has no pin for this code string. The rows below use the spelling on the archived file.</p>
-   <p>No registry pin.</p>
+   <p>PyAMFF is used for machine-learning optimization. PyAMFF 0.1.0-beta at master 240f51d01ca22969369f9bc21760c61cbb3b6665 (2026-07-04, v3.0.0 plus 475 commits).</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
+   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
+   <tr>
+   <td data-label="Role">machine-learning optimization</td>
+   <td data-label="Ref">master</td>
+   <td data-label="Commit">240f51d01ca2</td>
+   <td data-label="Source"><a href="https://gitlab.com/pyamff/pyamff">https://gitlab.com/pyamff/pyamff</a></td>
+   </tr>
+   </tbody></table></div>
    <h3>Best cost</h3>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="ethene-cost-bars-title" viewBox="0 0 680 94.0"><title id="ethene-cost-bars-title">Best cost for Ethene</title><text class="group-label" x="0" y="18">Ethene</text><line class="axis" x1="168.00" y1="58.00" x2="584.00" y2="58.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="58.00"/><line class="axis" x1="168.00" y1="54.00" x2="168.00" y2="58.00"/><text class="num" x="168.00" y="72.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="58.00"/><line class="axis" x1="584.00" y1="54.00" x2="584.00" y2="58.00"/><text class="num" x="584.00" y="72.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="88.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>n2p2: 17397.1</title><text class="code-label" x="156" y="46.00" text-anchor="end">n2p2</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="100.0386" height="10"/><text class="num" x="592.00" y="46.00">17397.1</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="emt-pt-38-nanoparticle-cost-bars-title" viewBox="0 0 680 94.0"><title id="emt-pt-38-nanoparticle-cost-bars-title">Best cost for EMT Pt 38 nanoparticle</title><text class="group-label" x="0" y="18">EMT Pt 38 nanoparticle</text><line class="axis" x1="168.00" y1="58.00" x2="584.00" y2="58.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="58.00"/><line class="axis" x1="168.00" y1="54.00" x2="168.00" y2="58.00"/><text class="num" x="168.00" y="72.00" text-anchor="middle">10¹</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="58.00"/><line class="axis" x1="584.00" y1="54.00" x2="584.00" y2="58.00"/><text class="num" x="584.00" y="72.00" text-anchor="middle">10²</text><text class="axis-name" x="376.00" y="88.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>n2p2: 25.02</title><text class="code-label" x="156" y="46.00" text-anchor="end">n2p2</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="165.6875" height="10"/><text class="num" x="592.00" y="46.00">25.02</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="ethene-cost-bars-title" viewBox="0 0 680 116.0"><title id="ethene-cost-bars-title">Best cost for Ethene</title><text class="group-label" x="0" y="18">Ethene</text><line class="axis" x1="168.00" y1="80.00" x2="584.00" y2="80.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="80.00"/><line class="axis" x1="168.00" y1="76.00" x2="168.00" y2="80.00"/><text class="num" x="168.00" y="94.00" text-anchor="middle">10²</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="80.00"/><line class="axis" x1="306.67" y1="76.00" x2="306.67" y2="80.00"/><text class="num" x="306.67" y="94.00" text-anchor="middle">10³</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="80.00"/><line class="axis" x1="445.33" y1="76.00" x2="445.33" y2="80.00"/><text class="num" x="445.33" y="94.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="80.00"/><line class="axis" x1="584.00" y1="76.00" x2="584.00" y2="80.00"/><text class="num" x="584.00" y="94.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="110.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>PyAMFF: 191.02</title><text class="code-label" x="156" y="46.00" text-anchor="end">PyAMFF</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="38.9763" height="10"/><text class="num" x="592.00" y="46.00">191.02</text></g><g><title>n2p2: 17397.1</title><text class="code-label" x="156" y="68.00" text-anchor="end">n2p2</text><rect class="suite-bar" x="168.00" y="59.00" width="310.6795" height="10"/><text class="num" x="592.00" y="68.00">17397.1</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="emt-pt-38-nanoparticle-cost-bars-title" viewBox="0 0 680 116.0"><title id="emt-pt-38-nanoparticle-cost-bars-title">Best cost for EMT Pt 38 nanoparticle</title><text class="group-label" x="0" y="18">EMT Pt 38 nanoparticle</text><line class="axis" x1="168.00" y1="80.00" x2="584.00" y2="80.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="80.00"/><line class="axis" x1="168.00" y1="76.00" x2="168.00" y2="80.00"/><text class="num" x="168.00" y="94.00" text-anchor="middle">10¹</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="80.00"/><line class="axis" x1="584.00" y1="76.00" x2="584.00" y2="80.00"/><text class="num" x="584.00" y="94.00" text-anchor="middle">10²</text><text class="axis-name" x="376.00" y="110.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>n2p2: 25.02</title><text class="code-label" x="156" y="46.00" text-anchor="end">n2p2</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="165.6875" height="10"/><text class="num" x="592.00" y="46.00">25.02</text></g><g><title>PyAMFF: 91.04</title><text class="code-label" x="156" y="68.00" text-anchor="end">PyAMFF</text><rect class="suite-bar" x="168.00" y="59.00" width="399.0406" height="10"/><text class="num" x="592.00" y="68.00">91.04</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <h3>Results</h3>
    <p>Ranked rows for this code, one version and one method on each row. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. <a href="../../methodology.html">Scoring rules</a>.</p>
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
    <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0">
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (8037eb98) · pyamff-rprop10-7-fcoeff0">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0</td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-rprop10-7-fcoeff0</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -31,10 +41,26 @@
    <td data-label="Failures" data-field="failures">0 failed</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0">
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (0.1.0-beta) · Rprop">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0</td>
+   <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Rprop</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">1</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">191.02</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">188</td>
+   <td data-label="Mean calls" data-field="mean_calls">191.02</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (8037eb98) · pyamff-lbfgs10-7-fcoeff0">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-lbfgs10-7-fcoeff0</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -47,10 +73,42 @@
    <td data-label="Failures" data-field="failures">0 failed</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0">
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (0.1.0-beta) · LBFGS">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0</td>
+   <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · LBFGS</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">2999.06</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">1911.5</td>
+   <td data-label="Mean calls" data-field="mean_calls">2599.02</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 2, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (0.1.0-beta) · Adam">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Adam</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">3</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">4329.84</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">4162.5</td>
+   <td data-label="Mean calls" data-field="mean_calls">4329.84</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (8037eb98) · pyamff-adam10-7-fcoeff0">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-adam10-7-fcoeff0</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -63,10 +121,10 @@
    <td data-label="Failures" data-field="failures">0 failed</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0_1">
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (8037eb98) · pyamff-rprop10-7-fcoeff0_1">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0_1</td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-rprop10-7-fcoeff0_1</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -79,10 +137,10 @@
    <td data-label="Failures" data-field="failures">18 failed, class not recorded</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0_1">
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (8037eb98) · pyamff-adam10-7-fcoeff0_1">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0_1</td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-adam10-7-fcoeff0_1</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">5</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -95,10 +153,42 @@
    <td data-label="Failures" data-field="failures">10 failed, class not recorded</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/C2H4" data-label="Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1">
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (0.1.0-beta) · Adam force">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1</td>
+   <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Adam force</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">5</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">17653.2</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">7754</td>
+   <td data-label="Mean calls" data-field="mean_calls">12253.2</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 9, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (0.1.0-beta) · Rprop force">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Rprop force</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">6</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">21463.1</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">4597</td>
+   <td data-label="Mean calls" data-field="mean_calls">11863.1</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 16, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">6</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -111,10 +201,42 @@
    <td data-label="Failures" data-field="failures">19 failed, class not recorded</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0">
+   <tr data-problem="mlopt/C2H4" data-label="PyAMFF (0.1.0-beta) · LBFGS force">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · LBFGS force</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">7</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">35203.7</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">24554</td>
+   <td data-label="Mean calls" data-field="mean_calls">24403.3</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 18, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (240f51d0) · Rprop">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0</td>
+   <td data-label="Row" data-field="label">PyAMFF (240f51d0) · Rprop</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">91.04</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">75</td>
+   <td data-label="Mean calls" data-field="mean_calls">91.04</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (8037eb98) · pyamff-rprop10-7-fcoeff0">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-rprop10-7-fcoeff0</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -127,10 +249,26 @@
    <td data-label="Failures" data-field="failures">0 failed</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0_1">
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (0.1.0-beta) · Rprop">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-rprop10-7-fcoeff0_1</td>
+   <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Rprop</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">3</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">947.86</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">931.5</td>
+   <td data-label="Mean calls" data-field="mean_calls">947.86</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (8037eb98) · pyamff-rprop10-7-fcoeff0_1">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-rprop10-7-fcoeff0_1</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -143,10 +281,26 @@
    <td data-label="Failures" data-field="failures">0 failed</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0">
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (0.1.0-beta) · Adam">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0</td>
+   <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Adam</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">4</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">1071.28</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">867.5</td>
+   <td data-label="Mean calls" data-field="mean_calls">1071.28</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (8037eb98) · pyamff-adam10-7-fcoeff0">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-adam10-7-fcoeff0</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -159,10 +313,10 @@
    <td data-label="Failures" data-field="failures">0 failed</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0_1">
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (8037eb98) · pyamff-adam10-7-fcoeff0_1">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-adam10-7-fcoeff0_1</td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-adam10-7-fcoeff0_1</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -175,10 +329,26 @@
    <td data-label="Failures" data-field="failures">0 failed</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0">
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (0.1.0-beta) · Adam force">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0</td>
+   <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Adam force</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">5</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">1788.26</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">1597.5</td>
+   <td data-label="Mean calls" data-field="mean_calls">1788.26</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (8037eb98) · pyamff-lbfgs10-7-fcoeff0">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-lbfgs10-7-fcoeff0</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">5</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -191,10 +361,10 @@
    <td data-label="Failures" data-field="failures">1 failed, class not recorded</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="mlopt/emt-pt38" data-label="Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1">
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
-   <td data-label="Row" data-field="label">Pyamff (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1</td>
+   <td data-label="Row" data-field="label">PyAMFF (8037eb98) · pyamff-lbfgs10-7-fcoeff0_1</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">6</td>
    <td data-label="Unit" data-field="unit">epochs</td>
@@ -205,6 +375,38 @@
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
    <td data-label="Failures" data-field="failures">0 failed</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (240f51d) · LBFGS">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (240f51d) · LBFGS</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">6</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">1948.42</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">1065</td>
+   <td data-label="Mean calls" data-field="mean_calls">1748.4</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">50</td>
+   </tr>
+   <tr data-problem="mlopt/emt-pt38" data-label="PyAMFF (0.1.0-beta) · LBFGS">
+   <td data-label="Suite">Machine learning optimization</td>
+   <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
+   <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · LBFGS</td>
+   <td data-label="Family" data-field="family">Minimizers</td>
+   <td data-label="Family rank" data-field="family_rank">7</td>
+   <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
+   <td data-label="PAR-2" data-field="par2_mean">2172.68</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">1650.5</td>
+   <td data-label="Mean calls" data-field="mean_calls">2172.68</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
    </tbody></table></div>

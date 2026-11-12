@@ -1,6 +1,6 @@
 # Latest stock rows beside the 2014 archive
 
-The archived `benchmark.dat` values are the paper rows. These runs do not
+The archived `benchmark.dat` values are the 2014 table rows. These runs do not
 rebuild a paper-era client, tarball, pin, or compiler, and they do not
 change an optimizer parameter to move a number toward the archive. Each
 code is its latest release, stock. The problems, starts, and convergence

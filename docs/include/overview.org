@@ -17,7 +17,7 @@
    <a class="suite-card" href="generated/suites/mlopt.html"><span class="suite-count">2</span><span class="suite-name">Machine learning optimization</span><span class="suite-problems">EMT Pt 38 nanoparticle, Ethene</span></a>
    <a class="suite-card" href="generated/suites/neb.html"><span class="suite-count">1</span><span class="suite-name">Nudged elastic band</span><span class="suite-problems">Pt heptamer island</span></a>
    <a class="suite-card" href="generated/suites/hTST.html"><span class="suite-count">2</span><span class="suite-name">Harmonic transition state theory</span><span class="suite-problems">EAM aluminum, Pt heptamer island</span></a>
-   <a class="suite-card" href="generated/suites/accelerated-md.html"><span class="suite-count">2</span><span class="suite-name">Accelerated molecular dynamics</span><span class="suite-problems">Al adatom on Al(100) at 150 K, Al adatom on Al(100) at 250 K</span></a>
+   <a class="suite-card" href="generated/suites/accelerated-md.html"><span class="suite-count">2</span><span class="suite-name">Accelerated molecular dynamics</span><span class="suite-problems">Al adatom on Al(100) at 150 K, Al adatom on Al(100) at 185 K</span></a>
    </div>
    <p class="page-links"><a href="methodology.html">Scoring rules</a></p>
    </section>

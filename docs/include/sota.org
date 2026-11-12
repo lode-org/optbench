@@ -20,7 +20,6 @@
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-label="Row" data-field="label">rgmin (0.4.1) · DOGLEG</td><td data-label="Family" data-field="family">Minimizers</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">81.881</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">79</td><td data-label="Mean calls" data-field="mean_calls">81.881</td><td data-label="Hessians" data-field="hessian_calls">80.881</td><td data-label="FD calls" data-field="fd_calls">9220.43</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">1000</td></tr>
    </tbody></table></div>
-   <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <p><a href="generated/suites/minimization/lj38-noise.html">Family tables, overall table, and performance profile</a>.</p>
    <h3>Morse bulk</h3>
    <div class="winner"><p class="winner-name">rgmin (0.4.1) · NEWTON</p><p class="winner-score"><small>PAR-2</small>8.35</p></div>
@@ -52,11 +51,11 @@
    <p class="bench-gaps">eOn band rows are not yet on the harness counter.</p><p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p><p class="bench-gaps">Files with no per-start harness record stay off the ranked table.</p>
    <p><a href="generated/suites/double-ended-saddle-search/lj38.html">Family tables, overall table, and performance profile</a>.</p>
    <h3>Lennard-Jones 38 transition-state separation</h3>
-   <div class="winner"><p class="winner-name">Eon svn (r2549) · Lanczos improved L-BFGS</p><p class="winner-score"><small>PAR-2</small>502.784</p></div>
+   <div class="winner"><p class="winner-name">eOn (develop b0bd4d5a) · Lanczos improved L-BFGS</p><p class="winner-score"><small>PAR-2</small>484.627</p></div>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="double-ended-saddle-search/lj38_2ts_separation">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Per-image mean</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr><td data-label="Row" data-field="label">Eon svn (r2549) · Lanczos improved L-BFGS</td><td data-label="Family" data-field="family">Minimum mode</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">502.784</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">418</td><td data-label="Mean calls" data-field="mean_calls">502.784</td><td data-label="Per-image mean" data-field="mean_per_image">100.557</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">51</td></tr>
+   <tr><td data-label="Row" data-field="label">eOn (develop b0bd4d5a) · Lanczos improved L-BFGS</td><td data-label="Family" data-field="family">Minimum mode</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">484.627</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">417</td><td data-label="Mean calls" data-field="mean_calls">484.627</td><td data-label="Per-image mean" data-field="mean_per_image">96.9255</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">51</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <p><a href="generated/suites/double-ended-saddle-search/lj38_2ts_separation.html">Family tables, overall table, and performance profile</a>.</p>
@@ -71,11 +70,11 @@
    <p><a href="generated/suites/double-ended-saddle-search/pt-island.html">Family tables, overall table, and performance profile</a>.</p>
    <h2 id="suite-globalopt">Global optimization</h2>
    <h3>Binary Lennard-Jones 100</h3>
-   <div class="winner"><p class="winner-name">GMIN · basin-hopping</p><p class="winner-score"><small>Published</small>-589.507</p></div>
+   <div class="winner"><p class="winner-name">EON (SVN r2549) (r2549) · Basin hopping</p><p class="winner-score"><small>PAR-2</small>4e+06</p></div>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="globalopt/lj100-binary">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr><td data-label="Row" data-field="label">GMIN · basin-hopping</td><td data-label="Family" data-field="family">Basin hopping / global</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">lowest energy (epsilon)</td><td data-label="PAR-2" data-field="par2_mean"></td><td data-label="Published" data-field="published">-589.507</td><td data-label="Median calls" data-field="median_calls"></td><td data-label="Mean calls" data-field="mean_calls"></td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">not recorded</td><td data-label="Runs" data-field="n">100</td></tr>
+   <tr><td data-label="Row" data-field="label">EON (SVN r2549) (r2549) · Basin hopping</td><td data-label="Family" data-field="family">Basin hopping / global</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">4e+06</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">2e+06</td><td data-label="Mean calls" data-field="mean_calls">2e+06</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 100, wrong_stationary 0</td><td data-label="Runs" data-field="n">100</td></tr>
    </tbody></table></div>
    <p><a href="generated/suites/globalopt/lj100-binary.html">Family tables, overall table, and performance profile</a>.</p>
    <h3>Lennard-Jones 38 global minimum</h3>
@@ -137,11 +136,11 @@
    <p><a href="generated/suites/globalopt/tip4p20.html">Family tables, overall table, and performance profile</a>.</p>
    <h2 id="suite-lowest-eigenvector">Lowest eigenvector</h2>
    <h3>Lennard-Jones 38</h3>
-   <div class="winner"><p class="winner-name">Sella (0.1.1) · lowest eigenvector</p><p class="winner-score"><small>PAR-2</small>17.8</p></div>
+   <div class="winner"><p class="winner-name">rgsaddle (0.2.2) · Lanczos</p><p class="winner-score"><small>PAR-2</small>17.585</p></div>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="lowest-eigenvector/lj38">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr><td data-label="Row" data-field="label">Sella (0.1.1) · lowest eigenvector</td><td data-label="Family" data-field="family">Minimum mode</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">17.8</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">17</td><td data-label="Mean calls" data-field="mean_calls">17.8</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">200</td></tr>
+   <tr><td data-label="Row" data-field="label">rgsaddle (0.2.2) · Lanczos</td><td data-label="Family" data-field="family">Minimum mode</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">17.585</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">17</td><td data-label="Mean calls" data-field="mean_calls">17.585</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">200</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <p><a href="generated/suites/lowest-eigenvector/lj38.html">Family tables, overall table, and performance profile</a>.</p>
@@ -155,11 +154,11 @@
    <p class="bench-gaps">No run is committed for this problem.</p>
    <p><a href="generated/suites/tsopt/cuh2.html">Family tables, overall table, and performance profile</a>.</p>
    <h3>Lennard-Jones 38</h3>
-   <div class="winner"><p class="winner-name">Sella (2.6.0) · Sella</p><p class="winner-score"><small>PAR-2</small>68.74</p></div>
+   <div class="winner"><p class="winner-name">rgsaddle (0.2.2) · P-RFO</p><p class="winner-score"><small>PAR-2</small>68.47</p></div>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="tsopt/LJ38">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr><td data-label="Row" data-field="label">Sella (2.6.0) · Sella</td><td data-label="Family" data-field="family">Single-ended saddle</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">68.74</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">59.5</td><td data-label="Mean calls" data-field="mean_calls">68.74</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">200</td></tr>
+   <tr><td data-label="Row" data-field="label">rgsaddle (0.2.2) · P-RFO</td><td data-label="Family" data-field="family">Single-ended saddle</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">68.47</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">59</td><td data-label="Mean calls" data-field="mean_calls">68.47</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">200</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">eOn rows are not yet on the harness counter.</p><p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p><p class="bench-gaps">Files with no per-start harness record stay off the ranked table.</p>
    <p><a href="generated/suites/tsopt/LJ38.html">Family tables, overall table, and performance profile</a>.</p>
@@ -170,15 +169,15 @@
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-label="Row" data-field="label">Sella (0.1.1) · sella</td><td data-label="Family" data-field="family">Single-ended saddle</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">53</td><td data-label="Published" data-field="published">53</td><td data-label="Median calls" data-field="median_calls">51</td><td data-label="Mean calls" data-field="mean_calls">53</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">0 failed</td><td data-label="Runs" data-field="n">49</td></tr>
    </tbody></table></div>
-   <p class="bench-gaps">eOn rows are not yet on the harness counter.</p><p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
+   <p class="bench-gaps">eOn rows are not yet on the harness counter.</p><p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p><p class="bench-gaps">Files with no per-start harness record stay off the ranked table.</p>
    <p><a href="generated/suites/tsopt/pt-island.html">Family tables, overall table, and performance profile</a>.</p>
    <h2 id="suite-mlopt">Machine learning optimization</h2>
    <h3>Ethene</h3>
-   <div class="winner"><p class="winner-name">n2p2 (2.3.0) · Kalman energy</p><p class="winner-score"><small>PAR-2</small>17397.1</p></div>
+   <div class="winner"><p class="winner-name">PyAMFF (0.1.0-beta) · Rprop</p><p class="winner-score"><small>PAR-2</small>191.02</p></div>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="mlopt/C2H4">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr><td data-label="Row" data-field="label">n2p2 (2.3.0) · Kalman energy</td><td data-label="Family" data-field="family">Minimizers</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">loss-gradient evaluations</td><td data-label="PAR-2" data-field="par2_mean">17397.1</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">10000</td><td data-label="Mean calls" data-field="mean_calls">9397.12</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 40, wrong_stationary 0</td><td data-label="Runs" data-field="n">50</td></tr>
+   <tr><td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Rprop</td><td data-label="Family" data-field="family">Minimizers</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">loss-gradient evaluations</td><td data-label="PAR-2" data-field="par2_mean">191.02</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">188</td><td data-label="Mean calls" data-field="mean_calls">191.02</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">50</td></tr>
    </tbody></table></div>
    <p><a href="generated/suites/mlopt/C2H4.html">Family tables, overall table, and performance profile</a>.</p>
    <h3>EMT Pt 38 nanoparticle</h3>
@@ -228,12 +227,12 @@
    </tbody></table></div>
    <p class="bench-gaps">eOn rows are not yet on the harness counter.</p>
    <p><a href="generated/suites/accelerated-md/standard_aladatom.html">Family tables, overall table, and performance profile</a>.</p>
-   <h3>Al adatom on Al(100) at 250 K</h3>
-   <div class="winner"><p class="winner-name">eOn · parallel replica</p><p class="winner-score"><small>Published</small>2.54294e+08</p></div>
+   <h3>Al adatom on Al(100) at 185 K</h3>
+   <div class="winner"><p class="winner-name">EON (SVN r2549) (r2549) · parallel replica</p><p class="winner-score"><small>PAR-2</small>829272</p></div>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="accelerated-md/aladatom">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr><td data-label="Row" data-field="label">eOn · parallel replica</td><td data-label="Family" data-field="family">Minimizers</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">escape rate (1/s)</td><td data-label="PAR-2" data-field="par2_mean"></td><td data-label="Published" data-field="published">2.54294e+08</td><td data-label="Median calls" data-field="median_calls"></td><td data-label="Mean calls" data-field="mean_calls"></td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">not recorded</td><td data-label="Runs" data-field="n">1</td></tr>
+   <tr><td data-label="Row" data-field="label">EON (SVN r2549) (r2549) · parallel replica</td><td data-label="Family" data-field="family">Minimizers</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">829272</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">557591</td><td data-label="Mean calls" data-field="mean_calls">829272</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">150</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">eOn rows are not yet on the harness counter.</p><p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <p><a href="generated/suites/accelerated-md/aladatom.html">Family tables, overall table, and performance profile</a>.</p>

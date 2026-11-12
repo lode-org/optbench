@@ -12,8 +12,8 @@
    </div>
    <h2>Charts</h2>
    <div class="lead-charts">
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-cost-bars-title" viewBox="0 0 680 270.0"><title id="lennard-jones-38-cost-bars-title">Best cost for Lennard-Jones 38</title><text class="group-label" x="0" y="18">Lennard-Jones 38</text><line class="axis" x1="168.00" y1="234.00" x2="584.00" y2="234.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="234.00"/><line class="axis" x1="168.00" y1="230.00" x2="168.00" y2="234.00"/><text class="num" x="168.00" y="248.00" text-anchor="middle">10¹</text><line class="grid" x1="272.00" y1="32.00" x2="272.00" y2="234.00"/><line class="axis" x1="272.00" y1="230.00" x2="272.00" y2="234.00"/><text class="num" x="272.00" y="248.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="234.00"/><line class="axis" x1="376.00" y1="230.00" x2="376.00" y2="234.00"/><text class="num" x="376.00" y="248.00" text-anchor="middle">10³</text><line class="grid" x1="480.00" y1="32.00" x2="480.00" y2="234.00"/><line class="axis" x1="480.00" y1="230.00" x2="480.00" y2="234.00"/><text class="num" x="480.00" y="248.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="234.00"/><line class="axis" x1="584.00" y1="230.00" x2="584.00" y2="234.00"/><text class="num" x="584.00" y="248.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="264.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Sella: 68.74</title><text class="code-label" x="156" y="46.00" text-anchor="end">Sella</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="87.0698" height="10"/><text class="num" x="592.00" y="46.00">68.74</text></g><g><title>OPTIM: 145</title><text class="code-label" x="156" y="68.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="59.00" width="120.7823" height="10"/><text class="num" x="592.00" y="68.00">145</text></g><g><title>pele: 192</title><text class="code-label" x="156" y="90.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="81.00" width="133.4633" height="10"/><text class="num" x="592.00" y="90.00">192</text></g><g><title>Eon svn: 237</title><text class="code-label" x="156" y="112.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="103.00" width="142.9738" height="10"/><text class="num" x="592.00" y="112.00">237</text></g><g><title>eOn: 280.33</title><text class="code-label" x="156" y="134.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="125.00" width="150.5576" height="10"/><text class="num" x="592.00" y="134.00">280.33</text></g><g><title>OptKing: 7030.36</title><text class="code-label" x="156" y="156.00" text-anchor="end">OptKing</text><rect class="suite-bar" x="168.00" y="147.00" width="296.0857" height="10"/><text class="num" x="592.00" y="156.00">7030.36</text></g><g><title>rgsaddle: 7803.19</title><text class="code-label" x="156" y="178.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="169.00" width="300.7963" height="10"/><text class="num" x="592.00" y="178.00">7803.19</text></g><g><title>pARTn: 20000</title><text class="code-label" x="156" y="200.00" text-anchor="end">pARTn</text><rect class="suite-bar" x="168.00" y="191.00" width="343.3071" height="10"/><text class="num" x="592.00" y="200.00">20000</text></g><g><title>TSASE: 20000</title><text class="code-label" x="156" y="222.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="213.00" width="343.3071" height="10"/><text class="num" x="592.00" y="222.00">20000</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
-   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="pt-heptamer-island-cost-bars-title" viewBox="0 0 680 270.0"><title id="pt-heptamer-island-cost-bars-title">Best cost for Pt heptamer island</title><text class="group-label" x="0" y="18">Pt heptamer island</text><line class="axis" x1="168.00" y1="234.00" x2="584.00" y2="234.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="234.00"/><line class="axis" x1="168.00" y1="230.00" x2="168.00" y2="234.00"/><text class="num" x="168.00" y="248.00" text-anchor="middle">10¹</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="234.00"/><line class="axis" x1="306.67" y1="230.00" x2="306.67" y2="234.00"/><text class="num" x="306.67" y="248.00" text-anchor="middle">10²</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="234.00"/><line class="axis" x1="445.33" y1="230.00" x2="445.33" y2="234.00"/><text class="num" x="445.33" y="248.00" text-anchor="middle">10³</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="234.00"/><line class="axis" x1="584.00" y1="230.00" x2="584.00" y2="234.00"/><text class="num" x="584.00" y="248.00" text-anchor="middle">10⁴</text><text class="axis-name" x="376.00" y="264.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Sella: 53</title><text class="code-label" x="156" y="46.00" text-anchor="end">Sella</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="100.4329" height="10"/><text class="num" x="592.00" y="46.00">53</text></g><g><title>OPTIM: 71</title><text class="code-label" x="156" y="68.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="59.00" width="118.0412" height="10"/><text class="num" x="592.00" y="68.00">71</text></g><g><title>pele: 88</title><text class="code-label" x="156" y="90.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="81.00" width="130.9683" height="10"/><text class="num" x="592.00" y="90.00">88</text></g><g><title>Eon svn: 106</title><text class="code-label" x="156" y="112.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="103.00" width="142.1757" height="10"/><text class="num" x="592.00" y="112.00">106</text></g><g><title>eOn: 108.796</title><text class="code-label" x="156" y="134.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="125.00" width="143.7436" height="10"/><text class="num" x="592.00" y="134.00">108.796</text></g><g><title>rgsaddle: 223.898</title><text class="code-label" x="156" y="156.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="147.00" width="187.2070" height="10"/><text class="num" x="592.00" y="156.00">223.898</text></g><g><title>OptKing: 1059.98</title><text class="code-label" x="156" y="178.00" text-anchor="end">OptKing</text><rect class="suite-bar" x="168.00" y="169.00" width="280.8413" height="10"/><text class="num" x="592.00" y="178.00">1059.98</text></g><g><title>TSASE: 1144.31</title><text class="code-label" x="156" y="200.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="191.00" width="285.4512" height="10"/><text class="num" x="592.00" y="200.00">1144.31</text></g><g><title>pARTn: 1970.22</title><text class="code-label" x="156" y="222.00" text-anchor="end">pARTn</text><rect class="suite-bar" x="168.00" y="213.00" width="318.1728" height="10"/><text class="num" x="592.00" y="222.00">1970.22</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lennard-jones-38-cost-bars-title" viewBox="0 0 680 270.0"><title id="lennard-jones-38-cost-bars-title">Best cost for Lennard-Jones 38</title><text class="group-label" x="0" y="18">Lennard-Jones 38</text><line class="axis" x1="168.00" y1="234.00" x2="584.00" y2="234.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="234.00"/><line class="axis" x1="168.00" y1="230.00" x2="168.00" y2="234.00"/><text class="num" x="168.00" y="248.00" text-anchor="middle">10¹</text><line class="grid" x1="272.00" y1="32.00" x2="272.00" y2="234.00"/><line class="axis" x1="272.00" y1="230.00" x2="272.00" y2="234.00"/><text class="num" x="272.00" y="248.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="234.00"/><line class="axis" x1="376.00" y1="230.00" x2="376.00" y2="234.00"/><text class="num" x="376.00" y="248.00" text-anchor="middle">10³</text><line class="grid" x1="480.00" y1="32.00" x2="480.00" y2="234.00"/><line class="axis" x1="480.00" y1="230.00" x2="480.00" y2="234.00"/><text class="num" x="480.00" y="248.00" text-anchor="middle">10⁴</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="234.00"/><line class="axis" x1="584.00" y1="230.00" x2="584.00" y2="234.00"/><text class="num" x="584.00" y="248.00" text-anchor="middle">10⁵</text><text class="axis-name" x="376.00" y="264.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>rgsaddle: 68.47</title><text class="code-label" x="156" y="46.00" text-anchor="end">rgsaddle</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="86.8920" height="10"/><text class="num" x="592.00" y="46.00">68.47</text></g><g><title>Sella: 68.74</title><text class="code-label" x="156" y="68.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="59.00" width="87.0698" height="10"/><text class="num" x="592.00" y="68.00">68.74</text></g><g><title>OPTIM: 145</title><text class="code-label" x="156" y="90.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="81.00" width="120.7823" height="10"/><text class="num" x="592.00" y="90.00">145</text></g><g><title>pele: 192</title><text class="code-label" x="156" y="112.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="103.00" width="133.4633" height="10"/><text class="num" x="592.00" y="112.00">192</text></g><g><title>Eon svn: 237</title><text class="code-label" x="156" y="134.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="125.00" width="142.9738" height="10"/><text class="num" x="592.00" y="134.00">237</text></g><g><title>eOn: 256.5</title><text class="code-label" x="156" y="156.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="147.00" width="146.5451" height="10"/><text class="num" x="592.00" y="156.00">256.5</text></g><g><title>OptKing: 7030.36</title><text class="code-label" x="156" y="178.00" text-anchor="end">OptKing</text><rect class="suite-bar" x="168.00" y="169.00" width="296.0857" height="10"/><text class="num" x="592.00" y="178.00">7030.36</text></g><g><title>pARTn: 20000</title><text class="code-label" x="156" y="200.00" text-anchor="end">pARTn</text><rect class="suite-bar" x="168.00" y="191.00" width="343.3071" height="10"/><text class="num" x="592.00" y="200.00">20000</text></g><g><title>TSASE: 20000</title><text class="code-label" x="156" y="222.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="213.00" width="343.3071" height="10"/><text class="num" x="592.00" y="222.00">20000</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="pt-heptamer-island-cost-bars-title" viewBox="0 0 680 270.0"><title id="pt-heptamer-island-cost-bars-title">Best cost for Pt heptamer island</title><text class="group-label" x="0" y="18">Pt heptamer island</text><line class="axis" x1="168.00" y1="234.00" x2="584.00" y2="234.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="234.00"/><line class="axis" x1="168.00" y1="230.00" x2="168.00" y2="234.00"/><text class="num" x="168.00" y="248.00" text-anchor="middle">10¹</text><line class="grid" x1="306.67" y1="32.00" x2="306.67" y2="234.00"/><line class="axis" x1="306.67" y1="230.00" x2="306.67" y2="234.00"/><text class="num" x="306.67" y="248.00" text-anchor="middle">10²</text><line class="grid" x1="445.33" y1="32.00" x2="445.33" y2="234.00"/><line class="axis" x1="445.33" y1="230.00" x2="445.33" y2="234.00"/><text class="num" x="445.33" y="248.00" text-anchor="middle">10³</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="234.00"/><line class="axis" x1="584.00" y1="230.00" x2="584.00" y2="234.00"/><text class="num" x="584.00" y="248.00" text-anchor="middle">10⁴</text><text class="axis-name" x="376.00" y="264.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>Sella: 53</title><text class="code-label" x="156" y="46.00" text-anchor="end">Sella</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="100.4329" height="10"/><text class="num" x="592.00" y="46.00">53</text></g><g><title>OPTIM: 71</title><text class="code-label" x="156" y="68.00" text-anchor="end">OPTIM</text><rect class="suite-bar" x="168.00" y="59.00" width="118.0412" height="10"/><text class="num" x="592.00" y="68.00">71</text></g><g><title>pele: 88</title><text class="code-label" x="156" y="90.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="81.00" width="130.9683" height="10"/><text class="num" x="592.00" y="90.00">88</text></g><g><title>Eon svn: 106</title><text class="code-label" x="156" y="112.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="103.00" width="142.1757" height="10"/><text class="num" x="592.00" y="112.00">106</text></g><g><title>eOn: 106.347</title><text class="code-label" x="156" y="134.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="125.00" width="142.3725" height="10"/><text class="num" x="592.00" y="134.00">106.347</text></g><g><title>rgsaddle: 147.878</title><text class="code-label" x="156" y="156.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="147.00" width="162.2264" height="10"/><text class="num" x="592.00" y="156.00">147.878</text></g><g><title>OptKing: 1059.98</title><text class="code-label" x="156" y="178.00" text-anchor="end">OptKing</text><rect class="suite-bar" x="168.00" y="169.00" width="280.8413" height="10"/><text class="num" x="592.00" y="178.00">1059.98</text></g><g><title>TSASE: 1144.31</title><text class="code-label" x="156" y="200.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="191.00" width="285.4512" height="10"/><text class="num" x="592.00" y="200.00">1144.31</text></g><g><title>pARTn: 1970.22</title><text class="code-label" x="156" y="222.00" text-anchor="end">pARTn</text><rect class="suite-bar" x="168.00" y="213.00" width="318.1728" height="10"/><text class="num" x="592.00" y="222.00">1970.22</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
    <p class="chart-files"><a href="../../_static/board/suite-tsopt.svg">SVG file</a></p>
    <div class="bench-export">
    <figure class="bench-plot"><a href="../../_static/board/suite-tsopt.svg"><picture><source srcset="../../_static/board/suite-tsopt.webp" type="image/webp"><img src="../../_static/board/suite-tsopt.png" alt="Transition state optimization best ranked cost" loading="lazy" decoding="async"></picture></a><figcaption>Transition state optimization best ranked cost. Select the plot for the full SVG.</figcaption></figure>
@@ -28,6 +28,15 @@
    <tr class="is-best group-start">
    <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
    <td class="problem" data-label="Problem"><a href="tsopt/LJ38.html">Lennard-Jones 38</a></td>
+   <td class="code" data-label="Code"><a href="../codes/rgsaddle.html">rgsaddle</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:20.8875%"><i></i></span><span class="bar-num">68.47</span></td>
+   <td class="num" data-label="Median">1124.95</td>
+   <td class="num" data-label="Success">100.0%</td>
+   <td class="num" data-label="PAR-2">68.47</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
+   <td class="problem" data-label="Problem"><a href="tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/sella.html">Sella</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:20.9302%"><i></i></span><span class="bar-num">68.74</span></td>
    <td class="num" data-label="Median">69.145</td>
@@ -35,7 +44,7 @@
    <td class="num" data-label="PAR-2">68.74</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
    <td class="problem" data-label="Problem"><a href="tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/optim.html">OPTIM</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:29.0342%"><i></i></span><span class="bar-num">145</span></td>
@@ -44,7 +53,7 @@
    <td class="num" data-label="PAR-2">145</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
    <td class="problem" data-label="Problem"><a href="tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/pele.html">pele</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:32.0825%"><i></i></span><span class="bar-num">192</span></td>
@@ -53,7 +62,7 @@
    <td class="num" data-label="PAR-2">192</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
    <td class="problem" data-label="Problem"><a href="tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:34.3687%"><i></i></span><span class="bar-num">237</span></td>
@@ -62,31 +71,22 @@
    <td class="num" data-label="PAR-2">237</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
    <td class="problem" data-label="Problem"><a href="tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:36.1917%"><i></i></span><span class="bar-num">280.33</span></td>
-   <td class="num" data-label="Median">2102.72</td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:35.2272%"><i></i></span><span class="bar-num">256.5</span></td>
+   <td class="num" data-label="Median">623.45</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">280.33</td>
+   <td class="num" data-label="PAR-2">256.5</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">7</span></td>
    <td class="problem" data-label="Problem"><a href="tsopt/LJ38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/optking.html">OptKing</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:71.1744%"><i></i></span><span class="bar-num">7030.36</span></td>
    <td class="num" data-label="Median">7363.89</td>
    <td class="num" data-label="Success">66.5%</td>
    <td class="num" data-label="PAR-2">7030.36</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">7</span></td>
-   <td class="problem" data-label="Problem"><a href="tsopt/LJ38.html">Lennard-Jones 38</a></td>
-   <td class="code" data-label="Code"><a href="../codes/rgsaddle.html">rgsaddle</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:72.3068%"><i></i></span><span class="bar-num">7803.19</span></td>
-   <td class="num" data-label="Median">19418.8</td>
-   <td class="num" data-label="Success">63.0%</td>
-   <td class="num" data-label="PAR-2">7803.19</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">8</span></td>
@@ -146,19 +146,19 @@
    <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
    <td class="problem" data-label="Problem"><a href="tsopt/pt-island.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:34.5538%"><i></i></span><span class="bar-num">108.796</span></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:34.2242%"><i></i></span><span class="bar-num">106.347</span></td>
    <td class="num" data-label="Median">135.408</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">108.796</td>
+   <td class="num" data-label="PAR-2">106.347</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
    <td class="problem" data-label="Problem"><a href="tsopt/pt-island.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/rgsaddle.html">rgsaddle</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:45.0017%"><i></i></span><span class="bar-num">223.898</span></td>
-   <td class="num" data-label="Median">6505.47</td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:38.9967%"><i></i></span><span class="bar-num">147.878</span></td>
+   <td class="num" data-label="Median">209.98</td>
    <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">223.898</td>
+   <td class="num" data-label="PAR-2">147.878</td>
    </tr>
    <tr>
    <td class="rank-cell" data-label="Rank"><span class="rank">7</span></td>

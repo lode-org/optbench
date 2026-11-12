@@ -38,7 +38,7 @@
    <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:25.2262%"><i></i></span><span class="bar-num">319.538</span></td>
-   <td class="num" data-label="Median">934.308</td>
+   <td class="num" data-label="Median">929.385</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">319.538</td>
    </tr>
@@ -47,7 +47,7 @@
    <td class="problem" data-label="Problem"><a href="neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:26.3666%"><i></i></span><span class="bar-num">336.769</span></td>
-   <td class="num" data-label="Median">804.154</td>
+   <td class="num" data-label="Median">678.923</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">336.769</td>
    </tr>

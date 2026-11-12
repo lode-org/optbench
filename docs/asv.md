@@ -13,6 +13,7 @@ asv is the measurement store. A result file is keyed to the commit asv checked o
 | `environments/eon-3.5.0.yml` | conda-forge pin for the eOn 3.5.0 binary |
 | `environments/eon-develop.yml` | Python pin for the eOn develop source build. Not a conda eOn package |
 | `environments/eon-svn.yml` | Python pin for the eOn SVN r2549 source build. Not a conda eOn package |
+| `environments/ogolem.yml` | Python pin for the OGOLEM source build. Not a conda package |
 | `environments/vcsqnm.yml` | Python pin for the vc-SQNM v1.3 source build. Not a conda package |
 | `benchmarks/` | The suite asv-runner imports |
 | `results/asv/<label>/machine.json` | The machine record for one `BENCH_HOST_LABEL` value. `machine` is the label and `os`, `arch`, `cpu`, `num_cpu`, and `ram` are `unspecified` |
@@ -90,6 +91,8 @@ It reads the record that `time_search` stored under `OPTBENCH_ASV_CACHE`.
 When that record is missing, the track runs the search.
 The force-call cap ends every search, so the class timeout is unbounded.
 Run these classes with `--launch-method forkserver`, because the spawn launcher cannot wait without a bound.
+
+`benchmarks/bench_ogolem.py` is the OGOLEM genetic algorithm on the globalopt Lennard-Jones problems. The default grid is seed `0` and start `0`. `setup` raises `NotImplementedError` when the jars under `OGOLEM_HOME` are absent. A one-start asv track stays off the ranked table.
 
 The quadratic sample is the run that `results/validation/statistics.json` scores. A subset of Lennard-Jones 38 is `results/validation/lj38-counter.dat` and it is not a published mean.
 

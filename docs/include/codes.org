@@ -7,6 +7,8 @@
    <div class="code-grid">
    <a class="code-card" href="generated/codes/eon.html">eOn</a>
    <a class="code-card" href="generated/codes/eon-svn.html">Eon svn</a>
+   <a class="code-card" href="generated/codes/eon--svn-r2549.html">EON (SVN r2549)</a>
+   <a class="code-card" href="generated/codes/eon--develop-80e94f88.html">eOn (develop 80e94f88)</a>
    <a class="code-card" href="generated/codes/rgmin.html">rgmin</a>
    <a class="code-card" href="generated/codes/rgsaddle.html">rgsaddle</a>
    <a class="code-card" href="generated/codes/geodesic.html">geodesic</a>
@@ -27,9 +29,12 @@
    <a class="code-card" href="generated/codes/airss.html">AIRSS</a>
    <a class="code-card" href="generated/codes/vc-sqnm.html">vc-SQNM</a>
    <a class="code-card" href="generated/codes/softsaddle.html">SoftSaddle</a>
+   <a class="code-card" href="generated/codes/ogolem.html">ogolem</a>
+   <a class="code-card" href="generated/codes/pyamff.html">PyAMFF</a>
+   <a class="code-card" href="generated/codes/geometric.html">geomeTRIC</a>
    <a class="code-card" href="generated/codes/gpridge.html">GPRidge</a>
+   <a class="code-card" href="generated/codes/eon--develop-b0bd4d5a.html">eOn (develop b0bd4d5a)</a>
    <a class="code-card" href="generated/codes/unknown.html">unknown</a>
-   <a class="code-card" href="generated/codes/pyamff.html">Pyamff</a>
    <a class="code-card" href="generated/codes/gman.html">Gman</a>
    </div></section>
 #+end_export

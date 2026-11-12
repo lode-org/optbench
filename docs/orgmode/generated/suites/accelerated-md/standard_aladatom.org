@@ -7,12 +7,11 @@
    <section class="bench" id="standard_aladatom" data-problem="accelerated-md/standard_aladatom">
    <div class="stat-row">
    <div class="stat"><span class="k">System</span><span class="v">Voter-Chen EAM</span></div>
-   <div class="stat"><span class="k">Atoms</span><span class="v num">—<sup>1</sup></span></div>
+   <div class="stat"><span class="k">Atoms</span><span class="v num">101</span></div>
    <div class="stat"><span class="k">Runs</span><span class="v num">1</span></div>
-   <div class="stat"><span class="k">Cap</span><span class="v">—<sup>2</sup></span></div>
+   <div class="stat"><span class="k">Cap</span><span class="v">—<sup>1</sup></span></div>
    </div>
-   <p class="bench-note"><sup>1</sup> The problem file does not state an atom count.</p>
-   <p class="bench-note"><sup>2</sup> The problem file does not state a cap.</p>
+   <p class="bench-note"><sup>1</sup> The problem file does not state a cap.</p>
    <p class="metric-line">The main metric is True rate. <a href="../../../methodology.html">Scoring rules</a>.</p>
    <h2>Charts</h2>
    <div class="lead-charts">

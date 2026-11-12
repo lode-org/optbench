@@ -1,0 +1,35 @@
+#+TITLE: eOn (develop b0bd4d5a)
+#+OPTIONS: toc:nil num:nil author:nil
+
+#+begin_export rst
+.. raw:: html
+
+   <section class="bench" id="code-eon--develop-b0bd4d5a">
+   <p>The registry has no pin for this code string. The rows below use the spelling on the archived file.</p>
+   <p>No registry pin.</p>
+   <h3>Best cost</h3>
+   <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="binary-lennard-jones-100-cost-bars-title" viewBox="0 0 680 116.0"><title id="binary-lennard-jones-100-cost-bars-title">Best cost for Binary Lennard-Jones 100</title><text class="group-label" x="0" y="18">Binary Lennard-Jones 100</text><line class="axis" x1="168.00" y1="80.00" x2="584.00" y2="80.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="80.00"/><line class="axis" x1="168.00" y1="76.00" x2="168.00" y2="80.00"/><text class="num" x="168.00" y="94.00" text-anchor="middle">10⁶</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="80.00"/><line class="axis" x1="584.00" y1="76.00" x2="584.00" y2="80.00"/><text class="num" x="584.00" y="94.00" text-anchor="middle">10⁷</text><text class="axis-name" x="376.00" y="110.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>eOn (develop b0bd4d5a): 4e+06</title><text class="code-label" x="156" y="46.00" text-anchor="end">eOn (develop b0bd4d5a)</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="250.4570" height="10"/><text class="num" x="592.00" y="46.00">4e+06</text></g><g><title>Eon svn: 4e+06</title><text class="code-label" x="156" y="68.00" text-anchor="end">Eon svn</text><rect class="suite-bar is-best" x="168.00" y="59.00" width="250.4570" height="10"/><text class="num" x="592.00" y="68.00">4e+06</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, one version and one method on each row. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. <a href="../../methodology.html">Scoring rules</a>.</p>
+   <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
+   <caption>Every ranked row for this code. Select a column heading to sort.</caption>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
+   <tr data-problem="globalopt/lj100-binary" data-label="eOn (develop b0bd4d5a) (3.6.0) · Basin hopping">
+   <td data-label="Suite">Global optimization</td>
+   <td data-label="Problem"><a href="../suites/globalopt/lj100-binary.html">Binary Lennard-Jones 100</a></td>
+   <td data-label="Row" data-field="label">eOn (develop b0bd4d5a) (3.6.0) · Basin hopping</td>
+   <td data-label="Family" data-field="family">Basin hopping / global</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Unit" data-field="unit">force calls</td>
+   <td data-label="PAR-2" data-field="par2_mean">4e+06</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">2e+06</td>
+   <td data-label="Mean calls" data-field="mean_calls">2e+06</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 100, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">100</td>
+   </tr>
+   </tbody></table></div>
+   </section>
+#+end_export

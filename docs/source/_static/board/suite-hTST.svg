@@ -339,61 +339,79 @@ L 507.869291 204.767193
     <g id="ytick_2">
      <g id="line2d_26">
       <g>
-       <use xlink:href="#m97dde00479" x="45.477115" y="234.504573" style="fill: #1c1915; stroke: #1c1915; stroke-width: 0.8"/>
+       <use xlink:href="#m97dde00479" x="45.477115" y="225.505737" style="fill: #1c1915; stroke: #1c1915; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_13">
-      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="38.477115" y="237.923519" transform="rotate(-0 38.477115 237.923519)">TSASE</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="38.477115" y="228.924682" transform="rotate(-0 38.477115 228.924682)">TSASE</text>
      </g>
     </g>
     <g id="ytick_3">
      <g id="line2d_27">
       <g>
-       <use xlink:href="#m97dde00479" x="45.477115" y="310.559255" style="fill: #1c1915; stroke: #1c1915; stroke-width: 0.8"/>
+       <use xlink:href="#m97dde00479" x="45.477115" y="272.531914" style="fill: #1c1915; stroke: #1c1915; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_14">
-      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="38.477115" y="313.9782" transform="rotate(-0 38.477115 313.9782)">Eon svn</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="38.477115" y="275.950859" transform="rotate(-0 38.477115 275.950859)">Eon svn</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#m97dde00479" x="45.477115" y="319.558091" style="fill: #1c1915; stroke: #1c1915; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="38.477115" y="322.977036" transform="rotate(-0 38.477115 322.977036)">eOn</text>
      </g>
     </g>
    </g>
    <g id="patch_9">
     <path d="M 45.477115 210.927622 
 L 261.490078 210.927622 
-L 261.490078 258.081525 
-L 45.477115 258.081525 
+L 261.490078 240.083852 
+L 45.477115 240.083852 
 z
 " clip-path="url(#p18c18f2237)" style="fill: #c2410c"/>
    </g>
    <g id="patch_10">
-    <path d="M 45.477115 286.982303 
-L 367.062401 286.982303 
-L 367.062401 334.136206 
-L 45.477115 334.136206 
+    <path d="M 45.477115 257.953799 
+L 367.062401 257.953799 
+L 367.062401 287.110029 
+L 45.477115 287.110029 
 z
 " clip-path="url(#p18c18f2237)" style="fill: #1c1915"/>
    </g>
    <g id="patch_11">
+    <path d="M 45.477115 304.979976 
+L 407.74726 304.979976 
+L 407.74726 334.136206 
+L 45.477115 334.136206 
+z
+" clip-path="url(#p18c18f2237)" style="fill: #1c1915"/>
+   </g>
+   <g id="patch_12">
     <path d="M 45.477115 340.296635 
 L 45.477115 204.767193 
 " style="fill: none; stroke: #c8c0b4; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="patch_12">
+   <g id="patch_13">
     <path d="M 507.869291 340.296635 
 L 507.869291 204.767193 
 " style="fill: none; stroke: #c8c0b4; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="patch_13">
+   <g id="patch_14">
     <path d="M 45.477115 340.296635 
 L 507.869291 340.296635 
 " style="fill: none; stroke: #c8c0b4; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="patch_14">
+   <g id="patch_15">
     <path d="M 45.477115 204.767193 
 L 507.869291 204.767193 
 " style="fill: none; stroke: #c8c0b4; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="text_15">
+   <g id="text_16">
     <text style="font-size: 12px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #1c1915" x="276.673203" y="198.767193" transform="rotate(-0 276.673203 198.767193)">Pt heptamer island</text>
    </g>
   </g>

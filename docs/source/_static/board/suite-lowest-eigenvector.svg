@@ -364,7 +364,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_7">
-      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="53.054302" y="44.357258" transform="rotate(-0 53.054302 44.357258)">Sella</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="53.054302" y="44.357258" transform="rotate(-0 53.054302 44.357258)">rgsaddle</text>
      </g>
     </g>
     <g id="ytick_2">
@@ -374,7 +374,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_8">
-      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="53.054302" y="73.205953" transform="rotate(-0 53.054302 73.205953)">OPTIM</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="53.054302" y="73.206305" transform="rotate(-0 53.054302 73.206305)">Sella</text>
      </g>
     </g>
     <g id="ytick_3">
@@ -384,7 +384,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_9">
-      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="53.054302" y="102.055352" transform="rotate(-0 53.054302 102.055352)">pele</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="53.054302" y="102.055" transform="rotate(-0 53.054302 102.055)">OPTIM</text>
      </g>
     </g>
     <g id="ytick_4">
@@ -394,7 +394,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_10">
-      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="53.054302" y="130.904047" transform="rotate(-0 53.054302 130.904047)">TSASE</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="53.054302" y="130.904398" transform="rotate(-0 53.054302 130.904398)">pele</text>
      </g>
     </g>
     <g id="ytick_5">
@@ -404,7 +404,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_11">
-      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="53.054302" y="159.753445" transform="rotate(-0 53.054302 159.753445)">rgsaddle</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: end; fill: #1c1915" x="53.054302" y="159.753094" transform="rotate(-0 53.054302 159.753094)">TSASE</text>
      </g>
     </g>
     <g id="ytick_6">
@@ -460,16 +460,16 @@ L -3.5 0
    </g>
    <g id="patch_3">
     <path d="M 60.054302 31.994757 
-L 88.08976 31.994757 
-L 88.08976 49.881166 
+L 87.49891 31.994757 
+L 87.49891 49.881166 
 L 60.054302 49.881166 
 z
 " clip-path="url(#p5d60a2127d)" style="fill: #c2410c"/>
    </g>
    <g id="patch_4">
     <path d="M 60.054302 60.843803 
-L 104.605178 60.843803 
-L 104.605178 78.730212 
+L 88.08976 60.843803 
+L 88.08976 78.730212 
 L 60.054302 78.730212 
 z
 " clip-path="url(#p5d60a2127d)" style="fill: #1c1915"/>
@@ -492,8 +492,8 @@ z
    </g>
    <g id="patch_7">
     <path d="M 60.054302 147.390944 
-L 106.736012 147.390944 
-L 106.736012 165.277353 
+L 104.605178 147.390944 
+L 104.605178 165.277353 
 L 60.054302 165.277353 
 z
 " clip-path="url(#p5d60a2127d)" style="fill: #1c1915"/>

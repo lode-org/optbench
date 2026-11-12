@@ -1,0 +1,24 @@
+#+TITLE: EON (SVN r2549)
+#+OPTIONS: toc:nil num:nil author:nil
+
+#+begin_export rst
+.. raw:: html
+
+   <section class="bench" id="code-eon--svn-r2549">
+   <p>EON (SVN r2549) is used for parallel replica. Unpatched SVN r2549, Fortran potentials linked, for the Al adatom parallel-replica rate.</p>
+   <h3>Versions</h3>
+   <div class="bench-scroll"><table class="bench-sortable">
+   <caption>Registry pins for this code.</caption>
+   <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
+   <tr>
+   <td data-label="Role">parallel replica</td>
+   <td data-label="Ref">r2549</td>
+   <td data-label="Commit">r2549</td>
+   <td data-label="Source"><a href="https://theory.cm.utexas.edu/svn/eon">https://theory.cm.utexas.edu/svn/eon</a></td>
+   </tr>
+   </tbody></table></div>
+   <h3>Results</h3>
+   <p>Ranked rows for this code, one version and one method on each row. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. <a href="../../methodology.html">Scoring rules</a>.</p>
+   <p>No ranked row.</p>
+   </section>
+#+end_export
