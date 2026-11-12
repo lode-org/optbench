@@ -1,0 +1,15 @@
+force_calls 485
+force_calls_min 178
+force_calls_max 1168
+force_calls_median 417.0
+call_unit total
+nfailed 0
+code eOn
+code_version (develop b0bd4d5a)
+commit b0bd4d5a5e0f4011831e45f4de389a4efa348e83
+algorithm Lanczos improved L-BFGS
+template eon/develop-b0bd4d5a-de-2ts-lanczos-improved
+problem double-ended-saddle-search/lj38_2ts_separation
+reducer harness
+counter harness
+count_keys HarnessCounter

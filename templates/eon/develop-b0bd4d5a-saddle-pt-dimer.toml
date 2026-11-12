@@ -1,0 +1,75 @@
+id = "eon/develop-b0bd4d5a-saddle-pt-dimer"
+engine = "eon"
+problem = "saddle-search/pt-island"
+code = "eOn"
+code_version = "(develop b0bd4d5a)"
+commit = "b0bd4d5a5e0f4011831e45f4de389a4efa348e83"
+algorithm = "Dimer"
+reducer = "akmc-until-27"
+failure_cap = 100000000
+max_searches = 5000
+pass_limit = 200
+workers = 8
+kind = "akmc"
+kernel = "morse"
+asv_class = "EonDevelopB0bd4d5aSaddlePtDimer"
+seeds = [1000]
+asv_timeout = 21600
+budget_seconds = 0
+note = """AKMC on the Pt island. The repetition stops at 27 good saddles below 1.5 eV, at 5000 displacement searches, or at 1e8 harness force calls, whichever comes first. The min-mode settings match eon/develop-saddle-pt-dimer: classic dimer, improved false, rotations_max 20, converged_angle 5, rotation steepest descent, displacement atoms 0-6, radius 3.3, magnitude 0.1, morse_pt in the ini. The harness kernel is morse/smooth/linear with D 0.7102, alpha 1.6047, r0 2.897, cutoff 9.5, and periodic boundaries in x and y. Temperature 700 K. Seed 1000. Communicator num_jobs 32."""
+
+[ini.Main]
+job = "akmc"
+temperature = 700
+finite_difference = 0.001
+random_seed = 1
+
+[ini.Potential]
+potential = "morse_pt"
+
+[ini.Optimizer]
+opt_method = "lbfgs"
+convergence_metric = "norm"
+converged_force = 0.001
+max_move = 0.2
+max_iterations = 1000
+
+[ini.AKMC]
+confidence = 1.1
+thermally_accessible_window = 99999
+confidence_scheme = "old"
+
+[ini."Process Search"]
+minimize_first = true
+
+[ini.Communicator]
+type = "local"
+num_jobs = 32
+number_of_CPUs = 1
+client_path = "eonclient"
+
+[ini."Saddle Search"]
+min_mode_method = "dimer"
+displace_listed_atom_weight = 1
+displace_atom_list = "0,1,2,3,4,5,6"
+displace_radius = 3.3
+displace_magnitude = 0.1
+max_energy = 5.0
+max_iterations = 1000
+converged_force = 0.001
+
+[ini.Prefactor]
+default_value = 5e12
+
+[ini.Dimer]
+improved = false
+opt_method = "sd"
+converged_angle = 5.0
+rotations_max = 20
+rotations_min = 1
+finite_angle = 0.005
+
+[ini.LBFGS]
+lbfgs_memory = 20
+lbfgs_inverse_curvature = 0.01
+lbfgs_auto_scale = true

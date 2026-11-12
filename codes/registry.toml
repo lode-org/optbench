@@ -78,6 +78,16 @@ committed = "2026-10-21"
 note = "develop at 9d77066c, merge of pull request 791. The optbench label is eOn (develop 9d77066c). eonclient --version prints 3.6.0 (9d77066c). OCI-NEB rows use this commit. The 7095b23 pin stays for the rows recorded on that commit. EON (SVN r2549) is a different code."
 
 [[code]]
+id = "eon-develop-b0bd4d5a"
+name = "eOn"
+role = "minimization and saddle search"
+repository = "https://github.com/TheochemUI/eon"
+ref = "develop"
+commit = "b0bd4d5a5e0f4011831e45f4de389a4efa348e83"
+committed = "2026-10-21"
+note = "develop at b0bd4d5a5e0f4011831e45f4de389a4efa348e83. eonclient --version prints 3.6.0 (b0bd4d5a). The ranked develop rows at this commit use the harness force counter. The later develop pins stay for the rows recorded on them."
+
+[[code]]
 id = "eon-svn"
 name = "Eon svn"
 # Archive rows spell the SVN code Eon, Eon r2006, or EON (SVN r2549).

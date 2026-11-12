@@ -1,0 +1,15 @@
+force_calls 115
+force_calls_min 77
+force_calls_max 160
+force_calls_median 112.0
+call_unit total
+nfailed 0
+code eOn
+code_version (develop b0bd4d5a)
+commit b0bd4d5a5e0f4011831e45f4de389a4efa348e83
+algorithm Dimer L-BFGS
+template eon/develop-b0bd4d5a-ts-pt-dimer
+problem tsopt/pt-island
+reducer harness
+counter harness
+count_keys HarnessCounter

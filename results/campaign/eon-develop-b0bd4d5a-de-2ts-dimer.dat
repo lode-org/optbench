@@ -1,0 +1,15 @@
+force_calls 638
+force_calls_min 184
+force_calls_max 3282
+force_calls_median 454.0
+call_unit total
+nfailed 0
+code eOn
+code_version (develop b0bd4d5a)
+commit b0bd4d5a5e0f4011831e45f4de389a4efa348e83
+algorithm Dimer L-BFGS
+template eon/develop-b0bd4d5a-de-2ts-dimer
+problem double-ended-saddle-search/lj38_2ts_separation
+reducer harness
+counter harness
+count_keys HarnessCounter

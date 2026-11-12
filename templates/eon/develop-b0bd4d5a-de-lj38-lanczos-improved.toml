@@ -1,0 +1,48 @@
+id = "eon/develop-b0bd4d5a-de-lj38-lanczos-improved"
+engine = "eon"
+problem = "double-ended-saddle-search/lj38"
+code = "eOn"
+code_version = "(develop b0bd4d5a)"
+commit = "b0bd4d5a5e0f4011831e45f4de389a4efa348e83"
+algorithm = "Lanczos improved L-BFGS"
+reducer = "harness"
+failure_cap = 2500
+kind = "de-lj38-mode"
+kernel = "lj40"
+asv_class = "EonDevelopB0bd4d5aDeLj38LanczosImproved"
+seeds = [1]
+asv_timeout = 7200
+budget_seconds = 0
+note = """Lanczos improved L-BFGS from the interpolated LJ38 midpoint on the 50 pairs. The stops match eon-svn/de-lj38-lanczos-improved: max_iterations 20, tolerance 0.05, quit_early true, max_move 0.1, max_energy 1e9. Optimizer max_iterations and the harness cap are 2500, the problem cap. The kernel is unshifted lj/cut with epsilon 1, sigma 1, and cutoff 40."""
+
+[ini.Main]
+job = "saddle_search"
+finite_difference = 0.001
+random_seed = 1
+
+[ini.Potential]
+potential = "lammps"
+
+[ini.Optimizer]
+opt_method = "lbfgs"
+convergence_metric = "norm"
+converged_force = 0.001
+max_move = 0.1
+max_iterations = 2500
+lbfgs_memory = 20
+
+[ini.LBFGS]
+lbfgs_memory = 20
+
+[ini."Saddle Search"]
+min_mode_method = "lanczos"
+client_displace_type = "load"
+converged_force = 0.001
+max_iterations = 2500
+displace_magnitude = 0.1
+max_energy = 1000000000
+
+[ini.Lanczos]
+max_iterations = 20
+tolerance = 0.05
+quit_early = true

@@ -1,0 +1,36 @@
+id = "eon/develop-de-pt-lanczos-improved"
+engine = "eon"
+problem = "double-ended-saddle-search/pt-island"
+code = "eOn"
+code_version = "eOn (develop 500350d9)"
+commit = "500350d9fae881f06c7ef194e5868da079c4be5a"
+algorithm = "Lanczos improved L-BFGS"
+reducer = "harness"
+failure_cap = 3000
+kind = "de-pt-mode"
+kernel = "morse_shift"
+asv_class = "EonDevelopDePtLanczosImproved"
+seeds = [1]
+asv_timeout = 3600
+budget_seconds = 3600
+note = """Lanczos improved L-BFGS from the interpolated Pt-island midpoint. min_mode_method is lanczos, client_displace_type is load, and the optimizer is lbfgs. converged_force is 0.001. Optimizer max_iterations and the harness cap are 3000. Saddle Search max_energy is 1e9, Lanczos max_iterations is 10, and Lanczos tolerance is 0.05, from archive/entries/double-ended-saddle-search/pt-island/eon-lanczos-improved/config.ini. That ini does not set finite_difference, so the client default 0.01 stays. The kernel is morse_shift: cutoff 9.5, pair energy shifted to zero at the cutoff, minimum image on the box diagonal. D 0.7102, alpha 1.6047, r0 2.897."""
+
+[ini.Main]
+job = "saddle_search"
+
+[ini.Potential]
+potential = "morse_pt"
+
+[ini.Optimizer]
+opt_method = "lbfgs"
+converged_force = 0.001
+max_iterations = 3000
+
+[ini."Saddle Search"]
+min_mode_method = "lanczos"
+client_displace_type = "load"
+max_energy = 1e9
+
+[ini.Lanczos]
+max_iterations = 10
+tolerance = 0.05
