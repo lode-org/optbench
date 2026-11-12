@@ -512,7 +512,8 @@ def _neb_specs() -> list[dict]:
     )
     specs = []
     for row in rows:
-        for profile in ("default", "adjusted"):
+        profiles = ("default",) if row["problem"].startswith("double-ended-saddle-search/") else ("default", "adjusted")
+        for profile in profiles:
             if profile == "default":
                 optimizer = "FIRE"
                 params: dict = {}

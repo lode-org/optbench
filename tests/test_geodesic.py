@@ -24,11 +24,8 @@ PROBLEMS = {
 
 ASE_IDS = {
     "geodesic/ase-de-lj38-default",
-    "geodesic/ase-de-lj38-tuned",
     "geodesic/ase-de-2ts-default",
-    "geodesic/ase-de-2ts-tuned",
     "geodesic/ase-de-pt-default",
-    "geodesic/ase-de-pt-tuned",
     "geodesic/ase-heptamer-default",
     "geodesic/ase-heptamer-tuned",
 }
@@ -49,7 +46,7 @@ def test_templates_are_an_initialiser_ablation():
     found = [item for item in list_templates(ROOT) if item["id"].startswith("geodesic/")]
     assert {item["id"] for item in found} == ASE_IDS | RGSADDLE_IDS
     band = [item for item in list_templates(ROOT) if item.get("engine") == "rgsaddle-band"]
-    assert len(band) == 12
+    assert len(band) == 6
     pin = _registry(ROOT, "geodesic")
     for item in found:
         loaded = load_template(ROOT, item["id"])
@@ -67,11 +64,8 @@ def test_templates_are_an_initialiser_ablation():
         _check_stop(resolve_problem(ROOT, "minimization/lj38"), loaded)
     caps = {
         "geodesic/ase-de-lj38-default": 2500,
-        "geodesic/ase-de-lj38-tuned": 2500,
         "geodesic/ase-de-2ts-default": 250000,
-        "geodesic/ase-de-2ts-tuned": 250000,
         "geodesic/ase-de-pt-default": 3000,
-        "geodesic/ase-de-pt-tuned": 3000,
         "geodesic/ase-heptamer-default": 10000,
         "geodesic/ase-heptamer-tuned": 10000,
     }
