@@ -151,6 +151,26 @@ committed = "2026-10-21"
 note = "0.2.2 at main 2db34b42, the merge of pull request 23. The min-mode Lanczos rows and the OCI-NEB L-BFGS refinement were measured on this commit. Dimer, P-RFO, and the other band presets stay on the earlier campaign files, which still name c0db2b8. Campaign files scored at 38c3137f keep that commit on their row. Stencil.band presets are not built here. The campaign calls the C band and min-mode API. OCI-NEB is CI-NEB followed by a min-mode refinement. Nonlinear CG is refused by check_force_driven; the min-mode translators are L-BFGS and FIRE."
 
 [[code]]
+id = "rgsaddle-8fa0eb15"
+name = "rgsaddle"
+role = "saddle search"
+repository = "https://github.com/OmniPotentRPC/rgsaddle"
+ref = "main"
+commit = "8fa0eb1559c92b6ae9d1de190e253787a183729d"
+committed = "2026-10-22"
+note = "main 8fa0eb15. The stock dimer FIRE rows were measured on this commit. The 2db34b42 pin stays for the other stock templates."
+
+[[code]]
+id = "rgsaddle-main"
+name = "rgsaddle"
+role = "saddle search"
+repository = "https://github.com/OmniPotentRPC/rgsaddle"
+ref = "main"
+commit = "8fa0eb1559c92b6ae9d1de190e253787a183729d"
+committed = "2026-10-21"
+note = "main 8fa0eb15, including the min-mode FIRE ridge fix from pull request 24. The dimer FIRE templates on tsopt/LJ38, tsopt/pt-island, and saddle-search/pt-island use this pin. The 0.2.2 pin stays for every other rgsaddle row."
+
+[[code]]
 id = "geodesic"
 name = "geodesic"
 role = "band initialiser"

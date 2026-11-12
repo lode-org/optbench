@@ -253,7 +253,17 @@ def test_rgsaddle_templates_match_their_problem_stop():
         problem = resolve_problem(ROOT, template["problem"])
         cap = _check_stop(problem, template)
         assert cap >= 1000
-        assert template["commit"] == "2db34b42e6e029ebcf5b9868b94fcdf969103c9f"
+        fire = {
+            "rgsaddle/dimer-fire",
+            "rgsaddle/pt-dimer-fire",
+            "rgsaddle/saddle-dimer-fire",
+        }
+        if template["id"] in fire:
+            assert template["commit"] == "8fa0eb1559c92b6ae9d1de190e253787a183729d"
+            assert template["code_version"] == "(main 8fa0eb15)"
+        else:
+            assert template["commit"] == "2db34b42e6e029ebcf5b9868b94fcdf969103c9f"
+            assert template["code_version"] == "0.2.2"
         assert template["engine"] == "rgsaddle"
     assert "rgsaddle/dimer-lbfgs" in found
     assert "rgsaddle/prfo" in found

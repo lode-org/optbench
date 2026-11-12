@@ -322,6 +322,8 @@ def test_pending_grid_is_every_problem_and_code():
         "eon-develop-80e94f88",
         "rgmin",
         "rgsaddle",
+        "rgsaddle-8fa0eb15",
+        "rgsaddle-main",
         "geodesic",
         "ase",
         "sella",
