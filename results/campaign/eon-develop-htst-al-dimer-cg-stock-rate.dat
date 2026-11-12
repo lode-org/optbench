@@ -1,0 +1,37 @@
+# counter harness. One force call is one ext_pot evaluation of the r2549 Aluminum EAM.
+# A window's calls are its share of the server total, split by sad-fcs inside each pass.
+# Archived protocol: confidence 1.95, displace_radius 3.3, displace_magnitude 0.5,
+# listed atom -1, max_energy 100, prefactor 1.2e12, optimizer max_iterations 5000, num_jobs 10000.
+# The dimer block is CG, rotations_max 50, converged_angle 1.
+# rate windows closed: 1. The archive averaged 639 barrier windows and 20 rate windows.
+# Dimer CG on the Al reactant. The archived config sets confidence 1.95, displace_radius 3.3, displace_magnitude 0.5, max_energy 100, listed-atom weight 1, prefactor 1.2e12, minimize_first, optimizer force 0.001 and max_iterations 5000, and num_jobs 10000. The dimer block is CG, 50 rotations, angle 1. The archived displace_atomlist value -1 is the last atom on the r2549 server. On this client that same value selects every free atom, so the list is file-order row 384, the last atom in the reactant. The names displace_listed_atom_weight and displace_atom_list are the keys this server accepts for the archived displace_listed_weight and displace_atomlist. The kernel is the Fortran Aluminum EAM through ext_pot. The client is eOn develop 500350d9. A window closes by the 2014 report rule once the processtable holds the eight reference barriers. The search stops at 10000 registered searches or when 639 barrier windows and 20 rate windows have closed.
+force_calls 6955057
+force_calls_min 6955057
+force_calls_max 6955057
+nfailed 0
+code eOn
+code_version (develop 500350d9)
+commit 500350d9fae881f06c7ef194e5868da079c4be5a
+algorithm Dimer-CG rotation: max=50 tol=1
+template eon-develop/htst-al-dimer-cg-stock-rate
+tuning default
+counter harness
+problem hTST/Al
+reducer harness
+par2_mean 6955057.0
+wilson_low 0.20654931437723745
+wilson_high 1.0
+par2_median 6955057.0
+par2_median_low 6955057.0
+par2_median_high 6955057.0
+v2_nfailed 0
+v2_successes 1
+n 1
+cap 100000000
+window rate
+window_count 1
+searches 3342
+harness_total 8371637
+rate_jobs 2811
+rate_force_calls 6955057
+rate_sad_fcs 6498368

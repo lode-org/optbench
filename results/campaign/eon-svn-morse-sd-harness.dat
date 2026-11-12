@@ -1,0 +1,29 @@
+# counter harness. One force call is one ext_pot evaluation.
+# The potential is morse_bulk, cutoff 7, shifted, orthorhombic minimum image.
+# Archived r2030 config: opt_method sd, sd_alpha 0.04, max_move 0.2, converged_force 0.001.
+# sd_twopoint and max_iterations are unset. The constructor iteration limit is 1000.
+# v2 success is under the problem cap, at the force stop, and Hessian index 0.
+# Steepest descent on the harness Morse bulk potential. The archived r2030 config sets opt_method sd, sd_alpha 0.04, max_move 0.2, and converged_force 0.001. sd_twopoint is unset. max_iterations is unset, so r2549 keeps its constructor limit of 1000. r2549 reads sd_alpha from the Optimizer section. The potential is the harness morse_bulk surface through ext_pot. Force calls are HarnessCounter charges.
+force_calls 122
+force_calls_min 88
+force_calls_max 136
+nfailed 0
+median 123
+code EON
+code_version (SVN r2549)
+commit r2549
+algorithm SD
+template eon-svn/morse-sd-harness
+tuning default
+counter harness
+problem minimization/morse-bulk
+reducer harness
+par2_mean 122
+wilson_low 0.963006501793
+wilson_high 1
+par2_median 123
+par2_median_low 120
+par2_median_high 126
+v2_nfailed 0
+v2_successes 100
+n 100
