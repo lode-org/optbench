@@ -1322,6 +1322,12 @@ def rank_violations(document: dict) -> list[str]:
     return errors
 
 
+def _row_is_tuned(row: dict) -> bool:
+    """A tuned template or a ``tuning = "tuned"`` row stays off the board."""
+    template = str(row.get("template") or "")
+    return template.endswith("-tuned") or row.get("tuned") is True or row.get("tuning") == "tuned"
+
+
 def build_board(root: Path) -> dict:
     """Score every committed campaign file, asv track, and archived row under ``root``."""
     root = Path(root)
@@ -1331,8 +1337,10 @@ def build_board(root: Path) -> dict:
     campaign, unparsed = _campaign_rows(root, problems, templates)
     asv_rows, asv_unparsed, unmapped = _asv_rows(root, problems, templates)
     unparsed.extend(asv_unparsed)
-    scored = [_public(row) for row in campaign + asv_rows]
-    rows = _dedup(campaign + asv_rows)
+    scored = [_public(row) for row in campaign + asv_rows if not _row_is_tuned(row)]
+    rows = [row for row in _dedup(campaign + asv_rows) if not _row_is_tuned(row)]
+    unparsed = [row for row in unparsed if not _row_is_tuned(row)]
+    unmapped = [row for row in unmapped if not _row_is_tuned(row)]
     full_n: dict[str, int | None] = {}
     for problem_id, problem in problems.items():
         full_n[problem_id] = stated_full_n(root, problem)

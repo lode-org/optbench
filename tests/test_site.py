@@ -1,6 +1,7 @@
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -251,6 +252,9 @@ def test_rendered_pages_use_the_board_rank(site: Path):
     )
     assert 'data-board-table="ranked" data-problem="saddle-search/pt-island"' in saddle
     assert "rgsaddle/saddle-dimer-rotskip-tuned" not in saddle
+    saddle_templates = re.findall(r'data-field="template">([^<]+)', saddle)
+    assert saddle_templates
+    assert all(not item.endswith("-tuned") for item in saddle_templates)
     assert "No full harness row." not in saddle
     assert "Per-search cost" not in saddle
     board = (site / "docs" / "include" / "v2-board.org").read_text(encoding="utf-8")
