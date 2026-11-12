@@ -11,7 +11,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 concurrency:
   group: asv-${{ github.ref }}
@@ -19,7 +18,7 @@ concurrency:
 
 jobs:
   bench:
-    name: asv-perch
+    name: asv-compare
     runs-on: ubuntu-latest
     # asv copies its environment into the benchmark server, and the server loads numpy before any benchmark module.
     # These are optbench.blas_threads.PINNED.
@@ -31,41 +30,46 @@ jobs:
       RAYON_NUM_THREADS: "1"
       VECLIB_MAXIMUM_THREADS: "1"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           fetch-depth: 0
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
+          version: "0.13.1"
+          python-version: "3.12.3"
           enable-cache: true
 
-      - uses: HaoZeke/asv-perch@v1
+      - name: Compare base and head on this runner
+        env:
+          OPTBENCH_ASV_BASE: ${{ github.event.pull_request.base.sha || github.sha }}
+          OPTBENCH_ASV_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+          OPTBENCH_ASV_MACHINE: unspecified
+        run: |
+          uv python install 3.12.3
+          uv sync --frozen --group dev
+          uv run optbench asv-machine
+          uvx --from snakemake==9.14.1 snakemake --cores 1 asv_compare
+
+      - name: Gate report is present
+        id: report
+        if: always()
+        run: |
+          if [ -f results/asv-ci/compare.txt ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload comparison text
+        if: always() && github.event_name == 'pull_request' && steps.report.outputs.present == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          results-path: results/asv
-          # A pull request from a fork gets a read-only token, so creating the comment fails the job.
-          # Those runs keep the table in the step summary.
-          post-comment: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && 'true' || 'false' }}
-          init-command: >-
-            uv python install 3.12 &&
-            uv sync --frozen --group dev &&
-            uv run optbench asv-machine
-          benchmark-command: >-
-            uv run asv run --machine unspecified --skip-existing --bench quadratic {sha}^!
-          baseline: |
-            label: base
-            sha: ${{ github.event.pull_request.base.sha || github.sha }}
-            env: uv-pip
-            description: Pinned uv environment from uv.lock and asv.conf.json
-          contenders: |
-            - label: head
-              sha: ${{ github.event.pull_request.head.sha || github.sha }}
-              env: uv-pip
-              description: Pinned uv environment from uv.lock and asv.conf.json
-          label-before: base
-          label-after: head
-          # asv-spyglass compare exits 1 at --factor (default 1.1). The action
-          # does not ignore that status, so regression-threshold never runs.
-          # Keep the two ratios equal. A slowdown past 10x still fails the job.
-          regression-threshold: "10"
-          asv-spyglass-args: --factor 10
-          runner-info: ubuntu-latest
+          name: asv-compare-${{ github.run_id }}
+          path: results/asv-ci/compare.txt
+          retention-days: 1
+
+      - name: Gate
+        if: always()
+        run: |
+          uv run python -c 'import json, pathlib, sys; path = pathlib.Path("results/asv-ci/gate.json"); decision = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else sys.exit("results/asv-ci/gate.json is missing"); sys.exit(0 if decision.get("regression") is False else "the gate reported a regression")'

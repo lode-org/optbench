@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import stat
 from pathlib import Path
 
@@ -35,11 +36,80 @@ def test_asv_uses_the_uv_environment():
     assert Uv.matches("3.12") is True
     assert Uv.matches("not-a-version") is False
     workflow = (ROOT / ".github" / "workflows" / "asv.yml").read_text(encoding="utf-8")
-    assert "HaoZeke/asv-perch@v1" in workflow
-    assert "results/asv" in workflow
-    assert 'regression-threshold: "10"' in workflow
-    assert "asv-spyglass-args: --factor 10" in workflow
-    assert "github.event.pull_request.head.repo.full_name == github.repository" in workflow
+    comment_workflow = (ROOT / ".github" / "workflows" / "asv-comment.yml").read_text(
+        encoding="utf-8"
+    )
+    snakefile = (ROOT / "Snakefile").read_text(encoding="utf-8")
+    uses = re.findall(r"uses: (\S+)", workflow)
+    assert uses == [
+        "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e",
+        "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+    ]
+    comment_uses = re.findall(r"uses: (\S+)", comment_workflow)
+    assert comment_uses == [
+        "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
+    ]
+    assert all(
+        re.fullmatch(r"[\w.-]+/[\w.-]+@[0-9a-f]{40}", ref)
+        for ref in uses + comment_uses
+    )
+    assert 'version: "0.13.1"' in workflow
+    assert 'python-version: "3.12.3"' in workflow
+    assert "uv python install 3.12.3" in workflow
+    assert "if: always() && github.event_name == 'pull_request'" in workflow
+    assert "pull-requests: write" not in workflow
+    assert "permissions:\n  contents: read\n" in workflow
+    assert "workflow_run:" in comment_workflow
+    assert (
+        "permissions:\n  actions: read\n  contents: read\n  pull-requests: write\n"
+        in comment_workflow
+    )
+    assert "metadata-file" not in comment_workflow
+    assert "python3 ci/asv_comment.py" in comment_workflow
+    assert "workflow_run.head_sha" not in comment_workflow
+    assert "pull_requests[0]" not in comment_workflow
+    assert "github.event.pull_request." not in comment_workflow
+    assert "if: github.event.workflow_run.event == 'pull_request'" in comment_workflow
+    assert workflow.count("if: always()") >= 2
+    ci_conf = json.loads((ROOT / "asv.ci.conf.json").read_text(encoding="utf-8"))
+    memray_conf = json.loads((ROOT / "asv.memray.conf.json").read_text(encoding="utf-8"))
+    assert ci_conf["pythons"] == ["3.12.3"]
+    assert memray_conf["pythons"] == ["3.12.3"]
+    assert "snakemake --cores 1 asv_compare" in workflow
+    assert "path: results/asv-ci/compare.txt" in workflow
+    assert "--quick" not in workflow
+    assert "--skip-existing" not in workflow
+    assert "factor 10" not in workflow
+    assert "--interleave-rounds" in snakefile
+    assert "--quick" not in snakefile
+    assert "--skip-existing" not in snakefile
+    assert "asv.ci.conf.json" in snakefile
+    rules = {}
+    matches = list(re.finditer(r"^rule (\w+):", snakefile, re.M))
+    for index, match in enumerate(matches):
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(snakefile)
+        rules[match.group(1)] = snakefile[match.start() : end]
+    measure = rules["asv_measure"]
+    compare = rules["asv_compare"]
+    assert 'report="results/asv-ci/compare.txt"' in measure
+    assert 'decision="results/asv-ci/gate.json"' in measure
+    assert "output:" not in compare
+    assert "compare.txt" not in compare
+    assert "rules.asv_measure.output.report" in compare
+    assert "rules.asv_measure.output.decision" in compare
+    assert "{input.decision}" in compare
+    assert 'HASHFILE:results/asv-ci/commits.txt' in measure
+    assert "--record-samples" in measure
+    assert "asv continuous" not in snakefile
+    assert "test $? -le 1" not in snakefile
+    assert 'test "$status" -eq 1' in measure
+    assert "test -s {output.report}" in measure
+    assert "test -s {output.decision}" in measure
+    assert 'results_dir": "results/asv-ci/data"' in (ROOT / "asv.ci.conf.json").read_text(
+        encoding="utf-8"
+    )
 
 
 def _fenced_blocks(text: str) -> list[list[str]]:

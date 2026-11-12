@@ -2,7 +2,7 @@
 
 asv is the measurement store. A result file is keyed to the commit asv checked out, the environment that ran it, and the machine record next to it. The v2 score reads those tracks. It does not keep a second copy of the numbers.
 
-`asv==0.6.6` and `asv-runner==0.3.1` are pinned in `pyproject.toml` and `uv.lock`. The benchmark classes use asv-runner's `track_*` and `time_*` discovery. CI uses `HaoZeke/asv-perch@v1` in `.github/workflows/asv.yml`. Gaps that would otherwise be local forks are `docs/asv-gaps.md`.
+`asv==0.6.6` and `asv-runner==0.3.1` are pinned in `pyproject.toml` and `uv.lock`. The benchmark classes use asv-runner's `track_*` and `time_*` discovery. The comparison comment is posted from `.github/workflows/asv-comment.yml`. Gaps that would otherwise be local forks are `docs/asv-gaps.md`.
 
 ## What is committed
 
@@ -149,27 +149,8 @@ See gap 10 in `docs/asv-gaps.md`.
 
 ## CI
 
-`.github/workflows/asv.yml` fetches the full history, installs Python 3.12 and syncs the lockfile.
-It runs `uv run optbench asv-machine`, then `HaoZeke/asv-perch@v1`.
-CI does not set `BENCH_HOST_LABEL`, so the entry is `unspecified`.
-The job sets the variables in `optbench.blas_threads.PINNED`, so the asv that the action starts already has them.
-The benchmark command is `uv run asv run --machine unspecified --skip-existing --bench quadratic {sha}^!`.
-That is the in-process sample, not the 1000-start eonclient grid.
-Those result files stay on the runner and are never committed.
-They are not written into `results/asv/xeon-8c`.
-`post-comment` is true when the head branch of a pull request lives in this repository.
-It stays false on a push, on a manual run and on a pull request from a fork.
-A fork's run has a read-only token, so GitHub refuses its comment request.
-Those runs still write the table to the step summary.
-A failure in the benchmarks or the comparison ends the step before the summary, so it still fails the job.
-A pull request whose base commit lacks `benchmarks/quadratic.py` fails this job, because asv runs that commit.
-`check.yml` is still the oracle and pytest job.
+The workflow `.github/workflows/asv.yml` uses a checkout of the history. It installs Python 3.12.3 and uv 0.13.1. It syncs the lockfile. It runs `uv run optbench asv-machine`. CI does not set `BENCH_HOST_LABEL`, so the entry is `unspecified`, and each `asv run` passes `--machine unspecified`. One runner runs `snakemake --cores 1 asv_compare` from `Snakefile`. A pull request sets the base and head commits. A push sets both to the pushed commit. That run records the quadratic suite and does not compare. The comparison writes under `results/asv-ci` via `asv.ci.conf.json`. It does not rewrite `results/asv`, and the comparison is not written into `results/asv/xeon-8c`. The benchmark workflow can read repository contents. It cannot write pull-request comments.
 
-asv-spyglass `compare` exits 1 when any benchmark is worse by `--factor`.
-The default factor is 1.1.
-`HaoZeke/asv-perch@v1` does not ignore that status, so the step stops before `regression-threshold` is applied.
-A pull request compares two commits.
-A push compares a commit with itself, which is why those runs stay green.
-Quadratic timings move by about ten percent between two runs, and that is enough to exit 1.
-The workflow sets `regression-threshold` to 10 and passes `--factor 10`.
-A slowdown past that factor still fails the job.
+The Snakefile calls `asv run` twice on a `HASHFILE:` list of the two commits, once for `quadratic` timings and once for `quadratic` tracks. Both calls pass `--interleave-rounds`. The timing call also passes `--record-samples`. Neither call passes `--quick` or `--skip-existing`. Timing rounds default to 8, so each timing row keeps a sample list. Eight samples are enough for asv's Mann-Whitney threshold to call a separated shift different. `optbench.asv_gate` reads those two result files. They must name the same machine. A timing row is a regression only when `asv._stats.is_different` says the samples differ and the head median is slower. One sample cannot decide a timing row. A track row is exact: any force-call change fails the job. A missing track value, including a pair of missing values, is unmeasured and fails the job. `asv run` returns status 1 when no benchmark is selected, and that status fails the measurement rule. The measurement rule writes `results/asv-ci/compare.txt` and `results/asv-ci/gate.json`. When the decision itself is a failure and both files are non-empty, the measurement rule still succeeds, so those files stay. The next rule reads the decision and fails the build. The benchmark workflow uploads `results/asv-ci/compare.txt` when that file is present, including after a failed comparison, because the upload step uses `if: always()`. `.github/workflows/asv-comment.yml` runs after that workflow when the event is a pull request, including a pull request opened from a fork. Its checkout is the workflow commit. Code from the pull request head never runs there. It can read repository contents and action artifacts, and it can write pull request comments. When the finished run names one pull request, that pull request is used. Otherwise exactly one open pull request must have the measured head. The chosen pull request is fetched again, and a comment is posted only when the fetched head is still the measured head. No match, or more than one, posts nothing and fails the step. `ci/asv_comment.py` places the report in a fence longer than every backtick run in the report. A report over 40000 bytes is rejected. A control character other than a line feed or a tab is rejected. The benchmark job's last step reads `results/asv-ci/gate.json`. `check.yml` is still the oracle and pytest job.
+
+The job sets the variables in `optbench.blas_threads.PINNED`, so the asv that the comparison starts already has them.

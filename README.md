@@ -297,7 +297,7 @@ uv run asv publish
 `optbench asv-machine` stores `BENCH_HOST_LABEL` for a new result and sets every other machine field to `unspecified`. Campaign runs set `BENCH_HOST_LABEL=workstation-a`. With `--machine`, asv uses that label instead of the host name, and the new files go under `results/asv/<label>/`. They do not replace the `xeon-8c` archive. `optbench statistics` reads the saved tracks. When more than one machine directory has quadratic tracks, `--machine` picks one. The saved file comes from `asv run` without `--quick`.
 `optbench.asv_launch` records the BLAS pools that the asv server starts with (`docs/asv.md`, Launcher).
 It also pins BLAS to one thread before asv loads NumPy (`docs/asv.md`, Threads).
-CI runs `uv run optbench asv-machine` and `asv run --machine unspecified`, then the quadratic suite with `HaoZeke/asv-perch@v1` (`.github/workflows/asv.yml`).
+CI runs `uv run optbench asv-machine` and `asv run --machine unspecified` on one runner. The quadratic comparison is written under `results/asv-ci`, not into `results/asv`. The comment is posted from `.github/workflows/asv-comment.yml`.
 
 ## Build the site
 
