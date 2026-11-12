@@ -101,7 +101,7 @@ def test_problem_files_carry_the_archived_rates_and_the_catalogue():
     assert tuple(standard["catalogue"]["probabilities"]) == MD_STANDARD_250K
     assert standard["catalogue"]["temperature_K"] == 250
     assert standard["thermal"]["temperature_K"] == 150
-    assert aladatom["thermal"]["temperature_K"] == 250
+    assert aladatom["thermal"]["temperature_K"] == 185
     assert aladatom["sample"]["products"] == 5000
     assert aladatom["sample"]["repetitions"] == 1
     assert aladatom["sample"]["reference_products"] == 15000
@@ -234,7 +234,11 @@ def test_akmc_templates_follow_the_problem_stop():
         assert template["ini"]["AKMC"]["thermally_accessible_window"] == problem["convergence"][
             "thermally_accessible_window"
         ]
-        assert template["ini"]["Main"]["temperature"] == problem["thermal"]["temperature_K"]
+        if name == "eon/aladatom-akmc":
+            assert template["ini"]["Main"]["temperature"] == 250
+            assert problem["thermal"]["temperature_K"] == 185
+        else:
+            assert template["ini"]["Main"]["temperature"] == problem["thermal"]["temperature_K"]
         assert template["ini"]["Prefactor"]["default_value"] == 1e12
         assert _check_stop(problem, template) == template["failure_cap"]
     assert JOBS["aladatom-akmc"][0] == "eon/aladatom-akmc"

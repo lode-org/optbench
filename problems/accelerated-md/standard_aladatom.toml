@@ -4,7 +4,7 @@ suite = "accelerated-md"
 problem = "standard_aladatom"
 contract = "stated"
 entry_count = 1
-remark = "Aluminum adatom on Al(100) at 150 K. The reactant and the Voter-Chen EAM are the same as the 250 K problem. The reference escape rate is the parallel-replica row with Langevin friction 0.001 per fs. The product probabilities are the 250 K molecular dynamics standard, which is the only published catalogue."
+remark = "Aluminum adatom on Al(100) at 150 K. The reactant and the Voter-Chen EAM are the same as accelerated-md/aladatom. The reference escape rate is the parallel-replica row with Langevin friction 0.001 per fs. The product probabilities are the 250 K molecular dynamics standard, which is the only published catalogue."
 
 [potential]
 kind = "eam_al"

@@ -1,5 +1,5 @@
 id = "accelerated-md/aladatom"
-title = "Al adatom on Al(100) at 250 K"
+title = "Al adatom on Al(100) at 185 K"
 suite = "accelerated-md"
 problem = "aladatom"
 contract = "stated"
@@ -11,10 +11,10 @@ kind = "eam_al"
 name = "Voter-Chen aluminum"
 
 [thermal]
-temperature_K = 250
+temperature_K = 185
 thermostat = "langevin"
 friction_per_fs = 0.001
-friction_note = "The branching page allows Langevin friction from 0.005 to 0.03 per fs, or an Andersen thermostat with collision strength 0.2 to 0.8 and period 200 to 1000 fs. The archived true rate used Langevin friction 0.001 per fs."
+friction_note = "benchmark.dat records thermostat langevin_0.001. website/accelerated-md.tmpl r89, the page added with that file, says the Langevin thermostat with the Verlet algorithm and a friction coefficient of 0.001 1/fs. The time step is 1 fs."
 
 [reference]
 true_rate = 2.542941e8

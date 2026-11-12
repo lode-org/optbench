@@ -1,0 +1,20 @@
+# transition confirmed: the product was minimized and it differs from the reactant
+force_calls 829272
+force_calls_min 3339
+force_calls_max 3469890
+force_calls_median 557591.0
+call_unit total
+nfailed 0
+code EON (SVN r2549)
+code_version r2549
+commit r2549
+algorithm parallel replica
+template eon-r2549/aladatom-pr-langevin
+problem accelerated-md/aladatom
+reducer harness
+counter harness
+count_keys HarnessCounter
+true_rate 1.267009e+09
+uncertainty 9.562560e+07
+n_transitions 150
+force_calls_total 124390765

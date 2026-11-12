@@ -399,7 +399,10 @@ def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dic
         failure = None
     else:
         return None
-    if cap is not None and calls >= cap:
+    # A confirmed transition met the problem stop. Reaching the cap after
+    # that confirmation is not a cap failure.
+    confirmed = raw.get("transition_found") in (1, True, "1")
+    if cap is not None and calls >= cap and not confirmed:
         success = False
     record: dict = {"force_calls": calls, "success": success, "start": raw.get("start") or raw.get("geometry")}
     # Kept so a later preference can see whether this start applied the index rule.

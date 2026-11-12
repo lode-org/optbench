@@ -81,6 +81,26 @@ committed = "2026-01-23"
 note = "SVN revision 2549, last changed 2026-01-23 by eboniw. eonclient -v prints r2549. The 2014 tables used earlier revisions. Export of those trees is forbidden, so the runs here are r2549. QSC sources are not in the revision. LAMMPS is not linked. Min-mode methods in this revision are dimer and lanczos. One harness uses r2549 Morse::force: cutoff 9.5, pair energy shifted to zero at the cutoff, minimum image on the box diagonal. The lane harness uses unshifted lj/cut and morse/smooth/linear. github.com/henkelmangroup/eon mirrors the same tree. The conda-forge 3.5.0 binary is a different pin. The name is Eon svn so it does not collide with the git eOn pins. This is EON, the SVN code. It is not a version of https://github.com/TheochemUI/eon. The hTST Al dimer campaign labels the stock unpatched Fortran build EON (SVN r2549)."
 
 [[code]]
+id = "eon-r2549"
+name = "EON (SVN r2549)"
+role = "parallel replica"
+repository = "https://theory.cm.utexas.edu/svn/eon"
+ref = "r2549"
+commit = "r2549"
+committed = "2026-01-23"
+note = "Unpatched SVN r2549, Fortran potentials linked, for the Al adatom parallel-replica rate. This is not the git eOn client. The eon-svn pin stays for the other r2549 scores."
+
+[[code]]
+id = "eon-develop-80e94f88"
+name = "eOn (develop 80e94f88)"
+role = "parallel replica"
+repository = "https://github.com/TheochemUI/eon"
+ref = "develop"
+commit = "80e94f88b54e24815287860f32a0558683e9c02b"
+committed = "2026-10-21"
+note = "develop 80e94f88, 51 commits after b0bd4d5a. Fortran is enabled. This is not EON and not SVN r2549. The eon-develop pin at 7095b23a stays for the scores that were run on it."
+
+[[code]]
 id = "rgmin"
 name = "rgmin"
 role = "minimization"

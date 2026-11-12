@@ -104,6 +104,14 @@ def _parse_processes(text: str) -> list[dict]:
     return rows
 
 
+def _temperature(template: dict, problem: dict) -> float:
+    """Use the template temperature when the ini sets one."""
+    ini = ((template.get("ini") or {}).get("Main") or {}).get("temperature")
+    if ini not in (None, ""):
+        return float(ini)
+    return float(problem["thermal"]["temperature_K"])
+
+
 def _write_config(
     template: dict,
     dest: Path,
@@ -270,7 +278,7 @@ def _one_repetition(
         },
     )
     shutil.copy(reactant_path, work / "pos.con")
-    temperature = float(problem["thermal"]["temperature_K"])
+    temperature = _temperature(template, problem)
     _write_config(template, work / "config.ini", client, seed, workers, temperature)
     prepare_client_env(client)
     target = float((problem.get("convergence") or {}).get("confidence", 0.95))
@@ -482,7 +490,7 @@ def _write_result(
     lines.append("contributor Rohit Goswami")
     lines.append(f"repetitions {len(rows)}")
     lines.append(f"workers {workers}")
-    lines.append(f"temperature_K {problem['thermal']['temperature_K']}")
+    lines.append(f"temperature_K {_temperature(template, problem)}")
     lines.append("thermostat akmc")
     lines.append(f"reference_rate {_fmt(reference)}")
     lines.append(f"reference_products {products}")
