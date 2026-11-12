@@ -18,11 +18,8 @@ from __future__ import annotations
 import ctypes
 import hashlib
 import math
-import os
 import socket
 import struct
-import subprocess
-import tempfile
 import threading
 from collections.abc import Callable
 from pathlib import Path
@@ -199,6 +196,25 @@ class GminServer:
 _LJ40 = None
 
 
+def _lj40_path() -> Path:
+    """``codes/gmin/lj40.c`` built once per source and flags.
+
+    The library sits in the fastpot build directory under a hash of both,
+    so another checkout's kernel is never loaded. The link happens in a
+    private directory and is renamed into place.
+    """
+    from optbench.fastpot import _build_dir, _link
+    from optbench.surfaces import NATIVE_FLAGS
+
+    source = Path(__file__).resolve().parents[1] / "codes" / "gmin" / "lj40.c"
+    digest = hashlib.sha256(" ".join(NATIVE_FLAGS).encode())
+    digest.update(source.read_bytes())
+    library = _build_dir() / f"lj40-{digest.hexdigest()[:16]}.so"
+    if not library.is_file():
+        _link(["gcc", *NATIVE_FLAGS, str(source)], library, check=True)
+    return library
+
+
 def lennard_jones_compiled(coords: np.ndarray) -> tuple[float, np.ndarray]:
     """Compiled unshifted LJ with the harness parameters.
 
@@ -208,17 +224,7 @@ def lennard_jones_compiled(coords: np.ndarray) -> tuple[float, np.ndarray]:
     """
     global _LJ40
     if _LJ40 is None:
-        from optbench.surfaces import NATIVE_FLAGS
-
-        source = Path(__file__).resolve().parents[1] / "codes" / "gmin" / "lj40.c"
-        digest = hashlib.sha256(" ".join(NATIVE_FLAGS).encode())
-        digest.update(source.read_bytes())
-        library = Path(tempfile.gettempdir()) / f"optbench-lj40-{digest.hexdigest()[:16]}.so"
-        if not library.is_file():
-            partial = library.with_name(f"{library.name}.{os.getpid()}.tmp")
-            subprocess.check_call(["gcc", *NATIVE_FLAGS, str(source), "-o", str(partial)])
-            partial.replace(library)
-        loaded = ctypes.CDLL(str(library))
+        loaded = ctypes.CDLL(str(_lj40_path()))
         loaded.optbench_lj40.argtypes = [
             ctypes.c_int,
             ctypes.POINTER(ctypes.c_double),

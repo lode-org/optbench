@@ -11,7 +11,6 @@ the energy and the radial force are both zero at ``rc``.
 from __future__ import annotations
 
 import hashlib
-import os
 import subprocess
 import tempfile
 from pathlib import Path
@@ -147,6 +146,39 @@ _NATIVE_HEADERS = ("svml_exp.h", "svml_pow.h")
 _NATIVE_LIB = None
 
 
+def _morse_path(source: Path) -> Path:
+    """The surface library, built once per source set and published whole.
+
+    ``source`` is the Morse pair file a caller names. The exp and pow
+    objects are part of the same library, so the hash covers them too.
+    The link runs in a private directory and is renamed into place.
+    """
+    from optbench.fastpot import _link
+
+    here = Path(__file__).parent
+    sources = [here / name for name in _NATIVE_SOURCES]
+    digest = hashlib.sha256(" ".join(NATIVE_FLAGS).encode())
+    digest.update(Path(source).read_bytes())
+    for path in [*sources, *(here / name for name in _NATIVE_HEADERS)]:
+        digest.update(path.read_bytes())
+    library = Path(tempfile.gettempdir()) / f"optbench-surfaces-{digest.hexdigest()[:16]}.so"
+    if not library.is_file():
+        try:
+            _link(
+                ["gcc", *NATIVE_FLAGS, *map(str, sources), "-lm"],
+                library,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+        except FileNotFoundError as error:
+            raise RuntimeError("the surfaces need gcc to build their exp, pow and Morse pair loop") from error
+        except subprocess.CalledProcessError as error:
+            detail = (error.stderr or "").strip()
+            raise RuntimeError(f"gcc could not build the surface library: {detail}") from error
+    return library
+
+
 def native_library():
     """The Morse pair loop, and the exp and pow the surfaces share.
 
@@ -160,26 +192,7 @@ def native_library():
         return _NATIVE_LIB
     import ctypes
 
-    here = Path(__file__).parent
-    sources = [here / name for name in _NATIVE_SOURCES]
-    digest = hashlib.sha256(" ".join(NATIVE_FLAGS).encode())
-    for path in [*sources, *(here / name for name in _NATIVE_HEADERS)]:
-        digest.update(path.read_bytes())
-    library = Path(tempfile.gettempdir()) / f"optbench-surfaces-{digest.hexdigest()[:16]}.so"
-    if not library.is_file():
-        partial = library.with_name(f"{library.name}.{os.getpid()}.tmp")
-        try:
-            subprocess.run(
-                ["gcc", *NATIVE_FLAGS, "-o", str(partial), *map(str, sources), "-lm"],
-                check=True,
-                capture_output=True,
-                text=True,
-            )
-        except FileNotFoundError as error:
-            raise RuntimeError("the surfaces need gcc to build their exp, pow and Morse pair loop") from error
-        except subprocess.CalledProcessError as error:
-            raise RuntimeError(f"gcc could not build the surface library: {error.stderr.strip()}") from error
-        partial.replace(library)
+    library = _morse_path(Path(__file__).with_name("morse_pair.c"))
     loaded = ctypes.CDLL(str(library))
     double = ctypes.c_double
     pointer = ctypes.POINTER(double)
