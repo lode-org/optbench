@@ -15,7 +15,7 @@ def test_shipped_templates_use_the_lj38_stop():
         ids.append(template["id"])
         problem_name = template.get("problem", "minimization/lj38")
         _check_stop(resolve_problem(ROOT, problem_name), template)
-    assert "eon-client/lbfgs-m100" in ids
+    assert "eon-client/lbfgs-m20" in ids
     assert "eon-svn/lbfgs-m100" in ids
     assert "eon/lj38-lbfgs" in ids
     assert "eon/lj38-lbfgs-m100" in ids

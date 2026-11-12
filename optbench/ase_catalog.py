@@ -260,29 +260,20 @@ def _minimization_specs() -> list[dict]:
     specs = []
     for slug, problem, archive, potential, stop, select in problems:
         for name in OPTIMIZERS:
-            for profile in ("default", "adjusted"):
-                if profile == "default":
-                    params = {}
-                    source = "default"
-                    note = f"ASE {ASE_VERSION} {name} constructor defaults."
-                    if problem == "minimization/lj38" and name in {"BFGS", "LBFGS"}:
-                        params = {"maxstep": 0.1}
-                        source = "repaired"
-                        note = (
-                            f"ASE {ASE_VERSION} {name} constructor maxstep is 0.2. "
-                            "On LJ38 starts that begin inside the repulsive core that step increases the force. "
-                            "This default row uses maxstep 0.1. Morse defaults stay at the constructor value."
-                        )
-                else:
-                    params, source, note = _tuned_minimizer(problem, name)
-                row_stop = stop
-                if (
-                    problem == "minimization/lj38"
-                    and name == "PreconLBFGS"
-                    and profile == "adjusted"
-                ):
-                    row_stop = {**stop, "norm": "fmax"}
-                specs.append(
+            profile = "default"
+            params = {}
+            source = "default"
+            note = f"ASE {ASE_VERSION} {name} constructor defaults."
+            if problem == "minimization/lj38" and name in {"BFGS", "LBFGS"}:
+                params = {"maxstep": 0.1}
+                source = "repaired"
+                note = (
+                    f"ASE {ASE_VERSION} {name} constructor maxstep is 0.2. "
+                    "On LJ38 starts that begin inside the repulsive core that step increases the force. "
+                    "This default row uses maxstep 0.1. Morse defaults stay at the constructor value."
+                )
+            row_stop = stop
+            specs.append(
                     {
                         "id": f"ase/{slug}-{_opt_slug(name)}-{_id_suffix(profile)}",
                         "engine": "ase",
@@ -303,21 +294,12 @@ def _minimization_specs() -> list[dict]:
                         "input": {"archive_path": archive, "select": select},
                     }
                 )
-        # Sella can minimize with order 0.
-        for profile in ("default", "adjusted"):
-            if profile == "default":
-                params = {"order": 0}
-                source = "default"
-                note = f"Sella {SELLA_VERSION} minimum defaults, order 0."
-            else:
-                params = {"order": 0, **SELLA_TUNED}
-                source = "transferred"
-                note = (
-                    "Sella minimization has no archived script. "
-                    + SELLA_TUNED_NOTE
-                    + " order 0."
-                )
-            specs.append(
+        # Sella can minimize with order 0. The adjusted minimum profiles are not stock.
+        profile = "default"
+        params = {"order": 0}
+        source = "default"
+        note = f"Sella {SELLA_VERSION} minimum defaults, order 0."
+        specs.append(
                 {
                     "id": f"sella/{slug}-min-{_id_suffix(profile)}",
                     "engine": "sella",

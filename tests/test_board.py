@@ -373,7 +373,7 @@ def _asv_track(
 
 
 def _asv_one_start(root: Path) -> None:
-    _asv_track(root, "bench_lj38.Lj38EonLbfgsM100", [4.0])
+    _asv_track(root, "bench_lj38.Lj38EonLbfgsM20", [4.0])
 
 
 def test_one_start_asv_grid_is_partial(tmp_path: Path):
@@ -383,12 +383,12 @@ def test_one_start_asv_grid_is_partial(tmp_path: Path):
     text = text.replace('problem = "toy"', 'problem = "lj38"')
     text = text.replace('title = "Toy"', 'title = "Lennard-Jones 38 clusters"')
     problem.write_text(text, encoding="utf-8")
-    template = tmp_path / "templates" / "eon-client" / "lbfgs-m100.toml"
+    template = tmp_path / "templates" / "eon-client" / "lbfgs-m20.toml"
     template.parent.mkdir(parents=True)
     template.write_text(
         "\n".join(
             [
-                'id = "eon-client/lbfgs-m100"',
+                'id = "eon-client/lbfgs-m20"',
                 'engine = "eon"',
                 'problem = "minimization/lj38"',
                 'code = "eOn"',
@@ -402,7 +402,7 @@ def test_one_start_asv_grid_is_partial(tmp_path: Path):
     _asv_one_start(tmp_path)
 
     document = build_board(tmp_path)
-    short_rows = [row for row in document["short"] if row["entry"].endswith("Lj38EonLbfgsM100")]
+    short_rows = [row for row in document["short"] if row["entry"].endswith("Lj38EonLbfgsM20")]
     assert len(short_rows) == 1
     assert short_rows[0]["n"] == 1
     assert short_rows[0]["short"] is True
@@ -411,7 +411,7 @@ def test_one_start_asv_grid_is_partial(tmp_path: Path):
         row
         for problem_rows in document["problems"].values()
         for row in problem_rows["ranked"]
-        if str(row["entry"]).endswith("Lj38EonLbfgsM100")
+        if str(row["entry"]).endswith("Lj38EonLbfgsM20")
     ]
     assert ranked == []
 

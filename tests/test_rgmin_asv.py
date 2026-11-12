@@ -9,7 +9,7 @@ from benchmarks.bench_rgmin import (
     asv_benchmark_pattern,
     selected_indices,
     RgminLj38Bb,
-    RgminLj38LbfgsTuned,
+    RgminLj38Lbfgs,
     RgminMorseLbfgs,
     _specs,
 )
@@ -17,20 +17,20 @@ from optbench.failures import FAILURES
 
 
 def test_rgmin_asv_params_are_seed_and_start_index(monkeypatch):
-    assert RgminLj38LbfgsTuned.param_names == ["seed", "start"]
-    assert RgminLj38LbfgsTuned.params[0] == [SEED]
-    assert RgminLj38LbfgsTuned.params[1] == ["0"]
+    assert RgminLj38Lbfgs.param_names == ["seed", "start"]
+    assert RgminLj38Lbfgs.params[0] == [SEED]
+    assert RgminLj38Lbfgs.params[1] == ["0"]
     assert RgminMorseLbfgs.params[1] == ["0"]
-    assert RgminLj38LbfgsTuned.repeat == 1
-    assert RgminLj38LbfgsTuned.rounds == 1
-    assert RgminLj38LbfgsTuned.number == 1
-    assert RgminLj38LbfgsTuned.warmup_time == 0
-    assert RgminLj38LbfgsTuned.sample_time == 0
-    assert RgminLj38LbfgsTuned.cap == 10000
-    assert RgminLj38LbfgsTuned.track_force_calls.unit == "force calls"
-    assert RgminLj38LbfgsTuned.track_success.unit == "fraction"
+    assert RgminLj38Lbfgs.repeat == 1
+    assert RgminLj38Lbfgs.rounds == 1
+    assert RgminLj38Lbfgs.number == 1
+    assert RgminLj38Lbfgs.warmup_time == 0
+    assert RgminLj38Lbfgs.sample_time == 0
+    assert RgminLj38Lbfgs.cap == 10000
+    assert RgminLj38Lbfgs.track_force_calls.unit == "force calls"
+    assert RgminLj38Lbfgs.track_success.unit == "fraction"
     for cause in FAILURES:
-        method = getattr(RgminLj38LbfgsTuned, f"track_failure_{cause}")
+        method = getattr(RgminLj38Lbfgs, f"track_failure_{cause}")
         assert method.unit == "count"
     assert selected_indices(1000) == ["0"]
     monkeypatch.setenv("OPTBENCH_ASV_FULL", "1")
@@ -40,8 +40,8 @@ def test_rgmin_asv_params_are_seed_and_start_index(monkeypatch):
 
 def test_asv_class_filter_is_anchored_and_literal():
     names = [spec["class_name"] for spec in _specs()]
-    assert len(names) == 72
-    assert len(set(names)) == 72
+    assert len(names) == 36
+    assert len(set(names)) == 36
     for name in names:
         pattern = re.compile(asv_benchmark_pattern(name))
         assert pattern.search(f"bench_rgmin.{name}.time_search('0', '0')")
@@ -96,9 +96,9 @@ def test_lj38_lbfgs_index_drops_rigid_rotation_and_keeps_a_real_saddle():
     assert saddle["min_eigenvalues"][0] < -1.0
 
 
-def test_one_tuned_lbfgs_start_is_a_harness_count():
+def test_one_lbfgs_start_is_a_harness_count():
     pytest.importorskip("rgmin")
-    bench = RgminLj38LbfgsTuned()
+    bench = RgminLj38Lbfgs()
     bench.setup(SEED, "0")
     bench.time_search(SEED, "0")
     calls = bench.track_force_calls(SEED, "0")
