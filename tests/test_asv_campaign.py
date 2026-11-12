@@ -46,7 +46,7 @@ def test_harness_tracks_use_the_cap_rule(tmp_path: Path):
     assert fields["nfailed"] == "2"
     assert fields["force_calls_min"] == "40"
     assert fields["force_calls_max"] == "100"
-    assert fields["commit"] == "7095b23ac17d49f434a5e08ccb072897ceca698e"
+    assert fields["commit"] == "8f3119a22a7120814c54a5811c7a3aa59be0fd4e"
     assert fields["counter"] == "harness"
     assert fields["published_mean"] == "false"
     assert fields["asv_commit"] == "abc"
@@ -83,4 +83,4 @@ def test_akmc_mean_keeps_only_repetitions_that_reach_27(tmp_path: Path):
     assert fields["counter"] == "harness"
     assert fields["published_mean"] == "false"
     assert fields["total_searches"] == "4000"
-    assert "7095b23ac17d49f434a5e08ccb072897ceca698e" in fields["commit"]
+    assert "8f3119a22a7120814c54a5811c7a3aa59be0fd4e" in fields["commit"]

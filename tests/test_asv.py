@@ -316,6 +316,7 @@ def test_pending_grid_is_every_problem_and_code():
         "eon-develop-f6817b53",
         "eon-develop-9d77066c",
         "eon-develop-b0bd4d5a",
+        "eon-develop-8f3119a2",
         "eon-svn",
         "eon-r2549",
         "eon-develop-80e94f88",
