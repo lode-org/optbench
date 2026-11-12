@@ -18,6 +18,7 @@ uv = ">=0.8"
 [tasks]
 test = "uv run pytest"
 check = "uv run optbench check"
+board-render = "uv run optbench board render"
 campaign = "uv run optbench run"
 
 [environments]

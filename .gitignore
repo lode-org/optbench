@@ -25,3 +25,7 @@ results/campaign/geometries/
 /tutorial/
 results/asv-ci/
 results/asv-memray/
+results/board/plots/*.png
+results/board/plots/*.webp
+docs/source/_static/board/*.png
+docs/source/_static/board/*.webp

@@ -38,6 +38,17 @@ pixi run -e docs html
 pixi run -e docs sitesize
 ```
 
+The board plots workflow in `.github/workflows/board-plots.yml` draws the PNG and WebP thumbnails and uploads them as `board-plots`.
+It runs on a pull request and on a push to `main`.
+
+```bash
+uv run optbench board render
+```
+
+The pages build publishes those thumbnails with the site.
+They are not files in git.
+The published paths are under `_static/board/` on <https://lode-org.github.io/optbench/>.
+
 ## Docs
 
 Site prose lives in Org under `docs/orgmode`.

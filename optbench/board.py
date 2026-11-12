@@ -2,6 +2,9 @@
 
 ``uv run optbench board`` reads
 ``results/campaign``, ``results/asv``, and ``oracle/entries.jsonl``.
+``uv run optbench board render`` reads the saved rows in
+``results/board/index.json`` and writes the PNG and WebP thumbnails.
+Those thumbnails are not stored in git.
 A ranked row is one code, one version, and one stock method or preset.
 Harness rows use the v2 PAR-2 mean. An archived row uses its published
 primary number and sits in the same tables.
@@ -2380,6 +2383,97 @@ def _drop_unwritten(directory: Path, keep_names: set[str]) -> None:
             path.unlink()
 
 
+_RASTER_SUFFIXES = {".png", ".webp"}
+
+
+def _drop_rasters(directory: Path, keep_stems: set[str]) -> None:
+    """Remove PNG and WebP files this render did not write."""
+    if not directory.is_dir():
+        return
+    for path in directory.iterdir():
+        if path.is_file() and path.suffix.lower() in _RASTER_SUFFIXES and path.stem not in keep_stems:
+            path.unlink()
+
+
+def _profile_document(problem: dict) -> dict | None:
+    profile = problem.get("profile")
+    if not isinstance(profile, dict) or not profile.get("rho"):
+        return None
+    return profile
+
+
+def render_board_plots(root: Path, output: Path | None = None) -> list[str]:
+    """Write board plots from ``results/board/index.json``.
+
+    The score rows are not rebuilt. PNG and WebP thumbnails are written
+    beside the SVG. The default directory is ``results/board/plots``.
+    That run also writes the pages copies under ``docs/source/_static/board``.
+    """
+    root = Path(root)
+    index_path = root / "results" / "board" / "index.json"
+    if not index_path.is_file():
+        raise FileNotFoundError(index_path)
+    document = json.loads(index_path.read_text(encoding="utf-8"))
+    plot_dir = Path(output) if output is not None else root / "results" / "board" / "plots"
+    if not plot_dir.is_absolute():
+        plot_dir = root / plot_dir
+    written: list[str] = []
+    stems: set[str] = set()
+    for problem_id, problem in (document.get("problems") or {}).items():
+        ranked = list(problem.get("ranked") or [])
+        if not ranked:
+            continue
+        for path in _write_plots(problem_id, ranked, _profile_document(problem), plot_dir):
+            written.append(path)
+            stems.add(Path(path).stem)
+    _drop_rasters(plot_dir, stems)
+    default_plots = (root / "results" / "board" / "plots").resolve()
+    if plot_dir.resolve() == default_plots:
+        written.extend(_render_page_plots(root, document, plot_dir, stems))
+    return written
+
+
+def _render_page_plots(root: Path, document: dict, plot_dir: Path, score_stems: set[str]) -> list[str]:
+    """Styled problem plots and suite charts used by the pages build."""
+    if not (root / "codes" / "registry.toml").is_file() or not (root / "problems").is_dir():
+        return []
+    from .problems import load_all
+    from .site import SUITE_ORDER, _by_slug, _problem_titles, _registry_pins
+    from .site_pages import restyle_problem_plots, suite_tables, write_suite_plot
+
+    directory = root / "docs" / "source" / "_static" / "board"
+    directory.mkdir(parents=True, exist_ok=True)
+    if plot_dir.is_dir():
+        for path in plot_dir.iterdir():
+            if path.is_file() and path.stem in score_stems:
+                shutil.copy(path, directory / path.name)
+    restyle_problem_plots(document, directory, _problem_titles(root))
+    problems = load_all(root / "problems")
+    by_slug = _by_slug(problems)
+    by_suite: dict[str, list] = {}
+    for problem in problems.values():
+        by_suite.setdefault(problem["suite"], []).append(problem)
+    _contributor, pins = _registry_pins(root)
+    order = list(SUITE_ORDER) + sorted(set(by_suite) - set(SUITE_ORDER))
+    stems = set(score_stems)
+    for suite in order:
+        group = by_suite.get(suite)
+        if not group:
+            continue
+        _leaderboard, _problems_html, series = suite_tables(group, document, pins, root, by_slug, suite)
+        name = write_suite_plot(suite, series, directory)
+        if name:
+            stems.add(Path(name).stem)
+    written = []
+    for stem in sorted(stems):
+        for suffix in (".svg", ".png", ".webp"):
+            path = directory / f"{stem}{suffix}"
+            if path.is_file():
+                written.append(str(path))
+    _drop_rasters(directory, stems)
+    return written
+
+
 def _strip_private(document: dict) -> dict:
     public_problems = {}
     for problem_id, problem in document["problems"].items():
@@ -2406,6 +2500,9 @@ def write_board(root: Path, output: Path, *, site: bool | None = None) -> dict:
     is the Board page under ``root/docs``. Otherwise every file goes under
     ``output``. ``site`` left as None is true only when ``output`` is the
     checkout's ``results/board``.
+
+    PNG and WebP thumbnails are written with the SVG. They are not stored
+    in git. ``render_board_plots`` redraws them from the saved JSON.
     """
     root = Path(root)
     output = Path(output)

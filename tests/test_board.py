@@ -7,7 +7,14 @@ from pathlib import Path
 
 import pytest
 
-from optbench.board import MissingAsvCommit, build_board, headline_table, render_problem_section, write_board
+from optbench.board import (
+    MissingAsvCommit,
+    build_board,
+    headline_table,
+    render_board_plots,
+    render_problem_section,
+    write_board,
+)
 from optbench.score import rate_interval
 
 PIN = "a" * 40
@@ -1068,6 +1075,64 @@ def test_board_output_leaves_the_checkout_clean(tmp_path: Path):
     assert (output / "index.json").is_file()
     assert (output / "plots" / "minimization-toy-profile.svg").read_text(encoding="utf-8") != "tracked\n"
     assert "PAR-2" in (output / "v2-board.org").read_text(encoding="utf-8")
+
+
+def test_board_render_redraws_thumbnails_from_the_saved_rows(tmp_path: Path):
+    _problem(tmp_path, starts=2, cap=100)
+    _template(tmp_path, "toy/cheap")
+    _template(tmp_path, "toy/dear")
+    _registry(tmp_path)
+    _dat(tmp_path, "cheap", PIN, template="toy/cheap")
+    _dat(tmp_path, "dear", PIN, template="toy/dear")
+    _starts(tmp_path, "cheap", [_row(2, True, "0"), _row(2, True, "1")])
+    _starts(tmp_path, "dear", [_row(4, True, "0"), _row(4, True, "1")])
+    write_board(tmp_path, tmp_path / "results" / "board")
+    index = tmp_path / "results" / "board" / "index.json"
+    saved = index.read_bytes()
+    plots = tmp_path / "results" / "board" / "plots"
+    site = tmp_path / "docs" / "source" / "_static" / "board"
+    for directory in (plots, site):
+        for path in directory.glob("*"):
+            if path.suffix in {".png", ".webp"}:
+                path.unlink()
+    stale = plots / "removed-cost.png"
+    stale.write_bytes(b"stale")
+
+    written = render_board_plots(tmp_path)
+
+    assert index.read_bytes() == saved
+    assert not stale.exists()
+    assert (plots / "minimization-toy-profile.png").stat().st_size > 0
+    assert (plots / "minimization-toy-cost.webp").read_bytes().startswith(b"RIFF")
+    assert (site / "minimization-toy-profile.webp").read_bytes().startswith(b"RIFF")
+    assert (site / "suite-minimization.png").stat().st_size > 0
+    assert any(path.endswith("minimization-toy-cost.png") for path in written)
+    other = tmp_path / "elsewhere"
+    render_board_plots(tmp_path, other)
+    assert (other / "minimization-toy-cost.png").stat().st_size > 0
+    assert not (other / "suite-minimization.png").exists()
+
+
+def test_board_render_command_reads_the_saved_rows(tmp_path: Path):
+    _problem(tmp_path, starts=2, cap=100)
+    _template(tmp_path)
+    _registry(tmp_path)
+    _dat(tmp_path, "toy-fast", PIN)
+    _starts(tmp_path, "toy-fast", [_row(2, True, "0"), _row(2, True, "1")])
+    write_board(tmp_path, tmp_path / "results" / "board")
+    index = tmp_path / "results" / "board" / "index.json"
+    saved = index.read_bytes()
+    plots = tmp_path / "results" / "board" / "plots"
+    for path in plots.glob("*.png"):
+        path.unlink()
+    subprocess.run(
+        [sys.executable, "-m", "optbench", "board", "render", "--root", str(tmp_path)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert index.read_bytes() == saved
+    assert (plots / "minimization-toy-cost.png").stat().st_size > 0
 
 
 def test_the_default_output_still_updates_the_board_page(tmp_path: Path):

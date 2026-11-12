@@ -29,6 +29,7 @@ jobs:
           environments: docs
 
       - name: Build the site
+        # Draws board PNG and WebP into docs/build and publishes them with the site.
         run: pixi run -e docs html
 
       - name: Page weight

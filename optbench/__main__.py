@@ -337,12 +337,18 @@ def sitesize(
     raise SystemExit(check_site_weight(destination))
 
 
-@app.command
+board_app = cyclopts.App(name="board")
+
+
+@board_app.default
 def board(
     root: Path = Path("."),
     output: Path = Path("results/board"),
 ) -> None:
-    """Score committed results and write the v2 leaderboard."""
+    """Score committed results and write the v2 leaderboard.
+
+    ``render`` writes the PNG and WebP thumbnails from the saved rows.
+    """
     from optbench.board import write_board
 
     destination = output if output.is_absolute() else root / output
@@ -369,6 +375,32 @@ def board(
                 f"success_rate={row['success_rate']} "
                 f"n={row['n']} nfailed={row['nfailed']} score={score}"
             )
+
+
+@board_app.command
+def render(
+    root: Path = Path("."),
+    output: Path = Path("results/board/plots"),
+) -> None:
+    """Write PNG and WebP thumbnails from the saved board rows."""
+    from optbench.board import render_board_plots
+
+    destination = output if output.is_absolute() else root / output
+    try:
+        written = render_board_plots(root, destination)
+    except FileNotFoundError as exc:
+        raise SystemExit(str(exc)) from None
+    rasters = [Path(path) for path in written if path.endswith(".png") or path.endswith(".webp")]
+    score_dir = destination.resolve()
+    pages = (root / "docs" / "source" / "_static" / "board").resolve()
+    score_n = sum(1 for path in rasters if path.resolve().parent == score_dir)
+    page_n = sum(1 for path in rasters if path.resolve().parent == pages)
+    print(f"wrote {score_n} thumbnails under {destination}")
+    if page_n:
+        print(f"wrote {page_n} thumbnails under {pages}")
+
+
+app.command(board_app)
 
 
 @app.command(name="validate-counter")

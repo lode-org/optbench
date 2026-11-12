@@ -28,10 +28,21 @@ It is the Tutorial page on the site.
 
 `uv run optbench board` reads `results/campaign` and `results/asv` and writes `results/board` plus the v2 table on the Board page. It does not start a search. A band method is ranked on the harness force-call total across every image, and the per-image mean is a second column from that same total. A ranked row is one code, one version, and one stock method. Older full versions stay in the same tables. A run that is both a campaign file and an asv track is one row, with the source kept as a column. A row that used fewer starts than the problem's full set stays off the ranked table. An asv result that covers one start stays out of the ranked mean.
 
-`uv run optbench board --output DIR` writes the JSON, the plots, and the Board page include `v2-board.org` under `DIR`.
+`uv run optbench board --output DIR` writes the JSON, the SVG plots, and the Board page include `v2-board.org` under `DIR`.
 It leaves `docs/` as it was.
 Only the default output, `results/board`, also copies the plots to `docs/source/_static/board`.
 That run also writes `docs/include/v2-board.org`.
+PNG and WebP thumbnails are written next to those SVG files. They are not stored in git.
+
+`uv run optbench board render` reads the saved rows in `results/board/index.json` and writes those thumbnails.
+It does not score the campaigns again.
+The default write is `results/board/plots`, and the same run writes the pages copies under `docs/source/_static/board`.
+`uv run optbench board render --output DIR` writes only under `DIR`.
+`pixi run board-render` is the same command.
+The `board plots` job in `.github/workflows/board-plots.yml` runs it on a pull request and on a push to `main`, and uploads the thumbnails as the `board-plots` artifact.
+The pages workflow builds the site with `pixi run -e docs html`.
+That build draws the same thumbnails into `docs/build` and publishes them with the site.
+The public copies are at <https://lode-org.github.io/optbench/_static/board/>.
 
 The harness does not contain eOn, pele, or Sella. Those are installed separately, and the commands below say which release produced the files in `results/campaign/`.
 
@@ -308,6 +319,11 @@ pixi run -e docs html
 ```
 
 Open `docs/build/index.html`.
+
+The PNG and WebP thumbnails under `docs/source/_static/board` are drawn during this build.
+They are the files the published pages serve from `_static/board/`.
+Run `uv run optbench board render` to draw them in a checkout.
+The SVG files stay in git. The thumbnails do not.
 
 The hosted test run is `uv run pytest` and `uv run optbench check`. A published score uses every start in the problem. SoftSaddle is a MATLAB batch in `.github/workflows/softsaddle-check.yml`: it builds `libmorse`, `libdavidson`, and `liblanczos`, then runs two searches with a 600 second cap. That batch leaves the April 2019 score of 423491.1 force calls in `softsaddle/entry.toml` as the archived number.
 
