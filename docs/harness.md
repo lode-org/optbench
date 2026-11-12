@@ -66,7 +66,7 @@ One point uses the Cartesian distance, because centering a single point would re
 
 If the problem states no cap and every record is a success, `par_applied` is false and the mean is the mean of the recorded costs. That is how the ten Pt-island repetitions are summarised: each cost is `force_calls / total_searches` from the `# rep` line. The recorded `force_calls` value remains the mean of the campaign totals.
 
-Each record, campaign or repetition, has a `tuning` of `default` or `adjusted`. The previous spelling of an adjusted row names the same class and is still rejected from the ranked table. Provenance is the code, version, commit, parameters, and machine. `collect_provenance` takes the machine label from `BENCH_HOST_LABEL` when the caller does not pass one, and the system, architecture, and Python version from the process. Given the params of an asv result, it keeps their fields and replaces the asv machine name with the label.
+Each record, campaign or repetition, has a `tuning` of `default` or `adjusted`. The previous spelling of an adjusted row names the same class and is still rejected from the ranked table. `optbench check` rejects `tuning = "tuned"`, a template file named `*-tuned`, and a template that sets `tuned = true`. Provenance is the code, version, commit, parameters, and machine. `collect_provenance` takes the machine label from `BENCH_HOST_LABEL` when the caller does not pass one, and the system, architecture, and Python version from the process. Given the params of an asv result, it keeps their fields and replaces the asv machine name with the label.
 
 ## Quadratic sample
 

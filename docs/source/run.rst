@@ -19,9 +19,10 @@ A campaign is one problem id and one template id. It writes one
 ``benchmark.dat``. The problem file is the stop and the geometries. The
 template is the client. ``--workers`` is the number of client processes.
 
-The recorded client tally for this command is 181. It is eOn 3.5.0, commit
+The recorded client tally for this command is 201. It is eOn 3.5.0, commit
 ``4d8b34baf1ba8d2d980df29838bac1f969d1662c``, template
-``eon-client/lbfgs-m100``, all 1000 starts, force norm 0.01.
+``eon-client/lbfgs-m20``, all 1000 starts, force norm 0.01.
+L-BFGS memory is 20, the value the client ships.
 The ranked harness table is on the minimization page.
 Build ``eonclient`` from that commit of `https://github.com/TheochemUI/eon <https://github.com/TheochemUI/eon>`_.
 ``pip install pyeonclient`` does not set L-BFGS memory, and this command
@@ -29,7 +30,7 @@ does not call it.
 
 .. code:: sh
 
-    uv run optbench run minimization/lj38 eon-client/lbfgs-m100 \
+    uv run optbench run minimization/lj38 eon-client/lbfgs-m20 \
       --workers 4 \
       --output benchmark.dat
 
@@ -39,13 +40,13 @@ runs the same command:
 .. code:: sh
 
     pixi exec --spec eon --spec uv -- uv run optbench run \
-      minimization/lj38 eon-client/lbfgs-m100 \
+      minimization/lj38 eon-client/lbfgs-m20 \
       --workers 4 \
       --output benchmark.dat
 
 The geometries come from ``inputs/manifest.jsonl``. For this problem that
 is ``inputs/sha256/86bf774955b906c486d37282c48e42628e8fe4af3579222f6e07fcf5913157b1/lj38-clusters.tgz``.
-Compare ``force_calls`` with ``results/campaign/eon-client-lbfgs-m100.dat``.
+Compare ``force_calls`` with ``results/campaign/eon-client-lbfgs-m20.dat``.
 A directory passed as ``--geometries`` checks the client. It is not the
 published mean.
 

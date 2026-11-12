@@ -922,6 +922,23 @@ def _benchmark_index() -> dict[str, dict]:
     return index
 
 
+def omit_retired_tuned_track(class_name: str, described: dict) -> bool:
+    """A tuned benchmark class that is no longer registered is not a row.
+
+    The measurements can stay in the asv store. Without a template they are
+    not a ranked row and not an unranked row. ``*Tuned`` is the old suffix.
+    ``*LbfgsM100`` is the eOn and pele memory-100 class. An unregistered
+    rgsaddle class ending in ``Lbfgs`` is a band stepper the library does
+    not ship.
+    """
+    if described.get("template") or described.get("problem"):
+        return False
+    name = str(class_name)
+    if name.endswith("Tuned") or name.endswith("LbfgsM100"):
+        return True
+    return "Rgsaddle" in name and name.endswith("Lbfgs")
+
+
 def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict]) -> tuple[list[dict], list[dict], list[dict]]:
     results_dir = root / "results" / "asv"
     if not results_dir.is_dir():
@@ -946,6 +963,8 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
             seen.add(class_name)
             module_name = parts[-2] if len(parts) >= 2 else ""
             described = index.get(f"{module_name}.{class_name}") or index.get(class_name) or {}
+            if omit_retired_tuned_track(class_name, described):
+                continue
             template_id = described.get("template") or ""
             template = templates.get(template_id)
             pinned = _template_at_commit(root, str(result.commit_hash), template_id) if template_id else None
