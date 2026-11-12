@@ -68,6 +68,16 @@ committed = "2026-10-22"
 note = "develop at merge f6817b537ec1d1563420023fb45fbd0e5b75e7fd. The version string is 3.6.0 (f6817b53). The NEB conjugate-gradient band step uses secant lengths. This pin is not the 7095b23 develop pin and not the conda-forge 3.5.0 binary."
 
 [[code]]
+id = "eon-develop-9d77066c"
+name = "eOn"
+role = "minimization and saddle search"
+repository = "https://github.com/TheochemUI/eon"
+ref = "develop"
+commit = "9d77066c375c11602514c7de2931c1ee936e93f6"
+committed = "2026-10-21"
+note = "develop at 9d77066c, merge of pull request 791. The optbench label is eOn (develop 9d77066c). eonclient --version prints 3.6.0 (9d77066c). OCI-NEB rows use this commit. The 7095b23 pin stays for the rows recorded on that commit. EON (SVN r2549) is a different code."
+
+[[code]]
 id = "eon-svn"
 name = "Eon svn"
 # Archive rows spell the SVN code Eon, Eon r2006, or EON (SVN r2549).
