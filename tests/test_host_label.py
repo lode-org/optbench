@@ -179,10 +179,17 @@ def test_documented_asv_commands_name_the_label():
         *sorted((ROOT / ".github" / "workflows").glob("*.yml")),
     ]
     lines = [(path.relative_to(ROOT), line.strip()) for path in paths for line in _commands(path)]
+    snakefile = ROOT / "Snakefile"
+    folded = re.sub(r"\\\n", " ", snakefile.read_text(encoding="utf-8"))
+    lines.extend(
+        (snakefile.relative_to(ROOT), line.strip())
+        for line in folded.splitlines()
+        if "uv run asv" in line
+    )
     assert [hit for hit in lines if "asv machine" in hit[1]] == []
     writers = [hit for hit in lines if re.search(r"asv (run|compare)\b", hit[1])]
     assert writers
     assert [hit for hit in writers if "--machine" not in hit[1]] == []
     workflow = (ROOT / ".github" / "workflows" / "asv.yml").read_text(encoding="utf-8")
     assert "uv run optbench asv-machine" in workflow
-    assert "--machine unspecified" in workflow
+    assert "OPTBENCH_ASV_MACHINE: unspecified" in workflow
