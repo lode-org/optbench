@@ -12,6 +12,7 @@ structure_source = "EMT molecular dynamics at 300 K"
 
 [convergence]
 max_epochs = 10000
+force_max_epochs = 30000
 energy_only_grad_norm = 0.02
 force_training_grad_norm = 0.1
 

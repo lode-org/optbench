@@ -91,8 +91,9 @@ def _json_lines(path: Path) -> list[dict]:
 def stated_full_n(root: Path, problem: dict) -> int | None:
     """How many starts the problem file calls a complete score.
 
-    ``sample.starts``, ``pairs``, ``repetitions`` or ``initializations``
-    wins. A minimization archive with no sample count uses the number of
+    ``sample.starts``, ``sample.pairs``, ``sample.repetitions``, or ``sample.initializations``
+    wins. ``sample.initializations`` is the machine-learning start count.
+    A minimization archive with no sample count uses the number of
     ``.con`` files, which is the Morse bulk set.
     """
     sample = problem.get("sample") or {}
@@ -894,6 +895,7 @@ def _benchmark_index() -> dict[str, dict]:
         "benchmarks.bench_vcsqnm",
         "benchmarks.bench_pele",
         "benchmarks.bench_optking",
+        "benchmarks.bench_pyamff",
         "benchmarks.quadratic",
     )
     for module_name in modules:

@@ -1039,3 +1039,18 @@ def test_the_default_output_still_updates_the_board_page(tmp_path: Path):
     assert "docs/include/v2-board.org" in changed
     assert "docs/source/_static/board/minimization-toy-profile.svg" in changed
     assert not (root / "results" / "board" / "v2-board.org").exists()
+
+
+def test_initializations_are_the_full_set(tmp_path: Path):
+    _problem(tmp_path, starts=4)
+    path = tmp_path / "problems" / "minimization" / "toy.toml"
+    path.write_text(path.read_text(encoding="utf-8").replace("starts = 4", "initializations = 4"), encoding="utf-8")
+    _template(tmp_path)
+    _registry(tmp_path)
+    _dat(tmp_path, "toy-fast", PIN)
+    _starts(tmp_path, "toy-fast", [_row(3, True, "0"), _row(4, True, "1")])
+
+    problem = build_board(tmp_path)["problems"]["minimization/toy"]
+    assert problem["full_n"] == 4
+    assert problem["ranked"] == []
+    assert problem["short"][0]["short_reason"] == "scored 2 of 4 starts"

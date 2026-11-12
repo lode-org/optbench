@@ -1,0 +1,28 @@
+id = "pyamff/emt-pt38-rprop"
+engine = "pyamff"
+problem = "mlopt/emt-pt38"
+code = "PyAMFF"
+code_version = "240f51d0"
+commit = "240f51d01ca22969369f9bc21760c61cbb3b6665"
+algorithm = "Rprop"
+tuning = "default"
+ranked = true
+parameter_source = "default"
+failure_cap = 10000
+paper_baseline = true
+note = "PyAMFF master 240f51d0 (2026-07-04). The VERSION file says 0.1.0-beta. Tag v3.0.0 is older. Stock torch Rprop, learning rate 0.01, etas 0.5 and 1.2, steps from 1e-6 to 50. The network is 10-7 tanh on the archived Behler-Parrinello fingerprints. Force coefficient 0, energy coefficient 1, no scaler, one batch. Fifty uniform[-1, 1) starts. The stop is the archive energy-only rule: every parameter gradient component below 0.02, cap 10000. The stock loss name is SSE. The class still tags that sum of squared per-atom errors as SE. init_model_parameters is true because this revision opens saved_model_params.pyamff when the flag is false. One harness call is one evaluation of the loss and its gradient, including the initial weights. Mean epoch 91.04 is inside 10 percent of 97.58. Median epoch 75 is outside 10 percent of 99. Energy RMSE stays inside 10 percent. The median gap was not tuned."
+
+[pyamff]
+optimizer = "Rprop"
+learning_rate = 0.01
+hidden_layers = [10, 7]
+activation = "tanh"
+initial_weights = "random_uniform"
+loss_type = "SSE"
+energy_coefficient = 1.0
+force_coefficient = 0.0
+scaler = "NoScaler"
+batch_num_per_proc = 1
+loss_grad_tol = 0.02
+epochs_max = 10000
+init_model_parameters = true

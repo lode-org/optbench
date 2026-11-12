@@ -1,0 +1,33 @@
+# PyAMFF 0.1.0-beta at 240f51d01ca22969369f9bc21760c61cbb3b6665. Stock LBFGS on the archived config, SSE loss, init_model_parameters true, fifty unseeded uniform[-1, 1) starts. Stop when every parameter gradient component is below 0.1, cap 30000. Failures stay in the legacy mean at the logged epoch. A capped start scores twice the cap.
+problem mlopt/C2H4
+template pyamff/c2h4-lbfgs-force
+cap 30000
+counter harness
+code PyAMFF
+code_version 0.1.0-beta
+commit 240f51d01ca22969369f9bc21760c61cbb3b6665
+tuning default
+algorithm LBFGS
+n 50
+force_calls 24403.32
+force_calls_min 12537
+force_calls_max 29999
+nfailed 18
+median 24554.0
+mean_epoch 24403.32
+median_epoch 24554.0
+mean_energy_rmse 0.0107815944
+median_energy_rmse 0.010469679999999999
+mean_force_rmse 0.0917981064
+median_force_rmse 0.09123571999999999
+par2_mean 35203.68
+median_low 21796.5
+median_high 29201.0
+wilson_low 0.501410168761127
+wilson_high 0.7586125034815325
+n_cap 18
+n_divergence 0
+n_not_converged 0
+n_wrong_stationary 0
+n_crash 0
+note PyAMFF 0.1.0-beta at 240f51d01ca22969369f9bc21760c61cbb3b6665. Stock LBFGS on the archived config, SSE loss, init_model_parameters true, fifty unseeded uniform[-1, 1) starts. Stop when every parameter gradient component is below 0.1, cap 30000. Failures stay in the legacy mean at the logged epoch. A capped start scores twice the cap.

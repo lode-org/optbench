@@ -1,0 +1,33 @@
+# PyAMFF 0.1.0-beta at 240f51d01ca22969369f9bc21760c61cbb3b6665. Stock Rprop on the archived config, SSE loss, init_model_parameters true, fifty unseeded uniform[-1, 1) starts. Stop when every parameter gradient component is below 0.02, cap 10000. Failures stay in the legacy mean at the logged epoch. A capped start scores twice the cap.
+problem mlopt/C2H4
+template pyamff/c2h4-rprop
+cap 10000
+counter harness
+code PyAMFF
+code_version 0.1.0-beta
+commit 240f51d01ca22969369f9bc21760c61cbb3b6665
+tuning default
+algorithm Rprop
+n 50
+force_calls 191.02
+force_calls_min 59
+force_calls_max 368
+nfailed 0
+median 188.0
+mean_epoch 191.02
+median_epoch 188.0
+mean_energy_rmse 0.0081221152
+median_energy_rmse 0.007655805
+mean_force_rmse -1
+median_force_rmse -1
+par2_mean 191.02
+median_low 173.0
+median_high 213.5
+wilson_low 0.9286524008666414
+wilson_high 1.0
+n_cap 0
+n_divergence 0
+n_not_converged 0
+n_wrong_stationary 0
+n_crash 0
+note PyAMFF 0.1.0-beta at 240f51d01ca22969369f9bc21760c61cbb3b6665. Stock Rprop on the archived config, SSE loss, init_model_parameters true, fifty unseeded uniform[-1, 1) starts. Stop when every parameter gradient component is below 0.02, cap 10000. Failures stay in the legacy mean at the logged epoch. A capped start scores twice the cap.
