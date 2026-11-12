@@ -1,15 +1,49 @@
-"""OGOLEM Sweden input text and failure classes."""
+"""OGOLEM harness socket and Sweden input."""
 
 import math
+import socket
 
 import pytest
 
+from optbench.potentials import lennard_jones
 from optbench.runners.ogolem_go import (
     LJ38_STOP_ENERGY,
+    HarnessLJServer,
     center_cluster,
     classify_start,
     ogo_text,
 )
+
+def _exchange(server: HarnessLJServer, line: str) -> str:
+    host, port = server.server_address
+    with socket.create_connection((host, port), timeout=5) as sock:
+        sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        reader = sock.makefile("rwb")
+        reader.write(b"hello\n")
+        reader.flush()
+        assert reader.readline() == b"ok\n"
+        reader.write(line.encode("ascii") + b"\n")
+        reader.flush()
+        return reader.readline().decode("ascii")
+def test_server_matches_lennard_jones_and_caches_and_caps():
+    server = HarnessLJServer(cap=2, threshold=None)
+    try:
+        first = _exchange(server, "calculate 2 0.0 0.0 0.0 1.5 0.0 0.0")
+        parts = first.split()
+        energy, gradient = lennard_jones([0.0, 0.0, 0.0, 1.5, 0.0, 0.0])
+        assert parts[0] == "ok"
+        assert int(parts[1]) == 1
+        assert float(parts[2]) == pytest.approx(energy)
+        assert [float(value) for value in parts[3:]] == pytest.approx(gradient.tolist())
+        repeat = _exchange(server, "calculate 2 0.0 0.0 0.0 1.5 0.0 0.0")
+        assert int(repeat.split()[1]) == 1
+        second = _exchange(server, "calculate 2 0.0 0.0 0.0 2.5 0.0 0.0")
+        assert int(second.split()[1]) == 2
+        capped = _exchange(server, "calculate 2 0.0 0.0 0.0 3.5 0.0 0.0")
+        assert capped.startswith("cap 2")
+        assert server.counter.calls == 2
+    finally:
+        server.close()
 
 def test_center_and_ogo_text_follow_the_sweden_example():
     import numpy as np
