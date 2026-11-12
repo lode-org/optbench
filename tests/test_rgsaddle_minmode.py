@@ -34,7 +34,7 @@ ISLAND_TEMPLATES = sorted(path.stem for path in (ROOT / "templates" / "rgsaddle"
 def test_island_search_bounds_are_the_archived_eon_search():
     archived = configparser.ConfigParser(strict=False)
     archived.read(ROOT / "archive" / "entries" / "saddle-search" / "pt-island" / "eon-dimer" / "config.ini")
-    assert len(ISLAND_TEMPLATES) == 8
+    assert len(ISLAND_TEMPLATES) == 4
     for name in ISLAND_TEMPLATES:
         template = load_template(ROOT, f"rgsaddle/{name}")
         ini = template["ini"]
@@ -54,13 +54,9 @@ def test_island_search_cap_is_the_step_ceiling_and_two_minimizations():
         caps[name] = steps * _step_ceiling(ini["SaddleSearch"]) + 2 * int(ini["Optimizer"]["max_iterations"])
     assert caps == {
         "saddle-dimer-fire": 48000,
-        "saddle-dimer-fire-tuned": 28000,
         "saddle-dimer-lbfgs": 48000,
-        "saddle-dimer-lbfgs-tuned": 28000,
         "saddle-dimer-rotskip": 48000,
-        "saddle-dimer-rotskip-tuned": 16000,
         "saddle-lanczos": 30000,
-        "saddle-lanczos-tuned": 22000,
     }
     assert _step_ceiling({"min_mode_method": "dimer", "max_rotations": 20, "difference": "central"}) == 88
 

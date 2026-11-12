@@ -627,13 +627,9 @@ def _bind_catalog(class_name: str, template_id: str):
 
 _CATALOG_ROWS = [
     ("RgsaddleSaddlePtDimerLbfgs", "rgsaddle/saddle-dimer-lbfgs"),
-    ("RgsaddleSaddlePtDimerLbfgsTuned", "rgsaddle/saddle-dimer-lbfgs-tuned"),
     ("RgsaddleSaddlePtDimerFire", "rgsaddle/saddle-dimer-fire"),
-    ("RgsaddleSaddlePtDimerFireTuned", "rgsaddle/saddle-dimer-fire-tuned"),
     ("RgsaddleSaddlePtLanczos", "rgsaddle/saddle-lanczos"),
-    ("RgsaddleSaddlePtLanczosTuned", "rgsaddle/saddle-lanczos-tuned"),
     ("RgsaddleSaddlePtDimerRotskip", "rgsaddle/saddle-dimer-rotskip"),
-    ("RgsaddleSaddlePtDimerRotskipTuned", "rgsaddle/saddle-dimer-rotskip-tuned"),
 ]
 
 for _class_name, _template_id in _CATALOG_ROWS:
