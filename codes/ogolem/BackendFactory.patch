@@ -1,0 +1,18 @@
+diff --git a/src/org/ogolem/core/BackendFactory.java b/src/org/ogolem/core/BackendFactory.java
+index 9c0aa00..ff0aa6a 100644
+--- a/src/org/ogolem/core/BackendFactory.java
++++ b/src/org/ogolem/core/BackendFactory.java
+@@ -596,6 +596,13 @@ public class BackendFactory {
+         System.err.println("Wrong input to configure tinker: " + sTemp3 + ".");
+         throw new RuntimeException("Illlegal input to configure tinker as a backend.");
+       }
++    } else if (sBackend.equalsIgnoreCase("optbench") || sBackend.startsWith("optbench:")) {
++      try {
++        final Class<?> cls = Class.forName("org.ogolem.optbench.OptbenchBackend");
++        back = (CartesianFullBackend) cls.getDeclaredConstructor().newInstance();
++      } catch (Exception e) {
++        throw new RuntimeException("optbench backend is not on the classpath", e);
++      }
+     } else {
+       System.err.println("Wrong input for EnergyBackend: " + sBackend + " returning null.");
+       back = null;
