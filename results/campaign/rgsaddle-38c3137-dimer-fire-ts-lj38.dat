@@ -1,0 +1,25 @@
+force_calls 1414
+force_calls_min 448
+force_calls_median 1166.0
+force_calls_max 5332
+nfailed 4
+par2_mean 1785.4550000000
+successes 196
+wilson_low 0.9497129131
+wilson_high 0.9921955736
+par2_median 1169.5000000000
+n_cap 4
+n_wrong_stationary 0
+n_divergence 0
+n_crash 0
+counter harness
+code rgsaddle
+code_version 0.2.2
+commit 38c3137f62ce1436d662bb37188a8d7cd2d789b8
+algorithm Dimer FIRE
+tuning default
+template rgsaddle/dimer-fire
+problem tsopt/LJ38
+rotation_steps 145140
+library_evaluations 316900
+harness_calls 317096
