@@ -28,6 +28,7 @@ barriers = [0.601, 0.601, 0.620, 0.986, 0.987, 0.989, 0.986, 0.987, 0.989, 1.196
 norm = "max_atom"
 force_norm = 0.001
 force_unit = "eV/Angstrom"
+max_force_calls = 20000000
 
 [sample]
 starts = 13

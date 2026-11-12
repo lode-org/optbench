@@ -716,6 +716,11 @@ def _run_points(planned: dict, output: Path, workers: int) -> dict:
 
 
 def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+    from optbench.campaign import load_template
+
+    method = str((load_template(root, template_name).get("tsase") or {}).get("method", "ci"))
+    if method == "quench-dimer":
+        raise ValueError(f"{template_name} method quench-dimer is not a search this module runs")
     planned = plan(root, problem_name, template_name, output.parent / "work")
     if "task" in planned["settings"]:
         return _run_points(planned, output, workers)

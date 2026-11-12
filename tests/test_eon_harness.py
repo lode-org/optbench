@@ -359,7 +359,14 @@ def test_500350d9_templates_run_on_the_500350d9_build():
         assert load_template(ROOT, template)["commit"].startswith("500350d9")
         assert _family_of(load_template(ROOT, template)) == "500350d9"
     for template in names(bench_eon_client):
-        assert load_template(ROOT, template)["commit"].startswith("4d8b34ba")
+        commit = load_template(ROOT, template)["commit"]
+        if template in {
+            "eon-client/htst-pt-dimer-lbfgs",
+            "eon-client/htst-pt-lanczos-lbfgs",
+        }:
+            assert commit.startswith("4c1b814f")
+            continue
+        assert commit.startswith("4d8b34ba")
 
 
 def test_client_default_grid_is_one_start():
@@ -368,3 +375,10 @@ def test_client_default_grid_is_one_start():
 
     assert len(EonClientNebPtLbfgs.params[1]) == 1
     assert EonClientNebPtLbfgs.template_name == "eon-client/neb-pt-lbfgs"
+
+
+def test_client_htst_pt_uses_the_problem_force_call_cap():
+    from benchmarks.bench_eon_client import EonClientHtstPtDimerLbfgs, EonClientHtstPtLanczosLbfgs
+
+    assert EonClientHtstPtDimerLbfgs.cap == 20000000
+    assert EonClientHtstPtLanczosLbfgs.cap == 20000000
