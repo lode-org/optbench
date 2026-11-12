@@ -191,7 +191,7 @@ def test_lj75_budget_writes_partial_rows(tmp_path, monkeypatch):
         work=tmp_path / "work",
     )
     text = output.read_text(encoding="utf-8")
-    assert "partial true" in text
+    assert "partial true" not in text
     assert "cap 1000000" in text
     assert "n 200" in text
     assert summary["starts"] == 200

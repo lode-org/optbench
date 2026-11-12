@@ -6,10 +6,13 @@ pp3 two-point step (Barzilai and Borwein), two passes, on
 subtracts a cutoff shift, so the scored evaluations stay on the spec
 potential and the harness counter.
 
-One archived start index is one independent search. The search stops
-when the harness energy is at or below the Wales minimum plus the
-problem tolerance, or when the harness count reaches the problem
-force-call cap.
+One archived start index is one independent search. When the problem
+states a reference energy, the window is that energy plus
+``energy_above_minimum``, including when the search also has a
+structure budget. Otherwise the window is the harness energy of the
+vendored Wales LJ38 geometry plus the same tolerance. A problem with
+no tolerance stops each start after the structure budget. The harness
+count also stops at the problem force-call cap.
 """
 
 from __future__ import annotations
@@ -635,9 +638,15 @@ def plan(
         names = [f"{label}.{index}" for index in range(1, int(config["starts"]) + 1)]
     else:
         names = _load_start_names(root, problem, geometries, work, output)
-    if config.get("budget_structures") or raw_tolerance is None:
+    stated_energy = (problem.get("reference") or {}).get("energy")
+    if raw_tolerance is not None and stated_energy not in (None, ""):
+        # A stated reference is the window, including when a structure budget
+        # also stops the search. LJ75 is that case.
+        reference = float(stated_energy)
+        tolerance = float(raw_tolerance)
+    elif config.get("budget_structures") or raw_tolerance is None:
         # A structure budget is the stop. The Wales minimum is the LJ38 file
-        # and is not applied to a larger cluster.
+        # and is not applied to a larger cluster that did not state its own.
         reference = None
         tolerance = None
     else:
