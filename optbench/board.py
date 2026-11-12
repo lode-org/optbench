@@ -859,6 +859,9 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
             kind=str((template or {}).get("kind") or fields.get("kind") or ""),
             origin="harness",
         )
+        finding = str(fields.get("finding") or "").strip()
+        if finding:
+            row["finding"] = finding
         named = str(fields.get("potential") or "").strip()
         declared = ""
         if str(fields.get("ranked") or "").lower() == "false":
@@ -866,7 +869,10 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
         elif str(fields.get("partial") or "").lower() == "true" or str(fields.get("short") or "").lower() == "true":
             declared = "result file sets short true"
         if declared:
-            if named:
+            detail = str(fields.get("partial_reason") or fields.get("short_reason") or "").strip()
+            if detail and "partial" not in detail.lower():
+                declared = detail
+            if named and named not in declared:
                 declared = f"{declared}; potential {named}"
             row["_declared_short"] = declared
         if not records:
@@ -901,6 +907,7 @@ def _benchmark_index() -> dict[str, dict]:
         "benchmarks.bench_eon_lane",
         "benchmarks.bench_eon_client",
         "benchmarks.bench_rgmin",
+        "benchmarks.bench_ogolem",
         "benchmarks.bench_ase_sella",
         "benchmarks.bench_rgsaddle",
         "benchmarks.bench_geodesic",
@@ -909,6 +916,7 @@ def _benchmark_index() -> dict[str, dict]:
         "benchmarks.bench_lammpsneb",
         "benchmarks.bench_noise",
         "benchmarks.bench_geometric",
+        "benchmarks.bench_globalopt",
         "benchmarks.bench_n2p2",
         "benchmarks.bench_gmin",
         "benchmarks.bench_vcsqnm",
@@ -1962,6 +1970,10 @@ def headline_table(problem: dict) -> str:
         lines.append(f'<tr><td colspan="{len(headers)}">No ranked row.</td></tr>')
     lines.append("</tbody></table></div>")
     winner = _winner_html(ranked[0]) if ranked else ""
+    finding = str(ranked[0].get("finding") or "").strip() if ranked else ""
+    if finding:
+        label = ranked[0].get("template") or ranked[0].get("entry") or ""
+        lines.append(f'<p class="bench-finding">{_cell(label)}: {_cell(finding)}.</p>')
     body = "\n".join(lines)
     return f"{winner}\n{body}" if winner else body
 
@@ -2268,6 +2280,31 @@ def _table(
     budget = _budget_table(problem)
     if budget:
         lines.append(budget)
+    findings = [row for row in ranked if str(row.get("finding") or "").strip()]
+    if findings:
+        lines.append("<h3>Findings</h3><ul>")
+        for row in findings:
+            lines.append(
+                "<li>"
+                f"{_cell(_safe_name(row) or row.get('code') or '')}: {_cell(row['finding'])}."
+                "</li>"
+            )
+        lines.append("</ul>")
+    noted = [
+        row
+        for row in (problem.get("short") or [])
+        if "energy" in str(row.get("short_reason") or "")
+    ]
+    if noted:
+        lines.append("<h3>Short of the full set</h3><ul>")
+        for row in noted:
+            lines.append(
+                "<li>"
+                f"{_cell(_safe_name(row) or row.get('code') or '')} n={row['n']}, "
+                f"{_cell(row['short_reason'])}."
+                "</li>"
+            )
+        lines.append("</ul>")
     held = _aside_rows(problem)
     if held:
         lines.append("<h3>Off the ranked table</h3><ul>")

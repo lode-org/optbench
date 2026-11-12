@@ -1,11 +1,13 @@
-"""OGOLEM archives, force caps, and Sweden input."""
+"""OGOLEM row text, archives, and the harness socket."""
 
+import json
 import math
 import socket
 from pathlib import Path
 
 import pytest
 
+from optbench.board import build_board
 from optbench.campaign import load_template, resolve_problem
 from optbench.potentials import lennard_jones
 from optbench.runners.ogolem_go import (
@@ -16,7 +18,10 @@ from optbench.runners.ogolem_go import (
     XYZ_SCALE,
     HarnessLJServer,
     _force_cap,
+    _partial_reason,
+    _repeated_energy,
     _threshold,
+    _write_outputs,
     center_cluster,
     classify_start,
     load_starts,
@@ -36,6 +41,7 @@ def _exchange(server: HarnessLJServer, line: str) -> str:
         reader.write(line.encode("ascii") + b"\n")
         reader.flush()
         return reader.readline().decode("ascii")
+
 def test_server_matches_lennard_jones_and_caches_and_caps():
     server = HarnessLJServer(cap=2, threshold=None)
     try:
@@ -145,3 +151,125 @@ def test_classify_start_uses_the_energy_window_and_the_cap():
         exit_code=0, calls=4, energy=math.nan, cap=100, threshold=LJ38_STOP_ENERGY, hit_cap=False
     )
     assert failure == "divergence"
+
+def test_partial_reason_counts_starts_on_the_lowest_energy():
+    problem = {"id": "globalopt/lj75"}
+    records = [
+        {"energy": -396.2822488255712, "force_calls": 1000000},
+        {"energy": -396.2822488255711, "force_calls": 1000000},
+        {"energy": -392.6594685996733, "force_calls": 1000000},
+    ]
+    reason = _partial_reason(problem, records, True, 200)
+    assert reason == (
+        "scored 3 of 200 starts; lowest energy -396.28224883; "
+        "2 of 3 starts at -396.28224883; mean calls 1000000.0; median calls 1000000.0"
+    )
+    hit = dict(records[0])
+    hit["energy"] = -397.4913461429096
+    hit["force_calls"] = 544484
+    mixed = _partial_reason(problem, [hit, *records], True, 200)
+    assert mixed == (
+        "scored 4 of 200 starts; lowest energy -397.49134614; "
+        "2 of 4 starts at -396.28224883; mean calls 886121.0; median calls 1000000.0"
+    )
+
+def test_a_complete_grid_records_a_repeated_energy_that_is_not_the_lowest(tmp_path: Path):
+    records = [
+        {"energy": -397.4913461429096, "force_calls": 544484, "success": True, "failure": None, "start": "coords.1", "index": 1},
+        {"energy": -396.2822488255712, "force_calls": 1000000, "success": False, "failure": "cap", "start": "coords.2", "index": 2},
+        {"energy": -396.2822488255711, "force_calls": 1000000, "success": False, "failure": "cap", "start": "coords.3", "index": 3},
+        {"energy": -396.2822488255712, "force_calls": 1000000, "success": False, "failure": "cap", "start": "coords.4", "index": 4},
+    ]
+    assert _repeated_energy(records) == "3 of 4 starts at -396.28224883; lowest energy -397.49134614"
+    assert _repeated_energy(records[1:]) == ""
+    problem = {"id": "globalopt/lj75", "sample": {"starts": 4}}
+    template = {
+        "id": "ogolem/lj75",
+        "code": "ogolem",
+        "code_version": "2016.CURRENT",
+        "commit": COMMIT,
+        "algorithm": "genetic algorithm",
+        "problem": "globalopt/lj75",
+        "tuning": "default",
+        "failure_cap": 1000000,
+        "note": "published settings",
+    }
+    output = tmp_path / "ogolem-lj75.dat"
+    _write_outputs(output, records, template, problem, 1000000, True)
+    text = output.read_text(encoding="utf-8")
+    assert "partial true" not in text
+    assert "finding 3 of 4 starts at -396.28224883; lowest energy -397.49134614" in text
+
+def test_partial_reason_is_kept_when_the_problem_states_no_full_set(tmp_path: Path):
+    problem = tmp_path / "problems" / "globalopt" / "toy.toml"
+    problem.parent.mkdir(parents=True)
+    problem.write_text(
+        "\n".join(
+            [
+                'id = "globalopt/toy"',
+                'title = "toy"',
+                'suite = "globalopt"',
+                'problem = "toy"',
+                'contract = "partial"',
+                "",
+                "[metrics]",
+                'required = ["force_calls"]',
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    template = tmp_path / "templates" / "ogolem" / "toy.toml"
+    template.parent.mkdir(parents=True)
+    template.write_text(
+        "\n".join(
+            [
+                'id = "ogolem/toy"',
+                'engine = "ogolem"',
+                'problem = "globalopt/toy"',
+                'code = "ogolem"',
+                'code_version = "2016.CURRENT"',
+                f'commit = "{COMMIT}"',
+                "failure_cap = 10",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    campaign = tmp_path / "results" / "campaign"
+    campaign.mkdir(parents=True)
+    (campaign / "ogolem-toy.dat").write_text(
+        "\n".join(
+            [
+                "code ogolem",
+                "code_version 2016.CURRENT",
+                f"commit {COMMIT}",
+                "template ogolem/toy",
+                "problem globalopt/toy",
+                "counter harness",
+                "partial true",
+                "partial_reason no success rule on globalopt/toy; lowest energy -1.25000000; mean calls 4.0",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    (campaign / "ogolem-toy.starts.jsonl").write_text(
+        json.dumps(
+            {
+                "force_calls": 4,
+                "success": False,
+                "failure": "wrong_stationary",
+                "start": "coords.1",
+                "counter": "harness",
+                "energy": -1.25,
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    document = build_board(tmp_path)
+    row = document["problems"]["globalopt/toy"]["short"][0]
+    assert row["short"] is True
+    assert row["short_reason"] == "no success rule on globalopt/toy; lowest energy -1.25000000; mean calls 4.0"
+    assert document["problems"]["globalopt/toy"]["ranked"] == []
