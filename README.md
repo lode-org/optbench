@@ -81,7 +81,7 @@ uv run optbench run minimization/lj38 eon-client/lbfgs-m100 \
   --output benchmark.dat
 ```
 
-The command uses `eonclient` from `PATH`. `--client` or `EONCLIENT` overrides that. One line does both the binary and the Python command, which is the pixi-and-uv form:
+The command uses `eonclient` from `PATH`. `--client` or `EONCLIENT` overrides that. A template may declare auxiliary run files with `[[inputs]]`: each entry names a `source` and an optional `target` path inside the run directory. A relative `source` is resolved from the repository root. The global-optimization templates stage the archived `in.lammps` that way. One line does both the binary and the Python command, which is the pixi-and-uv form:
 
 ```bash
 pixi exec --spec eon --spec uv -- uv run optbench run \

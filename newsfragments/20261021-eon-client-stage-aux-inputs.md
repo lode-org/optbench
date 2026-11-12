@@ -1,0 +1,1 @@
+`optbench.campaign` stages template-declared auxiliary files before each eonclient launch. Templates name them with `[[inputs]]` (`source`, optional `target`). The LJ38 basin-hopping and minima-hopping templates stage the archived `in.lammps`.

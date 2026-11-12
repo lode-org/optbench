@@ -17,6 +17,10 @@ seeds = [314159]
 asv_timeout = 1800
 budget_seconds = 1200
 
+[[inputs]]
+source = "archive/entries/globalopt/lj38/eon-basinhopping/in.lammps"
+target = "in.lammps"
+
 [ini.Main]
 job = "global_optimization"
 temperature = 8000
