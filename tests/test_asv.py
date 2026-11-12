@@ -169,7 +169,8 @@ def test_rgsaddle_grid_is_seed_then_one_start_until_full(monkeypatch):
         and getattr(value, "template_id", "").startswith("rgsaddle/")
         and value.problem_id != "saddle-search/pt-island"
     ]
-    assert len(classes) == 13
+    assert len(classes) == 11
+    assert all(not benchmark.template_id.endswith("-tuned") for benchmark in classes)
     for benchmark in classes:
         assert benchmark.param_names == ["seed", "start"]
         assert benchmark.params[0] == ["0"]

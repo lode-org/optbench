@@ -15,9 +15,7 @@ def test_softsaddle_templates_match_the_registry_pin():
     rows = [row for row in list_templates(ROOT) if str(row["id"]).startswith("softsaddle/")]
     assert {row["id"] for row in rows} == {
         "softsaddle/mode-lanczos",
-        "softsaddle/mode-lanczos-tuned",
         "softsaddle/mode-davidson",
-        "softsaddle/mode-davidson-tuned",
         "softsaddle/saddle-davidson-sm50",
         "softsaddle/saddle-lanczos-sm0",
         "softsaddle/saddle-lanczos-sm50",
