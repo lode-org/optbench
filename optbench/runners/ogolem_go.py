@@ -683,3 +683,301 @@ def _completed(path: Path) -> dict[str, dict]:
         if row.get("start") is not None and row.get("force_calls") is not None:
             found[str(row["start"])] = row
     return found
+
+
+def printed_version(home: Path | None = None) -> str:
+    """First line of ``MainOgolem --version``. The snapshot prints 2016.CURRENT."""
+    root = home or ogolem_home()
+    command = [
+        str(java_bin()),
+        "--enable-preview",
+        "--add-modules=jdk.incubator.vector",
+        "-cp",
+        _classpath(root),
+        "org.ogolem.general.MainOgolem",
+        "--version",
+    ]
+    proc = subprocess.run(command, capture_output=True, text=True, timeout=60, check=False)
+    lines = [line.strip() for line in proc.stdout.splitlines() if line.strip()]
+    if not lines:
+        raise RuntimeError(proc.stderr[-400:] or "OGOLEM printed no version")
+    return lines[0]
+
+
+def _java_command(home: Path, threads: int) -> list[str]:
+    return [
+        str(java_bin()),
+        "--enable-preview",
+        "--add-modules=jdk.incubator.vector",
+        "-Xmx1024m",
+        "-Dlogging.level.root=WARN",
+        "-cp",
+        _classpath(home),
+        "org.ogolem.general.MainOgolem",
+        "--shmem",
+        "input.ogo",
+        str(threads),
+    ]
+
+
+def execute_start(job: dict) -> dict:
+    """Run one JVM. The record is the lowest harness energy and its call count."""
+    import numpy as np
+
+    started = time.monotonic()
+    print(f"ogolem begin {job.get('problem')} {job.get('start')}", flush=True)
+    cap = int(job["cap"])
+    threshold = job.get("threshold")
+    positions = center_cluster(job["coords"])
+    atoms = int(np.asarray(positions).shape[0])
+    work = Path(job["work"])
+    if work.exists():
+        shutil.rmtree(work)
+    seeds = work / "seeds"
+    seeds.mkdir(parents=True)
+    copies = int(job.get("seed_copies") or 1)
+    for copy in range(copies):
+        write_xyz(seeds / f"seed-{copy}.xyz", positions)
+    text = ogo_text(
+        atoms=atoms,
+        pool=int(job["pool"]),
+        iterations=int(job["iterations"]),
+        cell=float(job["cell"]),
+        seed=int(job["seed"]),
+        threshold=None if threshold is None else float(threshold),
+    )
+    (work / "input.ogo").write_text(text, encoding="utf-8")
+    server = HarnessLJServer(cap=cap, threshold=None if threshold is None else float(threshold), trace=bool(job.get("trace")))
+    log_path = work / "ogolem.log"
+    exit_code = 1
+    error = ""
+    try:
+        env = os.environ.copy()
+        env["OPTBENCH_POTSERVER"] = server.endpoint
+        command = _java_command(Path(job["home"]), int(job["threads"]))
+        with log_path.open("w", encoding="utf-8") as handle:
+            proc = subprocess.Popen(
+                command,
+                cwd=work,
+                env=env,
+                stdout=handle,
+                stderr=subprocess.STDOUT,
+            )
+            try:
+                exit_code = int(proc.wait(timeout=float(job.get("wall") or 86400)))
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                proc.wait(timeout=30)
+                exit_code = -9
+                error = "wall timeout"
+    except Exception as exc:
+        error = f"{type(exc).__name__}: {exc}"
+        exit_code = 1
+    finally:
+        server.close()
+    if exit_code not in (0, 3) and not error and log_path.is_file():
+        tail = log_path.read_text(encoding="utf-8", errors="replace")[-400:]
+        error = tail.strip()
+    calls = int(server.counter.calls)
+    energy = server.best_energy
+    success, failure, reasons = classify_start(
+        exit_code=exit_code,
+        calls=calls,
+        energy=energy,
+        cap=cap,
+        threshold=None if threshold is None else float(threshold),
+        hit_cap=server.hit_cap,
+    )
+    record = {
+        "schema": "optbench.start/v2",
+        "start": job["start"],
+        "index": job["index"],
+        "force_calls": calls,
+        "counter": "harness",
+        "comparable": True,
+        "success": success,
+        "failure": failure,
+        "reasons": reasons,
+        "energy": None if energy is None else float(energy),
+        "found": bool(server.found),
+        "exit_code": exit_code,
+        "seconds": time.monotonic() - started,
+        "code": job["code"],
+        "code_version": job["code_version"],
+        "commit": job["commit"],
+        "tuning": job["tuning"],
+        "template": job["template"],
+        "problem": job["problem"],
+    }
+    if error:
+        record["error"] = error
+    if job.get("trace"):
+        record["traces"] = server.traces
+    return record
+
+
+def run_template(
+    root: Path,
+    problem: dict,
+    template: dict,
+    *,
+    geometries: Path | None = None,
+    output: Path,
+    workers: int = 1,
+    work: Path | None = None,
+    limit: int = 0,
+    resume: bool = False,
+) -> dict:
+    commit = str(template.get("commit") or "")
+    if commit != COMMIT:
+        raise RuntimeError(f"{template['id']} commit {commit} is not the built pin {COMMIT}")
+    version = str(template.get("code_version") or "")
+    if version != CODE_VERSION:
+        raise RuntimeError(f"{template['id']} version {version} is not {CODE_VERSION}")
+    home = ogolem_home()
+    if not jars_ready(home):
+        raise RuntimeError(f"OGOLEM jars for {COMMIT} are not installed under {home}")
+    if not java_bin().is_file():
+        raise RuntimeError(f"java is missing at {java_bin()}")
+    _ensure_exploded(home)
+    printed = printed_version(home)
+    if printed != PRINTED_VERSION:
+        raise RuntimeError(f"OGOLEM printed {printed}, expected {PRINTED_VERSION}")
+    stated = template.get("problem")
+    if stated and stated != problem["id"]:
+        raise ValueError(f"{template['id']} is for {stated}, not {problem['id']}")
+    cap = _force_cap(problem, template)
+    settings = _ogolem_settings(template)
+    if settings["pool"] < 2:
+        raise ValueError(f"{template['id']} pool_size must be at least 2")
+    threshold = _threshold(problem, template)
+    if problem["id"] == "globalopt/lj38":
+        if threshold is None or abs(threshold - LJ38_STOP_ENERGY) > 1e-9:
+            raise RuntimeError(
+                f"lj38 threshold {threshold} is not the archived stop energy {LJ38_STOP_ENERGY}"
+            )
+    scratch = work or Path(os.environ.get("OPTBENCH_OGOLEM_WORK", "/tmp/optbench-ogolem")) / template["id"].replace("/", "-")
+    if geometries is not None:
+        raise ValueError("ogolem reads the problem archive; pass no geometries directory")
+    loaded = load_starts(root, problem, template, scratch)
+    if limit:
+        loaded = loaded[: int(limit)]
+    done = _completed(output.with_suffix(".starts.jsonl")) if resume else {}
+    jobs = []
+    kept = []
+    for index, (name, coords) in enumerate(loaded):
+        if name in done:
+            row = dict(done[name])
+            row["index"] = index
+            kept.append(row)
+            continue
+        jobs.append(
+            {
+                "index": index,
+                "start": name,
+                "coords": coords.reshape(-1, 3).tolist(),
+                "cap": cap,
+                "threshold": threshold,
+                "pool": settings["pool"],
+                "iterations": settings["iterations"],
+                "cell": settings["cell"],
+                "threads": settings["threads"],
+                "seed": index + 1,
+                "home": str(home),
+                "work": str(scratch / "starts" / f"{index:04d}-{name}"),
+                "wall": 86400,
+                "trace": False,
+                "code": template.get("code"),
+                "code_version": version,
+                "commit": commit,
+                "tuning": template.get("tuning", ""),
+                "template": template["id"],
+                "problem": problem["id"],
+            }
+        )
+    scored = threshold is not None
+    records = list(kept)
+
+    def _store(record: dict) -> None:
+        records.append(record)
+        _write_outputs(output, records, template, problem, cap, scored)
+        print(
+            f"{template['id']} {len(records)}/{len(loaded)} start={record['start']} "
+            f"calls={record['force_calls']} energy={record.get('energy')} "
+            f"failure={record.get('failure')} seconds={record.get('seconds', 0):.1f}",
+            flush=True,
+        )
+
+    if jobs and workers <= 1:
+        for job in jobs:
+            _store(execute_start(job))
+    elif jobs:
+        import multiprocessing as mp
+        from concurrent.futures import ProcessPoolExecutor, as_completed
+
+        context = mp.get_context("spawn")
+        with ProcessPoolExecutor(max_workers=workers, mp_context=context) as pool:
+            futures = [pool.submit(execute_start, job) for job in jobs]
+            for future in as_completed(futures):
+                _store(future.result())
+    elif records:
+        _write_outputs(output, records, template, problem, cap, scored)
+    else:
+        raise RuntimeError(f"{template['id']} has no starts")
+    summary = _write_outputs(output, records, template, problem, cap, scored)
+    return summary
+
+
+def smoke_dimer() -> dict:
+    """Two atoms at the Lennard-Jones minimum, evaluated by a real JVM.
+
+    The first socket call is the seeded geometry in reduced units. Its
+    distance and energy check the argon-sigma conversion. Local
+    optimization of a wrong scale can still fall into the well, so the
+    first call is the check.
+    """
+    import numpy as np
+
+    home = ogolem_home()
+    if not jars_ready(home):
+        raise RuntimeError(f"OGOLEM jars for {COMMIT} are not installed under {home}")
+    distance = 2.0 ** (1.0 / 6.0)
+    coords = [[-0.5 * distance, 0.0, 0.0], [0.5 * distance, 0.0, 0.0]]
+    work = Path("/tmp/optbench-ogolem-dimer")
+    job = {
+        "index": 0,
+        "start": "dimer",
+        "coords": coords,
+        "cap": 1000,
+        "threshold": None,
+        "pool": 2,
+        "iterations": 0,
+        "cell": 60.0,
+        "threads": 1,
+        "seed": 1,
+        "seed_copies": 2,
+        "home": str(home),
+        "work": str(work),
+        "wall": 180,
+        "trace": True,
+        "code": "ogolem",
+        "code_version": CODE_VERSION,
+        "commit": COMMIT,
+        "tuning": "default",
+        "template": "ogolem/dimer",
+        "problem": "smoke",
+    }
+    record = execute_start(job)
+    traces = record.get("traces") or []
+    if not traces:
+        raise RuntimeError(f"dimer made no harness call: {record.get('error')}")
+    first = traces[0]["coords"]
+    pos = np.asarray(first, dtype=np.float64).reshape(-1, 3)
+    span = float(np.linalg.norm(pos[0] - pos[1]))
+    record["first_distance"] = span
+    record["first_energy"] = float(traces[0]["energy"])
+    if abs(span - distance) > 1e-6:
+        raise RuntimeError(f"dimer distance {span} is not {distance}")
+    if abs(record["first_energy"] + 1.0) > 1e-6:
+        raise RuntimeError(f"dimer energy {record['first_energy']} is not -1")
+    return record

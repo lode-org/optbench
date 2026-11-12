@@ -1,0 +1,1 @@
+The campaign dispatches the ogolem engine to one JVM per archived start. The printed jar stamp must match the harness pin before a start is scored. The two-atom Lennard-Jones check runs when the jars are installed.
