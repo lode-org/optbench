@@ -2,8 +2,8 @@ id = "rgsaddle/saddle-dimer-rotskip"
 engine = "rgsaddle"
 problem = "saddle-search/pt-island"
 code = "rgsaddle"
-code_version = "0.2.2"
-commit = "2db34b42e6e029ebcf5b9868b94fcdf969103c9f"
+code_version = "(main 8fa0eb15)"
+commit = "8fa0eb1559c92b6ae9d1de190e253787a183729d"
 algorithm = "Dimer rotation-skip L-BFGS"
 tuning = "default"
 
@@ -33,5 +33,4 @@ mode_seed = "file"
 repetitions = 1
 displace_atoms = "0,1,2,3,4,5,6"
 displace_magnitude = 0.1
-displace_radius = 3.3
 max_searches = 20000

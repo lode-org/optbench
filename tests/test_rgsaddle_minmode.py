@@ -257,6 +257,9 @@ def test_rgsaddle_templates_match_their_problem_stop():
             "rgsaddle/dimer-fire",
             "rgsaddle/pt-dimer-fire",
             "rgsaddle/saddle-dimer-fire",
+            "rgsaddle/saddle-dimer-lbfgs",
+            "rgsaddle/saddle-dimer-rotskip",
+            "rgsaddle/saddle-lanczos",
         }
         if template["id"] in fire:
             assert template["commit"] == "8fa0eb1559c92b6ae9d1de190e253787a183729d"

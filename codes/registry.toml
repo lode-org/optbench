@@ -171,6 +171,16 @@ committed = "2026-10-21"
 note = "main 8fa0eb15, including the min-mode FIRE ridge fix from pull request 24. The dimer FIRE templates on tsopt/LJ38, tsopt/pt-island, and saddle-search/pt-island use this pin. The 0.2.2 pin stays for every other rgsaddle row."
 
 [[code]]
+id = "rgsaddle-main"
+name = "rgsaddle"
+role = "saddle search"
+repository = "https://github.com/OmniPotentRPC/rgsaddle"
+ref = "main"
+commit = "8fa0eb1559c92b6ae9d1de190e253787a183729d"
+committed = "2026-10-21"
+note = "0.2.2 at main 8fa0eb15, rgmin d76539d. The four default saddle-search/pt-island templates use this commit. Since df8ec2f the translator keeps its memory inside a 45 degree mode cone, and a capped FIRE step that leaves the negative mode is replaced. The dimer still measures the rotated dimer when the trial angle sits on its 1e-4 floor."
+
+[[code]]
 id = "geodesic"
 name = "geodesic"
 role = "band initialiser"

@@ -1,10 +1,10 @@
-# rep 1 force_calls 19966821 unique_saddles 1 fraction_connected 0.0 total_searches 20000 connected 0 minimize_calls 14 minimum_converged 1 seed 20261016
-force_calls 19966821.0
-force_calls_min 19966821
-force_calls_max 19966821
+# rep 1 force_calls 9239580 unique_saddles 10 fraction_connected 0.00015 total_searches 20000 connected 3 minimize_calls 14 minimum_converged 1 seed 20261016
+force_calls 9239580.0
+force_calls_min 9239580
+force_calls_max 9239580
 code rgsaddle
 code_version 0.2.2
-commit c0db2b8d333c557251635cb8bb7b3d81f0088a71
+commit 8fa0eb1559c92b6ae9d1de190e253787a183729d
 algorithm Lanczos L-BFGS
 tuning default
 template rgsaddle/saddle-lanczos
@@ -15,5 +15,5 @@ nfailed 1
 goal 27
 cap 5064
 n 20000
-par2_mean 10128.0
-v2_nfailed 20000
+par2_mean 10126.55025
+v2_nfailed 19997
