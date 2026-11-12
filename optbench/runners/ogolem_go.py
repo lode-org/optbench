@@ -321,3 +321,126 @@ class _Handler(socketserver.StreamRequestHandler):
                 self.wfile.flush()
         except (ConnectionError, TimeoutError, socket.timeout):
             return
+
+
+def _geometry_files(root: Path) -> list[Path]:
+    files = [path for path in root.rglob("*") if path.is_file() and not path.name.startswith(".")]
+    cons = [path for path in files if path.suffix == ".con"]
+    if cons:
+        return sorted(cons, key=lambda path: _sort_key(path.name))
+    # A bare ``coords`` file in the lj98 and lj150 archives repeats coords.100.
+    # The archived loops read coords.<index> only.
+    coords = [
+        path
+        for path in files
+        if _NUMBER.search(path.name) and (path.name.startswith("coords.") or path.suffix == ".xyz")
+    ]
+    if not coords:
+        raise FileNotFoundError(f"{root} has no .con or coords files")
+    return sorted(coords, key=lambda path: _sort_key(path.name))
+
+
+def _read_rows(path: Path):
+    import numpy as np
+
+    if path.suffix == ".con":
+        pos, _box = read_con(path.read_text(encoding="utf-8", errors="replace"))
+        return pos
+    rows = []
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        parts = line.split()
+        if len(parts) < 3:
+            continue
+        try:
+            rows.append([float(parts[0]), float(parts[1]), float(parts[2])])
+        except ValueError:
+            continue
+    if not rows:
+        raise ValueError(f"{path} has no coordinates")
+    return np.asarray(rows, dtype=np.float64)
+
+
+def _archive_of(root: Path, problem: dict, template: dict) -> Path:
+    from optbench.campaign import geometry_archive
+
+    try:
+        return geometry_archive(root, problem)
+    except ValueError:
+        archive_path = (template.get("input") or {}).get("archive_path")
+        if not archive_path:
+            raise
+        return geometry_archive(root, {"id": problem["id"], "input": {"archive_path": archive_path}})
+
+
+def load_starts(root: Path, problem: dict, template: dict, work: Path) -> list[tuple[str, object]]:
+    """Archived geometries in numeric order. ``.con`` wins when both exist."""
+    import tarfile
+
+    archive = _archive_of(root, problem, template)
+    dest = work / "geometries" / problem["id"].replace("/", "-")
+    dest.mkdir(parents=True, exist_ok=True)
+    marker = dest / ".extracted"
+    recorded = f"{archive.name}:{archive.stat().st_size}"
+    if marker.is_file() and marker.read_text(encoding="utf-8").strip() == recorded:
+        pass
+    else:
+        if any(dest.iterdir()):
+            shutil.rmtree(dest)
+            dest.mkdir(parents=True, exist_ok=True)
+        with tarfile.open(archive) as packed:
+            packed.extractall(dest, filter="data")
+        marker.write_text(recorded, encoding="utf-8")
+    loaded = []
+    for path in _geometry_files(dest):
+        loaded.append((path.name, _read_rows(path)))
+    expected = (problem.get("sample") or {}).get("starts")
+    if expected is not None and len(loaded) != int(expected):
+        raise ValueError(f"{problem['id']} expected {expected} starts, found {len(loaded)}")
+    return loaded
+
+
+def _threshold(problem: dict, template: dict) -> float | None:
+    convergence = problem.get("convergence") or {}
+    tolerance = convergence.get("energy_above_minimum")
+    if tolerance in (None, ""):
+        return None
+    problem_ref = (problem.get("reference") or {}).get("energy")
+    template_ref = template.get("reference_energy")
+    if problem_ref not in (None, ""):
+        reference = float(problem_ref)
+        if template_ref not in (None, "") and abs(float(template_ref) - reference) > 1e-9:
+            raise ValueError(
+                f"{template.get('id', 'template')} reference_energy {template_ref} "
+                f"is not the problem reference {reference}"
+            )
+    elif template_ref not in (None, ""):
+        reference = float(template_ref)
+    else:
+        reference = convergence.get("minimum", convergence.get("reference_energy"))
+        if reference in (None, ""):
+            return None
+    return float(reference) + float(tolerance)
+
+
+def _force_cap(problem: dict, template: dict) -> int:
+    """Problem ``max_force_calls`` when stated, otherwise the template cap."""
+    stated = (problem.get("convergence") or {}).get("max_force_calls")
+    raw = template.get("failure_cap")
+    if stated not in (None, ""):
+        cap = int(stated)
+        if raw not in (None, "") and int(raw) != cap:
+            raise ValueError(f"{template.get('id', 'template')} failure_cap {raw} is not the problem cap {cap}")
+        return cap
+    if raw in (None, ""):
+        raise ValueError(f"{template.get('id', 'template')} needs failure_cap")
+    return int(raw)
+
+
+def _ogolem_settings(template: dict) -> dict:
+    section = template.get("ogolem") or {}
+    return {
+        "pool": int(section.get("pool_size", 100)),
+        "iterations": int(section.get("glob_iterations", 19900)),
+        "cell": float(section.get("cell_bohr", 60)),
+        "threads": int(section.get("threads", 1)),
+    }

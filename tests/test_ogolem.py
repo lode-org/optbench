@@ -1,18 +1,29 @@
-"""OGOLEM harness socket and Sweden input."""
+"""OGOLEM archives, force caps, and Sweden input."""
 
 import math
 import socket
+from pathlib import Path
 
 import pytest
 
+from optbench.campaign import load_template, resolve_problem
 from optbench.potentials import lennard_jones
 from optbench.runners.ogolem_go import (
+    ANGTOBOHR,
+    AR_SIGMA_BOHR,
+    COMMIT,
     LJ38_STOP_ENERGY,
+    XYZ_SCALE,
     HarnessLJServer,
+    _force_cap,
+    _threshold,
     center_cluster,
     classify_start,
+    load_starts,
     ogo_text,
 )
+
+ROOT = Path(__file__).resolve().parents[1]
 
 def _exchange(server: HarnessLJServer, line: str) -> str:
     host, port = server.server_address
@@ -44,6 +55,53 @@ def test_server_matches_lennard_jones_and_caches_and_caps():
         assert server.counter.calls == 2
     finally:
         server.close()
+
+def test_lj38_stop_is_the_archived_eon_threshold():
+    template = load_template(ROOT, "ogolem/lj38")
+    problem = resolve_problem(ROOT, "globalopt/lj38")
+    assert template["commit"] == COMMIT
+    assert template["failure_cap"] == 2000000
+    assert float(template["reference_energy"]) + float(problem["convergence"]["energy_above_minimum"]) == pytest.approx(
+        LJ38_STOP_ENERGY
+    )
+
+def test_larger_clusters_use_the_cambridge_window_and_the_problem_cap():
+    expected = {
+        "lj75": (-397.492331, 1_000_000, 200),
+        "lj98": (-543.665361, 1_000_000_000, 100),
+        "lj150": (-893.310258, 10_000_000, 100),
+    }
+    for slug, (energy, cap, starts) in expected.items():
+        problem = resolve_problem(ROOT, f"globalopt/{slug}")
+        template = load_template(ROOT, f"ogolem/{slug}")
+        assert float(problem["reference"]["energy"]) == energy
+        assert int(problem["sample"]["starts"]) == starts
+        assert _force_cap(problem, template) == cap
+        assert _threshold(problem, template) == pytest.approx(energy + 0.001)
+    lj38 = resolve_problem(ROOT, "globalopt/lj38")
+    assert _threshold(lj38, load_template(ROOT, "ogolem/lj38")) == pytest.approx(LJ38_STOP_ENERGY)
+    assert _force_cap(lj38, load_template(ROOT, "ogolem/lj38")) == 2_000_000
+
+def test_archive_counts_do_not_double_count_xyz(tmp_path: Path):
+    lj38 = load_starts(ROOT, resolve_problem(ROOT, "globalopt/lj38"), load_template(ROOT, "ogolem/lj38"), tmp_path)
+    assert len(lj38) == 100
+    assert [name for name, _pos in lj38].count("0.con") == 1
+    assert all(name.endswith(".con") for name, _pos in lj38)
+    lj75 = load_starts(ROOT, resolve_problem(ROOT, "globalopt/lj75"), load_template(ROOT, "ogolem/lj75"), tmp_path)
+    lj98 = load_starts(ROOT, resolve_problem(ROOT, "globalopt/lj98"), load_template(ROOT, "ogolem/lj98"), tmp_path)
+    lj150 = load_starts(ROOT, resolve_problem(ROOT, "globalopt/lj150"), load_template(ROOT, "ogolem/lj150"), tmp_path)
+    assert len(lj75) == 200
+    assert len(lj98) == 100
+    assert len(lj150) == 100
+    assert lj75[0][1].shape[0] == 75
+    assert lj98[0][1].shape[0] == 98
+    assert lj150[0][1].shape[0] == 150
+
+def test_length_unit_is_the_argon_sigma():
+    # Contact at this sigma is 2**(1/6)*6.434516991 bohr, above 1.2*(1.85+1.85).
+    assert AR_SIGMA_BOHR == 6.434516991
+    assert XYZ_SCALE * ANGTOBOHR == pytest.approx(AR_SIGMA_BOHR)
+    assert load_template(ROOT, "ogolem/lj38")["ogolem"]["cell_bohr"] == 60
 
 def test_center_and_ogo_text_follow_the_sweden_example():
     import numpy as np

@@ -1,0 +1,1 @@
+OGOLEM uses max_force_calls when the problem file states one, and the template budget otherwise. The lj38 template budget is 2000000. lj75 is 1000000, lj98 is 1000000000, and lj150 is 10000000. Archived geometries load in numeric order.
