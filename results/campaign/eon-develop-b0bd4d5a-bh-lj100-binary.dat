@@ -1,0 +1,20 @@
+avg_energy -593.971
+min_energy -598.689
+max_energy -589.046
+n 100
+hits 0
+par2_mean 4e+06
+call_mean 2e+06
+call_median 2e+06
+quench_mean 10572.6
+code eOn (develop b0bd4d5a)
+code_version 3.6.0
+commit b0bd4d5a5e0f4011831e45f4de389a4efa348e83
+algorithm Basin hopping
+template eon-develop-b0bd4d5a/bh-lj100-binary
+problem globalopt/lj100-binary
+reducer harness
+counter harness
+tuning default
+cap 2000000
+call_unit total

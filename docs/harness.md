@@ -35,6 +35,10 @@ Auxiliary input files for one template are declared as `[[inputs]]` in that temp
 
 eonclient can be scored with the harness counter without rebuilding it. `optbench.potserver` serves one `HarnessCounter`. `python -m optbench.extpot` is the `ext_pot` program eOn already runs: one force evaluation is one socket `calculate`. `optbench/native/extpot_bridge.c` is the same exchange in C. Each atom is one line. A Morse bulk coordinate prints to more than 64 characters, so the atom buffer has to hold that whole line or the next atom is joined onto it. `RgpotCounter.calculate` is the same counter for an rgpot client. The wire protocol, the seed sample, the failure classes, and the noise rule are `docs/v2.md`.
 
+## Binary LJ100 ext_pot
+
+The binary Lennard-Jones basin-hopping runs do not use that socket program. They call `cells/eon/lj100-binary-basinhopping/sources/bridge.c` through `preload.c`. The reply is the unshifted lj/cut energy and the force `F = -dE/dx`. A positive pair magnitude with `dx = r_j - r_i` is the gradient. EON steps along the returned vector, so that sign keeps the unrelaxed start. `tests/test_blj_bridge.py` checks the force against central differences on one pair and on geometry 0.
+
 ```bash
 uv run optbench validate-counter --limit 3 --output results/validation/lj38-counter.dat
 uv run optbench statistics --output results/validation/statistics.json

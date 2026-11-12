@@ -1,0 +1,35 @@
+id = "eon-svn-r2549/bh-lj100-binary"
+engine = "eon"
+problem = "globalopt/lj100-binary"
+code = "EON (SVN r2549)"
+code_version = "r2549"
+commit = "r2549"
+algorithm = "Basin hopping"
+reducer = "harness"
+tuning = "default"
+failure_cap = 2000000
+note = '''
+Stock EON SVN r2549 basin hopping on the 42/58 binary LJ100 starts. Fortran build, client sources unpatched. QSC is not in revision 2549 and this run does not call it. The force-call cap is 2000000. That number is max_force_calls in problems/globalopt/lj100-binary.toml. A start that reaches the cap is charged 4000000. The ini is the archive config.ini: temperature 14000, 60000 basin-hopping steps, displacement 0.3 (the archive names this max_displacement; r2549 reads displacement), gaussian draws, significant_structure, swap_probability 0, L-BFGS, converged_force 0.001, max_iterations 10000. random_seed is 1 so the recorded run is not the clock. The harness counts every ext_pot force call and stops at the cap. Component 1 is 58 atoms of sigma 1.3 and component 2 is 42 atoms of sigma 1.0. The unlike sigma is 1.15, epsilon is 1, the cutoff is 20, and the potential is unshifted. The ext_pot reply is that energy and the LAMMPS lj/cut force, F = -dE/dx, in metal units (eV, Angstrom). A start succeeds at or below -604.796307 plus 0.001 with fewer than 2000000 calls.
+'''
+
+[ini.Main]
+job = "basin_hopping"
+quiet = true
+write_log = false
+temperature = 14000
+random_seed = 1
+
+[ini.Potential]
+potential = "ext_pot"
+
+[ini."Basin Hopping"]
+steps = 60000
+displacement = 0.3
+significant_structure = true
+displacement_distribution = "gaussian"
+swap_probability = 0.0
+
+[ini.Optimizer]
+opt_method = "lbfgs"
+converged_force = 0.001
+max_iterations = 10000
