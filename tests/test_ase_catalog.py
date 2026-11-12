@@ -29,7 +29,12 @@ def test_catalog_covers_every_problem_and_both_profiles():
         by_problem.setdefault(spec["problem"], set()).add(spec["profile"])
     assert set(by_problem) == PROBLEMS
     for problem, profiles in by_problem.items():
-        if problem in {"minimization/lj38", "minimization/morse-bulk"}:
+        if problem in {
+            "minimization/lj38",
+            "minimization/morse-bulk",
+            "tsopt/LJ38",
+            "tsopt/pt-island",
+        }:
             assert profiles == {"default"}
         else:
             assert profiles == {"default", "adjusted"}
@@ -68,8 +73,8 @@ def test_templates_match_the_catalog_and_registry(tmp_path):
     assert sella["optimizer"]["parameters"]["order"] == 1
     assert "delta0" not in sella["optimizer"]["parameters"]
     assert sella["reducer"] == "all"
-    tuned_sella = load_template(ROOT, "sella/lj38-ts-tuned")
-    assert tuned_sella["optimizer"]["parameters"]["delta0"] == 1.3e-3
+    default_sella = load_template(ROOT, "sella/lj38-ts-default")
+    assert "delta0" not in default_sella["optimizer"]["parameters"]
     registry = tomllib.loads((ROOT / "codes" / "registry.toml").read_text(encoding="utf-8"))
     names = {row["id"] for row in registry["code"]}
     assert {"eon", "ase", "sella"} <= names

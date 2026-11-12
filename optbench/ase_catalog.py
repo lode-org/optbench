@@ -347,19 +347,11 @@ def _ts_specs() -> list[dict]:
     )
     specs = []
     for row in rows:
-        for profile in ("default", "adjusted"):
-            if profile == "default":
-                params = {"order": 1}
-                source = "default"
-                note = (
-                    f"Sella {SELLA_VERSION} saddle defaults, order 1."
-                    + row["pbc_note"]
-                )
-            else:
-                params = {"order": 1, **SELLA_TUNED}
-                source = "archive"
-                note = SELLA_TUNED_NOTE + row["pbc_note"]
-            specs.append(
+        profile = "default"
+        params = {"order": 1}
+        source = "default"
+        note = f"Sella {SELLA_VERSION} saddle defaults, order 1." + row["pbc_note"]
+        specs.append(
                 {
                     "id": f"sella/{row['slug']}-{_id_suffix(profile)}",
                     "engine": "sella",
