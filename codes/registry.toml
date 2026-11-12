@@ -90,6 +90,7 @@ note = "develop at b0bd4d5a5e0f4011831e45f4de389a4efa348e83. eonclient --version
 [[code]]
 id = "eon-develop-b0bd4d5a-label"
 name = "eOn (develop b0bd4d5a)"
+page = "eOn"
 role = "minimization and saddle search"
 repository = "https://github.com/TheochemUI/eon"
 ref = "develop"
@@ -133,6 +134,7 @@ note = "SVN revision 2549, last changed 2026-01-23 by eboniw. eonclient -v print
 [[code]]
 id = "eon-r2549"
 name = "EON (SVN r2549)"
+page = "Eon svn"
 role = "parallel replica"
 repository = "https://theory.cm.utexas.edu/svn/eon"
 ref = "r2549"
@@ -143,6 +145,7 @@ note = "Unpatched SVN r2549, Fortran potentials linked, for the Al adatom parall
 [[code]]
 id = "eon-develop-80e94f88"
 name = "eOn (develop 80e94f88)"
+page = "eOn"
 role = "parallel replica"
 repository = "https://github.com/TheochemUI/eon"
 ref = "develop"

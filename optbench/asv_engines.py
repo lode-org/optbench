@@ -58,6 +58,9 @@ def _scratch_cache(name: str) -> Path:
 
 SEED = "0"
 WALK_PROBLEM = "saddle-search/pt-island"
+# pt-island is one catalog walk. hTST/Pt is one barrier-window sample.
+# Neither is a start grid, so neither becomes an asv cell.
+SKIP_PROBLEMS = frozenset({WALK_PROBLEM, "hTST/Pt"})
 # plan builds band jobs from cached_pairs in these engines only.
 BAND_ENGINES = ("compass", "partn", "tsase")
 _NAMES: dict[str, list[str]] = {}
@@ -112,7 +115,7 @@ def cells(root: Path = ROOT, engine: str | None = None) -> list[dict]:
         else:
             problems = []
         for problem_id in problems:
-            if problem_id == WALK_PROBLEM:
+            if problem_id in SKIP_PROBLEMS:
                 continue
             class_name = camel(str(template["id"])) + ("" if stated else camel(problem_id))
             found.append(

@@ -88,4 +88,4 @@ def test_adjusted_and_short_rows_stay_off_the_rank():
             assert not template.endswith("-adjusted")
             assert "ranked false" not in str(row.get("short_reason") or "")
     withheld = document["withheld"]
-    assert any(str(row.get("template") or "").endswith("-tuned") for row in withheld)
+    assert not any(str(row.get("template") or "").endswith("-tuned") for row in withheld)

@@ -330,7 +330,8 @@ def build_document(
     for key in result.get_all_result_keys():
         if key.startswith("bench_ase_sella.") and key.endswith(".track_force_calls"):
             present.add(key.split(".", 1)[1].rsplit(".", 1)[0])
-    unknown = sorted(present - set(grid))
+    # Retired adjusted rows stay in old result files. They are not classes now.
+    unknown = sorted(name for name in present - set(grid) if not name.endswith("Tuned"))
     if unknown:
         raise SystemExit(f"result has classes that are not in the catalog: {unknown}")
     return {

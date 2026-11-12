@@ -44,7 +44,7 @@ def _harness_templates() -> set[str]:
 
 def test_every_eon_template_declares_a_known_kernel():
     templates = _eon_templates()
-    assert len(templates) == 173
+    assert len(templates) == 206
     unknown = {
         template["id"]: template.get("kernel")
         for template in templates

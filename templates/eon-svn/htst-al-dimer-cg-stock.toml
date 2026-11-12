@@ -1,4 +1,5 @@
 id = "eon-svn/htst-al-dimer-cg-stock"
+kernel = "client"
 engine = "eon"
 problem = "hTST/Al"
 task = "htst"

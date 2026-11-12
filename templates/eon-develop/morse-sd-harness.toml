@@ -1,4 +1,5 @@
 id = "eon-develop/morse-sd-harness"
+kernel = "client"
 engine = "eon"
 problem = "minimization/morse-bulk"
 task = "minimize"

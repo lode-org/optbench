@@ -17,3 +17,21 @@ cap 5064
 n 20000
 par2_mean 10125.10715
 v2_nfailed 19994
+# Scored row kept in git. The per-start file is listed in raw-data-manifest.tsv.
+board_n_crash 0
+board_n_divergence 19916
+board_n_cap 60
+board_n_wrong_stationary 18
+board_n 20000
+board_nfailed 19994
+board_par2_mean 10125.10715
+board_success_rate 0.0003
+board_median 10128
+board_median_low 10128
+board_median_high 10128
+board_mean_calls 444.5284
+board_median_calls 423
+board_min_calls 177
+board_max_calls 1267
+board_hessian_calls 0
+board_call_unit total

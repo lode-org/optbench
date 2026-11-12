@@ -74,7 +74,7 @@ def test_every_campaign_only_board_row_of_an_engine_is_a_class():
             template = load_template(ROOT, row["template"])
         except (FileNotFoundError, KeyError, ValueError):
             continue
-        if template.get("engine") in engines and row["problem"] != asv_engines.WALK_PROBLEM:
+        if template.get("engine") in engines and row["problem"] not in asv_engines.SKIP_PROBLEMS:
             wanted.add((row["template"], row["problem"]))
     assert wanted
     assert wanted <= have
@@ -82,7 +82,7 @@ def test_every_campaign_only_board_row_of_an_engine_is_a_class():
 
 def test_walk_and_refusing_templates_have_no_cell():
     found = {(cell["template_id"], cell["problem_id"]) for cell in asv_engines.cells(ROOT)}
-    assert not any(problem == asv_engines.WALK_PROBLEM for _template, problem in found)
+    assert not any(problem in asv_engines.SKIP_PROBLEMS for _template, problem in found)
     assert not any(template in {"optim/unhooked", "pykmc/lattice"} for template, _problem in found)
 
 

@@ -1,4 +1,5 @@
 id = "eon-svn-r2549/bh-lj100-binary"
+kernel = "client"
 engine = "eon"
 problem = "globalopt/lj100-binary"
 code = "EON (SVN r2549)"

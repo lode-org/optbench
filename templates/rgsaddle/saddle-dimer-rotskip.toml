@@ -33,4 +33,5 @@ mode_seed = "file"
 repetitions = 1
 displace_atoms = "0,1,2,3,4,5,6"
 displace_magnitude = 0.1
+displace_radius = 3.3
 max_searches = 20000

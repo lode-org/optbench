@@ -458,6 +458,42 @@ def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dic
     return record
 
 
+def _recorded_summary(fields: dict[str, str]) -> dict | None:
+    """Aggregates stored on the campaign row when the per-start file is elsewhere.
+
+    The raw ``.starts.jsonl`` and ``.v2.json`` for a full run are not kept
+    in git. The ``board_*`` fields are the scored row, so the board can
+    publish the same numbers from the ``.dat`` alone.
+    """
+    if "board_par2_mean" not in fields or "board_n" not in fields:
+        return None
+
+    def _num(key: str) -> float | None:
+        raw = fields.get(key)
+        if raw in (None, ""):
+            return None
+        return float(raw)
+
+    summary = {
+        "n": int(float(fields["board_n"])),
+        "nfailed": int(float(fields.get("board_nfailed") or 0)),
+        "par2_mean": float(fields["board_par2_mean"]),
+        "success_rate": float(fields.get("board_success_rate") or 0),
+        "median": _num("board_median"),
+        "median_low": _num("board_median_low"),
+        "median_high": _num("board_median_high"),
+        "mean_calls": _num("board_mean_calls"),
+        "median_calls": _num("board_median_calls"),
+        "min_calls": _num("board_min_calls"),
+        "max_calls": _num("board_max_calls"),
+        "call_unit": fields.get("board_call_unit") or "total",
+        "hessian_calls": float(fields.get("board_hessian_calls") or 0),
+    }
+    for name in FAILURES:
+        summary[f"n_{name}"] = int(float(fields.get(f"board_n_{name}") or 0))
+    return summary
+
+
 def _records_from_repetitions(text: str, fields: dict[str, str]) -> list[dict]:
     rows = parse_repetitions(text)
     if not rows:
@@ -876,8 +912,15 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
                 declared = f"{declared}; potential {named}"
             row["_declared_short"] = declared
         if not records:
-            row["note"] = "no per-start record"
-            unparsed.append(row)
+            recorded = _recorded_summary(fields)
+            if recorded is None:
+                row["note"] = "no per-start record"
+                unparsed.append(row)
+                continue
+            row["note"] = "summary"
+            _apply_summary(row, recorded, [])
+            row["hessian_calls"] = recorded["hessian_calls"]
+            rows.append(row)
             continue
         if _success_needs_hessian(problem) and any(
             record.get("success") and "hessian_index" not in record for record in records

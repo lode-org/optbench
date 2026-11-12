@@ -89,7 +89,7 @@ def test_saddle_search_and_mlopt_rows_carry_the_stated_count():
         assert {row["n"] for row in _archive_rows(problem_id).values()} == {50}
     problems = board.load_all(ROOT / "problems")
     assert board.stated_full_n(ROOT, problems["mlopt/emt-pt38"]) == 50
-    assert board.stated_full_n(ROOT, problems["mlopt/C2H4"]) is None
+    assert board.stated_full_n(ROOT, problems["mlopt/C2H4"]) == 50
 
 
 def test_a_count_needs_an_entry_a_source_and_no_count_of_its_own(tmp_path: Path):

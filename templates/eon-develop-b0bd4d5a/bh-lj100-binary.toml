@@ -1,4 +1,5 @@
 id = "eon-develop-b0bd4d5a/bh-lj100-binary"
+kernel = "client"
 engine = "eon"
 problem = "globalopt/lj100-binary"
 code = "eOn (develop b0bd4d5a)"

@@ -200,7 +200,7 @@
       "problem": "globalopt/lj100-binary",
       "published": null,
       "rank_cost": 4000000.0,
-      "registry_match": false,
+      "registry_match": true,
       "scored": true,
       "short": false,
       "short_reason": "",

@@ -1,7 +1,6 @@
 import hashlib
 import json
 import os
-import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -252,8 +251,11 @@ def test_rendered_pages_use_the_board_rank(site: Path):
     )
     assert 'data-board-table="ranked" data-problem="saddle-search/pt-island"' in saddle
     assert "rgsaddle/saddle-dimer-rotskip-tuned" not in saddle
-    saddle_templates = re.findall(r'data-field="template">([^<]+)', saddle)
-    assert saddle_templates
+    saddle_templates = [
+        str(row.get("template") or "")
+        for row in document["problems"]["saddle-search/pt-island"]["ranked"]
+    ]
+    assert any(saddle_templates)
     assert all(not item.endswith("-tuned") for item in saddle_templates)
     assert "No full harness row." not in saddle
     entries = [row.get("entry") for row in document.get("client_counter", [])]
@@ -301,7 +303,8 @@ def test_rendered_pages_use_the_board_rank(site: Path):
     rgmin = (site / "docs" / "orgmode" / "generated" / "codes" / "rgmin.org").read_text(encoding="utf-8")
     assert "f15726f1c798" in rgmin
     rgsaddle = (site / "docs" / "orgmode" / "generated" / "codes" / "rgsaddle.org").read_text(encoding="utf-8")
-    assert "c0db2b8d333c" in rgsaddle
+    assert "2db34b42e6e0" in rgsaddle
+    assert "8fa0eb1559c9" in rgsaddle
     assert not (site / "docs" / "include" / "featured.org").exists()
     assert not list((site / "docs" / "include").glob("*-pass.org"))
     for problem in document["problems"].values():

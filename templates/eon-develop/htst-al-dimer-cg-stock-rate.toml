@@ -1,4 +1,5 @@
 id = "eon-develop/htst-al-dimer-cg-stock-rate"
+kernel = "client"
 engine = "eon"
 problem = "hTST/Al"
 task = "htst-written"
