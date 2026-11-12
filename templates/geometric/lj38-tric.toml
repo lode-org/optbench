@@ -1,0 +1,14 @@
+id = "geometric/lj38-tric"
+engine = "geometric"
+problem = "minimization/lj38"
+code = "geomeTRIC"
+code_version = "1.1.1"
+commit = "f657e69bae9c81bf7a23e7375db98502ca5c8c30"
+algorithm = "TRIC"
+tuning = "default"
+note = "TRIC coordinates, DelocalizedInternalCoordinates with connect false and addcart false. Bonds are the two nearest neighbors. The covalent-radius graph is not used: pairs inside 1 Angstrom would be bonded and the primitive G matrix does not finish on these starts. A coordinate rebuild keeps that neighbor list. Atoms are labeled H so Schlegel's guess stays positive near sigma. The stop, trust radius, and Hessian policy match the Cartesian row. A failed coordinate rebuild can continue in Cartesian coordinates, which is the library recovery."
+
+[geometric]
+coordsys = "tric"
+element = "H"
+neighbors = 2

@@ -1,0 +1,31 @@
+# counter harness. One force call is one RgpotCounter.calculate entry.
+# geomeTRIC finite-difference Hessians are not used.
+# v2 success is under the cap, at the force stop, and Hessian index 0.
+# energy and Kabsch RMSD were not applied: the problem file has no energy_tol, rmsd_tol, or per-start reference.
+# LJ38 index removes the six rigid modes. A curvature is negative only below -max(force_norm, 1e-8*||H||_F, 1e-6).
+# final coordinate system: CartesianCoordinates 1000
+# Cartesian coordinates. The custom engine evaluates the harness Lennard-Jones potential. The bond list is empty. Atoms are labeled H. The stop is the problem force norm. geomeTRIC GAU thresholds are 1e-30 and tmin is 1e-4. Trust radius 0.1, maximum trust 0.3, and the BFGS update are the minimization defaults. No finite-difference Hessian.
+force_calls 390
+force_calls_min 250
+force_calls_max 1027
+nfailed 0
+median 329
+code geomeTRIC
+code_version 1.1.1
+commit f657e69bae9c81bf7a23e7375db98502ca5c8c30
+algorithm Cartesian
+template geometric/lj38-cart
+tuning default
+counter harness
+problem minimization/lj38
+par2_mean 507.683
+wilson_low 0.986971831758
+wilson_high 0.997247330858
+par2_median 330
+par2_median_low 327
+par2_median_high 331
+v2_nfailed 6
+v2_successes 994
+n 1000
+energy_min -171.133230232
+energy_max -151.003770064

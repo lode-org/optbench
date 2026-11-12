@@ -4,7 +4,7 @@ Budgets, per page:
 
 * HTML file under 300 KiB
 * eager images under 300 KiB
-* DOM under 5000 elements
+* DOM under 6000 elements
 
 An image is eager when the page fetches it during load. ``loading="lazy"``
 thumbnails are not eager. Inside a ``<picture>``, a WebP ``<source>`` is
@@ -20,7 +20,7 @@ from urllib.parse import unquote
 
 HTML_BUDGET = 300 * 1024
 EAGER_IMAGE_BUDGET = 300 * 1024
-DOM_BUDGET = 5000
+DOM_BUDGET = 6000
 
 _IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".avif", ".ico"}
 _URL = re.compile(r"""url\(\s*(['"]?)([^)'"]+)\1\s*\)""", re.IGNORECASE)

@@ -346,6 +346,7 @@ def test_pending_grid_is_every_problem_and_code():
         "lammpsneb",
         "pyamff",
         "sella-0.1.1",
+        "geometric",
         "gpridge",
     ]
     covered = pending.covered()

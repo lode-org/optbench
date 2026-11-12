@@ -31,7 +31,7 @@ def test_lj38_noise_does_not_invent_a_reference():
 
 def test_noise_catalog_covers_the_campaign_and_skips_exact_hessians():
     catalog = specs()
-    assert len(catalog) == 62
+    assert len(catalog) == 70
     on_disk = [row for row in list_templates(ROOT) if row.get("engine") == "noise"]
     assert {row["id"] for row in on_disk} == {row["id"] for row in catalog}
     by_id = {row["id"]: row for row in on_disk}
@@ -75,6 +75,9 @@ def test_noise_catalog_covers_the_campaign_and_skips_exact_hessians():
     for name in ("lbfgs", "mylbfgs", "fire", "sd"):
         for sigma in SIGMA_LEVELS:
             assert f"noise/pele-{name}-{sigma_slug(sigma)}" in by_id
+    for coordsys in ("cart", "tric"):
+        for sigma in SIGMA_LEVELS:
+            assert f"noise/geometric-{coordsys}-{sigma_slug(sigma)}" in by_id
 
 
 def test_exact_hessian_job_is_refused():
@@ -96,3 +99,14 @@ def test_exact_hessian_job_is_refused():
     }
     with pytest.raises(ValueError, match="exact Hessian"):
         _minimize_job(job)
+
+
+def test_exception_text_keeps_a_single_type_prefix():
+    from optbench.counter import ForceCallCap
+    from optbench.runners.noise_min import _exception_text
+
+    assert _exception_text(RuntimeError("RuntimeError: Not bracketed")) == "RuntimeError: Not bracketed"
+    assert _exception_text(RuntimeError("coordinate rebuild did not settle")) == (
+        "RuntimeError: coordinate rebuild did not settle"
+    )
+    assert _exception_text(ForceCallCap("ForceCallCap: force-call cap")) == "ForceCallCap: force-call cap"

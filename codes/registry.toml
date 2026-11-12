@@ -168,17 +168,7 @@ repository = "https://github.com/OmniPotentRPC/rgsaddle"
 ref = "main"
 commit = "8fa0eb1559c92b6ae9d1de190e253787a183729d"
 committed = "2026-10-21"
-note = "main 8fa0eb15, including the min-mode FIRE ridge fix from pull request 24. The dimer FIRE templates on tsopt/LJ38, tsopt/pt-island, and saddle-search/pt-island use this pin. The 0.2.2 pin stays for every other rgsaddle row."
-
-[[code]]
-id = "rgsaddle-main"
-name = "rgsaddle"
-role = "saddle search"
-repository = "https://github.com/OmniPotentRPC/rgsaddle"
-ref = "main"
-commit = "8fa0eb1559c92b6ae9d1de190e253787a183729d"
-committed = "2026-10-21"
-note = "0.2.2 at main 8fa0eb15, rgmin d76539d. The four default saddle-search/pt-island templates use this commit. Since df8ec2f the translator keeps its memory inside a 45 degree mode cone, and a capped FIRE step that leaves the negative mode is replaced. The dimer still measures the rotated dimer when the trial angle sits on its 1e-4 floor."
+note = "main 8fa0eb15, including the min-mode FIRE ridge fix from pull request 24. The dimer FIRE templates and the four default saddle-search/pt-island templates use this pin. The 2db34b42 pin stays for the other stock templates."
 
 [[code]]
 id = "geodesic"
@@ -396,6 +386,16 @@ ref = "0.1.1"
 commit = "0.1.1"
 committed = "2019-12-10"
 note = "Sella 0.1.1 PESWrapper.diag for the lowest-eigenvector row. eta 1e-6, gamma 1e-16, vreftol 0.99, gradient v0, rigid-mode projection. This pin is not Sella 2.6.0."
+
+[[code]]
+id = "geometric"
+name = "geomeTRIC"
+role = "minimization"
+repository = "https://github.com/leeping/geomeTRIC"
+ref = "1.1.1"
+commit = "f657e69bae9c81bf7a23e7375db98502ca5c8c30"
+committed = "2026-05-18"
+note = "geomeTRIC 1.1.1, tag 1.1.1, built from that commit. Minimization uses the custom engine and the trust-radius optimizer in Cartesian and TRIC coordinates. The harness potential is the spec Lennard-Jones or Morse kernel. TRIC bonds are the two nearest Cartesian neighbors. The covalent-radius graph is not used: the builder treats any pair inside 1 Angstrom as bonded, which on a compressed Lennard-Jones start produces a primitive G matrix that does not finish, and the Morse first shell asks for a matrix of about a tebibyte. A coordinate rebuild keeps the stored neighbor list; the library call would otherwise rediscover covalent bonds. Lennard-Jones atoms are labeled H so Schlegel's guess Hessian stays positive near sigma. Morse atoms are Pt."
 
 [[template]]
 id = "sella-0.1.1/lj38-loweig"
