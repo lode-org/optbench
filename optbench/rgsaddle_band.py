@@ -466,6 +466,17 @@ def _open_band(
     return _Session(lib, handle, callback, n_images, dof, lib.rgsaddle_band_free)
 
 
+def accepted_step(previous, rc: int, stepped):
+    """The report to keep after one band step.
+
+    ``rc`` other than success leaves ``previous`` in place. The failed
+    step's report is not a climbing image.
+    """
+    if int(rc) != _OK:
+        return previous
+    return stepped
+
+
 def _relax(
     lib,
     positions: np.ndarray,
@@ -520,7 +531,10 @@ def _relax(
             if surface.rgpot is not None and surface.calls() >= surface.cap:
                 surface.hit_cap = True
                 break
-            rc, report = session.step()
+            rc, stepped = session.step()
+            # A failed callback returns a zeroed report. ci_index 0 is then
+            # the reactant, and its force is recorded as the climbing image.
+            report = accepted_step(report, rc, stepped)
             if rc != _OK:
                 break
             evaluation = session.evaluation()

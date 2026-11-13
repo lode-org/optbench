@@ -28,9 +28,12 @@ from optbench.rgsaddle_band import (
     BandConfig,
     MinModeConfig,
     Report,
+    _OK,
     _Request,
+    _SURFACE_FAILED,
     _dat,
     _registry,
+    accepted_step,
     library_path,
     publish_sidecars,
     vibrational_index,
@@ -418,3 +421,12 @@ def test_double_well_ci_neb_is_an_index_one_saddle(monkeypatch):
     assert record["counter"] == "harness"
     assert charged["n"] >= record["force_calls"] + record["verify_calls"]
     assert record["energy"] == pytest.approx(1.0, abs=1e-3)
+
+
+def test_a_failed_step_keeps_the_climbing_image():
+    kept = Report()
+    kept.ci_index = 3
+    failed = Report()
+    failed.ci_index = 0
+    assert accepted_step(kept, _SURFACE_FAILED, failed).ci_index == 3
+    assert accepted_step(kept, _OK, failed).ci_index == 0
