@@ -5,6 +5,7 @@ code = "eOn (develop f6817b53)"
 code_version = "3.6.0"
 commit = "f6817b537ec1d1563420023fb45fbd0e5b75e7fd"
 algorithm = "LBFGS"
+method = "CI-NEB lj/cut"
 tuning = "r2549-ini"
 reducer = "harness"
 failure_cap = 2500

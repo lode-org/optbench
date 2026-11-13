@@ -31,7 +31,7 @@
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:17.1352%"><i></i></span><span class="bar-num">484.627</span></td>
-   <td class="num" data-label="Median">15260.3</td>
+   <td class="num" data-label="Median">44040.5</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">484.627</td>
    </tr>
@@ -139,7 +139,7 @@
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:18.1543%"><i></i></span><span class="bar-num">230.72</span></td>
-   <td class="num" data-label="Median">716.38</td>
+   <td class="num" data-label="Median">1010.08</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">230.72</td>
    </tr>
@@ -247,7 +247,7 @@
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:14.7830%"><i></i></span><span class="bar-num">197.542</span></td>
-   <td class="num" data-label="Median">311.068</td>
+   <td class="num" data-label="Median">1695.63</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">197.542</td>
    </tr>

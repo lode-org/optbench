@@ -41,7 +41,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-label="Row" data-field="label">ASE (3.29.0) · NEB-FIRE</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">18</td>
+   <td data-label="Family rank" data-field="family_rank">22</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">4912.84</td>
    <td data-label="Published" data-field="published"></td>
@@ -57,7 +57,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-label="Row" data-field="label">ASE (3.29.0) · NEB-FIRE</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">18</td>
+   <td data-label="Family rank" data-field="family_rank">22</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">444244</td>
    <td data-label="Published" data-field="published"></td>

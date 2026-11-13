@@ -5,6 +5,7 @@ code = "eOn"
 code_version = "(develop 9d77066c)"
 commit = "9d77066c375c11602514c7de2931c1ee936e93f6"
 algorithm = "LBFGS"
+method = "OCI-NEB"
 reducer = "report-capped"
 kernel = "ljcluster"
 failure_cap = 250000

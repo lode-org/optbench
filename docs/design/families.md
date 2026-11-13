@@ -53,6 +53,12 @@ eOn develop `500350d9` has eight stock methods on `lj38_2ts_separation`:
 `CI-NEB lj/cut` is the unshifted cutoff-40 kernel. `CI-NEB ljcluster` is
 the shifted cutoff-15 kernel. They are different methods.
 
+eOn 3.6.0 uses those same method names. A template that only recorded the
+optimizer as `LBFGS` left OCI-NEB, energy-weighted CI-NEB, the accept-energy
+line search, and plain CI-NEB as one row. The `method` field is the name
+the board ranks. An asv file from before that field still takes the name
+from the working template.
+
 ## Hessian columns
 
 `Hessians` is the mean analytic Hessian count on the recorded starts.

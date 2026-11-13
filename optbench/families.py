@@ -119,6 +119,29 @@ def _plain_name(value: object) -> str:
     return text
 
 
+def named_template(recorded: dict | None, working: dict | None) -> dict | None:
+    """The working template's method when the recorded file names only the optimizer.
+
+    An asv track keeps the code pin from the commit that measured it.
+    That file often has no method, so every band on one optimizer collapses
+    to one row. The working template of the same id supplies the method.
+    """
+    if not working:
+        return recorded
+    if not recorded:
+        return working
+    if recorded.get("method") or recorded.get("preset"):
+        return recorded
+    if not (working.get("method") or working.get("preset")):
+        return recorded
+    named = dict(recorded)
+    if working.get("method"):
+        named["method"] = working["method"]
+    if working.get("preset"):
+        named["preset"] = working["preset"]
+    return named
+
+
 def method_name(template: dict | None, fields: dict | None = None, algorithm: str = "") -> str:
     """Stock method or preset. An explicit method or preset wins over the optimizer name."""
     template = template or {}

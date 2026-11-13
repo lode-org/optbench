@@ -6,7 +6,8 @@ from pathlib import Path
 import pytest
 
 from optbench.board import build_board, rank_violations
-from optbench.families import family_of, finite_difference_calls, method_name
+from optbench.campaign import load_template
+from optbench.families import family_of, finite_difference_calls, method_name, named_template
 
 
 def test_fd_calls_use_one_force_call_per_coordinate():
@@ -14,6 +15,56 @@ def test_fd_calls_use_one_force_call_per_coordinate():
     assert finite_difference_calls(80.881, 114) == 80.881 * 114
     assert finite_difference_calls(0.0, None) == 0.0
     assert finite_difference_calls(1.0, None) is None
+
+
+def test_eon_band_variants_are_not_one_lbfgs_method():
+    names = {
+        method_name(load_template(ROOT, template_id))
+        for template_id in (
+            "eon/develop-de-2ts",
+            "eon/develop-de-2ts-accept-energy",
+            "eon/develop-de-2ts-oci",
+            "eon/develop-de-2ts-ew",
+        )
+    }
+    assert names == {
+        "CI-NEB ljcluster",
+        "CI-NEB accept energy",
+        "OCI-NEB",
+        "energy-weighted CI-NEB",
+    }
+    recorded = {"algorithm": "LBFGS", "code": "eOn", "code_version": "3.6.0"}
+    labeled = named_template(recorded, load_template(ROOT, "eon/develop-de-2ts-oci"))
+    assert method_name(labeled) == "OCI-NEB"
+    assert labeled["code_version"] == "3.6.0"
+    assert "method" not in recorded
+
+
+def test_eon_36_band_methods_stay_on_the_board():
+    document = _document()
+    expected = {
+        "double-ended-saddle-search/lj38_2ts_separation": {
+            "OCI-NEB",
+            "energy-weighted CI-NEB",
+            "CI-NEB ljcluster",
+            "CI-NEB accept energy",
+        },
+        "double-ended-saddle-search/lj38": {
+            "OCI-NEB",
+            "energy-weighted CI-NEB",
+            "CI-NEB lj/cut",
+            "CI-NEB accept energy",
+        },
+        "double-ended-saddle-search/pt-island": {
+            "OCI-NEB",
+            "energy-weighted CI-NEB",
+        },
+    }
+    for problem_id, methods in expected.items():
+        ranked = document["problems"][problem_id]["ranked"]
+        found = {row["method"] for row in ranked if str(row.get("code_version") or "") == "3.6.0"}
+        missing = methods - found
+        assert not missing, (problem_id, missing)
 
 
 def test_a_parameter_record_is_not_the_method_name():

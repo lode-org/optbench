@@ -41,7 +41,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-label="Row" data-field="label">LAMMPS (30 Sep 2026) · CI-NEB-fire</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">16</td>
+   <td data-label="Family rank" data-field="family_rank">18</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">4526.2</td>
    <td data-label="Published" data-field="published"></td>
@@ -57,7 +57,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-label="Row" data-field="label">LAMMPS (30 Sep 2026) · CI-NEB-quickmin</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">19</td>
+   <td data-label="Family rank" data-field="family_rank">23</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">4949.7</td>
    <td data-label="Published" data-field="published"></td>
@@ -73,7 +73,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-label="Row" data-field="label">LAMMPS (30 Sep 2026) · CI-NEB-quickmin</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">20</td>
+   <td data-label="Family rank" data-field="family_rank">24</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">451959</td>
    <td data-label="Published" data-field="published"></td>
@@ -89,7 +89,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-label="Row" data-field="label">LAMMPS (30 Sep 2026) · CI-NEB-fire</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">21</td>
+   <td data-label="Family rank" data-field="family_rank">25</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">500000</td>
    <td data-label="Published" data-field="published"></td>
@@ -121,7 +121,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">LAMMPS (30 Sep 2026) · CI-NEB-quickmin</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">20</td>
+   <td data-label="Family rank" data-field="family_rank">22</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">4566.78</td>
    <td data-label="Published" data-field="published"></td>

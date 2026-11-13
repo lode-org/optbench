@@ -52,6 +52,7 @@ from .families import (
     finite_difference_calls,
     is_adjusted,
     method_name,
+    named_template,
     row_label,
     version_text,
 )
@@ -1121,7 +1122,7 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
                 comparable=bool(template_id) and bool(problem_id) and not client_counter,
                 cap=cap,
                 note=pin_note,
-                method=method_name(source_template or template, {}),
+                method=method_name(named_template(source_template, template), {}),
                 kind=str((source_template or template or {}).get("kind") or ""),
                 origin="harness",
             )

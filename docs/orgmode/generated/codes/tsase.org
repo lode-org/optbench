@@ -42,7 +42,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-label="Row" data-field="label">TSASE (1.0) · CI-NEB</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">15</td>
+   <td data-label="Family rank" data-field="family_rank">17</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">3119.56</td>
    <td data-label="Published" data-field="published"></td>
@@ -58,7 +58,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-label="Row" data-field="label">TSASE (1.0) · NEB</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">20</td>
+   <td data-label="Family rank" data-field="family_rank">24</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">5000</td>
    <td data-label="Published" data-field="published"></td>
@@ -74,7 +74,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-label="Row" data-field="label">TSASE (1.0) · CI-NEB</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">19</td>
+   <td data-label="Family rank" data-field="family_rank">23</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">451753</td>
    <td data-label="Published" data-field="published"></td>
@@ -90,7 +90,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
    <td data-label="Row" data-field="label">TSASE (1.0) · NEB</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">22</td>
+   <td data-label="Family rank" data-field="family_rank">26</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">500000</td>
    <td data-label="Published" data-field="published"></td>
@@ -122,7 +122,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">TSASE (1.0) · NEB</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">21</td>
+   <td data-label="Family rank" data-field="family_rank">23</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">6000</td>
    <td data-label="Published" data-field="published"></td>

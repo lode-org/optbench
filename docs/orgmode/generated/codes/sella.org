@@ -50,7 +50,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-label="Row" data-field="label">Sella (2.6.0) · Sella+NEB</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">8</td>
+   <td data-label="Family rank" data-field="family_rank">10</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">2055.3</td>
    <td data-label="Published" data-field="published"></td>
