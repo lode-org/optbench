@@ -130,6 +130,8 @@ def _fenced_blocks(text: str) -> list[list[str]]:
 def test_asv_commands_name_the_committed_machine():
     records = sorted((ROOT / "results" / "asv").glob("*/machine.json"))
     assert len(records) == 1, records
+    folders = sorted(path for path in (ROOT / "results" / "asv").iterdir() if path.is_dir())
+    assert folders == [records[0].parent]
     name = records[0].parent.name
     assert json.loads(records[0].read_text(encoding="utf-8"))["machine"] == name
     launch = "uv run python -m optbench.asv_launch"
