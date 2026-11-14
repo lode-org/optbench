@@ -56,12 +56,27 @@ def load_template(root: Path, name: str) -> dict:
     return data
 
 
+_TEMPLATE_CACHE: dict[tuple, list[dict]] = {}
+
+
 def list_templates(root: Path) -> list[dict]:
+    """Every template under ``root``.
+
+    A check imports the benchmark modules after this, and each module
+    lists the templates again. The parsed files are remembered. A new
+    or a changed file is read again.
+    """
+    directory = Path(root) / "templates"
+    paths = tuple(sorted(directory.rglob("*.toml"))) if directory.is_dir() else ()
+    stamp = tuple((path, path.stat().st_mtime_ns, path.stat().st_size) for path in paths)
+    cached = _TEMPLATE_CACHE.get(stamp)
+    if cached is not None:
+        return list(cached)
     found = []
-    for path in sorted((root / "templates").rglob("*.toml")):
-        data = tomllib.loads(path.read_text(encoding="utf-8"))
-        found.append(data)
-    return found
+    for path in paths:
+        found.append(tomllib.loads(path.read_text(encoding="utf-8")))
+    _TEMPLATE_CACHE[stamp] = found
+    return list(found)
 
 
 def resolve_problem(root: Path, name: str) -> dict:

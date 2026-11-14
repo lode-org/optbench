@@ -9,6 +9,17 @@ from optbench.dat import parse
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_a_changed_template_is_read_again(tmp_path: Path) -> None:
+    directory = tmp_path / "templates"
+    directory.mkdir()
+    path = directory / "one.toml"
+    path.write_text('id = "one"\nengine = "none"\n', encoding="utf-8")
+    assert list_templates(tmp_path)[0]["id"] == "one"
+    path.write_text('id = "two"\nengine = "none"\nextra = 1\n', encoding="utf-8")
+    assert list_templates(tmp_path)[0]["id"] == "two"
+    assert list_templates(tmp_path)[0]["id"] == "two"
+
+
 def test_shipped_templates_use_the_lj38_stop():
     ids = []
     for template in list_templates(ROOT):
