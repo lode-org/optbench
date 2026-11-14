@@ -14,6 +14,8 @@ import math
 import random
 import statistics
 
+import numpy as np
+
 from .failures import FAILURES, failure_tally
 
 RATE_Z = 1.959963984540054
@@ -301,6 +303,82 @@ def bootstrap_interval(
     return point, low, high
 
 
+# MT19937 as CPython's ``random.Random.getrandbits`` uses it. A word of
+# at most 32 bits is one tempered output, shifted down. The twist is the
+# same in-place recurrence, so a block of indexes is the same stream as
+# one ``getrandbits`` call per index.
+_MT_N = 624
+_MT_M = 397
+_MT_A = np.uint32(0x9908B0DF)
+_MT_UPPER = np.uint32(0x80000000)
+_MT_LOWER = np.uint32(0x7FFFFFFF)
+
+
+def _temper(words: np.ndarray) -> np.ndarray:
+    words = np.asarray(words, dtype=np.uint32).copy()
+    words ^= words >> np.uint32(11)
+    words ^= (words << np.uint32(7)) & np.uint32(0x9D2C5680)
+    words ^= (words << np.uint32(15)) & np.uint32(0xEFC60000)
+    words ^= words >> np.uint32(18)
+    return words
+
+
+def _twist(state: np.ndarray) -> np.ndarray:
+    state = np.asarray(state, dtype=np.uint32)
+    cut = _MT_N - _MT_M
+    out = state.copy()
+
+    def mix(left: np.ndarray, right: np.ndarray) -> np.ndarray:
+        mixed = (left & _MT_UPPER) | (right & _MT_LOWER)
+        shifted = mixed >> np.uint32(1)
+        return np.where((mixed & np.uint32(1)) != 0, shifted ^ _MT_A, shifted).astype(np.uint32)
+
+    out[:cut] = state[_MT_M : _MT_M + cut] ^ mix(state[:cut], state[1 : cut + 1])
+    second = min(_MT_N - 1, 2 * cut)
+    out[cut:second] = out[: second - cut] ^ mix(state[cut:second], state[cut + 1 : second + 1])
+    if second < _MT_N - 1:
+        out[second : _MT_N - 1] = out[second - cut : _MT_N - 1 - cut] ^ mix(
+            state[second : _MT_N - 1], state[second + 1 : _MT_N]
+        )
+    mixed = (int(state[_MT_N - 1]) & 0x80000000) | (int(out[0]) & 0x7FFFFFFF)
+    out[_MT_N - 1] = np.uint32(
+        (int(out[_MT_M - 1]) ^ (mixed >> 1) ^ (0x9908B0DF if mixed & 1 else 0)) & 0xFFFFFFFF
+    )
+    return out
+
+
+def _index_block(count: int, needed: int, seed: int) -> np.ndarray:
+    """``needed`` draws from ``range(count)``, in ``getrandbits`` order."""
+    rng = random.Random(seed)
+    packed = rng.getstate()[1]
+    state = np.array(packed[:_MT_N], dtype=np.uint32)
+    index = int(packed[_MT_N])
+    bits = count.bit_length()
+    shift = np.uint32(32 - bits)
+    span = np.uint32(1 << bits)
+    rate = count / int(span)
+    chosen = np.empty(needed, dtype=np.uint32)
+    filled = 0
+    while filled < needed:
+        words = int((needed - filled) / rate * 1.08) + _MT_N
+        block = np.empty(words, dtype=np.uint32)
+        wrote = 0
+        while wrote < words:
+            if index >= _MT_N:
+                state = _twist(state)
+                index = 0
+            take = min(_MT_N - index, words - wrote)
+            block[wrote : wrote + take] = _temper(state[index : index + take])
+            index += take
+            wrote += take
+        picks = block >> shift
+        keep = picks[picks < count]
+        take = min(int(keep.size), needed - filled)
+        chosen[filled : filled + take] = keep[:take]
+        filled += take
+    return chosen
+
+
 def _resample_median_iqr(
     values: list[float],
     resamples: int,
@@ -309,10 +387,42 @@ def _resample_median_iqr(
     """Bootstrap medians and interquartile ranges from one index stream.
 
     ``randrange(count)`` is ``getrandbits(count.bit_length())`` with the
-    values at or above ``count`` rejected. Drawing that stream once, and
-    sorting each draw once, is the same sample the two separate intervals
-    used to take.
+    values at or above ``count`` rejected. The indexes are that stream.
+    Each draw is sorted once and supplies both intervals.
     """
+    count = len(values)
+    if count.bit_length() > 32:
+        return _resample_median_iqr_py(values, resamples, seed)
+    picked = _index_block(count, resamples * count, seed)
+    pool = np.asarray(values, dtype=np.float64)
+    draws = np.sort(pool[picked].reshape(resamples, count), axis=1)
+    if count % 2:
+        medians = draws[:, count // 2]
+    else:
+        mid = count // 2
+        medians = (draws[:, mid - 1] + draws[:, mid]) / 2.0
+    if count == 1:
+        widths = np.zeros(resamples, dtype=np.float64)
+    else:
+        def at(fraction: float) -> np.ndarray:
+            position = (count - 1) * fraction
+            low = int(position)
+            high = min(low + 1, count - 1)
+            weight = position - low
+            return draws[:, low] * (1.0 - weight) + draws[:, high] * weight
+
+        widths = at(0.75) - at(0.25)
+    medians = np.sort(medians)
+    widths = np.sort(widths)
+    return [float(item) for item in medians], [float(item) for item in widths]
+
+
+def _resample_median_iqr_py(
+    values: list[float],
+    resamples: int,
+    seed: int,
+) -> tuple[list[float], list[float]]:
+    """The same stream, one index at a time. Used above 32 bits."""
     count = len(values)
     rng = random.Random(seed)
     getrandbits = rng.getrandbits

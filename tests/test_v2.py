@@ -72,6 +72,16 @@ def test_one_bootstrap_pass_matches_the_two_intervals():
     assert summary["iqr"] == width
     assert summary["iqr_low"] == wlow
     assert summary["iqr_high"] == whigh
+    larger = [float((i * 5) % 23) + 0.125 for i in range(400)]
+    summary = distribution_summary(larger, resamples=80, seed=20261015)
+    median, low, high = bootstrap_interval(larger, statistics.median, resamples=80, seed=20261015)
+    width, wlow, whigh = bootstrap_interval(larger, iqr, resamples=80, seed=20261015)
+    assert summary["median"] == median
+    assert summary["median_low"] == low
+    assert summary["median_high"] == high
+    assert summary["iqr"] == width
+    assert summary["iqr_low"] == wlow
+    assert summary["iqr_high"] == whigh
 
 
 def test_pt_island_repetitions_are_per_search():
