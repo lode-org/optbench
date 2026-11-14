@@ -697,9 +697,108 @@ def _score_many(jobs: list[tuple[list[dict], int | None]]) -> list:
         return list(pool.map(_score_job, jobs, chunksize=8))
 
 
-def _place_rows(events: list, rows: list[dict], unparsed: list[dict], unmapped: list[dict] | None = None) -> None:
-    """Replay parse events in order, after the score jobs have finished."""
-    results = iter(_score_many([(event[2], event[3]) for event in events if event[0] == "score"]))
+class _ScoreBatch:
+    """Score jobs for one pass, in the order the events will be replayed."""
+
+    def __init__(self, session: "_ScoreSession") -> None:
+        self.session = session
+        self.pending: list[tuple[list[dict], int | None]] = []
+        self.futures: list = []
+        self.events: list | None = None
+        self.rows: list[dict] | None = None
+        self.unparsed: list[dict] | None = None
+        self.unmapped: list[dict] | None = None
+        self.held = False
+
+    def add(self, job: tuple[list[dict], int | None]) -> None:
+        self.session.enqueue(self, job)
+
+    def hold(
+        self,
+        events: list,
+        rows: list[dict],
+        unparsed: list[dict],
+        unmapped: list[dict] | None,
+    ) -> None:
+        self.events = events
+        self.rows = rows
+        self.unparsed = unparsed
+        self.unmapped = unmapped
+        self.held = True
+
+    def collect(self) -> list:
+        self.session.flush(self)
+        if self.futures:
+            return [future.result() for future in self.futures]
+        return [_score_job(job) for job in self.pending]
+
+
+class _ScoreSession:
+    """One pool for every large score batch.
+
+    Jobs are submitted as soon as their start lists exist. Later batches
+    join the same workers instead of opening a second pool. A batch that
+    never reaches the inline threshold is scored in this process.
+    """
+
+    def __init__(self) -> None:
+        self.pool = None
+        self.batches: list[_ScoreBatch] = []
+        self._jobs = 0
+        self._starts = 0
+
+    def batch(self) -> _ScoreBatch:
+        item = _ScoreBatch(self)
+        self.batches.append(item)
+        return item
+
+    def enqueue(self, batch: _ScoreBatch, job: tuple[list[dict], int | None]) -> None:
+        if self.pool is not None:
+            batch.futures.append(self.pool.submit(_score_job, job))
+            return
+        batch.pending.append(job)
+        self._jobs += 1
+        self._starts += len(job[0])
+        if self._jobs >= 4 and self._starts >= 2000:
+            self._open()
+
+    def _open(self) -> None:
+        import os
+        from concurrent.futures import ProcessPoolExecutor
+
+        self.pool = ProcessPoolExecutor(max_workers=os.cpu_count() or 1)
+        for batch in self.batches:
+            self.flush(batch)
+
+    def flush(self, batch: _ScoreBatch) -> None:
+        if self.pool is None:
+            return
+        for job in batch.pending:
+            batch.futures.append(self.pool.submit(_score_job, job))
+        batch.pending.clear()
+
+    def finish(self) -> None:
+        for batch in self.batches:
+            if not batch.held or batch.events is None or batch.rows is None or batch.unparsed is None:
+                continue
+            _replay(batch.events, batch.rows, batch.unparsed, batch.unmapped, batch.collect())
+
+    def close(self) -> None:
+        pool = self.pool
+        self.pool = None
+        if pool is not None:
+            pool.shutdown(wait=True)
+
+
+def _replay(
+    events: list,
+    rows: list[dict],
+    unparsed: list[dict],
+    unmapped: list[dict] | None,
+    results,
+) -> None:
+    """Replay parse events in order, taking one score result per score event."""
+    results = iter(results)
     for event in events:
         kind = event[0]
         if kind == "bad":
@@ -718,6 +817,25 @@ def _place_rows(events: list, rows: list[dict], unparsed: list[dict], unmapped: 
             else:
                 _apply_summary(row, result, event[2])
                 rows.append(row)
+
+
+def _place_rows(
+    events: list,
+    rows: list[dict],
+    unparsed: list[dict],
+    unmapped: list[dict] | None = None,
+    batch: _ScoreBatch | None = None,
+) -> None:
+    """Replay parse events in order, after the score jobs have finished.
+
+    A batch has already been given each score job. The replay waits until
+    the session asks for the results.
+    """
+    if batch is not None:
+        batch.hold(events, rows, unparsed, unmapped)
+        return
+    jobs = [(event[2], event[3]) for event in events if event[0] == "score"]
+    _replay(events, rows, unparsed, unmapped, _score_many(jobs))
 
 
 def _score_records(records: list[dict], cap: int | None) -> dict:
@@ -884,10 +1002,16 @@ def _dedup(rows: list[dict]) -> list[dict]:
     return merged
 
 
-def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict]) -> tuple[list[dict], list[dict]]:
+def _campaign_rows(
+    root: Path,
+    problems: dict[str, dict],
+    templates: dict[str, dict],
+    session: _ScoreSession | None = None,
+) -> tuple[list[dict], list[dict]]:
     rows: list[dict] = []
     unparsed: list[dict] = []
     events: list = []
+    batch = session.batch() if session is not None else None
     for stem, group in _campaign_groups(root / "results" / "campaign").items():
         path = group.get("dat") or group.get("v2") or group.get("starts_jsonl") or group.get("starts")
         fields: dict[str, str] = {}
@@ -998,7 +1122,9 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
             # has no stationary point, so a missing index there is not this mark.
             row["_missing_hessian_index"] = True
         events.append(("score", row, records, cap))
-    _place_rows(events, rows, unparsed)
+        if batch is not None:
+            batch.add((records, cap))
+    _place_rows(events, rows, unparsed, batch=batch)
     return rows, unparsed
 
 
@@ -1074,7 +1200,12 @@ def omit_retired_tuned_track(class_name: str, described: dict) -> bool:
     return "Rgsaddle" in name and name.endswith("Lbfgs")
 
 
-def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict]) -> tuple[list[dict], list[dict], list[dict]]:
+def _asv_rows(
+    root: Path,
+    problems: dict[str, dict],
+    templates: dict[str, dict],
+    session: _ScoreSession | None = None,
+) -> tuple[list[dict], list[dict], list[dict]]:
     results_dir = root / "results" / "asv"
     if not results_dir.is_dir():
         return [], [], []
@@ -1087,6 +1218,7 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
     unparsed: list[dict] = []
     unmapped: list[dict] = []
     events: list = []
+    batch = session.batch() if session is not None else None
     for result in iter_results(str(results_dir)):
         keys = [key for key in result.get_all_result_keys() if str(key).endswith("track_force_calls")]
         seen: set[str] = set()
@@ -1198,7 +1330,9 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
                 events.append(("bad", row))
                 continue
             events.append(("score", row, records, cap))
-    _place_rows(events, rows, unparsed, unmapped)
+            if batch is not None:
+                batch.add((records, cap))
+    _place_rows(events, rows, unparsed, unmapped, batch)
     return rows, unparsed, unmapped
 
 
@@ -1460,23 +1594,36 @@ def _row_is_tuned(row: dict) -> bool:
     return template.endswith("-tuned") or row.get("tuned") is True or row.get("tuning") == "tuned"
 
 
-def build_board(root: Path) -> dict:
-    """Score every committed campaign file, asv track, and archived row under ``root``."""
+def build_board(root: Path, before_collect=None) -> dict:
+    """Score every committed campaign file, asv track, and archived row under ``root``.
+
+    Score jobs start as soon as their start lists exist. ``before_collect``
+    runs while those jobs are still in the pool, and the summaries are
+    read afterwards.
+    """
     root = Path(root)
     problems = load_all(root / "problems") if (root / "problems").is_dir() else {}
     templates = {item["id"]: item for item in list_templates(root)} if (root / "templates").is_dir() else {}
     registry = _registry(root)
-    campaign, unparsed = _campaign_rows(root, problems, templates)
-    asv_rows, asv_unparsed, unmapped = _asv_rows(root, problems, templates)
+    session = _ScoreSession()
+    try:
+        campaign, unparsed = _campaign_rows(root, problems, templates, session)
+        asv_rows, asv_unparsed, unmapped = _asv_rows(root, problems, templates, session)
+        full_n = {
+            problem_id: stated_full_n(root, problem) for problem_id, problem in problems.items()
+        }
+        archive = _archive_rows(root, problems, registry, full_n)
+        if before_collect is not None:
+            before_collect()
+        session.finish()
+    finally:
+        session.close()
     unparsed.extend(asv_unparsed)
     scored = [_public(row) for row in campaign + asv_rows if not _row_is_tuned(row)]
     rows = [row for row in _dedup(campaign + asv_rows) if not _row_is_tuned(row)]
     unparsed = [row for row in unparsed if not _row_is_tuned(row)]
     unmapped = [row for row in unmapped if not _row_is_tuned(row)]
-    full_n: dict[str, int | None] = {}
-    for problem_id, problem in problems.items():
-        full_n[problem_id] = stated_full_n(root, problem)
-    rows.extend(_archive_rows(root, problems, registry, full_n))
+    rows.extend(archive)
     by_problem: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
         by_problem[row["problem"]].append(row)

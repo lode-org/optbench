@@ -299,23 +299,32 @@ def check(problems_dir: Path, oracle_path: Path) -> int:
     from .board import build_board, rank_violations
     from .campaign import list_templates
     from .pins import pin_errors
-    from .site_check import check_site
+    from .site_check import check_site, read_site_pages
 
-    document = build_board(root)
-    site_errors = check_site(root, document)
+    prepared: dict = {}
+
+    def while_scoring() -> None:
+        prepared["pages"] = read_site_pages(root)
+        prepared["templates"] = list_templates(root)
+        from .findings import findings_errors
+
+        prepared["findings"] = findings_errors(root)
+        prepared["held"] = held_back_errors(root)
+        prepared["banned"] = banned_word_errors(root)
+
+    document = build_board(root, before_collect=while_scoring)
+    site_errors = check_site(root, document, prepared["pages"])
     site_errors.extend(rank_violations(document))
-    site_errors.extend(pin_errors(root, list_templates(root), document["_scored_rows"]))
-    site_errors.extend(held_back_errors(root))
-    site_errors.extend(banned_word_errors(root))
+    site_errors.extend(pin_errors(root, prepared["templates"], document["_scored_rows"]))
+    site_errors.extend(prepared["held"])
+    site_errors.extend(prepared["banned"])
     if site_errors:
         print(f"site {len(site_errors)}")
         for line in site_errors:
             print(line)
         return 1
     print("site tables match the board")
-    from .findings import findings_errors
-
-    finding_errors = findings_errors(root)
+    finding_errors = prepared["findings"]
     if finding_errors:
         print(f"findings {len(finding_errors)}")
         for line in finding_errors:

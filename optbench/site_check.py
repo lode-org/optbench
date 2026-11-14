@@ -242,12 +242,26 @@ def _headline_ids(text: str) -> set[str]:
     return found
 
 
-def check_site(root: Path, document: dict | None = None) -> list[str]:
+def read_site_pages(root: Path) -> list[tuple[str, str, list[dict]]]:
+    """Read the rendered pages and parse their tables.
+
+    The tables do not need the board. A caller can build them while score
+    jobs are still running, then pass them to ``check_site``.
+    """
+    return [(label, text, _parse_tables(text)) for label, text in _page_texts(root)]
+
+
+def check_site(
+    root: Path,
+    document: dict | None = None,
+    pages: list[tuple[str, str, list[dict]]] | None = None,
+) -> list[str]:
     """Compare rendered v2 tables with the board.
 
     ``docs/build`` is included when that directory exists. ``document``
     is the board when the caller already built it. Omitting it builds
-    one here.
+    one here. ``pages`` are ``(label, text, tables)`` from
+    ``read_site_pages`` when the caller already parsed them.
     """
     root = Path(root)
     if document is None:
@@ -260,17 +274,18 @@ def check_site(root: Path, document: dict | None = None) -> list[str]:
     problems = load_all(root / "problems") if (root / "problems").is_dir() else {}
     registry = _registry(root)
     errors: list[str] = tuned_row_errors(document)
-    pages = _page_texts(root)
+    if pages is None:
+        pages = [(label, text, _parse_tables(text)) for label, text in _page_texts(root)]
     if not pages:
         errors.append("site pages are missing")
         return errors
-    texts = {label: text for label, text in pages}
+    texts = {label: text for label, text, _tables in pages}
     seen_code: set[tuple[str, str]] = set()
-    for label, text in pages:
+    for label, text, tables in pages:
         for caption in STALE_CAPTIONS:
             if caption in text:
                 errors.append(f"{label} still has the old caption {caption!r}")
-        for table in _parse_tables(text):
+        for table in tables:
             kind = table["attrs"].get("data-board-table", "")
             if kind == "ranked":
                 errors.extend(_check_ranked(label, table, document))
