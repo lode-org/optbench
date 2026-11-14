@@ -430,3 +430,32 @@ def test_a_failed_step_keeps_the_climbing_image():
     failed.ci_index = 0
     assert accepted_step(kept, _SURFACE_FAILED, failed).ci_index == 3
     assert accepted_step(kept, _OK, failed).ci_index == 0
+
+
+def test_energy_weighted_cap_rows_name_the_climbed_image():
+    """A capped energy-weighted start does not record the reactant.
+
+    A failed step zeroes the report. Image 0 is then the reactant and its
+    force sits under the 0.001 stop. The call count at the cap stays; the
+    stored image is the last accepted one, or the highest image when the
+    climb had not started.
+    """
+    root = Path(__file__).resolve().parents[1]
+    names = (
+        "rgsaddle-0.2.2-double-ended-saddle-search-lj38--rgsaddle-ew-ci-neb.starts.jsonl",
+        "rgsaddle-0.2.2-double-ended-saddle-search-lj38_2ts_separation--rgsaddle-ew-ci-neb.starts.jsonl",
+    )
+    capped = 0
+    for name in names:
+        for line in (root / "results" / "campaign" / name).read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            if row.get("failure") != "cap":
+                continue
+            capped += 1
+            assert row["ci_index"] != 0
+            assert row["force_norm"] > 0.001
+            assert "force_norm" in row["reasons"]
+            assert row["force_calls"] in (2500, 10000)
+    assert capped == 11 + 27
