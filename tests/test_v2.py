@@ -1,7 +1,15 @@
 import json
+import statistics
 from pathlib import Path
 
-from optbench.score import distribution_summary, penalised_cost, quantile, score_v2, rate_interval
+from optbench.score import (
+    bootstrap_interval,
+    distribution_summary,
+    penalised_cost,
+    quantile,
+    score_v2,
+    rate_interval,
+)
 from optbench.quadratic import build_smoke
 from optbench.v2 import parse_repetitions
 
@@ -47,6 +55,23 @@ def test_par2_charges_the_failure_and_bootstrap_is_stable():
     assert first["median_low"] == second["median_low"]
     assert first["median_low"] <= first["median"] <= first["median_high"]
     assert first["iqr"] == quantile([10, 30, 200], 0.75) - quantile([10, 30, 200], 0.25)
+
+
+def test_one_bootstrap_pass_matches_the_two_intervals():
+    values = [float(i * 3 % 11) for i in range(32)]
+    summary = distribution_summary(values, resamples=40, seed=9)
+
+    def iqr(sample: list[float]) -> float:
+        return quantile(sample, 0.75) - quantile(sample, 0.25)
+
+    median, low, high = bootstrap_interval(values, statistics.median, resamples=40, seed=9)
+    width, wlow, whigh = bootstrap_interval(values, iqr, resamples=40, seed=9)
+    assert summary["median"] == median
+    assert summary["median_low"] == low
+    assert summary["median_high"] == high
+    assert summary["iqr"] == width
+    assert summary["iqr_low"] == wlow
+    assert summary["iqr_high"] == whigh
 
 
 def test_pt_island_repetitions_are_per_search():

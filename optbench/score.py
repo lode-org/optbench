@@ -236,11 +236,7 @@ def penalised_cost(force_calls: float, success: bool, cap: int | None, factor: i
     return float(force_calls)
 
 
-def quantile(values: list[float], fraction: float) -> float:
-    """Linear quantile, the same ranks as ``sample_stats``."""
-    if not values:
-        raise ValueError("values is empty")
-    ordered = sorted(float(value) for value in values)
+def _quantile_sorted(ordered: list[float], fraction: float) -> float:
     count = len(ordered)
     if count == 1:
         return ordered[0]
@@ -249,6 +245,26 @@ def quantile(values: list[float], fraction: float) -> float:
     high = min(low + 1, count - 1)
     weight = position - low
     return ordered[low] * (1.0 - weight) + ordered[high] * weight
+
+
+def quantile(values: list[float], fraction: float) -> float:
+    """Linear quantile, the same ranks as ``sample_stats``."""
+    if not values:
+        raise ValueError("values is empty")
+    return _quantile_sorted(sorted(float(value) for value in values), fraction)
+
+
+def _median_iqr(ordered: list[float]) -> tuple[float, float]:
+    """Median and interquartile range of one already sorted sample."""
+    count = len(ordered)
+    if count % 2:
+        median = float(ordered[count // 2])
+    else:
+        mid = count // 2
+        median = float((ordered[mid - 1] + ordered[mid]) / 2)
+    if count == 1:
+        return median, 0.0
+    return median, _quantile_sorted(ordered, 0.75) - _quantile_sorted(ordered, 0.25)
 
 
 def _percentile(sorted_values: list[float], fraction: float) -> float:
@@ -285,8 +301,38 @@ def bootstrap_interval(
     return point, low, high
 
 
-def _iqr(values: list[float]) -> float:
-    return quantile(values, 0.75) - quantile(values, 0.25)
+def _resample_median_iqr(
+    values: list[float],
+    resamples: int,
+    seed: int,
+) -> tuple[list[float], list[float]]:
+    """Bootstrap medians and interquartile ranges from one index stream.
+
+    ``randrange(count)`` is ``getrandbits(count.bit_length())`` with the
+    values at or above ``count`` rejected. Drawing that stream once, and
+    sorting each draw once, is the same sample the two separate intervals
+    used to take.
+    """
+    count = len(values)
+    rng = random.Random(seed)
+    getrandbits = rng.getrandbits
+    bits = count.bit_length()
+    medians: list[float] = []
+    iqrs: list[float] = []
+    for _ in range(resamples):
+        draw = [0.0] * count
+        for index in range(count):
+            pick = getrandbits(bits)
+            while pick >= count:
+                pick = getrandbits(bits)
+            draw[index] = float(values[pick])
+        draw.sort()
+        median, width = _median_iqr(draw)
+        medians.append(median)
+        iqrs.append(width)
+    medians.sort()
+    iqrs.sort()
+    return medians, iqrs
 
 
 def distribution_summary(
@@ -298,21 +344,23 @@ def distribution_summary(
     """Median, interquartile range, and bootstrap intervals of a cost sample."""
     if not values:
         raise ValueError("values is empty")
-    median, median_low, median_high = bootstrap_interval(
-        values, statistics.median, resamples=resamples, seed=seed
-    )
-    iqr, iqr_low, iqr_high = bootstrap_interval(values, _iqr, resamples=resamples, seed=seed)
+    if resamples <= 0:
+        raise ValueError("resamples must be positive")
+    median = float(statistics.median(values))
+    q25 = quantile(values, 0.25)
+    q75 = quantile(values, 0.75)
+    medians, iqrs = _resample_median_iqr(values, resamples, seed)
     return {
         "n": len(values),
         "mean": statistics.fmean(values),
         "median": median,
-        "median_low": median_low,
-        "median_high": median_high,
-        "q25": quantile(values, 0.25),
-        "q75": quantile(values, 0.75),
-        "iqr": iqr,
-        "iqr_low": iqr_low,
-        "iqr_high": iqr_high,
+        "median_low": _quantile_sorted(medians, 0.025),
+        "median_high": _quantile_sorted(medians, 0.975),
+        "q25": q25,
+        "q75": q75,
+        "iqr": q75 - q25,
+        "iqr_low": _quantile_sorted(iqrs, 0.025),
+        "iqr_high": _quantile_sorted(iqrs, 0.975),
         "bootstrap_resamples": resamples,
         "bootstrap_seed": seed,
     }
