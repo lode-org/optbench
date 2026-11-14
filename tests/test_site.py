@@ -318,6 +318,43 @@ def test_rendered_pages_use_the_board_rank(site: Path):
     assert check_site(site) == []
 
 
+def test_a_reused_board_matches_the_fresh_site_check(tmp_path: Path, monkeypatch):
+    document = {
+        "problems": {
+            "toy/one": {
+                "id": "toy/one",
+                "ranked": [{"label": "Toy method", "template": "toy/plain"}],
+            }
+        }
+    }
+    monkeypatch.setattr("optbench.site_check.build_board", lambda root: document)
+    include = tmp_path / "docs" / "include"
+    include.mkdir(parents=True)
+    (include / "v2-board.org").write_text(
+        'data-board-table="headline" data-problem="toy/one"\n',
+        encoding="utf-8",
+    )
+    fresh = check_site(tmp_path)
+    assert check_site(tmp_path, document) == fresh
+    assert check_site(tmp_path, {"problems": {}}) != fresh
+
+
+def test_check_builds_the_board_once(monkeypatch):
+    calls = []
+    document = {"problems": {}, "_scored_rows": []}
+
+    def fake(root):
+        calls.append(Path(root))
+        return document
+
+    monkeypatch.setattr("optbench.board.build_board", fake)
+    monkeypatch.setattr("optbench.site_check.build_board", fake)
+    from optbench.check import check
+
+    check(ROOT / "problems", ROOT / "oracle" / "entries.jsonl")
+    assert len(calls) == 1
+
+
 def test_a_stale_summary_number_fails_the_check(site: Path):
     document = json.loads((site / "results" / "board" / "index.json").read_text(encoding="utf-8"))
     top = document["problems"]["minimization/lj38"]["ranked"][0]

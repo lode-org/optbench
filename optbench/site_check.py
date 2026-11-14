@@ -242,16 +242,19 @@ def _headline_ids(text: str) -> set[str]:
     return found
 
 
-def check_site(root: Path) -> list[str]:
-    """Compare rendered v2 tables with a fresh board.
+def check_site(root: Path, document: dict | None = None) -> list[str]:
+    """Compare rendered v2 tables with the board.
 
-    ``docs/build`` is included when that directory exists.
+    ``docs/build`` is included when that directory exists. ``document``
+    is the board when the caller already built it. Omitting it builds
+    one here.
     """
     root = Path(root)
-    try:
-        document = build_board(root)
-    except MissingAsvCommit as exc:
-        return [str(exc)]
+    if document is None:
+        try:
+            document = build_board(root)
+        except MissingAsvCommit as exc:
+            return [str(exc)]
     from .check import tuned_row_errors
 
     problems = load_all(root / "problems") if (root / "problems").is_dir() else {}

@@ -301,8 +301,8 @@ def check(problems_dir: Path, oracle_path: Path) -> int:
     from .pins import pin_errors
     from .site_check import check_site
 
-    site_errors = check_site(root)
     document = build_board(root)
+    site_errors = check_site(root, document)
     site_errors.extend(rank_violations(document))
     site_errors.extend(pin_errors(root, list_templates(root), document["_scored_rows"]))
     site_errors.extend(held_back_errors(root))
