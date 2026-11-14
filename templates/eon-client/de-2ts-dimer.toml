@@ -12,7 +12,7 @@ kind = "de-2ts-mode"
 kernel = "lj40"
 asv_class = "EonClientDe2tsDimer"
 note = '''
-No 2014 eon config is in the archive for this problem. The band uses the LJ38 climbing-image settings and the problem cap of 10000 force calls, five interior images, and converged_force 0.001. The min-mode files are the interpolated end points, dimer converged_angle 5, rotations_max 10. The harness kernel is unshifted lj/cut with epsilon 1, sigma 1, and cutoff 40.
+No 2014 eon config is in the archive for this problem. The band uses the LJ38 climbing-image settings and this file's failure_cap of 10000 force calls, five interior images, and converged_force 0.001. The min-mode files are the interpolated end points, dimer converged_angle 5, rotations_max 10. The harness kernel is unshifted lj/cut with epsilon 1, sigma 1, and cutoff 40.
 '''
 seeds = [1]
 asv_timeout = 1200

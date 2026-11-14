@@ -32,23 +32,6 @@ NO_CAP_CLAIMS = (
     r"problem (?:file )?(?:does not state|states no) (?:a )?(?:force )?(?:cap|max_force_calls)",
 )
 
-# eOn notes that still call 10000 the lj38_2ts problem cap. The problem
-# file says 250000. Drop an entry when its note is corrected.
-EON_NOTES = {
-    "templates/eon-client/de-2ts-ci-neb.toml",
-    "templates/eon-client/de-2ts-ci-swdneb.toml",
-    "templates/eon-client/de-2ts-dimer.toml",
-    "templates/eon-client/de-2ts-lanczos-improved.toml",
-    "templates/eon-client/de-2ts-lanczos.toml",
-    "templates/eon-svn/de-2ts-ci-neb.toml",
-    "templates/eon-svn/de-2ts-ci-swdneb.toml",
-    "templates/eon-svn/de-2ts-dimer.toml",
-    "templates/eon-svn/de-2ts-lanczos-improved.toml",
-    "templates/eon-svn/de-2ts-lanczos.toml",
-    "templates/eon-svn/de-2ts-neb.toml",
-}
-
-
 def _number(text: str) -> int:
     return int(text.replace("_", "").replace(",", ""))
 
@@ -107,9 +90,7 @@ def test_cap_prose_matches_the_stop_table_and_the_problem_file():
         for path, found in claims.items()
     }
     wrong = {name: found for name, found in wrong.items() if found}
-    assert set(wrong) == EON_NOTES, {name: wrong[name] for name in set(wrong) ^ EON_NOTES if name in wrong}
-    for name in EON_NOTES:
-        assert all(claim[2] == 10000 and claim[3] == 250000 for claim in wrong[name]), wrong[name]
+    assert wrong == {}
 
 
 def test_the_checker_reads_a_wrong_problem_cap(tmp_path: Path):
