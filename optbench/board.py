@@ -658,6 +658,57 @@ def _blank_row(**values) -> dict:
     return row
 
 
+def _score_job(job: tuple[list[dict], int | None]):
+    """One scored summary, or the exception the caller already records."""
+    records, cap = job
+    try:
+        return _score_records(records, cap)
+    except (ValueError, RuntimeError) as exc:
+        return exc
+
+
+def _score_many(jobs: list[tuple[list[dict], int | None]]) -> list:
+    """Score each start list. Large batches run side by side.
+
+    The seed is fixed, so a worker produces the same summary as this
+    process. Small batches stay here and skip the pool.
+    """
+    if not jobs:
+        return []
+    starts = sum(len(records) for records, _cap in jobs)
+    if len(jobs) < 4 or starts < 2000:
+        return [_score_job(job) for job in jobs]
+    import os
+    from concurrent.futures import ProcessPoolExecutor
+
+    workers = min(len(jobs), os.cpu_count() or 1)
+    with ProcessPoolExecutor(max_workers=workers) as pool:
+        return list(pool.map(_score_job, jobs, chunksize=8))
+
+
+def _place_rows(events: list, rows: list[dict], unparsed: list[dict], unmapped: list[dict] | None = None) -> None:
+    """Replay parse events in order, after the score jobs have finished."""
+    results = iter(_score_many([(event[2], event[3]) for event in events if event[0] == "score"]))
+    for event in events:
+        kind = event[0]
+        if kind == "bad":
+            unparsed.append(event[1])
+        elif kind == "unmap":
+            if unmapped is not None:
+                unmapped.append(event[1])
+        elif kind == "ok":
+            rows.append(event[1])
+        else:
+            row = event[1]
+            result = next(results)
+            if isinstance(result, BaseException):
+                row["note"] = str(result)
+                unparsed.append(row)
+            else:
+                _apply_summary(row, result, event[2])
+                rows.append(row)
+
+
 def _score_records(records: list[dict], cap: int | None) -> dict:
     summary = score_v2(records, cap)
     calls = [float(record["force_calls"]) for record in records]
@@ -825,6 +876,7 @@ def _dedup(rows: list[dict]) -> list[dict]:
 def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict]) -> tuple[list[dict], list[dict]]:
     rows: list[dict] = []
     unparsed: list[dict] = []
+    events: list = []
     for stem, group in _campaign_groups(root / "results" / "campaign").items():
         path = group.get("dat") or group.get("v2") or group.get("starts_jsonl") or group.get("starts")
         fields: dict[str, str] = {}
@@ -833,14 +885,15 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
             try:
                 fields, _duplicates = parse_lenient(group["dat"].read_text(encoding="utf-8"))
             except DatError as exc:
-                unparsed.append(
+                events.append((
+                    "bad",
                     _blank_row(
                         entry=stem,
                         path=str(group["dat"].relative_to(root)),
                         note=str(exc),
                         source="campaign",
-                    )
-                )
+                    ),
+                ))
                 continue
         probe = _first_raw(group)
         template_id = fields.get("template") or str(probe.get("template") or "")
@@ -859,7 +912,8 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
         try:
             records, record_source = _load_group_records(group, cap, force_tol, images)
         except (json.JSONDecodeError, OSError, ValueError) as exc:
-            unparsed.append(
+            events.append((
+                "bad",
                 _blank_row(
                     problem=problem_id,
                     template=template_id,
@@ -869,8 +923,8 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
                     code=fields.get("code", ""),
                     code_version=fields.get("code_version", ""),
                     commit=fields.get("commit", ""),
-                )
-            )
+                ),
+            ))
             continue
         counter = fields.get("counter") or str(probe.get("counter") or "")
         if not counter and str(fields.get("reducer") or "").lower().startswith("harness"):
@@ -919,12 +973,12 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
             recorded = _recorded_summary(fields)
             if recorded is None:
                 row["note"] = "no per-start record"
-                unparsed.append(row)
+                events.append(("bad", row))
                 continue
             row["note"] = "summary"
             _apply_summary(row, recorded, [])
             row["hessian_calls"] = recorded["hessian_calls"]
-            rows.append(row)
+            events.append(("ok", row))
             continue
         if _success_needs_hessian(problem) and any(
             record.get("success") and "hessian_index" not in record for record in records
@@ -932,14 +986,8 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
             # A success with no index did not apply the rule. A cap or a crash
             # has no stationary point, so a missing index there is not this mark.
             row["_missing_hessian_index"] = True
-        try:
-            summary = _score_records(records, cap)
-        except (ValueError, RuntimeError) as exc:
-            row["note"] = str(exc)
-            unparsed.append(row)
-            continue
-        _apply_summary(row, summary, records)
-        rows.append(row)
+        events.append(("score", row, records, cap))
+    _place_rows(events, rows, unparsed)
     return rows, unparsed
 
 
@@ -1027,6 +1075,7 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
     rows: list[dict] = []
     unparsed: list[dict] = []
     unmapped: list[dict] = []
+    events: list = []
     for result in iter_results(str(results_dir)):
         keys = [key for key in result.get_all_result_keys() if str(key).endswith("track_force_calls")]
         seen: set[str] = set()
@@ -1065,7 +1114,8 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
             try:
                 tracked = track_rows(result, class_name)
             except SystemExit as exc:
-                unparsed.append(
+                events.append((
+                    "bad",
                     _blank_row(
                         problem=problem_id,
                         template=template_id,
@@ -1074,8 +1124,8 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
                         path=f"results/asv/{result.commit_hash}",
                         asv_commit=str(result.commit_hash),
                         note=str(exc),
-                    )
-                )
+                    ),
+                ))
                 continue
             reducer = str((source_template or template or {}).get("reducer") or "")
             images = _image_count(problem, source_template or template, {})
@@ -1094,7 +1144,8 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
                         record["start"] = tuple(item.get("params") or ())
                         records.append(record)
             except ValueError as exc:
-                unparsed.append(
+                events.append((
+                    "bad",
                     _blank_row(
                         problem=problem_id,
                         template=template_id,
@@ -1103,8 +1154,8 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
                         path=f"results/asv/{result.commit_hash}",
                         asv_commit=str(result.commit_hash),
                         note=str(exc),
-                    )
-                )
+                    ),
+                ))
                 continue
             client_counter = module_name == "bench_lj38"
             row = _blank_row(
@@ -1129,20 +1180,14 @@ def _asv_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict])
             if not problem_id or not template_id:
                 row["note"] = f"benchmark {row['entry']} is not a problem template"
                 row["n"] = len(records)
-                unmapped.append(row)
+                events.append(("unmap", row))
                 continue
             if not records:
                 row["note"] = "asv track has no starts"
-                unparsed.append(row)
+                events.append(("bad", row))
                 continue
-            try:
-                summary = _score_records(records, cap)
-            except (ValueError, RuntimeError) as exc:
-                row["note"] = str(exc)
-                unparsed.append(row)
-                continue
-            _apply_summary(row, summary, records)
-            rows.append(row)
+            events.append(("score", row, records, cap))
+    _place_rows(events, rows, unparsed, unmapped)
     return rows, unparsed, unmapped
 
 
