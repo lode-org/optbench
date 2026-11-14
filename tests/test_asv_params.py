@@ -1,5 +1,6 @@
 """Track checks read the parameter strings that asv 0.6.6 saved."""
 
+import ast
 import itertools
 import json
 from pathlib import Path
@@ -8,6 +9,7 @@ import pytest
 
 import benchmarks.bench_lammpsneb as bench_lammpsneb
 import benchmarks.bench_rgsaddle as bench_rgsaddle
+from optbench import asv_score
 from optbench.asv_score import decoded_params
 from optbench.failures import FAILURES
 
@@ -62,6 +64,29 @@ def _write_sidecars(document: dict, module) -> int:
 def test_decoded_params_undo_the_repr_quotes():
     assert decoded_params([["'0'"], ["'min01'", "'pair_00'"]]) == [["0"], ["min01", "pair_00"]]
     assert decoded_params([["1"], ["'0001'"]]) == [[1], ["0001"]]
+
+
+def test_unwrap_remembers_a_repeated_parameter(monkeypatch: pytest.MonkeyPatch) -> None:
+    asv_score._UNWRAP_CACHE.clear()
+    calls = {"n": 0}
+    real = ast.literal_eval
+
+    def counting(value):
+        calls["n"] += 1
+        return real(value)
+
+    monkeypatch.setattr(asv_score.ast, "literal_eval", counting)
+    assert asv_score._unwrap("'0'") == "0"
+    assert asv_score._unwrap("'0'") == "0"
+    assert calls["n"] == 1
+    left = asv_score._unwrap("[1]")
+    right = asv_score._unwrap("[1]")
+    assert calls["n"] == 3
+    left.append(2)
+    assert right == [1]
+    assert asv_score._unwrap("not python") == "not python"
+    assert asv_score._unwrap("not python") == "not python"
+    assert calls["n"] == 4
 
 
 @pytest.mark.parametrize(("module", "commit"), SAVED, ids=[module.__name__ for module, _commit in SAVED])

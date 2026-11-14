@@ -67,14 +67,36 @@ def _quadratic(root: Path):
     return quadratic
 
 
+_UNWRAP_MISSING = object()
+_UNWRAP_CACHE: dict[str, object] = {}
+
+
+def _cacheable(value) -> bool:
+    if isinstance(value, (str, int, float, bool, type(None))):
+        return True
+    if isinstance(value, tuple):
+        return all(_cacheable(item) for item in value)
+    return False
+
+
 def _unwrap(value):
-    """asv stores parameter values with ``repr`` quotes inside the JSON string."""
-    if isinstance(value, str):
-        try:
-            return ast.literal_eval(value)
-        except (SyntaxError, ValueError):
-            return value
-    return value
+    """asv stores parameter values with ``repr`` quotes inside the JSON string.
+
+    The same quoted strings repeat for every start. An immutable parse is
+    remembered. A list or a dict is parsed again, so callers do not share it.
+    """
+    if not isinstance(value, str):
+        return value
+    cached = _UNWRAP_CACHE.get(value, _UNWRAP_MISSING)
+    if cached is not _UNWRAP_MISSING:
+        return cached
+    try:
+        parsed = ast.literal_eval(value)
+    except (SyntaxError, ValueError):
+        parsed = value
+    if _cacheable(parsed):
+        _UNWRAP_CACHE[value] = parsed
+    return parsed
 
 
 def decoded_params(params: list) -> list[list]:
