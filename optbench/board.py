@@ -37,6 +37,8 @@ import tomllib
 from collections import defaultdict
 from pathlib import Path
 
+import orjson
+
 from .campaign import geometry_archive, list_templates
 from .corrections import corrected, load_corrections
 from .differences import difference_note, load_differences
@@ -82,11 +84,20 @@ def _float_field(fields: dict[str, str], key: str) -> float | None:
 
 
 def _json_lines(path: Path) -> list[dict]:
+    """One dict per JSON line.
+
+    ``NaN`` and ``Infinity`` are not strict JSON. Those lines use the
+    stdlib parser, which accepts them. Every other line uses orjson
+    and comes back as the same objects.
+    """
     rows = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for line in path.read_bytes().splitlines():
         if not line.strip():
             continue
-        value = json.loads(line)
+        if b"NaN" in line or b"Infinity" in line:
+            value = json.loads(line)
+        else:
+            value = orjson.loads(line)
         if isinstance(value, dict):
             rows.append(value)
     return rows

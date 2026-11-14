@@ -8,7 +8,7 @@ readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
-dependencies = ["cyclopts>=3.24", "numpy>=1.26", "matplotlib>=3.8"]
+dependencies = ["cyclopts>=3.24", "numpy>=1.26", "matplotlib>=3.8", "orjson>=3.10"]
 
 [project.scripts]
 optbench = "optbench.__main__:main"
