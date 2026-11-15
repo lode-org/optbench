@@ -328,6 +328,10 @@ def _module_pin(root: Path, commit: str, module_name: str) -> str:
     return pin
 
 
+_DIGITS = re.compile(r"\d+")
+_INDEXED_NAME = re.compile(r"[A-Za-z][A-Za-z0-9]*[_-](\d+)")
+
+
 def _geometry_key(start) -> str:
     """One token per geometry so campaign names and asv indexes line up.
 
@@ -338,9 +342,9 @@ def _geometry_key(start) -> str:
     text = str(start if start is not None else "").strip()
     if text.endswith(".con"):
         text = text[: -len(".con")]
-    if re.fullmatch(r"\d+", text):
+    if _DIGITS.fullmatch(text):
         return str(int(text))
-    match = re.fullmatch(r"[A-Za-z][A-Za-z0-9]*[_-](\d+)", text)
+    match = _INDEXED_NAME.fullmatch(text)
     if match:
         return str(int(match.group(1)))
     return text
@@ -614,16 +618,19 @@ def _comparable(fields: dict[str, str], raw_rows: list[dict]) -> bool:
 
 
 def _first_raw(group: dict[str, Path]) -> dict:
+    """The first start record. The rest of the file is read later."""
     for kind in ("starts_jsonl", "starts"):
         path = group.get(kind)
         if path is None:
             continue
         try:
-            for line in path.read_text(encoding="utf-8").splitlines():
-                if line.strip():
+            with path.open("rb") as handle:
+                for line in handle:
+                    if not line.strip():
+                        continue
                     value = json.loads(line)
                     return value if isinstance(value, dict) else {}
-        except (json.JSONDecodeError, OSError):
+        except (json.JSONDecodeError, OSError, UnicodeError):
             return {}
     return {}
 

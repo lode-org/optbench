@@ -1,7 +1,7 @@
 import math
 from pathlib import Path
 
-from optbench.board import _json_lines
+from optbench.board import _first_raw, _json_lines
 
 
 def test_json_lines_match_the_stdlib_parser(tmp_path: Path) -> None:
@@ -20,3 +20,9 @@ def test_json_lines_match_the_stdlib_parser(tmp_path: Path) -> None:
     assert math.isnan(rows[2]["energy"])
     assert rows[2]["force_norm"] == float("-inf")
     assert rows[2]["ok"] is False
+
+
+def test_the_first_start_does_not_require_the_rest_of_the_file(tmp_path: Path) -> None:
+    path = tmp_path / "rows.starts.jsonl"
+    path.write_bytes(b'{"template": "demo", "force_calls": 1}\nnot json\n')
+    assert _first_raw({"starts_jsonl": path}) == {"template": "demo", "force_calls": 1}
