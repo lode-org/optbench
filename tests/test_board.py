@@ -1224,3 +1224,118 @@ def test_a_geometry_name_is_used_when_the_start_is_absent(tmp_path: Path):
     assert source == "starts.jsonl"
     assert records[0]["start"] == "pos_0007"
     assert build_board(tmp_path)["problems"]["minimization/toy"]["ranked"][0]["par2_mean"] == 4
+
+
+def _base_hessian_mean(raws: list[dict]) -> float:
+    """Mean f8c7c875 stored on the kept starts, in file order.
+
+    A value is kept when ``float`` accepts it. A missing key, a rejected
+    start, and text that is not a number are left out. With nothing left
+    the published mean is 0.
+    """
+    from optbench.board import _start_record
+
+    kept = []
+    for raw in raws:
+        if _start_record(raw, None, None, None) is None:
+            continue
+        value = raw.get("hessian_calls")
+        if value is None:
+            continue
+        try:
+            kept.append(float(value))
+        except (TypeError, ValueError):
+            continue
+    return sum(kept) / len(kept) if kept else 0.0
+
+
+def _mentions_hessian_mean(value) -> bool:
+    if isinstance(value, dict):
+        return "_hessian_mean" in value or any(_mentions_hessian_mean(item) for item in value.values())
+    if isinstance(value, list):
+        return any(_mentions_hessian_mean(item) for item in value)
+    if isinstance(value, str):
+        return "_hessian_mean" in value
+    return False
+
+
+def test_each_source_format_publishes_the_base_hessian_mean(tmp_path: Path):
+    """JSON lines, a ``.starts`` file, and a v2 document keep the old mean.
+
+    A ``# rep`` line can mention ``hessian_calls`` and the parser still
+    does not read it, so that row stays at 0, as it did before the count
+    moved off the record. The private mean is not part of the board.
+    """
+    from optbench.board import _campaign_groups, _load_group_records
+
+    starts = [
+        {"force_calls": 4, "success": True, "start": "0", "counter": "harness", "hessian_calls": 2},
+        {"force_calls": 6, "success": True, "start": "1", "counter": "harness", "hessian_calls": 4},
+        {"force_calls": 1, "success": True, "start": "2", "counter": "harness", "hessian_calls": 0},
+        {"force_calls": 8, "success": False, "failure": "cap", "start": "3", "counter": "harness", "hessian_calls": "nope"},
+        {"force_calls": 3, "success": True, "start": "4", "counter": "harness"},
+        {"hessian_calls": 100},
+    ]
+    expected = _base_hessian_mean(starts)
+    assert expected == 2.0
+
+    def ranked(root: Path) -> dict:
+        _problem(root, starts=5, cap=10)
+        _template(root)
+        _registry(root)
+        _dat(root, "toy-fast", PIN)
+        document = build_board(root)
+        assert not _mentions_hessian_mean(document)
+        text = render_problem_section(document["problems"]["minimization/toy"], set())
+        assert "_hessian_mean" not in text
+        return document["problems"]["minimization/toy"]["ranked"][0]
+
+    jsonl = tmp_path / "jsonl"
+    _starts(jsonl, "toy-fast", starts)
+    assert ranked(jsonl)["hessian_calls"] == expected
+
+    plain = tmp_path / "starts"
+    path = plain / "results" / "campaign" / "toy-fast.starts"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("".join(json.dumps(row) + "\n" for row in starts), encoding="utf-8")
+    assert ranked(plain)["hessian_calls"] == expected
+
+    v2 = tmp_path / "v2"
+    document_path = v2 / "results" / "campaign" / "toy-fast.v2.json"
+    document_path.parent.mkdir(parents=True, exist_ok=True)
+    document_path.write_text(
+        json.dumps({"runs": [{"starts": starts}]}) + "\n",
+        encoding="utf-8",
+    )
+    assert ranked(v2)["hessian_calls"] == expected
+
+    reps = tmp_path / "reps"
+    _problem(reps, starts=2, cap=10)
+    # The sample count for this file is the repetition count, not a start list.
+    problem = reps / "problems" / "minimization" / "toy.toml"
+    text = problem.read_text(encoding="utf-8").replace("starts = 2", "repetitions = 2")
+    problem.write_text(text, encoding="utf-8")
+    _template(reps)
+    _registry(reps)
+    dat = _dat(reps, "toy-fast", PIN)
+    dat.write_text(
+        dat.read_text(encoding="utf-8")
+        + "\n".join(
+            [
+                "# rep 1 force_calls 10 total_searches 2 hessian_calls 7",
+                "# rep 2 force_calls 30 total_searches 3 hessian_calls 9",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    group = _campaign_groups(reps / "results" / "campaign")["toy-fast"]
+    hessian_mean: list[float] = []
+    records, source = _load_group_records(group, None, None, None, hessian_mean)
+    assert source == "repetitions"
+    assert hessian_mean == [0.0]
+    assert records
+    assert all("hessian_calls" not in record for record in records)
+    document = build_board(reps)
+    assert not _mentions_hessian_mean(document)
+    assert document["problems"]["minimization/toy"]["ranked"][0]["hessian_calls"] == 0.0

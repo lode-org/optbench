@@ -503,11 +503,6 @@ def _record_plain(raw: dict, cap: int | None, force_tol: float | None):
     }
     if raw.get("hessian_index") is not None:
         record["hessian_index"] = raw["hessian_index"]
-    if raw.get("hessian_calls") is not None:
-        try:
-            record["hessian_calls"] = float(raw["hessian_calls"])
-        except (TypeError, ValueError):
-            pass
     if raw.get("per_image") is not None:
         try:
             record["per_image"] = float(raw["per_image"])
@@ -580,11 +575,6 @@ def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dic
     # Kept so a later preference can see whether this start applied the index rule.
     if raw.get("hessian_index") is not None:
         record["hessian_index"] = raw["hessian_index"]
-    if raw.get("hessian_calls") is not None:
-        try:
-            record["hessian_calls"] = float(raw["hessian_calls"])
-        except (TypeError, ValueError):
-            pass
     if raw.get("per_image") is not None:
         try:
             record["per_image"] = float(raw["per_image"])
@@ -652,6 +642,12 @@ def _recorded_summary(fields: dict[str, str]) -> dict | None:
 
 
 def _records_from_repetitions(text: str, fields: dict[str, str]) -> list[dict]:
+    """Per-search rows from ``# rep`` lines.
+
+    ``parse_repetitions`` keeps the repetition, the force calls, and the
+    search count. A hessian count is not one of those fields, so these
+    records have never carried ``hessian_calls``.
+    """
     rows = parse_repetitions(text)
     if not rows:
         return []
@@ -664,45 +660,79 @@ def _records_from_repetitions(text: str, fields: dict[str, str]) -> list[dict]:
     ]
 
 
+def _hessian_calls(raw: dict) -> float | None:
+    """Recorded hessian evaluations, or nothing when the file left them out.
+
+    The published row keeps the mean. A float on every start is not stored:
+    inserting that key is the table replay still holds when later results load.
+    """
+    if not isinstance(raw, dict):
+        return None
+    value = raw.get("hessian_calls")
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def _load_group_records(
     group: dict[str, Path],
     cap: int | None,
     force_tol: float | None,
     images: int | None = None,
+    hessian_mean: list[float] | None = None,
 ) -> tuple[list[dict], str]:
+    """Start records for one campaign group.
+
+    ``hessian_mean`` receives one number. It is the mean of the hessian
+    counts on the kept starts, in file order, or 0 when none of those
+    starts recorded a count. Repetition rows have no count to average.
+    """
+
+    def take(raws) -> tuple[list[dict], float, int]:
+        collected = []
+        total = 0.0
+        count = 0
+        for raw in raws:
+            record = _start_record(raw, images, cap, force_tol)
+            if record is None:
+                continue
+            collected.append(record)
+            number = _hessian_calls(raw)
+            if number is not None:
+                total += number
+                count += 1
+        return collected, total, count
+
+    def finish(collected: list[dict], total: float, count: int, source: str) -> tuple[list[dict], str]:
+        if hessian_mean is not None:
+            hessian_mean.append(total / count if count else 0.0)
+        return collected, source
+
     if "starts_jsonl" in group:
-        collected = []
-        for raw in _json_lines(group["starts_jsonl"]):
-            record = _start_record(raw, images, cap, force_tol)
-            if record is not None:
-                collected.append(record)
+        collected, total, count = take(_json_lines(group["starts_jsonl"]))
         if collected:
-            return collected, "starts.jsonl"
+            return finish(collected, total, count, "starts.jsonl")
     if "starts" in group:
-        collected = []
-        for raw in _json_lines(group["starts"]):
-            record = _start_record(raw, images, cap, force_tol)
-            if record is not None:
-                collected.append(record)
+        collected, total, count = take(_json_lines(group["starts"]))
         if collected:
-            return collected, "starts"
+            return finish(collected, total, count, "starts")
     if "v2" in group:
         document = json.loads(group["v2"].read_text(encoding="utf-8"))
         runs = document.get("runs") or []
-        collected = []
-        for run in runs:
-            for raw in run.get("starts") or []:
-                record = _start_record(raw, images, cap, force_tol)
-                if record is not None:
-                    collected.append(record)
+        collected, total, count = take(
+            raw for run in runs for raw in (run.get("starts") or [])
+        )
         if collected:
-            return collected, "v2.json"
+            return finish(collected, total, count, "v2.json")
     if "dat" in group:
         text = group["dat"].read_text(encoding="utf-8")
         fields, _duplicates = parse_lenient(text)
         collected = _records_from_repetitions(text, fields)
         if collected:
-            return collected, "repetitions"
+            return finish(collected, 0.0, 0, "repetitions")
     return [], ""
 
 
@@ -1035,12 +1065,17 @@ def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
                 inferred[label] += 1
     if inferred:
         row["failures_inferred"] = {name: inferred[name] for name in FAILURES if inferred[name]}
-    hessians = [
-        float(record["hessian_calls"])
-        for record in records
-        if record.get("hessian_calls") is not None
-    ]
-    row["hessian_calls"] = (sum(hessians) / len(hessians)) if hessians else 0.0
+    if "_hessian_mean" in row:
+        mean = row.pop("_hessian_mean")
+    else:
+        # A record built outside the campaign loader can still carry the count.
+        hessians = [
+            float(record["hessian_calls"])
+            for record in records
+            if isinstance(record, dict) and record.get("hessian_calls") is not None
+        ]
+        mean = (sum(hessians) / len(hessians)) if hessians else 0.0
+    row["hessian_calls"] = mean
     row["_profile"] = [(_geometry_key(record.get("start")), profile_cost(record)) for record in records]
 
 
@@ -1109,6 +1144,7 @@ def _collapse_run(group: list[dict]) -> dict:
         key=lambda row: ("campaign" not in _source_parts(row), str(row.get("path") or "")),
     )
     base = dict(ordered[0])
+    base.pop("_hessian_mean", None)
     paths: list[str] = []
     asv_commits: list[str] = []
     for row in ordered:
@@ -1189,8 +1225,11 @@ def _campaign_rows(
         cap = _cap_of(problem, template, fields)
         force_tol = _force_tol(problem, template)
         images = _image_count(problem, template, fields)
+        hessian_mean: list[float] = []
         try:
-            records, record_source = _load_group_records(group, cap, force_tol, images)
+            records, record_source = _load_group_records(
+                group, cap, force_tol, images, hessian_mean
+            )
         except (json.JSONDecodeError, OSError, ValueError) as exc:
             events.append((
                 "bad",
@@ -1266,6 +1305,8 @@ def _campaign_rows(
             # A success with no index did not apply the rule. A cap or a crash
             # has no stationary point, so a missing index there is not this mark.
             row["_missing_hessian_index"] = True
+        if hessian_mean:
+            row["_hessian_mean"] = hessian_mean[0]
         events.append(("score", row, records, cap))
         if batch is not None:
             batch.add((records, cap))
@@ -1375,6 +1416,8 @@ def _asv_rows(
             images = _image_count(problem, source_template or template, {})
             per_image_track = reducer == "per_image" and _commit_divides_band(root, str(result.commit_hash))
             records = []
+            hessian_sum = 0.0
+            hessian_n = 0
             try:
                 for item in tracked:
                     raw = {
@@ -1392,6 +1435,10 @@ def _asv_rows(
                     if record is not None:
                         record["start"] = tuple(item.get("params") or ())
                         records.append(record)
+                        number = _hessian_calls(raw)
+                        if number is not None:
+                            hessian_sum += number
+                            hessian_n += 1
             except ValueError as exc:
                 events.append((
                     "bad",
@@ -1435,6 +1482,9 @@ def _asv_rows(
                 row["note"] = "asv track has no starts"
                 events.append(("bad", row))
                 continue
+            # The track dict built above has no hessian count. The mean is 0,
+            # which is what reading the count off the record used to return.
+            row["_hessian_mean"] = hessian_sum / hessian_n if hessian_n else 0.0
             events.append(("score", row, records, cap))
             if batch is not None:
                 batch.add((records, cap))
