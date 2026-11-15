@@ -1433,7 +1433,10 @@ def _asv_rows(
                         per_image_track,
                     )
                     if record is not None:
-                        record["start"] = tuple(item.get("params") or ())
+                        params = item.get("params") or ()
+                        # The last axis is the geometry. The other axes are
+                        # the same on every start of the class.
+                        record["start"] = params[-1] if params else ""
                         records.append(record)
                         number = _hessian_calls(raw)
                         if number is not None:
