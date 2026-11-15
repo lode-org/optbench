@@ -35,13 +35,22 @@ def _loaded_optbench_root() -> Path | None:
     return Path(module.__file__).resolve().parents[1]
 
 
+def _place_checkout(text: str) -> None:
+    """Put ``text`` first on ``sys.path`` without adding a second copy."""
+    if text not in sys.path:
+        sys.path.insert(0, text)
+    elif sys.path[0] != text:
+        sys.path.remove(text)
+        sys.path.insert(0, text)
+
+
 def ensure_checkout(root: Path | None = None) -> Path:
     """Import ``optbench`` from ``root``. Reload it when another tree is loaded."""
     root = checkout(root)
     if _loaded_optbench_root() == root:
         return root
     text = str(root)
-    sys.path.insert(0, text)
+    _place_checkout(text)
     for name in list(sys.modules):
         if name == "optbench" or name.startswith("optbench."):
             del sys.modules[name]
@@ -51,6 +60,17 @@ def ensure_checkout(root: Path | None = None) -> Path:
     if found != root:
         raise RuntimeError(f"optbench loaded from {found}, not {root}")
     return root
+
+
+@contextlib.contextmanager
+def _at_checkout(root: Path):
+    """Run git-using commands from the checkout. asv's cwd is not that tree."""
+    previous = Path.cwd()
+    os.chdir(root)
+    try:
+        yield
+    finally:
+        os.chdir(previous)
 
 
 def drop_memos() -> None:
@@ -169,8 +189,9 @@ def prepare_replay(root: Path):
     )
     session = _ScoreSession()
     try:
-        _campaign_rows(root, problems, templates, session)
-        _asv_rows(root, problems, templates, session)
+        with _at_checkout(root):
+            _campaign_rows(root, problems, templates, session)
+            _asv_rows(root, problems, templates, session)
         prepared = []
         for batch in session.batches:
             if not batch.held or batch.events is None:
@@ -203,7 +224,7 @@ def run_check(root: Path) -> None:
     from optbench.check import check
 
     buffer = io.StringIO()
-    with contextlib.redirect_stdout(buffer):
+    with contextlib.redirect_stdout(buffer), _at_checkout(root):
         code = check(root / "problems", root / "oracle" / "entries.jsonl")
     if code != 0:
         raise RuntimeError(buffer.getvalue())

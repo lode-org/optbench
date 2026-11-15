@@ -1,9 +1,11 @@
 """The check timing samples read the checkout they were given."""
 
 import os
+import sys
 from pathlib import Path
 
 from benchmarks.bench_check import (
+    _place_checkout,
     campaign_json_paths,
     checkout,
     ensure_checkout,
@@ -34,3 +36,11 @@ def test_check_timing_reads_the_checkout(monkeypatch) -> None:
     assert load_campaign_json(root) > 100000
     assert parse_site(root) > 10
     assert "OPTBENCH_CHECKOUT" in os.environ
+
+
+def test_rebind_does_not_duplicate_the_checkout() -> None:
+    text = str(checkout())
+    before = sys.path.count(text)
+    _place_checkout(text)
+    _place_checkout(text)
+    assert sys.path.count(text) == max(before, 1)
