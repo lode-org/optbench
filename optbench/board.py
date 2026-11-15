@@ -506,32 +506,14 @@ _PRESENT = ("force_calls", "success", "start")
 class _Start:
     """One start, without a dict per record.
 
-    Optional fields stay ``None`` until set, so ``in`` and ``get`` match a
-    dict that never stored them. Replay reads the attributes.
+    A subclass carries only the fields that start has. A field with no
+    slot still reads as absent. Replay reads the attributes.
     """
 
-    __slots__ = (
-        "force_calls",
-        "success",
-        "start",
-        "call_unit",
-        "hessian_index",
-        "per_image",
-        "failure",
-        "reasons",
-        "failure_inferred",
-    )
+    __slots__ = ()
 
-    def __init__(self, force_calls, success, start, call_unit=None):
-        self.force_calls = force_calls
-        self.success = success
-        self.start = start
-        self.call_unit = call_unit
-        self.hessian_index = None
-        self.per_image = None
-        self.failure = None
-        self.reasons = None
-        self.failure_inferred = None
+    # Absent on the small records. The full record stores its own value.
+    failure_inferred = None
 
     def __getitem__(self, key):
         if key not in self:
@@ -549,8 +531,7 @@ class _Start:
     def __contains__(self, key):
         if key in _PRESENT:
             return True
-        value = getattr(self, key, None)
-        return value is not None
+        return getattr(self, key, None) is not None
 
     def __eq__(self, other):
         if isinstance(other, _Start):
@@ -563,11 +544,66 @@ class _Start:
 
     def _pairs(self) -> dict:
         found = {}
-        for key in self.__slots__:
+        for key in type(self).__slots__:
             value = getattr(self, key)
             if key in _PRESENT or value is not None:
                 found[key] = value
         return found
+
+
+def _start_type(name: str, slots: tuple[str, ...]) -> type:
+    cls = type(name, (_Start,), {"__slots__": slots})
+    cls.__module__ = __name__
+    return cls
+
+
+_CORE = ("force_calls", "success", "start", "call_unit")
+_StartPlain = _start_type("_StartPlain", _CORE)
+_StartIndex = _start_type("_StartIndex", _CORE + ("hessian_index",))
+_StartFailed = _start_type("_StartFailed", _CORE + ("failure",))
+_StartIndexFailed = _start_type("_StartIndexFailed", _CORE + ("hessian_index", "failure"))
+_StartFull = _start_type(
+    "_StartFull",
+    _CORE + ("hessian_index", "per_image", "failure", "reasons", "failure_inferred"),
+)
+
+
+def _make_start(
+    calls: float,
+    success: bool,
+    start,
+    call_unit: str | None = "total",
+    hessian_index=None,
+    per_image: float | None = None,
+    failure: str | None = None,
+    reasons: list | None = None,
+    inferred: bool | None = None,
+) -> _Start:
+    if per_image is None and reasons is None and inferred is None:
+        if hessian_index is None and failure is None:
+            record = _StartPlain()
+        elif failure is None:
+            record = _StartIndex()
+            record.hessian_index = hessian_index
+        elif hessian_index is None:
+            record = _StartFailed()
+            record.failure = failure
+        else:
+            record = _StartIndexFailed()
+            record.hessian_index = hessian_index
+            record.failure = failure
+    else:
+        record = _StartFull()
+        record.hessian_index = hessian_index
+        record.per_image = per_image
+        record.failure = failure
+        record.reasons = reasons
+        record.failure_inferred = inferred
+    record.force_calls = calls
+    record.success = success
+    record.start = start
+    record.call_unit = call_unit
+    return record
 
 
 def _record_plain(raw: dict, cap: int | None, force_tol: float | None):
@@ -588,41 +624,59 @@ def _record_plain(raw: dict, cap: int | None, force_tol: float | None):
         return _PLAIN
     if cap is not None and calls >= cap and raw.get("transition_found") not in (1, True, "1"):
         success = False
-    record = _Start(
-        calls,
-        success,
-        _shared_text(raw.get("start") or raw.get("geometry")),
-        "total",
-    )
-    if raw.get("hessian_index") is not None:
-        record["hessian_index"] = raw["hessian_index"]
+    start = _shared_text(raw.get("start") or raw.get("geometry"))
+    hessian = raw.get("hessian_index")
+    per_image = None
     if raw.get("per_image") is not None:
         try:
-            record["per_image"] = float(raw["per_image"])
+            per_image = float(raw["per_image"])
         except (TypeError, ValueError):
-            pass
+            per_image = None
     if success:
-        return record
+        return _make_start(
+            calls, success, start, hessian_index=hessian, per_image=per_image
+        )
     failure = raw.get("failure")
     if failure in FAILURES:
-        record["failure"] = _shared_text(failure)
-        return record
+        return _make_start(
+            calls,
+            success,
+            start,
+            hessian_index=hessian,
+            per_image=per_image,
+            failure=_shared_text(failure),
+        )
     reasons = raw.get("reasons")
     if isinstance(reasons, list) and reasons:
-        record["reasons"] = [_shared_text(str(item)) for item in reasons]
-        return record
-    record["failure_inferred"] = True
+        return _make_start(
+            calls,
+            success,
+            start,
+            hessian_index=hessian,
+            per_image=per_image,
+            reasons=[_shared_text(str(item)) for item in reasons],
+        )
     if raw.get("error"):
-        record["failure"] = "crash"
+        label = "crash"
     elif cap is not None and calls >= cap:
-        record["failure"] = "cap"
+        label = "cap"
     elif force_tol is not None and raw.get("force_norm") not in (None, ""):
         try:
             above = float(raw["force_norm"]) > force_tol
         except (TypeError, ValueError):
             above = True
-        record["failure"] = "divergence" if above else "wrong_stationary"
-    return record
+        label = "divergence" if above else "wrong_stationary"
+    else:
+        label = None
+    return _make_start(
+        calls,
+        success,
+        start,
+        hessian_index=hessian,
+        per_image=per_image,
+        failure=label,
+        inferred=True,
+    )
 
 
 def _start_record(raw: dict, images: int | None, cap: int | None, force_tol: float | None, per_image_track: bool = False):
@@ -664,42 +718,68 @@ def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dic
     confirmed = raw.get("transition_found") in (1, True, "1")
     if cap is not None and calls >= cap and not confirmed:
         success = False
-    record = _Start(
-        calls,
-        success,
-        _shared_text(raw.get("start") or raw.get("geometry")),
-    )
+    start = _shared_text(raw.get("start") or raw.get("geometry"))
     # Kept so a later preference can see whether this start applied the index rule.
-    if raw.get("hessian_index") is not None:
-        record["hessian_index"] = raw["hessian_index"]
+    hessian = raw.get("hessian_index")
+    per_image = None
     if raw.get("per_image") is not None:
         try:
-            record["per_image"] = float(raw["per_image"])
+            per_image = float(raw["per_image"])
         except (TypeError, ValueError):
-            pass
-    if raw.get("call_unit"):
-        record["call_unit"] = str(raw["call_unit"])
+            per_image = None
+    call_unit = str(raw["call_unit"]) if raw.get("call_unit") else None
     if success:
-        return record
+        return _make_start(
+            calls,
+            success,
+            start,
+            call_unit=call_unit,
+            hessian_index=hessian,
+            per_image=per_image,
+        )
     if failure in FAILURES:
-        record["failure"] = _shared_text(failure)
-        return record
+        return _make_start(
+            calls,
+            success,
+            start,
+            call_unit=call_unit,
+            hessian_index=hessian,
+            per_image=per_image,
+            failure=_shared_text(failure),
+        )
     reasons = raw.get("reasons")
     if isinstance(reasons, list) and reasons:
-        record["reasons"] = [_shared_text(str(item)) for item in reasons]
-        return record
-    record["failure_inferred"] = True
+        return _make_start(
+            calls,
+            success,
+            start,
+            call_unit=call_unit,
+            hessian_index=hessian,
+            per_image=per_image,
+            reasons=[_shared_text(str(item)) for item in reasons],
+        )
     if raw.get("error"):
-        record["failure"] = "crash"
+        label = "crash"
     elif cap is not None and calls >= cap:
-        record["failure"] = "cap"
+        label = "cap"
     elif force_tol is not None and raw.get("force_norm") not in (None, ""):
         try:
             above = float(raw["force_norm"]) > force_tol
         except (TypeError, ValueError):
             above = True
-        record["failure"] = "divergence" if above else "wrong_stationary"
-    return record
+        label = "divergence" if above else "wrong_stationary"
+    else:
+        label = None
+    return _make_start(
+        calls,
+        success,
+        start,
+        call_unit=call_unit,
+        hessian_index=hessian,
+        per_image=per_image,
+        failure=label,
+        inferred=True,
+    )
 
 
 def _recorded_summary(fields: dict[str, str]) -> dict | None:
@@ -1154,18 +1234,6 @@ def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
     row["mean_per_image"] = summary.get("mean_per_image")
     row["median_per_image"] = summary.get("median_per_image")
     row["failures"] = {name: summary[f"n_{name}"] for name in FAILURES}
-    inferred: dict[str, int] = defaultdict(int)
-    for record in records:
-        if isinstance(record, _Start):
-            flag = record.failure_inferred
-        else:
-            flag = record.get("failure_inferred")
-        if flag:
-            label = failure_of(record, row.get("cap"))
-            if label is not None:
-                inferred[label] += 1
-    if inferred:
-        row["failures_inferred"] = {name: inferred[name] for name in FAILURES if inferred[name]}
     if "_hessian_mean" in row:
         mean = row.pop("_hessian_mean")
     else:
@@ -1177,21 +1245,60 @@ def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
         ]
         mean = (sum(hessians) / len(hessians)) if hessians else 0.0
     row["hessian_calls"] = mean
-    # A repeated start reuses the token already stored for that start.
-    # An unhashable start, such as a list from JSON, cannot be a cache key.
+    # One branch per record class. A shared load of start or success sees
+    # several layouts and the replay gets slower.
     cache = _GEOMETRY_CACHE
     key_of = _geometry_key
     cost_of = profile_cost
-    row["_profile"] = [
-        (
-            cache[start]
-            if type(start := (record.start if isinstance(record, _Start) else record.get("start"))) is str
-            and start in cache
-            else key_of(start),
-            cost_of(record),
-        )
-        for record in records
-    ]
+    plain = _StartPlain
+    index = _StartIndex
+    failed = _StartFailed
+    indexed_failure = _StartIndexFailed
+    full = _StartFull
+    profile = []
+    append = profile.append
+    cap = row.get("cap")
+    inf = math.inf
+    inferred: dict[str, int] = defaultdict(int)
+    for record in records:
+        kind = type(record)
+        flag = False
+        if kind is plain:
+            start = record.start
+            cost = record.force_calls if record.success else inf
+        elif kind is index:
+            start = record.start
+            cost = record.force_calls if record.success else inf
+        elif kind is failed:
+            start = record.start
+            cost = record.force_calls if record.success else inf
+        elif kind is indexed_failure:
+            start = record.start
+            cost = record.force_calls if record.success else inf
+        elif kind is full:
+            start = record.start
+            cost = record.force_calls if record.success else inf
+            flag = record.failure_inferred
+        elif isinstance(record, _Start):
+            start = record.start
+            cost = cost_of(record)
+            flag = record.failure_inferred
+        else:
+            start = record.get("start")
+            cost = cost_of(record)
+            flag = record.get("failure_inferred")
+        if flag:
+            label = failure_of(record, cap)
+            if label is not None:
+                inferred[label] += 1
+        if type(start) is str and start in cache:
+            token = cache[start]
+        else:
+            token = key_of(start)
+        append((token, cost))
+    if inferred:
+        row["failures_inferred"] = {name: inferred[name] for name in FAILURES if inferred[name]}
+    row["_profile"] = profile
 
 
 def _source_parts(row: dict) -> set[str]:
