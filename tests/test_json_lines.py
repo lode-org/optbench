@@ -1,7 +1,18 @@
 import math
 from pathlib import Path
 
-from optbench.board import _first_raw, _json_lines
+import re
+
+from optbench.board import (
+    _PLAIN,
+    _first_raw,
+    _geometry_key,
+    _json_lines,
+    _record_from_raw,
+    _record_plain,
+    _start_record,
+)
+from optbench.score import normalize_start
 
 
 def test_json_lines_match_the_stdlib_parser(tmp_path: Path) -> None:
@@ -20,6 +31,86 @@ def test_json_lines_match_the_stdlib_parser(tmp_path: Path) -> None:
     assert math.isnan(rows[2]["energy"])
     assert rows[2]["force_norm"] == float("-inf")
     assert rows[2]["ok"] is False
+
+
+def test_geometry_names_match_the_old_patterns() -> None:
+    digits = re.compile(r"\d+")
+    indexed = re.compile(r"[A-Za-z][A-Za-z0-9]*[_-](\d+)")
+
+    def old(start):
+        if isinstance(start, tuple):
+            start = start[-1] if start else ""
+        text = str(start if start is not None else "").strip()
+        if text.endswith(".con"):
+            text = text[: -len(".con")]
+        if digits.fullmatch(text):
+            return str(int(text))
+        match = indexed.fullmatch(text)
+        if match:
+            return str(int(match.group(1)))
+        return text
+
+    names = [
+        "0",
+        "00",
+        "12",
+        "cluster_0000.con",
+        "pos_0000",
+        "pair_03",
+        "rep1-search1",
+        "product_49",
+        "min01",
+        "ä_1",
+        "A1_02",
+        "1_02",
+        "",
+        "²",
+        "a_²",
+        ("seed", "pair_07"),
+        None,
+    ]
+    for name in names:
+        assert _geometry_key(name) == old(name)
+
+
+def test_plain_records_match_the_general_normalizer() -> None:
+    rows = []
+    for calls in (1, 10, 100, 100.5, 0):
+        for success in (True, False):
+            rows.append({"force_calls": calls, "success": success, "start": "pair_03"})
+    rows.extend(
+        [
+            {"force_calls": 100, "success": True, "start": "pair_01", "transition_found": 1},
+            {"force_calls": 100, "success": True, "start": "pair_01", "transition_found": True},
+            {"force_calls": 100, "success": True, "start": "pair_01", "transition_found": "1"},
+            {"force_calls": 100, "success": True, "start": "pair_01", "transition_found": 0},
+            {"force_calls": 100, "success": True, "start": "pair_01", "transition_found": False},
+            {"force_calls": 100, "success": True, "start": "pair_01", "transition_found": None},
+            {"force_calls": 100, "success": False, "failure": "cap", "start": "s"},
+            {"force_calls": 50, "success": False, "failure": "divergence", "geometry": "pos_0004"},
+            {"force_calls": 50, "success": True, "start": "kept", "geometry": "other"},
+            {"force_calls": 12, "success": True, "hessian_index": 1, "hessian_calls": 3, "start": "h"},
+            {"force_calls": 12, "success": False, "hessian_index": None, "hessian_calls": "nope", "failure": "crash", "start": "h2"},
+            {"force_calls": float("nan"), "success": True, "start": "n"},
+            {"force_calls": float("inf"), "success": True, "start": "i"},
+            {"force_calls": float("-inf"), "success": False, "failure": "divergence", "start": "j"},
+            {"force_calls": 80, "success": False, "reasons": ["not_connected"], "start": "r"},
+            {"force_calls": 80, "success": False, "error": "boom", "start": "e"},
+            {"force_calls": 4, "success": True, "per_image": 2, "call_unit": "total", "start": "p"},
+            {"force_calls": 9, "success": False, "force_norm": 0.2, "start": "f"},
+            {"force_calls": 9, "success": False, "force_norm": 1e-8, "start": "f2"},
+        ]
+    )
+    for raw in rows:
+        for cap in (None, 10, 100):
+            for force_tol in (None, 1e-4):
+                general = _record_from_raw(normalize_start(dict(raw), None), cap, force_tol)
+                plain = _record_plain(dict(raw), cap, force_tol)
+                if plain is _PLAIN:
+                    assert _start_record(dict(raw), None, cap, force_tol) == general
+                    continue
+                assert plain == general
+                assert _start_record(dict(raw), None, cap, force_tol) == general
 
 
 def test_the_first_start_does_not_require_the_rest_of_the_file(tmp_path: Path) -> None:

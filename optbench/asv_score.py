@@ -131,6 +131,23 @@ def _missing(value) -> bool:
     return isinstance(value, float) and math.isnan(value)
 
 
+def _column(result, key, params):
+    """Values for one track, in the stored parameter order.
+
+    ``get_result_value`` rebuilds that order. No public accessor returns
+    the stored list, so a matching list is copied and the caller cannot
+    alias asv's own list.
+    """
+    stored_params = result.get_result_params(key)
+    values = result._results[key]
+    if stored_params == params and isinstance(values, list):
+        return list(values)
+    values = result.get_result_value(key, params)
+    if not isinstance(values, list):
+        return [values]
+    return values
+
+
 def track_rows(result, class_name: str) -> list[dict]:
     """One dict per parameter combination, in asv's product order."""
     force_key = _key(result, class_name, "track_force_calls")
@@ -138,10 +155,7 @@ def track_rows(result, class_name: str) -> list[dict]:
     combos = list(itertools.product(*params)) if params else [()]
     columns = {}
     for method in TRACKS:
-        key = _key(result, class_name, method)
-        values = result.get_result_value(key, params)
-        if not isinstance(values, list):
-            values = [values]
+        values = _column(result, _key(result, class_name, method), params)
         if len(values) != len(combos):
             raise SystemExit(f"{class_name}.{method} has {len(values)} values for {len(combos)} parameters")
         columns[method] = values

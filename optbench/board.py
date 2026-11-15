@@ -328,25 +328,33 @@ def _module_pin(root: Path, commit: str, module_name: str) -> str:
     return pin
 
 
-_DIGITS = re.compile(r"\d+")
-_INDEXED_NAME = re.compile(r"[A-Za-z][A-Za-z0-9]*[_-](\d+)")
-
-
 def _geometry_key(start) -> str:
     """One token per geometry so campaign names and asv indexes line up.
 
     ``cluster_0000.con``, ``pos_0000``, and asv start ``0`` are the same index.
+    A bare number is that number. A single ASCII name, one ``_`` or ``-``,
+    and a number is that number.
     """
     if isinstance(start, tuple):
         start = start[-1] if start else ""
     text = str(start if start is not None else "").strip()
     if text.endswith(".con"):
         text = text[: -len(".con")]
-    if _DIGITS.fullmatch(text):
+    if text.isdecimal():
         return str(int(text))
-    match = _INDEXED_NAME.fullmatch(text)
-    if match:
-        return str(int(match.group(1)))
+    sep = text.rfind("_")
+    dash = text.rfind("-")
+    if dash > sep:
+        sep = dash
+    if sep > 0 and text[sep + 1 :].isdecimal():
+        head = text[:sep]
+        if (
+            head
+            and head.isascii()
+            and head.isalnum()
+            and ("A" <= head[0] <= "Z" or "a" <= head[0] <= "z")
+        ):
+            return str(int(text[sep + 1 :]))
     return text
 
 
@@ -421,6 +429,81 @@ def _force_tol(problem: dict | None, template: dict | None) -> float | None:
         if key in stop:
             return float(stop[key])
     return None
+
+
+_PLAIN = object()
+
+
+def _record_plain(raw: dict, cap: int | None, force_tol: float | None):
+    """The common start: a total ``force_calls`` and a boolean ``success``.
+
+    Returns ``_PLAIN`` when the row needs the general normalizer.
+    """
+    if raw.get("count_key") not in (None, "") or raw.get("call_unit") not in (None, "", "total"):
+        return _PLAIN
+    calls = raw.get("force_calls")
+    if isinstance(calls, bool) or not isinstance(calls, (int, float)):
+        return _PLAIN
+    calls = float(calls)
+    if not math.isfinite(calls):
+        return None
+    success = raw.get("success")
+    if not isinstance(success, bool):
+        return _PLAIN
+    if cap is not None and calls >= cap and raw.get("transition_found") not in (1, True, "1"):
+        success = False
+    record = {
+        "force_calls": calls,
+        "success": success,
+        "start": raw.get("start") or raw.get("geometry"),
+        "call_unit": "total",
+    }
+    if raw.get("hessian_index") is not None:
+        record["hessian_index"] = raw["hessian_index"]
+    if raw.get("hessian_calls") is not None:
+        try:
+            record["hessian_calls"] = float(raw["hessian_calls"])
+        except (TypeError, ValueError):
+            pass
+    if raw.get("per_image") is not None:
+        try:
+            record["per_image"] = float(raw["per_image"])
+        except (TypeError, ValueError):
+            pass
+    if success:
+        return record
+    failure = raw.get("failure")
+    if failure in FAILURES:
+        record["failure"] = failure
+        return record
+    reasons = raw.get("reasons")
+    if isinstance(reasons, list) and reasons:
+        record["reasons"] = [str(item) for item in reasons]
+        return record
+    record["failure_inferred"] = True
+    if raw.get("error"):
+        record["failure"] = "crash"
+    elif cap is not None and calls >= cap:
+        record["failure"] = "cap"
+    elif force_tol is not None and raw.get("force_norm") not in (None, ""):
+        try:
+            above = float(raw["force_norm"]) > force_tol
+        except (TypeError, ValueError):
+            above = True
+        record["failure"] = "divergence" if above else "wrong_stationary"
+    return record
+
+
+def _start_record(raw: dict, images: int | None, cap: int | None, force_tol: float | None, per_image_track: bool = False):
+    if images is None and not per_image_track:
+        plain = _record_plain(raw, cap, force_tol)
+        if plain is not _PLAIN:
+            return plain
+    return _record_from_raw(
+        normalize_start(raw, images, per_image_track=per_image_track),
+        cap,
+        force_tol,
+    )
 
 
 def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dict | None:
@@ -547,7 +630,7 @@ def _load_group_records(
     if "starts_jsonl" in group:
         collected = []
         for raw in _json_lines(group["starts_jsonl"]):
-            record = _record_from_raw(normalize_start(raw, images), cap, force_tol)
+            record = _start_record(raw, images, cap, force_tol)
             if record is not None:
                 collected.append(record)
         if collected:
@@ -555,7 +638,7 @@ def _load_group_records(
     if "starts" in group:
         collected = []
         for raw in _json_lines(group["starts"]):
-            record = _record_from_raw(normalize_start(raw, images), cap, force_tol)
+            record = _start_record(raw, images, cap, force_tol)
             if record is not None:
                 collected.append(record)
         if collected:
@@ -566,7 +649,7 @@ def _load_group_records(
         collected = []
         for run in runs:
             for raw in run.get("starts") or []:
-                record = _record_from_raw(normalize_start(raw, images), cap, force_tol)
+                record = _start_record(raw, images, cap, force_tol)
                 if record is not None:
                     collected.append(record)
         if collected:
@@ -1256,8 +1339,13 @@ def _asv_rows(
                         "success": item["success"],
                         "failure": item["failure"],
                     }
-                    raw = normalize_start(raw, images, per_image_track=per_image_track)
-                    record = _record_from_raw(raw, cap, _force_tol(problem, source_template or template))
+                    record = _start_record(
+                        raw,
+                        images,
+                        cap,
+                        _force_tol(problem, source_template or template),
+                        per_image_track,
+                    )
                     if record is not None:
                         record["start"] = tuple(item.get("params") or ())
                         records.append(record)
