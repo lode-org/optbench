@@ -423,6 +423,58 @@ def test_double_well_ci_neb_is_an_index_one_saddle(monkeypatch):
     assert record["energy"] == pytest.approx(1.0, abs=1e-3)
 
 
+@pytest.mark.skipif(library_path() is None, reason="librgsaddle.so is not built")
+def test_a_climbed_image_at_the_cap_is_a_cap_failure():
+    from optbench.rgsaddle_band import run_band_search
+
+    def evaluate_full(coords):
+        xyz = np.asarray(coords, dtype=np.float64).reshape(1, 3)
+        x, y, z = xyz[0]
+        bend = y - 0.5 + 0.5 * x * x
+        energy = (x * x - 1.0) ** 2 + bend * bend + z * z
+        grad = np.array(
+            [[4.0 * x * (x * x - 1.0) + 2.0 * x * bend, 2.0 * bend, 2.0 * z]]
+        )
+        return float(energy), grad
+
+    record = run_band_search(
+        name="double-well",
+        reactant=np.array([[-1.0, 0.0, 0.0]]),
+        product=np.array([[1.0, 0.0, 0.0]]),
+        free=np.array([True]),
+        box=None,
+        evaluate_full=evaluate_full,
+        n_interior=4,
+        force_norm=1e-2,
+        cap=20,
+        max_move=0.2,
+        climbing=True,
+        spring="uniform",
+        path="linear",
+        refine="",
+        method="fire",
+        memory=20,
+        spring_k=5.0,
+        k_min=0.97,
+        k_max=9.7,
+        ci_trigger_factor=0.5,
+        ci_trigger_force=0.0,
+        idpp_spring_k=1.0,
+        idpp_force_tol=0.01,
+        idpp_max_steps=80,
+        sidpp_stage_steps=50,
+        project_rigid=False,
+        keep_translation=True,
+    )
+    assert record["candidate"] == "climbing"
+    assert record["ci_index"] not in (None, 0)
+    assert record["force_calls"] == 20
+    assert record["force_norm"] > 1e-2
+    assert "cap" in record["reasons"]
+    assert record["failure"] == "cap"
+    assert record["success"] is False
+
+
 def test_a_failed_step_keeps_the_climbing_image():
     kept = Report()
     kept.ci_index = 3
