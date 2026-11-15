@@ -9,7 +9,6 @@ from optbench.board import (
     _geometry_key,
     _json_lines,
     _json_lines_each,
-    _json_lines_joined,
     _record_from_raw,
     _record_plain,
     _start_record,
@@ -35,43 +34,37 @@ def test_json_lines_match_the_stdlib_parser(tmp_path: Path) -> None:
     assert rows[2]["ok"] is False
 
 
-def test_both_json_line_paths_agree(tmp_path: Path) -> None:
-    path = tmp_path / "rows.jsonl"
-    path.write_bytes(
-        b'{"n": 1}\n'
-        b'["not", "a", "dict"]\n'
-        b'{"label": "NaN inside the text"}\n'
-        b"{bad\n"
-    )
-    raw = path.read_bytes()
-    good = raw[: raw.rfind(b"\n{bad")]
-    assert _json_lines_joined(good) == _json_lines_each(good)
-    assert _json_lines_each(good) == [{"n": 1}, {"label": "NaN inside the text"}]
-    each_error = joined_error = None
+def _same_error(path: Path, raw: bytes) -> None:
+    each_error = file_error = None
     try:
         _json_lines_each(raw)
     except Exception as exc:
         each_error = exc
     try:
-        _json_lines_joined(raw)
+        _json_lines(path)
     except Exception as exc:
-        joined_error = exc
-    assert each_error is not None and joined_error is not None
-    assert type(each_error) is type(joined_error)
-    assert str(each_error) == str(joined_error)
+        file_error = exc
+    assert each_error is not None and file_error is not None
+    assert type(each_error) is type(file_error)
+    assert str(each_error) == str(file_error)
+
+
+def test_both_json_line_paths_agree(tmp_path: Path) -> None:
+    path = tmp_path / "rows.jsonl"
+    good = (
+        b'{"n": 1}\n'
+        b'["not", "a", "dict"]\n'
+        b'{"label": "NaN inside the text"}\n'
+    )
+    path.write_bytes(good)
+    assert _json_lines(path) == _json_lines_each(good)
+    assert _json_lines_each(good) == [{"n": 1}, {"label": "NaN inside the text"}]
+    raw = good + b"{bad\n"
+    path.write_bytes(raw)
+    _same_error(path, raw)
     pair = b'{"a": 1},{"b": 2}\n'
-    each_error = joined_error = None
-    try:
-        _json_lines_each(pair)
-    except Exception as exc:
-        each_error = exc
-    try:
-        _json_lines_joined(pair)
-    except Exception as exc:
-        joined_error = exc
-    assert each_error is not None and joined_error is not None
-    assert type(each_error) is type(joined_error)
-    assert str(each_error) == str(joined_error)
+    path.write_bytes(pair)
+    _same_error(path, pair)
 
 
 def test_geometry_names_match_the_old_patterns() -> None:

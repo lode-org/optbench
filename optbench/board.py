@@ -103,26 +103,6 @@ def _json_lines_each(raw: bytes) -> list[dict]:
     return rows
 
 
-def _json_lines_joined(raw: bytes) -> list[dict]:
-    """The line parser's result, reading a strict file as one array.
-
-    A file orjson cannot read as one array is read line by line, so a
-    bad line raises the same error and a non-dict line is omitted.
-    """
-    lines = [line for line in raw.splitlines() if line.strip()]
-    if not lines:
-        return []
-    try:
-        values = orjson.loads(b"[" + b",".join(lines) + b"]")
-    except orjson.JSONDecodeError:
-        return _json_lines_each(raw)
-    # One line that already holds two values parses as an array of two.
-    # The line parser rejects that line, so the counts have to match.
-    if len(values) != len(lines):
-        return _json_lines_each(raw)
-    return [value for value in values if isinstance(value, dict)]
-
-
 def _json_lines(path: Path) -> list[dict]:
     """One dict per JSON line.
 
