@@ -177,6 +177,40 @@ def _git_root(root: Path) -> str:
     return str(Path(root).resolve())
 
 
+def _git_text(root: Path, spec: str) -> str:
+    """The blob ``spec`` names, or "" when this checkout has no such object.
+
+    One ``git cat-file --batch`` process serves every lookup. Starting a
+    new ``git show`` for each template was the slow part.
+    """
+    procs = getattr(_git_text, "_procs", None)
+    if procs is None:
+        procs = {}
+        setattr(_git_text, "_procs", procs)
+    key = _git_root(root)
+    proc = procs.get(key)
+    if proc is None or proc.poll() is not None:
+        try:
+            proc = subprocess.Popen(
+                ["git", "-C", key, "cat-file", "--batch"],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL,
+            )
+        except (FileNotFoundError, OSError):
+            return ""
+        procs[key] = proc
+    assert proc.stdin is not None and proc.stdout is not None
+    proc.stdin.write(spec.encode("utf-8") + b"\n")
+    proc.stdin.flush()
+    header = proc.stdout.readline()
+    if not header or header.endswith(b" missing\n"):
+        return ""
+    size = int(header.split()[-1])
+    payload = proc.stdout.read(size + 1)
+    return payload[:size].decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
+
+
 def _is_work_tree(root: Path) -> bool:
     cache = getattr(_is_work_tree, "_cache", None)
     if cache is None:
@@ -244,15 +278,7 @@ def _template_at_commit(root: Path, commit: str, template_id: str) -> dict | Non
     _require_asv_commit(root, commit)
     loaded = None
     if commit and template_id:
-        rel = f"templates/{template_id}.toml"
-        try:
-            text = subprocess.check_output(
-                ["git", "-C", str(root), "show", f"{commit}:{rel}"],
-                stderr=subprocess.DEVNULL,
-                text=True,
-            )
-        except (subprocess.CalledProcessError, FileNotFoundError, OSError):
-            text = ""
+        text = _git_text(root, f"{commit}:templates/{template_id}.toml")
         if text:
             try:
                 loaded = tomllib.loads(text)
@@ -281,14 +307,7 @@ def _module_pin(root: Path, commit: str, module_name: str) -> str:
         return cache[key]
     text = ""
     if commit and module_name:
-        try:
-            text = subprocess.check_output(
-                ["git", "-C", str(root), "show", f"{commit}:benchmarks/{module_name}.py"],
-                stderr=subprocess.DEVNULL,
-                text=True,
-            )
-        except (subprocess.CalledProcessError, FileNotFoundError, OSError):
-            text = ""
+        text = _git_text(root, f"{commit}:benchmarks/{module_name}.py")
     try:
         body = ast.parse(text).body if text else []
     except SyntaxError:
@@ -357,14 +376,7 @@ def _commit_divides_band(root: Path, commit: str) -> bool:
     divides = False
     if commit:
         _require_asv_commit(root, commit)
-        try:
-            text = subprocess.check_output(
-                ["git", "-C", str(root), "show", f"{commit}:benchmarks/bench_ase_sella.py"],
-                stderr=subprocess.DEVNULL,
-                text=True,
-            )
-        except (subprocess.CalledProcessError, FileNotFoundError, OSError):
-            text = ""
+        text = _git_text(root, f"{commit}:benchmarks/bench_ase_sella.py")
         divides = _PER_IMAGE_TRACK in text
     cache[key] = divides
     return divides
