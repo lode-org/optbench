@@ -48,6 +48,32 @@ def test_drop_memos_clears_the_geometry_cache() -> None:
     assert _GEOMETRY_CACHE == {}
 
 
+def test_peakmem_entry_points_run_on_the_checkout() -> None:
+    import resource
+
+    from benchmarks.bench_check import Check, CheckJson, CheckReplay, CheckSite, CheckTracks
+
+    root = checkout()
+    samples = (
+        (Check, "peakmem_check", "root"),
+        (CheckJson, "peakmem_json", "root"),
+        (CheckTracks, "peakmem_tracks", "root"),
+        (CheckReplay, "peakmem_replay", "prepared"),
+        (CheckSite, "peakmem_site", "root"),
+    )
+    for cls, name, attr in samples:
+        bench = cls()
+        bench.setup()
+        getattr(bench, name)()
+        if attr == "root":
+            assert bench.root == root
+        else:
+            assert bench.prepared
+    # Linux reports the peak resident set in kilobytes. A real sample is
+    # well above an empty interpreter.
+    assert resource.getrusage(resource.RUSAGE_SELF).ru_maxrss > 8 * 1024
+
+
 def test_rebind_does_not_duplicate_the_checkout(monkeypatch) -> None:
     text = str(checkout())
     before = sys.path.count(text)

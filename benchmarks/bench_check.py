@@ -1,11 +1,12 @@
-"""Wall time of ``optbench check`` and of the stages that dominate it.
+"""Wall time and peak memory of ``optbench check`` and of its stages.
 
 The checkout is ``OPTBENCH_CHECKOUT`` when that is set, otherwise the
 tree that contains this file. ``optbench`` is loaded from that tree, and
 every sample reads that tree's campaign files, asv results, and site
 pages. Setup reads those files into the page cache, runs the stage once,
 and then drops the in-process memo tables. The timed call is the next
-sample. ``repeat`` is 3 so one asv run keeps three samples.
+sample. ``repeat`` is 3 so one asv run keeps three samples. A
+``peakmem_`` sample is the process high-water mark after that same call.
 """
 
 from __future__ import annotations
@@ -263,6 +264,9 @@ class Check(_Samples):
     def time_check(self) -> None:
         run_check(self.root)
 
+    def peakmem_check(self) -> None:
+        run_check(self.root)
+
 
 class CheckJson(_Samples):
     """Campaign start files through the checkout's JSON-line reader."""
@@ -274,6 +278,9 @@ class CheckJson(_Samples):
         self.root = root
 
     def time_json(self) -> None:
+        load_campaign_json(self.root)
+
+    def peakmem_json(self) -> None:
         load_campaign_json(self.root)
 
 
@@ -289,6 +296,9 @@ class CheckTracks(_Samples):
     def time_tracks(self) -> None:
         load_tracks(self.root)
 
+    def peakmem_tracks(self) -> None:
+        load_tracks(self.root)
+
 
 class CheckReplay(_Samples):
     """Ordered replay of a board built from this checkout."""
@@ -302,6 +312,9 @@ class CheckReplay(_Samples):
     def time_replay(self) -> None:
         run_replay(self.prepared)
 
+    def peakmem_replay(self) -> None:
+        run_replay(self.prepared)
+
 
 class CheckSite(_Samples):
     """Rendered site pages and their tables."""
@@ -313,4 +326,7 @@ class CheckSite(_Samples):
         self.root = root
 
     def time_site(self) -> None:
+        parse_site(self.root)
+
+    def peakmem_site(self) -> None:
         parse_site(self.root)
