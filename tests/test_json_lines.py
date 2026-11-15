@@ -59,6 +59,19 @@ def test_both_json_line_paths_agree(tmp_path: Path) -> None:
     assert each_error is not None and joined_error is not None
     assert type(each_error) is type(joined_error)
     assert str(each_error) == str(joined_error)
+    pair = b'{"a": 1},{"b": 2}\n'
+    each_error = joined_error = None
+    try:
+        _json_lines_each(pair)
+    except Exception as exc:
+        each_error = exc
+    try:
+        _json_lines_joined(pair)
+    except Exception as exc:
+        joined_error = exc
+    assert each_error is not None and joined_error is not None
+    assert type(each_error) is type(joined_error)
+    assert str(each_error) == str(joined_error)
 
 
 def test_geometry_names_match_the_old_patterns() -> None:

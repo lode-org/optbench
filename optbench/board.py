@@ -116,6 +116,10 @@ def _json_lines_joined(raw: bytes) -> list[dict]:
         values = orjson.loads(b"[" + b",".join(lines) + b"]")
     except orjson.JSONDecodeError:
         return _json_lines_each(raw)
+    # One line that already holds two values parses as an array of two.
+    # The line parser rejects that line, so the counts have to match.
+    if len(values) != len(lines):
+        return _json_lines_each(raw)
     return [value for value in values if isinstance(value, dict)]
 
 
