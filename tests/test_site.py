@@ -343,8 +343,10 @@ def test_check_builds_the_board_once(monkeypatch):
     calls = []
     document = {"problems": {}, "_scored_rows": []}
 
-    def fake(root):
+    def fake(root, before_collect=None):
         calls.append(Path(root))
+        if before_collect is not None:
+            before_collect()
         return document
 
     monkeypatch.setattr("optbench.board.build_board", fake)
