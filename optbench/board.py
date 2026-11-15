@@ -124,8 +124,30 @@ def _json_lines_joined(raw: bytes) -> list[dict]:
 
 
 def _json_lines(path: Path) -> list[dict]:
-    """One dict per JSON line."""
-    return _json_lines_joined(path.read_bytes())
+    """One dict per JSON line.
+
+    A strict file becomes one array in a single pass over the file bytes.
+    The source is dropped before the parse, so the joined buffer is not
+    held next to a separate list of line copies.
+    """
+    raw = path.read_bytes()
+    if not raw or raw == b"\n":
+        return []
+    end = len(raw) - 1 if raw[-1] == 10 else len(raw)
+    body = raw if end == len(raw) else raw[:end]
+    nlines = body.count(b"\n") + 1
+    blob = b"[" + body.replace(b"\n", b",") + b"]"
+    del body
+    del raw
+    try:
+        values = orjson.loads(blob)
+    except orjson.JSONDecodeError:
+        return _json_lines_each(path.read_bytes())
+    if len(values) != nlines:
+        return _json_lines_each(path.read_bytes())
+    if any(not isinstance(value, dict) for value in values):
+        return [value for value in values if isinstance(value, dict)]
+    return values
 
 
 def stated_full_n(root: Path, problem: dict) -> int | None:
