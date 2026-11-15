@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-15
+
+`optbench check` took about 105 seconds and now takes about 5.2 seconds. The printed check and the board scores are the same as before this speedup. Start lists are scored together. Campaign lines are parsed faster, and a repeated asv parameter string is parsed once.
+
+The board did change where the band records were wrong. OCI-NEB, energy-weighted CI-NEB, and the accept-energy search are separate rows. They had been one LBFGS row. A failed band step keeps the last accepted climbing image. Two asv files that have no machine record are left out. Eleven notes called 10000 the problem cap. That number is the template cap. The problem file says 250000.
+
 ## 2026-10-21
 
 `integrate/batch-3` ranks the stock rows from the finished board branches.
