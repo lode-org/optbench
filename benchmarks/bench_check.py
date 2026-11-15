@@ -91,6 +91,9 @@ def drop_memos() -> None:
     unwrap = getattr(score, "_UNWRAP_CACHE", None) if score is not None else None
     if isinstance(unwrap, dict):
         unwrap.clear()
+    geometry = getattr(board, "_GEOMETRY_CACHE", None) if board is not None else None
+    if isinstance(geometry, dict):
+        geometry.clear()
 
 
 def campaign_json_paths(root: Path) -> list[Path]:

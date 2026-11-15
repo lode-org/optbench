@@ -148,11 +148,28 @@ def _column(result, key, params):
     return values
 
 
+def _combo_at(index: int, axes: list) -> tuple:
+    """The parameter tuple at ``index``, last axis varying fastest."""
+    chosen = []
+    for axis in reversed(axes):
+        size = len(axis)
+        chosen.append(axis[index % size])
+        index //= size
+    chosen.reverse()
+    return tuple(chosen)
+
+
 def track_rows(result, class_name: str) -> list[dict]:
     """One dict per parameter combination, in asv's product order."""
     force_key = _key(result, class_name, "track_force_calls")
     params = result.get_result_params(force_key)
-    combos = list(itertools.product(*params)) if params else [()]
+    if params:
+        # The same quoted parameter is repeated for every other axis.
+        # Unwrap each axis once, then build the product from those strings.
+        stored_axes = [tuple(str(_unwrap(part)) for part in axis) for axis in params]
+        combos = list(itertools.product(*stored_axes))
+    else:
+        combos = [()]
     columns = {}
     for method in TRACKS:
         values = _column(result, _key(result, class_name, method), params)
@@ -160,30 +177,38 @@ def track_rows(result, class_name: str) -> list[dict]:
             raise SystemExit(f"{class_name}.{method} has {len(values)} values for {len(combos)} parameters")
         columns[method] = values
     version = result.benchmark_version.get(force_key)
+    force = columns["track_force_calls"]
+    success_col = columns["track_success"]
+    fail_cols = tuple((name, columns[f"track_failure_{name}"]) for name in FAILURES)
     rows = []
+    append = rows.append
     for index, combo in enumerate(combos):
-        raw = {method: columns[method][index] for method in TRACKS}
-        for method, value in raw.items():
+        for method in TRACKS:
+            value = columns[method][index]
             if _missing(value):
-                raise SystemExit(f"{class_name} {combo} {method} was skipped or failed")
-        success = float(raw["track_success"])
-        hits = [name for name in FAILURES if float(raw[f"track_failure_{name}"]) == 1.0]
+                shown = _combo_at(index, params) if params else ()
+                raise SystemExit(f"{class_name} {shown} {method} was skipped or failed")
+        success = float(success_col[index])
+        hits = [name for name, column in fail_cols if float(column[index]) == 1.0]
         if success == 1.0:
             if hits:
-                raise SystemExit(f"{class_name} {combo} is a success with failure tracks {hits}")
+                shown = _combo_at(index, params) if params else ()
+                raise SystemExit(f"{class_name} {shown} is a success with failure tracks {hits}")
             failure = None
             ok = True
         elif success == 0.0:
             if len(hits) != 1:
-                raise SystemExit(f"{class_name} {combo} failure tracks are {hits}")
+                shown = _combo_at(index, params) if params else ()
+                raise SystemExit(f"{class_name} {shown} failure tracks are {hits}")
             failure = hits[0]
             ok = False
         else:
-            raise SystemExit(f"{class_name} {combo} success track is {success}")
-        rows.append(
+            shown = _combo_at(index, params) if params else ()
+            raise SystemExit(f"{class_name} {shown} success track is {success}")
+        append(
             {
-                "params": tuple(str(_unwrap(part)) for part in combo),
-                "force_calls": _count(raw["track_force_calls"]),
+                "params": combo,
+                "force_calls": _count(force[index]),
                 "success": ok,
                 "failure": failure,
                 "version": version,

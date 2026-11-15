@@ -8,6 +8,7 @@ from benchmarks.bench_check import (
     _place_checkout,
     campaign_json_paths,
     checkout,
+    drop_memos,
     ensure_checkout,
     load_campaign_json,
     parse_site,
@@ -36,6 +37,15 @@ def test_check_timing_reads_the_checkout(monkeypatch) -> None:
     assert load_campaign_json(root) > 100000
     assert parse_site(root) > 10
     assert "OPTBENCH_CHECKOUT" in os.environ
+
+
+def test_drop_memos_clears_the_geometry_cache() -> None:
+    from optbench.board import _GEOMETRY_CACHE, _geometry_key
+
+    _geometry_key("cluster_0000")
+    assert _GEOMETRY_CACHE["cluster_0000"] == "0"
+    drop_memos()
+    assert _GEOMETRY_CACHE == {}
 
 
 def test_rebind_does_not_duplicate_the_checkout(monkeypatch) -> None:

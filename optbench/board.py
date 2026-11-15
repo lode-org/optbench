@@ -83,15 +83,15 @@ def _float_field(fields: dict[str, str], key: str) -> float | None:
         return None
 
 
-def _json_lines(path: Path) -> list[dict]:
-    """One dict per JSON line.
+def _json_lines_each(raw: bytes) -> list[dict]:
+    """One dict per non-empty line. A non-dict line is omitted.
 
     ``NaN`` and ``Infinity`` are not strict JSON. Those lines use the
-    stdlib parser, which accepts them. Every other line uses orjson
-    and comes back as the same objects.
+    stdlib parser, which accepts them. Every other line uses orjson.
+    A malformed line raises from the parser of that line.
     """
     rows = []
-    for line in path.read_bytes().splitlines():
+    for line in raw.splitlines():
         if not line.strip():
             continue
         if b"NaN" in line or b"Infinity" in line:
@@ -101,6 +101,27 @@ def _json_lines(path: Path) -> list[dict]:
         if isinstance(value, dict):
             rows.append(value)
     return rows
+
+
+def _json_lines_joined(raw: bytes) -> list[dict]:
+    """The line parser's result, reading a strict file as one array.
+
+    A file orjson cannot read as one array is read line by line, so a
+    bad line raises the same error and a non-dict line is omitted.
+    """
+    lines = [line for line in raw.splitlines() if line.strip()]
+    if not lines:
+        return []
+    try:
+        values = orjson.loads(b"[" + b",".join(lines) + b"]")
+    except orjson.JSONDecodeError:
+        return _json_lines_each(raw)
+    return [value for value in values if isinstance(value, dict)]
+
+
+def _json_lines(path: Path) -> list[dict]:
+    """One dict per JSON line."""
+    return _json_lines_joined(path.read_bytes())
 
 
 def stated_full_n(root: Path, problem: dict) -> int | None:
@@ -328,13 +349,29 @@ def _module_pin(root: Path, commit: str, module_name: str) -> str:
     return pin
 
 
+_GEOMETRY_MISS = object()
+_GEOMETRY_CACHE: dict[object, str] = {}
+
+
 def _geometry_key(start) -> str:
     """One token per geometry so campaign names and asv indexes line up.
 
     ``cluster_0000.con``, ``pos_0000``, and asv start ``0`` are the same index.
     A bare number is that number. A single ASCII name, one ``_`` or ``-``,
-    and a number is that number.
+    and a number is that number. The same name is repeated on every problem,
+    so the token is remembered.
     """
+    if isinstance(start, str):
+        found = _GEOMETRY_CACHE.get(start, _GEOMETRY_MISS)
+        if found is not _GEOMETRY_MISS:
+            return found
+        value = _geometry_text(start)
+        _GEOMETRY_CACHE[start] = value
+        return value
+    return _geometry_text(start)
+
+
+def _geometry_text(start) -> str:
     if isinstance(start, tuple):
         start = start[-1] if start else ""
     text = str(start if start is not None else "").strip()

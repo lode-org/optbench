@@ -8,6 +8,8 @@ from optbench.board import (
     _first_raw,
     _geometry_key,
     _json_lines,
+    _json_lines_each,
+    _json_lines_joined,
     _record_from_raw,
     _record_plain,
     _start_record,
@@ -31,6 +33,32 @@ def test_json_lines_match_the_stdlib_parser(tmp_path: Path) -> None:
     assert math.isnan(rows[2]["energy"])
     assert rows[2]["force_norm"] == float("-inf")
     assert rows[2]["ok"] is False
+
+
+def test_both_json_line_paths_agree(tmp_path: Path) -> None:
+    path = tmp_path / "rows.jsonl"
+    path.write_bytes(
+        b'{"n": 1}\n'
+        b'["not", "a", "dict"]\n'
+        b'{"label": "NaN inside the text"}\n'
+        b"{bad\n"
+    )
+    raw = path.read_bytes()
+    good = raw[: raw.rfind(b"\n{bad")]
+    assert _json_lines_joined(good) == _json_lines_each(good)
+    assert _json_lines_each(good) == [{"n": 1}, {"label": "NaN inside the text"}]
+    each_error = joined_error = None
+    try:
+        _json_lines_each(raw)
+    except Exception as exc:
+        each_error = exc
+    try:
+        _json_lines_joined(raw)
+    except Exception as exc:
+        joined_error = exc
+    assert each_error is not None and joined_error is not None
+    assert type(each_error) is type(joined_error)
+    assert str(each_error) == str(joined_error)
 
 
 def test_geometry_names_match_the_old_patterns() -> None:
