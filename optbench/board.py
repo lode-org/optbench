@@ -1606,9 +1606,11 @@ def _asv_rows(
     results_dir = root / "results" / "asv"
     if not results_dir.is_dir():
         return [], [], []
-    from asv.results import iter_results
+    from asv import util
+    from asv.console import log
+    from asv.results import iter_results_paths
 
-    from .asv_score import track_rows
+    from .asv_score import _load_track_file, track_rows
 
     index = _benchmark_index()
     rows: list[dict] = []
@@ -1616,7 +1618,12 @@ def _asv_rows(
     unmapped: list[dict] = []
     events: list = []
     batch = session.batch() if session is not None else None
-    for result in iter_results(str(results_dir)):
+    for directory, filename, machine_name in iter_results_paths(str(results_dir)):
+        try:
+            result = _load_track_file(Path(directory) / filename, machine_name)
+        except util.UserError as exc:
+            log.warning(str(exc))
+            continue
         keys = [key for key in result.get_all_result_keys() if str(key).endswith("track_force_calls")]
         seen: set[str] = set()
         for key in keys:
@@ -1742,6 +1749,7 @@ def _asv_rows(
             events.append(("score", row, records, cap))
             if batch is not None:
                 batch.add((records, cap))
+        del result
     _place_rows(events, rows, unparsed, unmapped, batch)
     return rows, unparsed, unmapped
 

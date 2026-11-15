@@ -265,6 +265,96 @@ def track_rows(result, class_name: str) -> list[dict]:
     return rows
 
 
+class _TrackFile:
+    """Track columns from one asv file. The rest of the result is not kept."""
+
+    __slots__ = (
+        "commit_hash",
+        "_results",
+        "_benchmark_params",
+        "_benchmark_version",
+        "_optbench_track_index",
+    )
+
+    def __init__(self, commit_hash, results, params, versions):
+        self.commit_hash = commit_hash
+        self._results = results
+        self._benchmark_params = params
+        self._benchmark_version = versions
+        self._optbench_track_index = None
+
+    def get_all_result_keys(self):
+        return self._results.keys()
+
+    def get_result_params(self, key):
+        return self._benchmark_params[key]
+
+    @property
+    def benchmark_version(self):
+        return self._benchmark_version
+
+
+def _load_track_file(path: Path, machine_name: str | None) -> _TrackFile:
+    """Read one result file and keep only the track columns.
+
+    The parsed document is dropped before the caller builds start rows,
+    so the statistics and the other benchmarks do not sit beside them.
+    """
+    from asv import util
+
+    with path.open(encoding="utf-8") as handle:
+        data = json.load(handle)
+    if data.get("version") != 2:
+        raise util.UserError(f"Error loading results file '{path}': unsupported version")
+    file_machine = (data.get("params") or {}).get("machine")
+    if machine_name is not None and file_machine != machine_name:
+        raise util.UserError(
+            f"Error loading results file '{path}': machine name is not '{machine_name}'"
+        )
+    columns = data.get("result_columns")
+    try:
+        stored = data.pop("results")
+        commit = data.pop("commit_hash")
+    except KeyError as exc:
+        raise util.UserError(f"Error loading results file '{path}': missing key {exc}") from exc
+    data.clear()
+    if not isinstance(columns, list) or not isinstance(stored, dict):
+        raise util.UserError(f"Error loading results file '{path}': missing key 'result_columns'")
+    try:
+        result_at = columns.index("result")
+        params_at = columns.index("params")
+        version_at = columns.index("version")
+    except ValueError as exc:
+        raise util.UserError(f"Error loading results file '{path}': missing key {exc}") from exc
+    results = {}
+    params_of = {}
+    versions = {}
+    for name, row in list(stored.items()):
+        if ".track_" not in str(name) or not isinstance(row, list):
+            stored[name] = None
+            continue
+        params_of[name] = row[params_at] if params_at < len(row) and row[params_at] is not None else []
+        results[name] = row[result_at] if result_at < len(row) else None
+        versions[name] = row[version_at] if version_at < len(row) else None
+        stored[name] = None
+    stored.clear()
+    return _TrackFile(str(commit), results, params_of, versions)
+
+
+def iter_track_files(results_dir: Path):
+    """Track columns of each asv result, in the order asv walks the directory."""
+    from asv import util
+    from asv.console import log
+    from asv.results import iter_results_paths
+
+    for directory, filename, machine_name in iter_results_paths(str(results_dir)):
+        path = Path(directory) / filename
+        try:
+            yield _load_track_file(path, machine_name)
+        except util.UserError as exc:
+            log.warning(str(exc))
+
+
 def load_quadratic_result(results_dir: Path, machine: str | None = None):
     """The one result file that holds ``QuadraticDisplacement`` tracks.
 
