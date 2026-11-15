@@ -358,6 +358,22 @@ def _module_pin(root: Path, commit: str, module_name: str) -> str:
 _GEOMETRY_MISS = object()
 _GEOMETRY_CACHE: dict[object, str] = {}
 _GEOMETRY_TOKENS: dict[str, str] = {}
+_SHARED_TEXT: dict[str, str] = {}
+
+
+def _shared_text(value):
+    """One object for each repeated start or failure string.
+
+    The record dict stays. Equal text from later files points at the
+    first copy, so the duplicates can be freed with the raw row.
+    """
+    if not isinstance(value, str):
+        return value
+    found = _SHARED_TEXT.get(value)
+    if found is None:
+        _SHARED_TEXT[value] = value
+        return value
+    return found
 
 
 def _geometry_key(start) -> str:
@@ -507,7 +523,7 @@ def _record_plain(raw: dict, cap: int | None, force_tol: float | None):
     record = {
         "force_calls": calls,
         "success": success,
-        "start": raw.get("start") or raw.get("geometry"),
+        "start": _shared_text(raw.get("start") or raw.get("geometry")),
         "call_unit": "total",
     }
     if raw.get("hessian_index") is not None:
@@ -521,11 +537,11 @@ def _record_plain(raw: dict, cap: int | None, force_tol: float | None):
         return record
     failure = raw.get("failure")
     if failure in FAILURES:
-        record["failure"] = failure
+        record["failure"] = _shared_text(failure)
         return record
     reasons = raw.get("reasons")
     if isinstance(reasons, list) and reasons:
-        record["reasons"] = [str(item) for item in reasons]
+        record["reasons"] = [_shared_text(str(item)) for item in reasons]
         return record
     record["failure_inferred"] = True
     if raw.get("error"):
@@ -580,7 +596,11 @@ def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dic
     confirmed = raw.get("transition_found") in (1, True, "1")
     if cap is not None and calls >= cap and not confirmed:
         success = False
-    record: dict = {"force_calls": calls, "success": success, "start": raw.get("start") or raw.get("geometry")}
+    record: dict = {
+        "force_calls": calls,
+        "success": success,
+        "start": _shared_text(raw.get("start") or raw.get("geometry")),
+    }
     # Kept so a later preference can see whether this start applied the index rule.
     if raw.get("hessian_index") is not None:
         record["hessian_index"] = raw["hessian_index"]
@@ -594,11 +614,11 @@ def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dic
     if success:
         return record
     if failure in FAILURES:
-        record["failure"] = failure
+        record["failure"] = _shared_text(failure)
         return record
     reasons = raw.get("reasons")
     if isinstance(reasons, list) and reasons:
-        record["reasons"] = [str(item) for item in reasons]
+        record["reasons"] = [_shared_text(str(item)) for item in reasons]
         return record
     record["failure_inferred"] = True
     if raw.get("error"):
@@ -1458,7 +1478,7 @@ def _asv_rows(
                         params = item.get("params") or ()
                         # The last axis is the geometry. The other axes are
                         # the same on every start of the class.
-                        record["start"] = params[-1] if params else ""
+                        record["start"] = _shared_text(params[-1] if params else "")
                         records.append(record)
                         number = _hessian_calls(raw)
                         if number is not None:

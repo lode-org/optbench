@@ -154,6 +154,49 @@ def test_plain_records_match_the_general_normalizer() -> None:
                 assert _start_record(dict(raw), None, cap, force_tol) == general
 
 
+def test_repeated_start_text_is_one_string(tmp_path: Path) -> None:
+    """Equal start and failure strings from separate files are one object.
+
+    The text is unchanged, and the profile token is the one the geometry
+    helper produces from that text.
+    """
+    from optbench.board import _apply_summary, _keyed_costs, _load_group_records, _score_records
+
+    def write(name: str, rows: list[dict]) -> Path:
+        path = tmp_path / name
+        path.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+        return path
+
+    first = write(
+        "a.starts.jsonl",
+        [
+            {"force_calls": 4, "success": True, "start": "cluster_0000"},
+            {"force_calls": 9, "success": False, "failure": "cap", "start": "cluster_0001"},
+        ],
+    )
+    second = write(
+        "b.starts.jsonl",
+        [
+            {"force_calls": 5, "success": True, "start": "cluster_0000"},
+            {"force_calls": 8, "success": False, "failure": "cap", "start": "cluster_0001"},
+        ],
+    )
+    left, _source = _load_group_records({"starts_jsonl": first}, None, None)
+    right, _source = _load_group_records({"starts_jsonl": second}, None, None)
+    assert left[0]["start"] == "cluster_0000"
+    assert left[0]["start"] is right[0]["start"]
+    assert left[1]["start"] is right[1]["start"]
+    assert left[1]["failure"] == "cap"
+    assert left[1]["failure"] is right[1]["failure"]
+    for records in (left, right):
+        row: dict = {}
+        _apply_summary(row, _score_records(records, 10), records)
+        assert _keyed_costs(row) == [
+            (_geometry_key(record["start"]), float("inf") if not record["success"] else float(record["force_calls"]))
+            for record in records
+        ]
+
+
 def test_the_first_start_does_not_require_the_rest_of_the_file(tmp_path: Path) -> None:
     path = tmp_path / "rows.starts.jsonl"
     path.write_bytes(b'{"template": "demo", "force_calls": 1}\nnot json\n')
