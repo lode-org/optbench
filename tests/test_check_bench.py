@@ -38,9 +38,10 @@ def test_check_timing_reads_the_checkout(monkeypatch) -> None:
     assert "OPTBENCH_CHECKOUT" in os.environ
 
 
-def test_rebind_does_not_duplicate_the_checkout() -> None:
+def test_rebind_does_not_duplicate_the_checkout(monkeypatch) -> None:
     text = str(checkout())
     before = sys.path.count(text)
+    monkeypatch.setattr(sys, "path", list(sys.path))
     _place_checkout(text)
     _place_checkout(text)
     assert sys.path.count(text) == max(before, 1)
