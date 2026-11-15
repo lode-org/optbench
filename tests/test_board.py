@@ -1164,3 +1164,63 @@ def test_initializations_are_the_full_set(tmp_path: Path):
     assert problem["full_n"] == 4
     assert problem["ranked"] == []
     assert problem["short"][0]["short_reason"] == "scored 2 of 4 starts"
+
+
+def test_a_non_finite_call_is_left_out_of_the_score(tmp_path: Path):
+    _problem(tmp_path, starts=1, cap=10)
+    _template(tmp_path)
+    _registry(tmp_path)
+    _dat(tmp_path, "toy-fast", PIN)
+    _starts(
+        tmp_path,
+        "toy-fast",
+        [
+            {"force_calls": float("nan"), "success": True, "start": "bad", "counter": "harness"},
+            {"force_calls": float("inf"), "success": True, "start": "worse", "counter": "harness"},
+            _row(4, True, "ok"),
+        ],
+    )
+
+    row = build_board(tmp_path)["problems"]["minimization/toy"]["ranked"][0]
+    assert row["n"] == 1
+    assert row["par2_mean"] == 4
+    assert row["nfailed"] == 0
+
+
+def test_a_confirmed_transition_at_the_cap_stays_a_success(tmp_path: Path):
+    _problem(tmp_path, starts=1, cap=10)
+    _template(tmp_path)
+    _registry(tmp_path)
+    _dat(tmp_path, "toy-fast", PIN)
+    kept = _row(10, True, "0")
+    kept["transition_found"] = 1
+    _starts(tmp_path, "toy-fast", [kept])
+    confirmed = build_board(tmp_path)["problems"]["minimization/toy"]["ranked"][0]
+    assert confirmed["nfailed"] == 0
+    assert confirmed["success_rate"] == 1
+    assert confirmed["failures"]["cap"] == 0
+
+    _starts(tmp_path, "toy-fast", [_row(10, True, "0")])
+    bare = build_board(tmp_path)["problems"]["minimization/toy"]["ranked"][0]
+    assert bare["nfailed"] == 1
+    assert bare["success_rate"] == 0
+    assert bare["failures"]["cap"] == 1
+
+
+def test_a_geometry_name_is_used_when_the_start_is_absent(tmp_path: Path):
+    from optbench.board import _campaign_groups, _load_group_records
+
+    _problem(tmp_path, starts=1, cap=10)
+    _template(tmp_path)
+    _registry(tmp_path)
+    _dat(tmp_path, "toy-fast", PIN)
+    _starts(
+        tmp_path,
+        "toy-fast",
+        [{"force_calls": 4, "success": True, "geometry": "pos_0007", "counter": "harness"}],
+    )
+    group = _campaign_groups(tmp_path / "results" / "campaign")["toy-fast"]
+    records, source = _load_group_records(group, 10, 0.01)
+    assert source == "starts.jsonl"
+    assert records[0]["start"] == "pos_0007"
+    assert build_board(tmp_path)["problems"]["minimization/toy"]["ranked"][0]["par2_mean"] == 4
