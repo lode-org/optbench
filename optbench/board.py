@@ -500,6 +500,74 @@ def _force_tol(problem: dict | None, template: dict | None) -> float | None:
 
 
 _PLAIN = object()
+_PRESENT = ("force_calls", "success", "start")
+
+
+class _Start:
+    """One start, without a dict per record.
+
+    Optional fields stay ``None`` until set, so ``in`` and ``get`` match a
+    dict that never stored them. Replay reads the attributes.
+    """
+
+    __slots__ = (
+        "force_calls",
+        "success",
+        "start",
+        "call_unit",
+        "hessian_index",
+        "per_image",
+        "failure",
+        "reasons",
+        "failure_inferred",
+    )
+
+    def __init__(self, force_calls, success, start, call_unit=None):
+        self.force_calls = force_calls
+        self.success = success
+        self.start = start
+        self.call_unit = call_unit
+        self.hessian_index = None
+        self.per_image = None
+        self.failure = None
+        self.reasons = None
+        self.failure_inferred = None
+
+    def __getitem__(self, key):
+        if key not in self:
+            raise KeyError(key)
+        return getattr(self, key)
+
+    def __setitem__(self, key, value):
+        setattr(self, key, value)
+
+    def get(self, key, default=None):
+        if key not in self:
+            return default
+        return getattr(self, key)
+
+    def __contains__(self, key):
+        if key in _PRESENT:
+            return True
+        value = getattr(self, key, None)
+        return value is not None
+
+    def __eq__(self, other):
+        if isinstance(other, _Start):
+            pairs = other._pairs()
+        elif isinstance(other, dict):
+            pairs = other
+        else:
+            return NotImplemented
+        return self._pairs() == pairs
+
+    def _pairs(self) -> dict:
+        found = {}
+        for key in self.__slots__:
+            value = getattr(self, key)
+            if key in _PRESENT or value is not None:
+                found[key] = value
+        return found
 
 
 def _record_plain(raw: dict, cap: int | None, force_tol: float | None):
@@ -520,12 +588,12 @@ def _record_plain(raw: dict, cap: int | None, force_tol: float | None):
         return _PLAIN
     if cap is not None and calls >= cap and raw.get("transition_found") not in (1, True, "1"):
         success = False
-    record = {
-        "force_calls": calls,
-        "success": success,
-        "start": _shared_text(raw.get("start") or raw.get("geometry")),
-        "call_unit": "total",
-    }
+    record = _Start(
+        calls,
+        success,
+        _shared_text(raw.get("start") or raw.get("geometry")),
+        "total",
+    )
     if raw.get("hessian_index") is not None:
         record["hessian_index"] = raw["hessian_index"]
     if raw.get("per_image") is not None:
@@ -596,11 +664,11 @@ def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dic
     confirmed = raw.get("transition_found") in (1, True, "1")
     if cap is not None and calls >= cap and not confirmed:
         success = False
-    record: dict = {
-        "force_calls": calls,
-        "success": success,
-        "start": _shared_text(raw.get("start") or raw.get("geometry")),
-    }
+    record = _Start(
+        calls,
+        success,
+        _shared_text(raw.get("start") or raw.get("geometry")),
+    )
     # Kept so a later preference can see whether this start applied the index rule.
     if raw.get("hessian_index") is not None:
         record["hessian_index"] = raw["hessian_index"]
@@ -1088,7 +1156,11 @@ def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
     row["failures"] = {name: summary[f"n_{name}"] for name in FAILURES}
     inferred: dict[str, int] = defaultdict(int)
     for record in records:
-        if record.get("failure_inferred"):
+        if isinstance(record, _Start):
+            flag = record.failure_inferred
+        else:
+            flag = record.get("failure_inferred")
+        if flag:
             label = failure_of(record, row.get("cap"))
             if label is not None:
                 inferred[label] += 1
@@ -1113,7 +1185,8 @@ def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
     row["_profile"] = [
         (
             cache[start]
-            if type(start := record.get("start")) is str and start in cache
+            if type(start := (record.start if isinstance(record, _Start) else record.get("start"))) is str
+            and start in cache
             else key_of(start),
             cost_of(record),
         )

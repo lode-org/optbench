@@ -154,6 +154,39 @@ def test_plain_records_match_the_general_normalizer() -> None:
                 assert _start_record(dict(raw), None, cap, force_tol) == general
 
 
+def test_a_start_record_reads_like_the_dict_it_replaced() -> None:
+    """The loader record keeps the fields a dict used to hold, and not the rest."""
+    plain = _record_plain(
+        {"force_calls": 4, "success": True, "start": "pos_0007", "hessian_index": 1},
+        None,
+        None,
+    )
+    assert plain["force_calls"] == 4.0
+    assert plain["success"] is True
+    assert plain["start"] == "pos_0007"
+    assert plain["call_unit"] == "total"
+    assert plain["hessian_index"] == 1
+    assert "per_image" not in plain
+    assert plain.get("per_image") is None
+    assert "failure" not in plain
+    missed = _record_plain(
+        {"force_calls": 4, "success": False, "start": "pos_0008"},
+        None,
+        None,
+    )
+    assert missed["failure_inferred"] is True
+    assert "hessian_index" not in missed
+    general = _record_from_raw(
+        normalize_start(
+            {"force_calls": 4, "success": True, "start": "pos_0007", "hessian_index": 1},
+            None,
+        ),
+        None,
+        None,
+    )
+    assert plain == general
+
+
 def test_repeated_start_text_is_one_string(tmp_path: Path) -> None:
     """Equal start and failure strings from separate files are one object.
 

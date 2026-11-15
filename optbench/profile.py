@@ -76,9 +76,15 @@ def _log_area(taus: Sequence[float], values: Sequence[float]) -> float:
 
 def profile_cost(record: dict) -> float:
     """Finite harness cost of a success, otherwise infinity for the profile."""
-    if not record["success"]:
+    try:
+        success = record.success
+        calls = record.force_calls
+    except AttributeError:
+        success = record["success"]
+        calls = record["force_calls"]
+    if not success:
         return math.inf
-    return float(record["force_calls"])
+    return float(calls)
 
 
 def par2_across(runs: dict[str, list[dict]], cap: int | None) -> dict[str, dict]:
