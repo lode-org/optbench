@@ -357,6 +357,7 @@ def _module_pin(root: Path, commit: str, module_name: str) -> str:
 
 _GEOMETRY_MISS = object()
 _GEOMETRY_CACHE: dict[object, str] = {}
+_GEOMETRY_TOKENS: dict[str, str] = {}
 
 
 def _geometry_key(start) -> str:
@@ -364,17 +365,25 @@ def _geometry_key(start) -> str:
 
     ``cluster_0000.con``, ``pos_0000``, and asv start ``0`` are the same index.
     A bare number is that number. A single ASCII name, one ``_`` or ``-``,
-    and a number is that number. The same name is repeated on every problem,
-    so the token is remembered.
+    and a number is that number. Each distinct start is remembered. Tokens
+    share one string, but a start is never looked up as if it were a token.
     """
-    if isinstance(start, str):
+    try:
         found = _GEOMETRY_CACHE.get(start, _GEOMETRY_MISS)
-        if found is not _GEOMETRY_MISS:
-            return found
-        value = _geometry_text(start)
-        _GEOMETRY_CACHE[start] = value
-        return value
-    return _geometry_text(start)
+    except TypeError:
+        return _geometry_text(start)
+    if found is not _GEOMETRY_MISS:
+        return found
+    value = _geometry_text(start)
+    shared = _GEOMETRY_TOKENS.get(value, _GEOMETRY_MISS)
+    if shared is _GEOMETRY_MISS:
+        _GEOMETRY_TOKENS[value] = value
+        shared = value
+    try:
+        _GEOMETRY_CACHE[start] = shared
+    except TypeError:
+        return shared
+    return shared
 
 
 def _geometry_text(start) -> str:
@@ -1076,7 +1085,20 @@ def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
         ]
         mean = (sum(hessians) / len(hessians)) if hessians else 0.0
     row["hessian_calls"] = mean
-    row["_profile"] = [(_geometry_key(record.get("start")), profile_cost(record)) for record in records]
+    # A repeated start reuses the token already stored for that start.
+    # An unhashable start, such as a list from JSON, cannot be a cache key.
+    cache = _GEOMETRY_CACHE
+    key_of = _geometry_key
+    cost_of = profile_cost
+    row["_profile"] = [
+        (
+            cache[start]
+            if type(start := record.get("start")) is str and start in cache
+            else key_of(start),
+            cost_of(record),
+        )
+        for record in records
+    ]
 
 
 def _source_parts(row: dict) -> set[str]:

@@ -1,16 +1,23 @@
+import json
 import math
 from pathlib import Path
 
 import re
 
 from optbench.board import (
+    _GEOMETRY_CACHE,
+    _GEOMETRY_TOKENS,
     _PLAIN,
+    _apply_summary,
     _first_raw,
     _geometry_key,
     _json_lines,
     _json_lines_each,
+    _keyed_costs,
+    _load_group_records,
     _record_from_raw,
     _record_plain,
+    _score_records,
     _start_record,
 )
 from optbench.score import normalize_start
@@ -151,3 +158,65 @@ def test_the_first_start_does_not_require_the_rest_of_the_file(tmp_path: Path) -
     path = tmp_path / "rows.starts.jsonl"
     path.write_bytes(b'{"template": "demo", "force_calls": 1}\nnot json\n')
     assert _first_raw({"starts_jsonl": path}) == {"template": "demo", "force_calls": 1}
+
+
+def _geometry_at_base(start) -> str:
+    """The geometry token from 4500ce76, with no start/token cache."""
+    if isinstance(start, tuple):
+        start = start[-1] if start else ""
+    text = str(start if start is not None else "").strip()
+    if text.endswith(".con"):
+        text = text[: -len(".con")]
+    if text.isdecimal():
+        return str(int(text))
+    sep = text.rfind("_")
+    dash = text.rfind("-")
+    if dash > sep:
+        sep = dash
+    if sep > 0 and text[sep + 1 :].isdecimal():
+        head = text[:sep]
+        if (
+            head
+            and head.isascii()
+            and head.isalnum()
+            and ("A" <= head[0] <= "Z" or "a" <= head[0] <= "z")
+        ):
+            return str(int(text[sep + 1 :]))
+    return text
+
+
+def test_a_token_and_a_list_start_keep_the_base_profile(tmp_path: Path) -> None:
+    """A start equal to an earlier token is parsed, and a JSON list does not raise.
+
+    ``foo.con.con`` tokens to ``foo.con``. That string is itself a start
+    whose token is ``foo``. Remembering the first token must not answer
+    the second start. A list start is not a cache key; its token is the
+    same text the base geometry produced.
+    """
+    _GEOMETRY_CACHE.clear()
+    _GEOMETRY_TOKENS.clear()
+    assert _geometry_key("foo.con.con") == "foo.con"
+    assert _geometry_key("foo.con") == "foo"
+    assert "foo.con" not in _GEOMETRY_CACHE or _GEOMETRY_CACHE["foo.con"] == "foo"
+
+    rows = [
+        {"force_calls": 4, "success": True, "start": "foo.con.con"},
+        {"force_calls": 6, "success": True, "start": "foo.con"},
+        {"force_calls": 2, "success": True, "start": ["left", "right"]},
+    ]
+    path = tmp_path / "rows.starts.jsonl"
+    path.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+    _GEOMETRY_CACHE.clear()
+    _GEOMETRY_TOKENS.clear()
+    records, source = _load_group_records({"starts_jsonl": path}, None, None)
+    assert source == "starts.jsonl"
+    assert [record["start"] for record in records] == [row["start"] for row in rows]
+    row = {}
+    _apply_summary(row, _score_records(records, None), records)
+    expected = [
+        (_geometry_at_base(record["start"]), float(record["force_calls"]))
+        for record in records
+    ]
+    assert _keyed_costs(row) == expected
+    shared = _geometry_key("cluster_0000")
+    assert _geometry_key("pos_0000") is shared
