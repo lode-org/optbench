@@ -359,6 +359,8 @@ _GEOMETRY_MISS = object()
 _GEOMETRY_CACHE: dict[object, str] = {}
 _GEOMETRY_TOKENS: dict[str, str] = {}
 _SHARED_TEXT: dict[str, str] = {}
+# One decimal string per geometry number. ``0010`` and ``pos_0010`` share it.
+_GEOMETRY_NUMBERS: list[str | None] = []
 
 
 def _shared_text(value):
@@ -373,6 +375,22 @@ def _shared_text(value):
     if found is None:
         _SHARED_TEXT[value] = value
         return value
+    return found
+
+
+def _geometry_number(number: int) -> str:
+    """The decimal token for one geometry, built at most once."""
+    numbers = _GEOMETRY_NUMBERS
+    if number < len(numbers):
+        found = numbers[number]
+        if found is not None:
+            return found
+    else:
+        numbers.extend([None] * (number + 1 - len(numbers)))
+        found = None
+    if found is None:
+        found = str(number)
+        numbers[number] = found
     return found
 
 
@@ -409,7 +427,7 @@ def _geometry_text(start) -> str:
     if text.endswith(".con"):
         text = text[: -len(".con")]
     if text.isdecimal():
-        return str(int(text))
+        return _geometry_number(int(text))
     sep = text.rfind("_")
     dash = text.rfind("-")
     if dash > sep:
@@ -422,7 +440,7 @@ def _geometry_text(start) -> str:
             and head.isalnum()
             and ("A" <= head[0] <= "Z" or "a" <= head[0] <= "z")
         ):
-            return str(int(text[sep + 1 :]))
+            return _geometry_number(int(text[sep + 1 :]))
     return text
 
 
@@ -611,17 +629,20 @@ def _record_plain(raw: dict, cap: int | None, force_tol: float | None):
 
     Returns ``_PLAIN`` when the row needs the general normalizer.
     """
-    if raw.get("count_key") not in (None, "") or raw.get("call_unit") not in (None, "", "total"):
+    get = raw.get
+    calls = get("force_calls")
+    kind = type(calls)
+    if kind is bool or (kind is not int and kind is not float):
         return _PLAIN
-    calls = raw.get("force_calls")
-    if isinstance(calls, bool) or not isinstance(calls, (int, float)):
+    success = get("success")
+    if type(success) is not bool:
         return _PLAIN
-    calls = float(calls)
-    if not math.isfinite(calls):
+    if get("count_key") not in (None, "") or get("call_unit") not in (None, "", "total"):
+        return _PLAIN
+    if kind is int:
+        calls = float(calls)
+    elif not math.isfinite(calls):
         return None
-    success = raw.get("success")
-    if not isinstance(success, bool):
-        return _PLAIN
     if cap is not None and calls >= cap and raw.get("transition_found") not in (1, True, "1"):
         success = False
     start = _shared_text(raw.get("start") or raw.get("geometry"))
@@ -877,10 +898,16 @@ def _load_group_records(
             if record is None:
                 continue
             collected.append(record)
-            number = _hessian_calls(raw)
-            if number is not None:
-                total += number
-                count += 1
+            if not isinstance(raw, dict):
+                continue
+            number = raw.get("hessian_calls")
+            if number is None:
+                continue
+            try:
+                total += float(number)
+            except (TypeError, ValueError):
+                continue
+            count += 1
         return collected, total, count
 
     def finish(collected: list[dict], total: float, count: int, source: str) -> tuple[list[dict], str]:
@@ -1260,6 +1287,9 @@ def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
     cap = row.get("cap")
     inf = math.inf
     inferred: dict[str, int] = defaultdict(int)
+    # The keyed profile keeps the first cost of each geometry. Later
+    # starts that share that token are not stored again.
+    seen: set[str] = set()
     for record in records:
         kind = type(record)
         flag = False
@@ -1295,6 +1325,9 @@ def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
             token = cache[start]
         else:
             token = key_of(start)
+        if token in seen:
+            continue
+        seen.add(token)
         append((token, cost))
     if inferred:
         row["failures_inferred"] = {name: inferred[name] for name in FAILURES if inferred[name]}
@@ -1638,8 +1671,8 @@ def _asv_rows(
             images = _image_count(problem, source_template or template, {})
             per_image_track = reducer == "per_image" and _commit_divides_band(root, str(result.commit_hash))
             records = []
-            hessian_sum = 0.0
-            hessian_n = 0
+            # The same tolerance for every start of this class.
+            force_tol = _force_tol(problem, source_template or template)
             try:
                 for item in tracked:
                     raw = {
@@ -1651,7 +1684,7 @@ def _asv_rows(
                         raw,
                         images,
                         cap,
-                        _force_tol(problem, source_template or template),
+                        force_tol,
                         per_image_track,
                     )
                     if record is not None:
@@ -1660,10 +1693,6 @@ def _asv_rows(
                         # the same on every start of the class.
                         record["start"] = _shared_text(params[-1] if params else "")
                         records.append(record)
-                        number = _hessian_calls(raw)
-                        if number is not None:
-                            hessian_sum += number
-                            hessian_n += 1
             except ValueError as exc:
                 events.append((
                     "bad",
@@ -1709,7 +1738,7 @@ def _asv_rows(
                 continue
             # The track dict built above has no hessian count. The mean is 0,
             # which is what reading the count off the record used to return.
-            row["_hessian_mean"] = hessian_sum / hessian_n if hessian_n else 0.0
+            row["_hessian_mean"] = 0.0
             events.append(("score", row, records, cap))
             if batch is not None:
                 batch.add((records, cap))

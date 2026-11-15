@@ -115,20 +115,49 @@ def _count(value: float) -> int | float:
     return number
 
 
+def _track_index(result) -> dict[str, str]:
+    """Map ``Class.method`` to the one result key that ends with it.
+
+    Built once per file. A class name is the component before the method,
+    so each tail is scanned a single time instead of once per track.
+    """
+    cached = getattr(result, "_optbench_track_index", None)
+    if cached is not None:
+        return cached
+    found: dict[str, str] = {}
+    ambiguous: set[str] = set()
+    for key in result.get_all_result_keys():
+        text = str(key)
+        dot = text.rfind(".")
+        if dot <= 0:
+            continue
+        tail = text[text.rfind(".", 0, dot) + 1 :]
+        if tail in found or tail in ambiguous:
+            found.pop(tail, None)
+            ambiguous.add(tail)
+            continue
+        found[tail] = text
+    result._optbench_track_index = found
+    return found
+
+
 def _key(result, class_name: str, method: str) -> str:
     suffix = f"{class_name}.{method}"
-    matches = [key for key in result.get_all_result_keys() if key.endswith(suffix)]
-    if len(matches) != 1:
+    found = _track_index(result)
+    key = found.get(suffix)
+    if key is None:
+        matches = [item for item in result.get_all_result_keys() if str(item).endswith(suffix)]
         raise SystemExit(
             f"{suffix} matched {matches or 'nothing'} in commit {result.commit_hash}"
         )
-    return matches[0]
+    return key
 
 
 def _missing(value) -> bool:
     if value is None:
         return True
-    return isinstance(value, float) and math.isnan(value)
+    # A NaN is the only float that is not equal to itself.
+    return value != value
 
 
 def _column(result, key, params):
@@ -159,23 +188,41 @@ def _combo_at(index: int, axes: list) -> tuple:
     return tuple(chosen)
 
 
-def track_rows(result, class_name: str) -> list[dict]:
-    """One dict per parameter combination, in asv's product order."""
+def _track_columns(result, class_name: str):
+    """Aligned track columns for one class, after a single key scan."""
+    index = _track_index(result)
     force_key = _key(result, class_name, "track_force_calls")
     params = result.get_result_params(force_key)
     if params:
-        # The same quoted parameter is repeated for every other axis.
-        # Unwrap each axis once, then build the product from those strings.
         stored_axes = [tuple(str(_unwrap(part)) for part in axis) for axis in params]
-        combos = list(itertools.product(*stored_axes))
+        width = 1
+        for axis in stored_axes:
+            width *= len(axis)
+        combos = None
     else:
+        stored_axes = []
+        width = 1
         combos = [()]
     columns = {}
     for method in TRACKS:
-        values = _column(result, _key(result, class_name, method), params)
-        if len(values) != len(combos):
-            raise SystemExit(f"{class_name}.{method} has {len(values)} values for {len(combos)} parameters")
+        key = index.get(f"{class_name}.{method}")
+        if not key:
+            _key(result, class_name, method)
+        values = _column(result, key, params)
+        if len(values) != width:
+            raise SystemExit(f"{class_name}.{method} has {len(values)} values for {width} parameters")
+        for value in values:
+            if value is None or value != value:
+                raise SystemExit(f"{class_name} {method} was skipped or failed")
         columns[method] = values
+    if combos is None:
+        combos = list(itertools.product(*stored_axes))
+    return force_key, params, combos, columns
+
+
+def track_rows(result, class_name: str) -> list[dict]:
+    """One dict per parameter combination, in asv's product order."""
+    force_key, params, combos, columns = _track_columns(result, class_name)
     version = result.benchmark_version.get(force_key)
     force = columns["track_force_calls"]
     success_col = columns["track_success"]
@@ -183,28 +230,29 @@ def track_rows(result, class_name: str) -> list[dict]:
     rows = []
     append = rows.append
     for index, combo in enumerate(combos):
-        for method in TRACKS:
-            value = columns[method][index]
-            if _missing(value):
-                shown = _combo_at(index, params) if params else ()
-                raise SystemExit(f"{class_name} {shown} {method} was skipped or failed")
-        success = float(success_col[index])
-        hits = [name for name, column in fail_cols if float(column[index]) == 1.0]
-        if success == 1.0:
-            if hits:
-                shown = _combo_at(index, params) if params else ()
-                raise SystemExit(f"{class_name} {shown} is a success with failure tracks {hits}")
+        success = success_col[index]
+        if success == 1.0 or success == 1:
+            for name, column in fail_cols:
+                if column[index] == 1.0 or column[index] == 1:
+                    shown = _combo_at(index, params) if params else ()
+                    raise SystemExit(f"{class_name} {shown} is a success with failure tracks {[name]}")
             failure = None
             ok = True
-        elif success == 0.0:
-            if len(hits) != 1:
+        elif success == 0.0 or success == 0:
+            failure = None
+            for name, column in fail_cols:
+                if column[index] == 1.0 or column[index] == 1:
+                    if failure is not None:
+                        shown = _combo_at(index, params) if params else ()
+                        raise SystemExit(f"{class_name} {shown} failure tracks are {[failure, name]}")
+                    failure = name
+            if failure is None:
                 shown = _combo_at(index, params) if params else ()
-                raise SystemExit(f"{class_name} {shown} failure tracks are {hits}")
-            failure = hits[0]
+                raise SystemExit(f"{class_name} {shown} failure tracks are []")
             ok = False
         else:
             shown = _combo_at(index, params) if params else ()
-            raise SystemExit(f"{class_name} {shown} success track is {success}")
+            raise SystemExit(f"{class_name} {shown} success track is {float(success)}")
         append(
             {
                 "params": combo,

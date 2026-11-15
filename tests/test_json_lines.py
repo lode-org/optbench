@@ -261,6 +261,13 @@ def _geometry_at_base(start) -> str:
     return text
 
 
+def test_one_decimal_token_per_geometry() -> None:
+    """Starts that name the same geometry share one token string."""
+    assert _geometry_key("pos_0010") is _geometry_key("0010")
+    assert _geometry_key("10") is _geometry_key("cluster_0010.con")
+    assert _geometry_key("pos_0010") == "10"
+
+
 def test_a_token_and_a_list_start_keep_the_base_profile(tmp_path: Path) -> None:
     """A start equal to an earlier token is parsed, and a JSON list does not raise.
 
