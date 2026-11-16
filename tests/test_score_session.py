@@ -165,6 +165,28 @@ def test_the_same_records_return_the_same_bootstrap_interval() -> None:
     assert first["median_high"] == second["median_high"]
 
 
+def test_two_samples_of_one_shape_match_a_fresh_score() -> None:
+    from optbench.score import _index_block, score_v2
+
+    first = [{"force_calls": float(value), "success": True} for value in (1, 4, 9, 2, 6)]
+    second = [{"force_calls": float(value), "success": True} for value in (8, 3, 3, 7, 1)]
+    cap = 20
+
+    def fresh(records):
+        if hasattr(_index_block, "_reuse"):
+            del _index_block._reuse
+        return score_v2(records, cap)
+
+    alone_first = fresh(first)
+    alone_second = fresh(second)
+    if hasattr(_index_block, "_reuse"):
+        del _index_block._reuse
+    together_first = score_v2(first, cap)
+    together_second = score_v2(second, cap)
+    assert together_first == alone_first
+    assert together_second == alone_second
+
+
 def test_packed_fields_score_the_same() -> None:
     records = [
         _make_start(10.0, True, "a", per_image=1.0),

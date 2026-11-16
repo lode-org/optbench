@@ -339,7 +339,17 @@ def _index_block(count: int, needed: int, seed: int) -> np.ndarray:
     of ``bits`` is that word shifted down, and values at or above ``count``
     are rejected, the same as one call at a time. The words come from the
     same generator without building one integer the size of the draw.
+
+    The stream depends only on the count, the length, and the seed. A later
+    sample with that same shape reuses the array. The caller does not write it.
     """
+    key = (count, needed, seed)
+    slot = getattr(_index_block, "_reuse", None)
+    if slot is not None and slot[0] == key:
+        return slot[1]
+    # Drop the previous shape before building the next one.
+    _index_block._reuse = None
+    del slot
     bits = count.bit_length()
     shift = np.uint32(32 - bits)
     rate = count / (1 << bits)
@@ -363,6 +373,8 @@ def _index_block(count: int, needed: int, seed: int) -> np.ndarray:
         take = min(int(keep.size), needed - filled)
         chosen[filled : filled + take] = keep[:take]
         filled += take
+    chosen.flags.writeable = False
+    _index_block._reuse = (key, chosen)
     return chosen
 
 
