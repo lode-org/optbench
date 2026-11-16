@@ -382,7 +382,9 @@ def _resample_median_iqr(
         return _resample_median_iqr_py(values, resamples, seed)
     picked = _index_block(count, resamples * count, seed)
     pool = np.asarray(values, dtype=np.float64)
-    draws = np.sort(pool[picked].reshape(resamples, count), axis=1)
+    # The gathered draws are a fresh array. Sorting them in place avoids a second copy.
+    draws = pool[picked].reshape(resamples, count)
+    draws.sort(axis=1)
     if count % 2:
         medians = draws[:, count // 2]
     else:
