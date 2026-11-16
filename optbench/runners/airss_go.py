@@ -671,12 +671,15 @@ def run_template(
     output: Path,
     workers: int,
     work: Path | None,
+    limit: int = 0,
 ) -> dict:
     from optbench.campaign import write_starts
 
     config = _config(template)
     problem_cap = _problem_cap(problem)
     jobs, reference, tolerance = plan(root, problem, template, geometries=geometries, output=output, work=work)
+    if limit:
+        jobs = jobs[: int(limit)]
     if workers <= 1:
         records = []
         total = len(jobs)

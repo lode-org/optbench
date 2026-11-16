@@ -170,6 +170,33 @@ def test_lj75_class_runs_the_campaign_job_and_every_track_has_its_value(tmp_path
     assert len(seen) == 1
 
 
+def test_a_limit_runs_the_first_airss_starts(tmp_path, monkeypatch):
+    import optbench.runners.airss_go as airss
+    from optbench.campaign import run
+
+    seen = []
+
+    def fake(job):
+        seen.append(job["start"])
+        return airss._capped(job, calls=100 + job["index"], energy=-300.0 - job["index"], structures=20)
+
+    monkeypatch.setattr(airss, "search_start", fake)
+    monkeypatch.setenv("AIRSS_BUILDCELL", "/bin/true")
+    output = tmp_path / "lj75.dat"
+    summary = run(
+        ROOT,
+        "globalopt/lj75",
+        "airss/lj75",
+        output=output,
+        workers=1,
+        work=tmp_path / "work",
+        limit=2,
+    )
+    assert seen == ["coords.1", "coords.2"]
+    assert summary["starts"] == 2
+    assert "\nn 2\n" in output.read_text(encoding="utf-8")
+
+
 def test_lj75_budget_writes_partial_rows(tmp_path, monkeypatch):
     import json
 

@@ -521,6 +521,7 @@ def run(
             output=output,
             workers=workers,
             work=work,
+            limit=limit,
         )
     if template["engine"] == "rgmin":
         from .runners.rgmin_min import run_template
