@@ -843,8 +843,8 @@ def _crash_record(name: str, calls: int, verify: int, crash: str) -> dict:
         "candidate": "crash",
         "ci_index": None,
         "refined": False,
-        "surrogate_steps": 0,
-        "geodesic_seconds": 0.0,
+        "surrogate_steps": None,
+        "geodesic_seconds": None,
     }
 
 

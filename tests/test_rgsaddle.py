@@ -511,3 +511,11 @@ def test_energy_weighted_cap_rows_name_the_climbed_image():
             assert "force_norm" in row["reasons"]
             assert row["force_calls"] in (2500, 10000)
     assert capped == 11 + 27
+
+
+def test_a_crashed_band_does_not_invent_a_geodesic_time():
+    from optbench.rgsaddle_band import _crash_record
+
+    row = _crash_record("pair_00", 4, 1, "RuntimeError")
+    assert row["geodesic_seconds"] is None
+    assert row["surrogate_steps"] is None
