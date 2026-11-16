@@ -19,6 +19,32 @@ from optbench.surfaces import lennard_jones, morse_smooth_linear, read_con
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_a_limit_runs_the_first_rgsaddle_geometries(monkeypatch, tmp_path: Path):
+    from optbench.campaign import run
+    import optbench.rgsaddle_minmode as driver
+
+    monkeypatch.setattr(driver, "_geometries", lambda *args, **kwargs: [{"name": f"g{i}"} for i in range(200)])
+    seen = []
+
+    def fake_dispatch(spec):
+        seen.append(spec["start"])
+        return {"force_calls": 4, "success": True, "failure": None, "start": spec["start"]}
+
+    monkeypatch.setattr(driver, "_spec_from_geometry", lambda row, *args, **kwargs: {"start": row["name"]})
+    monkeypatch.setattr(driver, "_dispatch", fake_dispatch)
+    output = tmp_path / "benchmark.dat"
+    summary = run(
+        ROOT,
+        "tsopt/LJ38",
+        "rgsaddle/lanczos",
+        output=output,
+        work=tmp_path / "work",
+        limit=1,
+    )
+    assert seen == ["g0"]
+    assert summary["starts"] == 1
+
+
 def test_island_saddle_success_is_the_eon_comparison():
     problem = resolve_problem(ROOT, "saddle-search/pt-island")
     success = problem["scoring"]["v2"]["success"]

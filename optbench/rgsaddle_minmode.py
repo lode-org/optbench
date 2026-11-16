@@ -997,6 +997,7 @@ def run_template(
     workers: int = 1,
     work: Path | None = None,
     repetition: int | None = None,
+    limit: int = 0,
 ) -> dict:
     """Run one rgsaddle template on every geometry of ``problem``.
 
@@ -1013,7 +1014,7 @@ def run_template(
     scratch.mkdir(parents=True, exist_ok=True)
     if problem["id"] == "saddle-search/pt-island":
         return _run_saddle_search(
-            root, problem, template, output=output, force_tol=force_tol, work=scratch, repetition=repetition
+            root, problem, template, output=output, force_tol=force_tol, work=scratch, repetition=repetition, limit=limit
         )
     if repetition is not None:
         raise RuntimeError(f"{problem['id']} has no repetitions to select")
@@ -1021,6 +1022,8 @@ def run_template(
     expected = int((problem.get("sample") or {}).get("starts") or len(rows))
     if len(rows) != expected:
         raise RuntimeError(f"{problem['id']} has {len(rows)} geometries, the problem states {expected}")
+    if limit:
+        rows = rows[: int(limit)]
     specs = [_spec_from_geometry(row, problem, template, cap, force_tol) for row in rows]
     if workers <= 1:
         records = [_dispatch(spec) for spec in specs]
@@ -1182,6 +1185,7 @@ def _run_saddle_search(
     force_tol: float,
     work: Path,
     repetition: int | None = None,
+    limit: int = 0,
 ) -> dict:
     """Displace the Pt island until the goal count of connected index-1 saddles.
 
@@ -1219,6 +1223,8 @@ def _run_saddle_search(
     distance_difference, energy_difference = tolerances(problem)
     lengths = periodic_lengths(cell, (problem.get("potential") or {}).get("pbc"))
     max_searches = int(search.get("max_searches", 20000))
+    if limit:
+        max_searches = min(max_searches, int(limit))
     saddle_settings = _section(template, "SaddleSearch")
     optimizer_settings = _section(template, "Optimizer")
     climb_steps = int(saddle_settings["max_iterations"])

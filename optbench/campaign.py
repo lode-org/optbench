@@ -570,6 +570,7 @@ def run(
             output=output,
             workers=workers,
             work=work,
+            limit=limit,
         )
     if template["engine"] == "ogolem":
         from .runners.ogolem_go import run_template
