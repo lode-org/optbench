@@ -134,6 +134,15 @@ def test_summary_uses_score_v2_and_keeps_blank_tracks_out(tmp_path: Path):
     assert row["missing_starts"] == ["0,c"]
 
 
+def test_a_non_finite_metric_is_omitted():
+    from optbench.ase_sella import format_metric
+
+    assert format_metric(float("nan")) is None
+    assert format_metric(float("inf")) is None
+    assert format_metric(12.0) == "12"
+    assert format_metric(None) is None
+
+
 def test_an_optimizer_exception_is_a_crash_and_a_nan_force_is_not_a_success():
     from optbench.ase_sella import _reason_list, _v2_records
     from optbench.failures import failure_of

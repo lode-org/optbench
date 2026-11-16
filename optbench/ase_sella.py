@@ -332,6 +332,8 @@ def format_metric(value: object) -> str | None:
     if isinstance(value, bool):
         return "true" if value else "false"
     if isinstance(value, float):
+        if not math.isfinite(value):
+            return None
         if value.is_integer():
             return str(int(value))
         return f"{value:.10g}"
