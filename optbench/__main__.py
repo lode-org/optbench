@@ -73,7 +73,13 @@ def run(
 ) -> None:
     """Run one problem template and write benchmark.dat."""
     from optbench.campaign import load_template
+    from optbench.campaign import require_limit
     from optbench.campaign import run as run_campaign
+
+    try:
+        require_limit(limit)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from None
 
     loaded = load_template(root, template)
     if loaded["engine"] == "rgsaddle-band" or (
@@ -233,6 +239,12 @@ def campaign_ase(
 ) -> None:
     """Run the ranked ASE and Sella templates."""
     from optbench.ase_sella import run_many
+    from optbench.campaign import require_limit
+
+    try:
+        require_limit(limit)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from None
 
     summaries = run_many(
         root,

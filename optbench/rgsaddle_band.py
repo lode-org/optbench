@@ -1435,6 +1435,9 @@ def run(
     limit: int = 0,
 ) -> dict:
     """Run every pair in one problem and write the dat, starts, and v2 score."""
+    from .campaign import require_limit
+
+    require_limit(limit)
     problem = resolve_problem(root, problem_name)
     template = load_template(root, template_name)
     if template["engine"] == "rgsaddle-band":

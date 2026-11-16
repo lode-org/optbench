@@ -907,6 +907,9 @@ def run(
     Replicas share the machine through MPI, so the starts run one at a time.
     ``resume`` keeps a start whose sidecar is already on disk.
     """
+    from .campaign import require_limit
+
+    require_limit(limit)
     del workers
     problem = resolve_problem(root, problem_name)
     template = load_template(root, template_name)

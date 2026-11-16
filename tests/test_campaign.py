@@ -406,6 +406,33 @@ def test_a_missing_client_result_is_recorded_as_a_crash(tmp_path: Path):
     assert summary["force_calls"] == 10
 
 
+def test_a_negative_start_limit_is_rejected(tmp_path: Path):
+    from optbench.__main__ import main
+
+    with pytest.raises(ValueError, match="limit must be zero or positive"):
+        run(
+            ROOT,
+            "minimization/lj38",
+            "geometric/lj38-cart",
+            output=tmp_path / "bench.dat",
+            limit=-1,
+        )
+    with pytest.raises(SystemExit, match="limit must be zero or positive"):
+        main(
+            [
+                "run",
+                "minimization/lj38",
+                "geometric/lj38-cart",
+                "--root",
+                str(ROOT),
+                "--limit",
+                "-1",
+                "--output",
+                str(tmp_path / "cli.dat"),
+            ]
+        )
+
+
 def test_a_short_iteration_cap_is_refused():
     problem = resolve_problem(ROOT, "minimization/lj38")
     template = {"ini": {"Optimizer": {"max_iterations": 10, "converged_force": 0.01}}}

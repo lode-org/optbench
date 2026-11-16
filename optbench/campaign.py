@@ -416,6 +416,14 @@ def client_record(detail: dict, cap: int) -> dict:
     return record
 
 
+def require_limit(limit: int) -> int:
+    """Zero keeps every planned start. A negative value is not a tail slice."""
+    value = int(limit)
+    if value < 0:
+        raise ValueError("limit must be zero or positive")
+    return value
+
+
 def run(
     root: Path,
     problem_name: str,
@@ -429,6 +437,7 @@ def run(
     limit: int = 0,
     resume: bool = False,
 ) -> dict:
+    require_limit(limit)
     template = load_template(root, template_name)
     if template["engine"] == "noise":
         from .runners.noise_min import run_template
