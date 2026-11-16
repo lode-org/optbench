@@ -1110,6 +1110,16 @@ def _score_many(jobs: list[tuple[list[dict], int | None]]) -> list:
         return list(pool.map(_score_job, packed, chunksize=8))
 
 
+# Eight short lists share a message. A list of this many starts is a
+# bootstrap big enough to keep one worker busy after the others have
+# drained, so it does not share a message and it is sent before the
+# short lists that arrived just ahead of it. A message also stops at
+# that many starts, so eight thousand-start lists are not one task
+# sitting on the tail.
+_SCORE_GROUP = 8
+_SCORE_HEAVY = 4000
+
+
 class _ScoreBatch:
     """Score jobs for one pass, in the order the events will be replayed."""
 
@@ -1118,6 +1128,7 @@ class _ScoreBatch:
         self.pending: list[tuple[list[dict], int | None]] = []
         self.futures: list = []
         self._buf: list = []
+        self._seq = 0
         self.events: list | None = None
         self.rows: list[dict] | None = None
         self.unparsed: list[dict] | None = None
@@ -1143,9 +1154,10 @@ class _ScoreBatch:
     def collect(self) -> list:
         self.session.flush(self)
         if self.futures:
-            found = []
-            for future in self.futures:
-                found.extend(future.result())
+            found: list = [None] * self._seq
+            for indexes, future in self.futures:
+                for index, result in zip(indexes, future.result(), strict=True):
+                    found[index] = result
             return found
         return [_score_job(job) for job in self.pending]
 
@@ -1180,13 +1192,26 @@ class _ScoreSession:
             self._open()
 
     def _buffer(self, batch: _ScoreBatch, packed: tuple) -> None:
-        batch._buf.append(packed)
-        if len(batch._buf) >= 8:
+        index = batch._seq
+        batch._seq += 1
+        # The bootstrap sorts one draw per start. Three long lists in one
+        # message keep a single worker busy for most of a second, and that
+        # second lands on the tail. The long list goes out alone, before
+        # the short lists still sitting in the buffer. ``collect`` writes
+        # each summary back to the index it arrived with.
+        if len(packed[0]) >= _SCORE_HEAVY:
+            self._submit(batch, [(index, packed)])
+            return
+        batch._buf.append((index, packed))
+        starts = sum(len(item[0]) for _index, item in batch._buf)
+        if len(batch._buf) >= _SCORE_GROUP or starts >= _SCORE_HEAVY:
             self._submit(batch, batch._buf)
             batch._buf = []
 
-    def _submit(self, batch: _ScoreBatch, packed: list) -> None:
-        batch.futures.append(self.pool.submit(_score_jobs, packed))
+    def _submit(self, batch: _ScoreBatch, indexed: list) -> None:
+        indexes = [index for index, _packed in indexed]
+        packed = [job for _index, job in indexed]
+        batch.futures.append((indexes, self.pool.submit(_score_jobs, packed)))
 
     def _open(self) -> None:
         import os
@@ -1200,10 +1225,10 @@ class _ScoreSession:
         if self.pool is None:
             return
         if batch.pending:
-            packed = [(_pack_score(records), cap) for records, cap in batch.pending]
+            pending = list(batch.pending)
             batch.pending.clear()
-            for start in range(0, len(packed), 8):
-                self._submit(batch, packed[start : start + 8])
+            for records, cap in pending:
+                self._buffer(batch, (_pack_score(records), cap))
         if batch._buf:
             self._submit(batch, batch._buf)
             batch._buf = []
