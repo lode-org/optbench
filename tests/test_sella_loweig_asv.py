@@ -7,9 +7,39 @@ from optbench.sella_loweig import write_asv
 from optbench.v2 import HOST_LABEL_ENV
 
 
+def _duration(document: dict, key: str):
+    row = document["results"][key]
+    index = document["result_columns"].index("duration")
+    if index >= len(row):
+        return None
+    return row[index]
+
+
 def _stored(root: Path) -> dict:
     path = next(item for item in (root / "results" / "asv").rglob("*.json") if item.name != "machine.json")
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def test_a_missing_sella_duration_is_not_zero(tmp_path: Path, monkeypatch):
+    monkeypatch.setenv(HOST_LABEL_ENV, "workstation-a")
+    monkeypatch.setattr("optbench.sella_loweig.ROOT", tmp_path)
+    campaign = tmp_path / "results" / "campaign"
+    campaign.mkdir(parents=True)
+    row = {"start": "0000", "force_calls": 4, "success": True, "failure": None}
+    (campaign / "sella-0.1.1-lj38-loweig.starts.jsonl").write_text(json.dumps(row) + "\n", encoding="utf-8")
+    write_asv("abc1234567890abc1234567890abc1234567890a")
+    assert _duration(_stored(tmp_path), "bench_sella_loweig.Lj38Loweig.track_force_calls") is None
+
+
+def test_a_measured_sella_duration_is_kept(tmp_path: Path, monkeypatch):
+    monkeypatch.setenv(HOST_LABEL_ENV, "workstation-a")
+    monkeypatch.setattr("optbench.sella_loweig.ROOT", tmp_path)
+    campaign = tmp_path / "results" / "campaign"
+    campaign.mkdir(parents=True)
+    row = {"start": "0000", "force_calls": 4, "success": True, "failure": None, "seconds": 1.5}
+    (campaign / "sella-0.1.1-lj38-loweig.starts.jsonl").write_text(json.dumps(row) + "\n", encoding="utf-8")
+    write_asv("abc1234567890abc1234567890abc1234567890a")
+    assert _duration(_stored(tmp_path), "bench_sella_loweig.Lj38Loweig.track_force_calls") == 1.5
 
 
 def test_sella_keeps_tracks_already_in_the_result_file(tmp_path: Path, monkeypatch):

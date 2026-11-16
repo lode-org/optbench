@@ -14,6 +14,7 @@ keep the 0.1.1 objects callable. They do not change the diagonalization.
 
 from __future__ import annotations
 
+import math
 import os
 import sys
 from pathlib import Path
@@ -216,6 +217,7 @@ def write_asv(commit: str) -> Path:
         starts = [str(row["start"]) for row in rows]
         param_lists = [[repr("0")], [repr(start) for start in starts]]
         columns = {method: [] for method in tracks}
+        measured: list[float] = []
         for row in rows:
             success = bool(row.get("success"))
             failure = None if success else failure_of(row, int(job["cap"]))
@@ -225,13 +227,19 @@ def write_asv(commit: str) -> Path:
             columns["track_failure_wrong_stationary"].append(1.0 if failure == "wrong_stationary" else 0.0)
             columns["track_failure_divergence"].append(1.0 if failure == "divergence" else 0.0)
             columns["track_failure_crash"].append(1.0 if failure == "crash" else 0.0)
+            seconds = row.get("seconds")
+            if isinstance(seconds, bool) or not isinstance(seconds, (int, float)) or not math.isfinite(float(seconds)):
+                measured.append(float("nan"))
+            else:
+                measured.append(float(seconds))
+        duration = None if any(math.isnan(value) for value in measured) else float(sum(measured))
         for method in tracks:
             name = f"{job['name']}.{method}"
             result._results[name] = columns[method]
             result._benchmark_params[name] = param_lists
             result._benchmark_version[name] = job["version"]
             result._started_at[name] = int(time.time() * 1000)
-            result._duration[name] = 0.0
+            result._duration[name] = duration
             result._samples[name] = None
             result._stats[name] = None
         wrote += 1
