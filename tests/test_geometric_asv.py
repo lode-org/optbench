@@ -64,3 +64,29 @@ def test_a_missing_duration_is_not_written_as_zero(tmp_path: Path, monkeypatch):
     path.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
     with pytest.raises(ValueError, match="no measured seconds"):
         write_results(root, "abc1234567890abc1234567890abc1234567890a", started_at=1)
+
+
+def _noise_rows(campaign: Path, stem: str, template: str) -> None:
+    record = {"force_calls": 4, "success": True, "failure": None, "seconds": 0.2}
+    lines = "\n".join(json.dumps(record) for _ in range(1000)) + "\n"
+    (campaign / f"{stem}.starts.jsonl").write_text(lines, encoding="utf-8")
+    (campaign / f"{stem}.dat").write_text(f"template {template}\n", encoding="utf-8")
+
+
+def test_a_geometric_noise_campaign_is_not_a_noise_track(tmp_path: Path, monkeypatch):
+    monkeypatch.setenv(HOST_LABEL_ENV, "workstation-a")
+    monkeypatch.setattr(
+        "optbench.noise_asv.specs",
+        lambda: [{"id": "noise/rgmin-fire-s0"}],
+    )
+    campaign = tmp_path / "results" / "campaign"
+    campaign.mkdir(parents=True)
+    _noise_rows(campaign, "noise-rgmin-fire-s0", "noise/rgmin-fire-s0")
+    _noise_rows(campaign, "noise-geometric-cart-s0", "noise/geometric-cart-s0")
+    from optbench.noise_asv import write_results as write_noise
+
+    written = write_noise(tmp_path, "abc1234567890abc1234567890abc1234567890a", started_at=1)
+    stored = json.loads(written.read_text(encoding="utf-8"))
+    keys = list(stored["results"])
+    assert any(key.startswith("bench_noise.NoiseRgminFireS0.") for key in keys)
+    assert not any("Geometric" in key for key in keys)

@@ -50,6 +50,9 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
     campaign = root / "results" / "campaign"
     groups: dict[str, list[dict]] = {}
     for path in sorted(campaign.glob("noise-*.starts.jsonl")):
+        # geomeTRIC writes noise-geometric-* and scores those itself.
+        if path.name.startswith("noise-geometric-"):
+            continue
         template = None
         dat = campaign / (path.name[: -len(".starts.jsonl")] + ".dat")
         text = dat.read_text(encoding="utf-8")
