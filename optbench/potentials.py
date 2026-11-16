@@ -356,7 +356,7 @@ def read_con(text: str) -> tuple[np.ndarray, np.ndarray]:
     if box is None:
         raise ValueError("con file has no orthorhombic box")
     try:
-        start = next(i for i, line in enumerate(lines) if line.startswith("Coordinates of Component"))
+        start = next(i for i, line in enumerate(lines) if line.strip().lower().startswith("coordinate"))
     except StopIteration:
         raise ValueError("con file has no coordinate block") from None
     announced = None

@@ -42,7 +42,7 @@ VARIANTS = (
 
 def read_con(text: str) -> np.ndarray:
     lines = text.splitlines()
-    start = next(i for i, line in enumerate(lines) if line.startswith("Coordinates of Component")) + 1
+    start = next(i for i, line in enumerate(lines) if line.strip().lower().startswith("coordinate")) + 1
     xyz = []
     for line in lines[start:]:
         parts = line.split()

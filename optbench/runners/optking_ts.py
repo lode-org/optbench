@@ -74,7 +74,7 @@ def parse_con(text: str) -> dict:
             break
     if box is None:
         raise ValueError("con file has no box")
-    start = next(index for index, line in enumerate(lines) if line.startswith("Coordinates of Component"))
+    start = next(index for index, line in enumerate(lines) if line.strip().lower().startswith("coordinate"))
     symbol = "X"
     for line in reversed(lines[:start]):
         token = line.strip()

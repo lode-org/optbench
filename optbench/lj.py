@@ -83,7 +83,9 @@ def _lj_cluster_python(
 def read_component_coordinates(text: str) -> list[float]:
     """Flatten ``x y z`` rows after ``Coordinates of Component``."""
     lines = text.splitlines()
-    start = next(index for index, line in enumerate(lines) if line.startswith("Coordinates of Component"))
+    start = next(
+        index for index, line in enumerate(lines) if line.strip().lower().startswith("coordinate")
+    )
     coords: list[float] = []
     for line in lines[start + 1 :]:
         parts = line.split()
