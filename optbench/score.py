@@ -353,10 +353,13 @@ def _index_block(count: int, needed: int, seed: int) -> np.ndarray:
             raw = source.random_raw(words)
             picks = raw if raw.dtype == np.uint32 else raw.astype(np.uint32, copy=False)
             picks = picks >> shift
+            # The raw words are finished. Drop them before the compact copy.
+            del raw
         else:
             blob = rng.getrandbits(32 * words)
             picks = np.frombuffer(blob.to_bytes(words * 4, "little"), dtype="<u4") >> shift
-        keep = picks[picks < count]
+            del blob
+        keep = np.compress(picks < count, picks)
         take = min(int(keep.size), needed - filled)
         chosen[filled : filled + take] = keep[:take]
         filled += take
