@@ -98,8 +98,8 @@ def test_larger_clusters_use_the_cambridge_window_and_the_problem_cap():
 def test_archive_counts_do_not_double_count_xyz(tmp_path: Path):
     lj38 = load_starts(ROOT, resolve_problem(ROOT, "globalopt/lj38"), load_template(ROOT, "ogolem/lj38"), tmp_path)
     assert len(lj38) == 100
-    assert [name for name, _pos in lj38].count("0.con") == 1
-    assert all(name.endswith(".con") for name, _pos in lj38)
+    assert [name for name, _pos, _symbols in lj38].count("0.con") == 1
+    assert all(name.endswith(".con") for name, _pos, _symbols in lj38)
     lj75 = load_starts(ROOT, resolve_problem(ROOT, "globalopt/lj75"), load_template(ROOT, "ogolem/lj75"), tmp_path)
     lj98 = load_starts(ROOT, resolve_problem(ROOT, "globalopt/lj98"), load_template(ROOT, "ogolem/lj98"), tmp_path)
     lj150 = load_starts(ROOT, resolve_problem(ROOT, "globalopt/lj150"), load_template(ROOT, "ogolem/lj150"), tmp_path)

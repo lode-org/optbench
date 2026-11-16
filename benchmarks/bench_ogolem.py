@@ -94,11 +94,12 @@ def _job(spec: dict, start: str) -> dict:
     loaded = load_starts(ROOT, problem, template, _cache_dir() / "geometries")
     if index < 0 or index >= len(loaded):
         raise IndexError(f"{spec['template_id']} start {start} is outside the archive")
-    name, coords = loaded[index]
+    name, coords, symbols = loaded[index]
     return {
         "index": index,
         "start": name,
         "coords": coords.reshape(-1, 3).tolist(),
+        "symbols": None if symbols is None else list(symbols),
         "cap": spec["cap"],
         "threshold": _threshold(problem, template),
         "pool": spec["pool"],

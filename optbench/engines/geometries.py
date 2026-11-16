@@ -14,7 +14,7 @@ from pathlib import Path
 
 import numpy as np
 
-from optbench.surfaces import load_con, read_mode
+from optbench.surfaces import read_con, read_mode, species_labels
 
 
 def pes_kind(problem: dict) -> str:
@@ -78,7 +78,8 @@ def _box(kind: str, cell: np.ndarray) -> list[float] | None:
 
 
 def _row(name: str, path: Path, kind: str, mode: Path | None = None) -> dict:
-    positions, fixed, cell = load_con(path)
+    text = path.read_text(encoding="utf-8", errors="replace")
+    positions, fixed, cell = read_con(text)
     reference = None
     if mode is not None:
         full = read_mode(mode.read_text(encoding="utf-8", errors="replace"))
@@ -93,6 +94,7 @@ def _row(name: str, path: Path, kind: str, mode: Path | None = None) -> dict:
         "fixed": np.asarray(fixed, dtype=bool).tolist(),
         "box": _box(kind, cell),
         "reference": reference,
+        "symbols": species_labels(text),
     }
 
 

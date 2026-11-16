@@ -100,7 +100,22 @@ def _unhooked(template_name: str) -> RuntimeError:
     )
 
 
-def _write_xyz(path: Path, positions: np.ndarray, box) -> None:
+def _xyz_labels(count: int, symbols, kind: str) -> list[str]:
+    """Element of each atom, in source order.
+
+    A one-species Lennard-Jones file already says Ar, and that text
+    stays. A mixed list is written as given. Any other one-species
+    list uses that element.
+    """
+    names = [str(item) for item in symbols] if symbols else []
+    if names and len(names) != count:
+        raise ValueError(f"{len(names)} labels for {count} atoms")
+    if len(set(names)) > 1 or (kind != "lj" and names):
+        return names
+    return ["Ar"] * count
+
+
+def _write_xyz(path: Path, positions: np.ndarray, box, symbols=None, kind: str = "lj") -> None:
     rows = np.asarray(positions, dtype=np.float64)
     lines = [str(len(rows))]
     if box is None:
@@ -111,8 +126,8 @@ def _write_xyz(path: Path, positions: np.ndarray, box) -> None:
             f"{lengths[0]:.16g} 0 0 0 {lengths[1]:.16g} 0 0 0 {lengths[2]:.16g}"
         )
         lines.append(f'Lattice="{lattice}" Properties=species:S:1:pos:R:3')
-    for row in rows:
-        lines.append(f"Ar {row[0]:.16g} {row[1]:.16g} {row[2]:.16g}")
+    for label, row in zip(_xyz_labels(len(rows), symbols, kind), rows, strict=True):
+        lines.append(f"{label} {row[0]:.16g} {row[1]:.16g} {row[2]:.16g}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -189,7 +204,7 @@ def _execute(job: dict) -> dict:
             relay = hook / "pysocket" / "fmlip_relay.py"
             relay.parent.mkdir(parents=True)
             shutil.copyfile(_RELAY, relay)
-            _write_xyz(folder / "geom.xyz", positions, box)
+            _write_xyz(folder / "geom.xyz", positions, box, job.get("symbols"), kind)
             _odata(
                 folder,
                 sys.executable,
@@ -285,6 +300,7 @@ def _job(start: dict, settings: dict, template: dict) -> dict:
         "positions": start["positions"],
         "free": [not bool(flag) for flag in start["fixed"]],
         "box": start["box"],
+        "symbols": list(start.get("symbols") or []),
         "kind": settings["potential"],
         "cap": int(settings["cap"]),
         "force_norm": float(settings["force_norm"]),

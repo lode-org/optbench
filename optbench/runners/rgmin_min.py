@@ -401,7 +401,7 @@ def run_template(
     )
 
 
-def _load_geometries(root: Path, problem: dict, geometries: Path | None, work: Path | None, output: Path):
+def _load_geometries(root: Path, problem: dict, geometries: Path | None, work: Path | None, output: Path, *, with_symbols: bool = False):
     import tarfile
 
     from optbench.campaign import geometry_archive, iter_geometries
@@ -430,8 +430,17 @@ def _load_geometries(root: Path, problem: dict, geometries: Path | None, work: P
         raise ValueError(f"{problem['id']} expected {expected} starts, found {len(cons)}")
     loaded = []
     for path in cons:
-        pos, box = read_con(path.read_text(encoding="utf-8", errors="replace"))
-        loaded.append((path.stem, pos.reshape(-1), box))
+        text = path.read_text(encoding="utf-8", errors="replace")
+        pos, box = read_con(text)
+        row = (path.stem, pos.reshape(-1), box)
+        if with_symbols:
+            from optbench.surfaces import species_labels
+
+            labels = species_labels(text)
+            if len(labels) != int(pos.shape[0]):
+                raise ValueError(f"{path} has {len(labels)} labels for {pos.shape[0]} atoms")
+            row = row + (labels,)
+        loaded.append(row)
     return loaded
 
 

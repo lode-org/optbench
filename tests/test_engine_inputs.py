@@ -87,12 +87,43 @@ def test_optim_xyz_keeps_every_atom_and_the_cell(tmp_path: Path):
     from optbench.engines.optim_search import _write_xyz
 
     path = tmp_path / "geom.xyz"
-    _write_xyz(path, np.asarray(POSITIONS, dtype=np.float64), CELL)
+    _write_xyz(path, np.asarray(POSITIONS, dtype=np.float64), CELL, SYMBOLS)
     lines = path.read_text(encoding="utf-8").splitlines()
     assert lines[0] == "3"
     assert "10" in lines[1] and "12" in lines[1] and "14" in lines[1]
     assert len(lines[2:]) == 3
     assert lines[2].split()[1:4] == ["0.1", "0.2", "0.3"]
+    assert [line.split()[0] for line in lines[2:]] == SYMBOLS
+
+
+def test_species_labels_follow_each_block_in_source_order():
+    from optbench.surfaces import read_con, species_labels
+
+    positions, _fixed, _cell = read_con(CON)
+    assert species_labels(CON) == SYMBOLS
+    assert len(species_labels(CON)) == len(positions)
+
+
+def test_optim_one_species_morse_uses_the_source_element(tmp_path: Path):
+    from optbench.engines.optim_search import _write_xyz
+
+    positions = np.asarray([[0.1, 0.2, 0.3], [1.0, 0.0, 0.0]], dtype=np.float64)
+    path = tmp_path / "geom.xyz"
+    _write_xyz(path, positions, CELL, ["Pt", "Pt"], "morse_pt")
+    labels = [line.split()[0] for line in path.read_text(encoding="utf-8").splitlines()[2:]]
+    assert labels == ["Pt", "Pt"]
+
+
+def test_optim_lj_single_species_xyz_stays_argon(tmp_path: Path):
+    from optbench.engines.optim_search import _write_xyz
+
+    positions = np.asarray([[0.1, 0.2, 0.3], [1.0, 0.0, 0.0]], dtype=np.float64)
+    plain = tmp_path / "plain.xyz"
+    labelled = tmp_path / "labelled.xyz"
+    _write_xyz(plain, positions, None)
+    _write_xyz(labelled, positions, None, ["H", "H"], "lj")
+    assert labelled.read_bytes() == plain.read_bytes()
+    assert plain.read_bytes() == b"2\noptbench\nAr 0.1 0.2 0.3\nAr 1 0 0\n"
 
 
 def test_gmin_coords_repeat_every_atom():
@@ -108,11 +139,24 @@ def test_ogolem_xyz_keeps_every_atom_in_the_jar_length_unit(tmp_path: Path):
     from optbench.runners.ogolem_go import XYZ_SCALE, write_xyz
 
     path = tmp_path / "seed.xyz"
-    write_xyz(path, POSITIONS)
+    write_xyz(path, POSITIONS, SYMBOLS)
     lines = path.read_text(encoding="utf-8").splitlines()
     assert lines[0] == "3"
+    assert [line.split()[0] for line in lines[2:]] == SYMBOLS
     coords = [float(part) for part in lines[-1].split()[1:]]
     assert coords == pytest.approx([value * XYZ_SCALE for value in POSITIONS[-1]])
+
+
+def test_ogolem_lj_single_species_xyz_stays_argon(tmp_path: Path):
+    from optbench.runners.ogolem_go import write_xyz
+
+    positions = [[0.5, 0.0, 0.0], [0.0, 0.5, 0.0]]
+    plain = tmp_path / "plain.xyz"
+    labelled = tmp_path / "labelled.xyz"
+    write_xyz(plain, positions)
+    write_xyz(labelled, positions, ["C", "C"])
+    assert labelled.read_bytes() == plain.read_bytes()
+    assert all(line.startswith("Ar ") for line in plain.read_text(encoding="utf-8").splitlines()[2:])
 
 
 def test_lammps_data_keeps_every_atom_cell_and_fixed_type(tmp_path: Path):
@@ -144,6 +188,19 @@ def test_geometric_molecule_keeps_positions_and_repeats_the_element():
     molecule = _make_molecule(POSITIONS, "Pt", [])
     assert molecule.elem == ["Pt", "Pt", "Pt"]
     assert molecule.xyzs[0].tolist() == POSITIONS
+
+
+def test_geometric_molecule_uses_the_source_elements_in_order():
+    pytest.importorskip("geometric")
+    from optbench.runners.geometric_min import _make_molecule
+
+    mixed = _make_molecule(POSITIONS, SYMBOLS, [])
+    assert mixed.elem == SYMBOLS
+    assert mixed.xyzs[0].tolist() == POSITIONS
+    one = _make_molecule([[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]], "H", [])
+    same = _make_molecule([[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]], ["H", "H"], [])
+    assert one.elem == same.elem == ["H", "H"]
+    assert one.xyzs[0].tolist() == same.xyzs[0].tolist()
 
 
 def test_sella_reader_keeps_species_cell_and_fixed_atoms(tmp_path: Path):

@@ -465,13 +465,27 @@ class _HarnessEngine:
     """Built inside ``optimize`` so geometric is imported in the worker."""
 
 
-def _make_molecule(coords, element: str, bonds: list[tuple[int, int]]):
+def _element_names(count: int, element) -> list[str]:
+    """One name per atom, in source order.
+
+    A single name is the template element, repeated. A list is the
+    element of each atom.
+    """
+    if isinstance(element, str):
+        return [element] * count
+    names = [str(item) for item in element]
+    if len(names) != count:
+        raise ValueError(f"{len(names)} elements for {count} atoms")
+    return names
+
+
+def _make_molecule(coords, element, bonds: list[tuple[int, int]]):
     import numpy as np
     from geometric.molecule import Molecule
 
     pos = np.asarray(coords, dtype=np.float64).reshape(-1, 3)
     molecule = Molecule()
-    molecule.elem = [element] * len(pos)
+    molecule.elem = _element_names(len(pos), element)
     molecule.xyzs = [pos.copy()]
     molecule.Data["bonds"] = list(bonds)
     molecule.top_settings["read_bonds"] = True
@@ -522,7 +536,7 @@ def optimize(job: dict, evaluate, stop) -> dict:
     install_keep_read_bonds()
     kind = str(job["kind"])
     coordsys = str(job["coordsys"])
-    element = str(job["element"])
+    element = job["symbols"] if job.get("symbols") else str(job["element"])
     neighbors = int(job.get("neighbors") or 0)
     cap = int(job["cap"])
     box = job.get("box")
@@ -886,17 +900,18 @@ def run_template(
     kind = _kind(problem["id"])
     from optbench.runners.rgmin_min import _load_geometries
 
-    loaded = _load_geometries(root, problem, geometries, work, output)
+    loaded = _load_geometries(root, problem, geometries, work, output, with_symbols=True)
     if limit:
         loaded = loaded[: int(limit)]
     jobs = []
-    for index, (name, coords, box) in enumerate(loaded):
+    for index, (name, coords, box, symbols) in enumerate(loaded):
         jobs.append(
             {
                 "index": index,
                 "start": name,
                 "coords": coords.tolist(),
                 "box": None if kind == "lj" or box is None else box.tolist(),
+                "symbols": list(symbols),
                 "kind": kind,
                 "coordsys": section["coordsys"],
                 "neighbors": section["neighbors"],

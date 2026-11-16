@@ -213,14 +213,28 @@ def ogo_text(
     return "\n".join(lines) + "\n"
 
 
-def write_xyz(path: Path, positions) -> None:
+def _seed_labels(count: int, symbols) -> list[str]:
+    """Ar for a one-species Lennard-Jones seed. Mixed names stay in order.
+
+    The jar looks up the collision radius from the element in the xyz
+    file. Existing seeds say Ar, and that text does not change.
+    """
+    names = [str(item) for item in symbols] if symbols else []
+    if names and len(names) != count:
+        raise ValueError(f"{len(names)} labels for {count} atoms")
+    if len(set(names)) > 1:
+        return names
+    return ["Ar"] * count
+
+
+def write_xyz(path: Path, positions, symbols=None) -> None:
     """Write a seed. OGOLEM multiplies the file by ``ANGTOBOHR`` on read."""
     import numpy as np
 
     pos = np.asarray(positions, dtype=np.float64).reshape(-1, 3) * XYZ_SCALE
     lines = [str(pos.shape[0]), "optbench seed"]
-    for row in pos:
-        lines.append(f"Ar {row[0]:.16e} {row[1]:.16e} {row[2]:.16e}")
+    for label, row in zip(_seed_labels(pos.shape[0], symbols), pos, strict=True):
+        lines.append(f"{label} {row[0]:.16e} {row[1]:.16e} {row[2]:.16e}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -344,9 +358,12 @@ def _geometry_files(root: Path) -> list[Path]:
 def _read_rows(path: Path):
     import numpy as np
 
+    from optbench.surfaces import species_labels
+
     if path.suffix == ".con":
-        pos, _box = read_con(path.read_text(encoding="utf-8", errors="replace"))
-        return pos
+        text = path.read_text(encoding="utf-8", errors="replace")
+        pos, _box = read_con(text)
+        return pos, species_labels(text)
     rows = []
     for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
         parts = line.split()
@@ -358,7 +375,7 @@ def _read_rows(path: Path):
             continue
     if not rows:
         raise ValueError(f"{path} has no coordinates")
-    return np.asarray(rows, dtype=np.float64)
+    return np.asarray(rows, dtype=np.float64), None
 
 
 def _archive_of(root: Path, problem: dict, template: dict) -> Path:
@@ -373,7 +390,7 @@ def _archive_of(root: Path, problem: dict, template: dict) -> Path:
         return geometry_archive(root, {"id": problem["id"], "input": {"archive_path": archive_path}})
 
 
-def load_starts(root: Path, problem: dict, template: dict, work: Path) -> list[tuple[str, object]]:
+def load_starts(root: Path, problem: dict, template: dict, work: Path) -> list[tuple[str, object, list[str] | None]]:
     """Archived geometries in numeric order. ``.con`` wins when both exist."""
     import tarfile
 
@@ -393,7 +410,8 @@ def load_starts(root: Path, problem: dict, template: dict, work: Path) -> list[t
         marker.write_text(recorded, encoding="utf-8")
     loaded = []
     for path in _geometry_files(dest):
-        loaded.append((path.name, _read_rows(path)))
+        positions, symbols = _read_rows(path)
+        loaded.append((path.name, positions, symbols))
     expected = (problem.get("sample") or {}).get("starts")
     if expected is not None and len(loaded) != int(expected):
         raise ValueError(f"{problem['id']} expected {expected} starts, found {len(loaded)}")
@@ -738,7 +756,7 @@ def execute_start(job: dict) -> dict:
     seeds.mkdir(parents=True)
     copies = int(job.get("seed_copies") or 1)
     for copy in range(copies):
-        write_xyz(seeds / f"seed-{copy}.xyz", positions)
+        write_xyz(seeds / f"seed-{copy}.xyz", positions, job.get("symbols"))
     text = ogo_text(
         atoms=atoms,
         pool=int(job["pool"]),
@@ -865,7 +883,7 @@ def run_template(
     done = _completed(output.with_suffix(".starts.jsonl")) if resume else {}
     jobs = []
     kept = []
-    for index, (name, coords) in enumerate(loaded):
+    for index, (name, coords, symbols) in enumerate(loaded):
         if name in done:
             row = dict(done[name])
             row["index"] = index
@@ -876,6 +894,7 @@ def run_template(
                 "index": index,
                 "start": name,
                 "coords": coords.reshape(-1, 3).tolist(),
+                "symbols": None if symbols is None else list(symbols),
                 "cap": cap,
                 "threshold": threshold,
                 "pool": settings["pool"],

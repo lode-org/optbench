@@ -98,6 +98,48 @@ def read_con(text: str) -> tuple[Array, Array, Array]:
     return positions, fixed, cell
 
 
+def species_labels(text: str) -> list[str]:
+    """Element name of each atom ``read_con`` keeps, in that order.
+
+    The name is the one-token line before a coordinate block. A later
+    block keeps its own name. Atoms before the first name are ``X``.
+    """
+    lines = text.splitlines()
+    try:
+        header = next(i for i, line in enumerate(lines) if line.strip().lower().startswith("coordinate"))
+    except StopIteration:
+        raise ValueError("con file has no coordinate block") from None
+    if header < 3:
+        raise ValueError("con file has no atom count")
+    count = _atom_count(lines[header - 3])
+    current = "X"
+    for line in reversed(lines[:header]):
+        token = line.split()
+        if len(token) == 1 and token[0].isalpha():
+            current = token[0]
+            break
+    labels: list[str] = []
+    for line in lines[header + 1 :]:
+        parts = line.split()
+        if len(parts) == 1 and parts[0].isalpha():
+            current = parts[0]
+            continue
+        if len(parts) < 3:
+            continue
+        try:
+            xyz = [float(parts[0]), float(parts[1]), float(parts[2])]
+        except ValueError:
+            continue
+        if not all(np.isfinite(value) for value in xyz):
+            raise ValueError("con coordinate is not finite")
+        labels.append(current)
+        if len(labels) == count:
+            break
+    if len(labels) != count:
+        raise ValueError(f"con file has {len(labels)} coordinates, the header says {count}")
+    return labels
+
+
 def read_mode(text: str) -> Array:
     """Reference mode. A leading ``#eigenvalue`` line is skipped."""
     values = []
