@@ -433,6 +433,7 @@ def run(
             workers=workers,
             work=work,
             limit=limit,
+            resume=resume,
         )
     if template["engine"] == "gmin":
         from .runners.gmin_min import run_template

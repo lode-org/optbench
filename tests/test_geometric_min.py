@@ -171,3 +171,32 @@ def test_cartesian_lj38_start_reaches_the_force_stop():
     assert record["force_norm"] <= 0.01
     assert record["force_calls"] < 10000
     assert record["coordinate_system"] == "CartesianCoordinates"
+
+
+def test_a_fresh_run_drops_a_partial_geometric_file(tmp_path):
+    from optbench.runners.geometric_min import _kept_partial
+
+    partial = tmp_path / "bench.partial.jsonl"
+    partial.write_text('{"index": 0, "force_calls": 4}\n', encoding="utf-8")
+    assert _kept_partial(partial, False) == {}
+    assert not partial.exists()
+    partial.write_text('{"index": 0, "force_calls": 4}\nnot json\n\n', encoding="utf-8")
+    assert _kept_partial(partial, True) == {0: {"index": 0, "force_calls": 4}}
+
+
+def test_run_asks_geometric_to_resume(monkeypatch, tmp_path):
+    captured = {}
+
+    def fake(_root, _problem, _template, **kwargs):
+        captured["resume"] = kwargs["resume"]
+        return {"force_calls": 1, "nfailed": 0, "starts": 1}
+
+    monkeypatch.setattr("optbench.runners.geometric_min.run_template", fake)
+    run(
+        ROOT,
+        "minimization/lj38",
+        "geometric/lj38-cart",
+        output=tmp_path / "bench.dat",
+        resume=True,
+    )
+    assert captured["resume"] is True
