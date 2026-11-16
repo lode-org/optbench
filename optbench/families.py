@@ -82,10 +82,39 @@ def finite_difference_calls(hessian_calls: float | None, coordinates: int | None
     return float(hessian_calls) * int(coordinates)
 
 
+def _matching_outer(text: str) -> str:
+    """Drop one pair of parentheses that wraps the whole string."""
+    if len(text) < 2 or text[0] != "(" or text[-1] != ")":
+        return text
+    depth = 0
+    for index, char in enumerate(text):
+        if char == "(":
+            depth += 1
+        elif char == ")":
+            depth -= 1
+            if depth == 0 and index != len(text) - 1:
+                return text
+            if depth < 0:
+                return text
+    if depth == 0:
+        return text[1:-1].strip()
+    return text
+
+
 def version_text(code_version: str, commit: str = "") -> str:
-    text = str(code_version or "").strip()
-    if len(text) >= 2 and text[0] == "(" and text[-1] == ")":
-        text = text[1:-1].strip()
+    """The version token, without a repeated code name or method.
+
+    ``(develop 500350d9) · LBFGS`` and ``eOn (develop 500350d9)`` are both
+    ``develop 500350d9``. A release such as ``1.0 (98aac60)`` stays whole.
+    """
+    text = _matching_outer(str(code_version or "").strip())
+    if " · " in text:
+        text = _matching_outer(text.split(" · ", 1)[0].strip())
+    if text.endswith(")") and "(" in text:
+        head, _, tail = text.rpartition("(")
+        name = head.strip()
+        if name.isalpha():
+            text = tail[:-1].strip()
     if text:
         return text
     commit = str(commit or "").strip()
@@ -160,10 +189,24 @@ def method_name(template: dict | None, fields: dict | None = None, algorithm: st
 
 
 def row_label(code: str, version: str, method: str) -> str:
-    """``eOn (develop 500350d9) · Lanczos improved``."""
+    """``eOn (develop 500350d9) · Lanczos improved``.
+
+    A code field that already carries a parenthetical keeps that token.
+    A release that is not already inside it is added after a comma.
+    """
     code = str(code or "").strip()
-    version = str(version or "").strip()
+    version = version_text(version)
     method = str(method or "").strip()
+    if code.endswith(")") and "(" in code:
+        head, _, tail = code.rpartition("(")
+        embedded = tail[:-1].strip()
+        base = head.strip()
+        if base and embedded:
+            if not version or version == embedded or version in embedded.split():
+                code, version = base, embedded
+            else:
+                code = base
+                version = f"{embedded}, {version}"
     if code and version and method:
         return f"{code} ({version}) · {method}"
     if code and method:

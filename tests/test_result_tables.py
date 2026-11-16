@@ -3,6 +3,7 @@
 import math
 
 from optbench.board import _aligned_costs, _assign_family_ranks, profile_gap
+from optbench.families import row_label, version_text
 from optbench.profile import performance_profile
 from optbench.score import band_total, score_v2, summarize_divided
 from optbench.site_pages import leaderboard_html
@@ -97,6 +98,23 @@ def test_one_start_par2_is_the_call_or_twice_the_cap():
     assert failed["success_only_mean"] is None
     assert failed["rate_low"] == 0.0
     assert failed["n_cap"] == 1
+
+
+def test_a_version_does_not_repeat_the_code_or_the_method():
+    assert version_text("(develop 500350d9) · LBFGS") == "develop 500350d9"
+    assert version_text("eOn (develop 500350d9)") == "develop 500350d9"
+    assert version_text("1.0 (98aac60)") == "1.0 (98aac60)"
+    assert version_text("3.6.0") == "3.6.0"
+    assert row_label("eOn", "(develop 500350d9) · LBFGS", "LBFGS") == "eOn (develop 500350d9) · LBFGS"
+    assert row_label("eOn", "eOn (develop 500350d9)", "LBFGS") == "eOn (develop 500350d9) · LBFGS"
+    assert row_label("eOn (develop b0bd4d5a)", "3.6.0", "Basin hopping") == (
+        "eOn (develop b0bd4d5a, 3.6.0) · Basin hopping"
+    )
+    assert row_label("EON (SVN r2549)", "r2549", "Basin hopping") == "EON (SVN r2549) · Basin hopping"
+    assert row_label("TSASE", "1.0 (98aac60)", "quenchDimer+neb-QM") == (
+        "TSASE (1.0 (98aac60)) · quenchDimer+neb-QM"
+    )
+    assert row_label("Gman", "r235", "GL-BFGS(Hess)") == "Gman (r235) · GL-BFGS(Hess)"
 
 
 def test_a_half_converts_to_the_even_band_total():
