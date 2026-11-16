@@ -609,6 +609,81 @@ def test_plot_files_keep_the_shape_the_writer_sets(tmp_path: Path):
     assert _svg_ids(cost_svg, "PathCollection_") == 1
 
 
+def test_summary_codes_follow_the_registry_then_the_rest() -> None:
+    from optbench.board import summary_codes
+
+    document = {
+        "problems": {
+            "neb/one": {
+                "ranked": [
+                    {"code": " Zed "},
+                    {"code": "eOn"},
+                    {"code": ""},
+                    {"code": "   "},
+                ]
+            },
+            "minimization/two": {"ranked": [{"code": "ASE"}, {"code": "eOn"}]},
+            "empty": {},
+        }
+    }
+    registry = [
+        {"name": "eOn"},
+        {"name": "Missing"},
+        {"name": ""},
+        {"name": "ASE"},
+        {"name": "eOn"},
+    ]
+    assert summary_codes(document, registry) == ["eOn", "ASE", "Zed"]
+    assert summary_codes({}, []) == []
+
+
+def test_summary_table_shows_the_best_run_of_each_code() -> None:
+    from optbench.board import summary_table
+
+    def link(problem, templates=False):
+        ident = problem["id"]
+        return f"{ident}#templates" if templates else ident
+
+    problems = [
+        {
+            "id": "neb/late",
+            "title": "Late & Co",
+            "ranked": [
+                {"code": "eOn", "par2_mean": 2.0, "template": "fast"},
+                {"code": "eOn", "par2_mean": 9.0, "template": "slow"},
+                {"code": "", "par2_mean": 1.0, "template": "blank"},
+            ],
+        },
+        {
+            "id": "minimization/early",
+            "ranked": [{"code": "ASE", "par2_mean": 1.5, "entry": "ase-entry"}],
+        },
+        {
+            "id": "custom/last",
+            "title": "Last",
+            "ranked": [{"code": "ASE", "par2_mean": 4, "template": "other"}],
+        },
+    ]
+    html = summary_table(problems, ["eOn", "ASE"], link)
+    late = html.index('data-problem="neb/late"')
+    early = html.index('data-problem="minimization/early"')
+    last = html.index('data-problem="custom/last"')
+    assert early < late < last
+    assert "Late &amp; Co" in html
+    assert 'href="minimization/early"' in html
+    assert "minimization/early" in html and "minimization/early#templates" in html
+    eon_missing = html.split('data-problem="minimization/early"', 1)[1].split("</tr>", 1)[0]
+    assert 'data-code="eOn"' in eon_missing and ">—</td>" in eon_missing
+    assert 'data-template="ase-entry"' in eon_missing
+    assert 'data-par2="1.5"' in eon_missing
+    eon_best = html.split('data-problem="neb/late"', 1)[1].split("</tr>", 1)[0]
+    assert 'data-template="fast"' in eon_best
+    assert 'data-par2="2"' in eon_best
+    assert "slow" not in eon_best
+    assert "blank" not in eon_best
+    assert "Best full harness run of each code." in html
+
+
 def test_a_partial_problem_drops_a_plot_left_from_an_earlier_run(tmp_path: Path):
     _problem(tmp_path, starts=4, cap=10)
     _template(tmp_path)
