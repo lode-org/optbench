@@ -554,6 +554,7 @@ def run(
             output=output,
             workers=workers,
             work=work,
+            limit=limit,
         )
     if template["engine"] == "rgsaddle":
         from .rgsaddle_minmode import run_template

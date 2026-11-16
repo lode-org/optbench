@@ -910,7 +910,7 @@ def _jsonable(record: dict) -> dict:
     return out
 
 
-def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, force_tol: float, work: Path, workers: int) -> dict:
+def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, force_tol: float, work: Path, workers: int, limit: int = 0) -> dict:
     settings = _settings(template)
     paths = (problem.get("input") or {}).get("geometries") or []
     con_path = next(path for path in paths if str(path).endswith(".con"))
@@ -968,6 +968,8 @@ def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, forc
     )
     batch = int(settings["batch"])
     max_searches = min(int(settings["max_searches"]), int(order.size))
+    if limit:
+        max_searches = min(max_searches, int(limit))
 
     def _batch(start: int, stop: int, radius_now: float) -> list[dict]:
         payloads = []
@@ -1199,11 +1201,13 @@ def mode_spec(root: Path, problem: dict, template: dict, row: dict, cap: int, wo
     }
 
 
-def _run_modes(root: Path, problem: dict, template: dict, *, output: Path, cap: int, work: Path, workers: int) -> dict:
+def _run_modes(root: Path, problem: dict, template: dict, *, output: Path, cap: int, work: Path, workers: int, limit: int = 0) -> dict:
     rows = _geometries(root, problem, work)
     expected = int((problem.get("sample") or {}).get("starts") or len(rows))
     if len(rows) != expected:
         raise RuntimeError(f"{problem['id']} has {len(rows)} geometries, the problem states {expected}")
+    if limit:
+        rows = rows[: int(limit)]
     specs = [mode_spec(root, problem, template, row, cap, work, index) for index, row in enumerate(rows)]
     if workers <= 1:
         records = [run_mode_point(spec) for spec in specs]
@@ -1281,7 +1285,7 @@ def _run_modes(root: Path, problem: dict, template: dict, *, output: Path, cap: 
     }
 
 
-def run_template(root: Path, problem: dict, template: dict, *, output: Path, workers: int = 1, work: Path | None = None) -> dict:
+def run_template(root: Path, problem: dict, template: dict, *, output: Path, workers: int = 1, work: Path | None = None, limit: int = 0) -> dict:
     """Run one SoftSaddle template."""
     from .campaign import _check_stop
 
@@ -1295,7 +1299,7 @@ def run_template(root: Path, problem: dict, template: dict, *, output: Path, wor
     scratch = work or output.parent / "work" / template["id"].replace("/", "-")
     scratch.mkdir(parents=True, exist_ok=True)
     if problem["id"] == "saddle-search/pt-island":
-        return _run_saddle(root, problem, template, output=output, force_tol=force_tol, work=scratch, workers=workers)
+        return _run_saddle(root, problem, template, output=output, force_tol=force_tol, work=scratch, workers=workers, limit=limit)
     if cap is None:
         raise ValueError(f"{problem['id']} has no force-call cap")
-    return _run_modes(root, problem, template, output=output, cap=cap, work=scratch, workers=workers)
+    return _run_modes(root, problem, template, output=output, cap=cap, work=scratch, workers=workers, limit=limit)

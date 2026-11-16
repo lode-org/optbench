@@ -27,6 +27,34 @@ def test_softsaddle_templates_match_the_registry_pin():
         _check_stop(resolve_problem(ROOT, row["problem"]), row)
 
 
+def test_a_limit_runs_the_first_softsaddle_modes(monkeypatch, tmp_path: Path):
+    from optbench.campaign import run
+    import optbench.softsaddle_run as soft
+
+    monkeypatch.setattr(soft, "library_path", lambda kind: Path("/bin/true"))
+    monkeypatch.setattr(soft, "_geometries", lambda *args, **kwargs: [{"name": f"m{i}"} for i in range(200)])
+    seen = []
+
+    def fake_point(spec):
+        seen.append(spec["start"])
+        return {"force_calls": 4, "success": True, "failure": None, "start": spec["start"]}
+
+    monkeypatch.setattr(soft, "mode_spec", lambda *args, **kwargs: {"start": args[3]["name"]})
+    monkeypatch.setattr(soft, "run_mode_point", fake_point)
+    output = tmp_path / "benchmark.dat"
+    summary = run(
+        ROOT,
+        "lowest-eigenvector/lj38",
+        "softsaddle/mode-lanczos",
+        output=output,
+        work=tmp_path / "work",
+        limit=1,
+    )
+    assert seen == ["m0"]
+    assert summary["starts"] == 1
+    assert "partial true" in output.read_text(encoding="utf-8")
+
+
 def test_hypersphere_is_the_sorted_5000_point_set():
     vectors, order = hypersphere()
     assert vectors.shape == (5000, 21)
