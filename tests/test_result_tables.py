@@ -2,10 +2,10 @@
 
 import math
 
-from optbench.board import _aligned_costs, _assign_family_ranks, profile_gap
+from optbench.board import _aligned_costs, _assign_family_ranks, _rank_key, profile_gap
 from optbench.families import row_label, version_text
 from optbench.profile import performance_profile
-from optbench.score import band_total, score_v2, summarize_divided
+from optbench.score import band_total, penalised_cost, score_v2, summarize_divided
 from optbench.site_pages import leaderboard_html
 
 
@@ -98,6 +98,29 @@ def test_one_start_par2_is_the_call_or_twice_the_cap():
     assert failed["success_only_mean"] is None
     assert failed["rate_low"] == 0.0
     assert failed["n_cap"] == 1
+
+
+def test_a_failure_does_not_tie_or_outrank_a_solved_run():
+    assert penalised_cost(10, True, 10) == 10
+    assert penalised_cost(10, False, 10) == 20
+    solved = {"family": "minimize", "rank_cost": 20.0, "success_rate": 1.0, "label": "solved"}
+    same = {"family": "minimize", "rank_cost": 20.0, "success_rate": 0.0, "label": "failed"}
+    cheaper = {"family": "minimize", "rank_cost": 10.0, "success_rate": 0.0, "label": "capped"}
+    rows = sorted([cheaper, same, solved], key=_rank_key)
+    assert [row["label"] for row in rows] == ["solved", "capped", "failed"]
+    _assign_family_ranks(rows)
+    assert [row["family_rank"] for row in rows] == [1, 2, 3]
+
+    html = leaderboard_html(
+        [
+            {"group": "p", "code": "Failed", "best": 20.0, "median": 20.0, "success": 0.0, "par2": 20.0, "unsolved": True, "code_href": "f.html"},
+            {"group": "p", "code": "Solved", "best": 30.0, "median": 30.0, "success": 1.0, "par2": 30.0, "unsolved": False, "code_href": "s.html"},
+        ],
+        show_problem=False,
+        bench="leader",
+    )
+    assert html.index("Solved") < html.index("Failed")
+    assert 'class="rank r1"' in html.split("Failed")[0]
 
 
 def test_a_version_does_not_repeat_the_code_or_the_method():

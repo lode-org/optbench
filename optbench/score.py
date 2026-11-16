@@ -231,11 +231,15 @@ def rate_interval(successes: int, starts: int, z: float = RATE_Z) -> tuple[float
 
 
 def penalised_cost(force_calls: float, success: bool, cap: int | None, factor: int = PAR_FACTOR) -> float:
-    """PAR cost. A failure, or a success at or above the cap, costs ``factor * cap``."""
-    if cap is not None and (not success or force_calls >= cap):
-        return float(factor * cap)
+    """PAR cost. A failure costs ``factor * cap``. A success keeps its call count.
+
+    A confirmed transition may sit on the cap and still be a success. That
+    count is not the failure sentinel, so it does not tie a run that failed.
+    """
     if not success:
-        raise ValueError("a failure needs a cap")
+        if cap is None:
+            raise ValueError("a failure needs a cap")
+        return float(factor * cap)
     return float(force_calls)
 
 

@@ -1199,12 +1199,14 @@ def test_a_confirmed_transition_at_the_cap_stays_a_success(tmp_path: Path):
     assert confirmed["nfailed"] == 0
     assert confirmed["success_rate"] == 1
     assert confirmed["failures"]["cap"] == 0
+    assert confirmed["par2_mean"] == 10
 
     _starts(tmp_path, "toy-fast", [_row(10, True, "0")])
     bare = build_board(tmp_path)["problems"]["minimization/toy"]["ranked"][0]
     assert bare["nfailed"] == 1
     assert bare["success_rate"] == 0
     assert bare["failures"]["cap"] == 1
+    assert bare["par2_mean"] == 20
 
 
 def test_a_geometry_name_is_used_when_the_start_is_absent(tmp_path: Path):

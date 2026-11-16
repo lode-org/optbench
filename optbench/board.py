@@ -2007,9 +2007,26 @@ def _rank_cost(row: dict):
     return score
 
 
+def unsolved_row(row: dict) -> bool:
+    """True when the row records starts and none of them succeeded.
+
+    A missing rate is not a failure. hTST Al states no cap, leaves the
+    PAR-2 cell empty, and still finished its windows.
+    """
+    rate = row.get("success_rate")
+    if rate is not None:
+        return float(rate) == 0.0
+    failed = row.get("nfailed")
+    count = int(row.get("n") or 0)
+    if failed is None or count <= 0:
+        return False
+    return int(failed) >= count
+
+
 def _rank_key(row: dict) -> tuple:
     score = _rank_cost(row)
     return (
+        unsolved_row(row),
         score is None,
         float(score) if score is not None else 0.0,
         str(row.get("label") or ""),
@@ -2257,7 +2274,8 @@ def _assign_family_ranks(ranked: list[dict]) -> None:
     """Competition rank within a family. Equal costs share a rank.
 
     The next distinct cost skips the tied places, so two firsts are
-    followed by a third. The list is already in cost order.
+    followed by a third. A row with no successes does not share a rank
+    with a row that finished a start. The list is already in rank order.
     """
     seen: dict[str, int] = defaultdict(int)
     last_cost: dict[str, object] = {}
@@ -2267,10 +2285,11 @@ def _assign_family_ranks(ranked: list[dict]) -> None:
         family = str(row.get("family") or "")
         seen[family] += 1
         cost = _rank_cost(row)
+        place = (unsolved_row(row), cost)
         previous = last_cost.get(family, missing)
-        if previous is missing or previous != cost:
+        if previous is missing or previous != place:
             last_rank[family] = seen[family]
-            last_cost[family] = cost
+            last_cost[family] = place
         row["family_rank"] = last_rank[family]
 
 

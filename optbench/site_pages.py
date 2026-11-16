@@ -381,6 +381,8 @@ def _format_rate(value: float | None) -> str:
 
 def code_summaries(problem: dict, ranked: list[dict], registry: list[dict]) -> list[dict]:
     """Best and median ranked cost, and the success rate of the best row, per code."""
+    from .board import unsolved_row
+
     grouped: dict[str, list[dict]] = defaultdict(list)
     for row in ranked:
         grouped[code_page_name(row, registry)].append(row)
@@ -389,9 +391,11 @@ def code_summaries(problem: dict, ranked: list[dict], registry: list[dict]) -> l
         scored = [(value, row) for row in rows if (value := _metric_value(row)) is not None]
         if not scored:
             continue
-        scored.sort(key=lambda item: (item[0], str(item[1].get("label") or "")))
-        values = [item[0] for item in scored]
-        best_value, best_row = scored[0]
+        solved = [item for item in scored if not unsolved_row(item[1])]
+        pool = solved or scored
+        pool.sort(key=lambda item: (item[0], str(item[1].get("label") or "")))
+        values = [item[0] for item in pool]
+        best_value, best_row = pool[0]
         par2 = best_row.get("par2_mean")
         found.append(
             {
@@ -400,11 +404,12 @@ def code_summaries(problem: dict, ranked: list[dict], registry: list[dict]) -> l
                 "median": float(statistics.median(values)),
                 "success": _success(best_row),
                 "par2": None if par2 is None else float(par2),
+                "unsolved": unsolved_row(best_row),
                 "n": len(scored),
                 "problem": str(problem.get("id") or ""),
             }
         )
-    found.sort(key=lambda item: (item["best"], item["code"].lower()))
+    found.sort(key=lambda item: (bool(item["unsolved"]), item["best"], item["code"].lower()))
     return found
 
 
@@ -492,27 +497,38 @@ def leaderboard_html(items: list[dict], *, show_problem: bool, bench: str) -> st
         "<caption>A shorter bar is a lower cost on the log scale for that problem. Select a column heading to sort.</caption>",
         "<thead><tr>" + "".join(headers) + "</tr></thead><tbody>",
     ]
+    items = sorted(
+        items,
+        key=lambda item: (
+            str(item.get("group") or ""),
+            bool(item.get("unsolved")),
+            float(item["best"]),
+            str(item.get("code") or "").lower(),
+        ),
+    )
     rank = 0
     place = 0
     previous = None
-    previous_best = None
+    previous_key = None
     par2_dash = "A dash in PAR-2 means that row has no PAR-2 score."
     rate_dash = "A dash in the success rate means that row did not record one."
     for item in items:
         group = str(item.get("group") or "")
         best = item.get("best")
+        key = (bool(item.get("unsolved")), best)
         if group != previous:
             place = 0
-            previous_best = None
+            previous_key = None
             previous = group
             started = True
         else:
             started = False
         place += 1
         # Competition rank. A tie keeps the rank, and the next cost skips.
-        if previous_best is None or best != previous_best:
+        # A row with no successes does not share a rank with one that finished.
+        if previous_key is None or key != previous_key:
             rank = place
-            previous_best = best
+            previous_key = key
         span = spans[group]
         fraction = None if span is None else log_cost_fraction(float(item["best"]), span[0], span[1])
         percent = 0.0 if fraction is None else 100.0 * fraction
