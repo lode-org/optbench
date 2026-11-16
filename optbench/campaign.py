@@ -775,6 +775,7 @@ def run(
     # A missing result or a bad termination is a failure at the cap, so it
     # stays out of the mean. The starts file keeps the raw call count.
     counts = []
+    failures = []
     start_rows = []
     for detail in details:
         calls = detail["force_calls"]
@@ -782,6 +783,12 @@ def run(
         bad = _bad_termination(calls, reason)
         counted = cap if bad else calls
         counts.append(counted)
+        if calls is None:
+            failures.append("crash")
+        elif counted >= cap:
+            failures.append("cap")
+        else:
+            failures.append(None)
         start_rows.append(
             {
                 "failed": bad or calls >= cap,
@@ -802,7 +809,7 @@ def run(
     output.write_text(benchmark_text(summary, template), encoding="utf-8")
     write_starts(
         output.with_suffix(".starts.jsonl"),
-        client_start_records([con.stem for con in cons], counts, cap),
+        client_start_records([con.stem for con in cons], counts, cap, failures),
     )
     write_starts(output.with_suffix(".starts"), start_rows)
     summary["starts"] = len(counts)

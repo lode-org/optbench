@@ -278,23 +278,33 @@ def write_starts(path: Path, records: list[dict]) -> None:
     path.write_text(body, encoding="utf-8")
 
 
-def client_start_records(names: list[str], counts: list[int], cap: int) -> list[dict]:
+def client_start_records(
+    names: list[str],
+    counts: list[int],
+    cap: int,
+    failures: list[str | None] | None = None,
+) -> list[dict]:
     """Per-start rows for a subprocess client.
 
     The client counted these calls. They are not a harness score.
+    ``failures`` is the class for each start. A missing result is a crash.
+    A count at the cap is a cap failure. A success has no class.
     """
+    if failures is not None and len(failures) != len(names):
+        raise ValueError("failures must match the starts")
     records = []
-    for name, count in zip(names, counts, strict=True):
-        records.append(
-            {
-                "schema": "optbench.start/v2",
-                "start": name,
-                "force_calls": count,
-                "counter": "client",
-                "comparable": False,
-                "success": count < cap,
-            }
-        )
+    for index, (name, count) in enumerate(zip(names, counts, strict=True)):
+        record = {
+            "schema": "optbench.start/v2",
+            "start": name,
+            "force_calls": count,
+            "counter": "client",
+            "comparable": False,
+            "success": count < cap,
+        }
+        if failures is not None:
+            record["failure"] = failures[index]
+        records.append(record)
     return records
 
 

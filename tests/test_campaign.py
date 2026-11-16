@@ -370,6 +370,42 @@ def test_a_nan_client_count_does_not_stop_the_other_starts(tmp_path: Path):
     assert summary["counts"][0] > 10
 
 
+def test_a_missing_client_result_is_recorded_as_a_crash(tmp_path: Path):
+    geometries = tmp_path / "geometries"
+    geometries.mkdir()
+    (geometries / "cluster_0000.con").write_text("missing\n", encoding="utf-8")
+    (geometries / "cluster_0001.con").write_text("kept\n", encoding="utf-8")
+    client = tmp_path / "client"
+    client.write_text(
+        "#!/usr/bin/env python3\n"
+        "from pathlib import Path\n"
+        "text = Path('pos.con').read_text()\n"
+        "if 'missing' in text:\n"
+        "    raise SystemExit(1)\n"
+        "Path('results.dat').write_text('0 termination_reason\\n10 total_force_calls\\n')\n",
+        encoding="utf-8",
+    )
+    client.chmod(client.stat().st_mode | stat.S_IEXEC)
+    output = tmp_path / "benchmark.dat"
+    summary = run(
+        ROOT,
+        "minimization/lj38",
+        "eon-svn/lbfgs-m100",
+        client=client,
+        geometries=geometries,
+        output=output,
+        work=tmp_path / "work",
+        workers=1,
+    )
+    rows = [json.loads(line) for line in output.with_suffix(".starts.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert rows[0]["success"] is False
+    assert rows[0]["failure"] == "crash"
+    assert rows[1]["success"] is True
+    assert rows[1]["failure"] is None
+    assert summary["nfailed"] == 1
+    assert summary["force_calls"] == 10
+
+
 def test_a_short_iteration_cap_is_refused():
     problem = resolve_problem(ROOT, "minimization/lj38")
     template = {"ini": {"Optimizer": {"max_iterations": 10, "converged_force": 0.01}}}
