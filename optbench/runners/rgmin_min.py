@@ -311,6 +311,7 @@ def _dat(summary: dict, template: dict, metrics: dict, commit: str, version: str
         "n": metrics.get("n"),
         "energy_min": summary.get("energy_min"),
         "energy_max": summary.get("energy_max"),
+        "partial": "true" if summary.get("partial") else None,
     }
     lines = [
         "# counter harness. One force call is one RgpotCounter.calculate entry.",
@@ -350,6 +351,7 @@ def run_template(
     output: Path,
     workers: int,
     work: Path | None,
+    limit: int = 0,
 ) -> dict:
     import rgmin
 
@@ -395,6 +397,7 @@ def run_template(
         commit=commit,
         root=root,
         noise=_noise(template, problem),
+        limit=limit,
     )
 
 
@@ -449,10 +452,13 @@ def _run(
     commit,
     root,
     noise: dict | None = None,
+    limit: int = 0,
 ) -> dict:
     loaded = _load_geometries(root, problem, geometries, work, output)
     if problem["id"] == "minimization/morse-bulk" and geometries is None and len(loaded) != 100:
         raise ValueError(f"morse-bulk expected 100 starts, found {len(loaded)}")
+    if limit:
+        loaded = loaded[: int(limit)]
     jobs = []
     for index, (name, coords, box) in enumerate(loaded):
         jobs.append(
@@ -494,6 +500,8 @@ def _run(
     summary = summarize_capped(legacy_counts, cap)
     successes = [int(record["force_calls"]) for record in records if record["converged"]]
     summary["median"] = statistics.median(successes) if successes else None
+    expected = (problem.get("sample") or {}).get("starts")
+    summary["partial"] = expected is not None and len(records) < int(expected)
     energies = [float(record["energy"]) for record in records if record.get("energy") is not None]
     if energies:
         summary["energy_min"] = min(energies)

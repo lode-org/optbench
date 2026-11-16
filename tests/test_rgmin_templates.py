@@ -83,6 +83,53 @@ def test_shared_work_directory_keeps_problem_archives_apart(tmp_path: Path):
     assert [row[0] for row in again] == [row[0] for row in morse_rows]
 
 
+def test_a_limit_runs_the_first_rgmin_geometries(monkeypatch, tmp_path: Path):
+    import sys
+    import types
+
+    fake = types.ModuleType("rgmin")
+    fake.__version__ = "0.4.1"
+    monkeypatch.setitem(sys.modules, "rgmin", fake)
+    from optbench.runners import rgmin_min
+
+    class _Coords:
+        def tolist(self):
+            return [0.0, 0.0, 0.0]
+
+    monkeypatch.setattr(
+        rgmin_min,
+        "_load_geometries",
+        lambda *args, **kwargs: [("s0", _Coords(), None), ("s1", _Coords(), None), ("s2", _Coords(), None)],
+    )
+    seen = []
+
+    def fake_job(spec):
+        seen.append(spec["start"])
+        return {
+            "index": spec["index"],
+            "start": spec["start"],
+            "converged": True,
+            "force_calls": 4,
+            "energy": -1.0,
+            "success": True,
+            "failure": None,
+        }
+
+    monkeypatch.setattr(rgmin_min, "_minimize_job", fake_job)
+    output = tmp_path / "benchmark.dat"
+    summary = run(
+        ROOT,
+        "minimization/lj38",
+        "rgmin/lj38-lbfgs",
+        output=output,
+        work=tmp_path / "work",
+        limit=1,
+    )
+    assert seen == ["s0"]
+    assert summary["starts"] == 1
+    assert "partial true" in output.read_text(encoding="utf-8")
+
+
 def test_rgmin_engine_does_not_need_eonclient(monkeypatch, tmp_path: Path):
     captured = {}
 

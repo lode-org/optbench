@@ -537,6 +537,7 @@ def run(
             output=output,
             workers=workers,
             work=work,
+            limit=limit,
         )
     if template["engine"] == "softsaddle":
         from .softsaddle_run import run_template
