@@ -679,7 +679,7 @@ def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
     return {"problem": problem, "template": template, "settings": settings, "jobs": jobs, "execute": execute}
 
 
-def _run_points(planned: dict, output: Path, workers: int) -> dict:
+def _run_points(planned: dict, output: Path, workers: int, limit: int = 0) -> dict:
     problem, template, settings = planned["problem"], planned["template"], planned["settings"]
     if settings["task"] == "minimize":
         comment = (
@@ -693,7 +693,7 @@ def _run_points(planned: dict, output: Path, workers: int) -> dict:
             "# TSASE forceCalls is not this count.\n"
             "# A mode success is the problem overlap. A saddle success is Hessian index 1."
         )
-    records = run_jobs(planned["jobs"], planned["execute"], workers)
+    records = run_jobs(planned["jobs"], planned["execute"], workers, limit)
     parameters = {
         "potential": settings["potential"],
         "cap": settings["cap"],
@@ -715,7 +715,7 @@ def _run_points(planned: dict, output: Path, workers: int) -> dict:
     )
 
 
-def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1, limit: int = 0) -> dict:
     from optbench.campaign import load_template
 
     method = str((load_template(root, template_name).get("tsase") or {}).get("method", "ci"))
@@ -723,9 +723,9 @@ def run(root: Path, problem_name: str, template_name: str, *, output: Path, work
         raise ValueError(f"{template_name} method quench-dimer is not a search this module runs")
     planned = plan(root, problem_name, template_name, output.parent / "work")
     if "task" in planned["settings"]:
-        return _run_points(planned, output, workers)
+        return _run_points(planned, output, workers, limit)
     problem, template, settings = planned["problem"], planned["template"], planned["settings"]
-    records = run_jobs(planned["jobs"], planned["execute"], workers)
+    records = run_jobs(planned["jobs"], planned["execute"], workers, limit)
     for record in records:
         record["problem"] = problem["id"]
         record["template"] = template["id"]

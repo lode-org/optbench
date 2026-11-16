@@ -243,10 +243,10 @@ def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
     }
 
 
-def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1, limit: int = 0) -> dict:
     planned = plan(root, problem_name, template_name, output.parent / "work")
     problem, template, settings = planned["problem"], planned["template"], planned["settings"]
-    records = run_jobs(planned["jobs"], planned["execute"], workers)
+    records = run_jobs(planned["jobs"], planned["execute"], workers, limit)
     comment = (
         "# counter harness. COMPASS calls the ASE calculator, and that calculator calls pes.evaluate.\n"
         "# forcetol, minimize_fmax, and both target distances are the problem force stop.\n"

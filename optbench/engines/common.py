@@ -386,8 +386,13 @@ def write_campaign(
     }
 
 
-def run_jobs(jobs: list[dict], execute, workers: int) -> list[dict]:
-    """One search per process. A reused process would keep a native singleton."""
+def run_jobs(jobs: list[dict], execute, workers: int, limit: int = 0) -> list[dict]:
+    """One search per process. A reused process would keep a native singleton.
+
+    ``limit`` keeps the first jobs. Zero runs the list that was planned.
+    """
+    if limit:
+        jobs = list(jobs)[: int(limit)]
     if len(jobs) <= 1:
         records = [execute(job) for job in jobs]
     else:

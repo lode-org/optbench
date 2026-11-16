@@ -378,7 +378,9 @@ def _jobs(starts: list[dict], settings: dict, template: dict) -> list[dict]:
     return rows
 
 
-def _collect(jobs: list[dict], workers: int) -> list[dict]:
+def _collect(jobs: list[dict], workers: int, limit: int = 0) -> list[dict]:
+    if limit:
+        jobs = list(jobs)[: int(limit)]
     if len(jobs) <= 1:
         records = [_execute(job) for job in jobs]
     else:
@@ -439,7 +441,7 @@ def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
     }
 
 
-def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1, limit: int = 0) -> dict:
     planned = plan(root, problem_name, template_name, output.parent / "work")
     problem, template, settings = planned["problem"], planned["template"], planned["settings"]
     section = _section(template)
@@ -463,7 +465,7 @@ def run(root: Path, problem_name: str, template_name: str, *, output: Path, work
             "coordinates": "bohr",
             "counter": "harness",
         }
-    records = _collect(planned["jobs"], workers)
+    records = _collect(planned["jobs"], workers, limit)
     return write_campaign(
         output,
         records,

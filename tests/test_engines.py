@@ -16,6 +16,47 @@ from optbench.engines.pykmc_search import available as pykmc_available
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_a_limit_keeps_the_first_plugged_jobs():
+    from optbench.engines.common import run_jobs
+
+    seen = []
+
+    def execute(job):
+        seen.append(job["name"])
+        return {"start": job["name"]}
+
+    records = run_jobs([{"name": "a"}, {"name": "b"}, {"name": "c"}], execute, 1, limit=1)
+    assert seen == ["a"]
+    assert [row["start"] for row in records] == ["a"]
+
+
+def test_run_passes_a_start_limit_to_a_plugged_engine(monkeypatch, tmp_path: Path):
+    seen = {}
+
+    class _Plug:
+        def run(self, root, problem_name, template_name, *, output, workers, limit=0):
+            seen["limit"] = limit
+            seen["template"] = template_name
+            return {
+                "force_calls": 1,
+                "nfailed": 0,
+                "starts": 1,
+                "template": template_name,
+                "problem": problem_name,
+            }
+
+    monkeypatch.setattr("optbench.engines.find", lambda name: _Plug() if name == "lammps" else None)
+    summary = run(
+        ROOT,
+        "minimization/lj38",
+        "lammps/cg-lj38",
+        output=tmp_path / "benchmark.dat",
+        limit=2,
+    )
+    assert seen["limit"] == 2
+    assert summary["starts"] == 1
+
+
 def test_named_engines_are_in_the_table():
     assert list(ENGINES) == [
         "partn",
@@ -156,10 +197,11 @@ def test_pykmc_and_optim_write_nothing(tmp_path: Path):
 def test_partn_engine_is_dispatched(monkeypatch, tmp_path: Path):
     captured = {}
 
-    def fake(root, problem_name, template_name, *, output, workers):
+    def fake(root, problem_name, template_name, *, output, workers, limit=0):
         captured["problem"] = problem_name
         captured["template"] = template_name
         captured["workers"] = workers
+        del limit
         return {
             "force_calls": 3,
             "nfailed": 0,

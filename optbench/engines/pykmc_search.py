@@ -28,6 +28,6 @@ def available() -> str | None:
     )
 
 
-def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
-    del root, problem_name, template_name, output, workers
+def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1, limit: int = 0) -> dict:
+    del root, problem_name, template_name, output, workers, limit
     raise RuntimeError(available())

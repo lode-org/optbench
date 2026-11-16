@@ -425,9 +425,9 @@ def _point_job(start: dict, settings: dict, template: dict) -> dict:
     }
 
 
-def run_points(jobs: list[dict], problem: dict, template: dict, settings: dict, *, output: Path, workers: int) -> dict:
+def run_points(jobs: list[dict], problem: dict, template: dict, settings: dict, *, output: Path, workers: int, limit: int = 0) -> dict:
     """One ARTn search from each sample geometry."""
-    records = run_jobs(jobs, _execute, workers)
+    records = run_jobs(jobs, _execute, workers, limit)
     section = _section(template)
     parameters = {
         **{key: value for key, value in settings.items() if key != "task"},
@@ -489,7 +489,7 @@ def _minimize_free(kind: str, positions: np.ndarray, free: np.ndarray, box, forc
     return out, bool(ok), int(surface.calls), float(energy)
 
 
-def run_catalog(root: Path, problem: dict, template: dict, *, output: Path, workers: int) -> dict:
+def run_catalog(root: Path, problem: dict, template: dict, *, output: Path, workers: int, limit: int = 0) -> dict:
     """Displace the Pt island until the goal count of connected index-1 saddles.
 
     Each search is one pARTn run from a kick off the minimized reactant.
@@ -512,6 +512,8 @@ def run_catalog(root: Path, problem: dict, template: dict, *, output: Path, work
     magnitude = float(search.get("displace_magnitude", 0.1))
     distance_difference, energy_difference = tolerances(problem)
     max_searches = int(search.get("max_searches", 20000))
+    if limit:
+        max_searches = min(max_searches, int(limit))
     budget = int(search.get("search_budget", 10000))
     listed = [int(part) for part in str(search.get("displace_atoms", "0,1,2,3,4,5,6")).split(",") if part.strip()]
     starts = load_starts(root, problem, output.parent / "work" / template["id"].replace("/", "-"))
@@ -711,16 +713,16 @@ def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
     return {"problem": problem, "template": template, "settings": settings, "jobs": jobs, "execute": _execute}
 
 
-def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1, limit: int = 0) -> dict:
     root = Path(root)
     problem, template = _resolved(root, problem_name, template_name)
     if problem["id"] == "saddle-search/pt-island":
-        return run_catalog(root, problem, template, output=output, workers=workers)
+        return run_catalog(root, problem, template, output=output, workers=workers, limit=limit)
     planned = plan(root, problem_name, template_name, output.parent / "work")
     problem, template, settings = planned["problem"], planned["template"], planned["settings"]
     if "task" in settings:
-        return run_points(planned["jobs"], problem, template, settings, output=output, workers=workers)
-    records = run_jobs(planned["jobs"], planned["execute"], workers)
+        return run_points(planned["jobs"], problem, template, settings, output=output, workers=workers, limit=limit)
+    records = run_jobs(planned["jobs"], planned["execute"], workers, limit)
     for record in records:
         record["problem"] = problem["id"]
         record["template"] = template["id"]

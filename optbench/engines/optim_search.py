@@ -330,11 +330,11 @@ def plan(root: Path, problem_name: str, template_name: str, work: Path) -> dict:
     }
 
 
-def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1) -> dict:
+def run(root: Path, problem_name: str, template_name: str, *, output: Path, workers: int = 1, limit: int = 0) -> dict:
     planned = plan(root, problem_name, template_name, output.parent / "work")
     problem, template, settings, wales = planned["problem"], planned["template"], planned["settings"], planned["wales"]
     section = _section(template)
-    records = [{**record, **wales} for record in run_jobs(planned["jobs"], planned["execute"], workers)]
+    records = [{**record, **wales} for record in run_jobs(planned["jobs"], planned["execute"], workers, limit)]
     template = {**template, "code_version": wales["wales_svnrev"][:12], "commit": wales["wales_sha256"]}
     comment = "\n".join(header(wales)) + "\n" + (
         "# commit is the sha256 of the Wales tarball the binary was built from.\n"

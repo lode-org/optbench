@@ -681,6 +681,7 @@ def run(
             template_name,
             output=output,
             workers=workers,
+            limit=limit,
         )
     task = str(template.get("task") or "")
     reducer = str(template.get("reducer") or "")
