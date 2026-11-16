@@ -444,6 +444,24 @@ def _can_resume(dest: Path) -> bool:
     return (dest / "states" / "0" / "search_results.txt").is_file() and (dest / "info.txt").is_file()
 
 
+def _open_work(dest: Path, resume: bool) -> bool:
+    """Keep a finished AKMC directory only when resume was asked for.
+
+    A fresh run removes the directory even if a previous pass registered
+    searches. Resume keeps states and the random stream, and drops scratch
+    from a killed batch.
+    """
+    resuming = bool(resume) and _can_resume(dest)
+    if dest.exists() and not resuming:
+        shutil.rmtree(dest)
+    dest.mkdir(parents=True, exist_ok=True)
+    for relative in ("jobs/scratch", "jobs/in", "jobs/out", "jobs/incomplete", "states", "potfiles"):
+        (dest / relative).mkdir(parents=True, exist_ok=True)
+    if resuming:
+        _clear_inflight(dest)
+    return resuming
+
+
 def _clear_inflight(dest: Path) -> None:
     """Drop scratch from a killed batch. Registered state stays."""
     for relative in ("jobs/scratch", "jobs/in", "jobs/out", "jobs/incomplete"):
@@ -600,6 +618,7 @@ def run_template(
     workers: int,
     work: Path | None,
     limit: int = 0,
+    resume: bool = False,
 ) -> dict:
     del geometries
     output = Path(output).resolve()
@@ -615,12 +634,7 @@ def run_template(
     partial = bool(limit)
     seed = int((template.get("ini") or {}).get("Main", {}).get("random_seed", 42))
     dest = (work or output.parent / "work" / template["id"].replace("/", "-")).resolve()
-    resuming = _can_resume(dest)
-    if dest.exists() and not resuming:
-        shutil.rmtree(dest)
-    dest.mkdir(parents=True, exist_ok=True)
-    for relative in ("jobs/scratch", "jobs/in", "jobs/out", "jobs/incomplete", "states", "potfiles"):
-        (dest / relative).mkdir(parents=True, exist_ok=True)
+    resuming = _open_work(dest, resume)
     if resuming:
         # Keep states/, info.txt, prng.pkl, and jobs.tbl. A killed batch
         # leaves incomplete clients in scratch; registering those would

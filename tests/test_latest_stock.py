@@ -164,3 +164,46 @@ def test_resume_keeps_registered_searches(tmp_path):
         ]
     )
     assert _snapshots_from_text(text) == [(0, 0), (6, 10), (12, 40)]
+
+
+def test_a_fresh_htst_run_does_not_keep_an_old_directory(tmp_path):
+    from optbench.runners.eon_htst import _open_work
+
+    dest = tmp_path / "work"
+    state = dest / "states" / "0"
+    state.mkdir(parents=True)
+    (state / "search_results.txt").write_text("kept\n", encoding="utf-8")
+    (dest / "info.txt").write_text("first_run = False\n", encoding="utf-8")
+    scratch = dest / "jobs" / "scratch" / "0_9"
+    scratch.mkdir(parents=True)
+    (scratch / "stdout.dat").write_text("partial", encoding="utf-8")
+    assert _open_work(dest, False) is False
+    assert not (state / "search_results.txt").exists()
+    state.mkdir(parents=True)
+    (state / "search_results.txt").write_text("kept\n", encoding="utf-8")
+    (dest / "info.txt").write_text("first_run = False\n", encoding="utf-8")
+    scratch.mkdir(parents=True)
+    (scratch / "stdout.dat").write_text("partial", encoding="utf-8")
+    assert _open_work(dest, True) is True
+    assert (state / "search_results.txt").read_text(encoding="utf-8") == "kept\n"
+    assert list((dest / "jobs" / "scratch").iterdir()) == []
+
+
+def test_run_asks_htst_to_resume(monkeypatch, tmp_path):
+    from optbench.campaign import run
+
+    captured = {}
+
+    def fake(_root, _problem, _template, **kwargs):
+        captured["resume"] = kwargs["resume"]
+        return {"force_calls": 1, "nfailed": 0, "starts": 1}
+
+    monkeypatch.setattr("optbench.runners.eon_htst.run_template", fake)
+    run(
+        ROOT,
+        "hTST/Al",
+        "eon-svn/htst-al-dimer-cg-stock",
+        output=tmp_path / "bench.dat",
+        resume=True,
+    )
+    assert captured["resume"] is True

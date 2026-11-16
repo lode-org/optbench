@@ -720,6 +720,7 @@ def run(
             workers=workers,
             work=work,
             limit=limit,
+            resume=resume,
         )
     if template["engine"] in _EON_ENGINES and task == "htst-written":
         paired = template.get("paired") or "the barrier template"
