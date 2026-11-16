@@ -1,5 +1,7 @@
 """A deferred score batch matches the inline scorer and stays in-process when small."""
 
+import time
+
 import pytest
 
 from optbench.board import (
@@ -10,6 +12,7 @@ from optbench.board import (
     _score_jobs,
     _score_many,
     _score_records,
+    _stop_pool,
 )
 
 
@@ -235,3 +238,27 @@ def test_a_score_worker_that_exits_keeps_the_finished_list() -> None:
         assert isinstance(found[1], Exception)
     finally:
         session.close()
+
+
+def test_closing_the_score_pool_stops_a_running_worker() -> None:
+    from concurrent.futures import ProcessPoolExecutor
+
+    session = _ScoreSession()
+    session.pool = ProcessPoolExecutor(max_workers=1)
+    session.pool.submit(time.sleep, 30)
+    started = time.monotonic()
+    session.close()
+    assert time.monotonic() - started < 5
+    assert session.pool is None
+
+
+def test_stop_pool_reaps_the_child() -> None:
+    from concurrent.futures import ProcessPoolExecutor
+
+    pool = ProcessPoolExecutor(max_workers=1)
+    pool.submit(time.sleep, 30)
+    processes = list(pool._processes.values())
+    assert processes and processes[0].is_alive()
+    _stop_pool(pool)
+    assert processes[0].exitcode is not None
+    assert not processes[0].is_alive()

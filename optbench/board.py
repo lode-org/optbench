@@ -1109,7 +1109,8 @@ def _score_many(jobs: list[tuple[list[dict], int | None]]) -> list:
 
     workers = min(len(jobs), os.cpu_count() or 1)
     packed = [(_pack_score(records), cap) for records, cap in jobs]
-    with ProcessPoolExecutor(max_workers=workers) as pool:
+    pool = ProcessPoolExecutor(max_workers=workers)
+    try:
         futures = [(index, pool.submit(_score_job, job)) for index, job in enumerate(packed)]
         found: list = [None] * len(packed)
         for index, future in futures:
@@ -1118,6 +1119,8 @@ def _score_many(jobs: list[tuple[list[dict], int | None]]) -> list:
             except Exception as exc:
                 found[index] = exc
         return found
+    finally:
+        _stop_pool(pool)
 
 
 # Eight short lists share a message. A list of this many starts is a
@@ -1176,6 +1179,25 @@ class _ScoreBatch:
                     found[index] = result
             return found
         return [_score_job(job) for job in self.pending]
+
+
+def _stop_pool(pool) -> None:
+    """Cancel queued work and stop workers that are still running.
+
+    ``shutdown(wait=True)`` waits for a bootstrap that is already in a
+    worker. An interrupt or a dead worker would leave that process
+    behind.
+    """
+    processes = list(getattr(pool, "_processes", {}).values())
+    try:
+        pool.shutdown(wait=False, cancel_futures=True)
+    except TypeError:
+        pool.shutdown(wait=False)
+    for process in processes:
+        if process.is_alive():
+            process.terminate()
+    for process in processes:
+        process.join(timeout=5)
 
 
 class _ScoreSession:
@@ -1259,7 +1281,7 @@ class _ScoreSession:
         pool = self.pool
         self.pool = None
         if pool is not None:
-            pool.shutdown(wait=True, cancel_futures=True)
+            _stop_pool(pool)
 
 
 def _replay(
