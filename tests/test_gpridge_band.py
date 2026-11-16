@@ -213,6 +213,17 @@ def test_timeout_terminates_child_processes(tmp_path):
                 pass
 
 
+def test_a_timed_out_band_search_is_a_crash():
+    from optbench.failures import classify_failure
+    from optbench.gpridge_band import _run_reasons
+
+    reasons = _run_reasons(124)
+    assert reasons[:2] == ["timeout", "crash"]
+    assert classify_failure(reasons) == "crash"
+    assert classify_failure(_run_reasons(1)) == "crash"
+    assert _run_reasons(0) == []
+
+
 def test_packaged_runtime_keeps_the_validated_source_hash(tmp_path, monkeypatch):
     import json
 

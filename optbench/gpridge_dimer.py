@@ -264,6 +264,7 @@ def _execute(job: dict) -> dict:
     reasons = []
     if status == 124:
         reasons.append("timeout")
+        reasons.append("crash")
     elif status not in (0, 2):
         reasons.append("crash")
     convergence = re.findall(r"Converged:\s*(yes|no)", text, re.I)

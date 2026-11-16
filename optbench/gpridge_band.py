@@ -287,6 +287,19 @@ def run_search(argv: list[str], directory: Path, env: dict, log, timeout: float)
             return 124
 
 
+def _run_reasons(returncode: int) -> list[str]:
+    """Why a process exit is a failure. A timeout is a killed search, a crash."""
+    reasons: list[str] = []
+    if returncode == 124:
+        reasons.append("timeout")
+        reasons.append("crash")
+    elif returncode not in (0, 2):
+        reasons.append("crash")
+    if returncode != 0:
+        reasons.append("not_converged")
+    return reasons
+
+
 def _execute(job: dict) -> dict:
     pair, settings = job["pair"], job["settings"]
     directory = Path(job["directory"]).resolve()
@@ -303,21 +316,15 @@ def _execute(job: dict) -> dict:
                         ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS")},
     }, indent=2) + "\n")
     began = time.perf_counter()
-    reasons = []
     with (directory / "search.log").open("w") as log:
         returncode = run_search(argv, directory, env, log,
                                 float(job["options"].get("timeout", 1800)))
-        if returncode == 124:
-            reasons.append("timeout")
     search_wall = time.perf_counter() - began
     text = (directory / "search.log").read_text(errors="replace")
     calls, total = parse_calls(text)
+    reasons = _run_reasons(returncode)
     if calls is None or total is None:
         reasons.append("missing_count")
-    if returncode not in (0, 2, 124):
-        reasons.append("crash")
-    if returncode != 0:
-        reasons.append("not_converged")
     if calls is not None and calls >= settings["cap"]:
         reasons.append("cap")
     if not re.search(r"^Converged: yes", text, re.MULTILINE):
