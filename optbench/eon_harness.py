@@ -513,12 +513,33 @@ def _extract_suffix(archive: Path, suffix: str, dest: Path) -> Path:
 
 
 def _replace_coords(text: str, positions: np.ndarray) -> str:
+    """Write positions onto coordinate rows, leaving species headers in place."""
     lines = text.splitlines()
-    header = next(i for i, line in enumerate(lines) if line.strip().lower().startswith("coordinate"))
-    for row, point in enumerate(positions):
-        old = lines[header + 1 + row].split()
+    slots = []
+    started = False
+    for index, line in enumerate(lines):
+        if line.strip().lower().startswith("coordinate"):
+            started = True
+            continue
+        if not started:
+            continue
+        parts = line.split()
+        if len(parts) < 3:
+            continue
+        try:
+            float(parts[0])
+            float(parts[1])
+            float(parts[2])
+        except ValueError:
+            continue
+        slots.append(index)
+    points = np.asarray(positions, dtype=np.float64).reshape(-1, 3)
+    if len(points) != len(slots):
+        raise ValueError(f"con file has {len(slots)} coordinates, received {len(points)}")
+    for index, point in zip(slots, points):
+        old = lines[index].split()
         tail = " ".join(old[3:]) if len(old) > 3 else "0"
-        lines[header + 1 + row] = f"  {point[0]:.8f}   {point[1]:.8f}   {point[2]:.8f}  {tail}"
+        lines[index] = f"  {point[0]:.8f}   {point[1]:.8f}   {point[2]:.8f}  {tail}"
     return "\n".join(lines) + "\n"
 
 

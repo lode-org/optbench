@@ -83,17 +83,18 @@ def parse_con(text: str) -> dict:
             break
     positions: list[list[float]] = []
     fixed: list[bool] = []
+    symbols: list[str] = []
+    current = symbol
     for line in lines[start + 1 :]:
         parts = line.split()
+        if len(parts) == 1 and parts[0].isalpha():
+            current = parts[0]
+            continue
         if len(parts) < 3:
-            if positions:
-                break
             continue
         try:
             xyz = [float(parts[0]), float(parts[1]), float(parts[2])]
         except ValueError:
-            if positions:
-                break
             continue
         flag = 0
         if len(parts) >= 4:
@@ -103,9 +104,16 @@ def parse_con(text: str) -> dict:
                 flag = 0
         positions.append(xyz)
         fixed.append(flag != 0)
+        symbols.append(current)
     if not positions:
         raise ValueError("con file has no coordinates")
-    return {"positions": positions, "fixed": fixed, "symbol": symbol, "box": box}
+    return {
+        "positions": positions,
+        "fixed": fixed,
+        "symbol": symbol,
+        "symbols": symbols,
+        "box": box,
+    }
 
 
 def counted_call(counter: HarnessCounter, evaluate, coords):
@@ -401,8 +409,13 @@ def search_start(job: dict) -> dict:
         evaluate, positions, free = _evaluate_factory(job)
         free_positions = positions[free]
         counter = HarnessCounter(cache=True, cap=int(job["cap"]))
+        labels = job.get("symbols")
+        if labels:
+            element = [str(labels[int(index)]) for index in free]
+        else:
+            element = [str(job["symbol"])] * int(free.size)
         molecule = qcel.models.Molecule(
-            symbols=[str(job["symbol"])] * int(free.size),
+            symbols=element,
             geometry=free_positions.reshape(-1).tolist(),
             fix_com=False,
             fix_orientation=False,

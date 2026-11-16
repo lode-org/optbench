@@ -88,11 +88,11 @@ def read_component_coordinates(text: str) -> list[float]:
     for line in lines[start + 1 :]:
         parts = line.split()
         if len(parts) < 3:
-            break
+            continue
         try:
             coords.extend((float(parts[0]), float(parts[1]), float(parts[2])))
         except ValueError:
-            break
+            continue
     if not coords:
         raise ValueError("con file has no coordinates")
     return coords

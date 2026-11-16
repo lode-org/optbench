@@ -202,14 +202,11 @@ def _coords(text: str) -> list[tuple[float, float, float]]:
     for line in lines[start + 1 :]:
         parts = line.split()
         if len(parts) < 3:
-            if points:
-                break
             continue
         try:
             points.append((float(parts[0]), float(parts[1]), float(parts[2])))
         except ValueError:
-            if points:
-                break
+            continue
     if not points:
         raise ValueError("no coordinates")
     return points

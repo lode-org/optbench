@@ -22,8 +22,6 @@ from pathlib import Path
 
 import cyclopts
 import numpy as np
-from pele.optimize._lbfgs_py import LBFGS
-from pele.potentials import LJ
 
 # The script's own environment does not install this repository.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -49,11 +47,11 @@ def read_con(text: str) -> np.ndarray:
     for line in lines[start:]:
         parts = line.split()
         if len(parts) < 3:
-            break
+            continue
         try:
             xyz.append([float(parts[0]), float(parts[1]), float(parts[2])])
         except ValueError:
-            break
+            continue
     return np.asarray(xyz, dtype=float).ravel()
 
 
@@ -62,6 +60,9 @@ def _stop(energy, gradient, tol, coords) -> bool:
 
 
 def run_one(job: tuple[str, int, float]) -> int:
+    from pele.optimize._lbfgs_py import LBFGS
+    from pele.potentials import LJ
+
     path, memory, maxstep = job
     pot = PeleCounter(LJ(eps=1.0, sig=1.0))
     coords = read_con(Path(path).read_text(encoding="utf-8"))
