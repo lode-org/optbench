@@ -272,13 +272,24 @@ def run_client(
     return found["force_calls"]
 
 
-def _one(job: tuple[str, str, str, str] | tuple[str, str, str, str, tuple[tuple[str, str], ...]]) -> dict:
+def _one(
+    job: tuple[str, str, str, str]
+    | tuple[str, str, str, str, tuple[tuple[str, str], ...]]
+    | tuple[str, str, str, str, tuple[tuple[str, str], ...], bool],
+) -> dict:
+    resume = False
     extra_inputs: tuple[tuple[str, str], ...] = ()
-    if len(job) == 5:
+    if len(job) == 6:
+        client, ini, con, work, extra_inputs, resume = job
+    elif len(job) == 5:
         client, ini, con, work, extra_inputs = job
     else:
         client, ini, con, work = job
-    found = client_result(_launch_client(client, ini, con, work, extra_inputs))
+    dest = Path(work)
+    if resume and (dest / "results.dat").is_file():
+        found = client_result(dest)
+    else:
+        found = client_result(_launch_client(client, ini, con, work, extra_inputs))
     found["geometry"] = Path(con).name
     return found
 
@@ -734,6 +745,7 @@ def run(
     if limit:
         jobs = jobs[: int(limit)]
         cons = cons[: int(limit)]
+    jobs = [(*job, bool(resume)) for job in jobs]
     if workers <= 1:
         details = [_one(job) for job in jobs]
     else:

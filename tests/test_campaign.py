@@ -284,6 +284,57 @@ def test_a_limit_runs_only_the_first_geometries(tmp_path: Path):
     assert not (tmp_path / "work" / "cluster_0001").exists()
 
 
+def test_resume_keeps_a_finished_client_geometry(tmp_path: Path):
+    geometries = tmp_path / "geometries"
+    geometries.mkdir()
+    for name in ("cluster_0000.con", "cluster_0001.con"):
+        (geometries / name).write_text("pos\n", encoding="utf-8")
+    kept = tmp_path / "work" / "cluster_0000"
+    kept.mkdir(parents=True)
+    kept.joinpath("results.dat").write_text(
+        "0 termination_reason\n7 total_force_calls\n",
+        encoding="utf-8",
+    )
+    client = tmp_path / "client"
+    client.write_text(
+        "#!/usr/bin/env python3\n"
+        "from pathlib import Path\n"
+        "Path('launched').write_text('yes', encoding='utf-8')\n"
+        "Path('results.dat').write_text('0 termination_reason\\n181 total_force_calls\\n')\n",
+        encoding="utf-8",
+    )
+    client.chmod(client.stat().st_mode | stat.S_IEXEC)
+    output = tmp_path / "kept.dat"
+    summary = run(
+        ROOT,
+        "minimization/lj38",
+        "eon-svn/lbfgs-m100",
+        client=client,
+        geometries=geometries,
+        output=output,
+        work=tmp_path / "work",
+        workers=1,
+        resume=True,
+    )
+    assert summary["counts"] == [7, 181]
+    assert not (kept / "launched").exists()
+    assert (tmp_path / "work" / "cluster_0001" / "launched").is_file()
+    fresh = tmp_path / "fresh.dat"
+    summary = run(
+        ROOT,
+        "minimization/lj38",
+        "eon-svn/lbfgs-m100",
+        client=client,
+        geometries=geometries,
+        output=fresh,
+        work=tmp_path / "work",
+        workers=1,
+        resume=False,
+    )
+    assert summary["counts"] == [181, 181]
+    assert (kept / "launched").is_file()
+
+
 def test_a_short_iteration_cap_is_refused():
     problem = resolve_problem(ROOT, "minimization/lj38")
     template = {"ini": {"Optimizer": {"max_iterations": 10, "converged_force": 0.01}}}
