@@ -28,6 +28,7 @@ jobs:
 
       - uses: astral-sh/setup-uv@v6
         with:
+          python-version: "3.12.3"
           enable-cache: true
 
       - name: cog --check
@@ -37,7 +38,7 @@ jobs:
           docs/source/conf.py optbench/__init__.py pixi.toml
 
       - name: Tests
-        run: uv run pytest
+        run: uv run --frozen pytest
 
       - name: Oracle check
         run: uv run optbench check
