@@ -1146,6 +1146,10 @@ def _rng_restore(payload: dict):
 
 
 def _checkpoint_paths(output: Path) -> tuple[Path, Path]:
+    folder = os.environ.get("OPTBENCH_RGSADDLE_CHECKPOINT_DIR")
+    if folder:
+        path = Path(folder)
+        return path / "catalog.json", path / "searches.jsonl"
     return output.with_name(output.stem + ".header.json"), output.with_name(output.stem + ".partial.jsonl")
 
 
@@ -1328,8 +1332,9 @@ def _run_saddle_search(
             before_outer = potential.calls
             outcome = _dispatch(spec)
             climb = int(outcome.get("calls", outcome.get("force_calls", 0)))
-            if int(outcome.get("step_calls_max") or 0) > step_ceiling or climb > climb_cap:
-                raise RuntimeError(f"{spec['name']} climbed past the step ceiling {step_ceiling} or the cap {climb_cap}")
+            past_step = int(outcome.get("step_calls_max") or 0) > step_ceiling
+            if climb > climb_cap:
+                raise RuntimeError(f"{spec['name']} climbed past the cap {climb_cap}")
             record = {
                 "schema": "optbench.start/v2",
                 "start": spec["name"],
@@ -1350,7 +1355,10 @@ def _run_saddle_search(
             curvature = outcome.get("curvature")
             negative = curvature is not None and math.isfinite(float(curvature)) and float(curvature) < 0.0
             saved_point = None
-            if outcome.get("converged") and negative and _finite_point(np.asarray(outcome["x"])):
+            if past_step:
+                # A step past the ceiling is divergence. The search is kept.
+                record["reasons"] = ["divergence"]
+            elif outcome.get("converged") and negative and _finite_point(np.asarray(outcome["x"])):
                 raw_eigenvalues, vectors = _hessian_spectrum(potential, outcome["x"])
                 # Free atoms of the island are pinned by the substrate.
                 # Their Hessian is not a free-cluster null space.
@@ -1535,9 +1543,10 @@ def _run_saddle_search(
         output.with_suffix(".v2.json").write_text(
             json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
-    header_path, partial_path = _checkpoint_paths(output)
-    partial_path.unlink(missing_ok=True)
-    header_path.unlink(missing_ok=True)
+    if not os.environ.get("OPTBENCH_RGSADDLE_CHECKPOINT_DIR"):
+        header_path, partial_path = _checkpoint_paths(output)
+        partial_path.unlink(missing_ok=True)
+        header_path.unlink(missing_ok=True)
     return {
         "force_calls": statistics.fmean(totals) if totals else None,
         "nfailed": failed_reps,

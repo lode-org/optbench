@@ -1,0 +1,19 @@
+# rep 1 force_calls 3406018 unique_saddles 121 fraction_connected 0.6251363140676118 total_searches 7336 connected 27 minimize_calls 14 minimum_converged 1 seed 20261016
+force_calls 3406018.0
+force_calls_min 3406018
+force_calls_max 3406018
+code rgsaddle
+code_version (develop 179e90f2)
+commit 179e90f29a3b2cbd4ea5804a5c4c132ab19acba4
+algorithm Dimer L-BFGS
+tuning default
+template rgsaddle/develop-saddle-dimer-lbfgs
+problem saddle-search/pt-island
+counter harness
+repetitions 1
+nfailed 0
+goal 27
+cap 48000
+n 7336
+par2_mean 95648.3219738277
+v2_nfailed 7309

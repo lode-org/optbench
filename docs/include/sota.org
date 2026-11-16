@@ -38,7 +38,7 @@
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr><td data-label="Row" data-field="label">Sella (2.6.0) · Sella</td><td data-label="Family" data-field="family">Single-ended saddle</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls per search</td><td data-label="PAR-2" data-field="par2_mean">5201.62</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">225</td><td data-label="Mean calls" data-field="mean_calls">247.812</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 4</td><td data-label="Runs" data-field="n">16</td></tr>
    </tbody></table></div>
-   <p class="bench-gaps">Eon rows are not yet on the harness counter.</p><p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
+   <p class="bench-gaps">Eon rows are not yet on the harness counter.</p><p class="bench-gaps">eOn rows are off the ranked table.</p><p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <p><a href="generated/suites/saddle-search/pt-island.html">Family tables, overall table, and performance profile</a>.</p>
    <h2 id="suite-double-ended-saddle-search">Double-ended saddle search</h2>
    <h3>LJ38 double-ended saddle</h3>

@@ -28,6 +28,12 @@
    <td data-label="Commit">8fa0eb1559c9</td>
    <td data-label="Source"><a href="https://github.com/OmniPotentRPC/rgsaddle">https://github.com/OmniPotentRPC/rgsaddle</a></td>
    </tr>
+   <tr>
+   <td data-label="Role">saddle search</td>
+   <td data-label="Ref">develop</td>
+   <td data-label="Commit">179e90f29a3b</td>
+   <td data-label="Source"><a href="https://github.com/OmniPotentRPC/rgsaddle">https://github.com/OmniPotentRPC/rgsaddle</a></td>
+   </tr>
    </tbody></table></div>
    <h3>Best cost</h3>
    <figure class="plate-figure"><svg class="plate-chart" role="img" aria-labelledby="lj38-double-ended-saddle-cost-bars-title" viewBox="0 0 680 314.0"><title id="lj38-double-ended-saddle-cost-bars-title">Best cost for LJ38 double-ended saddle</title><text class="group-label" x="0" y="18">LJ38 double-ended saddle</text><line class="axis" x1="168.00" y1="278.00" x2="584.00" y2="278.00"/><line class="grid" x1="168.00" y1="32.00" x2="168.00" y2="278.00"/><line class="axis" x1="168.00" y1="274.00" x2="168.00" y2="278.00"/><text class="num" x="168.00" y="292.00" text-anchor="middle">10²</text><line class="grid" x1="376.00" y1="32.00" x2="376.00" y2="278.00"/><line class="axis" x1="376.00" y1="274.00" x2="376.00" y2="278.00"/><text class="num" x="376.00" y="292.00" text-anchor="middle">10³</text><line class="grid" x1="584.00" y1="32.00" x2="584.00" y2="278.00"/><line class="axis" x1="584.00" y1="274.00" x2="584.00" y2="278.00"/><text class="num" x="584.00" y="292.00" text-anchor="middle">10⁴</text><text class="axis-name" x="376.00" y="308.00" text-anchor="middle">cost (force calls, log scale)</text><g><title>OPTIM: 131</title><text class="code-label" x="156" y="46.00" text-anchor="end">OPTIM</text><rect class="suite-bar is-best" x="168.00" y="37.00" width="24.3924" height="10"/><text class="num" x="592.00" y="46.00">131</text></g><g><title>eOn: 230.72</title><text class="code-label" x="156" y="68.00" text-anchor="end">eOn</text><rect class="suite-bar" x="168.00" y="59.00" width="75.5217" height="10"/><text class="num" x="592.00" y="68.00">230.72</text></g><g><title>Eon svn: 235.2</title><text class="code-label" x="156" y="90.00" text-anchor="end">Eon svn</text><rect class="suite-bar" x="168.00" y="81.00" width="77.2590" height="10"/><text class="num" x="592.00" y="90.00">235.2</text></g><g><title>pele: 293</title><text class="code-label" x="156" y="112.00" text-anchor="end">pele</text><rect class="suite-bar" x="168.00" y="103.00" width="97.1085" height="10"/><text class="num" x="592.00" y="112.00">293</text></g><g><title>geodesic: 1208.42</title><text class="code-label" x="156" y="134.00" text-anchor="end">geodesic</text><rect class="suite-bar" x="168.00" y="125.00" width="225.1013" height="10"/><text class="num" x="592.00" y="134.00">1208.42</text></g><g><title>COMPASS: 1517.3</title><text class="code-label" x="156" y="156.00" text-anchor="end">COMPASS</text><rect class="suite-bar" x="168.00" y="147.00" width="245.6629" height="10"/><text class="num" x="592.00" y="156.00">1517.3</text></g><g><title>Sella: 2055.3</title><text class="code-label" x="156" y="178.00" text-anchor="end">Sella</text><rect class="suite-bar" x="168.00" y="169.00" width="273.0780" height="10"/><text class="num" x="592.00" y="178.00">2055.3</text></g><g><title>rgsaddle: 2145.72</title><text class="code-label" x="156" y="200.00" text-anchor="end">rgsaddle</text><rect class="suite-bar" x="168.00" y="191.00" width="276.9672" height="10"/><text class="num" x="592.00" y="200.00">2145.72</text></g><g><title>TSASE: 3119.56</title><text class="code-label" x="156" y="222.00" text-anchor="end">TSASE</text><rect class="suite-bar" x="168.00" y="213.00" width="310.7714" height="10"/><text class="num" x="592.00" y="222.00">3119.56</text></g><g><title>LAMMPS: 4526.2</title><text class="code-label" x="156" y="244.00" text-anchor="end">LAMMPS</text><rect class="suite-bar" x="168.00" y="235.00" width="344.3926" height="10"/><text class="num" x="592.00" y="244.00">4526.2</text></g><g><title>ASE: 4912.84</title><text class="code-label" x="156" y="266.00" text-anchor="end">ASE</text><rect class="suite-bar" x="168.00" y="257.00" width="351.7972" height="10"/><text class="num" x="592.00" y="266.00">4912.84</text></g></svg><figcaption>A shorter bar is a lower cost on a log scale shared by the codes of this problem.</figcaption></figure>
@@ -538,6 +544,70 @@
    <td data-label="FD calls" data-field="fd_calls">0</td>
    <td data-label="Failures" data-field="failures">crash 0, divergence 9596, cap 10382, wrong_stationary 22</td>
    <td data-label="Runs" data-field="n">20000</td>
+   </tr>
+   <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop 179e90f2) · Lanczos L-BFGS">
+   <td data-label="Suite">Saddle search</td>
+   <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
+   <td data-label="Row" data-field="label">rgsaddle (develop 179e90f2) · Lanczos L-BFGS</td>
+   <td data-label="Family" data-field="family">Minimum mode</td>
+   <td data-label="Family rank" data-field="family_rank">6</td>
+   <td data-label="Unit" data-field="unit">force calls per search</td>
+   <td data-label="PAR-2" data-field="par2_mean">59928.9</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">546</td>
+   <td data-label="Mean calls" data-field="mean_calls">629.942</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 19970, cap 5, wrong_stationary 1</td>
+   <td data-label="Runs" data-field="n">20000</td>
+   </tr>
+   <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop 179e90f2) · Dimer rotation-skip L-BFGS">
+   <td data-label="Suite">Saddle search</td>
+   <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
+   <td data-label="Row" data-field="label">rgsaddle (develop 179e90f2) · Dimer rotation-skip L-BFGS</td>
+   <td data-label="Family" data-field="family">Minimum mode</td>
+   <td data-label="Family rank" data-field="family_rank">7</td>
+   <td data-label="Unit" data-field="unit">force calls per search</td>
+   <td data-label="PAR-2" data-field="par2_mean">95458.3</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">403</td>
+   <td data-label="Mean calls" data-field="mean_calls">446.937</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 4736, cap 0, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">4763</td>
+   </tr>
+   <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop 179e90f2) · Dimer L-BFGS">
+   <td data-label="Suite">Saddle search</td>
+   <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
+   <td data-label="Row" data-field="label">rgsaddle (develop 179e90f2) · Dimer L-BFGS</td>
+   <td data-label="Family" data-field="family">Minimum mode</td>
+   <td data-label="Family rank" data-field="family_rank">8</td>
+   <td data-label="Unit" data-field="unit">force calls per search</td>
+   <td data-label="PAR-2" data-field="par2_mean">95648.3</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">415</td>
+   <td data-label="Mean calls" data-field="mean_calls">464.286</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 7301, cap 0, wrong_stationary 8</td>
+   <td data-label="Runs" data-field="n">7336</td>
+   </tr>
+   <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop 179e90f2) · Dimer FIRE">
+   <td data-label="Suite">Saddle search</td>
+   <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
+   <td data-label="Row" data-field="label">rgsaddle (develop 179e90f2) · Dimer FIRE</td>
+   <td data-label="Family" data-field="family">Minimum mode</td>
+   <td data-label="Family rank" data-field="family_rank">9</td>
+   <td data-label="Unit" data-field="unit">force calls per search</td>
+   <td data-label="PAR-2" data-field="par2_mean">95803.1</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">1078</td>
+   <td data-label="Mean calls" data-field="mean_calls">1058.02</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 12985, cap 17, wrong_stationary 9</td>
+   <td data-label="Runs" data-field="n">13038</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="rgsaddle (0.2.2) · P-RFO">
    <td data-label="Suite">Transition state optimization</td>

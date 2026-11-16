@@ -326,6 +326,7 @@ def test_pending_grid_is_every_problem_and_code():
         "rgsaddle",
         "rgsaddle-8fa0eb15",
         "rgsaddle-main",
+        "rgsaddle-develop",
         "geodesic",
         "ase",
         "sella",

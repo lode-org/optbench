@@ -1,0 +1,19 @@
+# rep 1 force_calls 2128776 unique_saddles 105 fraction_connected 0.6330044089859332 total_searches 4763 connected 27 minimize_calls 14 minimum_converged 1 seed 20261016
+force_calls 2128776.0
+force_calls_min 2128776
+force_calls_max 2128776
+code rgsaddle
+code_version (develop 179e90f2)
+commit 179e90f29a3b2cbd4ea5804a5c4c132ab19acba4
+algorithm Dimer rotation-skip L-BFGS
+tuning default
+template rgsaddle/develop-saddle-dimer-rotskip
+problem saddle-search/pt-island
+counter harness
+repetitions 1
+nfailed 0
+goal 27
+cap 48000
+n 4763
+par2_mean 95458.3308838967
+v2_nfailed 4736

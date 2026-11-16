@@ -194,6 +194,16 @@ committed = "2026-10-21"
 note = "main 8fa0eb15, including the min-mode FIRE ridge fix from pull request 24. The dimer FIRE templates and the four default saddle-search/pt-island templates use this pin. The 2db34b42 pin stays for the other stock templates."
 
 [[code]]
+id = "rgsaddle-develop"
+name = "rgsaddle"
+role = "saddle search"
+repository = "https://github.com/OmniPotentRPC/rgsaddle"
+ref = "develop"
+commit = "179e90f29a3b2cbd4ea5804a5c4c132ab19acba4"
+committed = "2026-11-15"
+note = "develop 179e90f29a3b2cbd4ea5804a5c4c132ab19acba4, which is after ef1fd6463763be811a52ec33bae1f21870a600d4 and contains 116b92e83fdbd5ec24fcfe500e9de2663d1a35b2 (dimer rotation history kept across translations). The four saddle-search/pt-island catalog rows dimer FIRE, dimer L-BFGS, rotation-skip, and Lanczos were measured on this commit. The main and 0.2.2 pins stay for the rows recorded on them."
+
+[[code]]
 id = "geodesic"
 name = "geodesic"
 role = "band initialiser"
