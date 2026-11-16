@@ -11,6 +11,7 @@ the energy and the radial force are both zero at ``rc``.
 from __future__ import annotations
 
 import hashlib
+import math
 import subprocess
 import tempfile
 from pathlib import Path
@@ -32,6 +33,14 @@ def _atom_count(line: str) -> int:
     if total < 1:
         raise ValueError(f"con file announces {total} atoms")
     return total
+
+
+def _all_finite(values: list[float]) -> bool:
+    """True when every value is finite."""
+    for value in values:
+        if not math.isfinite(value):
+            return False
+    return True
 
 
 def read_con(text: str) -> tuple[Array, Array, Array]:
@@ -59,7 +68,7 @@ def read_con(text: str) -> tuple[Array, Array, Array]:
             xyz = [float(parts[0]), float(parts[1]), float(parts[2])]
         except ValueError:
             continue
-        if not all(np.isfinite(value) for value in xyz):
+        if not _all_finite(xyz):
             raise ValueError("con coordinate is not finite")
         flag = False
         if len(parts) > 3:
@@ -84,7 +93,7 @@ def read_con(text: str) -> tuple[Array, Array, Array]:
             lengths = [float(parts[0]), float(parts[1]), float(parts[2])]
         except ValueError:
             continue
-        if not all(np.isfinite(value) for value in lengths):
+        if not _all_finite(lengths):
             continue
         nxt = lines[index + 1].split() if index + 1 < len(lines) else []
         if len(nxt) >= 3:
@@ -130,7 +139,7 @@ def species_labels(text: str) -> list[str]:
             xyz = [float(parts[0]), float(parts[1]), float(parts[2])]
         except ValueError:
             continue
-        if not all(np.isfinite(value) for value in xyz):
+        if not _all_finite(xyz):
             raise ValueError("con coordinate is not finite")
         labels.append(current)
         if len(labels) == count:
