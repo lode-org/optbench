@@ -522,6 +522,93 @@ def test_plot_bytes_match_across_two_writes(tmp_path: Path):
         assert (first / name).read_bytes() == (second / name).read_bytes()
 
 
+def _flat_rgb(image):
+    """The same white flatten the plot writer uses before it encodes."""
+    from PIL import Image
+
+    if image.mode == "RGBA":
+        flat = Image.new("RGB", image.size, (255, 255, 255))
+        flat.paste(image, mask=image.getchannel("A"))
+        return flat
+    if image.mode != "RGB":
+        return image.convert("RGB")
+    return image
+
+
+def _svg_root(path: Path):
+    import xml.etree.ElementTree as ET
+
+    return ET.fromstring(path.read_text(encoding="utf-8"))
+
+
+def _svg_texts(path: Path) -> list[tuple[str, str]]:
+    styled = []
+    for element in _svg_root(path).iter():
+        if element.tag.rsplit("}", 1)[-1] != "text":
+            continue
+        styled.append((element.get("style") or "", "".join(element.itertext()).strip()))
+    return styled
+
+
+def _svg_ids(path: Path, prefix: str) -> int:
+    return sum(1 for element in _svg_root(path).iter() if (element.get("id") or "").startswith(prefix))
+
+
+def test_plot_files_keep_the_shape_the_writer_sets(tmp_path: Path):
+    """The six published files, their canvas, and the text the writer draws.
+
+    WebP quality 72 does not reproduce the PNG samples, so the rasters share
+    the flattened canvas instead of identical bytes.
+    """
+    from PIL import Image
+
+    from optbench.board import _write_plots
+
+    profile = {"taus": [1.0, 2.0], "rho": {"a": [0.0, 1.0]}, "solved": 1, "area_log10": 0.0}
+    ranked = [{"success_rate": 1.0, "par2_mean": 3.0, "median": 3.0}]
+    directory = tmp_path / "plots"
+    _write_plots("minimization/toy", ranked, profile, directory)
+    names = (
+        "minimization-toy-cost.png",
+        "minimization-toy-cost.svg",
+        "minimization-toy-cost.webp",
+        "minimization-toy-profile.png",
+        "minimization-toy-profile.svg",
+        "minimization-toy-profile.webp",
+    )
+    found = sorted(path.name for path in directory.iterdir() if path.is_file())
+    assert found == sorted(names)
+    for name in names:
+        assert (directory / name).stat().st_size > 0
+    for stem in ("minimization-toy-cost", "minimization-toy-profile"):
+        png = _flat_rgb(Image.open(directory / f"{stem}.png"))
+        webp = _flat_rgb(Image.open(directory / f"{stem}.webp"))
+        assert png.mode == webp.mode == "RGB"
+        assert png.size == webp.size == (720, 420)
+        blank = b"\xff" * (720 * 420 * 3)
+        assert png.tobytes() != blank
+        assert webp.tobytes() != blank
+    profile_svg = directory / "minimization-toy-profile.svg"
+    cost_svg = directory / "minimization-toy-cost.svg"
+    profile_text = [text for _style, text in _svg_texts(profile_svg)]
+    cost_styled = _svg_texts(cost_svg)
+    cost_text = [text for _style, text in cost_styled]
+    assert profile_text.count("Dolan-More profile: minimization/toy") == 1
+    assert profile_text.count("tau") == 1
+    assert profile_text.count("fraction of starts") == 1
+    assert profile_text.count("a") == 1
+    assert cost_text.count("Cost and success: minimization/toy") == 1
+    assert cost_text.count("success rate") == 1
+    assert cost_text.count("PAR-2 mean") == 1
+    assert sum(text == "1" and "font-size: 7px" in style for style, text in cost_styled) == 1
+    assert _svg_ids(profile_svg, "axes_") == 1
+    assert _svg_ids(cost_svg, "axes_") == 1
+    assert _svg_ids(profile_svg, "legend_") == 1
+    assert _svg_ids(cost_svg, "legend_") == 0
+    assert _svg_ids(profile_svg, "PathCollection_") == 0
+    assert _svg_ids(cost_svg, "PathCollection_") == 1
+
+
 def test_a_partial_problem_drops_a_plot_left_from_an_earlier_run(tmp_path: Path):
     _problem(tmp_path, starts=4, cap=10)
     _template(tmp_path)
