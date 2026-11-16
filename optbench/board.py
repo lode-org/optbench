@@ -44,7 +44,7 @@ from .corrections import corrected, load_corrections
 from .differences import difference_note, load_differences
 from .counts import entry_count, load_counts
 from .dat import DatError, parse_lenient
-from .failures import FAILURES, failure_of
+from .failures import FAILURES, classify_failure, failure_of
 from .families import (
     FAMILIES,
     coordinate_count,
@@ -61,7 +61,14 @@ from .families import (
 from .pins import pin_gap, same_commit
 from .problems import load_all
 from .profile import performance_profile, profile_cost
-from .score import PAR_FACTOR, normalize_start, score_v2
+from .score import (
+    PAR_FACTOR,
+    distribution_summary,
+    normalize_start,
+    penalised_cost,
+    rate_interval,
+    score_v2,
+)
 from .site import SUITE_ORDER, _float, _held, _primary, campaign_problem
 from .units import FORCE_CALL_FIELDS, harness_unit, rank_unit, row_unit, unit_source
 from .v2 import parse_repetitions
@@ -1072,8 +1079,9 @@ def _score_many(jobs: list[tuple[list[dict], int | None]]) -> list:
     from concurrent.futures import ProcessPoolExecutor
 
     workers = min(len(jobs), os.cpu_count() or 1)
+    packed = [(_pack_score(records), cap) for records, cap in jobs]
     with ProcessPoolExecutor(max_workers=workers) as pool:
-        return list(pool.map(_score_job, jobs, chunksize=8))
+        return list(pool.map(_score_job, packed, chunksize=8))
 
 
 class _ScoreBatch:
@@ -1133,7 +1141,7 @@ class _ScoreSession:
 
     def enqueue(self, batch: _ScoreBatch, job: tuple[list[dict], int | None]) -> None:
         if self.pool is not None:
-            batch.futures.append(self.pool.submit(_score_job, job))
+            batch.futures.append(self.pool.submit(_score_job, (_pack_score(job[0]), job[1])))
             return
         batch.pending.append(job)
         self._jobs += 1
@@ -1153,7 +1161,7 @@ class _ScoreSession:
         if self.pool is None:
             return
         for job in batch.pending:
-            batch.futures.append(self.pool.submit(_score_job, job))
+            batch.futures.append(self.pool.submit(_score_job, (_pack_score(job[0]), job[1])))
         batch.pending.clear()
 
     def finish(self) -> None:
@@ -1217,7 +1225,117 @@ def _place_rows(
     _replay(events, rows, unparsed, unmapped, _score_many(jobs))
 
 
+def _pack_score(records: list) -> list[tuple]:
+    """The fields a score worker reads.
+
+    The replay keeps the start records. The pool was pickling every slot
+    on those records, and the worker never reads the geometry.
+    """
+    packed = []
+    append = packed.append
+    for record in records:
+        if type(record) is dict:
+            append((
+                record.get("force_calls"),
+                record.get("success"),
+                record.get("failure"),
+                record.get("reasons"),
+                record.get("per_image"),
+            ))
+            continue
+        append((
+            record.force_calls,
+            record.success,
+            getattr(record, "failure", None),
+            getattr(record, "reasons", None),
+            getattr(record, "per_image", None),
+        ))
+    return packed
+
+
+def _failure_label(success, failure, reasons, calls, cap: int | None) -> str | None:
+    """Same class as ``failure_of`` for one packed start."""
+    if success:
+        if failure not in (None, "", "none"):
+            raise ValueError("a success cannot carry a failure class")
+        return None
+    if failure in FAILURES:
+        return str(failure)
+    named = [str(reason) for reason in reasons or []]
+    if named:
+        return classify_failure(named)
+    if cap is not None and float(calls) >= cap:
+        return "cap"
+    return "divergence"
+
+
+def _score_packed(records: list[tuple], cap: int | None) -> dict:
+    """``_score_records`` for the packed field tuples."""
+    if not records:
+        raise ValueError("records is empty")
+    successes = 0
+    costs: list[float] = []
+    tally = {name: 0 for name in FAILURES}
+    for calls, success, failure, reasons, _per_image in records:
+        ok = bool(success)
+        if ok:
+            successes += 1
+        costs.append(penalised_cost(float(calls), ok, cap))
+        label = _failure_label(success, failure, reasons, calls, cap)
+        if label is not None:
+            tally[label] += 1
+    starts = len(records)
+    low, high = rate_interval(successes, starts)
+    summary = distribution_summary(costs)
+    failed = starts - successes
+    if sum(tally.values()) != failed:
+        raise RuntimeError("failure classes dropped a start")
+    finished = [float(calls) for calls, success, _failure, _reasons, _per_image in records if success]
+    summary.update(
+        {
+            "scoring": "par2-bootstrap",
+            "successes": successes,
+            "nfailed": failed,
+            "success_rate": successes / starts,
+            "rate_low": low,
+            "rate_high": high,
+            "par_factor": PAR_FACTOR,
+            "cap": cap,
+            "par_applied": cap is not None,
+            "par2_mean": summary["mean"] if cap is not None else None,
+            "includes_failures": True,
+            "success_only_mean": (sum(finished) / len(finished)) if finished else None,
+            **{f"n_{name}": tally[name] for name in FAILURES},
+        }
+    )
+    calls = [float(item[0]) for item in records]
+    ordered = sorted(calls)
+    mid = len(ordered) // 2
+    if len(ordered) % 2:
+        median_calls = ordered[mid]
+    else:
+        median_calls = (ordered[mid - 1] + ordered[mid]) / 2
+    summary["mean_calls"] = sum(calls) / len(calls)
+    summary["median_calls"] = median_calls
+    summary["min_calls"] = ordered[0]
+    summary["max_calls"] = ordered[-1]
+    summary["call_unit"] = "total"
+    per_image = [item[4] for item in records if item[4] is not None]
+    if len(per_image) == len(records):
+        per_ordered = sorted(per_image)
+        per_mid = len(per_ordered) // 2
+        if len(per_ordered) % 2:
+            median_per = per_ordered[per_mid]
+        else:
+            median_per = (per_ordered[per_mid - 1] + per_ordered[per_mid]) / 2
+        summary["mean_per_image"] = sum(per_image) / len(per_image)
+        summary["median_per_image"] = median_per
+    return summary
+
+
 def _score_records(records: list[dict], cap: int | None) -> dict:
+    if records and type(records[0]) is tuple:
+        return _score_packed(records, cap)
     summary = score_v2(records, cap)
     calls = [float(record["force_calls"]) for record in records]
     ordered = sorted(calls)
