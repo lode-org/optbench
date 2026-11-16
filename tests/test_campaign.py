@@ -335,6 +335,41 @@ def test_resume_keeps_a_finished_client_geometry(tmp_path: Path):
     assert (kept / "launched").is_file()
 
 
+def test_a_nan_client_count_does_not_stop_the_other_starts(tmp_path: Path):
+    geometries = tmp_path / "geometries"
+    geometries.mkdir()
+    (geometries / "cluster_0000.con").write_text("nan-start\n", encoding="utf-8")
+    (geometries / "cluster_0001.con").write_text("kept\n", encoding="utf-8")
+    client = tmp_path / "client"
+    client.write_text(
+        "#!/usr/bin/env python3\n"
+        "from pathlib import Path\n"
+        "text = Path('pos.con').read_text()\n"
+        "if 'nan-start' in text:\n"
+        "    Path('results.dat').write_text('nan total_force_calls\\n')\n"
+        "else:\n"
+        "    Path('results.dat').write_text('0 termination_reason\\n10 total_force_calls\\n')\n",
+        encoding="utf-8",
+    )
+    client.chmod(client.stat().st_mode | stat.S_IEXEC)
+    output = tmp_path / "benchmark.dat"
+    summary = run(
+        ROOT,
+        "minimization/lj38",
+        "eon-svn/lbfgs-m100",
+        client=client,
+        geometries=geometries,
+        output=output,
+        work=tmp_path / "work",
+        workers=2,
+    )
+    assert summary["starts"] == 2
+    assert summary["nfailed"] == 1
+    assert summary["force_calls"] == 10
+    assert summary["counts"] == [summary["counts"][0], 10]
+    assert summary["counts"][0] > 10
+
+
 def test_a_short_iteration_cap_is_refused():
     problem = resolve_problem(ROOT, "minimization/lj38")
     template = {"ini": {"Optimizer": {"max_iterations": 10, "converged_force": 0.01}}}

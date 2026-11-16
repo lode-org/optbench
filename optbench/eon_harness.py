@@ -59,6 +59,7 @@ import numpy as np
 from .asv_tracks import TrackedSearch
 from .campaign import (
     benchmark_text,
+    client_count,
     format_ini,
     geometry_archive,
     list_templates,
@@ -966,7 +967,7 @@ def run_case(
                                 record["success"] = False
                                 record["failure"] = "wrong_stationary"
                 raw_text = fields.get("total_force_calls") or fields.get("force_calls_neb")
-                record["client_calls"] = int(float(raw_text)) if raw_text is not None else None
+                record["client_calls"] = client_count(raw_text) if raw_text is not None else None
                 record["client_reason"] = fields.get("termination_reason")
                 record.update(found["cap"])
                 record = _guard(record, record.get("client_calls"))

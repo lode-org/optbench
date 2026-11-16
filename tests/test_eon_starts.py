@@ -1,8 +1,40 @@
+import stat
 from pathlib import Path
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_a_bad_client_count_is_missing():
+    from optbench.campaign import client_count, parse_client_dat
+
+    assert client_count("181") == 181
+    assert client_count("181.0") == 181
+    assert client_count("0") == 0
+    assert client_count("nan") is None
+    assert client_count("inf") is None
+    assert client_count("-3") is None
+    assert client_count("1e") is None
+    assert parse_client_dat("nan total_force_calls\n0 termination_reason\n") == (None, "0")
+    assert parse_client_dat("12 total_force_calls\n") == (12, None)
+
+
+def test_a_nan_job_result_is_a_missing_count(tmp_path):
+    from optbench.eon_jobs import _execute
+
+    client = tmp_path / "client"
+    client.write_text(
+        "#!/usr/bin/env python3\n"
+        "from pathlib import Path\n"
+        "Path('results.dat').write_text('nan total_force_calls\\nnan number_of_extrema\\n')\n",
+        encoding="utf-8",
+    )
+    client.chmod(client.stat().st_mode | stat.S_IEXEC)
+    row = _execute((str(client), "", str(tmp_path / "run"), [], [], "total_force_calls"))
+    assert row["raw"] is None
+    assert row["force_calls"] is None
+    assert row["extrema"] is None
 
 
 def test_client_record_is_the_campaign_count():

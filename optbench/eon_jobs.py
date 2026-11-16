@@ -23,6 +23,7 @@ from pathlib import Path
 
 from .campaign import (
     benchmark_text,
+    client_count,
     client_result,
     format_ini,
     geometry_archive,
@@ -151,9 +152,9 @@ def _execute(spec: tuple) -> dict:
     fields = _read_dat(dest / "results.dat")
     base = client_result(dest)
     raw_text = fields.get(count_key)
-    raw = int(float(raw_text)) if raw_text is not None else None
+    raw = client_count(raw_text) if raw_text is not None else None
     extrema_text = fields.get("number_of_extrema")
-    extrema = int(float(extrema_text)) if extrema_text is not None else None
+    extrema = client_count(extrema_text) if extrema_text is not None else None
     return {
         "geometry": dest.name,
         "force_calls": base["force_calls"],
@@ -514,7 +515,7 @@ def _lowest_once(client: str, ini: str, work: str, con: str, direction: str) -> 
         (dest / "stderr.txt").write_text(proc.stderr or "", encoding="utf-8")
     fields = _read_dat(dest / "results.dat")
     raw_text = fields.get("total_force_calls")
-    raw = int(float(raw_text)) if raw_text is not None else None
+    raw = client_count(raw_text) if raw_text is not None else None
     mode_path = dest / "mode.dat"
     mode_text = mode_path.read_text(encoding="utf-8", errors="replace") if mode_path.is_file() else ""
     return {

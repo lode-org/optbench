@@ -8,6 +8,7 @@ benchmark.dat.
 from __future__ import annotations
 
 import json
+import math
 import shutil
 import statistics
 import subprocess
@@ -167,6 +168,22 @@ def _check_stop(problem: dict, template: dict) -> int | None:
     return cap
 
 
+def client_count(token: str) -> int | None:
+    """A force-call field, or None when it is not a finite count.
+
+    A killed client can leave ``nan``, ``inf``, a minus sign, or a cut-off
+    token. That is a missing count. It is not an exception that stops the
+    other starts.
+    """
+    try:
+        value = float(token)
+    except (TypeError, ValueError):
+        return None
+    if not math.isfinite(value) or value < 0:
+        return None
+    return int(value)
+
+
 def parse_client_dat(text: str) -> tuple[int | None, str | None]:
     """Read the eon client results.dat. The value is the first field."""
     calls = None
@@ -176,7 +193,9 @@ def parse_client_dat(text: str) -> tuple[int | None, str | None]:
         if len(parts) < 2:
             continue
         if parts[1] == "total_force_calls":
-            calls = int(float(parts[0]))
+            parsed = client_count(parts[0])
+            if parsed is not None:
+                calls = parsed
         elif parts[1] == "termination_reason":
             reason = parts[0]
     return calls, reason
