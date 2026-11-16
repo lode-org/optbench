@@ -137,3 +137,15 @@ def test_registry_pins_r2549():
     row = next(item for item in data["code"] if item["id"] == "eon-svn")
     assert row["commit"] == "r2549"
     assert row["name"] == "Eon svn"
+
+
+def test_a_crashed_svn_start_does_not_claim_zero_seconds(monkeypatch):
+    import benchmarks.bench_eon_svn as bench
+    from optbench.eon_svn import _job, _public_row
+
+    def boom(*_args, **_kwargs):
+        raise RuntimeError("client missing")
+
+    monkeypatch.setattr(bench, "run_case", boom)
+    row = _job(("eon-client/example", "ts", 1, "0000", 0, 1))
+    assert _public_row(row)["seconds"] is None

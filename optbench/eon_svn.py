@@ -45,7 +45,6 @@ def _job(spec: tuple) -> dict:
             "error": f"{type(exc).__name__}: {exc}",
             "seed": str(seed),
             "start": str(start),
-            "seconds": 0.0,
             "counter": "harness",
             "template": template_name,
         }
