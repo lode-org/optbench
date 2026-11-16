@@ -35,6 +35,29 @@ def write_machine_file(label: str | None = None, path: Path | None = None) -> di
     return record
 
 
+def write_result(dest: Path, document: dict) -> None:
+    """Write one asv result, keeping tracks this document does not replace.
+
+    Several suites share ``uv-pip-py3.12``. Replacing the file would drop
+    the suites that were already stored for that commit.
+    """
+    if dest.is_file():
+        existing = json.loads(dest.read_text(encoding="utf-8"))
+        previous = existing.get("results")
+        fresh = document.get("results")
+        if (
+            existing.get("commit_hash") == document.get("commit_hash")
+            and existing.get("env_name") == document.get("env_name")
+            and isinstance(previous, dict)
+            and isinstance(fresh, dict)
+        ):
+            merged = dict(previous)
+            merged.update(fresh)
+            document = {**document, "results": merged}
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(json.dumps(document, separators=(", ", ": ")), encoding="utf-8")
+
+
 def machine_dir(results_dir: Path, label: str | None = None) -> Path:
     """``results_dir/<label>``, with the ``machine.json`` asv reads beside the result files.
 

@@ -15,7 +15,7 @@ from pathlib import Path
 
 from benchmarks.bench_geometric import _class_name as geometric_class
 from benchmarks.bench_noise import _class_name as noise_class
-from optbench.asv_machine import machine_dir, machine_record
+from optbench.asv_machine import machine_dir, machine_record, write_result
 
 TRACKS = (
     "time_search",
@@ -119,5 +119,5 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
         "version": 2,
     }
     dest = machine_dir(root / "results" / "asv") / f"{commit[:8]}-uv-pip-py3.12.json"
-    dest.write_text(json.dumps(document, separators=(", ", ": ")), encoding="utf-8")
+    write_result(dest, document)
     return dest

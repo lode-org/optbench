@@ -250,6 +250,9 @@ def write_asv(commit: str) -> Path:
 
     params = {**machine_record(), "python": "3.12"}
     result = Results(params, {}, commit, int(time.time() * 1000), "3.12", "uv-pip-py3.12", {})
+    save_dir = str(ROOT / "results" / "asv")
+    if result._filename and Path(save_dir, result._filename).is_file():
+        result.load_data(save_dir)
     tracks = (
         "time_search",
         "track_force_calls",

@@ -13,7 +13,7 @@ import time
 from pathlib import Path
 
 from benchmarks.bench_noise import _class_name
-from optbench.asv_machine import machine_dir, machine_record
+from optbench.asv_machine import machine_dir, machine_record, write_result
 from optbench.noise_catalog import specs
 
 TRACKS = (
@@ -110,5 +110,5 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
     }
     # The other result files use asv's short hash in the name and the full hash inside.
     dest = machine_dir(root / "results" / "asv") / f"{commit[:8]}-uv-pip-py3.12.json"
-    dest.write_text(json.dumps(document, separators=(", ", ": ")), encoding="utf-8")
+    write_result(dest, document)
     return dest
