@@ -259,8 +259,9 @@ def parse_con(text: str) -> tuple[np.ndarray, np.ndarray]:
         raise ValueError("con file has no atoms")
     rows.sort()
     ids = [row[0] for row in rows]
-    if ids != list(range(len(ids))):
-        raise ValueError("con atom ids are not a dense range from 0")
+    count = len(ids)
+    if ids != list(range(count)) and ids != list(range(1, count + 1)):
+        raise ValueError("con atom ids are not a dense range")
     points = np.array([[row[1], row[2], row[3]] for row in rows], dtype=float)
     mask = np.array([row[4] for row in rows], dtype=bool)
     return points, mask
