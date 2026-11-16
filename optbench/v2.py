@@ -273,9 +273,16 @@ def parse_repetitions(text: str) -> list[dict]:
 
 
 def write_starts(path: Path, records: list[dict]) -> None:
+    """Replace the starts file only after the new text is complete.
+
+    Opening the destination first would leave a truncated file if the
+    process is killed while the lines are still being written.
+    """
     path.parent.mkdir(parents=True, exist_ok=True)
     body = "".join(json.dumps(record, sort_keys=True) + "\n" for record in records)
-    path.write_text(body, encoding="utf-8")
+    temporary = path.with_name(f".{path.name}.tmp")
+    temporary.write_text(body, encoding="utf-8")
+    temporary.replace(path)
 
 
 def client_start_records(

@@ -351,9 +351,9 @@ def benchmark_text(summary: dict, template: dict) -> str:
 
 def write_starts(path: Path, rows: list[dict]) -> None:
     """One JSON object per start, failures included."""
-    path.parent.mkdir(parents=True, exist_ok=True)
-    body = "\n".join(json.dumps(row, sort_keys=True) for row in rows)
-    path.write_text(body + ("\n" if body else ""), encoding="utf-8")
+    from .v2 import write_starts as write_v2
+
+    write_v2(path, rows)
 
 
 def client_jobs(

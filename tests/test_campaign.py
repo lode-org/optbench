@@ -433,6 +433,25 @@ def test_a_negative_start_limit_is_rejected(tmp_path: Path):
         )
 
 
+def test_an_interrupted_starts_file_keeps_the_previous_rows(tmp_path: Path, monkeypatch):
+    from optbench.campaign import write_starts
+
+    path = tmp_path / "bench.starts.jsonl"
+    path.write_text('{"start": "kept"}\n', encoding="utf-8")
+    original = Path.write_text
+
+    def fail_temp(self, text, *args, **kwargs):
+        if self.name.endswith(".tmp"):
+            raise RuntimeError("interrupted")
+        return original(self, text, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "write_text", fail_temp)
+    with pytest.raises(RuntimeError, match="interrupted"):
+        write_starts(path, [{"start": "new"}])
+    assert path.read_text(encoding="utf-8") == '{"start": "kept"}\n'
+    assert not list(tmp_path.glob("*.tmp"))
+
+
 def test_a_short_iteration_cap_is_refused():
     problem = resolve_problem(ROOT, "minimization/lj38")
     template = {"ini": {"Optimizer": {"max_iterations": 10, "converged_force": 0.01}}}
