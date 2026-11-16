@@ -45,12 +45,13 @@ import math
 import os
 import shutil
 import statistics
-import tempfile
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 from optbench.counter import ForceCallCap, HarnessCounter
+from optbench.scratch import mkdtemp as run_mkdtemp
+from optbench.scratch import session as run_session
 from optbench.failures import classify_failure
 from optbench.potserver import RgpotCounter
 from optbench.score import score_v2, summarize_capped
@@ -565,7 +566,7 @@ def optimize(job: dict, evaluate, stop) -> dict:
         qdata=False,
         hessian="never",
     )
-    dirname = tempfile.mkdtemp(prefix="geometric-optbench-")
+    dirname = run_mkdtemp(prefix="geometric-optbench-")
     opt = None
     stopped = False
     error = ""
@@ -907,32 +908,33 @@ def run_template(
     partial_path = output.with_suffix(".partial.jsonl")
     done_rows = _kept_partial(partial_path, resume)
     pending = [job for job in jobs if job["index"] not in done_rows]
-    if pending and workers > 1:
-        import multiprocessing as mp
+    with run_session():
+        if pending and workers > 1:
+            import multiprocessing as mp
 
-        context = mp.get_context("spawn")
-        with ProcessPoolExecutor(max_workers=workers, mp_context=context, initializer=_init_worker) as pool:
-            futures = {pool.submit(_minimize_job, job): job["index"] for job in pending}
-            total = len(jobs)
-            finished = len(done_rows)
+            context = mp.get_context("spawn")
+            with ProcessPoolExecutor(max_workers=workers, mp_context=context, initializer=_init_worker) as pool:
+                futures = {pool.submit(_minimize_job, job): job["index"] for job in pending}
+                total = len(jobs)
+                finished = len(done_rows)
+                partial_path.parent.mkdir(parents=True, exist_ok=True)
+                with partial_path.open("a", encoding="utf-8") as handle:
+                    for future in as_completed(futures):
+                        record = future.result()
+                        done_rows[int(record["index"])] = record
+                        handle.write(json.dumps(record, sort_keys=True) + "\n")
+                        handle.flush()
+                        finished += 1
+                        if finished == total or finished % 50 == 0:
+                            print(f"{template['id']} {finished}/{total}", flush=True)
+        else:
             partial_path.parent.mkdir(parents=True, exist_ok=True)
             with partial_path.open("a", encoding="utf-8") as handle:
-                for future in as_completed(futures):
-                    record = future.result()
+                for job in pending:
+                    record = _minimize_job(job)
                     done_rows[int(record["index"])] = record
                     handle.write(json.dumps(record, sort_keys=True) + "\n")
                     handle.flush()
-                    finished += 1
-                    if finished == total or finished % 50 == 0:
-                        print(f"{template['id']} {finished}/{total}", flush=True)
-    else:
-        partial_path.parent.mkdir(parents=True, exist_ok=True)
-        with partial_path.open("a", encoding="utf-8") as handle:
-            for job in pending:
-                record = _minimize_job(job)
-                done_rows[int(record["index"])] = record
-                handle.write(json.dumps(record, sort_keys=True) + "\n")
-                handle.flush()
     records = [done_rows[job["index"]] for job in jobs]
     for record in records:
         record.pop("index", None)

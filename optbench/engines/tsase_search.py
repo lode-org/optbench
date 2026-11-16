@@ -21,13 +21,13 @@ import importlib.util
 import os
 import subprocess
 import sys
-import tempfile
 import types
 from contextlib import redirect_stdout
 from pathlib import Path
 
 import numpy as np
 
+from ..scratch import temporary_directory as run_temporary
 from .common import (
     cached_pairs,
     judge_mode,
@@ -228,7 +228,7 @@ def _execute(job: dict) -> dict:
             self.results["forces"] = forces
 
     try:
-        with tempfile.TemporaryDirectory(prefix="tsase-") as folder:
+        with run_temporary("tsase-") as folder:
             os.chdir(folder)
             log = Path(folder) / "stdout.txt"
             calculator = attach_ase_counter(_Surface(), cap=cap, counter=counter)
@@ -391,7 +391,7 @@ def _execute_dimer(job: dict) -> dict:
     point = positions.copy()
     previous = Path.cwd()
     try:
-        with tempfile.TemporaryDirectory(prefix="tsase-dimer-") as folder:
+        with run_temporary("tsase-dimer-") as folder:
             os.chdir(folder)
             log = Path(folder) / "stdout.txt"
             atoms = Atoms(positions=positions, cell=_cell(positions, box), pbc=box is not None)

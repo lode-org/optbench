@@ -23,6 +23,7 @@ from optbench.pes import evaluate, load_pairs
 from optbench.rgsaddle_band import vibrational_index
 from optbench.score import score_v2
 from optbench.stationary import numerical_hessian
+from optbench.scratch import session as run_session
 from optbench.v2 import collect_provenance, write_starts
 
 _FD_STEP = 1e-5
@@ -393,17 +394,18 @@ def run_jobs(jobs: list[dict], execute, workers: int, limit: int = 0) -> list[di
     """
     if limit:
         jobs = list(jobs)[: int(limit)]
-    if len(jobs) <= 1:
-        records = [execute(job) for job in jobs]
-    else:
-        import multiprocessing
+    with run_session():
+        if len(jobs) <= 1:
+            records = [execute(job) for job in jobs]
+        else:
+            import multiprocessing
 
-        with ProcessPoolExecutor(
-            max_workers=max(1, int(workers)),
-            mp_context=multiprocessing.get_context("spawn"),
-            max_tasks_per_child=1,
-        ) as pool:
-            records = list(pool.map(execute, jobs))
+            with ProcessPoolExecutor(
+                max_workers=max(1, int(workers)),
+                mp_context=multiprocessing.get_context("spawn"),
+                max_tasks_per_child=1,
+            ) as pool:
+                records = list(pool.map(execute, jobs))
     order = {job["name"]: index for index, job in enumerate(jobs)}
     records.sort(key=lambda row: order[row["start"]])
     return records
@@ -420,12 +422,13 @@ def run_start(jobs: list[dict], execute, start: str) -> dict:
     chosen = [job for job in jobs if str(job["name"]) == str(start)]
     if len(chosen) != 1:
         raise KeyError(f"{len(chosen)} jobs are named {start}")
-    with ProcessPoolExecutor(
-        max_workers=1,
-        mp_context=multiprocessing.get_context("spawn"),
-        max_tasks_per_child=1,
-    ) as pool:
-        return pool.submit(execute, chosen[0]).result()
+    with run_session():
+        with ProcessPoolExecutor(
+            max_workers=1,
+            mp_context=multiprocessing.get_context("spawn"),
+            max_tasks_per_child=1,
+        ) as pool:
+            return pool.submit(execute, chosen[0]).result()
 
 
 def prepared(root: Path, problem_name: str, template_name: str, code_id: str) -> tuple[dict, dict, dict]:

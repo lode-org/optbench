@@ -17,13 +17,14 @@ from __future__ import annotations
 import logging
 import os
 import sys
-import tempfile
 import zlib
 from contextlib import redirect_stdout
 from pathlib import Path
 
 import numpy as np
 
+from ..scratch import session as run_session
+from ..scratch import temporary_directory as run_temporary
 from .common import judge_mode, judge_saddle, write_campaign
 from .geometries import load_starts, point_settings
 
@@ -175,7 +176,7 @@ def _execute_minimize(job: dict) -> dict:
     capped = False
     previous = Path.cwd()
     try:
-        with tempfile.TemporaryDirectory(prefix="pysis-min-") as folder:
+        with run_temporary("pysis-min-") as folder:
             os.chdir(folder)
             _prepare()
             from pysisyphus.Geometry import Geometry
@@ -313,7 +314,7 @@ def _execute_lanczos(job: dict) -> dict:
     overlap = 0.0
     previous = Path.cwd()
     try:
-        with tempfile.TemporaryDirectory(prefix="pysis-lanczos-") as folder:
+        with run_temporary("pysis-lanczos-") as folder:
             os.chdir(folder)
             _prepare()
             from pysisyphus.modefollow.lanczos import lanczos
@@ -381,17 +382,18 @@ def _jobs(starts: list[dict], settings: dict, template: dict) -> list[dict]:
 def _collect(jobs: list[dict], workers: int, limit: int = 0) -> list[dict]:
     if limit:
         jobs = list(jobs)[: int(limit)]
-    if len(jobs) <= 1:
-        records = [_execute(job) for job in jobs]
-    else:
-        import multiprocessing
-        from concurrent.futures import ProcessPoolExecutor
+    with run_session():
+        if len(jobs) <= 1:
+            records = [_execute(job) for job in jobs]
+        else:
+            import multiprocessing
+            from concurrent.futures import ProcessPoolExecutor
 
-        with ProcessPoolExecutor(
-            max_workers=max(1, int(workers)),
-            mp_context=multiprocessing.get_context("spawn"),
-        ) as pool:
-            records = list(pool.map(_execute, jobs))
+            with ProcessPoolExecutor(
+                max_workers=max(1, int(workers)),
+                mp_context=multiprocessing.get_context("spawn"),
+            ) as pool:
+                records = list(pool.map(_execute, jobs))
     order = {job["name"]: index for index, job in enumerate(jobs)}
     records.sort(key=lambda row: order[row["start"]])
     return records

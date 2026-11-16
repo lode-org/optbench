@@ -70,6 +70,8 @@ from .campaign import (
 from .eon_jobs import _client_env, _numpy_direction, _read_dat, _seeded_mode, cap_report
 from .eon_parse import abs_overlap, flat_floats, xyz_to_con
 from .stationary import negative_index, vibrational_eigenvalues
+from .scratch import mkdtemp as run_mkdtemp
+from .scratch import session as run_session
 from .surfaces import lennard_jones, morse_smooth_linear, read_con
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -855,7 +857,7 @@ def run_case(
         signal.signal(signal.SIGALRM, _on_alarm)
         signal.alarm(budget)
     started = time.monotonic()
-    work = Path(tempfile.mkdtemp(prefix="optbench-eon-"))
+    work = Path(run_mkdtemp("optbench-eon-"))
     server = None
     try:
         client = _client(family)
@@ -1111,13 +1113,14 @@ def fill(family: str, *, kinds: set[str] | None = None, workers: int = 1, limit:
         passes = int(template.get("pass_limit") or 0)
         for seed, start in grid_points(template, full=full, limit=limit):
             jobs.append((template["id"], seed, start, passes))
-    if workers <= 1:
-        results = [_fill_job(job) for job in jobs]
-    else:
-        import multiprocessing as mp
+    with run_session():
+        if workers <= 1:
+            results = [_fill_job(job) for job in jobs]
+        else:
+            import multiprocessing as mp
 
-        with ProcessPoolExecutor(max_workers=workers, mp_context=mp.get_context("spawn")) as pool:
-            results = list(pool.map(_fill_job, jobs))
+            with ProcessPoolExecutor(max_workers=workers, mp_context=mp.get_context("spawn")) as pool:
+                results = list(pool.map(_fill_job, jobs))
     grouped: dict[str, list] = {ident: [] for ident in templates}
     for row in results:
         grouped.setdefault(row["template"], []).append((row["seed"], row["start"], row))

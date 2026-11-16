@@ -26,6 +26,7 @@ import numpy as np
 
 from optbench.wales import REVISION_STAMP, header, snapshot, stamped_sha256
 
+from ..scratch import temporary_directory as run_temporary
 from .common import judge_saddle, run_jobs, write_campaign
 from .geometries import load_starts, point_settings
 
@@ -179,10 +180,9 @@ def _execute(job: dict) -> dict:
     calls = 0
     capped = False
     error = ""
-    import tempfile
 
     try:
-        with tempfile.TemporaryDirectory(prefix="optim-") as raw:
+        with run_temporary("optim-") as raw:
             folder = Path(raw)
             hook = folder / "hook"
             relay = hook / "pysocket" / "fmlip_relay.py"

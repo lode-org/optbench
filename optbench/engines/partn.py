@@ -15,7 +15,6 @@ from __future__ import annotations
 
 import os
 import sys
-import tempfile
 from ctypes import POINTER, byref, c_char_p
 from pathlib import Path
 
@@ -23,6 +22,7 @@ import numpy as np
 
 from ..connection import ProcessTable, per_atom_max, periodic_lengths, tolerances
 from ..connection import connected as endpoints_connected
+from ..scratch import temporary_directory as run_temporary
 from .common import (
     cached_pairs,
     initial_push,
@@ -208,7 +208,7 @@ def _execute(job: dict) -> dict:
     previous = Path.cwd()
     try:
         version = None
-        with tempfile.TemporaryDirectory(prefix="partn-") as folder:
+        with run_temporary("partn-") as folder:
             os.chdir(folder)
             art = pypARTn.artn(engine="other", shlib=job["shlib"])
             version = art.version()

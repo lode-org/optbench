@@ -14,11 +14,11 @@ from __future__ import annotations
 
 import os
 import random
-import tempfile
 from pathlib import Path
 
 import numpy as np
 
+from ..scratch import temporary_directory as run_temporary
 from .common import judge_saddle, run_jobs, write_campaign
 from .geometries import load_starts, point_settings
 
@@ -238,7 +238,7 @@ def _execute(job: dict) -> dict:
             forces[:] = 0.0
 
     try:
-        with tempfile.TemporaryDirectory(prefix="lammps-") as folder:
+        with run_temporary("lammps-") as folder:
             data = Path(folder) / "geometry.data"
             _write_data(data, positions, low, high)
             command = lammps(cmdargs=["-screen", "none", "-log", "none", "-nocite"])

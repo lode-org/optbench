@@ -11,12 +11,12 @@ from __future__ import annotations
 
 import os
 import sys
-import tempfile
 from contextlib import redirect_stdout
 from pathlib import Path
 
 import numpy as np
 
+from ..scratch import temporary_directory as run_temporary
 from .common import cached_pairs, judge_saddle, prepared, run_jobs, write_campaign
 
 ENGINE = "compass"
@@ -139,7 +139,7 @@ def _execute(job: dict) -> dict:
             return False
 
     try:
-        with tempfile.TemporaryDirectory(prefix="compass-") as folder:
+        with run_temporary("compass-") as folder:
             os.chdir(folder)
             log = Path(folder) / "stdout.txt"
             surface = _surface(kind, free, box)

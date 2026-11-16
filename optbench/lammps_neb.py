@@ -47,6 +47,9 @@ from .failures import classify_failure
 from .pes import evaluate, load_pairs
 from .rgsaddle_band import vibrational_index
 from .score import score_v2
+from .scratch import mkdtemp as run_mkdtemp
+from .scratch import session as run_session
+from .scratch import temporary_directory as run_temporary
 from .stationary import numerical_hessian
 from .v2 import collect_provenance, write_starts
 
@@ -410,7 +413,7 @@ def probe_pair(
     xyz = np.asarray(coords, dtype=np.float64)
     free = np.ones(xyz.shape[0], dtype=bool)
     lo, hi = _box_bounds(kind, xyz, xyz, box)
-    with tempfile.TemporaryDirectory(prefix="lammps-probe-") as folder:
+    with run_temporary("lammps-probe-") as folder:
         work = Path(folder)
         _write_data(work / "start.data", xyz, free, lo, hi)
         units = "lj" if kind == "lj" else "metal"
@@ -550,7 +553,12 @@ def search_geometry(
     owned: Path | None = None
     if work is None:
         # TemporaryDirectory deletes itself when collected, after the return.
-        owned = Path(tempfile.mkdtemp(prefix="lammpsneb-"))
+        if os.environ.get("OPTBENCH_LAMMPS_KEEP") == "1":
+            # The caller asked to keep this directory, so it stays outside
+            # the run parent that close removes.
+            owned = Path(tempfile.mkdtemp(prefix="lammpsneb-"))
+        else:
+            owned = Path(run_mkdtemp("lammpsneb-"))
         work = owned
     else:
         work.mkdir(parents=True, exist_ok=True)
@@ -746,7 +754,8 @@ def search_named(
     pairs = cached_pairs(root, problem, settings)
     if start not in pairs:
         raise KeyError(f"{problem['id']} has no start {start}")
-    record = _execute(pairs[start], settings, n1=n1, n2=n2, work=work)
+    with run_session():
+        record = _execute(pairs[start], settings, n1=n1, n2=n2, work=work)
     record["seed"] = str(seed)
     record["problem"] = problem["id"]
     record["template"] = template["id"]
@@ -926,25 +935,26 @@ def run(
             row = json.loads(path.read_text(encoding="utf-8"))
             done[str(row["start"])] = row
     parts.mkdir(parents=True, exist_ok=True)
-    for index, pair in enumerate(pairs, start=1):
-        if pair.name in done:
-            records.append(done[pair.name])
-            continue
-        record = _execute(pair, settings)
-        record["seed"] = "0"
-        record["problem"] = problem["id"]
-        record["template"] = template["id"]
-        record["code"] = template["code"]
-        record["code_version"] = template["code_version"]
-        record["commit"] = template["commit"]
-        record["algorithm"] = template["algorithm"]
-        record["tuning"] = template["tuning"]
-        path = parts / f"{pair.name}.json"
-        path.write_text(json.dumps(record, sort_keys=True) + "\n", encoding="utf-8")
-        records.append(record)
-        print(
-            f"{index}/{len(pairs)} {template['id']} {pair.name} "
-            f"calls={record['force_calls']} success={record['success']} failure={record['failure']}",
-            flush=True,
-        )
-    return write_outputs(output, records, template, settings, problem)
+    with run_session():
+        for index, pair in enumerate(pairs, start=1):
+            if pair.name in done:
+                records.append(done[pair.name])
+                continue
+            record = _execute(pair, settings)
+            record["seed"] = "0"
+            record["problem"] = problem["id"]
+            record["template"] = template["id"]
+            record["code"] = template["code"]
+            record["code_version"] = template["code_version"]
+            record["commit"] = template["commit"]
+            record["algorithm"] = template["algorithm"]
+            record["tuning"] = template["tuning"]
+            path = parts / f"{pair.name}.json"
+            path.write_text(json.dumps(record, sort_keys=True) + "\n", encoding="utf-8")
+            records.append(record)
+            print(
+                f"{index}/{len(pairs)} {template['id']} {pair.name} "
+                f"calls={record['force_calls']} success={record['success']} failure={record['failure']}",
+                flush=True,
+            )
+        return write_outputs(output, records, template, settings, problem)
