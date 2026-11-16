@@ -1432,6 +1432,7 @@ def run(
     *,
     output: Path,
     workers: int = 1,
+    limit: int = 0,
 ) -> dict:
     """Run every pair in one problem and write the dat, starts, and v2 score."""
     problem = resolve_problem(root, problem_name)
@@ -1445,6 +1446,8 @@ def run(
     commit = _registry(root, str(template.get("code") or "rgsaddle"))["commit"]
     settings = _settings(template, problem, commit)
     pairs = list(cached_pairs(root, problem, settings).values())
+    if limit:
+        pairs = pairs[: int(limit)]
     jobs = [_job(pair, settings) for pair in pairs]
     _threads_one()
     if workers <= 1:

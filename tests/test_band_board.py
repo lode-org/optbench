@@ -336,3 +336,41 @@ def _page_row(root: Path, label: str) -> dict[str, str]:
 def _write(path: Path, lines: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def test_a_limit_runs_the_first_band_pairs(monkeypatch, tmp_path: Path):
+    import optbench.rgsaddle_band as band
+    from optbench.__main__ import run as cli_run
+
+    monkeypatch.setattr(
+        band,
+        "cached_pairs",
+        lambda *args, **kwargs: {"a": {"name": "a"}, "b": {"name": "b"}, "c": {"name": "c"}},
+    )
+    monkeypatch.setattr(band, "_job", lambda pair, settings: {"name": pair["name"]})
+    seen = []
+
+    def fake_execute(job):
+        seen.append(job["name"])
+        return {"start": job["name"]}
+
+    monkeypatch.setattr(band, "_execute", fake_execute)
+    monkeypatch.setattr(
+        band,
+        "write_outputs",
+        lambda output, records, template, settings, problem: {
+            "starts": len(records),
+            "force_calls": 1,
+            "nfailed": 0,
+            "template": template["id"],
+            "problem": problem["id"],
+        },
+    )
+    cli_run(
+        "neb/Pt-heptamer",
+        "rgsaddle/ci-neb",
+        root=ROOT,
+        output=tmp_path / "benchmark.dat",
+        limit=1,
+    )
+    assert seen == ["a"]

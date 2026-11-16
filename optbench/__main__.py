@@ -87,6 +87,7 @@ def run(
             template,
             output=output,
             workers=workers,
+            limit=limit,
         )
     elif loaded["engine"] == "lammps-neb":
         from optbench.lammps_neb import run as run_lammps
