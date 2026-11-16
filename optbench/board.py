@@ -1077,11 +1077,14 @@ def _blank_row(**values) -> dict:
 
 
 def _score_job(job: tuple[list[dict], int | None]):
-    """One scored summary, or the exception the caller already records."""
+    """One scored summary, or the exception the caller already records.
+
+    One bad list must not discard the other lists in the same message.
+    """
     records, cap = job
     try:
         return _score_records(records, cap)
-    except (ValueError, RuntimeError) as exc:
+    except Exception as exc:
         return exc
 
 
@@ -1107,7 +1110,14 @@ def _score_many(jobs: list[tuple[list[dict], int | None]]) -> list:
     workers = min(len(jobs), os.cpu_count() or 1)
     packed = [(_pack_score(records), cap) for records, cap in jobs]
     with ProcessPoolExecutor(max_workers=workers) as pool:
-        return list(pool.map(_score_job, packed, chunksize=8))
+        futures = [(index, pool.submit(_score_job, job)) for index, job in enumerate(packed)]
+        found: list = [None] * len(packed)
+        for index, future in futures:
+            try:
+                found[index] = future.result()
+            except Exception as exc:
+                found[index] = exc
+        return found
 
 
 # Eight short lists share a message. A list of this many starts is a
@@ -1156,7 +1166,13 @@ class _ScoreBatch:
         if self.futures:
             found: list = [None] * self._seq
             for indexes, future in self.futures:
-                for index, result in zip(indexes, future.result(), strict=True):
+                try:
+                    results = future.result()
+                except Exception as exc:
+                    for index in indexes:
+                        found[index] = exc
+                    continue
+                for index, result in zip(indexes, results, strict=True):
                     found[index] = result
             return found
         return [_score_job(job) for job in self.pending]
@@ -1243,7 +1259,7 @@ class _ScoreSession:
         pool = self.pool
         self.pool = None
         if pool is not None:
-            pool.shutdown(wait=True)
+            pool.shutdown(wait=True, cancel_futures=True)
 
 
 def _replay(

@@ -2,7 +2,15 @@
 
 import pytest
 
-from optbench.board import _ScoreSession, _blank_row, _make_start, _pack_score, _score_many, _score_records
+from optbench.board import (
+    _ScoreSession,
+    _blank_row,
+    _make_start,
+    _pack_score,
+    _score_jobs,
+    _score_many,
+    _score_records,
+)
 
 
 def test_a_small_batch_matches_the_inline_scorer() -> None:
@@ -162,3 +170,68 @@ def test_packed_fields_score_the_same() -> None:
     ]
     cap = 30
     assert _score_records(_pack_score(records), cap) == _score_records(records, cap)
+
+
+def test_one_bad_list_does_not_drop_the_rest_of_the_message() -> None:
+    jobs = [
+        ([{"force_calls": 1.0, "success": True}], 10),
+        ([{"success": True}], 10),
+        ([{"force_calls": 4.0, "success": True}], 10),
+    ]
+    results = _score_jobs(jobs)
+    assert results[0]["successes"] == 1
+    assert isinstance(results[1], KeyError)
+    assert results[2]["successes"] == 1
+    assert results[2]["mean_calls"] == 4.0
+
+
+def test_a_failed_score_message_keeps_the_lists_around_it() -> None:
+    session = _ScoreSession()
+    batch = session.batch()
+    batch._seq = 3
+
+    class _Future:
+        def __init__(self, value, fail: bool = False) -> None:
+            self.value = value
+            self.fail = fail
+
+        def result(self):
+            if self.fail:
+                raise RuntimeError("worker died")
+            return self.value
+
+    batch.futures = [
+        ([0], _Future([{"n": 1}])),
+        ([1], _Future(None, fail=True)),
+        ([2], _Future([{"n": 3}])),
+    ]
+    found = batch.collect()
+    assert found[0] == {"n": 1}
+    assert isinstance(found[1], RuntimeError)
+    assert str(found[1]) == "worker died"
+    assert found[2] == {"n": 3}
+
+
+def test_a_score_worker_that_exits_keeps_the_finished_list() -> None:
+    import os
+    from concurrent.futures import ProcessPoolExecutor
+
+    def _die(_jobs):
+        os._exit(1)
+
+    session = _ScoreSession()
+    session.pool = ProcessPoolExecutor(max_workers=1)
+    try:
+        batch = session.batch()
+        batch._seq = 2
+        good = session.pool.submit(
+            _score_jobs,
+            [([{"force_calls": 2.0, "success": True}], 10)],
+        )
+        dead = session.pool.submit(_die, [])
+        batch.futures = [([0], good), ([1], dead)]
+        found = batch.collect()
+        assert found[0]["successes"] == 1
+        assert isinstance(found[1], Exception)
+    finally:
+        session.close()
