@@ -391,17 +391,15 @@ def code_summaries(problem: dict, ranked: list[dict], registry: list[dict]) -> l
         scored = [(value, row) for row in rows if (value := _metric_value(row)) is not None]
         if not scored:
             continue
+        scored.sort(key=lambda item: (item[0], str(item[1].get("label") or "")))
         solved = [item for item in scored if not unsolved_row(item[1])]
-        pool = solved or scored
-        pool.sort(key=lambda item: (item[0], str(item[1].get("label") or "")))
-        values = [item[0] for item in pool]
-        best_value, best_row = pool[0]
+        best_value, best_row = (solved or scored)[0]
         par2 = best_row.get("par2_mean")
         found.append(
             {
                 "code": code,
                 "best": best_value,
-                "median": float(statistics.median(values)),
+                "median": float(statistics.median([item[0] for item in scored])),
                 "success": _success(best_row),
                 "par2": None if par2 is None else float(par2),
                 "unsolved": unsolved_row(best_row),

@@ -6,7 +6,7 @@ from optbench.board import _aligned_costs, _assign_family_ranks, _rank_key, prof
 from optbench.families import row_label, version_text
 from optbench.profile import performance_profile
 from optbench.score import band_total, penalised_cost, score_v2, summarize_divided
-from optbench.site_pages import leaderboard_html
+from optbench.site_pages import code_summaries, leaderboard_html
 
 
 def test_a_missing_start_is_not_dropped_from_the_profile():
@@ -121,6 +121,17 @@ def test_a_failure_does_not_tie_or_outrank_a_solved_run():
     )
     assert html.index("Solved") < html.index("Failed")
     assert 'class="rank r1"' in html.split("Failed")[0]
+
+
+def test_the_code_median_keeps_an_unsolved_method():
+    rows = [
+        {"code": "Toy", "label": "Toy · fast", "rank_cost": 10.0, "par2_mean": 10.0, "success_rate": 1.0, "n": 4, "nfailed": 0},
+        {"code": "Toy", "label": "Toy · capped", "rank_cost": 20.0, "par2_mean": 20.0, "success_rate": 0.0, "n": 4, "nfailed": 4},
+    ]
+    (summary,) = code_summaries({"id": "minimization/toy"}, rows, [])
+    assert summary["best"] == 10.0
+    assert summary["median"] == 15.0
+    assert summary["unsolved"] is False
 
 
 def test_a_version_does_not_repeat_the_code_or_the_method():
