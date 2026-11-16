@@ -303,24 +303,54 @@ def bootstrap_interval(
     return point, low, high
 
 
+def _tempered_source(seed: int):
+    """A NumPy MT19937 standing where ``random.Random(seed)`` stands.
+
+    Its raw words are the tempered outputs ``getrandbits(32)`` would return,
+    including across the twist. ``None`` when this NumPy will not take that
+    state, and the caller draws the words from ``getrandbits`` instead.
+    """
+    rng = random.Random(seed)
+    _version, state, _gauss = rng.getstate()
+    try:
+        source = np.random.MT19937()
+        source.state = {
+            "bit_generator": "MT19937",
+            "state": {
+                "key": np.array(state[:-1], dtype=np.uint32),
+                "pos": int(state[-1]),
+            },
+        }
+    except (AttributeError, TypeError, ValueError, KeyError):
+        return None
+    return source
+
+
 def _index_block(count: int, needed: int, seed: int) -> np.ndarray:
     """``needed`` draws from ``range(count)``, in ``getrandbits`` order.
 
     One ``getrandbits(32)`` is one tempered word. A wider call is those
     words packed little-endian, so the low word is the first draw. A draw
     of ``bits`` is that word shifted down, and values at or above ``count``
-    are rejected, the same as one call at a time.
+    are rejected, the same as one call at a time. The words come from the
+    same generator without building one integer the size of the draw.
     """
-    rng = random.Random(seed)
     bits = count.bit_length()
     shift = np.uint32(32 - bits)
     rate = count / (1 << bits)
     chosen = np.empty(needed, dtype=np.uint32)
     filled = 0
+    source = _tempered_source(seed)
+    rng = None if source is not None else random.Random(seed)
     while filled < needed:
         words = max(int((needed - filled) / rate * 1.05) + 8, 1)
-        blob = rng.getrandbits(32 * words)
-        picks = np.frombuffer(blob.to_bytes(words * 4, "little"), dtype="<u4") >> shift
+        if source is not None:
+            raw = source.random_raw(words)
+            picks = raw if raw.dtype == np.uint32 else raw.astype(np.uint32, copy=False)
+            picks = picks >> shift
+        else:
+            blob = rng.getrandbits(32 * words)
+            picks = np.frombuffer(blob.to_bytes(words * 4, "little"), dtype="<u4") >> shift
         keep = picks[picks < count]
         take = min(int(keep.size), needed - filled)
         chosen[filled : filled + take] = keep[:take]
