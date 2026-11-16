@@ -22,11 +22,20 @@ CONTRIBUTOR = "Rohit Goswami"
 
 
 def read_con(text: str) -> np.ndarray:
-    lines = [line for line in text.splitlines() if line.strip()]
+    """XYZ block. The comment is line 2 even when it is blank.
+
+    Dropping blank lines would treat the first atom as that comment and
+    drop the last atom.
+    """
+    lines = text.splitlines()
+    if len(lines) < 3 or not lines[0].strip():
+        raise ValueError("xyz needs a count, a comment, and coordinates")
     count = int(lines[0].split()[0])
     coords = []
     for line in lines[2 : 2 + count]:
         parts = line.split()
+        if len(parts) < 4:
+            raise ValueError("xyz coordinate needs element x y z")
         coords.append([float(parts[1]), float(parts[2]), float(parts[3])])
     if len(coords) != count:
         raise ValueError(f"expected {count} atoms, read {len(coords)}")
