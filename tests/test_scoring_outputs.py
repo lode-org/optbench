@@ -13,6 +13,7 @@ from optbench.board import (
     _record_plain,
     _score_packed,
     _assign_family_ranks,
+    build_board,
 )
 from optbench.site_pages import code_summaries
 
@@ -119,3 +120,61 @@ def test_a_tie_shares_a_rank_and_a_failure_does_not_take_it():
     assert summary["best"] == solved["par2_mean"]
     assert summary["median"] == (solved["par2_mean"] + solved["min_calls"]) / 2
     assert summary["unsolved"] is False
+
+
+_DOCUMENT = None
+
+
+def _placed(problem_id: str) -> list[tuple]:
+    global _DOCUMENT
+    if _DOCUMENT is None:
+        _DOCUMENT = build_board(ROOT)
+    problem = _DOCUMENT["problems"][problem_id]
+    return [
+        (row["family_rank"], row["success_rate"], row["par2_mean"], row["label"])
+        for row in problem["ranked"]
+        if problem_id == "neb/Pt-heptamer" or row["family"] == "band"
+    ]
+
+
+def test_pt_heptamer_ranks_by_par2_and_shares_tied_places():
+    """Equal PAR-2 shares a rank. The next distinct cost skips the tied place."""
+    assert _placed("neb/Pt-heptamer") == [
+        (1, 1.0, 318.9230769230769, "geodesic (1.0.0) · CI-NEB-LBFGS geodesic"),
+        (1, 1.0, 319.53846153846155, "eOn (develop 500350d9) · LBFGS"),
+        (2, 1.0, 336.7692307692308, "Eon svn (r2549) · LBFGS"),
+        (2, 1.0, 543.5384615384615, "geodesic (1.0.0) · NEB-FIRE geodesic"),
+        (3, 1.0, 561.4615384615385, "COMPASS (1.0.0) · COMPASS"),
+        (3, 1.0, 606.9230769230769, "ASE (3.29.0) · NEB-FIRE"),
+        (4, 1.0, 678.9230769230769, "Eon svn (r2549) · FIRE"),
+        (4, 1.0, 678.9230769230769, "eOn (develop 500350d9) · FIRE"),
+        (6, 1.0, 727.5384615384615, "eOn (develop f6817b53, 3.6.0) · CG"),
+        (4, 1.0, 732.4615384615385, "rgsaddle (0.2.2) · S-IDPP CI-NEB"),
+        (5, 1.0, 735.5384615384615, "rgsaddle (0.2.2) · IDPP CI-NEB"),
+        (6, 1.0, 736.7692307692307, "rgsaddle (0.2.2) · CI-NEB"),
+        (7, 1.0, 759.6923076923077, "rgsaddle (0.2.2) · CI-NEB energy-weighted"),
+        (8, 1.0, 760.7692307692307, "rgsaddle (0.2.2) · OCI-NEB"),
+        (9, 1.0, 762.6153846153846, "geodesic (1.0.0) · CI-NEB geodesic"),
+        (7, 1.0, 929.3846153846154, "eOn (SVN r2549) · CG"),
+        (8, 1.0, 1141.076923076923, "eOn (develop 500350d9) · CG"),
+        (9, 1.0, 1322.0, "Eon svn (r2549) · QuickMin"),
+        (9, 1.0, 1322.0, "eOn (develop 500350d9) · QuickMin"),
+        (10, 1.0, 1398.4615384615386, "LAMMPS (30 Sep 2026) · CI-NEB-fire"),
+        (11, 1.0, 1521.1538461538462, "TSASE (1.0) · CI-NEB"),
+        (12, 1.0, 3417.6923076923076, "LAMMPS (30 Sep 2026) · CI-NEB-quickmin"),
+        (11, 1.0, 3517.6923076923076, "eOn (3.6.0) · LBFGS"),
+        (13, 0.0, 20000.0, "TSASE (1.0) · NEB"),
+        (13, 0.0, 20000.0, "rgsaddle (0.2.2) · NEB"),
+    ]
+
+
+def test_lj38_neb_ties_share_the_cap_rank():
+    """Three unsolved NEB rows share one rank. Nothing is placed after them."""
+    band = _placed("double-ended-saddle-search/lj38")
+    assert band[-3:] == [
+        (24, 0.0, 5000.0, "TSASE (1.0) · NEB"),
+        (24, 0.0, 5000.0, "eOn (3.6.0) · energy-weighted CI-NEB"),
+        (24, 0.0, 5000.0, "rgsaddle (0.2.2) · NEB"),
+    ]
+    assert band[-4][0] == 23
+    assert all(rank <= 24 for rank, _rate, _par2, _label in band)
