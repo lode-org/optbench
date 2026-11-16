@@ -20,22 +20,61 @@ import numpy as np
 Array = np.ndarray
 
 
+def _atom_count(line: str) -> int:
+    """Sum the per-type counts on the line three above ``Coordinates``."""
+    try:
+        counts = [int(float(part)) for part in line.split()]
+    except ValueError:
+        raise ValueError("con file has no atom count") from None
+    if not counts or any(count < 0 for count in counts):
+        raise ValueError("con file has no atom count")
+    total = sum(counts)
+    if total < 1:
+        raise ValueError(f"con file announces {total} atoms")
+    return total
+
+
 def read_con(text: str) -> tuple[Array, Array, Array]:
     """Return positions ``(N, 3)``, a fixed mask, and the orthorhombic cell.
 
     The fixed mask is true where the eOn flag is non-zero. The cell is
-    the box lengths on the line above the angle line.
+    the box lengths on the line above the angle line. Every species
+    block is read. A short block is not padded out to the header count.
     """
     lines = text.splitlines()
-    header = next(i for i, line in enumerate(lines) if line.strip().lower().startswith("coordinate"))
-    count = int(float(lines[header - 3].split()[0]))
-    positions = np.empty((count, 3), dtype=np.float64)
-    fixed = np.zeros(count, dtype=bool)
-    for row, line in enumerate(lines[header + 1 : header + 1 + count]):
+    try:
+        header = next(i for i, line in enumerate(lines) if line.strip().lower().startswith("coordinate"))
+    except StopIteration:
+        raise ValueError("con file has no coordinate block") from None
+    if header < 3:
+        raise ValueError("con file has no atom count")
+    count = _atom_count(lines[header - 3])
+    parsed: list[list[float]] = []
+    flags: list[bool] = []
+    for line in lines[header + 1 :]:
         parts = line.split()
-        positions[row] = [float(parts[0]), float(parts[1]), float(parts[2])]
+        if len(parts) < 3:
+            continue
+        try:
+            xyz = [float(parts[0]), float(parts[1]), float(parts[2])]
+        except ValueError:
+            continue
+        if not all(np.isfinite(value) for value in xyz):
+            raise ValueError("con coordinate is not finite")
+        flag = False
         if len(parts) > 3:
-            fixed[row] = float(parts[3]) != 0.0
+            try:
+                flag = float(parts[3]) != 0.0
+            except ValueError:
+                raise ValueError("con coordinate has a bad fixed flag") from None
+        parsed.append(xyz)
+        flags.append(flag)
+        if len(parsed) == count:
+            break
+    if len(parsed) != count:
+        raise ValueError(f"con file has {len(parsed)} coordinates, the header says {count}")
+    positions = np.asarray(parsed, dtype=np.float64)
+    fixed = np.asarray(flags, dtype=bool)
     cell = np.zeros(3, dtype=np.float64)
     for index in range(header):
         parts = lines[index].split()
@@ -44,6 +83,8 @@ def read_con(text: str) -> tuple[Array, Array, Array]:
         try:
             lengths = [float(parts[0]), float(parts[1]), float(parts[2])]
         except ValueError:
+            continue
+        if not all(np.isfinite(value) for value in lengths):
             continue
         nxt = lines[index + 1].split() if index + 1 < len(lines) else []
         if len(nxt) >= 3:
@@ -54,8 +95,6 @@ def read_con(text: str) -> tuple[Array, Array, Array]:
             if all(abs(angle - 90.0) < 1e-6 for angle in angles):
                 cell = np.asarray(lengths, dtype=np.float64)
                 break
-    if len(positions) != count:
-        raise ValueError(f"expected {count} coordinates")
     return positions, fixed, cell
 
 

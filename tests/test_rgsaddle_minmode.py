@@ -223,6 +223,55 @@ def test_read_con_marks_fixed_atoms_and_the_box():
     assert cell.tolist() == pytest.approx([19.2, 19.0, 30.0])
 
 
+def test_a_second_component_stays_in_the_geometry():
+    text = "\n".join(
+        [
+            "0",
+            "20 20 20",
+            "90 90 90",
+            "0 0",
+            "0 0",
+            "2",
+            "2 1",
+            "1.0 1.0",
+            "Al",
+            "Coordinates of Component 1",
+            "0 0 0 1 0",
+            "1 0 0 1 1",
+            "Al",
+            "Coordinates of Component 2",
+            "2 3 4 0 0",
+        ]
+    )
+    positions, fixed, _cell = read_con(text)
+    assert positions.shape == (3, 3)
+    assert positions[2].tolist() == [2.0, 3.0, 4.0]
+    assert fixed.tolist() == [True, True, False]
+
+
+def test_a_short_coordinate_block_is_not_a_geometry():
+    text = "\n".join(
+        [
+            "0",
+            "20 20 20",
+            "90 90 90",
+            "0 0",
+            "0 0",
+            "1",
+            "2",
+            "1.0",
+            "Pt",
+            "Coordinates",
+            "0 0 0 0 0",
+        ]
+    )
+    with pytest.raises(ValueError, match="header says 2"):
+        read_con(text)
+    nan = text + "\nnan 0 0 0 0\n"
+    with pytest.raises(ValueError, match="not finite"):
+        read_con(nan)
+
+
 def test_vibrational_index_drops_only_a_numerical_rigid_mode():
     from optbench.rgsaddle_minmode import _rigid_basis, _vibrational_eigenvalues
     from optbench.stationary import negative_index
