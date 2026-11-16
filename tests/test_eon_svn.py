@@ -149,3 +149,18 @@ def test_a_crashed_svn_start_does_not_claim_zero_seconds(monkeypatch):
     monkeypatch.setattr(bench, "run_case", boom)
     row = _job(("eon-client/example", "ts", 1, "0000", 0, 1))
     assert _public_row(row)["seconds"] is None
+
+
+def test_a_legacy_crashed_svn_zero_is_unmeasured():
+    from optbench.eon_svn import _measured_seconds
+
+    crashed = {
+        "start": "0000",
+        "success": False,
+        "failure": "crash",
+        "force_calls": 0.0,
+        "seconds": 0.0,
+    }
+    finished = {"start": "0001", "success": True, "failure": None, "force_calls": 4, "seconds": 0.0}
+    assert _measured_seconds(crashed) is None
+    assert _measured_seconds(finished) == 0.0

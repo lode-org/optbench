@@ -14,6 +14,7 @@ from pathlib import Path
 
 from benchmarks.bench_pele import _class_name
 from optbench.asv_machine import machine_dir, machine_record
+from optbench.timing import false_zero
 
 TRACKS = (
     "time_search",
@@ -30,8 +31,10 @@ def _version(name: str) -> str:
     return hashlib.sha256(name.encode("utf-8")).hexdigest()
 
 
-def _seconds(row: dict) -> float:
+def _seconds(row: dict) -> float | None:
     value = row.get("seconds")
+    if false_zero(row, value):
+        return None
     if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
         raise ValueError(f"{row.get('start', '?')} has no measured seconds")
     return float(value)
@@ -104,7 +107,8 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
             "track_failure_divergence": failure["divergence"],
             "track_failure_crash": failure["crash"],
         }
-        duration = sum(seconds)
+        measured = [value for value in seconds if value is not None]
+        duration = float(sum(measured)) if measured else None
         for method in TRACKS:
             key = f"bench_pele.{class_name}.{method}"
             results[key] = [payload[method], [seeds, starts], _version(key), now, duration]

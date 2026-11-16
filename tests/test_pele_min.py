@@ -159,3 +159,10 @@ def test_a_missing_pele_duration_is_not_zero():
     with pytest.raises(ValueError, match="no measured seconds"):
         _seconds({"start": "s0", "seconds": float("nan")})
     assert _seconds({"start": "s0", "seconds": 0.0}) == 0.0
+    assert _seconds({"start": "s0", "success": True, "seconds": 0.0}) == 0.0
+    assert (
+        _seconds(
+            {"start": "s0", "success": False, "failure": "crash", "force_calls": 0, "seconds": 0.0}
+        )
+        is None
+    )

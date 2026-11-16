@@ -20,6 +20,20 @@ def _stored(root: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def test_a_legacy_crashed_sella_zero_is_not_a_duration(tmp_path: Path, monkeypatch):
+    monkeypatch.setenv(HOST_LABEL_ENV, "workstation-a")
+    monkeypatch.setattr("optbench.sella_loweig.ROOT", tmp_path)
+    campaign = tmp_path / "results" / "campaign"
+    campaign.mkdir(parents=True)
+    crashed = {"start": "0000", "force_calls": 0, "success": False, "failure": "crash", "seconds": 0.0}
+    (campaign / "sella-0.1.1-lj38-loweig.starts.jsonl").write_text(
+        json.dumps(crashed) + "\n",
+        encoding="utf-8",
+    )
+    write_asv("abc1234567890abc1234567890abc1234567890a")
+    assert _duration(_stored(tmp_path), "bench_sella_loweig.Lj38Loweig.track_force_calls") is None
+
+
 def test_a_missing_sella_duration_is_not_zero(tmp_path: Path, monkeypatch):
     monkeypatch.setenv(HOST_LABEL_ENV, "workstation-a")
     monkeypatch.setattr("optbench.sella_loweig.ROOT", tmp_path)

@@ -14,6 +14,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 from optbench.asv_machine import machine_dir, machine_record
+from optbench.timing import false_zero
 from optbench.failures import FAILURES
 from optbench.score import score_v2
 
@@ -69,10 +70,12 @@ def _load_done(path: Path) -> dict[tuple[str, str], dict]:
 
 
 def _measured_seconds(row: dict) -> float | None:
-    """A missing or non-finite duration stays unset. It is not zero."""
+    """A missing, non-finite, or crashed zero stays unset. It is not a time."""
     if "seconds" not in row or row["seconds"] is None:
         return None
     value = row["seconds"]
+    if false_zero(row, value):
+        return None
     if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)):
         return None
     return float(value)
@@ -283,9 +286,10 @@ def write_asv(commit: str) -> Path:
         times = []
         for row in ordered:
             measured = _measured_seconds(row)
-            if measured is None:
+            if measured is None and not false_zero(row, row.get("seconds")):
                 raise ValueError(f"{stem} {row.get('start')} has no measured seconds")
             times.append(measured)
+        timed = [value for value in times if value is not None]
         columns = {
             "time_search": times,
             "track_force_calls": [float(row["force_calls"]) for row in ordered],
@@ -301,7 +305,7 @@ def write_asv(commit: str) -> Path:
             result._benchmark_params[name] = param_lists
             result._benchmark_version[name] = "r2549"
             result._started_at[name] = int(time.time() * 1000)
-            result._duration[name] = float(sum(columns["time_search"]))
+            result._duration[name] = float(sum(timed)) if timed else None
             result._samples[name] = None
             result._stats[name] = None
         wrote += 1

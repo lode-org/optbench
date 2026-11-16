@@ -11,6 +11,16 @@ from optbench.noise_asv import write_results as write_noise
 from optbench.v2 import HOST_LABEL_ENV
 
 
+def test_a_legacy_crashed_geometric_zero_is_unmeasured():
+    from optbench.geometric_asv import _seconds
+
+    assert _seconds({"start": "0", "success": True, "seconds": 0.0}) == 0.0
+    assert (
+        _seconds({"start": "1", "success": False, "failure": "crash", "force_calls": 0, "seconds": 0.0})
+        is None
+    )
+
+
 def _campaign(root: Path, name: str, template: str, count: int) -> None:
     campaign = root / "results" / "campaign"
     campaign.mkdir(parents=True, exist_ok=True)

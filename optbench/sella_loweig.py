@@ -169,6 +169,7 @@ def write_asv(commit: str) -> Path:
 
     from optbench.asv_machine import machine_dir, machine_record
     from optbench.failures import failure_of
+    from optbench.timing import false_zero
 
     params = {**machine_record(), "python": "3.12"}
     result = Results(params, {}, commit, int(time.time() * 1000), "3.12", "uv-pip-py3.12", {})
@@ -218,6 +219,7 @@ def write_asv(commit: str) -> Path:
         param_lists = [[repr("0")], [repr(start) for start in starts]]
         columns = {method: [] for method in tracks}
         measured: list[float] = []
+        missing = False
         for row in rows:
             success = bool(row.get("success"))
             failure = None if success else failure_of(row, int(job["cap"]))
@@ -228,11 +230,13 @@ def write_asv(commit: str) -> Path:
             columns["track_failure_divergence"].append(1.0 if failure == "divergence" else 0.0)
             columns["track_failure_crash"].append(1.0 if failure == "crash" else 0.0)
             seconds = row.get("seconds")
+            if false_zero(row, seconds):
+                continue
             if isinstance(seconds, bool) or not isinstance(seconds, (int, float)) or not math.isfinite(float(seconds)):
-                measured.append(float("nan"))
-            else:
-                measured.append(float(seconds))
-        duration = None if any(math.isnan(value) for value in measured) else float(sum(measured))
+                missing = True
+                continue
+            measured.append(float(seconds))
+        duration = None if missing or not measured else float(sum(measured))
         for method in tracks:
             name = f"{job['name']}.{method}"
             result._results[name] = columns[method]

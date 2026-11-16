@@ -9,11 +9,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import time
 from pathlib import Path
 
 from benchmarks.bench_noise import _class_name
 from optbench.asv_machine import machine_dir, machine_record, write_result
+from optbench.timing import false_zero
 from optbench.noise_catalog import specs
 
 TRACKS = (
@@ -81,7 +83,13 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
             label = row.get("failure")
             for name in failure:
                 failure[name].append(1.0 if label == name else 0.0)
-            seconds.append(float(row["seconds"]))
+            value = row.get("seconds")
+            if false_zero(row, value):
+                seconds.append(None)
+            elif isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)):
+                raise ValueError(f"{row.get('start', '?')} has no measured seconds")
+            else:
+                seconds.append(float(value))
         payload = {
             "time_search": seconds,
             "track_force_calls": calls,
@@ -91,7 +99,8 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
             "track_failure_divergence": failure["divergence"],
             "track_failure_crash": failure["crash"],
         }
-        duration = sum(seconds)
+        measured = [value for value in seconds if value is not None]
+        duration = float(sum(measured)) if measured else None
         for method in TRACKS:
             key = f"bench_noise.{class_name}.{method}"
             results[key] = [payload[method], [seeds, starts], _version(key), now, duration]

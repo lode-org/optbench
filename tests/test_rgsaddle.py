@@ -513,6 +513,37 @@ def test_energy_weighted_cap_rows_name_the_climbed_image():
     assert capped == 11 + 27
 
 
+def test_a_legacy_crashed_band_zero_is_left_out_of_the_timing():
+    from optbench.rgsaddle_band import band_timing
+
+    rows = [
+        {
+            "success": True,
+            "failure": None,
+            "force_calls": 12,
+            "geodesic_seconds": 2.0,
+            "surrogate_steps": 4,
+        },
+        {
+            "success": False,
+            "failure": "crash",
+            "force_calls": 0,
+            "geodesic_seconds": 0.0,
+            "surrogate_steps": 0,
+        },
+        {
+            "success": True,
+            "failure": None,
+            "force_calls": 3,
+            "geodesic_seconds": 0.0,
+            "surrogate_steps": 0,
+        },
+    ]
+    timing = band_timing(rows)
+    assert timing["geodesic_seconds_mean"] == 1.0
+    assert timing["surrogate_steps_mean"] == 2.0
+
+
 def test_a_crashed_band_does_not_invent_a_geodesic_time():
     from optbench.rgsaddle_band import _crash_record
 

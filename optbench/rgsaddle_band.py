@@ -23,6 +23,7 @@ from __future__ import annotations
 import ctypes
 import json
 import os
+import math
 import statistics
 import tomllib
 import traceback
@@ -1229,6 +1230,30 @@ def _execute_search(job: dict) -> dict:
     )
 
 
+def band_timing(records: list[dict]) -> dict:
+    """Means of measured geodesic times and surrogate steps.
+
+    A zero on a crashed or never-started row is left out. A zero on a
+    successful row stays in the mean.
+    """
+    from .timing import false_zero
+
+    geodesic = []
+    steps = []
+    for row in records:
+        for key, found in (("geodesic_seconds", geodesic), ("surrogate_steps", steps)):
+            value = row.get(key)
+            if false_zero(row, value):
+                continue
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)):
+                continue
+            found.append(float(value))
+    return {
+        "geodesic_seconds_mean": statistics.fmean(geodesic) if geodesic else None,
+        "surrogate_steps_mean": statistics.fmean(steps) if steps else None,
+    }
+
+
 def _number(value: float) -> str:
     if float(value).is_integer():
         return str(int(value))
@@ -1376,6 +1401,7 @@ def write_outputs(
             settings["cap"],
         ),
         "success_mean": _success_mean(records),
+        "timing": band_timing(records),
     }
     output.with_suffix(".v2.json").write_text(
         json.dumps(document, indent=2, sort_keys=True) + "\n",

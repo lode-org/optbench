@@ -16,6 +16,7 @@ from pathlib import Path
 from benchmarks.bench_geometric import _class_name as geometric_class
 from benchmarks.bench_noise import _class_name as noise_class
 from optbench.asv_machine import machine_dir, machine_record, write_result
+from optbench.timing import false_zero
 
 TRACKS = (
     "time_search",
@@ -36,8 +37,10 @@ def _quote(value: str) -> str:
     return repr(str(value))
 
 
-def _seconds(row: dict) -> float:
+def _seconds(row: dict) -> float | None:
     value = row.get("seconds")
+    if false_zero(row, value):
+        return None
     if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
         raise ValueError(f"{row.get('start', '?')} has no measured seconds")
     return float(value)
@@ -101,7 +104,8 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
         }
         seeds = [_quote("0")]
         starts = [_quote(str(index)) for index in range(len(rows))]
-        duration = sum(seconds)
+        measured = [value for value in seconds if value is not None]
+        duration = float(sum(measured)) if measured else None
         for method in TRACKS:
             key = f"{module}.{class_name}.{method}"
             results[key] = [payload[method], [seeds, starts], _version(key), now, duration]

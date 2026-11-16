@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 import math
 from pathlib import Path
 
@@ -141,3 +143,26 @@ def test_run_asks_noise_to_resume(monkeypatch, tmp_path):
         resume=True,
     )
     assert captured["resume"] is True
+
+
+def test_a_legacy_crashed_noise_zero_is_not_a_time(tmp_path: Path, monkeypatch):
+    from optbench.noise_asv import write_results
+    from optbench.v2 import HOST_LABEL_ENV
+
+    monkeypatch.setenv(HOST_LABEL_ENV, "workstation-a")
+    monkeypatch.setattr("optbench.noise_asv.specs", lambda: [{"id": "noise/rgmin-fire-s0"}])
+    campaign = tmp_path / "results" / "campaign"
+    campaign.mkdir(parents=True)
+    rows = [{"force_calls": 4, "success": True, "failure": None, "seconds": 0.0} for _ in range(999)]
+    rows.append({"force_calls": 0, "success": False, "failure": "crash", "seconds": 0.0})
+    (campaign / "noise-rgmin-fire-s0.starts.jsonl").write_text(
+        "".join(json.dumps(row) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+    (campaign / "noise-rgmin-fire-s0.dat").write_text("template noise/rgmin-fire-s0\n", encoding="utf-8")
+    written = write_results(tmp_path, "abc1234567890abc1234567890abc1234567890a", started_at=1)
+    stored = json.loads(written.read_text(encoding="utf-8"))
+    times = stored["results"]["bench_noise.NoiseRgminFireS0.time_search"][0]
+    assert times[-1] is None
+    assert times[0] == 0.0
+    assert stored["results"]["bench_noise.NoiseRgminFireS0.time_search"][4] == 0.0
