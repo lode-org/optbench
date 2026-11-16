@@ -1336,12 +1336,32 @@ def _pack_score(records: list) -> list[tuple]:
     """The fields a score worker reads.
 
     The replay keeps the start records. The pool was pickling every slot
-    on those records, and the worker never reads the geometry.
+    on those records, and the worker never reads the geometry. A class
+    stores only the fields that start has, so a missing name is not
+    looked up on every row.
     """
     packed = []
     append = packed.append
+    plain = _StartPlain
+    index = _StartIndex
+    failed = _StartFailed
+    indexed = _StartIndexFailed
+    full = _StartFull
     for record in records:
-        if type(record) is dict:
+        kind = type(record)
+        if kind is index or kind is plain:
+            append((record.force_calls, record.success, None, None, None))
+        elif kind is indexed or kind is failed:
+            append((record.force_calls, record.success, record.failure, None, None))
+        elif kind is full:
+            append((
+                record.force_calls,
+                record.success,
+                record.failure,
+                record.reasons,
+                record.per_image,
+            ))
+        elif kind is dict:
             append((
                 record.get("force_calls"),
                 record.get("success"),
@@ -1349,14 +1369,14 @@ def _pack_score(records: list) -> list[tuple]:
                 record.get("reasons"),
                 record.get("per_image"),
             ))
-            continue
-        append((
-            record.force_calls,
-            record.success,
-            getattr(record, "failure", None),
-            getattr(record, "reasons", None),
-            getattr(record, "per_image", None),
-        ))
+        else:
+            append((
+                record.force_calls,
+                record.success,
+                getattr(record, "failure", None),
+                getattr(record, "reasons", None),
+                getattr(record, "per_image", None),
+            ))
     return packed
 
 
