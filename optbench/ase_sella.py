@@ -8,6 +8,7 @@ returns both energy and forces counts once.
 from __future__ import annotations
 
 import json
+import math
 import os
 import statistics
 import tarfile
@@ -22,6 +23,7 @@ os.environ["NUMEXPR_NUM_THREADS"] = "1"
 
 from .blas import pin_one_thread
 from .campaign import load_template, resolve_problem
+from .failures import classify_failure
 from .counter import HarnessCounter, attach_ase_counter
 from .score import score_v2, summarize_all, summarize_capped, summarize_divided
 from .v2 import host_label
@@ -1220,14 +1222,14 @@ def _reason_list(row: dict, cap: int, tol: float) -> list[str]:
         reasons.append("cap")
     error = row.get("error")
     if error and error != "force-call cap":
-        reasons.append("error")
+        reasons.append("crash")
     norm = row.get("force_norm")
-    if norm is None or float(norm) > float(tol):
+    if norm is None or not math.isfinite(float(norm)) or float(norm) > float(tol):
         reasons.append("force_norm")
     if row.get("expected_index") is not None and "hessian_index" in row:
         if int(row["hessian_index"]) != int(row["expected_index"]):
             reasons.append("hessian_index")
-    elif row.get("expected_index") is not None and "hessian_index" not in row and "error" not in reasons:
+    elif row.get("expected_index") is not None and "hessian_index" not in row and "crash" not in reasons:
         if "cap" not in reasons and "force_norm" not in reasons:
             reasons.append("hessian_index")
     return reasons
@@ -1288,9 +1290,10 @@ def _run_start(payload: dict) -> dict:
     if payload["task"] in {"neb", "sella-neb"}:
         reasons = [reason for reason in reasons if reason != "hessian_index"]
     row["reasons"] = reasons
-    row["success"] = not reasons
+    row["failure"] = None if not reasons else classify_failure(reasons)
+    row["success"] = row["failure"] is None
     row["failed"] = not row["success"]
-    row["converged"] = "force_norm" not in reasons and "cap" not in reasons and "error" not in reasons
+    row["converged"] = "force_norm" not in reasons and "cap" not in reasons and "crash" not in reasons
     row["wall_seconds"] = time.perf_counter() - began
     return row
 
@@ -1319,7 +1322,14 @@ def _v2_records(rows: list[dict], template: dict) -> tuple[list[dict], int]:
     for row in rows:
         calls = float(row["force_calls"])
         success = bool(row.get("success")) and calls < cap
-        records.append({"force_calls": calls, "success": success})
+        record = {"force_calls": calls, "success": success}
+        if not success:
+            reasons = list(row.get("reasons") or [])
+            if reasons:
+                record["reasons"] = reasons
+            elif row.get("failure") in ("crash", "divergence", "cap", "wrong_stationary"):
+                record["failure"] = row["failure"]
+        records.append(record)
     return records, cap
 
 

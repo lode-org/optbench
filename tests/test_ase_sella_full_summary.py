@@ -132,3 +132,31 @@ def test_summary_uses_score_v2_and_keeps_blank_tracks_out(tmp_path: Path):
     assert row["par2"]["par2_mean"] == scored["par2_mean"]
     assert row["par2"]["n_cap"] == 1
     assert row["missing_starts"] == ["0,c"]
+
+
+def test_an_optimizer_exception_is_a_crash_and_a_nan_force_is_not_a_success():
+    from optbench.ase_sella import _reason_list, _v2_records
+    from optbench.failures import failure_of
+
+    template = {"stop": {"max_force_calls": 100}}
+    crashed = {
+        "force_calls": 3,
+        "error": "RuntimeError: boom",
+        "force_norm": None,
+        "expected_index": 1,
+        "success": False,
+    }
+    reasons = _reason_list(crashed, 100, 0.01)
+    assert reasons[0] == "crash"
+    crashed["reasons"] = reasons
+    crashed["success"] = False
+    records, cap = _v2_records([crashed], template)
+    assert records[0]["success"] is False
+    assert failure_of(records[0], cap) == "crash"
+    nan_force = {"force_calls": 4, "force_norm": float("nan"), "success": False}
+    nan_reasons = _reason_list(nan_force, 100, 0.01)
+    assert "force_norm" in nan_reasons
+    nan_force["reasons"] = nan_reasons
+    scored, cap = _v2_records([nan_force], template)
+    assert scored[0]["success"] is False
+    assert failure_of(scored[0], cap) == "divergence"
