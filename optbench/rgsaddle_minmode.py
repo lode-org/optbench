@@ -998,6 +998,7 @@ def run_template(
     work: Path | None = None,
     repetition: int | None = None,
     limit: int = 0,
+    resume: bool = False,
 ) -> dict:
     """Run one rgsaddle template on every geometry of ``problem``.
 
@@ -1014,7 +1015,7 @@ def run_template(
     scratch.mkdir(parents=True, exist_ok=True)
     if problem["id"] == "saddle-search/pt-island":
         return _run_saddle_search(
-            root, problem, template, output=output, force_tol=force_tol, work=scratch, repetition=repetition, limit=limit
+            root, problem, template, output=output, force_tol=force_tol, work=scratch, repetition=repetition, limit=limit, resume=resume
         )
     if repetition is not None:
         raise RuntimeError(f"{problem['id']} has no repetitions to select")
@@ -1176,6 +1177,11 @@ def _append_partial(path: Path, record: dict) -> None:
         handle.flush()
 
 
+def _continues(header: dict | None, template_id: str, rep: int, resume: bool) -> bool:
+    """A matching checkpoint for this repetition is kept only when resume was asked."""
+    return bool(resume) and header is not None and header.get("template") == template_id and int(header.get("rep", 0)) == rep
+
+
 def _run_saddle_search(
     root: Path,
     problem: dict,
@@ -1186,6 +1192,7 @@ def _run_saddle_search(
     work: Path,
     repetition: int | None = None,
     limit: int = 0,
+    resume: bool = False,
 ) -> dict:
     """Displace the Pt island until the goal count of connected index-1 saddles.
 
@@ -1247,8 +1254,9 @@ def _run_saddle_search(
     for rep in [repetition] if repetition is not None else range(1, repetitions + 1):
         header_path, partial_path = _checkpoint_paths(output)
         header = json.loads(header_path.read_text(encoding="utf-8")) if header_path.is_file() else None
-        saved = _load_partial(partial_path) if header and header.get("template") == template["id"] and int(header.get("rep", 0)) == rep else []
-        if header and header.get("template") == template["id"] and int(header.get("rep", 0)) == rep:
+        continuing = _continues(header, template["id"], rep, resume)
+        saved = _load_partial(partial_path) if continuing else []
+        if continuing:
             potential = HarnessSurface(_bind(raw, positions, free, cell))
             minimum = np.asarray(header["minimum"], dtype=np.float64)
             min_energy = float(header["min_energy"])

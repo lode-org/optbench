@@ -375,3 +375,33 @@ def test_prfo_finds_the_quadratic_saddle():
     assert record["success"], record
     assert record["hessian_index"] == 1
     assert np.linalg.norm(record["x"]) < 1e-2
+
+
+def test_a_fresh_rgsaddle_search_does_not_keep_its_checkpoint():
+    from optbench.rgsaddle_minmode import _continues
+
+    header = {"template": "rgsaddle/saddle-lanczos", "rep": 1}
+    assert _continues(header, "rgsaddle/saddle-lanczos", 1, False) is False
+    assert _continues(header, "rgsaddle/saddle-lanczos", 1, True) is True
+    assert _continues(header, "rgsaddle/saddle-lanczos", 2, True) is False
+    assert _continues(None, "rgsaddle/saddle-lanczos", 1, True) is False
+
+
+def test_run_asks_rgsaddle_to_resume(monkeypatch, tmp_path):
+    from optbench.campaign import run
+
+    captured = {}
+
+    def fake(_root, _problem, _template, **kwargs):
+        captured["resume"] = kwargs["resume"]
+        return {"force_calls": 1, "nfailed": 0, "starts": 1}
+
+    monkeypatch.setattr("optbench.rgsaddle_minmode.run_template", fake)
+    run(
+        ROOT,
+        "saddle-search/pt-island",
+        "rgsaddle/saddle-lanczos",
+        output=tmp_path / "bench.dat",
+        resume=True,
+    )
+    assert captured["resume"] is True
