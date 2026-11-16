@@ -23,6 +23,7 @@ from optbench.extpot import respond
 from optbench.fastpot import bridge_executable, kernels
 from optbench.lj import _lj_cluster_python, lj_cluster
 from optbench.potserver import PotServer
+from optbench.surfaces import read_con
 
 
 def _require_gcc():
@@ -58,16 +59,9 @@ def test_native_kernels_match_the_python_loops():
     archive = _stored(root, "website/tsopt/pt-island/pt-island-con.tgz")
     with tarfile.open(archive) as packed:
         text = packed.extractfile("pt-island-con/reactant.con").read().decode()
-    lines = [line for line in text.splitlines() if line.strip()]
-    lengths = [float(part) for part in lines[2].split()]
+    positions, _fixed, lengths = read_con(text)
     cell = [lengths[0], 0.0, 0.0, 0.0, lengths[1], 0.0, 0.0, 0.0, lengths[2]]
-    start = next(index for index, line in enumerate(lines) if line.lower().startswith("coordinates"))
-    reactant: list[float] = []
-    for line in lines[start + 1 :]:
-        parts = line.split()
-        if len(parts) < 3:
-            break
-        reactant.extend(float(part) for part in parts[:3])
+    reactant = positions.reshape(-1).tolist()
     assert morse_cluster(reactant, box=cell) == _morse_python(reactant, box=cell)
     nudged = [value + rng.uniform(-0.2, 0.2) for value in reactant]
     assert morse_cluster(nudged, box=cell) == _morse_python(nudged, box=cell)

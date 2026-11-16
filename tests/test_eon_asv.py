@@ -31,9 +31,10 @@ from benchmarks.bench_eon_develop import (
     morse_cluster,
     selected,
 )
-from optbench.eon_jobs import _stored
 from optbench.asv_tracks import TrackedSearch as _TrackedSearch
 from optbench.counter import HarnessCounter
+from optbench.eon_jobs import _stored
+from optbench.surfaces import read_con
 
 
 def test_default_grid_is_one_real_start():
@@ -210,18 +211,10 @@ def test_pt_island_reactant_is_a_morse_minimum():
     )
     with tarfile.open(archive) as packed:
         text = packed.extractfile("pt-island-con/reactant.con").read().decode()
-    lines = [line for line in text.splitlines() if line.strip()]
-    lengths = [float(part) for part in lines[2].split()]
+    coords, fixed, lengths = read_con(text)
     box = [lengths[0], 0.0, 0.0, 0.0, lengths[1], 0.0, 0.0, 0.0, lengths[2]]
-    start = next(i for i, line in enumerate(lines) if line.lower().startswith("coordinates"))
-    positions: list[float] = []
-    free: list[bool] = []
-    for line in lines[start + 1 :]:
-        parts = line.split()
-        if len(parts) < 5:
-            break
-        positions.extend(float(part) for part in parts[:3])
-        free.append(int(float(parts[3])) == 0)
+    positions = coords.reshape(-1).tolist()
+    free = [not flag for flag in fixed]
     _energy, forces = morse_cluster(positions, box=box)
     _bare, bare = morse_cluster(positions)
 

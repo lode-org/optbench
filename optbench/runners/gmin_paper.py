@@ -112,17 +112,22 @@ def _coords_text(raw: bytes, kind: str) -> str:
         if not text.endswith("\n"):
             text += "\n"
         return text
-    lines = []
-    body = raw.decode("utf-8", errors="replace").splitlines()[2:]
+    lines = raw.decode("utf-8", errors="replace").splitlines()
+    if len(lines) < 3 or not lines[0].strip():
+        raise ValueError("xyz needs a count, a comment, and coordinates")
+    count = int(lines[0].split()[0])
+    # The comment is line 2 even when it is blank. Skipping a short
+    # line in the coordinate block would pull in a later atom.
+    body = lines[2 : 2 + count]
+    if len(body) != count:
+        raise ValueError(f"xyz announced {count} atoms and held {len(body)}")
+    coords = []
     for line in body:
         parts = line.split()
         if len(parts) < 4:
-            continue
-        coords = " ".join(parts[1:4]).replace("e", "D").replace("E", "D")
-        lines.append(coords)
-    if not lines:
-        raise ValueError("xyz has no coordinates")
-    return "\n".join(lines) + "\n"
+            raise ValueError("xyz coordinate needs element x y z")
+        coords.append(" ".join(parts[1:4]).replace("e", "D").replace("E", "D"))
+    return "\n".join(coords) + "\n"
 
 
 def _problem_dict(root: Path, problem: str) -> dict:

@@ -468,25 +468,27 @@ def _read_positions(path: Path) -> list[list[float]]:
 
 
 def _read_xyz(path: Path):
-    """Read an xyz file whose symbols need not be chemical elements."""
+    """Read an xyz file whose symbols need not be chemical elements.
+
+    The comment is line 2 even when it is blank. Skipping a short line
+    in the coordinate block would pull in a later atom.
+    """
     from ase import Atoms
     from ase.data import atomic_numbers
 
     lines = path.read_text(encoding="utf-8").splitlines()
+    if len(lines) < 3 or not lines[0].strip():
+        raise ValueError(f"{path} needs a count, a comment, and coordinates")
     count = int(lines[0].split()[0])
-    rows = []
-    for line in lines[2:]:
-        parts = line.split()
-        if len(parts) < 4:
-            continue
-        rows.append(parts)
-        if len(rows) == count:
-            break
-    if len(rows) != count:
-        raise ValueError(f"{path} has {len(rows)} coordinates, expected {count}")
+    body = lines[2 : 2 + count]
+    if len(body) != count:
+        raise ValueError(f"{path} has {len(body)} coordinates, expected {count}")
     symbols = []
     positions = []
-    for parts in rows:
+    for line in body:
+        parts = line.split()
+        if len(parts) < 4:
+            raise ValueError(f"{path} coordinate needs element x y z")
         symbol = parts[0]
         if symbol not in atomic_numbers:
             symbol = "H"
