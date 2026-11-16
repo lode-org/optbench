@@ -355,18 +355,40 @@ def read_con(text: str) -> tuple[np.ndarray, np.ndarray]:
             break
     if box is None:
         raise ValueError("con file has no orthorhombic box")
-    start = next(i for i, line in enumerate(lines) if line.startswith("Coordinates of Component"))
+    try:
+        start = next(i for i, line in enumerate(lines) if line.startswith("Coordinates of Component"))
+    except StopIteration:
+        raise ValueError("con file has no coordinate block") from None
+    announced = None
+    if start >= 3:
+        try:
+            counts = [int(float(part)) for part in lines[start - 3].split()]
+        except ValueError:
+            counts = []
+        if counts and all(count >= 0 for count in counts) and sum(counts) > 0:
+            announced = sum(counts)
     rows = []
     for line in lines[start + 1 :]:
         parts = line.split()
         if len(parts) < 3:
-            break
+            if announced is None:
+                break
+            continue
         try:
-            rows.append([float(parts[0]), float(parts[1]), float(parts[2])])
+            xyz = [float(parts[0]), float(parts[1]), float(parts[2])]
         except ValueError:
-            break
+            if announced is None:
+                break
+            continue
+        if not all(np.isfinite(value) for value in xyz):
+            raise ValueError("con coordinate is not finite")
         if len(parts) >= 4 and parts[3] != "0":
             raise ValueError("frozen atoms are not a minimization coordinate in this runner")
+        rows.append(xyz)
+        if announced is not None and len(rows) == announced:
+            break
     if not rows:
         raise ValueError("con file has no coordinates")
+    if announced is not None and len(rows) != announced:
+        raise ValueError(f"con file has {len(rows)} coordinates, the header says {announced}")
     return np.asarray(rows, dtype=np.float64), box
