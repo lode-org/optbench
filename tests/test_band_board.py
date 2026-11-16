@@ -374,3 +374,19 @@ def test_a_limit_runs_the_first_band_pairs(monkeypatch, tmp_path: Path):
         limit=1,
     )
     assert seen == ["a"]
+
+
+def test_a_crashed_band_search_does_not_write_nan():
+    import json
+
+    from optbench.rgsaddle_band import _crash_record
+
+    record = _crash_record("pair", 3, 0, "RuntimeError")
+    text = json.dumps(record, sort_keys=True)
+    assert "NaN" not in text
+    loaded = json.loads(text)
+    assert loaded["failure"] == "crash"
+    assert loaded["success"] is False
+    assert loaded["energy"] is None
+    assert loaded["force_norm"] is None
+    assert loaded["force_calls"] == 3
