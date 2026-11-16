@@ -45,9 +45,21 @@ def _alias_page(code: str, registry: list[dict]) -> str | None:
     best: str | None = None
     best_len = -1
     for pin in registry:
-        candidates = [str(pin.get("name") or "")] + _alias_list(pin)
-        for candidate in candidates:
-            if candidate and candidate == code and len(candidate) > best_len:
+        name = str(pin.get("name") or "")
+        if name and name == code and len(name) > best_len:
+            best = pin_page(pin)
+            best_len = len(name)
+        raw = pin.get("aliases") or ()
+        if isinstance(raw, str):
+            if raw and raw == code and len(raw) > best_len:
+                best = pin_page(pin)
+                best_len = len(raw)
+            continue
+        for item in raw:
+            candidate = item if isinstance(item, str) else str(item)
+            if not candidate.strip():
+                continue
+            if candidate == code and len(candidate) > best_len:
                 best = pin_page(pin)
                 best_len = len(candidate)
     return best
@@ -56,9 +68,9 @@ def _alias_page(code: str, registry: list[dict]) -> str | None:
 def _id_page(code: str, registry: list[dict]) -> str | None:
     folded = code.lower()
     for pin in registry:
-        names = {str(pin.get("id") or "").lower(), str(pin.get("name") or "").lower()}
-        names.discard("")
-        if folded in names:
+        ident = str(pin.get("id") or "")
+        name = str(pin.get("name") or "")
+        if (ident and ident.lower() == folded) or (name and name.lower() == folded):
             return pin_page(pin)
     return None
 
