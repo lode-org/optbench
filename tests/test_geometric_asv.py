@@ -3,6 +3,8 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from optbench.asv_machine import machine_record
 from optbench.geometric_asv import write_results
 from optbench.v2 import HOST_LABEL_ENV
@@ -39,3 +41,26 @@ def test_geometric_results_write_a_machine_record(tmp_path: Path, monkeypatch):
     stored = json.loads(written.read_text(encoding="utf-8"))
     assert stored["params"]["machine"] == "workstation-a"
     assert written.parent.name == "workstation-a"
+
+
+def test_a_missing_duration_is_not_written_as_zero(tmp_path: Path, monkeypatch):
+    monkeypatch.setenv(HOST_LABEL_ENV, "workstation-a")
+    root = tmp_path
+    _campaign(root, "geometric-morse-cart", "geometric/morse-cart", 100)
+    _campaign(root, "geometric-morse-tric", "geometric/morse-tric", 100)
+    _campaign(root, "geometric-lj38-cart", "geometric/lj38-cart", 1000)
+    _campaign(root, "geometric-lj38-tric", "geometric/lj38-tric", 1000)
+    for coords in ("cart", "tric"):
+        for sigma in ("s0", "s1em2", "s1em3", "s1em4"):
+            _campaign(
+                root,
+                f"noise-geometric-{coords}-{sigma}",
+                f"noise/geometric-{coords}-{sigma}",
+                1000,
+            )
+    path = root / "results" / "campaign" / "geometric-lj38-cart.starts.jsonl"
+    rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    del rows[0]["seconds"]
+    path.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
+    with pytest.raises(ValueError, match="no measured seconds"):
+        write_results(root, "abc1234567890abc1234567890abc1234567890a", started_at=1)

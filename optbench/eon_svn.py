@@ -7,6 +7,7 @@ A file with fewer starts than that grid sets ``partial true``.
 from __future__ import annotations
 
 import json
+import math
 import statistics
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -68,6 +69,16 @@ def _load_done(path: Path) -> dict[tuple[str, str], dict]:
     return found
 
 
+def _measured_seconds(row: dict) -> float | None:
+    """A missing or non-finite duration stays unset. It is not zero."""
+    if "seconds" not in row or row["seconds"] is None:
+        return None
+    value = row["seconds"]
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(float(value)):
+        return None
+    return float(value)
+
+
 def _public_row(row: dict) -> dict:
     kept = {
         "schema": "optbench.start/v2",
@@ -83,7 +94,7 @@ def _public_row(row: dict) -> dict:
         "code_version": row.get("code_version", "r2549"),
         "commit": row.get("commit", "r2549"),
         "tuning": row.get("tuning", "default"),
-        "seconds": float(row.get("seconds") or 0.0),
+        "seconds": _measured_seconds(row),
         "call_unit": "total",
     }
     if not kept["success"]:
@@ -267,8 +278,14 @@ def write_asv(commit: str) -> Path:
             continue
         ordered = [rows[combo] for combo in combos]
         param_lists = [[repr(str(seed)) for seed in spec["campaign_seeds"]], [repr(str(start)) for start in spec["campaign_starts"]]]
+        times = []
+        for row in ordered:
+            measured = _measured_seconds(row)
+            if measured is None:
+                raise ValueError(f"{stem} {row.get('start')} has no measured seconds")
+            times.append(measured)
         columns = {
-            "time_search": [float(row.get("seconds") or 0.0) for row in ordered],
+            "time_search": times,
             "track_force_calls": [float(row["force_calls"]) for row in ordered],
             "track_success": [1.0 if row["success"] else 0.0 for row in ordered],
             "track_failure_cap": [1.0 if row.get("failure") == "cap" else 0.0 for row in ordered],

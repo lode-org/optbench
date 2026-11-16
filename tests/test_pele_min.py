@@ -147,3 +147,15 @@ def test_one_lj38_lbfgs_start_is_a_harness_minimum():
     assert record["success"] is True
     assert record["hessian_index"] == 0
     assert record["failure"] is None
+
+
+def test_a_missing_pele_duration_is_not_zero():
+    import pytest
+
+    from optbench.pele_asv import _seconds
+
+    with pytest.raises(ValueError, match="no measured seconds"):
+        _seconds({"start": "s0"})
+    with pytest.raises(ValueError, match="no measured seconds"):
+        _seconds({"start": "s0", "seconds": float("nan")})
+    assert _seconds({"start": "s0", "seconds": 0.0}) == 0.0

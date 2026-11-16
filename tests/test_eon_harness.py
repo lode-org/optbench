@@ -275,6 +275,9 @@ def test_svn_public_row_keeps_the_cap_fields():
 
     record = {"start": "0000", "seed": "1", "force_calls": STUB_CAP, "success": False, "failure": "cap"}
     plain = _public_row(record)
+    assert plain["seconds"] is None
+    assert _public_row({**record, "seconds": float("nan")})["seconds"] is None
+    assert _public_row({**record, "seconds": 1.5})["seconds"] == 1.5
     row = _public_row({**record, "client_calls_at_cap": STUB_CAP, "client_stop_at_cap": _refusal(STUB_CAP)})
     assert row["client_calls_at_cap"] == STUB_CAP
     assert row["client_stop_at_cap"] == _refusal(STUB_CAP)

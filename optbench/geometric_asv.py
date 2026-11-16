@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import time
 from pathlib import Path
 
@@ -33,6 +34,13 @@ def _version(name: str) -> str:
 
 def _quote(value: str) -> str:
     return repr(str(value))
+
+
+def _seconds(row: dict) -> float:
+    value = row.get("seconds")
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+        raise ValueError(f"{row.get('start', '?')} has no measured seconds")
+    return float(value)
 
 
 def _records(path: Path, expected: int) -> list[dict]:
@@ -81,7 +89,7 @@ def write_results(root: Path, commit: str, *, started_at: int | None = None) -> 
             label = row.get("failure")
             for name in failure:
                 failure[name].append(1.0 if label == name else 0.0)
-            seconds.append(float(row.get("seconds") or 0.0))
+            seconds.append(_seconds(row))
         payload = {
             "time_search": seconds,
             "track_force_calls": calls,
