@@ -1,3 +1,4 @@
+import json
 import stat
 from pathlib import Path
 
@@ -247,6 +248,40 @@ target = "potentials/pair.table"
     staged = tmp_path / "work" / "cluster_0000"
     assert (staged / "in.lammps").read_text(encoding="utf-8").strip() == "pair_style lj/cut 40.0"
     assert (staged / "potentials" / "pair.table").read_text(encoding="utf-8").strip() == "PAIR TABLE"
+
+
+def test_a_limit_runs_only_the_first_geometries(tmp_path: Path):
+    geometries = tmp_path / "geometries"
+    geometries.mkdir()
+    for name in ("cluster_0000.con", "cluster_0001.con", "cluster_0002.con"):
+        (geometries / name).write_text("pos\n", encoding="utf-8")
+    client = tmp_path / "client"
+    client.write_text(
+        "#!/usr/bin/env python3\n"
+        "from pathlib import Path\n"
+        "Path('results.dat').write_text('0 termination_reason\\n10 total_force_calls\\n')\n",
+        encoding="utf-8",
+    )
+    client.chmod(client.stat().st_mode | stat.S_IEXEC)
+    output = tmp_path / "benchmark.dat"
+    summary = run(
+        ROOT,
+        "minimization/lj38",
+        "eon-svn/lbfgs-m100",
+        client=client,
+        geometries=geometries,
+        output=output,
+        work=tmp_path / "work",
+        limit=1,
+    )
+    assert summary["starts"] == 1
+    starts = [
+        json.loads(line)
+        for line in output.with_suffix(".starts.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    assert [row["start"] for row in starts] == ["cluster_0000"]
+    assert (tmp_path / "work" / "cluster_0000").is_dir()
+    assert not (tmp_path / "work" / "cluster_0001").exists()
 
 
 def test_a_short_iteration_cap_is_refused():

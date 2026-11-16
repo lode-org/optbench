@@ -723,6 +723,9 @@ def run(
         raise ValueError("eon-client run needs a client")
     problem = resolve_problem(root, problem_name)
     jobs, cap, cons = client_jobs(root, problem, template, client, geometries=geometries, output=output, work=work)
+    if limit:
+        jobs = jobs[: int(limit)]
+        cons = cons[: int(limit)]
     if workers <= 1:
         details = [_one(job) for job in jobs]
     else:
