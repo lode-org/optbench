@@ -707,13 +707,34 @@ def _record_plain(raw: dict, cap: int | None, force_tol: float | None):
     )
 
 
+def _record_from_track(calls, success, failure, start, cap: int | None):
+    """A total asv start. The track dict already holds these fields.
+
+    ``force_calls`` is an int or a float, ``success`` is a bool, and
+    ``failure`` is one of the four classes or absent. That is the row
+    ``_record_plain`` would build from the three-key dict.
+    """
+    if type(calls) is int:
+        calls = float(calls)
+    elif type(calls) is not float or not math.isfinite(calls):
+        return None
+    if cap is not None and calls >= cap:
+        success = False
+    if success:
+        return _make_start(calls, True, start)
+    if failure in FAILURES:
+        return _make_start(calls, False, start, failure=_shared_text(failure))
+    label = "cap" if cap is not None and calls >= cap else None
+    return _make_start(calls, False, start, failure=label, inferred=True)
+
+
 def _start_record(raw: dict, images: int | None, cap: int | None, force_tol: float | None, per_image_track: bool = False):
     if images is None and not per_image_track:
         plain = _record_plain(raw, cap, force_tol)
         if plain is not _PLAIN:
             return plain
     return _record_from_raw(
-        normalize_start(raw, images, per_image_track=per_image_track),
+        normalize_start(raw, images, per_image_track=per_image_track, reuse=True),
         cap,
         force_tol,
     )
@@ -1672,9 +1693,7 @@ def _campaign_rows(
             row["hessian_calls"] = recorded["hessian_calls"]
             events.append(("ok", row))
             continue
-        if _success_needs_hessian(problem) and any(
-            record.get("success") and "hessian_index" not in record for record in records
-        ):
+        if _success_needs_hessian(problem) and _missing_hessian_index(records):
             # A success with no index did not apply the rule. A cap or a crash
             # has no stationary point, so a missing index there is not this mark.
             row["_missing_hessian_index"] = True
@@ -1799,24 +1818,36 @@ def _asv_rows(
             # The same tolerance for every start of this class.
             force_tol = _force_tol(problem, source_template or template)
             try:
+                plain_track = images is None and not per_image_track
                 for item in tracked:
-                    raw = {
-                        "force_calls": item["force_calls"],
-                        "success": item["success"],
-                        "failure": item["failure"],
-                    }
-                    record = _start_record(
-                        raw,
-                        images,
-                        cap,
-                        force_tol,
-                        per_image_track,
-                    )
+                    if plain_track:
+                        params = item["params"]
+                        record = _record_from_track(
+                            item["force_calls"],
+                            item["success"],
+                            item["failure"],
+                            _shared_text(params[-1] if params else ""),
+                            cap,
+                        )
+                    else:
+                        raw = {
+                            "force_calls": item["force_calls"],
+                            "success": item["success"],
+                            "failure": item["failure"],
+                        }
+                        record = _start_record(
+                            raw,
+                            images,
+                            cap,
+                            force_tol,
+                            per_image_track,
+                        )
+                        if record is not None:
+                            params = item.get("params") or ()
+                            # The last axis is the geometry. The other axes are
+                            # the same on every start of the class.
+                            record["start"] = _shared_text(params[-1] if params else "")
                     if record is not None:
-                        params = item.get("params") or ()
-                        # The last axis is the geometry. The other axes are
-                        # the same on every start of the class.
-                        record["start"] = _shared_text(params[-1] if params else "")
                         records.append(record)
             except ValueError as exc:
                 events.append((
@@ -1962,6 +1993,38 @@ def _method_key(row: dict) -> tuple:
         str(row.get("method") or "").casefold(),
         row.get("origin") or "harness",
     )
+
+
+def _missing_hessian_index(records: list) -> bool:
+    """A success that did not store a Hessian index.
+
+    Index records always carry one. A plain or failed record has no slot
+    for it, and a dict is missing it when the key is absent.
+    """
+    plain = _StartPlain
+    failed = _StartFailed
+    full = _StartFull
+    indexed = _StartIndex
+    indexed_failure = _StartIndexFailed
+    for record in records:
+        kind = type(record)
+        if kind is indexed or kind is indexed_failure:
+            continue
+        if kind is plain or kind is failed:
+            if record.success:
+                return True
+            continue
+        if kind is full:
+            if record.success and record.hessian_index is None:
+                return True
+            continue
+        if isinstance(record, dict):
+            if record.get("success") and "hessian_index" not in record:
+                return True
+            continue
+        if getattr(record, "success", None) and getattr(record, "hessian_index", None) is None:
+            return True
+    return False
 
 
 def _success_needs_hessian(problem: dict | None) -> bool:

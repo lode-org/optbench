@@ -81,7 +81,7 @@ def band_total(force_calls: float, *, images: int | None, call_unit: str) -> tup
     return total, per
 
 
-def normalize_start(raw: dict, images: int | None, *, per_image_track: bool = False) -> dict:
+def normalize_start(raw: dict, images: int | None, *, per_image_track: bool = False, reuse: bool = False) -> dict:
     """One start whose ``force_calls`` is the harness total across the band.
 
     A ``force_calls_neb`` row stores the per-image quotient in
@@ -89,10 +89,11 @@ def normalize_start(raw: dict, images: int | None, *, per_image_track: bool = Fa
     stored the per-image quotient; ``per_image_track`` puts that track back
     on the total. Every other row is already a total. ``per_image`` divides
     the total by ``images``, the same divisor for every code on the problem.
+    ``reuse`` writes into ``raw``. The caller can still read fields this leaves alone.
     """
     if not isinstance(raw, dict):
         raise ValueError("start is not a record")
-    scaled = dict(raw)
+    scaled = raw if reuse else dict(raw)
     count_key = str(raw.get("count_key") or "")
     stated = str(raw.get("call_unit") or "")
     try:
