@@ -13,6 +13,12 @@ def test_xyz_to_con_centers_a_free_cluster():
     assert abs((xs[0] + xs[1]) / 2 - 50) < 1e-6
 
 
+def test_xyz_to_con_keeps_a_blank_comment_line():
+    commented = "2\nenergy -1\nA 0 0 0\nA 2 0 0\n"
+    blank = "2\n\nA 0 0 0\nA 2 0 0\n"
+    assert xyz_to_con(blank) == xyz_to_con(commented)
+
+
 def test_abs_overlap_does_not_renormalize():
     assert abs_overlap([1.0, 0.0], [1.0, 0.0]) == 1.0
     assert abs_overlap([0.0, 2.0], [0.0, -0.5]) == 1.0

@@ -11,16 +11,18 @@ from __future__ import annotations
 def xyz_to_con(text: str, *, box: float | None = None) -> str:
     """Extended XYZ to a free-cluster ``.con``.
 
-    The first line is the atom count. The second line is a comment.
-    Each later line is ``element x y z``. Lennard-Jones depends on
+    The first line is the atom count. The second line is a comment and
+    may be blank. Each later line is ``element x y z``. Lennard-Jones depends on
     distances, so the cluster is centered in a cube. The default cube
     is at least 100 and at least 80 past the span, which puts periodic
     images outside a cutoff of 40.
     """
-    lines = [line.strip() for line in text.splitlines() if line.strip()]
-    if len(lines) < 3:
+    lines = text.splitlines()
+    if len(lines) < 3 or not lines[0].strip():
         raise ValueError("xyz needs a count, a comment, and coordinates")
     natoms = int(lines[0].split()[0])
+    # The comment is line 2 even when it is blank. Dropping blank lines
+    # would treat the first atom as that comment.
     body = lines[2 : 2 + natoms]
     if len(body) != natoms:
         raise ValueError(f"xyz declares {natoms} atoms and has {len(body)}")
