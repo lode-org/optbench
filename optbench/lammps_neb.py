@@ -32,7 +32,6 @@ import json
 import os
 import re
 import shutil
-import signal
 import statistics
 import subprocess
 import sys
@@ -46,6 +45,7 @@ from .campaign import geometry_archive, load_template, resolve_problem
 from .failures import classify_failure
 from .pes import evaluate, load_pairs
 from .rgsaddle_band import vibrational_index
+from .process import wait_group
 from .score import score_v2
 from .scratch import mkdtemp as run_mkdtemp
 from .scratch import session as run_session
@@ -370,10 +370,8 @@ def _run_process(cmd: list[str], work: Path, timeout: float) -> int | None:
             start_new_session=True,
         )
         try:
-            return int(proc.wait(timeout=timeout))
+            return wait_group(proc, timeout)
         except subprocess.TimeoutExpired:
-            os.killpg(proc.pid, signal.SIGKILL)
-            proc.wait(timeout=60)
             return None
 
 

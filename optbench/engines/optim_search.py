@@ -26,6 +26,7 @@ import numpy as np
 
 from optbench.wales import REVISION_STAMP, header, snapshot, stamped_sha256
 
+from ..process import wait_group
 from ..scratch import temporary_directory as run_temporary
 from .common import judge_saddle, run_jobs, write_campaign
 from .geometries import load_starts, point_settings
@@ -215,21 +216,22 @@ def _execute(job: dict) -> dict:
                 env["OPTBENCH_BOX"] = " ".join(f"{float(value):.16g}" for value in lengths)
             stdout_path = folder / "stdout.txt"
             stderr_path = folder / "stderr.txt"
-            try:
-                with stdout_path.open("w", encoding="utf-8") as stdout, stderr_path.open("w", encoding="utf-8") as stderr:
-                    proc = subprocess.run(
-                        [str(binary)],
-                        cwd=folder,
-                        env=env,
-                        stdout=stdout,
-                        stderr=stderr,
-                        text=True,
-                        timeout=3600,
-                        check=False,
-                    )
-            except subprocess.TimeoutExpired:
-                proc = None
-                error = "OPTIM exceeded 3600s"
+            with stdout_path.open("w", encoding="utf-8") as stdout, stderr_path.open("w", encoding="utf-8") as stderr:
+                child = subprocess.Popen(
+                    [str(binary)],
+                    cwd=folder,
+                    env=env,
+                    stdout=stdout,
+                    stderr=stderr,
+                    start_new_session=True,
+                )
+                try:
+                    code = wait_group(child, 3600)
+                except subprocess.TimeoutExpired:
+                    proc = None
+                    error = "OPTIM exceeded 3600s"
+                else:
+                    proc = subprocess.CompletedProcess([str(binary)], code)
             count_path = folder / "calls.txt"
             if count_path.is_file():
                 calls = int(count_path.read_text(encoding="utf-8").strip() or "0")

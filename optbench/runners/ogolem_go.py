@@ -38,6 +38,7 @@ from collections import Counter
 from pathlib import Path
 
 from optbench.counter import ForceCallCap, HarnessCounter
+from optbench.process import wait_group
 from optbench.failures import classify_failure
 from optbench.potentials import lennard_jones, read_con
 from optbench.score import score_v2, summarize_capped
@@ -762,12 +763,11 @@ def execute_start(job: dict) -> dict:
                 env=env,
                 stdout=handle,
                 stderr=subprocess.STDOUT,
+                start_new_session=True,
             )
             try:
-                exit_code = int(proc.wait(timeout=float(job.get("wall") or 86400)))
+                exit_code = wait_group(proc, float(job.get("wall") or 86400))
             except subprocess.TimeoutExpired:
-                proc.kill()
-                proc.wait(timeout=30)
                 exit_code = -9
                 error = "wall timeout"
     except Exception as exc:

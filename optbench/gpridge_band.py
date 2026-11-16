@@ -12,7 +12,6 @@ import json
 import math
 import os
 import re
-import signal
 import subprocess
 import time
 from pathlib import Path
@@ -273,17 +272,14 @@ def verify_band(path: Path, pair, settings: dict) -> dict:
 
 
 def run_search(argv: list[str], directory: Path, env: dict, log, timeout: float) -> int:
-    """Run one search, terminating its process group when the budget expires."""
+    """Run one search. The budget and an interrupt both stop its session."""
+    from optbench.process import wait_group
+
     with subprocess.Popen(argv, cwd=directory, env=env, stdout=log,
                           stderr=subprocess.STDOUT, start_new_session=True) as proc:
         try:
-            return proc.wait(timeout=timeout)
+            return wait_group(proc, timeout)
         except subprocess.TimeoutExpired:
-            try:
-                os.killpg(proc.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-            proc.wait()
             return 124
 
 

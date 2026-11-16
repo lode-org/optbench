@@ -31,6 +31,7 @@ from pathlib import Path
 import numpy as np
 
 from optbench.counter import HarnessCounter
+from optbench.process import wait_group
 from optbench.failures import classify_failure
 from optbench.gmin_pot import lennard_jones_compiled
 from optbench.potentials import lennard_jones, read_con
@@ -358,12 +359,11 @@ def run_one(job: dict) -> dict:
                 env=env,
                 stdout=stdout,
                 stderr=stderr,
+                start_new_session=True,
             )
             try:
-                returncode = int(proc.wait(timeout=float(job["timeout"])))
+                returncode = wait_group(proc, float(job["timeout"]))
             except subprocess.TimeoutExpired:
-                proc.kill()
-                proc.wait(timeout=30)
                 returncode = -9
                 error = "timeout"
     except Exception as exc:
