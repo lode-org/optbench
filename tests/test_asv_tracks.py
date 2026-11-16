@@ -15,7 +15,7 @@ class _Result:
         self.commit_hash = "abc"
         self.benchmark_version = {}
         count = 1
-        self._params = params or [["'0'"], ["'a'", "'b'"]]
+        self._params = [["'0'"], ["'a'", "'b'"]] if params is None else params
         for axis in self._params:
             count *= len(axis)
         self._results = {}
@@ -95,6 +95,72 @@ def test_a_failure_needs_exactly_one_class():
 def test_a_success_bit_must_be_zero_or_one():
     result = _Result({"track_success": [0.5, 1.0]})
     with pytest.raises(SystemExit, match="success track is"):
+        track_rows(result, CLASS_NAME)
+
+
+def test_whole_force_counts_are_ints_and_quoted_axes_unwrap():
+    result = _Result(
+        {"track_force_calls": [4.0, 4.5]},
+        params=[["'1'", "'2'"]],
+    )
+    rows = track_rows(result, CLASS_NAME)
+    assert [(row["params"], row["force_calls"], row["version"]) for row in rows] == [
+        (("1",), 4, "v"),
+        (("2",), 4.5, "v"),
+    ]
+
+
+def test_an_integer_success_bit_is_zero_or_one():
+    result = _Result(
+        {
+            "track_success": [1, 0],
+            "track_force_calls": [2.0, 3.5],
+            "track_failure_cap": [0, 1],
+        },
+        params=[["'a'", "'b'"]],
+    )
+    rows = track_rows(result, CLASS_NAME)
+    assert [(row["success"], row["force_calls"], row["failure"]) for row in rows] == [
+        (True, 2, None),
+        (False, 3.5, "cap"),
+    ]
+
+
+@pytest.mark.parametrize("name", ["crash", "divergence", "cap", "wrong_stationary"])
+def test_a_failed_start_records_that_class(name: str):
+    result = _Result(
+        {"track_success": [0.0], f"track_failure_{name}": [1.0]},
+        params=[["'a'"]],
+    )
+    rows = track_rows(result, CLASS_NAME)
+    assert rows[0]["success"] is False
+    assert rows[0]["failure"] == name
+
+
+def test_two_failure_classes_name_the_first_pair_in_order():
+    result = _Result(
+        {
+            "track_success": [0.0],
+            "track_failure_crash": [1.0],
+            "track_failure_cap": [1.0],
+        },
+        params=[["'a'"]],
+    )
+    with pytest.raises(SystemExit, match=r"failure tracks are \['crash', 'cap'\]"):
+        track_rows(result, CLASS_NAME)
+
+
+def test_a_track_with_no_axes_is_one_row():
+    result = _Result({}, params=[])
+    rows = track_rows(result, CLASS_NAME)
+    assert [(row["params"], row["force_calls"], row["success"], row["failure"]) for row in rows] == [
+        ((), 3, True, None),
+    ]
+
+
+def test_a_nan_track_value_is_rejected():
+    result = _Result({"track_success": [float("nan")]}, params=[["'a'"]])
+    with pytest.raises(SystemExit, match="was skipped or failed"):
         track_rows(result, CLASS_NAME)
 
 

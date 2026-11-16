@@ -1,5 +1,7 @@
 """A deferred score batch matches the inline scorer and stays in-process when small."""
 
+import pytest
+
 from optbench.board import _ScoreSession, _blank_row, _make_start, _pack_score, _score_many, _score_records
 
 
@@ -58,6 +60,98 @@ def test_a_long_list_keeps_its_place_among_short_ones(monkeypatch) -> None:
     direct = [_score_records(records, cap) for records, cap in jobs]
     assert [item["n"] for item in found] == [len(records) for records, _cap in jobs]
     assert found == direct
+
+
+def test_an_empty_score_list_is_rejected() -> None:
+    with pytest.raises(ValueError, match="records is empty"):
+        _score_records([], 10)
+
+
+def test_a_failure_needs_a_cap() -> None:
+    with pytest.raises(ValueError, match="a failure needs a cap"):
+        _score_records([{"force_calls": 1.0, "success": False}], None)
+
+
+def test_a_success_cannot_carry_a_failure_class() -> None:
+    record = {"force_calls": 1.0, "success": True, "failure": "cap"}
+    with pytest.raises(ValueError, match="a success cannot carry a failure class"):
+        _score_records([record], 10)
+    with pytest.raises(ValueError, match="a success cannot carry a failure class"):
+        _score_records([(1.0, True, "cap", None, None)], 10)
+
+
+def test_reaching_the_cap_costs_twice_the_cap_and_stays_a_success() -> None:
+    summary = _score_records([{"force_calls": 10.0, "success": True}], 10)
+    assert summary["nfailed"] == 0
+    assert summary["par_applied"] is True
+    assert summary["par2_mean"] == 20.0
+    assert summary["success_only_mean"] == 10.0
+    assert summary["n"] == 1
+    assert summary["median"] == 20.0
+    assert summary["success_rate"] == 1.0
+    assert summary["rate_high"] == 1.0
+
+
+def test_an_unlabeled_failure_is_divergence_under_the_cap_and_cap_at_it() -> None:
+    under = _score_records([{"force_calls": 3.0, "success": False}], 10)
+    assert under["n_divergence"] == 1
+    assert under["n_cap"] == 0
+    assert under["par2_mean"] == 20.0
+    reached = _score_records([{"force_calls": 10.0, "success": False}], 10)
+    assert reached["n_cap"] == 1
+    assert reached["n_divergence"] == 0
+    assert reached["par2_mean"] == 20.0
+
+
+def test_no_cap_leaves_the_par_mean_unset() -> None:
+    summary = _score_records(
+        [
+            {"force_calls": 2.0, "success": True},
+            {"force_calls": 4.0, "success": True},
+        ],
+        None,
+    )
+    assert summary["par_applied"] is False
+    assert summary["par2_mean"] is None
+    assert summary["success_only_mean"] == 3.0
+    assert summary["mean_calls"] == 3.0
+    assert summary["nfailed"] == 0
+
+
+def test_every_failure_has_no_success_mean_and_a_zero_rate_floor() -> None:
+    summary = _score_records(
+        [
+            {"force_calls": 1.0, "success": False, "failure": "crash"},
+            {"force_calls": 2.0, "success": False, "failure": "divergence"},
+        ],
+        5,
+    )
+    assert summary["success_only_mean"] is None
+    assert summary["nfailed"] == 2
+    assert summary["rate_low"] == 0.0
+    assert summary["n_crash"] == 1
+    assert summary["n_divergence"] == 1
+    assert summary["par2_mean"] == 10.0
+
+
+def test_a_reason_list_and_a_packed_reason_list_name_the_same_class() -> None:
+    cap = 10
+    as_dict = _score_records([{"force_calls": 4.0, "success": False, "reasons": ["crash"]}], cap)
+    packed = _score_records([(4.0, False, None, ["crash"], None)], cap)
+    assert as_dict["n_crash"] == packed["n_crash"] == 1
+    assert as_dict["par2_mean"] == packed["par2_mean"] == 20.0
+
+
+def test_the_same_records_return_the_same_bootstrap_interval() -> None:
+    records = [
+        {"force_calls": 1.0, "success": True},
+        {"force_calls": 9.0, "success": False, "failure": "cap"},
+    ]
+    first = _score_records(records, 10)
+    second = _score_records(records, 10)
+    assert first["median"] == second["median"] == 10.5
+    assert first["median_low"] == second["median_low"]
+    assert first["median_high"] == second["median_high"]
 
 
 def test_packed_fields_score_the_same() -> None:
