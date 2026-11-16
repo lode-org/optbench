@@ -1085,6 +1085,11 @@ def _score_job(job: tuple[list[dict], int | None]):
         return exc
 
 
+def _score_jobs(jobs: list) -> list:
+    """Score one group of packed jobs. One message, so the pipe is not paid per list."""
+    return [_score_job(job) for job in jobs]
+
+
 def _score_many(jobs: list[tuple[list[dict], int | None]]) -> list:
     """Score each start list. Large batches run side by side.
 
@@ -1112,6 +1117,7 @@ class _ScoreBatch:
         self.session = session
         self.pending: list[tuple[list[dict], int | None]] = []
         self.futures: list = []
+        self._buf: list = []
         self.events: list | None = None
         self.rows: list[dict] | None = None
         self.unparsed: list[dict] | None = None
@@ -1137,7 +1143,10 @@ class _ScoreBatch:
     def collect(self) -> list:
         self.session.flush(self)
         if self.futures:
-            return [future.result() for future in self.futures]
+            found = []
+            for future in self.futures:
+                found.extend(future.result())
+            return found
         return [_score_job(job) for job in self.pending]
 
 
@@ -1162,13 +1171,22 @@ class _ScoreSession:
 
     def enqueue(self, batch: _ScoreBatch, job: tuple[list[dict], int | None]) -> None:
         if self.pool is not None:
-            batch.futures.append(self.pool.submit(_score_job, (_pack_score(job[0]), job[1])))
+            self._buffer(batch, (_pack_score(job[0]), job[1]))
             return
         batch.pending.append(job)
         self._jobs += 1
         self._starts += len(job[0])
         if self._jobs >= 4 and self._starts >= 2000:
             self._open()
+
+    def _buffer(self, batch: _ScoreBatch, packed: tuple) -> None:
+        batch._buf.append(packed)
+        if len(batch._buf) >= 8:
+            self._submit(batch, batch._buf)
+            batch._buf = []
+
+    def _submit(self, batch: _ScoreBatch, packed: list) -> None:
+        batch.futures.append(self.pool.submit(_score_jobs, packed))
 
     def _open(self) -> None:
         import os
@@ -1181,9 +1199,14 @@ class _ScoreSession:
     def flush(self, batch: _ScoreBatch) -> None:
         if self.pool is None:
             return
-        for job in batch.pending:
-            batch.futures.append(self.pool.submit(_score_job, (_pack_score(job[0]), job[1])))
-        batch.pending.clear()
+        if batch.pending:
+            packed = [(_pack_score(records), cap) for records, cap in batch.pending]
+            batch.pending.clear()
+            for start in range(0, len(packed), 8):
+                self._submit(batch, packed[start : start + 8])
+        if batch._buf:
+            self._submit(batch, batch._buf)
+            batch._buf = []
 
     def finish(self) -> None:
         for batch in self.batches:
