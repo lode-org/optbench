@@ -910,7 +910,12 @@ def _jsonable(record: dict) -> dict:
     return out
 
 
-def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, force_tol: float, work: Path, workers: int, limit: int = 0) -> dict:
+def _continues(header: dict | None, template_id: str, resume: bool) -> bool:
+    """A matching checkpoint is kept only when this run asked to continue."""
+    return bool(resume) and header is not None and header.get("template") == template_id
+
+
+def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, force_tol: float, work: Path, workers: int, limit: int = 0, resume: bool = False) -> dict:
     settings = _settings(template)
     paths = (problem.get("input") or {}).get("geometries") or []
     con_path = next(path for path in paths if str(path).endswith(".con"))
@@ -928,8 +933,9 @@ def _run_saddle(root: Path, problem: dict, template: dict, *, output: Path, forc
     raw = potential_from_problem(problem)
     header_path, partial_path = _checkpoint_paths(output)
     header = json.loads(header_path.read_text(encoding="utf-8")) if header_path.is_file() else None
-    saved = _load_partial(partial_path) if header and header.get("template") == template["id"] else []
-    if header and header.get("template") == template["id"]:
+    continuing = _continues(header, template["id"], resume)
+    saved = _load_partial(partial_path) if continuing else []
+    if continuing:
         minimum = np.asarray(header["minimum"], dtype=np.float64)
         min_energy = float(header["min_energy"])
         minimize_calls = int(header["minimize_calls"])
@@ -1285,7 +1291,7 @@ def _run_modes(root: Path, problem: dict, template: dict, *, output: Path, cap: 
     }
 
 
-def run_template(root: Path, problem: dict, template: dict, *, output: Path, workers: int = 1, work: Path | None = None, limit: int = 0) -> dict:
+def run_template(root: Path, problem: dict, template: dict, *, output: Path, workers: int = 1, work: Path | None = None, limit: int = 0, resume: bool = False) -> dict:
     """Run one SoftSaddle template."""
     from .campaign import _check_stop
 
@@ -1299,7 +1305,7 @@ def run_template(root: Path, problem: dict, template: dict, *, output: Path, wor
     scratch = work or output.parent / "work" / template["id"].replace("/", "-")
     scratch.mkdir(parents=True, exist_ok=True)
     if problem["id"] == "saddle-search/pt-island":
-        return _run_saddle(root, problem, template, output=output, force_tol=force_tol, work=scratch, workers=workers, limit=limit)
+        return _run_saddle(root, problem, template, output=output, force_tol=force_tol, work=scratch, workers=workers, limit=limit, resume=resume)
     if cap is None:
         raise ValueError(f"{problem['id']} has no force-call cap")
     return _run_modes(root, problem, template, output=output, cap=cap, work=scratch, workers=workers, limit=limit)

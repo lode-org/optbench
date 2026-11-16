@@ -102,3 +102,33 @@ def test_quadratic_lowest_mode(tmp_path: Path, solver: str):
     assert record["curvature"] == pytest.approx(-2.0, rel=1e-3, abs=1e-3)
     assert record["force_calls"] < 10000
     assert record["failure"] is None
+
+
+def test_a_fresh_softsaddle_search_does_not_keep_its_checkpoint():
+    from optbench.softsaddle_run import _continues
+
+    header = {"template": "softsaddle/saddle-lanczos-sm0", "min_ok": True}
+    assert _continues(header, "softsaddle/saddle-lanczos-sm0", False) is False
+    assert _continues(header, "softsaddle/saddle-lanczos-sm0", True) is True
+    assert _continues(header, "softsaddle/saddle-davidson-sm50", True) is False
+    assert _continues(None, "softsaddle/saddle-lanczos-sm0", True) is False
+
+
+def test_run_asks_softsaddle_to_resume(monkeypatch, tmp_path):
+    from optbench.campaign import run
+
+    captured = {}
+
+    def fake(_root, _problem, _template, **kwargs):
+        captured["resume"] = kwargs["resume"]
+        return {"force_calls": 1, "nfailed": 0, "starts": 1}
+
+    monkeypatch.setattr("optbench.softsaddle_run.run_template", fake)
+    run(
+        ROOT,
+        "saddle-search/pt-island",
+        "softsaddle/saddle-lanczos-sm0",
+        output=tmp_path / "bench.dat",
+        resume=True,
+    )
+    assert captured["resume"] is True
