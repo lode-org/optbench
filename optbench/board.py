@@ -1998,12 +1998,17 @@ def _public(row: dict) -> dict:
     }
 
 
-def _rank_key(row: dict) -> tuple:
+def _rank_cost(row: dict):
     score = row.get("rank_cost")
     if score is None:
         score = row.get("par2_mean")
     if score is None:
         score = row.get("published")
+    return score
+
+
+def _rank_key(row: dict) -> tuple:
+    score = _rank_cost(row)
     return (
         score is None,
         float(score) if score is not None else 0.0,
@@ -2249,11 +2254,24 @@ def board_rows(problem: dict) -> list[dict]:
 
 
 def _assign_family_ranks(ranked: list[dict]) -> None:
+    """Competition rank within a family. Equal costs share a rank.
+
+    The next distinct cost skips the tied places, so two firsts are
+    followed by a third. The list is already in cost order.
+    """
     seen: dict[str, int] = defaultdict(int)
+    last_cost: dict[str, object] = {}
+    last_rank: dict[str, int] = {}
+    missing = object()
     for row in ranked:
         family = str(row.get("family") or "")
         seen[family] += 1
-        row["family_rank"] = seen[family]
+        cost = _rank_cost(row)
+        previous = last_cost.get(family, missing)
+        if previous is missing or previous != cost:
+            last_rank[family] = seen[family]
+            last_cost[family] = cost
+        row["family_rank"] = last_rank[family]
 
 
 def rank_violations(document: dict) -> list[str]:
@@ -2434,15 +2452,16 @@ def _aligned_costs(rows: list[dict]) -> tuple[dict[str, list[float]] | None, str
         return None, "The ranked rows have no per-start record."
     key_sets = [{key for key, _cost in keyed} for _label, keyed in series]
     common = set.intersection(*key_sets)
-    shortest = min(len(keys) for keys in key_sets)
-    if common and len(common) >= shortest:
+    # A shorter row is a missing solver, not a reason to drop the starts
+    # the others still have. Only an identical start set lines up by name.
+    if common and all(keys == common for keys in key_sets):
         order = [key for key, _cost in series[0][1] if key in common]
         costs: dict[str, list[float]] = {}
         for label, keyed in series:
             found = dict(keyed)
             costs[label] = [found[key] for key in order]
         return costs, ""
-    if len({len(keyed) for _label, keyed in series}) == 1:
+    if not common and len({len(keyed) for _label, keyed in series}) == 1:
         return {label: [cost for _key, cost in keyed] for label, keyed in series}, ""
     return None, "The ranked rows do not share one start set."
 

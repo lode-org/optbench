@@ -493,18 +493,26 @@ def leaderboard_html(items: list[dict], *, show_problem: bool, bench: str) -> st
         "<thead><tr>" + "".join(headers) + "</tr></thead><tbody>",
     ]
     rank = 0
+    place = 0
     previous = None
+    previous_best = None
     par2_dash = "A dash in PAR-2 means that row has no PAR-2 score."
     rate_dash = "A dash in the success rate means that row did not record one."
     for item in items:
         group = str(item.get("group") or "")
+        best = item.get("best")
         if group != previous:
-            rank = 1
+            place = 0
+            previous_best = None
             previous = group
             started = True
         else:
-            rank += 1
             started = False
+        place += 1
+        # Competition rank. A tie keeps the rank, and the next cost skips.
+        if previous_best is None or best != previous_best:
+            rank = place
+            previous_best = best
         span = spans[group]
         fraction = None if span is None else log_cost_fraction(float(item["best"]), span[0], span[1])
         percent = 0.0 if fraction is None else 100.0 * fraction
