@@ -41,28 +41,25 @@ def _alias_list(pin: dict) -> list[str]:
 
 
 def _alias_page(code: str, registry: list[dict]) -> str | None:
-    """Longest exact alias or name. Case distinguishes eOn from Eon."""
-    best: str | None = None
-    best_len = -1
+    """First exact alias or name. Case distinguishes eOn from Eon.
+
+    An exact match has the code's length, so a later match cannot be longer.
+    The first pin in registry order is the page.
+    """
     for pin in registry:
         name = str(pin.get("name") or "")
-        if name and name == code and len(name) > best_len:
-            best = pin_page(pin)
-            best_len = len(name)
+        if name and name == code:
+            return pin_page(pin)
         raw = pin.get("aliases") or ()
         if isinstance(raw, str):
-            if raw and raw == code and len(raw) > best_len:
-                best = pin_page(pin)
-                best_len = len(raw)
+            if raw and raw == code:
+                return pin_page(pin)
             continue
         for item in raw:
             candidate = item if isinstance(item, str) else str(item)
-            if not candidate.strip():
-                continue
-            if candidate == code and len(candidate) > best_len:
-                best = pin_page(pin)
-                best_len = len(candidate)
-    return best
+            if candidate.strip() and candidate == code:
+                return pin_page(pin)
+    return None
 
 
 def _id_page(code: str, registry: list[dict]) -> str | None:
