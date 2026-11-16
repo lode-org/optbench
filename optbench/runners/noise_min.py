@@ -604,6 +604,30 @@ def _dat(
     return "\n".join(lines) + "\n"
 
 
+def _kept_partial(path: Path, resume: bool) -> dict[int, dict]:
+    """Rows already written, only when this run asked to continue.
+
+    A fresh run deletes the partial file so the next pass starts at the
+    first geometry.
+    """
+    if not resume:
+        if path.is_file():
+            path.unlink()
+        return {}
+    done: dict[int, dict] = {}
+    if not path.is_file():
+        return done
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        done[int(row["index"])] = row
+    return done
+
+
 def run_template(
     root: Path,
     problem: dict,
@@ -614,6 +638,7 @@ def run_template(
     workers: int,
     work: Path | None,
     limit: int = 0,
+    resume: bool = False,
 ) -> dict:
     _quiet_threads()
     if template.get("engine") != "noise":
@@ -706,17 +731,8 @@ def run_template(
                 "cap": cap,
             }
         )
-    done_rows: dict[int, dict] = {}
     partial_path = output.with_suffix(".partial.jsonl")
-    if partial_path.is_file():
-        for line in partial_path.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            try:
-                row = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            done_rows[int(row["index"])] = row
+    done_rows = _kept_partial(partial_path, resume)
     pending = [job for job in jobs if job["index"] not in done_rows]
     if pending:
         partial_path.parent.mkdir(parents=True, exist_ok=True)

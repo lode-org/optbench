@@ -416,6 +416,7 @@ def run(
             workers=workers,
             work=work,
             limit=limit,
+            resume=resume,
         )
     if template["engine"] == "geometric":
         from .runners.geometric_min import run_template

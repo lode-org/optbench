@@ -110,3 +110,34 @@ def test_exception_text_keeps_a_single_type_prefix():
         "RuntimeError: coordinate rebuild did not settle"
     )
     assert _exception_text(ForceCallCap("ForceCallCap: force-call cap")) == "ForceCallCap: force-call cap"
+
+
+def test_a_fresh_run_drops_a_partial_noise_file(tmp_path):
+    from optbench.runners.noise_min import _kept_partial
+
+    partial = tmp_path / "bench.partial.jsonl"
+    partial.write_text('{"index": 1, "force_calls": 9}\n', encoding="utf-8")
+    assert _kept_partial(partial, False) == {}
+    assert not partial.exists()
+    partial.write_text('{"index": 1, "force_calls": 9}\nnot json\n', encoding="utf-8")
+    assert _kept_partial(partial, True) == {1: {"index": 1, "force_calls": 9}}
+
+
+def test_run_asks_noise_to_resume(monkeypatch, tmp_path):
+    from optbench.campaign import run
+
+    captured = {}
+
+    def fake(_root, _problem, _template, **kwargs):
+        captured["resume"] = kwargs["resume"]
+        return {"force_calls": 1, "nfailed": 0, "starts": 1}
+
+    monkeypatch.setattr("optbench.runners.noise_min.run_template", fake)
+    run(
+        ROOT,
+        "minimization/lj38-noise",
+        "noise/ase-lbfgs-s1em4",
+        output=tmp_path / "bench.dat",
+        resume=True,
+    )
+    assert captured["resume"] is True
