@@ -74,6 +74,46 @@ def test_peakmem_entry_points_run_on_the_checkout() -> None:
     assert resource.getrusage(resource.RUSAGE_SELF).ru_maxrss > 8 * 1024
 
 
+def test_a_plot_peak_matches_across_two_fresh_processes(tmp_path: Path) -> None:
+    import subprocess
+
+    from benchmarks.bench_check import plot_process_args, plot_process_env
+
+    subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "import matplotlib; matplotlib.use('Agg'); "
+            "from matplotlib.font_manager import findfont; findfont('DejaVu Sans'); "
+            "import matplotlib.pyplot; import PIL.Image; PIL.Image.init()",
+        ],
+        check=True,
+        cwd=tmp_path,
+    )
+    code = (
+        "import sys\n"
+        "from pathlib import Path\n"
+        "from benchmarks.bench_check import traced_plot_peak\n"
+        "rows=[('minimization/toy', [{'code':'a','label':'alpha','success_rate':1.0,"
+        "'par2_mean':3.0,'_profile':[['0',1.0],['1',2.0]]}])]\n"
+        "print(traced_plot_peak(rows, Path(sys.argv[1])))\n"
+    )
+    env = plot_process_env()
+    env["PYTHONPATH"] = str(checkout())
+    peaks = []
+    for name in ("one", "two"):
+        proc = subprocess.run(
+            [*plot_process_args(sys.executable), "-c", code, str(tmp_path / name)],
+            check=True,
+            cwd=checkout(),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+        peaks.append(int(proc.stdout.strip()))
+    assert peaks[0] == peaks[1]
+
+
 def test_rebind_does_not_duplicate_the_checkout(monkeypatch) -> None:
     text = str(checkout())
     before = sys.path.count(text)

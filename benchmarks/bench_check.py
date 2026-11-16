@@ -214,6 +214,90 @@ def run_replay(prepared) -> None:
         _replay(events, [], [], [], list(results))
 
 
+def plot_rows(root: Path) -> list[tuple[str, list]]:
+    """Ranked rows in problem order.
+
+    Building the board is not part of the plot sample. The score pool finishes
+    in arrival order, so two builds of the same rows do not leave the same heap.
+    """
+    root = ensure_checkout(root)
+    from optbench.board import build_board
+
+    document = build_board(root)
+    prepared: list[tuple[str, list]] = []
+    for problem_id, problem in sorted(document["problems"].items()):
+        ranked = problem.get("_ranked_rows") or []
+        if ranked:
+            prepared.append((problem_id, ranked))
+    return prepared
+
+
+def plot_process_env(base: dict | None = None) -> dict[str, str]:
+    """Environment for one plot sample.
+
+    ``PYTHONHASHSEED`` is fixed. Matplotlib also keys font and artist caches by
+    object identity, so the process has to be started with address layout fixed
+    (``setarch -R``) or those caches allocate in a different order. The font
+    list on disk is loaded at import; it has to exist already, or the process
+    that builds it does not match a process that reads it. The working directory
+    is the checkout. Figures are written elsewhere, so the sample does not
+    create a directory on the import path.
+    """
+    env = dict(os.environ if base is None else base)
+    env["PYTHONHASHSEED"] = "0"
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    env.setdefault("SOURCE_DATE_EPOCH", "0")
+    return env
+
+
+def plot_process_args(python: str) -> list[str]:
+    """argv prefix for one plot sample, before ``-c`` or the script path."""
+    import platform
+
+    return ["setarch", platform.machine(), "-R", python]
+
+
+def traced_plot_peak(rows: list[tuple[str, list]], directory: Path) -> int:
+    """Traced peak bytes of writing ``rows``.
+
+    The imports below are the same ones the plot writer loads on its first
+    call. They finish before the trace, which is the post-import window used
+    for the other Python peaks. ``gc.collect()`` runs after that and before
+    the trace. No figure is drawn first: a real board builds the font and text
+    caches while it writes.
+    """
+    import gc
+    import tracemalloc
+
+    import matplotlib
+
+    matplotlib.use("Agg", force=False)
+    pyplot = importlib.import_module("matplotlib.pyplot")
+    for name in (
+        "matplotlib.ticker",
+        "matplotlib.backends.backend_agg",
+        "matplotlib.backends.backend_svg",
+        "matplotlib.backends._backend_agg",
+    ):
+        importlib.import_module(name)
+    importlib.import_module("PIL.Image").init()
+    pyplot.switch_backend("Agg")
+
+    from optbench.board import _profile_for, _write_plots
+
+    directory = Path(directory)
+    gc.collect()
+    tracemalloc.start()
+    try:
+        for problem_id, ranked in rows:
+            # write_board builds the profile in this same pass, then draws it.
+            _write_plots(problem_id, ranked, _profile_for(ranked), directory)
+    finally:
+        _current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+    return peak
+
+
 def parse_site(root: Path) -> int:
     """Parse the rendered site pages. Returns the page count."""
     root = ensure_checkout(root)
