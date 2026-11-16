@@ -384,6 +384,18 @@ def _finish(job, counter, outcome, error, last, steps, hessian_calls) -> dict:
     )
 
 
+def _free_symbols(job: dict, free) -> list[str]:
+    """Element of each free atom, in source order.
+
+    A missing list repeats the first species. That is the old single-element
+    path. A list is the name parse_con stored for every atom.
+    """
+    labels = job.get("symbols")
+    if labels:
+        return [str(labels[int(index)]) for index in free]
+    return [str(job["symbol"])] * int(len(free))
+
+
 def search_start(job: dict) -> dict:
     """Run one start. OptKing's own convergence test is not the stop."""
     import logging
@@ -409,11 +421,7 @@ def search_start(job: dict) -> dict:
         evaluate, positions, free = _evaluate_factory(job)
         free_positions = positions[free]
         counter = HarnessCounter(cache=True, cap=int(job["cap"]))
-        labels = job.get("symbols")
-        if labels:
-            element = [str(labels[int(index)]) for index in free]
-        else:
-            element = [str(job["symbol"])] * int(free.size)
+        element = _free_symbols(job, free)
         molecule = qcel.models.Molecule(
             symbols=element,
             geometry=free_positions.reshape(-1).tolist(),
@@ -617,6 +625,7 @@ def load_jobs(root: Path, problem: dict, template: dict, *, geometries: Path | N
                 "positions": parsed["positions"],
                 "fixed": parsed["fixed"],
                 "symbol": parsed["symbol"],
+                "symbols": list(parsed["symbols"]),
                 "box": parsed["box"],
                 "pbc": pbc,
                 "potential": potential,
