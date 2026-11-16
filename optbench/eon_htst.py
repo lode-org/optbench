@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import shutil
 import time
@@ -47,16 +48,27 @@ def parse_searches(text: str) -> list[dict]:
         if len(fields) < 7:
             continue
         result = fields[-1]
+        try:
+            barrier = float(fields[2])
+            sad = int(fields[4])
+            mins = int(fields[5])
+        except (ValueError, OverflowError):
+            continue
+        if not math.isfinite(barrier) or sad < 0 or mins < 0:
+            continue
         process_id = None
         if "-" in result:
             kind, ident = result.split("-", 1)
             if kind in {"good", "repeat"}:
-                process_id = int(ident)
+                try:
+                    process_id = int(ident)
+                except ValueError:
+                    process_id = None
         rows.append(
             {
-                "barrier": float(fields[2]),
-                "sad_fcs": int(fields[4]),
-                "mins_fcs": int(fields[5]),
+                "barrier": barrier,
+                "sad_fcs": sad,
+                "mins_fcs": mins,
                 "process_id": process_id,
             }
         )

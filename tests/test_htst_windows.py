@@ -84,6 +84,22 @@ def test_parse_searches_keeps_good_and_repeat_ids():
     assert [row["sad_fcs"] + row["mins_fcs"] for row in rows] == [12, 4, 10]
 
 
+def test_a_truncated_search_line_does_not_drop_the_earlier_rows():
+    text = "\n".join(
+        [
+            "wuid type barrier max-dist sad-fcs mins-fcs pref-fcs result",
+            "----",
+            "0 random 0.60100 1 10 2 0 good-4",
+            "1 random nan 1 3 1 0 Not",
+            "2 random 0.60100 1 cut 2 0 repeat-4",
+            "3 random 0.50000 1 4 1 0 good-1",
+        ]
+    )
+    rows = parse_searches(text)
+    assert [row["process_id"] for row in rows] == [4, 1]
+    assert [row["sad_fcs"] for row in rows] == [10, 4]
+
+
 def test_assign_delta_sums_to_the_harness_tally():
     rows = [
         {"sad_fcs": 10, "mins_fcs": 0},

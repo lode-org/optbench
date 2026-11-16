@@ -10,6 +10,7 @@ counter. It is not a harness wrap.
 from __future__ import annotations
 
 import json
+import math
 import os
 import shutil
 import time
@@ -56,8 +57,15 @@ def search_cost(text: str) -> dict:
     searches = 0
     repeats = 0
     for fields in _search_lines(text):
+        try:
+            sad = int(float(fields[4]))
+            mins = int(float(fields[5]))
+        except (ValueError, OverflowError):
+            continue
+        if not math.isfinite(sad) or not math.isfinite(mins) or sad < 0 or mins < 0:
+            continue
         searches += 1
-        force_calls += int(float(fields[4])) + int(float(fields[5]))
+        force_calls += sad + mins
         if any(token.startswith("repeat-") for token in fields):
             repeats += 1
     return {

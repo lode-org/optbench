@@ -165,6 +165,10 @@ def test_one_rate_has_no_standard_error_and_confidence_needs_twenty_repeats():
     assert cost["force_calls"] == 18
     assert cost["repeat_lines"] == 1
     assert cost["confidence"] == 0.0
+    broken = text + "\n3 random nan 1.0 cut 1 0 good-2\n4 random 0.2 1.0 5 1 0 good-3\n"
+    kept = search_cost(broken)
+    assert kept["force_calls"] == 24
+    assert kept["total_searches"] == 3
 
 
 def test_thermal_window_uses_the_eon_kelvin_conversion():

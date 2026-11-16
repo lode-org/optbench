@@ -166,6 +166,24 @@ def test_resume_keeps_registered_searches(tmp_path):
     assert _snapshots_from_text(text) == [(0, 0), (6, 10), (12, 40)]
 
 
+def test_a_truncated_htst_search_line_keeps_the_other_rows():
+    from optbench.runners.eon_htst import _searches
+
+    text = "\n".join(
+        [
+            "header",
+            "rule",
+            "0 random 0.60100 1 10 2 0 good-4",
+            "1 random nan 1 cut 1 0 Not",
+            "2 random 0.50000 1 4 1 0 good-1",
+        ]
+    )
+    rows = _searches(text)
+    assert [row["sad"] for row in rows] == [10, 4]
+    assert rows[0]["process_id"] == 4
+    assert rows[1]["process_id"] == 1
+
+
 def test_a_fresh_htst_run_does_not_keep_an_old_directory(tmp_path):
     from optbench.runners.eon_htst import _open_work
 

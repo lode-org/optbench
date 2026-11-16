@@ -97,10 +97,17 @@ def _searches(text: str) -> list[dict]:
                     process_id = int(rest)
                 except ValueError:
                     process_id = None
+        try:
+            sad = int(float(fields[4]))
+            barrier = float(fields[2])
+        except (ValueError, OverflowError):
+            continue
+        if not math.isfinite(barrier) or sad < 0:
+            continue
         rows.append(
             {
-                "sad": int(float(fields[4])),
-                "barrier": float(fields[2]),
+                "sad": sad,
+                "barrier": barrier,
                 "status": status,
                 "process_id": process_id,
             }
