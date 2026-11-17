@@ -405,6 +405,7 @@ def search_start(job: dict) -> dict:
     scratch = Path(job["scratch"])
     scratch.mkdir(parents=True, exist_ok=True)
     previous = Path.cwd()
+    silenced = logging.root.manager.disable
     counter = None
     outcome = "crash"
     error = ""
@@ -526,6 +527,7 @@ def search_start(job: dict) -> dict:
         error = error or f"{type(exc).__name__}: {exc}"
     finally:
         os.chdir(previous)
+        logging.disable(silenced)
     record = _finish(job, counter, outcome, error, last, steps, hessian_calls)
     if record.get("error") is None:
         record.pop("error", None)

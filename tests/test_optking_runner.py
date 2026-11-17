@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 import tarfile
 from pathlib import Path
 
@@ -390,6 +391,28 @@ def test_a_search_that_never_started_reports_no_calls_and_no_point(tmp_path):
     assert (record["force_calls"], record["verify_calls"]) == (0, 0)
     assert (record["energy"], record["force_norm"], record["hessian_index"]) == (None, None, None)
     assert record["error"] == "could not start"
+
+
+@pytest.fixture
+def logging_level():
+    import logging
+
+    before = logging.root.manager.disable
+    yield before
+    logging.disable(before)
+
+
+def test_a_search_leaves_the_logging_level_and_the_directory_as_it_found_them(tmp_path, monkeypatch, logging_level):
+    import logging
+
+    monkeypatch.setitem(sys.modules, "qcelemental", None)
+    here = Path.cwd()
+    record = optking_ts.search_start(_job(tmp_path))
+    assert record["failure"] == "crash"
+    assert "qcelemental" in record["error"]
+    assert (tmp_path / "scratch").is_dir()
+    assert Path.cwd() == here
+    assert logging.root.manager.disable == logging_level
 
 
 def test_the_free_atoms_take_their_elements_from_the_list_or_repeat_the_first_species():
