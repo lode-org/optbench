@@ -862,6 +862,18 @@ def test_a_search_with_no_point_that_hit_the_cap_is_counted_with_its_calls(monke
     assert record["force_calls"] == 0 and record["energy"] is None
 
 
+def test_a_box_that_is_not_numbers_is_a_crash_before_the_search_or_any_force_call(monkeypatch):
+    def never(job, evaluate, stop):
+        pytest.fail("the search ran")
+
+    monkeypatch.setattr(geometric_min, "optimize", never)
+    record = geometric_min._minimize_job(_job(box=["a", "b", "c"]))
+    assert record["failure"] == "crash"
+    assert record["error"].startswith("ValueError: ")
+    assert "'a'" in record["error"]
+    assert (record["force_calls"], record["verify_calls"], record["energy"]) == (0, 0, None)
+
+
 def test_a_final_point_the_potential_cannot_evaluate_is_a_crash_with_no_energy(monkeypatch):
     odd = [0.0, 0.0, 0.0, 1.0, 0.0]
     monkeypatch.setattr(geometric_min, "optimize", _optimizer(odd))
@@ -1316,6 +1328,77 @@ def test_the_installed_library_is_stopped_by_the_budget_at_a_point_it_has_reache
     assert record["force_calls"] == 4
     assert record["error"].startswith("ForceCallCap: force-call cap 4")
     assert record["energy"] is not None
+
+
+def test_the_installed_library_is_not_given_a_coordinate_system_it_does_not_have():
+    _installed()
+    record = geometric_min._minimize_job(_real_job(_tetrahedron(shake=0.03), "dlc"))
+    assert record["failure"] == "crash"
+    assert record["error"] == "ValueError: unknown geomeTRIC coordinate system dlc"
+    assert (record["force_calls"], record["energy"]) == (0, None)
+
+
+def test_the_installed_library_that_keeps_rebuilding_its_coordinates_is_given_up_on_after_100_rebuilds(monkeypatch):
+    _installed()
+    from geometric.optimize import OPT_STATE, Optimizer
+
+    steps: list[int] = []
+
+    def rebuild(self):
+        steps.append(len(steps))
+        self.state = OPT_STATE.SKIP_EVALUATION
+
+    monkeypatch.setattr(Optimizer, "step", rebuild)
+    record = geometric_min._minimize_job(_real_job(_tetrahedron(shake=0.05), "tric"))
+    assert len(steps) == 101
+    assert record["failure"] == "crash"
+    assert record["error"] == "coordinate rebuild did not settle"
+    assert (record["rebuilds"], record["geometric_steps"], record["force_calls"]) == (101, 0, 1)
+
+
+@pytest.mark.parametrize("state", ["CONVERGED", "FAILED"])
+def test_the_installed_library_that_ends_a_step_converged_or_failed_ends_the_search_without_a_stop(monkeypatch, state):
+    _installed()
+    from geometric.optimize import OPT_STATE, Optimizer
+
+    def finish(self):
+        self.state = getattr(OPT_STATE, state)
+
+    monkeypatch.setattr(Optimizer, "step", finish)
+    record = geometric_min._minimize_job(_real_job(_tetrahedron(shake=0.05), "cart"))
+    assert record["converged"] is False
+    assert (record["failure"], record["reasons"]) == ("divergence", ["force_norm"])
+    assert (record["force_calls"], record["geometric_steps"]) == (1, 0)
+    assert "error" not in record
+
+
+def test_the_installed_library_that_fails_while_evaluating_is_a_crash_at_the_point_it_has(monkeypatch):
+    _installed()
+    from geometric.optimize import Optimizer
+
+    def fail(self):
+        raise RuntimeError("engine failed")
+
+    start = _tetrahedron(shake=0.05)
+    monkeypatch.setattr(Optimizer, "calcEnergyForce", fail)
+    record = geometric_min._minimize_job(_real_job(start, "cart"))
+    assert (record["failure"], record["error"]) == ("crash", "RuntimeError: engine failed")
+    assert record["coordinate_system"] == "CartesianCoordinates"
+    assert record["energy"] == pytest.approx(lennard_jones(start)[0], rel=1e-9)
+    assert record["force_calls"] == 0
+
+
+def test_the_installed_library_that_cannot_build_its_optimizer_leaves_no_point(monkeypatch):
+    _installed()
+    from geometric.optimize import Optimizer
+
+    def refuse(self, *args, **kwargs):
+        raise ValueError("no coordinate system")
+
+    monkeypatch.setattr(Optimizer, "__init__", refuse)
+    record = geometric_min._minimize_job(_real_job(_tetrahedron(shake=0.05), "cart"))
+    assert (record["failure"], record["error"]) == ("crash", "ValueError: no coordinate system")
+    assert (record["energy"], record["coordinate_system"], record["force_calls"]) == (None, "", 0)
 
 
 def test_the_installed_library_gets_the_start_in_problem_units_and_the_gradient_comes_back_in_them():
