@@ -25,6 +25,7 @@ from ase import Atoms
 from optbench import ase_sella
 from optbench.ase_lj import LennardJones
 from optbench.ase_sella import (
+    CONTRIBUTOR,
     _baseline_parameters,
     _build_optimizer,
     _describe_precon,
@@ -518,7 +519,7 @@ def test_the_dat_names_the_template_the_counter_the_method_and_who_ran_it(tmp_pa
     assert fields["counter"] == "harness"
     assert fields["reducer"] == "capped"
     assert fields["host"] == "bench-host"
-    assert fields["contributor"] == "Rohit Goswami"
+    assert fields["contributor"] == CONTRIBUTOR
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", fields["date"])
     assert fields["par2_mean"] == "463"
     assert fields["par2_median_low"] == "365"
@@ -858,7 +859,7 @@ def test_a_problem_record_lists_the_complete_runs_of_that_problem_with_numeric_m
     assert record["problem"] == "minimization/lj38"
     assert record["status"] == "complete"
     assert record["host"] == "bench-host"
-    assert record["submitter"] == "Rohit Goswami"
+    assert record["submitter"] == CONTRIBUTOR
     assert [run["entry"] for run in record["runs"]] == ["ase-3.29.0-lj38-bfgs-default", "ase-3.29.0-lj38-lbfgs-default"]
     first, second = record["runs"]
     assert first["metrics"] == {
