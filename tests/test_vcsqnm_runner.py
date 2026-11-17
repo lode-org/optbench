@@ -1032,6 +1032,47 @@ def test_a_budget_that_only_the_slowest_start_misses_is_scored_with_a_failure_at
     assert summary["par2_mean"] == pytest.approx((sum(kept) + 2 * cap) / 3)
 
 
+def _archived_starts(monkeypatch, count: int) -> None:
+    kept = [(f"initial_{index}", np.asarray(_dimer()), np.full(3, CELL)) for index in range(count)]
+    monkeypatch.setattr("optbench.runners.rgmin_min._load_geometries", lambda *args, **kwargs: kept)
+
+
+def _bulk_run(tmp_path: Path, **options) -> dict:
+    problem = {**_problem(), "id": "minimization/morse-bulk"}
+    template = _template(problem="minimization/morse-bulk")
+    options.setdefault("geometries", None)
+    return vcsqnm_min.run_template(
+        tmp_path, problem, template, workers=1, output=tmp_path / "out" / "bench.dat", work=tmp_path / "work", **options
+    )
+
+
+@pytest.mark.parametrize("found", [3, 99, 101])
+def test_a_bulk_run_over_the_archived_starts_is_refused_unless_there_are_one_hundred(
+    pinned, monkeypatch, tmp_path, found
+):
+    _archived_starts(monkeypatch, found)
+    with pytest.raises(ValueError, match=f"morse-bulk expected 100 starts, found {found}"):
+        _bulk_run(tmp_path)
+    assert not (tmp_path / "out").exists()
+
+
+def test_a_limit_a_named_folder_or_another_problem_does_not_need_one_hundred_starts(pinned, monkeypatch, tmp_path):
+    _sqnm_standin(monkeypatch)
+    _archived_starts(monkeypatch, 3)
+    assert _bulk_run(tmp_path, limit=2)["starts"] == 2
+    assert _bulk_run(tmp_path, geometries=tmp_path / "cons")["starts"] == 3
+    other = vcsqnm_min.run_template(
+        tmp_path,
+        _problem(),
+        _template(),
+        geometries=None,
+        workers=1,
+        output=tmp_path / "out" / "other.dat",
+        work=tmp_path / "work",
+    )
+    assert other["starts"] == 3
+
+
 @pytest.mark.parametrize(
     ("change", "error", "message"),
     [
