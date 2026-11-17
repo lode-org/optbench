@@ -54,13 +54,15 @@ def test_client_record_is_the_campaign_count():
     assert (over["force_calls"], over["success"], over["failure"]) == (120.0, False, "cap")
 
 
-def test_job_start_is_scored_as_the_campaign_file(monkeypatch):
+def test_job_start_is_scored_as_the_campaign_file(monkeypatch, tmp_path):
     from optbench import eon_jobs
 
+    start_path = str(tmp_path / "w" / "runs" / "pair_00")
+    run_root = tmp_path / "stub"
     planned = {
         "template": {"id": "eon/x", "failure_cap": 100},
         "ini": "",
-        "specs": [("/w/runs/pair_00", [], [], "total_force_calls")],
+        "specs": [(start_path, [], [], "total_force_calls")],
         "images": 1,
     }
     for raw, reason, expected in (
@@ -70,10 +72,10 @@ def test_job_start_is_scored_as_the_campaign_file(monkeypatch):
         (None, None, (100.0, False, "crash")),
     ):
         monkeypatch.setattr(eon_jobs, "_execute", lambda spec, raw=raw, reason=reason: {"raw": raw, "reason": reason})
-        record = eon_jobs.run_start(Path("/stub"), planned, "pair_00")
+        record = eon_jobs.run_start(run_root, planned, "pair_00")
         assert (record["force_calls"], record["success"], record["failure"]) == expected
     with pytest.raises(KeyError):
-        eon_jobs.run_start(Path("/stub"), planned, "pair_01")
+        eon_jobs.run_start(run_root, planned, "pair_01")
 
 
 def test_plan_is_the_spec_list_run_named_runs(tmp_path):

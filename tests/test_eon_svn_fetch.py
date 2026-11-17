@@ -1,6 +1,7 @@
 """The eOn SVN r2549 manifest and the per-file fetch that checks against it."""
 
 import hashlib
+import os
 import re
 import shutil
 import subprocess
@@ -51,7 +52,8 @@ def test_fetch_checks_every_file_and_resumes(tmp_path: Path):
         lines.append(f"{hashlib.sha256(body).hexdigest()}  {len(body):>8d}  {mode}  {path}")
     manifest.write_text("\n".join(lines) + "\n", encoding="utf-8")
     dest = tmp_path / "dest"
-    env = {"PATH": "/usr/bin:/bin", "EON_SVN_URL": source.as_uri()}
+    env = dict(os.environ)
+    env["EON_SVN_URL"] = source.as_uri()
 
     def fetch(*flags):
         return subprocess.run(

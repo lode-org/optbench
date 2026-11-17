@@ -48,6 +48,13 @@ def _campaign_starts() -> dict[str, list[str]]:
     return found
 
 
+def _stub_client(tmp_path: Path) -> str:
+    client = tmp_path / "stub-eonclient"
+    client.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+    client.chmod(0o755)
+    return str(client)
+
+
 def test_every_client_counted_board_row_is_a_class():
     from benchmarks.bench_lj38 import TEMPLATES
 
@@ -136,8 +143,9 @@ def _stub(monkeypatch, tmp_path: Path, calls: list):
     from optbench import eon_harness
 
     monkeypatch.setenv("OPTBENCH_ASV_CACHE", str(tmp_path))
-    monkeypatch.setattr(eon_harness, "client_file", lambda spec: "/stub/eonclient")
-    monkeypatch.setattr(eon_harness, "check_client", lambda spec, label: "/stub/eonclient")
+    client = _stub_client(tmp_path)
+    monkeypatch.setattr(eon_harness, "client_file", lambda spec: client)
+    monkeypatch.setattr(eon_harness, "check_client", lambda spec, label: client)
 
     def search(cell, client, start, work):
         calls.append((cell["template_id"], start))
@@ -201,7 +209,7 @@ def test_a_catalogue_start_is_the_campaign_repetition(monkeypatch, tmp_path):
         }
 
     monkeypatch.setattr(eon_amd, "run_repetition", repetition)
-    record = asv_eon.search(cell, "/stub/eonclient", "rep-1", tmp_path)
+    record = asv_eon.search(cell, _stub_client(tmp_path), "rep-1", tmp_path)
     committed = json.loads(
         (ROOT / "results" / "campaign" / "eon-3.6.0-aladatom-akmc.starts.jsonl").read_text(encoding="utf-8")
     )
@@ -214,12 +222,12 @@ def test_a_catalogue_start_is_the_campaign_repetition(monkeypatch, tmp_path):
     for key in ("start", "geometry", "force_calls", "success", "failure", "seed", "counter", "template", "problem"):
         assert record[key] == committed[key]
     with pytest.raises(KeyError):
-        asv_eon.search(cell, "/stub/eonclient", "rep-2", tmp_path)
+        asv_eon.search(cell, _stub_client(tmp_path), "rep-2", tmp_path)
 
 
-def test_a_missing_client_is_a_skip(monkeypatch):
+def test_a_missing_client_is_a_skip(monkeypatch, tmp_path):
     cell = asv_eon.cells("eon/")[0]
-    monkeypatch.setenv("EON_MAIN_CLIENT", "/nonexistent/eonclient")
-    monkeypatch.setattr(asv_eon.Path, "home", classmethod(lambda cls: Path("/nonexistent")))
+    monkeypatch.setenv("EON_MAIN_CLIENT", str(tmp_path / "missing" / "eonclient"))
+    monkeypatch.setattr(asv_eon.Path, "home", classmethod(lambda cls: tmp_path / "home"))
     with pytest.raises(NotImplementedError, match="EON_MAIN_CLIENT"):
         asv_eon.bind(cell)().setup("0", "x")

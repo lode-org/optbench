@@ -1,5 +1,6 @@
 """AIRSS cell generation and the harness two-point step."""
 
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -20,6 +21,13 @@ from optbench.runners.airss_go import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _true_binary() -> str:
+    binary = shutil.which("true")
+    if binary is None:
+        pytest.skip("true is not on PATH")
+    return binary
 
 
 def test_wales_lj38_energy_is_the_published_minimum():
@@ -147,7 +155,7 @@ def test_lj75_class_runs_the_campaign_job_and_every_track_has_its_value(tmp_path
         return airss._capped(job, calls=100 + job["index"], energy=-300.0, structures=20)
 
     monkeypatch.setattr(airss, "search_start", fake)
-    monkeypatch.setenv("AIRSS_BUILDCELL", "/bin/true")
+    monkeypatch.setenv("AIRSS_BUILDCELL", _true_binary())
     monkeypatch.setenv("OPTBENCH_ASV_CACHE", str(tmp_path / "cache"))
     assert AirssLj75.template_id == "airss/lj75"
     assert AirssLj75.problem_id == "globalopt/lj75"
@@ -181,7 +189,7 @@ def test_a_limit_runs_the_first_airss_starts(tmp_path, monkeypatch):
         return airss._capped(job, calls=100 + job["index"], energy=-300.0 - job["index"], structures=20)
 
     monkeypatch.setattr(airss, "search_start", fake)
-    monkeypatch.setenv("AIRSS_BUILDCELL", "/bin/true")
+    monkeypatch.setenv("AIRSS_BUILDCELL", _true_binary())
     output = tmp_path / "lj75.dat"
     summary = run(
         ROOT,
@@ -207,7 +215,7 @@ def test_lj75_budget_writes_partial_rows(tmp_path, monkeypatch):
         return airss._capped(job, calls=100 + job["index"], energy=-300.0 - job["index"], structures=20)
 
     monkeypatch.setattr(airss, "search_start", fake)
-    monkeypatch.setenv("AIRSS_BUILDCELL", "/bin/true")
+    monkeypatch.setenv("AIRSS_BUILDCELL", _true_binary())
     output = tmp_path / "lj75.dat"
     summary = run(
         ROOT,

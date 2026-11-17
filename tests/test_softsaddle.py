@@ -1,5 +1,6 @@
 """SoftSaddle templates and the compiled eigen-solvers."""
 
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -31,7 +32,10 @@ def test_a_limit_runs_the_first_softsaddle_modes(monkeypatch, tmp_path: Path):
     from optbench.campaign import run
     import optbench.softsaddle_run as soft
 
-    monkeypatch.setattr(soft, "library_path", lambda kind: Path("/bin/true"))
+    binary = shutil.which("true")
+    if binary is None:
+        pytest.skip("true is not on PATH")
+    monkeypatch.setattr(soft, "library_path", lambda kind: Path(binary))
     monkeypatch.setattr(soft, "_geometries", lambda *args, **kwargs: [{"name": f"m{i}"} for i in range(200)])
     seen = []
 

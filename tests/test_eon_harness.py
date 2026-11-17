@@ -65,6 +65,10 @@ with open("results.dat", "w") as results:
 '''
 
 
+def _proc_status() -> Path:
+    return Path(Path.cwd().anchor) / "proc" / "self" / "status"
+
+
 def _sum_kernel(positions, numbers=None, box=None):
     del numbers, box
     energy = float(sum(positions))
@@ -75,8 +79,8 @@ def _sum_kernel(positions, numbers=None, box=None):
 def _require_bridge():
     if shutil.which("cc") is None:
         pytest.skip("cc is not installed")
-    if not Path("/proc/self/status").is_file():
-        pytest.skip("the bridge finds the client through /proc")
+    if not _proc_status().is_file():
+        pytest.skip("the bridge finds the client through procfs")
 
 
 def _stub_client(directory: Path) -> Path:

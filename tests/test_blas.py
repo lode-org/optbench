@@ -43,7 +43,7 @@ def test_an_ase_start_pins_openblas_loaded_before_ase_sella():
     )
     seen = json.loads(done.stdout)
     if not seen["first"]:
-        pytest.skip("no OpenBLAS in /proc/self/maps")
+        pytest.skip("no OpenBLAS in procfs maps")
     assert seen["error"] == "ValueError: none"
     assert seen["imported"] == seen["first"]
     if len(os.sched_getaffinity(0)) > 1:

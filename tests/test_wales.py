@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import subprocess
 import tarfile
@@ -63,7 +64,9 @@ def test_build_files_hold_no_pin(relative: str):
 
 def _shell(script: str, **env: str) -> subprocess.CompletedProcess:
     command = f'source "{ROOT}/codes/checkout.sh"\n{script}'
-    return subprocess.run(["bash", "-c", command], capture_output=True, text=True, env={"PATH": "/usr/bin:/bin", **env})
+    merged = dict(os.environ)
+    merged.update(env)
+    return subprocess.run(["bash", "-c", command], capture_output=True, text=True, env=merged)
 
 
 def _tarball(path: Path, revision: str) -> Path:

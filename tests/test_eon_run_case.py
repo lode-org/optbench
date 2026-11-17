@@ -52,6 +52,10 @@ MINIMA = "eon-svn/mh-lj38"
 CONVERGED = "0 termination_reason|{calls} total_force_calls"
 
 
+def _proc_status() -> Path:
+    return Path(Path.cwd().anchor) / "proc" / "self" / "status"
+
+
 def _con(positions, fixed=()) -> str:
     head = [
         "stationary point under test",
@@ -85,8 +89,8 @@ def _pinned_pair(tmp_path: Path, half_gap: float, drift: float = 0.0) -> str:
 def run(tmp_path, monkeypatch):
     if shutil.which("cc") is None:
         pytest.skip("cc is not installed")
-    if not Path("/proc/self/status").is_file():
-        pytest.skip("the bridge finds the client through /proc")
+    if not _proc_status().is_file():
+        pytest.skip("the bridge finds the client through procfs")
     client = tmp_path / "stub-eonclient"
     client.write_text(f"#!{sys.executable}\n{STUB}", encoding="utf-8")
     client.chmod(0o755)

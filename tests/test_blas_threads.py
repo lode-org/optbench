@@ -22,7 +22,7 @@ def test_pools_report_the_library_count_not_the_variable():
     done = subprocess.run([sys.executable, "-c", source], env=env, capture_output=True, text=True, check=True)
     pools = json.loads(done.stdout)
     if not pools:
-        pytest.skip("no OpenBLAS found in /proc/self/maps")
+        pytest.skip("no OpenBLAS found in procfs maps")
     assert {pool["threads"] for pool in pools} == {min(2, os.cpu_count() or 1)}
     assert all(pool["version"].startswith("OpenBLAS ") for pool in pools)
 
