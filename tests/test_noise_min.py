@@ -1019,6 +1019,26 @@ def test_a_failed_pin_check_stops_a_vcsqnm_run_before_any_start(tmp_path, monkey
     assert not (tmp_path / "out").exists()
 
 
+def test_a_template_seed_does_not_need_a_seed_in_the_problem(tmp_path):
+    _starts(tmp_path / "cons")
+    problem = _problem()
+    problem["noise"] = {"sigma": [0.0]}
+    summary = _run(tmp_path, _template(), problem)
+    rows = _rows(tmp_path / "out" / "bench.starts.jsonl")
+    assert summary["starts"] == 3
+    assert [row["seed"] for row in rows] == [SEED, SEED + 1, SEED + 2]
+
+
+def test_a_run_with_no_seed_anywhere_is_refused(tmp_path):
+    _starts(tmp_path / "cons")
+    problem, template = _problem(), _template()
+    problem["noise"] = {"sigma": [0.0]}
+    template["noise"] = {"sigma": 0.0}
+    with pytest.raises(KeyError, match="seed"):
+        _run(tmp_path, template, problem)
+    assert not (tmp_path / "out").exists()
+
+
 def test_the_problem_seed_is_used_when_the_template_has_none(tmp_path):
     _starts(tmp_path / "cons")
     template = _template()

@@ -703,7 +703,7 @@ def run_template(
         raise ValueError(f"{problem['id']} has no energy_tol for the noise window")
     energy_tol = window_energy_tolerance(float(convergence["energy_tol"]), sigma, float((problem.get("noise") or {}).get("kappa", KAPPA)))
     cap = int(convergence["max_force_calls"])
-    seed = int(noise.get("seed", (problem.get("noise") or {})["seed"]))
+    seed = int(noise["seed"]) if "seed" in noise else int((problem.get("noise") or {})["seed"])
     from optbench.runners.rgmin_min import _load_geometries
 
     loaded = _load_geometries(root, problem, geometries, work, output)
