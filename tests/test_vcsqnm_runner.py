@@ -468,6 +468,7 @@ def test_a_diverged_search_is_not_verified_and_is_a_divergence(pinned, monkeypat
     assert record["reasons"] == ["divergence"]
     assert record["energy"] is None and record["force_norm"] is None
     assert record["verify_calls"] == 0 and "error" not in record
+    assert record["hessian_index"] is None and record["min_eigenvalues"] == []
 
 
 def test_a_point_that_is_not_finite_is_a_divergence(pinned, monkeypatch):
@@ -675,13 +676,36 @@ def test_a_slow_package_runs_into_the_budget_without_an_error(pinned, monkeypatc
 
 
 @pytest.mark.parametrize("method", ["vc", "ase-vc"])
-def test_a_moving_cell_that_turns_to_nan_is_a_divergence(pinned, monkeypatch, method):
+def test_a_moving_cell_that_the_package_collapses_is_a_divergence(pinned, monkeypatch, method):
+    _sqnm_standin(monkeypatch, scale=0.0)
+    box = [CELL, CELL, CELL]
+    record = vcsqnm_min._minimize_job(_job(kind="morse", method=method, coords=_dimer(0.05), box=box, cap=20))
+    assert record["failure"] == "divergence"
+    assert record["reasons"] == ["divergence"]
+    assert "error" not in record
+    assert record["energy"] is None
+    assert record["hessian_index"] is None and record["min_eigenvalues"] == []
+
+
+@pytest.mark.parametrize("method", ["vc", "ase-vc"])
+def test_a_moving_cell_that_turns_to_nan_is_a_divergence_with_no_index(pinned, monkeypatch, method):
     _sqnm_standin(monkeypatch, scale=math.nan)
     box = [CELL, CELL, CELL]
     record = vcsqnm_min._minimize_job(_job(kind="morse", method=method, coords=_dimer(0.05), box=box, cap=20))
     assert record["failure"] == "divergence"
     assert "error" not in record
     assert record["energy"] is None
+    assert record["hessian_index"] is None and record["min_eigenvalues"] == []
+
+
+def test_a_flat_starting_cell_is_a_divergence_before_any_evaluation(pinned, monkeypatch):
+    _sqnm_standin(monkeypatch)
+    record = vcsqnm_min._minimize_job(
+        _job(kind="morse", method="vc", coords=_dimer(0.05), box=[0.0, 0.0, 0.0], cap=20)
+    )
+    assert record["force_calls"] == 0
+    assert record["failure"] == "divergence"
+    assert "error" not in record
 
 
 @pytest.mark.parametrize("method", ["sqnm", "ase"])

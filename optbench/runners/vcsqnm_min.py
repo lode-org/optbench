@@ -471,7 +471,12 @@ def _minimize_job(job: dict) -> dict:
                     error = f"{type(exc).__name__}: {exc}"
     hessian_index = None
     min_eigenvalues: list[float] = []
-    if point is not None and all(math.isfinite(value) for value in point) and (not error or "ForceCallCap" in error):
+    if (
+        point is not None
+        and not diverged
+        and all(math.isfinite(value) for value in point)
+        and (not error or "ForceCallCap" in error)
+    ):
         try:
             hessian_index, min_eigenvalues = _index_at(
                 job["kind"], point, job.get("box"), cell, gtol, variable
