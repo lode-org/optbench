@@ -350,7 +350,7 @@ def _rigid_basis(point: np.ndarray) -> np.ndarray:
         column = np.zeros_like(pos)
         column[:, axis] = 1.0
         columns.append(column.reshape(-1))
-    if count >= 3:
+    if count >= 2:
         centered = pos - pos.mean(axis=0)
         for axis in range(3):
             unit = np.zeros(3, dtype=np.float64)

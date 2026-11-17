@@ -368,12 +368,17 @@ def test_a_single_atom_has_no_rigid_basis():
 @pytest.mark.parametrize(
     ("points", "modes"),
     [
+        ([[0, 0, 0], [1.4, 0, 0]], 5),
+        ([[0, 0, 0], [0, 1.4, 0]], 5),
+        ([[0, 0, 0], [0, 0, 1.4]], 5),
+        ([[0.0, 0.1, 0.2], [0.7, 0.9, 0.6]], 5),
         ([[0, 0, 0], [1, 0, 0], [0.2, 1.1, 0]], 6),
         ([[0, 0, 0], [1, 0, 0], [0.2, 1.1, 0], [0.1, 0.2, 1.3]], 6),
         ([[-1.1, 0, 0], [0, 0, 0], [1.1, 0, 0]], 5),
     ],
+    ids=["pair-x", "pair-y", "pair-z", "pair-oblique", "triangle", "tetrahedron", "line"],
 )
-def test_a_cluster_of_three_atoms_or_more_has_an_orthonormal_basis_of_its_rigid_motions(points, modes):
+def test_a_free_cluster_of_two_atoms_or_more_has_an_orthonormal_basis_of_its_rigid_motions(points, modes):
     positions = np.asarray(points, dtype=float)
     basis = _rigid_basis(positions.reshape(-1))
     assert basis.shape == (positions.size, modes)
@@ -384,6 +389,30 @@ def test_a_cluster_of_three_atoms_or_more_has_an_orthonormal_basis_of_its_rigid_
     for motion in motions:
         flat = motion.reshape(-1)
         assert np.linalg.norm(flat - basis @ (basis.T @ flat)) < 1e-10
+
+
+def _pair_barrier(flat):
+    """Two free atoms joined by the double well, whose top is at a distance of 1.4."""
+    positions = np.asarray(flat, dtype=np.float64).reshape(2, 3)
+    delta = positions[0] - positions[1]
+    length = float(np.linalg.norm(delta))
+    pull = _well_slope(length) * delta / length
+    return _well(length), np.concatenate([pull, -pull])
+
+
+def test_a_pair_just_past_its_barrier_top_is_index_one_once_its_rotations_are_removed():
+    start = np.array([0.1, 0.2, 0.3])
+    direction = np.array([1.0, 2.0, 2.0]) / 3.0
+    point = np.concatenate([start, start + (1.4 + 1e-4) * direction])
+    projected, _ = _judge(point, _pair_barrier)
+    assert projected["force_norm"] < 1e-3
+    assert projected["cartesian_index"] == 3
+    assert projected["hessian_index"] == 1
+    assert projected["rigid_modes_removed"] == 5
+    assert projected["success"] is True
+    kept, _ = _judge(point, _pair_barrier, project_rigid=False)
+    assert kept["hessian_index"] == 3
+    assert kept["reasons"] == ["hessian_index"]
 
 
 # The checkpoint files a catalogue keeps beside its output
