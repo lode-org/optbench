@@ -233,12 +233,25 @@ def test_a_minimizer_that_stops_on_a_saddle_has_found_the_wrong_stationary_point
     assert row["energy"] == pytest.approx(pair, abs=1e-6)
 
 
-def test_the_fmax_stop_reads_the_largest_atom_force_and_the_l2_stop_the_total(displaced):
-    total = _run_start(_payload("minimize", [displaced], norm="l2"))
-    largest = _run_start(_payload("minimize", [displaced], norm="fmax"))
-    assert total["success"] and largest["success"]
-    assert largest["force_norm"] <= 1e-3
-    assert largest["force_calls"] <= total["force_calls"]
+def test_the_fmax_stop_reads_the_largest_atom_force_and_the_l2_stop_the_total(tmp_path):
+    nearly = _xyz(tmp_path / "nearly.xyz", TETRAHEDRON + 0.02 * DISPLACEMENT)
+    atoms = _read_atoms(nearly)
+    atoms.calc = _inner_calculator(POTENTIAL)
+    forces = atoms.get_forces()
+    largest = float(np.linalg.norm(forces, axis=1).max())
+    total = float(np.linalg.norm(forces))
+    tolerance = 0.5 * (largest + total)
+    assert largest < tolerance < total
+
+    by_atom = _run_start(_payload("minimize", [nearly], norm="fmax", tol=tolerance))
+    assert by_atom["force_calls"] == 1
+    assert by_atom["force_norm"] == pytest.approx(largest, rel=1e-9)
+    assert by_atom["success"] is True
+
+    by_total = _run_start(_payload("minimize", [nearly], norm="l2", tol=tolerance))
+    assert by_total["force_calls"] > 1
+    assert by_total["force_norm"] <= tolerance
+    assert by_total["success"] is True
 
 
 def test_the_largest_atom_force_and_the_total_force_ignore_what_a_pinned_atom_feels(tmp_path):
