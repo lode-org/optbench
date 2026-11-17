@@ -5,8 +5,10 @@ One process uses one core and one thread. Checkpoints are catalog.json
 and searches.jsonl under build/rgsaddle/<method>/ so a row can resume.
 
 The csv command writes results/campaign/rgsaddle-develop-179e90f2-pt-island.csv
-from the search ledgers, the campaign files, and the machine. Nothing in
-that file is typed by hand.
+from the search ledgers, the campaign files, and
+results/campaign/rgsaddle-develop-179e90f2-pt-island-hardware.json.
+Nothing in that file is typed by hand. Method rows keep the force-call
+budget in ``budget`` and the cap failure count in ``cap_failures``.
 """
 
 from __future__ import annotations
@@ -27,6 +29,7 @@ GOAL = 27
 MAX_SEARCHES = 20000
 BARRIER_EV = 1.5
 CSV_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island.csv"
+HARDWARE_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island-hardware.json"
 TIMING_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island-timing.json"
 COMMANDS_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island-commands.json"
 PROVENANCE_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-eon-provenance.json"
@@ -475,27 +478,16 @@ def _write_eon_dat(records: list[dict], wall: float, version: str, error: str) -
 
 
 def _hardware_rows() -> list[dict[str, str]]:
-    model = ""
-    cores = ""
-    for line in Path("/proc/cpuinfo").read_text(encoding="utf-8").splitlines():
-        if line.startswith("model name") and not model:
-            model = line.split(":", 1)[1].strip()
-        if line.startswith("cpu cores") and not cores:
-            cores = line.split(":", 1)[1].strip()
-    mem_kb = ""
-    for line in Path("/proc/meminfo").read_text(encoding="utf-8").splitlines():
-        if line.startswith("MemTotal"):
-            mem_kb = line.split()[1]
-            break
-    online = Path("/sys/devices/system/cpu/online").read_text(encoding="utf-8").strip()
-    return [
-        {"row_kind": "hardware", "key": "model_name", "value": model},
-        {"row_kind": "hardware", "key": "cpu_cores", "value": cores},
-        {"row_kind": "hardware", "key": "cpus_online", "value": online},
-        {"row_kind": "hardware", "key": "mem_total_kb", "value": mem_kb},
-        {"row_kind": "hardware", "key": "affinity_policy", "value": "one core per method"},
-        {"row_kind": "hardware", "key": "thread_vars", "value": ",".join(f"{name}=1" for name in THREAD_VARS)},
-    ]
+    recorded = json.loads(HARDWARE_PATH.read_text(encoding="utf-8"))
+    keys = (
+        "model_name",
+        "cpu_cores",
+        "cpus_online",
+        "mem_total_kb",
+        "affinity_policy",
+        "thread_vars",
+    )
+    return [{"row_kind": "hardware", "key": key, "value": str(recorded[key])} for key in keys]
 
 
 def _command_rows() -> list[dict[str, str]]:
@@ -521,6 +513,31 @@ def _command_rows() -> list[dict[str, str]]:
             row["argv_origin"] = str(provenance.get("argv_origin") or "")
         rows.append(row)
     return rows
+
+
+def _protocol_budget(method: str, fields: dict[str, str]) -> str:
+    """Force-call budget on the dat.
+
+    The eOn classic dat has no cap line. Its template uses the same
+    saddle and optimizer iteration limits as the dimer rows, so the
+    bound is climb steps times the step ceiling plus both endpoint
+    minimizations.
+    """
+    recorded = fields.get("cap", "")
+    if recorded or method != "eon-classic":
+        return recorded
+    from optbench.campaign import load_template
+    from optbench.rgsaddle_minmode import _step_ceiling
+
+    template = load_template(ROOT, fields.get("template") or "eon/develop-saddle-pt-dimer")
+    ini = template["ini"]
+    saddle = dict(ini["Saddle Search"])
+    dimer = ini.get("Dimer") or {}
+    if "max_rotations" not in saddle and dimer.get("rotations_max") not in (None, ""):
+        saddle["max_rotations"] = dimer["rotations_max"]
+    ceiling = _step_ceiling(saddle)
+    climb = int(saddle["max_iterations"]) * ceiling
+    return str(climb + 2 * int(ini["Optimizer"]["max_iterations"]))
 
 
 def _method_rows() -> list[dict[str, str]]:
@@ -569,10 +586,13 @@ def _method_rows() -> list[dict[str, str]]:
             "par2_mean": scored or fields.get("par2_mean", ""),
             "force_calls": fields.get("force_calls", "")
             or (str(sum(int(record["force_calls"]) for record in records)) if records else ""),
-            "cap": fields.get("cap", ""),
+            "budget": _protocol_budget(method, fields),
             "goal": fields.get("goal", str(GOAL)),
+            "cap_failures": str(counts["cap"]),
         }
         for key, value in counts.items():
+            if key == "cap":
+                continue
             row[key] = str(value)
         rows.append(row)
     return rows

@@ -5,14 +5,20 @@
 .. raw:: html
 
    <section class="bench" id="code-eon">
-   <p>eOn is used for minimization and saddle search and parallel replica. Version string 3.5.0 and Python client 0.4.2. Archived rows also spell it eOn (develop 500350d9).</p>
+   <p>eOn is used for minimization and saddle search and parallel replica. Tag v3.5.0 is conda-forge package eon 3.5.0 build np2py312h3e7f63d_0. Archived rows also spell it eOn (develop 500350d9).</p>
    <h3>Versions</h3>
    <div class="bench-scroll"><table class="bench-sortable">
    <caption>Registry pins for this code.</caption>
    <thead><tr><th>Role</th><th>Ref</th><th>Commit</th><th>Source</th></tr></thead><tbody>
    <tr>
    <td data-label="Role">minimization and saddle search</td>
-   <td data-label="Ref">3.5.0</td>
+   <td data-label="Ref">v3.5.0</td>
+   <td data-label="Commit">d9cc6c5bee43</td>
+   <td data-label="Source"><a href="https://github.com/TheochemUI/eon">https://github.com/TheochemUI/eon</a></td>
+   </tr>
+   <tr>
+   <td data-label="Role">minimization and saddle search</td>
+   <td data-label="Ref">4d8b34ba</td>
    <td data-label="Commit">4d8b34baf1ba</td>
    <td data-label="Source"><a href="https://github.com/TheochemUI/eon">https://github.com/TheochemUI/eon</a></td>
    </tr>

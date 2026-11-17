@@ -1,0 +1,8 @@
+{
+  "affinity_policy": "one core per method",
+  "cpu_cores": "8",
+  "cpus_online": "0-7",
+  "mem_total_kb": "49342816",
+  "model_name": "Intel(R) Xeon(R) Processor",
+  "thread_vars": "RAYON_NUM_THREADS=1,OMP_NUM_THREADS=1,OPENBLAS_NUM_THREADS=1,MKL_NUM_THREADS=1,NUMEXPR_NUM_THREADS=1"
+}

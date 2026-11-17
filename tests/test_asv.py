@@ -309,6 +309,7 @@ def test_pending_grid_is_every_problem_and_code():
     assert len(problem_ids()) >= 25
     assert code_ids() == [
         "eon",
+        "eon-4d8b34ba",
         "eon-main",
         "eon-develop",
         "eon-develop-500350d9",

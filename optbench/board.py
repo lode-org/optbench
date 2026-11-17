@@ -438,13 +438,20 @@ def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dic
             pass
     if raw.get("call_unit"):
         record["call_unit"] = str(raw["call_unit"])
+    if raw.get("result") not in (None, ""):
+        record["result"] = str(raw["result"])
     if success:
         return record
     reasons = raw.get("reasons")
     if isinstance(reasons, list) and reasons:
         record["reasons"] = [str(item) for item in reasons]
-        record["failure"] = classify_failure(record["reasons"])
+        record["failure"] = classify_failure(record["reasons"], record.get("result"))
         return record
+    if record.get("result"):
+        label = classify_failure([], record.get("result"))
+        if label is not None:
+            record["failure"] = label
+            return record
     if failure in ALL_FAILURES:
         record["failure"] = failure
         return record

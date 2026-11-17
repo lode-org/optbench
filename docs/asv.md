@@ -27,7 +27,7 @@ asv is the measurement store. A result file is keyed to the commit asv checked o
 
 ## Adding a code
 
-1. Pin the code commit in `codes/registry.toml`. A published eOn score keeps commit `4d8b34baf1ba8d2d980df29838bac1f969d1662c`. A conda binary's printed token is not that commit.
+1. Pin the code commit in `codes/registry.toml`. The eOn 3.5.0 pin is tag `v3.5.0`, commit `d9cc6c5bee432d625eb6c56d7ea74b723a37ee3b`. Scores recorded on `4d8b34baf1ba8d2d980df29838bac1f969d1662c` keep that commit. A conda binary's printed token is the feedstock commit, not the source commit.
 2. If the code is a conda package, add `environments/<name>.yml` with the version. Do not invent a build string. A source build that is not a conda package still gets a yml so its pin is not the 3.5.0 file; leave the package out. asv has one `environment_type` for the run, so the yml is the pin and `asv run -E` is how a later unit selects it. There is no per-benchmark environment attribute. See the gaps file. `environments/eon-develop.yml` is that source pin. The develop classes call `EONCLIENT`.
 3. Copy `benchmarks/quadratic.py`.
    `param_names` is `["seed", "start"]`.

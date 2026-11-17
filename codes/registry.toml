@@ -9,10 +9,20 @@ id = "eon"
 name = "eOn"
 role = "minimization and saddle search"
 repository = "https://github.com/TheochemUI/eon"
-ref = "3.5.0"
+ref = "v3.5.0"
+commit = "d9cc6c5bee432d625eb6c56d7ea74b723a37ee3b"
+committed = "2026-10-02"
+note = "Tag v3.5.0 is conda-forge package eon 3.5.0 build np2py312h3e7f63d_0. Package sha256 f3453a602ee1838ca6eae46c82e780a5b11048eb479612f135ef360b73f2d19a from https://conda.anaconda.org/conda-forge/linux-64/eon-3.5.0-np2py312h3e7f63d_0.conda, release tarball https://github.com/TheochemUI/eOn/releases/download/v3.5.0/eon-v3.5.0.tar.xz sha256 2af417ab5eb2870e0447cbcef0fda89c58bcbd62c151b31bb012efd20e0321ff of this commit. eonclient --version prints 3.5.0 (7ec1840); 7ec1840 is feedstock commit 7ec184029c7cfde572a408f08f656d55694f0153 on https://github.com/conda-forge/eon-feedstock, not an eOn source commit. Version string 3.5.0 and Python client 0.4.2. Lennard-Jones scores use this client. The subset counter check uses that conda-forge binary. That check is not a published mean. Scores recorded on 4d8b34ba stay on the eon-4d8b34ba pin."
+
+[[code]]
+id = "eon-4d8b34ba"
+name = "eOn"
+role = "minimization and saddle search"
+repository = "https://github.com/TheochemUI/eon"
+ref = "4d8b34ba"
 commit = "4d8b34baf1ba8d2d980df29838bac1f969d1662c"
 committed = "2026-10-02"
-note = "Version string 3.5.0 and Python client 0.4.2. Lennard-Jones scores use this client. The subset counter check uses the conda-forge binary, which prints 3.5.0 (7ec1840). That check is not a published mean."
+note = "Git snapshot recorded on the eon-client templates and the campaign rows that name this commit. Tag v3.5.0 is d9cc6c5bee432d625eb6c56d7ea74b723a37ee3b."
 
 [[code]]
 id = "eon-main"
@@ -22,7 +32,7 @@ repository = "https://github.com/TheochemUI/eon"
 ref = "main"
 commit = "1d71c944501832bfafb955ffe13b9aae50c8efd4"
 committed = "2026-10-15"
-note = "main, including merged pull request 776. The version string is 3.6.0. Templates under templates/eon/ use this commit. The 3.5.0 pin above stays for the scores that were run on it."
+note = "main, including merged pull request 776. The version string is 3.6.0. Templates under templates/eon/ use this commit. Scores recorded on 4d8b34ba stay on that pin. Tag v3.5.0 is d9cc6c5bee432d625eb6c56d7ea74b723a37ee3b."
 
 [[code]]
 id = "eon-develop"

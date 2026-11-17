@@ -16,8 +16,9 @@
         "disconnected": 5126,
         "divergence": 0,
         "duplicate": 8353,
+        "high_energy": 3401,
         "over_barrier": 67,
-        "wrong_stationary": 3401
+        "wrong_stationary": 0
       },
       "family": "min-mode",
       "family_rank": null,

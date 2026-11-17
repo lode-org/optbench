@@ -177,6 +177,19 @@ def test_failure_classes_stay_in_the_par2_mean():
     assert classify_failure(["cap", "force_norm"]) == "cap"
     assert classify_failure(["hessian_index", "rmsd"]) == "wrong_stationary"
     assert classify_failure(["force_norm"]) == "wrong_stationary"
+    assert classify_failure(["force_norm"], "Saddle Search Terminated High Energy") == "high_energy"
+    assert (
+        failure_of(
+            {
+                "force_calls": 10,
+                "success": False,
+                "reasons": ["force_norm"],
+                "result": "Saddle Search Terminated High Energy",
+            },
+            100,
+        )
+        == "high_energy"
+    )
     assert classify_failure(["divergence", "force_norm"]) == "divergence"
     assert classify_failure(["duplicate", "barrier"]) == "duplicate"
     assert classify_failure(["barrier"]) == "over_barrier"
