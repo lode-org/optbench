@@ -1218,7 +1218,9 @@ def _run_saddle_search(
     if str(_section(template, "Main").get("session", "minmode")) == "prfo":
         raise RuntimeError("saddle-search displacements use the min-mode session")
     paths = (problem.get("input") or {}).get("geometries") or []
-    con_path = next(path for path in paths if str(path).endswith(".con"))
+    con_path = next((path for path in paths if str(path).endswith(".con")), None)
+    if con_path is None:
+        raise ValueError(f"{problem['id']} lists no .con geometry")
     positions, fixed, cell = load_con(_stored(root, con_path))
     search = _section(template, "Search")
     goal = int((problem.get("goal") or {}).get("connected_saddles", search.get("connected", 27)))

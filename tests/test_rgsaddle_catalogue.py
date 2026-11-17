@@ -873,6 +873,15 @@ def test_a_first_minimization_that_runs_out_of_calls_is_reported_and_the_run_goe
     assert " minimum_converged 0 " in written.read_text(encoding="utf-8")
 
 
+def test_a_problem_that_lists_no_con_geometry_is_refused_by_name(search):
+    poscar = _problem(input={"geometries": ["toy/island.POSCAR"]})
+    with pytest.raises(ValueError, match="saddle-search/pt-island lists no .con geometry"):
+        search(_climb(), problem=poscar)
+    empty = _problem(input={"geometries": []})
+    with pytest.raises(ValueError, match="saddle-search/pt-island lists no .con geometry"):
+        search(_climb(), problem=empty)
+
+
 # Stopping a run and picking it up again
 
 
