@@ -496,6 +496,30 @@ def test_a_point_the_potential_cannot_read_is_a_crash_from_the_verification(pinn
     assert record["error"].startswith("ValueError: ")
 
 
+def test_the_first_error_of_a_run_is_the_one_its_record_keeps(pinned, monkeypatch):
+    monkeypatch.setattr(vcsqnm_min, "drive", _driver([0.0, 0.0], stopped=False, error="ValueError: lost"))
+    record = vcsqnm_min._minimize_job(_job(coords=_tetrahedron()))
+    assert (record["failure"], record["error"]) == ("crash", "ValueError: lost")
+    assert (record["energy"], record["verify_calls"]) == (None, 0)
+
+
+def test_a_spectrum_that_cannot_be_computed_does_not_hide_that_the_budget_ran_out(pinned, monkeypatch):
+    point = _tetrahedron(shake=0.02)
+
+    def broken(*args):
+        raise np.linalg.LinAlgError("no spectrum")
+
+    monkeypatch.setattr(vcsqnm_min, "_index_at", broken)
+    monkeypatch.setattr(vcsqnm_min, "drive", _driver(point, stopped=False, error="ForceCallCap: force-call cap 4"))
+    record = vcsqnm_min._minimize_job(_job(coords=point))
+    assert (record["failure"], record["error"]) == ("cap", "ForceCallCap: force-call cap 4")
+    assert record["hessian_index"] is None
+    monkeypatch.setattr(vcsqnm_min, "drive", _driver(point, stopped=False))
+    record = vcsqnm_min._minimize_job(_job(coords=point))
+    assert (record["failure"], record["error"]) == ("crash", "LinAlgError: no spectrum")
+    assert record["energy"] is not None
+
+
 def test_a_cluster_has_no_cell_to_move(pinned):
     record = vcsqnm_min._minimize_job(_job(method="vc"))
     assert record["failure"] == "crash"
@@ -672,6 +696,23 @@ def test_a_slow_package_runs_into_the_budget_without_an_error(pinned, monkeypatc
     record = vcsqnm_min._minimize_job(_job(method=method, coords=_tetrahedron(shake=0.03), cap=7))
     assert record["failure"] == "cap"
     assert record["force_calls"] == 7
+    assert "error" not in record
+
+
+def test_a_step_that_spends_the_last_permitted_call_is_not_followed_by_an_evaluation_that_would_be_refused(
+    pinned, monkeypatch
+):
+    _sqnm_standin(monkeypatch)
+
+    def trial_then_move(self, atoms):
+        atoms.set_positions(atoms.positions + 0.004 * atoms.get_forces())
+        atoms.get_forces()
+        atoms.set_positions(atoms.positions + 0.004 * atoms.get_forces())
+
+    monkeypatch.setattr(sys.modules["sqnm.vcsqnm_for_ase"].aseOptimizer, "step", trial_then_move)
+    record = vcsqnm_min._minimize_job(_job(method="ase", coords=_tetrahedron(shake=0.03), cap=2))
+    assert record["failure"] == "cap"
+    assert record["force_calls"] == 2
     assert "error" not in record
 
 
