@@ -64,7 +64,7 @@ def test_geometric_engine_does_not_need_eonclient(monkeypatch, tmp_path: Path):
     assert summary["starts"] == 1
 
 
-def test_batched_primitives_match_the_library_formulas():
+def test_batched_primitives_match_the_library_formulas(tmp_path: Path):
     geometric = pytest.importorskip("geometric")
     assert geometric.__version__ == "1.1.1"
     import numpy as np
@@ -73,7 +73,7 @@ def test_batched_primitives_match_the_library_formulas():
     from optbench.runners.rgmin_min import _load_geometries
 
     install_fast_add()
-    work = Path("/tmp/optbench-geo-test")
+    work = tmp_path / "optbench-geo-test"
     loaded = _load_geometries(ROOT, resolve_problem(ROOT, "minimization/lj38"), None, work, work / "lj.dat")
     _name, coords, _box = loaded[0]
     bonds = knearest(coords, 2, None)
@@ -144,12 +144,12 @@ def test_coordinate_rebuild_keeps_the_stored_bond_list():
     assert open_list.Data["bonds"] == discovered.Data["bonds"]
 
 
-def test_cartesian_lj38_start_reaches_the_force_stop():
+def test_cartesian_lj38_start_reaches_the_force_stop(tmp_path: Path):
     pytest.importorskip("geometric")
     from optbench.runners.geometric_min import _minimize_job
     from optbench.runners.rgmin_min import _load_geometries
 
-    work = Path("/tmp/optbench-geo-test")
+    work = tmp_path / "optbench-geo-test"
     loaded = _load_geometries(ROOT, resolve_problem(ROOT, "minimization/lj38"), None, work, work / "lj.dat")
     name, coords, _box = loaded[0]
     record = _minimize_job(

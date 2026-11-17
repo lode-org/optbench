@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+import os
 from pathlib import Path
 
 import numpy as np
@@ -29,7 +30,17 @@ from optbench.n2p2_ml import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-N2P2 = Path("/tmp/n2p2/src/libnnptrain/KalmanFilter.cpp")
+
+
+def _n2p2_root() -> Path:
+    configured = os.environ.get("N2P2_ROOT")
+    if configured:
+        return Path(configured)
+    return ROOT / "third_party" / "n2p2"
+
+
+N2P2_ROOT = _n2p2_root()
+N2P2 = N2P2_ROOT / "src" / "libnnptrain" / "KalmanFilter.cpp"
 
 
 def _equilateral() -> tuple[np.ndarray, np.ndarray]:
@@ -341,7 +352,7 @@ def test_recommended_kalman_block_matches_the_constants():
         N2P2_RANDOM_SEED,
     )
 
-    text = Path("/tmp/n2p2/examples/input.nn.recommended").read_text(encoding="utf-8")
+    text = (N2P2_ROOT / "examples" / "input.nn.recommended").read_text(encoding="utf-8")
     values = {}
     for line in text.splitlines():
         stripped = line.strip()

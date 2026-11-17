@@ -83,7 +83,7 @@ def test_cluster_starts_are_the_numbered_website_coords(tmp_path):
         assert "coords" not in {name for name, _pos in loaded}
 
 
-def test_bhpt_keyword_order_and_repeated_coords():
+def test_bhpt_keyword_order_and_repeated_coords(tmp_path):
     job = {
         "replicas": 4,
         "pttmin": 0.1,
@@ -117,7 +117,7 @@ def test_bhpt_keyword_order_and_repeated_coords():
         pytest.skip("mpirun is not on PATH")
     from optbench.runners.gmin_go import _command
 
-    command = _command("/tmp/gmin-build/GMIN", 4)
+    command = _command(str(tmp_path / "gmin-build" / "GMIN"), 4)
     assert command[command.index("-np") + 1] == "4"
     assert "mpi_yield_when_idle" in command
 

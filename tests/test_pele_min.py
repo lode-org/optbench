@@ -118,14 +118,15 @@ def test_steepest_step_matches_the_library():
     assert np.allclose(point, library.coords)
 
 
-def test_one_lj38_lbfgs_start_is_a_harness_minimum():
+def test_one_lj38_lbfgs_start_is_a_harness_minimum(tmp_path: Path):
     _pele()
     from optbench.runners.pele_min import _minimize_job, merged_options
 
     problem = resolve_problem(ROOT, "minimization/lj38")
     from optbench.runners.pele_min import _load_geometries
 
-    loaded = _load_geometries(ROOT, problem, None, Path("/tmp/optbench-pele-test"), Path("/tmp/optbench-pele-test/unused.dat"))
+    work = tmp_path / "optbench-pele-test"
+    loaded = _load_geometries(ROOT, problem, None, work, work / "unused.dat")
     name, coords, _box = loaded[0]
     record = _minimize_job(
         {

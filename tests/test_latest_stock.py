@@ -1,5 +1,6 @@
 """Paper-row templates carry the archived method settings."""
 
+import shutil
 from pathlib import Path
 
 from optbench.campaign import _check_stop, load_template, resolve_problem
@@ -122,13 +123,16 @@ def test_htst_matches_the_archived_protocol():
         _check_stop(resolve_problem(ROOT, template["problem"]), template)
 
 
-def test_worker_count_queues_in_front_of_the_slots():
+def test_worker_count_queues_in_front_of_the_slots(tmp_path):
     from optbench.runners.eon_htst import _live_communicator, _prepare_server
 
     assert _live_communicator(8, 10000) == (8, 64)
     assert _live_communicator(8, 2) == (8, 2)
     template = load_template(ROOT, "eon-svn/htst-al-dimer-cg-stock")
-    text = _prepare_server(template, "/bin/true", 42, 8, Path("/tmp/bridge"), 10000)
+    binary = shutil.which("true")
+    if binary is None:
+        pytest.skip("true is not on PATH")
+    text = _prepare_server(template, binary, 42, 8, tmp_path / "bridge", 10000)
     assert "number_of_CPUs = 8" in text
     assert "num_jobs = 64" in text
     assert "confidence = 1.95" in text

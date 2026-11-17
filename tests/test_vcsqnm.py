@@ -29,11 +29,12 @@ def test_column_layout_roundtrips():
     assert np.array_equal(_flatten(_columns(flat)), flat)
 
 
-def test_morse_cell_matches_the_orthorhombic_kernel():
+def test_morse_cell_matches_the_orthorhombic_kernel(tmp_path: Path):
     from optbench.runners.rgmin_min import _load_geometries
 
     morse = resolve_problem(ROOT, "minimization/morse-bulk")
-    _name, coords, box = _load_geometries(ROOT, morse, None, Path("/tmp/optbench-vcsqnm-geo"), Path("/tmp/u.dat"))[0]
+    work = tmp_path / "optbench-vcsqnm-geo"
+    _name, coords, box = _load_geometries(ROOT, morse, None, work, work / "u.dat")[0]
     energy, grad, deriv = morse_cell(coords, box)
     bulk_energy, bulk_grad = morse_bulk(coords, box)
     assert energy == pytest.approx(bulk_energy, abs=1e-9)
@@ -128,11 +129,12 @@ def _sqnm():
     return pytest.importorskip("sqnm.sqnm")
 
 
-def _first(problem_id: str):
+def _first(problem_id: str, tmp_path: Path):
     from optbench.runners.rgmin_min import _load_geometries
 
     problem = resolve_problem(ROOT, problem_id)
-    return _load_geometries(ROOT, problem, None, Path("/tmp/optbench-vcsqnm-geo"), Path("/tmp/u.dat"))[0]
+    work = tmp_path / "optbench-vcsqnm-geo"
+    return _load_geometries(ROOT, problem, None, work, work / "u.dat")[0]
 
 
 def _job(name, coords, box, kind, method, gtol, **overrides):
@@ -153,14 +155,14 @@ def _job(name, coords, box, kind, method, gtol, **overrides):
     }
 
 
-def test_cluster_zero_matches_the_repaired_coefficient():
+def test_cluster_zero_matches_the_repaired_coefficient(tmp_path: Path):
     _sqnm()
     from optbench.runners.vcsqnm_min import _columns, _flatten, _minimize_job
     from optbench.vcsqnm_catalog import TUNED
     from sqnm.free_or_fixed_cell_sqnm import free_sqnm
     from optbench.potentials import lennard_jones
 
-    name, coords, _box = _first("minimization/lj38")
+    name, coords, _box = _first("minimization/lj38", tmp_path)
     native = _minimize_job(_job(name, coords, None, "lj", "sqnm", 0.01))
     wrapped = _minimize_job(_job(name, coords, None, "lj", "ase", 0.01))
     tuned = _minimize_job(_job(name, coords, None, "lj", "sqnm", 0.01, **TUNED))
@@ -184,11 +186,11 @@ def test_cluster_zero_matches_the_repaired_coefficient():
     assert energy_out > -1.0
 
 
-def test_morse_start_matches_between_the_wrapper_and_the_native_step():
+def test_morse_start_matches_between_the_wrapper_and_the_native_step(tmp_path: Path):
     _sqnm()
     from optbench.runners.vcsqnm_min import _minimize_job
 
-    name, coords, box = _first("minimization/morse-bulk")
+    name, coords, box = _first("minimization/morse-bulk", tmp_path)
     native = _minimize_job(_job(name, coords, box, "morse", "sqnm", 1e-3))
     wrapped = _minimize_job(_job(name, coords, box, "morse", "ase", 1e-3))
     cell = _minimize_job(_job(name, coords, box, "morse", "vc", 1e-3))
@@ -209,13 +211,13 @@ def test_morse_start_matches_between_the_wrapper_and_the_native_step():
     assert cell["energy"] < native["energy"] - 50.0
 
 
-def test_sigma_zero_matches_the_clean_count():
+def test_sigma_zero_matches_the_clean_count(tmp_path: Path):
     _sqnm()
     from optbench.noise import KAPPA, window_energy_tolerance
     from optbench.runners.noise_min import _minimize_job
     from optbench.vcsqnm_catalog import DEFAULT
 
-    name, coords, _box = _first("minimization/lj38")
+    name, coords, _box = _first("minimization/lj38", tmp_path)
     record = _minimize_job(
         {
             "index": 0,
