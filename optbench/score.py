@@ -102,6 +102,8 @@ def normalize_start(raw: dict, images: int | None, *, per_image_track: bool = Fa
                 total = float(raw["raw"])
                 per = None if not images else total / images
             else:
+                if raw.get("force_calls") is None:
+                    raise ValueError("band count has no raw count and no force calls")
                 total, per = band_total(float(raw["force_calls"]), images=images, call_unit="per_image")
         elif stated == "per_image" or per_image_track:
             calls = raw.get("force_calls")

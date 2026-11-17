@@ -174,6 +174,11 @@ def test_a_client_band_start_without_a_counter_total_is_scaled_from_its_per_imag
     assert "per_image" not in unscaled
 
 
+def test_a_client_band_start_with_no_count_at_all_is_refused_as_a_value_error():
+    with pytest.raises(ValueError, match="no raw count and no force calls"):
+        normalize_start({"count_key": "force_calls_neb", "success": True, "start": "min03"}, 8)
+
+
 def test_a_per_image_start_is_put_back_on_the_band_total():
     labelled = normalize_start({"force_calls": 12.5, "call_unit": "per_image", "success": True}, 8)
     assert (labelled["force_calls"], labelled["per_image"], labelled["call_unit"]) == (100.0, 12.5, "total")

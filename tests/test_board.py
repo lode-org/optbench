@@ -812,6 +812,37 @@ def test_two_codes_on_one_band_rank_the_same_total(tmp_path: Path):
     )
 
 
+def test_a_band_start_with_no_count_puts_its_file_among_the_unparsed_and_the_board_still_builds(tmp_path: Path):
+    _problem(tmp_path, starts=2, cap=1000)
+    problem_path = tmp_path / "problems" / "minimization" / "toy.toml"
+    problem_path.write_text(
+        problem_path.read_text(encoding="utf-8") + "\n[band]\ninterior_images = 8\n", encoding="utf-8"
+    )
+    _template(tmp_path)
+    _registry(tmp_path)
+    _dat(tmp_path, "eon-band", PIN)
+    _starts(
+        tmp_path,
+        "eon-band",
+        [
+            {
+                "force_calls": 10,
+                "raw": 80,
+                "count_key": "force_calls_neb",
+                "success": True,
+                "start": "0",
+                "counter": "harness",
+            },
+            {"count_key": "force_calls_neb", "success": True, "start": "1", "counter": "harness"},
+        ],
+    )
+
+    document = build_board(tmp_path)
+    assert "minimization/toy" not in document["problems"]
+    assert [row["entry"] for row in document["unparsed"]] == ["eon-band"]
+    assert "no raw count and no force calls" in document["unparsed"][0]["note"]
+
+
 def test_a_campaign_and_its_asv_track_are_one_row(tmp_path: Path):
     _problem(tmp_path, starts=2, cap=10000)
     problem = tmp_path / "problems" / "minimization" / "toy.toml"
