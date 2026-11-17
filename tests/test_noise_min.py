@@ -29,7 +29,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from optbench.counter import HarnessCounter
+from optbench.counter import ForceCallCap, HarnessCounter
 from optbench.noise import KAPPA, stop_threshold
 from optbench.potentials import lennard_jones
 from optbench.potserver import RgpotCounter
@@ -327,6 +327,63 @@ def test_an_ase_optimizer_settles_a_shaken_tetrahedron_on_the_closed_form_minimu
     assert "error" not in record
 
 
+class _Stepper:
+    """What the loop asks of an optimizer: one step at a time, and never more than a handful of them."""
+
+    def __init__(self, move):
+        self.move = move
+        self.runs = 0
+
+    def run(self, fmax=0.0, steps=1):
+        self.runs += 1
+        if self.runs > 5:
+            raise AssertionError("the loop went on")
+        self.move()
+
+
+def _loop(stepper, observed, counter, cap):
+    potential = types.SimpleNamespace(counter=counter)
+    return noise_min._step_optimizer(stepper, observed, potential, cap, 1.0e-6, 1.0e-8, 12)
+
+
+def test_a_step_that_spends_no_call_ends_the_loop_instead_of_spinning():
+    observed, counter = _observed(0.0, cap=50)
+    stepper = _Stepper(lambda: None)
+    assert _loop(stepper, observed, counter, 50) is False
+    assert (stepper.runs, counter.calls) == (1, 0)
+
+
+def test_a_step_that_runs_into_the_budget_ends_the_loop_with_the_calls_it_made():
+    observed, counter = _observed(0.0, cap=2)
+
+    def walk():
+        for shake in (0.01, 0.02, 0.03):
+            observed(_tetrahedron(shake=shake))
+
+    stepper = _Stepper(walk)
+    assert _loop(stepper, observed, counter, 2) is False
+    assert (stepper.runs, counter.calls) == (1, 2)
+
+
+def test_a_runtime_error_that_names_the_force_call_cap_ends_the_loop():
+    def spent():
+        raise RuntimeError("the force-call cap of 50 is spent")
+
+    observed, counter = _observed(0.0, cap=50)
+    stepper = _Stepper(spent)
+    assert _loop(stepper, observed, counter, 50) is False
+    assert stepper.runs == 1
+
+
+def test_any_other_runtime_error_from_a_step_is_not_hidden():
+    def lost():
+        raise RuntimeError("the optimizer lost its direction")
+
+    observed, counter = _observed(0.0, cap=50)
+    with pytest.raises(RuntimeError, match="lost its direction"):
+        _loop(_Stepper(lost), observed, counter, 50)
+
+
 def test_a_record_names_its_start_seed_and_the_schema_it_belongs_to():
     record = noise_min._minimize_job(_job(index=5, seed=100, sigma=0.0))
     assert record["schema"] == "optbench.start/v2"
@@ -409,6 +466,57 @@ def test_an_unknown_family_is_a_crash_that_names_it():
     assert record["energy"] is None
 
 
+def test_coordinates_that_are_not_numbers_are_a_crash_before_any_force_call():
+    record = noise_min._minimize_job(_job(coords=["x", "y", "z"]))
+    assert record["failure"] == "crash"
+    assert record["error"].startswith("ValueError: ")
+    assert "'x'" in record["error"]
+    assert (record["force_calls"], record["verify_calls"], record["energy"]) == (0, 0, None)
+
+
+def test_the_first_error_of_a_start_is_the_one_its_record_keeps(monkeypatch):
+    def fails_at_a_point_nobody_can_read(job, x0, observed, potential, *rest):
+        potential.last_point = [0.0, 0.0]
+        raise RuntimeError("the driver failed")
+
+    monkeypatch.setattr(noise_min, "_drive_ase", fails_at_a_point_nobody_can_read)
+    record = noise_min._minimize_job(_job())
+    assert record["failure"] == "crash"
+    assert record["error"] == "RuntimeError: the driver failed"
+    assert (record["energy"], record["verify_calls"]) == (None, 0)
+
+
+def test_a_spectrum_that_cannot_be_computed_is_a_crash_that_names_why(monkeypatch):
+    def broken(point, force_stop):
+        raise np.linalg.LinAlgError("no spectrum")
+
+    monkeypatch.setattr(noise_min, "_index", broken)
+    monkeypatch.setattr(noise_min, "_drive_ase", lambda *args: (_tetrahedron(), False))
+    record = noise_min._minimize_job(_job())
+    assert record["failure"] == "crash"
+    assert record["error"] == "LinAlgError: no spectrum"
+    assert record["energy"] == pytest.approx(-6.0, abs=1e-9)
+    assert (record["hessian_index"], record["verify_calls"]) == (None, 1)
+
+
+def test_a_spectrum_that_cannot_be_computed_does_not_hide_that_the_budget_ran_out(monkeypatch):
+    def spent(job, x0, observed, potential, *rest):
+        observed(x0)
+        potential.last_point = list(x0)
+        raise ForceCallCap("force-call cap 2000")
+
+    def broken(point, force_stop):
+        raise np.linalg.LinAlgError("no spectrum")
+
+    monkeypatch.setattr(noise_min, "_drive_ase", spent)
+    monkeypatch.setattr(noise_min, "_index", broken)
+    record = noise_min._minimize_job(_job())
+    assert record["failure"] == "cap"
+    assert record["error"] == "ForceCallCap: force-call cap 2000"
+    assert record["force_calls"] == 1
+    assert record["hessian_index"] is None
+
+
 @pytest.mark.parametrize(
     ("family", "method", "module"),
     [
@@ -441,6 +549,8 @@ def _geometric_double(report: dict, seen: dict | None = None):
         if seen is not None:
             seen["spec"] = spec
         evaluate(spec["coords"])
+        if seen is not None:
+            seen["stop"] = stop(None)
         return dict(report)
 
     return optimize
@@ -461,6 +571,16 @@ def test_the_geometric_report_reaches_the_record_and_the_spec_carries_the_option
     assert (seen["spec"]["neighbors"], seen["spec"]["element"], seen["spec"]["cap"]) == (3, "Ar", 77)
     assert seen["spec"]["box"] is None and seen["spec"]["start"] == "initial_3"
     assert record["force_calls"] == 1
+
+
+def test_the_stop_given_to_geometric_is_the_noise_aware_test_on_the_last_force_it_evaluated(monkeypatch):
+    seen: dict = {}
+    report = {"point": _tetrahedron(), "stopped": True}
+    monkeypatch.setattr("optbench.runners.geometric_min.optimize", _geometric_double(report, seen))
+    noise_min._minimize_job(_job(family="geometric", method="cart", coords=_tetrahedron()))
+    assert seen["stop"] is True
+    noise_min._minimize_job(_job(family="geometric", method="cart", coords=_tetrahedron(shake=0.03)))
+    assert seen["stop"] is False
 
 
 def test_the_geometric_coordinate_system_is_the_option_before_the_method(monkeypatch):
@@ -689,6 +809,28 @@ def test_a_gradient_solver_that_reports_its_tolerance_is_a_success_at_sigma_zero
     assert (config.method, config.gtol, config.maxiter, config.options) == ("lbfgs", 1.0e-6, CAP, {"memory": 7})
 
 
+def test_a_solver_that_reports_the_budget_without_spending_a_call_is_dropped_after_the_cap_plus_one_steps(monkeypatch):
+    double = _rgmin_double()
+    steps: list[int] = []
+
+    class Idle:
+        def __init__(self, size, config):
+            pass
+
+        def step(self, fg, x):
+            steps.append(len(steps))
+            return types.SimpleNamespace(stop=double.Stop.Budget)
+
+    double.Solver = Idle
+    monkeypatch.setitem(sys.modules, "rgmin", double)
+    record = noise_min._minimize_job(_job(family="rgmin", method="lbfgs", cap=20))
+    assert len(steps) == 21
+    assert record["force_calls"] == 0
+    assert record["converged"] is False
+    assert record["reasons"] == ["force_norm"]
+    assert record["failure"] == "divergence"
+
+
 def test_an_exact_hessian_method_counts_one_hessian_for_each_step_it_takes(monkeypatch):
     monkeypatch.setitem(sys.modules, "rgmin", _rgmin_double())
     record = noise_min._minimize_job(_job(family="rgmin", method="newton", cap=CAP))
@@ -889,6 +1031,24 @@ def test_a_resumed_run_keeps_the_rows_it_has_and_a_fresh_run_discards_them(tmp_p
     assert not partial.exists()
 
 
+def test_a_resumed_run_that_has_every_row_runs_no_start_again(tmp_path, monkeypatch):
+    _starts(tmp_path / "cons")
+    output = tmp_path / "out" / "bench.dat"
+    _run(tmp_path)
+    first = _rows(output.with_suffix(".starts.jsonl"))
+    partial = output.with_suffix(".partial.jsonl")
+    partial.write_text("".join(json.dumps(dict(row, index=index)) + "\n" for index, row in enumerate(first)), encoding="utf-8")
+
+    def ran_again(job):
+        raise AssertionError(f"{job['start']} ran again")
+
+    monkeypatch.setattr(noise_min, "_minimize_job", ran_again)
+    summary = _run(tmp_path, resume=True)
+    assert summary["starts"] == 3
+    assert _rows(output.with_suffix(".starts.jsonl")) == first
+    assert not partial.exists()
+
+
 def test_a_run_of_starts_that_all_crash_still_writes_its_files_and_pays_twice_the_cap_for_each(tmp_path, monkeypatch):
     _starts(tmp_path / "cons")
     _absent(monkeypatch, "sella")
@@ -1014,6 +1174,52 @@ def test_a_vcsqnm_template_must_name_the_pinned_commit_and_a_fixed_cell_method(t
     template["solver"]["method"] = "vc"
     with pytest.raises(ValueError, match="moves a cell this potential does not have"):
         _run(tmp_path, template)
+
+
+def test_a_template_for_the_installed_rgmin_is_accepted_and_the_run_goes_on(tmp_path, monkeypatch):
+    double = _rgmin_double()
+    monkeypatch.setitem(sys.modules, "rgmin", double)
+    _starts(tmp_path / "cons")
+    template = _template("rgmin", method="lbfgs")
+    template["code_version"] = double.__version__
+    summary = _run(tmp_path, template)
+    rows = _rows(tmp_path / "out" / "bench.starts.jsonl")
+    assert summary["starts"] == 3
+    assert all(row["rgmin_stop"] for row in rows)
+
+
+def test_a_template_for_the_installed_pele_is_accepted_and_the_run_goes_on(tmp_path, monkeypatch):
+    monkeypatch.setattr(importlib.metadata, "version", lambda name: "9.9.9")
+    monkeypatch.setattr(
+        "optbench.runners.pele_min.drive_minimizer",
+        lambda method, coords, potential, *, stop, cap, options: (_tetrahedron(), True, ""),
+    )
+    _starts(tmp_path / "cons")
+    template = _template("pele", method="lbfgs")
+    template["code_version"] = "9.9.9"
+    summary = _run(tmp_path, template)
+    rows = _rows(tmp_path / "out" / "bench.starts.jsonl")
+    assert summary["starts"] == 3
+    assert [row["success"] for row in rows] == [True, True, True]
+
+
+def test_a_vcsqnm_template_that_names_the_pin_and_a_fixed_cell_method_is_accepted_and_the_run_goes_on(
+    tmp_path, monkeypatch
+):
+    from optbench.vcsqnm_catalog import CODE_VERSION, COMMIT
+
+    monkeypatch.setattr("optbench.runners.vcsqnm_min.assert_pin", lambda: None)
+    monkeypatch.setattr(
+        "optbench.runners.vcsqnm_min.drive",
+        _vcsqnm_double({"point": _tetrahedron(), "stopped": True, "error": ""}),
+    )
+    _starts(tmp_path / "cons")
+    template = _template("vcsqnm", method="sqnm")
+    template["commit"], template["code_version"] = COMMIT, CODE_VERSION
+    summary = _run(tmp_path, template)
+    rows = _rows(tmp_path / "out" / "bench.starts.jsonl")
+    assert summary["starts"] == 3
+    assert [row["success"] for row in rows] == [True, True, True]
 
 
 def test_a_failed_pin_check_stops_a_vcsqnm_run_before_any_start(tmp_path, monkeypatch):
