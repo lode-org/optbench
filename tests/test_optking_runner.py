@@ -120,6 +120,12 @@ def test_a_con_with_a_box_and_no_atoms_is_refused():
         optking_ts.parse_con(text)
 
 
+def test_a_con_with_a_box_and_no_coordinates_block_is_refused_the_same_way():
+    text = "\n".join([*HEAD, "1", "1", "1.0", "Pt", ""])
+    with pytest.raises(ValueError, match="no coordinates"):
+        optking_ts.parse_con(text)
+
+
 def test_each_atom_keeps_the_element_of_its_block_and_odd_rows_are_skipped():
     text = "\n".join(
         [
