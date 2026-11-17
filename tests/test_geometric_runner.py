@@ -874,6 +874,24 @@ def test_a_final_point_the_potential_cannot_evaluate_is_a_crash_with_no_energy(m
     assert geometric_min._minimize_job(_job())["error"] == "RuntimeError: first"
 
 
+@pytest.mark.parametrize("bad", [math.nan, math.inf, -math.inf])
+@pytest.mark.parametrize("where", ["one coordinate", "every coordinate"])
+def test_a_final_point_that_is_not_finite_is_a_divergence_with_no_energy_force_or_index(monkeypatch, bad, where):
+    point = _tetrahedron()
+    if where == "one coordinate":
+        point[3] = bad
+    else:
+        point = [bad] * len(point)
+    monkeypatch.setattr(geometric_min, "optimize", _optimizer(point, stopped=False))
+    with np.errstate(all="ignore"):
+        record = geometric_min._minimize_job(_job())
+    assert (record["failure"], record["reasons"], record["converged"]) == ("divergence", ["divergence"], False)
+    assert (record["energy"], record["force_norm"], record["hessian_index"]) == (None, None, None)
+    assert record["min_eigenvalues"] == []
+    assert (record["force_calls"], record["verify_calls"]) == (1, 0)
+    assert "error" not in record
+
+
 def test_a_hessian_that_cannot_be_diagonalised_is_a_crash_that_keeps_the_energy_and_force(monkeypatch):
     def broken(*args, **kwargs):
         raise np.linalg.LinAlgError("Eigenvalues did not converge")
@@ -1101,6 +1119,26 @@ def test_a_start_that_crashes_a_start_that_misses_the_cap_and_one_that_converges
     assert summary["par2_mean"] == pytest.approx((1 + 2 * CAP + 2 * CAP) / 3)
     assert summary["energy_min"] < summary["energy_max"]
     assert summary["coordinate_systems"] == {"DelocalizedInternalCoordinates": 2, "unknown": 1}
+
+
+def test_a_start_that_ends_at_no_point_does_not_set_the_energy_range_of_the_run(monkeypatch, tmp_path, stub_library):
+    exact = _tetrahedron()
+    _by_start(
+        monkeypatch,
+        {
+            "initial_0": {"point": exact},
+            "initial_1": {"point": [math.nan] * len(exact), "stopped": False},
+            "initial_2": {"point": exact},
+        },
+    )
+    _starts(tmp_path / "cons")
+    with np.errstate(all="ignore"):
+        summary = _run(tmp_path)
+    rows = _rows(tmp_path / "out" / "bench.starts.jsonl")
+    assert [row["failure"] for row in rows] == [None, "divergence", None]
+    assert rows[1]["energy"] is None
+    assert summary["energy_min"] == pytest.approx(-6.0, abs=1e-12)
+    assert summary["energy_max"] == pytest.approx(-6.0, abs=1e-12)
 
 
 def test_starts_that_all_fail_leave_no_median_and_cost_twice_the_cap(monkeypatch, tmp_path, stub_library):

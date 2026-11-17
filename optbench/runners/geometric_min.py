@@ -705,7 +705,8 @@ def _minimize_job(job: dict) -> dict:
         error = f"ForceCallCap: {exc}"
     except Exception as exc:
         error = f"{type(exc).__name__}: {exc}"
-    if potential is not None and point is not None:
+    usable = point is not None and all(math.isfinite(value) for value in point)
+    if potential is not None and usable:
         calls = int(potential.counter.calls)
         try:
             with potential.counter.verification():
@@ -720,7 +721,7 @@ def _minimize_job(job: dict) -> dict:
         verify_calls = int(potential.counter.verify_calls)
     hessian_index = None
     min_eigenvalues: list[float] = []
-    if point is not None and (not error or "ForceCallCap" in error or "force-call cap" in error):
+    if usable and (not error or "ForceCallCap" in error or "force-call cap" in error):
         try:
             hessian_index, min_eigenvalues = _index_at(
                 kind,
@@ -732,8 +733,7 @@ def _minimize_job(job: dict) -> dict:
             if not error:
                 error = f"{type(exc).__name__}: {exc}"
     finite = (
-        point is not None
-        and all(math.isfinite(value) for value in point)
+        usable
         and energy is not None
         and math.isfinite(energy)
         and force_norm is not None
