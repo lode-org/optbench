@@ -115,6 +115,14 @@ def test_a_con_with_no_box_is_refused():
         optking_ts.parse_con("label\nPt\nCoordinates of Component 1\n1.0 2.0 3.0 0 0\n")
 
 
+def test_a_header_line_is_the_box_only_when_it_is_three_numbers_followed_by_three_angles():
+    head = ["three words here", "1.0 2.0 3.0", "4.0 5.0", "10.0 11.0 12.0", "90.0 90.0 90.0", "0 0", "0 0 0"]
+    text = "\n".join([*head, "1", "1", "39.948", "Ar", "Coordinates of Component 1", "0.5 0.25 0.125 0 0", ""])
+    parsed = optking_ts.parse_con(text)
+    assert parsed["box"] == [10.0, 11.0, 12.0]
+    assert parsed["positions"] == [[0.5, 0.25, 0.125]]
+
+
 def test_a_con_with_a_box_and_no_atoms_is_refused():
     text = "\n".join([*HEAD, "1", "0", "1.0", "Pt", "Coordinates of Component 1", ""])
     with pytest.raises(ValueError, match="no coordinates"):
