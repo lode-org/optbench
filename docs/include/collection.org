@@ -70,11 +70,11 @@
    <p><a href="generated/suites/double-ended-saddle-search/pt-island.html">Family tables, overall table, and performance profile</a>.</p>
    <h2 id="suite-globalopt">Global optimization</h2>
    <h3>Binary Lennard-Jones 100</h3>
-   <div class="winner"><p class="winner-name">EON (SVN r2549) (r2549) · Basin hopping</p><p class="winner-score"><small>PAR-2</small>4e+06</p></div>
+   <div class="winner"><p class="winner-name">EON (SVN r2549) · Basin hopping</p><p class="winner-score"><small>PAR-2</small>4e+06</p></div>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="globalopt/lj100-binary">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr><td data-label="Row" data-field="label">EON (SVN r2549) (r2549) · Basin hopping</td><td data-label="Family" data-field="family">Basin hopping / global</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">4e+06</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">2e+06</td><td data-label="Mean calls" data-field="mean_calls">2e+06</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 100, wrong_stationary 0</td><td data-label="Runs" data-field="n">100</td></tr>
+   <tr><td data-label="Row" data-field="label">EON (SVN r2549) · Basin hopping</td><td data-label="Family" data-field="family">Basin hopping / global</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">4e+06</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">2e+06</td><td data-label="Mean calls" data-field="mean_calls">2e+06</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 100, wrong_stationary 0</td><td data-label="Runs" data-field="n">100</td></tr>
    </tbody></table></div>
    <p><a href="generated/suites/globalopt/lj100-binary.html">Family tables, overall table, and performance profile</a>.</p>
    <h3>Lennard-Jones 38 global minimum</h3>
@@ -228,11 +228,11 @@
    <p class="bench-gaps">eOn rows are not yet on the harness counter.</p>
    <p><a href="generated/suites/accelerated-md/standard_aladatom.html">Family tables, overall table, and performance profile</a>.</p>
    <h3>Al adatom on Al(100) at 185 K</h3>
-   <div class="winner"><p class="winner-name">EON (SVN r2549) (r2549) · parallel replica</p><p class="winner-score"><small>PAR-2</small>829272</p></div>
+   <div class="winner"><p class="winner-name">EON (SVN r2549) · parallel replica</p><p class="winner-score"><small>PAR-2</small>829272</p></div>
    <div class="bench-scroll">
    <table data-board-table="headline" data-problem="accelerated-md/aladatom">
    <thead><tr><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr><td data-label="Row" data-field="label">EON (SVN r2549) (r2549) · parallel replica</td><td data-label="Family" data-field="family">Minimizers</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">829272</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">557591</td><td data-label="Mean calls" data-field="mean_calls">829272</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">150</td></tr>
+   <tr><td data-label="Row" data-field="label">EON (SVN r2549) · parallel replica</td><td data-label="Family" data-field="family">Minimizers</td><td data-label="Family rank" data-field="family_rank">1</td><td data-label="Unit" data-field="unit">force calls</td><td data-label="PAR-2" data-field="par2_mean">829272</td><td data-label="Published" data-field="published"></td><td data-label="Median calls" data-field="median_calls">557591</td><td data-label="Mean calls" data-field="mean_calls">829272</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td><td data-label="Runs" data-field="n">150</td></tr>
    </tbody></table></div>
    <p class="bench-gaps">eOn rows are not yet on the harness counter.</p><p class="bench-gaps">A run short of the full set, or a run that is not the stock method, stays off the ranked table.</p>
    <p><a href="generated/suites/accelerated-md/aladatom.html">Family tables, overall table, and performance profile</a>.</p>

@@ -1842,7 +1842,7 @@
       "full_n": 200,
       "hessian_calls": 0.0,
       "kind": "ts-lj38",
-      "label": "eOn (eOn (develop 500350d9)) \u00b7 Lanczos improved L-BFGS",
+      "label": "eOn (develop 500350d9) \u00b7 Lanczos improved L-BFGS",
       "max_calls": 2992.0,
       "mean_calls": 285.515,
       "mean_per_image": null,

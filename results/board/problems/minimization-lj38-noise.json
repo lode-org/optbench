@@ -904,7 +904,7 @@
         "wrong_stationary": 11
       },
       "family": "minimize",
-      "family_rank": 13,
+      "family_rank": 12,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,

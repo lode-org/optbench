@@ -40,8 +40,8 @@
    <td class="num" data-label="Success">0.0%</td>
    <td class="num" data-label="PAR-2">4e+06</td>
    </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
+   <tr class="is-best">
+   <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
    <td class="problem" data-label="Problem"><a href="globalopt/lj100-binary.html">Binary Lennard-Jones 100</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:60.2060%"><i></i></span><span class="bar-num">4e+06</span></td>

@@ -132,8 +132,8 @@
       "TSASE (1.0) \u00b7 NEB": 0.0,
       "eOn (3.6.0) \u00b7 OCI-NEB": 0.16071940446466793,
       "eOn (3.6.0) \u00b7 energy-weighted CI-NEB": 0.18623042104636128,
-      "eOn (eOn (develop 500350d9)) \u00b7 CI-NEB": 1.0178895616095636,
-      "eOn (eOn (develop 500350d9)) \u00b7 Lanczos improved L-BFGS": 1.0842182047219662,
+      "eOn (develop 500350d9) \u00b7 CI-NEB": 1.0178895616095636,
+      "eOn (develop 500350d9) \u00b7 Lanczos improved L-BFGS": 1.0842182047219662,
       "geodesic (1.0.0) \u00b7 CI-NEB geodesic": 0.5051181283175278,
       "geodesic (1.0.0) \u00b7 CI-NEB-LBFGS geodesic": 0.8954366820174355,
       "geodesic (1.0.0) \u00b7 NEB-FIRE geodesic": 0.5459357548482371,
@@ -250,14 +250,14 @@
         0.2711864406779661,
         0.5254237288135594
       ],
-      "eOn (eOn (develop 500350d9)) \u00b7 CI-NEB": [
+      "eOn (develop 500350d9) \u00b7 CI-NEB": [
         0.0847457627118644,
         0.8813559322033898,
         0.9830508474576272,
         0.9830508474576272,
         0.9830508474576272
       ],
-      "eOn (eOn (develop 500350d9)) \u00b7 Lanczos improved L-BFGS": [
+      "eOn (develop 500350d9) \u00b7 Lanczos improved L-BFGS": [
         0.4067796610169492,
         0.8983050847457628,
         1.0,
@@ -344,8 +344,8 @@
       "TSASE (1.0) \u00b7 NEB": 0.0,
       "eOn (3.6.0) \u00b7 OCI-NEB": 0.6440677966101694,
       "eOn (3.6.0) \u00b7 energy-weighted CI-NEB": 0.5932203389830508,
-      "eOn (eOn (develop 500350d9)) \u00b7 CI-NEB": 0.9830508474576272,
-      "eOn (eOn (develop 500350d9)) \u00b7 Lanczos improved L-BFGS": 1.0,
+      "eOn (develop 500350d9) \u00b7 CI-NEB": 0.9830508474576272,
+      "eOn (develop 500350d9) \u00b7 Lanczos improved L-BFGS": 1.0,
       "geodesic (1.0.0) \u00b7 CI-NEB geodesic": 0.847457627118644,
       "geodesic (1.0.0) \u00b7 CI-NEB-LBFGS geodesic": 0.847457627118644,
       "geodesic (1.0.0) \u00b7 NEB-FIRE geodesic": 0.9830508474576272,
@@ -632,7 +632,7 @@
       "full_n": 59,
       "hessian_calls": 0.0,
       "kind": "de-pt-mode",
-      "label": "eOn (eOn (develop 500350d9)) \u00b7 Lanczos improved L-BFGS",
+      "label": "eOn (develop 500350d9) \u00b7 Lanczos improved L-BFGS",
       "max_calls": 584.0,
       "mean_calls": 197.54237288135593,
       "mean_per_image": 65.84745762711864,
@@ -986,7 +986,7 @@
       "full_n": 59,
       "hessian_calls": 0.0,
       "kind": "de-pt",
-      "label": "eOn (eOn (develop 500350d9)) \u00b7 CI-NEB",
+      "label": "eOn (develop 500350d9) \u00b7 CI-NEB",
       "max_calls": 3000.0,
       "mean_calls": 260.22033898305085,
       "mean_per_image": 86.74011299435028,
@@ -2156,7 +2156,7 @@
         "wrong_stationary": 0
       },
       "family": "band",
-      "family_rank": 24,
+      "family_rank": 23,
       "fd_calls": 0.0,
       "full_n": 59,
       "hessian_calls": 0.0,

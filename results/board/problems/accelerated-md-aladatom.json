@@ -112,18 +112,18 @@
   "over_budget": [],
   "profile": {
     "area_log10": {
-      "EON (SVN r2549) (r2549) \u00b7 parallel replica": 0.752574989159953,
-      "eOn (develop 80e94f88) (3.6.0) \u00b7 parallel replica": 1.2041199826559248
+      "EON (SVN r2549) \u00b7 parallel replica": 0.752574989159953,
+      "eOn (develop 80e94f88, 3.6.0) \u00b7 parallel replica": 1.2041199826559248
     },
     "rho": {
-      "EON (SVN r2549) (r2549) \u00b7 parallel replica": [
+      "EON (SVN r2549) \u00b7 parallel replica": [
         0.0,
         0.0,
         1.0,
         1.0,
         1.0
       ],
-      "eOn (develop 80e94f88) (3.6.0) \u00b7 parallel replica": [
+      "eOn (develop 80e94f88, 3.6.0) \u00b7 parallel replica": [
         1.0,
         1.0,
         1.0,
@@ -132,8 +132,8 @@
       ]
     },
     "solved": {
-      "EON (SVN r2549) (r2549) \u00b7 parallel replica": 1.0,
-      "eOn (develop 80e94f88) (3.6.0) \u00b7 parallel replica": 1.0
+      "EON (SVN r2549) \u00b7 parallel replica": 1.0,
+      "eOn (develop 80e94f88, 3.6.0) \u00b7 parallel replica": 1.0
     },
     "taus": [
       1.0,
@@ -166,7 +166,7 @@
       "full_n": 1,
       "hessian_calls": 0.0,
       "kind": "prd",
-      "label": "EON (SVN r2549) (r2549) \u00b7 parallel replica",
+      "label": "EON (SVN r2549) \u00b7 parallel replica",
       "max_calls": 3469890.0,
       "mean_calls": 829271.7666666667,
       "mean_per_image": null,
@@ -218,7 +218,7 @@
       "full_n": 1,
       "hessian_calls": 0.0,
       "kind": "prd",
-      "label": "eOn (develop 80e94f88) (3.6.0) \u00b7 parallel replica",
+      "label": "eOn (develop 80e94f88, 3.6.0) \u00b7 parallel replica",
       "max_calls": 3661676.0,
       "mean_calls": 891081.2333333333,
       "mean_per_image": null,

@@ -216,39 +216,39 @@ L 507.6 26.16
    </g>
    <g id="legend_1">
     <g id="patch_7">
-     <path d="M 310.826719 257.1 
+     <path d="M 314.064219 257.1 
 L 502.7 257.1 
 Q 504.1 257.1 504.1 255.7 
 L 504.1 235.398906 
 Q 504.1 233.998906 502.7 233.998906 
-L 310.826719 233.998906 
-Q 309.426719 233.998906 309.426719 235.398906 
-L 309.426719 255.7 
-Q 309.426719 257.1 310.826719 257.1 
+L 314.064219 233.998906 
+Q 312.664219 233.998906 312.664219 235.398906 
+L 312.664219 255.7 
+Q 312.664219 257.1 314.064219 257.1 
 z
 " style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
     </g>
     <g id="line2d_14">
-     <path d="M 312.226719 239.667813 
-L 319.226719 239.667813 
-L 319.226719 239.667813 
-L 326.226719 239.667813 
-L 326.226719 239.667813 
+     <path d="M 315.464219 239.667813 
+L 322.464219 239.667813 
+L 322.464219 239.667813 
+L 329.464219 239.667813 
+L 329.464219 239.667813 
 " style="fill: none; stroke: #1f77b4; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_15">
-     <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="331.826719" y="242.117813" transform="rotate(-0 331.826719 242.117813)">EON (SVN r2549) (r2549) · parallel replica</text>
+     <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="335.064219" y="242.117813" transform="rotate(-0 335.064219 242.117813)">EON (SVN r2549) · parallel replica</text>
     </g>
     <g id="line2d_15">
-     <path d="M 312.226719 250.168359 
-L 319.226719 250.168359 
-L 319.226719 250.168359 
-L 326.226719 250.168359 
-L 326.226719 250.168359 
+     <path d="M 315.464219 250.168359 
+L 322.464219 250.168359 
+L 322.464219 250.168359 
+L 329.464219 250.168359 
+L 329.464219 250.168359 
 " style="fill: none; stroke: #ff7f0e; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_16">
-     <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="331.826719" y="252.618359" transform="rotate(-0 331.826719 252.618359)">eOn (develop 80e94f88) (3.6.0) · parallel replica</text>
+     <text style="font-size: 7px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="335.064219" y="252.618359" transform="rotate(-0 335.064219 252.618359)">eOn (develop 80e94f88, 3.6.0) · parallel replica</text>
     </g>
    </g>
   </g>

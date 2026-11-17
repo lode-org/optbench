@@ -52,7 +52,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · DOGLEG</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">3</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">81.881</td>
    <td data-label="Published" data-field="published"></td>
@@ -84,7 +84,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · NEWTON</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">6</td>
+   <td data-label="Family rank" data-field="family_rank">5</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">166.337</td>
    <td data-label="Published" data-field="published"></td>
@@ -116,7 +116,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · LBFGS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">12</td>
+   <td data-label="Family rank" data-field="family_rank">11</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">197.228</td>
    <td data-label="Published" data-field="published"></td>
@@ -148,7 +148,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · BB</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">31</td>
+   <td data-label="Family rank" data-field="family_rank">30</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">639.474</td>
    <td data-label="Published" data-field="published"></td>
@@ -180,7 +180,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · CG</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">34</td>
+   <td data-label="Family rank" data-field="family_rank">33</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">669.237</td>
    <td data-label="Published" data-field="published"></td>
@@ -212,7 +212,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · FIRE</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">41</td>
+   <td data-label="Family rank" data-field="family_rank">40</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">769.36</td>
    <td data-label="Published" data-field="published"></td>
@@ -244,7 +244,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · FIRE2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">44</td>
+   <td data-label="Family rank" data-field="family_rank">43</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">845.947</td>
    <td data-label="Published" data-field="published"></td>
@@ -276,7 +276,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · BFGS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">46</td>
+   <td data-label="Family rank" data-field="family_rank">45</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">1010.45</td>
    <td data-label="Published" data-field="published"></td>
@@ -308,7 +308,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · QUICKMIN</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">51</td>
+   <td data-label="Family rank" data-field="family_rank">50</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">1933</td>
    <td data-label="Published" data-field="published"></td>
@@ -388,7 +388,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · SD</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">65</td>
+   <td data-label="Family rank" data-field="family_rank">64</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">8392.75</td>
    <td data-label="Published" data-field="published"></td>
@@ -468,7 +468,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.0) · SR2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">76</td>
+   <td data-label="Family rank" data-field="family_rank">73</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">20000</td>
    <td data-label="Published" data-field="published"></td>
@@ -596,7 +596,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · DOGLEG</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">3</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">10.11</td>
    <td data-label="Published" data-field="published"></td>
@@ -708,7 +708,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · BFGS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">27</td>
+   <td data-label="Family rank" data-field="family_rank">26</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">54.04</td>
    <td data-label="Published" data-field="published"></td>
@@ -884,7 +884,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">rgmin (0.4.1) · FIRE2</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">46</td>
+   <td data-label="Family rank" data-field="family_rank">45</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">121.85</td>
    <td data-label="Published" data-field="published"></td>

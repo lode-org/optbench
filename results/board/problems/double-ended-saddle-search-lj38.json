@@ -277,7 +277,6 @@
       "Sella (2.6.0) \u00b7 Sella+NEB": 0.21072099696478688,
       "TSASE (1.0) \u00b7 CI-NEB": 0.18061799739838877,
       "TSASE (1.0) \u00b7 NEB": 0.0,
-      "eOn ((develop 500350d9) \u00b7 Doubly nudged CI-NEB) \u00b7 Doubly nudged CI-NEB": 0.608080591241242,
       "eOn (3.5.0) \u00b7 CI-NEB": 0.6592556905041188,
       "eOn (3.5.0) \u00b7 Dimer L-BFGS": 0.6171114911111615,
       "eOn (3.5.0) \u00b7 Lanczos L-BFGS": 1.0295225851708156,
@@ -286,10 +285,11 @@
       "eOn (3.6.0) \u00b7 CI-NEB lj/cut": 0.6532350905908392,
       "eOn (3.6.0) \u00b7 OCI-NEB": 0.042144199392957375,
       "eOn (3.6.0) \u00b7 energy-weighted CI-NEB": 0.0,
+      "eOn (develop 500350d9) \u00b7 Doubly nudged CI-NEB": 0.608080591241242,
       "eOn (develop b0bd4d5a) \u00b7 Dimer L-BFGS": 1.0204916853008963,
       "eOn (develop b0bd4d5a) \u00b7 Lanczos L-BFGS": 1.0536049848239342,
       "eOn (develop b0bd4d5a) \u00b7 Lanczos improved L-BFGS": 1.1288624837399295,
-      "eOn (develop f6817b53) (3.6.0) \u00b7 CI-NEB lj/cut": 0.6442041907209197,
+      "eOn (develop f6817b53, 3.6.0) \u00b7 CI-NEB lj/cut": 0.6442041907209197,
       "geodesic (1.0.0) \u00b7 CI-NEB geodesic": 0.2348033966179054,
       "geodesic (1.0.0) \u00b7 CI-NEB-LBFGS geodesic": 0.6231320910244411,
       "geodesic (1.0.0) \u00b7 NEB-FIRE geodesic": 0.0030102999566398126,
@@ -392,13 +392,6 @@
         0.0,
         0.0
       ],
-      "eOn ((develop 500350d9) \u00b7 Doubly nudged CI-NEB) \u00b7 Doubly nudged CI-NEB": [
-        0.0,
-        0.02,
-        0.7,
-        0.86,
-        0.88
-      ],
       "eOn (3.5.0) \u00b7 CI-NEB": [
         0.0,
         0.02,
@@ -455,6 +448,13 @@
         0.0,
         0.0
       ],
+      "eOn (develop 500350d9) \u00b7 Doubly nudged CI-NEB": [
+        0.0,
+        0.02,
+        0.7,
+        0.86,
+        0.88
+      ],
       "eOn (develop b0bd4d5a) \u00b7 Dimer L-BFGS": [
         0.2,
         0.9,
@@ -476,7 +476,7 @@
         1.0,
         1.0
       ],
-      "eOn (develop f6817b53) (3.6.0) \u00b7 CI-NEB lj/cut": [
+      "eOn (develop f6817b53, 3.6.0) \u00b7 CI-NEB lj/cut": [
         0.0,
         0.02,
         0.76,
@@ -561,7 +561,6 @@
       "Sella (2.6.0) \u00b7 Sella+NEB": 1.0,
       "TSASE (1.0) \u00b7 CI-NEB": 0.52,
       "TSASE (1.0) \u00b7 NEB": 0.0,
-      "eOn ((develop 500350d9) \u00b7 Doubly nudged CI-NEB) \u00b7 Doubly nudged CI-NEB": 0.88,
       "eOn (3.5.0) \u00b7 CI-NEB": 0.94,
       "eOn (3.5.0) \u00b7 Dimer L-BFGS": 0.66,
       "eOn (3.5.0) \u00b7 Lanczos L-BFGS": 1.0,
@@ -570,10 +569,11 @@
       "eOn (3.6.0) \u00b7 CI-NEB lj/cut": 0.94,
       "eOn (3.6.0) \u00b7 OCI-NEB": 0.12,
       "eOn (3.6.0) \u00b7 energy-weighted CI-NEB": 0.0,
+      "eOn (develop 500350d9) \u00b7 Doubly nudged CI-NEB": 0.88,
       "eOn (develop b0bd4d5a) \u00b7 Dimer L-BFGS": 0.98,
       "eOn (develop b0bd4d5a) \u00b7 Lanczos L-BFGS": 1.0,
       "eOn (develop b0bd4d5a) \u00b7 Lanczos improved L-BFGS": 1.0,
-      "eOn (develop f6817b53) (3.6.0) \u00b7 CI-NEB lj/cut": 0.92,
+      "eOn (develop f6817b53, 3.6.0) \u00b7 CI-NEB lj/cut": 0.92,
       "geodesic (1.0.0) \u00b7 CI-NEB geodesic": 0.68,
       "geodesic (1.0.0) \u00b7 CI-NEB-LBFGS geodesic": 0.86,
       "geodesic (1.0.0) \u00b7 NEB-FIRE geodesic": 0.04,
@@ -1323,7 +1323,7 @@
       "full_n": 50,
       "hessian_calls": 0.0,
       "kind": "de-lj38",
-      "label": "eOn (develop f6817b53) (3.6.0) \u00b7 CI-NEB lj/cut",
+      "label": "eOn (develop f6817b53, 3.6.0) \u00b7 CI-NEB lj/cut",
       "max_calls": 2500.0,
       "mean_calls": 877.94,
       "mean_per_image": 175.588,
@@ -1531,7 +1531,7 @@
       "full_n": 50,
       "hessian_calls": 0.0,
       "kind": "de-lj38",
-      "label": "eOn ((develop 500350d9) \u00b7 Doubly nudged CI-NEB) \u00b7 Doubly nudged CI-NEB",
+      "label": "eOn (develop 500350d9) \u00b7 Doubly nudged CI-NEB",
       "max_calls": 2500.0,
       "mean_calls": 928.96,
       "mean_per_image": 185.792,
@@ -2611,7 +2611,7 @@
         "wrong_stationary": 0
       },
       "family": "band",
-      "family_rank": 25,
+      "family_rank": 24,
       "fd_calls": 0.0,
       "full_n": 50,
       "hessian_calls": 0.0,
@@ -2663,7 +2663,7 @@
         "wrong_stationary": 0
       },
       "family": "band",
-      "family_rank": 26,
+      "family_rank": 24,
       "fd_calls": 0.0,
       "full_n": 50,
       "hessian_calls": 0.0,
@@ -2722,7 +2722,7 @@
       "full_n": 50,
       "hessian_calls": 0.0,
       "kind": "de-lj38-mode",
-      "label": "eOn (eOn (develop 500350d9)) \u00b7 Lanczos improved L-BFGS",
+      "label": "eOn (develop 500350d9) \u00b7 Lanczos improved L-BFGS",
       "max_calls": 2071.0,
       "mean_calls": 329.6,
       "mean_per_image": 65.92,

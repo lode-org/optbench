@@ -667,7 +667,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 3,
+      "family_rank": 2,
       "fd_calls": 9220.434,
       "full_n": 1000,
       "hessian_calls": 80.881,
@@ -818,7 +818,7 @@
         "wrong_stationary": 5
       },
       "family": "minimize",
-      "family_rank": 6,
+      "family_rank": 5,
       "fd_calls": 7483.986,
       "full_n": 1000,
       "hessian_calls": 65.649,
@@ -1115,7 +1115,7 @@
         "wrong_stationary": 1
       },
       "family": "minimize",
-      "family_rank": 12,
+      "family_rank": 11,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -1969,7 +1969,7 @@
         "wrong_stationary": 11
       },
       "family": "minimize",
-      "family_rank": 29,
+      "family_rank": 28,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -2073,7 +2073,7 @@
         "wrong_stationary": 6
       },
       "family": "minimize",
-      "family_rank": 31,
+      "family_rank": 30,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -2224,7 +2224,7 @@
         "wrong_stationary": 4
       },
       "family": "minimize",
-      "family_rank": 34,
+      "family_rank": 33,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -2579,7 +2579,7 @@
         "wrong_stationary": 3
       },
       "family": "minimize",
-      "family_rank": 41,
+      "family_rank": 40,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -2735,7 +2735,7 @@
         "wrong_stationary": 6
       },
       "family": "minimize",
-      "family_rank": 44,
+      "family_rank": 43,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -2839,7 +2839,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 46,
+      "family_rank": 45,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -3099,7 +3099,7 @@
         "wrong_stationary": 2
       },
       "family": "minimize",
-      "family_rank": 51,
+      "family_rank": 50,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -3812,7 +3812,7 @@
         "wrong_stationary": 3
       },
       "family": "minimize",
-      "family_rank": 65,
+      "family_rank": 64,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -4280,7 +4280,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 74,
+      "family_rank": 73,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -4332,7 +4332,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 75,
+      "family_rank": 73,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,
@@ -4384,7 +4384,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 76,
+      "family_rank": 73,
       "fd_calls": 0.0,
       "full_n": 1000,
       "hessian_calls": 0.0,

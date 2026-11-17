@@ -241,26 +241,26 @@ L 507.6 26.16
    </g>
    <g id="legend_1">
     <g id="line2d_19">
-     <path d="M 184.0975 237.355156 
-L 192.0975 237.355156 
-L 192.0975 237.355156 
-L 200.0975 237.355156 
-L 200.0975 237.355156 
+     <path d="M 233.59125 237.355156 
+L 241.59125 237.355156 
+L 241.59125 237.355156 
+L 249.59125 237.355156 
+L 249.59125 237.355156 
 " style="fill: none; stroke: #0f6e6e; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_15">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="206.4975" y="240.155156" transform="rotate(-0 206.4975 240.155156)">EON (SVN r2549) (r2549) · Dimer-CG rotation: max=50 tol=1</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="255.99125" y="240.155156" transform="rotate(-0 255.99125 240.155156)">EON (SVN r2549) · Dimer-CG rotation: max=50 tol=1</text>
     </g>
     <g id="line2d_20">
-     <path d="M 184.0975 249.355781 
-L 192.0975 249.355781 
-L 192.0975 249.355781 
-L 200.0975 249.355781 
-L 200.0975 249.355781 
+     <path d="M 233.59125 249.355781 
+L 241.59125 249.355781 
+L 241.59125 249.355781 
+L 249.59125 249.355781 
+L 249.59125 249.355781 
 " style="fill: none; stroke: #9a3412; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_16">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="206.4975" y="252.155781" transform="rotate(-0 206.4975 252.155781)">eOn (develop 500350d9) (500350d9) · Dimer-CG rotation: max=50 tol=1</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="255.99125" y="252.155781" transform="rotate(-0 255.99125 252.155781)">eOn (develop 500350d9) · Dimer-CG rotation: max=50 tol=1</text>
     </g>
    </g>
   </g>

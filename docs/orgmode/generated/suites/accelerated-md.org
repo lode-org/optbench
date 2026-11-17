@@ -27,15 +27,6 @@
    <thead><tr><th>Rank</th><th>Problem</th><th>Code</th><th title="Lowest cost for this code. A shorter bar is a lower cost on the shared log scale.">Best</th><th title="Median of this code&#x27;s costs on that problem.">Median</th><th title="Share of runs that finished.">Success</th><th title="Mean cost of the runs. A failure counts as twice the cap.">PAR-2</th></tr></thead><tbody>
    <tr class="is-best group-start">
    <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
-   <td class="problem" data-label="Problem"><a href="accelerated-md/standard_aladatom.html">Al adatom on Al(100) at 150 K</a></td>
-   <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:92.2154%"><i></i></span><span class="bar-num">835900</span></td>
-   <td class="num" data-label="Median">835900</td>
-   <td class="num" data-label="Success">—<sup>1</sup></td>
-   <td class="num" data-label="PAR-2">—<sup>2</sup></td>
-   </tr>
-   <tr class="is-best group-start">
-   <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
    <td class="problem" data-label="Problem"><a href="accelerated-md/aladatom.html">Al adatom on Al(100) at 185 K</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:91.8697%"><i></i></span><span class="bar-num">829272</span></td>
@@ -51,6 +42,15 @@
    <td class="num" data-label="Median">891081</td>
    <td class="num" data-label="Success">100.0%</td>
    <td class="num" data-label="PAR-2">891081</td>
+   </tr>
+   <tr class="is-best group-start">
+   <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
+   <td class="problem" data-label="Problem"><a href="accelerated-md/standard_aladatom.html">Al adatom on Al(100) at 150 K</a></td>
+   <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:92.2154%"><i></i></span><span class="bar-num">835900</span></td>
+   <td class="num" data-label="Median">835900</td>
+   <td class="num" data-label="Success">—<sup>1</sup></td>
+   <td class="num" data-label="PAR-2">—<sup>2</sup></td>
    </tr>
    </tbody></table></div>
    <p class="bench-note"><sup>1</sup> A dash in the success rate means that row did not record one.</p>

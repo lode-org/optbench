@@ -1454,7 +1454,7 @@
         "wrong_stationary": 0
       },
       "family": "min-mode",
-      "family_rank": 18,
+      "family_rank": 17,
       "fd_calls": 0.0,
       "full_n": 49,
       "hessian_calls": 0.0,
@@ -1773,7 +1773,7 @@
       "full_n": 49,
       "hessian_calls": 0.0,
       "kind": "ts-pt",
-      "label": "eOn (eOn (develop 500350d9)) \u00b7 Lanczos improved L-BFGS",
+      "label": "eOn (develop 500350d9) \u00b7 Lanczos improved L-BFGS",
       "max_calls": 205.0,
       "mean_calls": 108.79591836734694,
       "mean_per_image": null,

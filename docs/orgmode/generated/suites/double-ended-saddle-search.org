@@ -28,105 +28,6 @@
    <thead><tr><th>Rank</th><th>Problem</th><th>Code</th><th title="Lowest cost for this code. A shorter bar is a lower cost on the shared log scale.">Best</th><th title="Median of this code&#x27;s costs on that problem.">Median</th><th title="Share of runs that finished.">Success</th><th title="Mean cost of the runs. A failure counts as twice the cap.">PAR-2</th></tr></thead><tbody>
    <tr class="is-best group-start">
    <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:17.1352%"><i></i></span><span class="bar-num">484.627</span></td>
-   <td class="num" data-label="Median">44040.5</td>
-   <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">484.627</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:17.5345%"><i></i></span><span class="bar-num">502.784</span></td>
-   <td class="num" data-label="Median">681.784</td>
-   <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">502.784</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/optim.html">OPTIM</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:36.5036%"><i></i></span><span class="bar-num">2885</span></td>
-   <td class="num" data-label="Median">2885</td>
-   <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">2885</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/sella.html">Sella</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:62.4396%"><i></i></span><span class="bar-num">31447.3</span></td>
-   <td class="num" data-label="Median">31447.3</td>
-   <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">31447.3</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/pele.html">pele</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:68.0991%"><i></i></span><span class="bar-num">52961.9</span></td>
-   <td class="num" data-label="Median">52961.9</td>
-   <td class="num" data-label="Success">94.1%</td>
-   <td class="num" data-label="PAR-2">52961.9</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/compass.html">COMPASS</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:75.0899%"><i></i></span><span class="bar-num">100831</span></td>
-   <td class="num" data-label="Median">100831</td>
-   <td class="num" data-label="Success">80.4%</td>
-   <td class="num" data-label="PAR-2">100831</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">7</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/rgsaddle.html">rgsaddle</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:85.6308%"><i></i></span><span class="bar-num">266216</span></td>
-   <td class="num" data-label="Median">417164</td>
-   <td class="num" data-label="Success">47.1%</td>
-   <td class="num" data-label="PAR-2">266216</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">8</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/geodesic.html">geodesic</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:90.3751%"><i></i></span><span class="bar-num">412102</span></td>
-   <td class="num" data-label="Median">412455</td>
-   <td class="num" data-label="Success">17.6%</td>
-   <td class="num" data-label="PAR-2">412102</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">9</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/ase.html">ASE</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:91.1905%"><i></i></span><span class="bar-num">444244</span></td>
-   <td class="num" data-label="Median">444244</td>
-   <td class="num" data-label="Success">11.8%</td>
-   <td class="num" data-label="PAR-2">444244</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">10</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/tsase.html">TSASE</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:91.3725%"><i></i></span><span class="bar-num">451753</span></td>
-   <td class="num" data-label="Median">475877</td>
-   <td class="num" data-label="Success">9.8%</td>
-   <td class="num" data-label="PAR-2">451753</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">11</span></td>
-   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
-   <td class="code" data-label="Code"><a href="../codes/lammps.html">LAMMPS</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:91.3775%"><i></i></span><span class="bar-num">451959</span></td>
-   <td class="num" data-label="Median">475980</td>
-   <td class="num" data-label="Success">9.8%</td>
-   <td class="num" data-label="PAR-2">451959</td>
-   </tr>
-   <tr class="is-best group-start">
-   <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
    <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td class="code" data-label="Code"><a href="../codes/optim.html">OPTIM</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:5.8636%"><i></i></span><span class="bar-num">131</span></td>
@@ -223,6 +124,105 @@
    <td class="num" data-label="Median">4912.84</td>
    <td class="num" data-label="Success">2.0%</td>
    <td class="num" data-label="PAR-2">4912.84</td>
+   </tr>
+   <tr class="is-best group-start">
+   <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/eon.html">eOn</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:17.1352%"><i></i></span><span class="bar-num">484.627</span></td>
+   <td class="num" data-label="Median">44040.5</td>
+   <td class="num" data-label="Success">100.0%</td>
+   <td class="num" data-label="PAR-2">484.627</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:17.5345%"><i></i></span><span class="bar-num">502.784</span></td>
+   <td class="num" data-label="Median">681.784</td>
+   <td class="num" data-label="Success">100.0%</td>
+   <td class="num" data-label="PAR-2">502.784</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/optim.html">OPTIM</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:36.5036%"><i></i></span><span class="bar-num">2885</span></td>
+   <td class="num" data-label="Median">2885</td>
+   <td class="num" data-label="Success">100.0%</td>
+   <td class="num" data-label="PAR-2">2885</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/sella.html">Sella</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:62.4396%"><i></i></span><span class="bar-num">31447.3</span></td>
+   <td class="num" data-label="Median">31447.3</td>
+   <td class="num" data-label="Success">100.0%</td>
+   <td class="num" data-label="PAR-2">31447.3</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/pele.html">pele</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:68.0991%"><i></i></span><span class="bar-num">52961.9</span></td>
+   <td class="num" data-label="Median">52961.9</td>
+   <td class="num" data-label="Success">94.1%</td>
+   <td class="num" data-label="PAR-2">52961.9</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/compass.html">COMPASS</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:75.0899%"><i></i></span><span class="bar-num">100831</span></td>
+   <td class="num" data-label="Median">100831</td>
+   <td class="num" data-label="Success">80.4%</td>
+   <td class="num" data-label="PAR-2">100831</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">7</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/rgsaddle.html">rgsaddle</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:85.6308%"><i></i></span><span class="bar-num">266216</span></td>
+   <td class="num" data-label="Median">417164</td>
+   <td class="num" data-label="Success">47.1%</td>
+   <td class="num" data-label="PAR-2">266216</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">8</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/geodesic.html">geodesic</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:90.3751%"><i></i></span><span class="bar-num">412102</span></td>
+   <td class="num" data-label="Median">412455</td>
+   <td class="num" data-label="Success">17.6%</td>
+   <td class="num" data-label="PAR-2">412102</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">9</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/ase.html">ASE</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:91.1905%"><i></i></span><span class="bar-num">444244</span></td>
+   <td class="num" data-label="Median">444244</td>
+   <td class="num" data-label="Success">11.8%</td>
+   <td class="num" data-label="PAR-2">444244</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">10</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/tsase.html">TSASE</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:91.3725%"><i></i></span><span class="bar-num">451753</span></td>
+   <td class="num" data-label="Median">475877</td>
+   <td class="num" data-label="Success">9.8%</td>
+   <td class="num" data-label="PAR-2">451753</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank">11</span></td>
+   <td class="problem" data-label="Problem"><a href="double-ended-saddle-search/lj38_2ts_separation.html">Lennard-Jones 38 transition-state separation</a></td>
+   <td class="code" data-label="Code"><a href="../codes/lammps.html">LAMMPS</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:91.3775%"><i></i></span><span class="bar-num">451959</span></td>
+   <td class="num" data-label="Median">475980</td>
+   <td class="num" data-label="Success">9.8%</td>
+   <td class="num" data-label="PAR-2">451959</td>
    </tr>
    <tr class="is-best group-start">
    <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>

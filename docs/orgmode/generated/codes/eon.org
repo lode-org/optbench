@@ -114,10 +114,10 @@
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
    <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
-   <tr data-problem="accelerated-md/aladatom" data-label="eOn (develop 80e94f88) (3.6.0) · parallel replica">
+   <tr data-problem="accelerated-md/aladatom" data-label="eOn (develop 80e94f88, 3.6.0) · parallel replica">
    <td data-label="Suite">Accelerated molecular dynamics</td>
    <td data-label="Problem"><a href="../suites/accelerated-md/aladatom.html">Al adatom on Al(100) at 185 K</a></td>
-   <td data-label="Row" data-field="label">eOn (develop 80e94f88) (3.6.0) · parallel replica</td>
+   <td data-label="Row" data-field="label">eOn (develop 80e94f88, 3.6.0) · parallel replica</td>
    <td data-label="Family" data-field="family">Minimizers</td>
    <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">force calls</td>
@@ -242,10 +242,10 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 3, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/lj38" data-label="eOn (develop f6817b53) (3.6.0) · CI-NEB lj/cut">
+   <tr data-problem="double-ended-saddle-search/lj38" data-label="eOn (develop f6817b53, 3.6.0) · CI-NEB lj/cut">
    <td data-label="Suite">Double-ended saddle search</td>
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
-   <td data-label="Row" data-field="label">eOn (develop f6817b53) (3.6.0) · CI-NEB lj/cut</td>
+   <td data-label="Row" data-field="label">eOn (develop f6817b53, 3.6.0) · CI-NEB lj/cut</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
    <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">force calls</td>
@@ -258,10 +258,10 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 4, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/lj38" data-label="eOn ((develop 500350d9) · Doubly nudged CI-NEB) · Doubly nudged CI-NEB">
+   <tr data-problem="double-ended-saddle-search/lj38" data-label="eOn (develop 500350d9) · Doubly nudged CI-NEB">
    <td data-label="Suite">Double-ended saddle search</td>
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
-   <td data-label="Row" data-field="label">eOn ((develop 500350d9) · Doubly nudged CI-NEB) · Doubly nudged CI-NEB</td>
+   <td data-label="Row" data-field="label">eOn (develop 500350d9) · Doubly nudged CI-NEB</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
    <td data-label="Family rank" data-field="family_rank">6</td>
    <td data-label="Unit" data-field="unit">force calls</td>
@@ -327,7 +327,7 @@
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
    <td data-label="Row" data-field="label">eOn (3.6.0) · energy-weighted CI-NEB</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
-   <td data-label="Family rank" data-field="family_rank">25</td>
+   <td data-label="Family rank" data-field="family_rank">24</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">5000</td>
    <td data-label="Published" data-field="published"></td>
@@ -658,10 +658,10 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 42, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">51</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/pt-island" data-label="eOn (eOn (develop 500350d9)) · Lanczos improved L-BFGS">
+   <tr data-problem="double-ended-saddle-search/pt-island" data-label="eOn (develop 500350d9) · Lanczos improved L-BFGS">
    <td data-label="Suite">Double-ended saddle search</td>
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
-   <td data-label="Row" data-field="label">eOn (eOn (develop 500350d9)) · Lanczos improved L-BFGS</td>
+   <td data-label="Row" data-field="label">eOn (develop 500350d9) · Lanczos improved L-BFGS</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
    <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">force calls</td>
@@ -674,10 +674,10 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">59</td>
    </tr>
-   <tr data-problem="double-ended-saddle-search/pt-island" data-label="eOn (eOn (develop 500350d9)) · CI-NEB">
+   <tr data-problem="double-ended-saddle-search/pt-island" data-label="eOn (develop 500350d9) · CI-NEB">
    <td data-label="Suite">Double-ended saddle search</td>
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/pt-island.html">Pt heptamer island</a></td>
-   <td data-label="Row" data-field="label">eOn (eOn (develop 500350d9)) · CI-NEB</td>
+   <td data-label="Row" data-field="label">eOn (develop 500350d9) · CI-NEB</td>
    <td data-label="Family" data-field="family">Band / NEB</td>
    <td data-label="Family rank" data-field="family_rank">6</td>
    <td data-label="Unit" data-field="unit">force calls</td>
@@ -722,12 +722,12 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 24, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">59</td>
    </tr>
-   <tr data-problem="globalopt/lj100-binary" data-label="eOn (develop b0bd4d5a) (3.6.0) · Basin hopping">
+   <tr data-problem="globalopt/lj100-binary" data-label="eOn (develop b0bd4d5a, 3.6.0) · Basin hopping">
    <td data-label="Suite">Global optimization</td>
    <td data-label="Problem"><a href="../suites/globalopt/lj100-binary.html">Binary Lennard-Jones 100</a></td>
-   <td data-label="Row" data-field="label">eOn (develop b0bd4d5a) (3.6.0) · Basin hopping</td>
+   <td data-label="Row" data-field="label">eOn (develop b0bd4d5a, 3.6.0) · Basin hopping</td>
    <td data-label="Family" data-field="family">Basin hopping / global</td>
-   <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">4e+06</td>
    <td data-label="Published" data-field="published"></td>
@@ -754,12 +754,12 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">100</td>
    </tr>
-   <tr data-problem="hTST/Al" data-label="eOn (develop 500350d9) (500350d9) · Dimer-CG rotation: max=50 tol=1">
+   <tr data-problem="hTST/Al" data-label="eOn (develop 500350d9) · Dimer-CG rotation: max=50 tol=1">
    <td data-label="Suite">Harmonic transition state theory</td>
    <td data-label="Problem"><a href="../suites/hTST/Al.html">EAM aluminum</a></td>
-   <td data-label="Row" data-field="label">eOn (develop 500350d9) (500350d9) · Dimer-CG rotation: max=50 tol=1</td>
+   <td data-label="Row" data-field="label">eOn (develop 500350d9) · Dimer-CG rotation: max=50 tol=1</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">4</td>
+   <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
    <td data-label="Published" data-field="published"></td>
@@ -807,7 +807,7 @@
    <td data-label="Problem"><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-label="Row" data-field="label">eOn (3.5.0) · Lanczos CG</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">5</td>
+   <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">26.385</td>
    <td data-label="Published" data-field="published"></td>
@@ -823,7 +823,7 @@
    <td data-label="Problem"><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-label="Row" data-field="label">eOn (3.6.0) · Lanczos</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">6</td>
+   <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">26.385</td>
    <td data-label="Published" data-field="published"></td>
@@ -834,12 +834,12 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">200</td>
    </tr>
-   <tr data-problem="lowest-eigenvector/lj38" data-label="eOn (develop f6817b53) (3.6.0) · Lanczos">
+   <tr data-problem="lowest-eigenvector/lj38" data-label="eOn (develop f6817b53, 3.6.0) · Lanczos">
    <td data-label="Suite">Lowest eigenvector</td>
    <td data-label="Problem"><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
-   <td data-label="Row" data-field="label">eOn (develop f6817b53) (3.6.0) · Lanczos</td>
+   <td data-label="Row" data-field="label">eOn (develop f6817b53, 3.6.0) · Lanczos</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">7</td>
+   <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">26.385</td>
    <td data-label="Published" data-field="published"></td>
@@ -850,10 +850,10 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">200</td>
    </tr>
-   <tr data-problem="lowest-eigenvector/lj38" data-label="eOn (eOn (develop 500350d9)) · Lanczos">
+   <tr data-problem="lowest-eigenvector/lj38" data-label="eOn (develop 500350d9) · Lanczos">
    <td data-label="Suite">Lowest eigenvector</td>
    <td data-label="Problem"><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
-   <td data-label="Row" data-field="label">eOn (eOn (develop 500350d9)) · Lanczos</td>
+   <td data-label="Row" data-field="label">eOn (develop 500350d9) · Lanczos</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
    <td data-label="Family rank" data-field="family_rank">9</td>
    <td data-label="Unit" data-field="unit">force calls</td>
@@ -871,7 +871,7 @@
    <td data-label="Problem"><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-label="Row" data-field="label">eOn (3.5.0) · Dimer L-BFGS</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">13</td>
+   <td data-label="Family rank" data-field="family_rank">12</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">28.33</td>
    <td data-label="Published" data-field="published"></td>
@@ -882,10 +882,10 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">200</td>
    </tr>
-   <tr data-problem="lowest-eigenvector/lj38" data-label="eOn (eOn (develop 500350d9)) · Dimer">
+   <tr data-problem="lowest-eigenvector/lj38" data-label="eOn (develop 500350d9) · Dimer">
    <td data-label="Suite">Lowest eigenvector</td>
    <td data-label="Problem"><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
-   <td data-label="Row" data-field="label">eOn (eOn (develop 500350d9)) · Dimer</td>
+   <td data-label="Row" data-field="label">eOn (develop 500350d9) · Dimer</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
    <td data-label="Family rank" data-field="family_rank">16</td>
    <td data-label="Unit" data-field="unit">force calls</td>
@@ -903,7 +903,7 @@
    <td data-label="Problem"><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-label="Row" data-field="label">eOn (3.5.0) · Dimer CG</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">18</td>
+   <td data-label="Family rank" data-field="family_rank">17</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">30.355</td>
    <td data-label="Published" data-field="published"></td>
@@ -919,7 +919,7 @@
    <td data-label="Problem"><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-label="Row" data-field="label">eOn (3.6.0) · Dimer</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">19</td>
+   <td data-label="Family rank" data-field="family_rank">17</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">30.355</td>
    <td data-label="Published" data-field="published"></td>
@@ -983,7 +983,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">eOn (develop 500350d9) · SD</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">48</td>
+   <td data-label="Family rank" data-field="family_rank">47</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">122</td>
    <td data-label="Published" data-field="published"></td>
@@ -994,10 +994,10 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">100</td>
    </tr>
-   <tr data-problem="neb/Pt-heptamer" data-label="eOn ((develop 500350d9) · LBFGS) · LBFGS">
+   <tr data-problem="neb/Pt-heptamer" data-label="eOn (develop 500350d9) · LBFGS">
    <td data-label="Suite">Nudged elastic band</td>
    <td data-label="Problem"><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
-   <td data-label="Row" data-field="label">eOn ((develop 500350d9) · LBFGS) · LBFGS</td>
+   <td data-label="Row" data-field="label">eOn (develop 500350d9) · LBFGS</td>
    <td data-label="Family" data-field="family">Connect / double-ended</td>
    <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">force calls per band</td>
@@ -1010,28 +1010,12 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">13</td>
    </tr>
-   <tr data-problem="neb/Pt-heptamer" data-label="eOn (eOn (develop 500350d9)) · LBFGS">
+   <tr data-problem="neb/Pt-heptamer" data-label="eOn (develop 500350d9) · FIRE">
    <td data-label="Suite">Nudged elastic band</td>
    <td data-label="Problem"><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
-   <td data-label="Row" data-field="label">eOn (eOn (develop 500350d9)) · LBFGS</td>
+   <td data-label="Row" data-field="label">eOn (develop 500350d9) · FIRE</td>
    <td data-label="Family" data-field="family">Connect / double-ended</td>
-   <td data-label="Family rank" data-field="family_rank">2</td>
-   <td data-label="Unit" data-field="unit">force calls per band</td>
-   <td data-label="PAR-2" data-field="par2_mean">319.538</td>
-   <td data-label="Published" data-field="published"></td>
-   <td data-label="Median calls" data-field="median_calls">330</td>
-   <td data-label="Mean calls" data-field="mean_calls">319.538</td>
-   <td data-label="Hessians" data-field="hessian_calls">0</td>
-   <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-label="Runs" data-field="n">13</td>
-   </tr>
-   <tr data-problem="neb/Pt-heptamer" data-label="eOn ((develop 500350d9) · FIRE) · FIRE">
-   <td data-label="Suite">Nudged elastic band</td>
-   <td data-label="Problem"><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
-   <td data-label="Row" data-field="label">eOn ((develop 500350d9) · FIRE) · FIRE</td>
-   <td data-label="Family" data-field="family">Connect / double-ended</td>
-   <td data-label="Family rank" data-field="family_rank">6</td>
+   <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">force calls per band</td>
    <td data-label="PAR-2" data-field="par2_mean">678.923</td>
    <td data-label="Published" data-field="published"></td>
@@ -1042,12 +1026,12 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">13</td>
    </tr>
-   <tr data-problem="neb/Pt-heptamer" data-label="eOn (develop f6817b53) (3.6.0) · CG">
+   <tr data-problem="neb/Pt-heptamer" data-label="eOn (develop f6817b53, 3.6.0) · CG">
    <td data-label="Suite">Nudged elastic band</td>
    <td data-label="Problem"><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
-   <td data-label="Row" data-field="label">eOn (develop f6817b53) (3.6.0) · CG</td>
+   <td data-label="Row" data-field="label">eOn (develop f6817b53, 3.6.0) · CG</td>
    <td data-label="Family" data-field="family">Connect / double-ended</td>
-   <td data-label="Family rank" data-field="family_rank">7</td>
+   <td data-label="Family rank" data-field="family_rank">6</td>
    <td data-label="Unit" data-field="unit">force calls per band</td>
    <td data-label="PAR-2" data-field="par2_mean">727.538</td>
    <td data-label="Published" data-field="published"></td>
@@ -1063,7 +1047,7 @@
    <td data-label="Problem"><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">eOn (SVN r2549) · CG</td>
    <td data-label="Family" data-field="family">Connect / double-ended</td>
-   <td data-label="Family rank" data-field="family_rank">8</td>
+   <td data-label="Family rank" data-field="family_rank">7</td>
    <td data-label="Unit" data-field="unit">force calls per band</td>
    <td data-label="PAR-2" data-field="par2_mean">929.385</td>
    <td data-label="Published" data-field="published"></td>
@@ -1074,44 +1058,28 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
    <td data-label="Runs" data-field="n">13</td>
    </tr>
-   <tr data-problem="neb/Pt-heptamer" data-label="eOn ((develop 500350d9) · CG) · CG">
+   <tr data-problem="neb/Pt-heptamer" data-label="eOn (develop 500350d9) · CG">
    <td data-label="Suite">Nudged elastic band</td>
    <td data-label="Problem"><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
-   <td data-label="Row" data-field="label">eOn ((develop 500350d9) · CG) · CG</td>
+   <td data-label="Row" data-field="label">eOn (develop 500350d9) · CG</td>
+   <td data-label="Family" data-field="family">Connect / double-ended</td>
+   <td data-label="Family rank" data-field="family_rank">8</td>
+   <td data-label="Unit" data-field="unit">force calls per band</td>
+   <td data-label="PAR-2" data-field="par2_mean">1141.08</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">778</td>
+   <td data-label="Mean calls" data-field="mean_calls">1141.08</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
+   <td data-label="Runs" data-field="n">13</td>
+   </tr>
+   <tr data-problem="neb/Pt-heptamer" data-label="eOn (develop 500350d9) · QuickMin">
+   <td data-label="Suite">Nudged elastic band</td>
+   <td data-label="Problem"><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
+   <td data-label="Row" data-field="label">eOn (develop 500350d9) · QuickMin</td>
    <td data-label="Family" data-field="family">Connect / double-ended</td>
    <td data-label="Family rank" data-field="family_rank">9</td>
-   <td data-label="Unit" data-field="unit">force calls per band</td>
-   <td data-label="PAR-2" data-field="par2_mean">1141.08</td>
-   <td data-label="Published" data-field="published"></td>
-   <td data-label="Median calls" data-field="median_calls">778</td>
-   <td data-label="Mean calls" data-field="mean_calls">1141.08</td>
-   <td data-label="Hessians" data-field="hessian_calls">0</td>
-   <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-label="Runs" data-field="n">13</td>
-   </tr>
-   <tr data-problem="neb/Pt-heptamer" data-label="eOn (eOn (develop 500350d9)) · CG">
-   <td data-label="Suite">Nudged elastic band</td>
-   <td data-label="Problem"><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
-   <td data-label="Row" data-field="label">eOn (eOn (develop 500350d9)) · CG</td>
-   <td data-label="Family" data-field="family">Connect / double-ended</td>
-   <td data-label="Family rank" data-field="family_rank">10</td>
-   <td data-label="Unit" data-field="unit">force calls per band</td>
-   <td data-label="PAR-2" data-field="par2_mean">1141.08</td>
-   <td data-label="Published" data-field="published"></td>
-   <td data-label="Median calls" data-field="median_calls">778</td>
-   <td data-label="Mean calls" data-field="mean_calls">1141.08</td>
-   <td data-label="Hessians" data-field="hessian_calls">0</td>
-   <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0</td>
-   <td data-label="Runs" data-field="n">13</td>
-   </tr>
-   <tr data-problem="neb/Pt-heptamer" data-label="eOn ((develop 500350d9) · QuickMin) · QuickMin">
-   <td data-label="Suite">Nudged elastic band</td>
-   <td data-label="Problem"><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
-   <td data-label="Row" data-field="label">eOn ((develop 500350d9) · QuickMin) · QuickMin</td>
-   <td data-label="Family" data-field="family">Connect / double-ended</td>
-   <td data-label="Family rank" data-field="family_rank">12</td>
    <td data-label="Unit" data-field="unit">force calls per band</td>
    <td data-label="PAR-2" data-field="par2_mean">1322</td>
    <td data-label="Published" data-field="published"></td>
@@ -1127,7 +1095,7 @@
    <td data-label="Problem"><a href="../suites/neb/Pt-heptamer.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">eOn (3.6.0) · LBFGS</td>
    <td data-label="Family" data-field="family">Connect / double-ended</td>
-   <td data-label="Family rank" data-field="family_rank">13</td>
+   <td data-label="Family rank" data-field="family_rank">11</td>
    <td data-label="Unit" data-field="unit">force calls per band</td>
    <td data-label="PAR-2" data-field="par2_mean">3517.69</td>
    <td data-label="Published" data-field="published"></td>
@@ -1159,7 +1127,7 @@
    <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">eOn (develop b0bd4d5a) · Dimer</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">7</td>
+   <td data-label="Family rank" data-field="family_rank">6</td>
    <td data-label="Unit" data-field="unit">force calls per search</td>
    <td data-label="PAR-2" data-field="par2_mean">2e+08</td>
    <td data-label="Published" data-field="published"></td>
@@ -1175,7 +1143,7 @@
    <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">eOn (develop b0bd4d5a) · Lanczos</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">8</td>
+   <td data-label="Family rank" data-field="family_rank">6</td>
    <td data-label="Unit" data-field="unit">force calls per search</td>
    <td data-label="PAR-2" data-field="par2_mean">2e+08</td>
    <td data-label="Published" data-field="published"></td>

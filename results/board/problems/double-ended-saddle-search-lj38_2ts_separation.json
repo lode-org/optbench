@@ -2476,7 +2476,7 @@
         "wrong_stationary": 4
       },
       "family": "band",
-      "family_rank": 26,
+      "family_rank": 25,
       "fd_calls": 0.0,
       "full_n": 51,
       "hessian_calls": 0.0,
@@ -2528,7 +2528,7 @@
         "wrong_stationary": 0
       },
       "family": "band",
-      "family_rank": 27,
+      "family_rank": 25,
       "fd_calls": 0.0,
       "full_n": 51,
       "hessian_calls": 0.0,
@@ -2580,7 +2580,7 @@
         "wrong_stationary": 3
       },
       "family": "band",
-      "family_rank": 28,
+      "family_rank": 25,
       "fd_calls": 0.0,
       "full_n": 51,
       "hessian_calls": 0.0,
@@ -2639,7 +2639,7 @@
       "full_n": 51,
       "hessian_calls": 0.0,
       "kind": "de-2ts-mode",
-      "label": "eOn (eOn (develop 500350d9)) \u00b7 Lanczos improved L-BFGS",
+      "label": "eOn (develop 500350d9) \u00b7 Lanczos improved L-BFGS",
       "max_calls": 616.0,
       "mean_calls": 65.45098039215686,
       "mean_per_image": 13.090196078431372,

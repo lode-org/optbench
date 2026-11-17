@@ -100,7 +100,7 @@
    <td class="num" data-label="PAR-2">20000</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">9</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">8</span></td>
    <td class="code" data-label="Code"><a href="../../codes/tsase.html">TSASE</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:82.5257%"><i></i></span><span class="bar-num">20000</span></td>
    <td class="num" data-label="Median">20000</td>

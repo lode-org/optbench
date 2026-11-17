@@ -1062,7 +1062,7 @@
         "wrong_stationary": 0
       },
       "family": "min-mode",
-      "family_rank": 7,
+      "family_rank": 6,
       "fd_calls": 0.0,
       "full_n": null,
       "hessian_calls": 0.0,
@@ -1114,7 +1114,7 @@
         "wrong_stationary": 0
       },
       "family": "min-mode",
-      "family_rank": 8,
+      "family_rank": 6,
       "fd_calls": 0.0,
       "full_n": null,
       "hessian_calls": 0.0,

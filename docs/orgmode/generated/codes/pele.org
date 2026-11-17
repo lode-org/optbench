@@ -103,7 +103,7 @@
    <td data-label="Problem"><a href="../suites/lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td data-label="Row" data-field="label">pele · hybrid eigenvector following</td>
    <td data-label="Family" data-field="family">Connect / double-ended</td>
-   <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">25</td>
    <td data-label="Published" data-field="published">25</td>
@@ -215,7 +215,7 @@
    <td data-label="Problem"><a href="../suites/minimization/lj38.html">Lennard-Jones 38 clusters</a></td>
    <td data-label="Row" data-field="label">pele (0.1.2) · steepest descent</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">74</td>
+   <td data-label="Family rank" data-field="family_rank">73</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">20000</td>
    <td data-label="Published" data-field="published"></td>
@@ -327,7 +327,7 @@
    <td data-label="Problem"><a href="../suites/minimization/morse-bulk.html">Morse bulk</a></td>
    <td data-label="Row" data-field="label">pele (0.1.2) · MYLBFGS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">38</td>
+   <td data-label="Family rank" data-field="family_rank">37</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">92.06</td>
    <td data-label="Published" data-field="published"></td>

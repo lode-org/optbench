@@ -27,24 +27,6 @@
    <thead><tr><th>Rank</th><th>Problem</th><th>Code</th><th title="Lowest cost for this code. A shorter bar is a lower cost on the shared log scale.">Best</th><th title="Median of this code&#x27;s costs on that problem.">Median</th><th title="Share of runs that finished.">Success</th><th title="Mean cost of the runs. A failure counts as twice the cap.">PAR-2</th></tr></thead><tbody>
    <tr class="is-best group-start">
    <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
-   <td class="problem" data-label="Problem"><a href="mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
-   <td class="code" data-label="Code"><a href="../codes/n2p2.html">n2p2</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:39.8287%"><i></i></span><span class="bar-num">25.02</span></td>
-   <td class="num" data-label="Median">30012.5</td>
-   <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">25.02</td>
-   </tr>
-   <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
-   <td class="problem" data-label="Problem"><a href="mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
-   <td class="code" data-label="Code"><a href="../codes/pyamff.html">PyAMFF</a></td>
-   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:95.9232%"><i></i></span><span class="bar-num">91.04</span></td>
-   <td class="num" data-label="Median">1429.77</td>
-   <td class="num" data-label="Success">100.0%</td>
-   <td class="num" data-label="PAR-2">91.04</td>
-   </tr>
-   <tr class="is-best group-start">
-   <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
    <td class="problem" data-label="Problem"><a href="mlopt/C2H4.html">Ethene</a></td>
    <td class="code" data-label="Code"><a href="../codes/pyamff.html">PyAMFF</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:9.3693%"><i></i></span><span class="bar-num">191.02</span></td>
@@ -60,6 +42,24 @@
    <td class="num" data-label="Median">38698.6</td>
    <td class="num" data-label="Success">20.0%</td>
    <td class="num" data-label="PAR-2">17397.1</td>
+   </tr>
+   <tr class="is-best group-start">
+   <td class="rank-cell" data-label="Rank"><span class="rank r1">1</span></td>
+   <td class="problem" data-label="Problem"><a href="mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
+   <td class="code" data-label="Code"><a href="../codes/n2p2.html">n2p2</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:39.8287%"><i></i></span><span class="bar-num">25.02</span></td>
+   <td class="num" data-label="Median">30012.5</td>
+   <td class="num" data-label="Success">100.0%</td>
+   <td class="num" data-label="PAR-2">25.02</td>
+   </tr>
+   <tr>
+   <td class="rank-cell" data-label="Rank"><span class="rank r2">2</span></td>
+   <td class="problem" data-label="Problem"><a href="mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
+   <td class="code" data-label="Code"><a href="../codes/pyamff.html">PyAMFF</a></td>
+   <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:95.9232%"><i></i></span><span class="bar-num">91.04</span></td>
+   <td class="num" data-label="Median">1429.77</td>
+   <td class="num" data-label="Success">100.0%</td>
+   <td class="num" data-label="PAR-2">91.04</td>
    </tr>
    </tbody></table></div>
    <h2>Problems</h2>

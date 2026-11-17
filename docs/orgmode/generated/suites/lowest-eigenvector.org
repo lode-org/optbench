@@ -52,7 +52,7 @@
    <td class="num" data-label="PAR-2">25</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">4</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
    <td class="problem" data-label="Problem"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/pele.html">pele</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:9.9485%"><i></i></span><span class="bar-num">25</span></td>
@@ -61,7 +61,7 @@
    <td class="num" data-label="PAR-2">25</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">5</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank r3">3</span></td>
    <td class="problem" data-label="Problem"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/tsase.html">TSASE</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:9.9485%"><i></i></span><span class="bar-num">25</span></td>
@@ -79,7 +79,7 @@
    <td class="num" data-label="PAR-2">26.385</td>
    </tr>
    <tr>
-   <td class="rank-cell" data-label="Rank"><span class="rank">7</span></td>
+   <td class="rank-cell" data-label="Rank"><span class="rank">6</span></td>
    <td class="problem" data-label="Problem"><a href="lowest-eigenvector/lj38.html">Lennard-Jones 38</a></td>
    <td class="code" data-label="Code"><a href="../codes/eon-svn.html">Eon svn</a></td>
    <td class="num best" data-label="Best"><span class="bar" aria-hidden="true" style="--w:10.5339%"><i></i></span><span class="bar-num">26.385</span></td>

@@ -241,26 +241,26 @@ L 507.6 26.16
    </g>
    <g id="legend_1">
     <g id="line2d_19">
-     <path d="M 284.31625 237.355156 
-L 292.31625 237.355156 
-L 292.31625 237.355156 
-L 300.31625 237.355156 
-L 300.31625 237.355156 
+     <path d="M 288.01625 237.355156 
+L 296.01625 237.355156 
+L 296.01625 237.355156 
+L 304.01625 237.355156 
+L 304.01625 237.355156 
 " style="fill: none; stroke: #0f6e6e; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_15">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="306.71625" y="240.155156" transform="rotate(-0 306.71625 240.155156)">EON (SVN r2549) (r2549) · parallel replica</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="310.41625" y="240.155156" transform="rotate(-0 310.41625 240.155156)">EON (SVN r2549) · parallel replica</text>
     </g>
     <g id="line2d_20">
-     <path d="M 284.31625 249.355781 
-L 292.31625 249.355781 
-L 292.31625 249.355781 
-L 300.31625 249.355781 
-L 300.31625 249.355781 
+     <path d="M 288.01625 249.355781 
+L 296.01625 249.355781 
+L 296.01625 249.355781 
+L 304.01625 249.355781 
+L 304.01625 249.355781 
 " style="fill: none; stroke: #9a3412; stroke-width: 1.5; stroke-linecap: square"/>
     </g>
     <g id="text_16">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="306.71625" y="252.155781" transform="rotate(-0 306.71625 252.155781)">eOn (develop 80e94f88) (3.6.0) · parallel replica</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="310.41625" y="252.155781" transform="rotate(-0 310.41625 252.155781)">eOn (develop 80e94f88, 3.6.0) · parallel replica</text>
     </g>
    </g>
   </g>
