@@ -19,8 +19,10 @@ import importlib.util
 import json
 import math
 import signal
+import types
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 # OptKing opens a log file in the working directory when it is imported, so
@@ -29,6 +31,7 @@ for _name in ("optking", "qcelemental"):
     if importlib.util.find_spec(_name) is None:
         pytest.skip(f"{_name} is in the campaign group of the lockfile", allow_module_level=True)
 
+from optbench.counter import ForceCallCap
 from optbench.runners import optking_ts
 
 LJ = {"kind": "lennard-jones", "epsilon": 1.0, "sigma": 1.0, "rc": 40.0}
@@ -285,3 +288,120 @@ def test_a_run_over_the_three_stationary_starts_scores_a_wrong_point_as_a_legacy
         ("initial_1", "wrong_stationary", 0),
         ("initial_2", "wrong_stationary", 2),
     ]
+
+
+@pytest.fixture
+def library(tmp_path_factory, monkeypatch):
+    """The classes of OptKing the search drives. Importing it opens a log file in the working directory."""
+    monkeypatch.chdir(tmp_path_factory.mktemp("first_import"))
+    from optking.exceptions import AlgError, OptError
+    from optking.opt_helper import CustomHelper
+
+    return types.SimpleNamespace(helper=CustomHelper, optimizer_error=OptError, algorithm_error=AlgError)
+
+
+def _raising(monkeypatch, library, name: str, error: Exception) -> None:
+    def raises(self, *args, **kwargs):
+        raise error
+
+    monkeypatch.setattr(library.helper, name, raises)
+
+
+def _near_energy(half_gap: float = 1.5) -> float:
+    left = math.dist(NEAR, (-half_gap, 0.0, 0.0))
+    right = math.dist(NEAR, (half_gap, 0.0, 0.0))
+    return _u(left) + _u(right) + _u(2.0 * half_gap)
+
+
+def test_a_potential_with_no_finite_energy_at_the_start_is_a_divergence_after_one_call(tmp_path):
+    record = optking_ts.search_start(_job(tmp_path, 3.5, NEAR, potential=dict(MORSE, D=float("nan"))))
+    assert (record["success"], record["failure"], record["reasons"]) == (False, "divergence", ["divergence"])
+    assert (record["force_calls"], record["steps"], record["hessian_calls"]) == (1, 0, 0)
+    assert record["energy"] is None and record["force_norm"] is None
+    assert "error" not in record
+
+
+def test_a_search_given_no_calls_spends_none_and_does_not_succeed(tmp_path):
+    record = optking_ts.search_start(_job(tmp_path, 1.5, NEAR, cap=0))
+    assert record["success"] is False
+    assert (record["force_calls"], record["steps"], record["hessian_calls"]) == (0, 0, 0)
+    assert record["energy"] is None and record["hessian_index"] is None
+
+
+@pytest.mark.filterwarnings("ignore:invalid value encountered:RuntimeWarning")
+def test_a_long_search_leaves_a_note_of_where_it_is_every_25_steps(tmp_path, monkeypatch):
+    short = optking_ts.search_start(_job(tmp_path / "short", 1.5, NEAR))
+    assert short["success"] is True and short["steps"] < 25
+    assert not (tmp_path / "short" / "scratch" / "progress.txt").exists()
+    monkeypatch.setattr(optking_ts, "STALL_STEPS", 30)
+    record = optking_ts.search_start(_job(tmp_path / "long", 1.5, NEAR, gtol=0.0))
+    assert record["failure"] == "divergence" and 25 < record["steps"] < 50
+    words = (tmp_path / "long" / "scratch" / "progress.txt").read_text(encoding="utf-8").split()
+    assert words[:3] == ["steps", "25", "calls"] and words[4] == "force"
+    assert int(words[3]) <= record["force_calls"]
+    assert float(words[5]) == record["force_norm"] < 1.0e-8
+
+
+@pytest.mark.parametrize(
+    ("error", "named"),
+    [
+        ("optimizer_error", "OptError: the step failed"),
+        ("algorithm_error", "AlgError: no rational function step"),
+        ("value", "ValueError: the step is not a number"),
+        ("linalg", "LinAlgError: singular matrix"),
+    ],
+)
+def test_an_error_the_library_raises_on_a_step_is_a_crash_that_names_it_and_keeps_the_start(
+    tmp_path, monkeypatch, library, error, named
+):
+    errors = {
+        "optimizer_error": library.optimizer_error("the step failed"),
+        "algorithm_error": library.algorithm_error("no rational function step"),
+        "value": ValueError("the step is not a number"),
+        "linalg": np.linalg.LinAlgError("singular matrix"),
+    }
+    _raising(monkeypatch, library, "take_step", errors[error])
+    record = optking_ts.search_start(_job(tmp_path, 1.5, NEAR))
+    assert (record["success"], record["failure"], record["reasons"]) == (False, "crash", ["crash"])
+    assert record["error"] == named
+    assert (record["force_calls"], record["hessian_calls"], record["steps"]) == (1 + 2 * 3, 1, 0)
+    assert record["energy"] == pytest.approx(_near_energy(), abs=1e-12)
+
+
+def test_the_librarys_own_step_limit_is_a_cap_only_when_the_budget_is_spent(tmp_path, monkeypatch, library):
+    _raising(monkeypatch, library, "take_step", library.optimizer_error("Maximum number of steps exceeded"))
+    spent_by_the_stencil = 1 + 2 * 3
+    roomy = optking_ts.search_start(_job(tmp_path / "roomy", 1.5, NEAR))
+    assert (roomy["failure"], roomy["reasons"], roomy["force_calls"]) == ("divergence", ["divergence"], spent_by_the_stencil)
+    exact = optking_ts.search_start(_job(tmp_path / "exact", 1.5, NEAR, cap=spent_by_the_stencil))
+    assert (exact["failure"], exact["reasons"], exact["force_calls"]) == ("cap", ["cap"], spent_by_the_stencil)
+    assert "error" not in roomy and "error" not in exact
+
+
+@pytest.mark.parametrize(("name", "calls"), [("take_step", 1 + 2 * 3), ("calculations_needed", 1)])
+def test_a_budget_error_raised_by_the_library_is_a_cap_whichever_call_raises_it(
+    tmp_path, monkeypatch, library, name, calls
+):
+    _raising(monkeypatch, library, name, ForceCallCap("budget"))
+    record = optking_ts.search_start(_job(tmp_path, 1.5, NEAR))
+    assert (record["success"], record["failure"], record["reasons"]) == (False, "cap", ["cap"])
+    assert record["force_calls"] == calls
+    assert record["energy"] == pytest.approx(_near_energy(), abs=1e-12)
+    assert "error" not in record
+
+
+@pytest.mark.parametrize("moved", ["shifted", "wrong size"])
+def test_a_library_that_changes_the_input_before_the_first_step_is_a_crash_with_no_force_call(
+    tmp_path, monkeypatch, library, moved
+):
+    opened = library.helper.geom
+    shapes = {
+        "shifted": lambda self: np.asarray(opened.fget(self), dtype=float) + 1.0e-3,
+        "wrong size": lambda self: np.zeros(6),
+    }
+    monkeypatch.setattr(library.helper, "geom", property(shapes[moved]))
+    record = optking_ts.search_start(_job(tmp_path, 1.5, NEAR))
+    assert (record["success"], record["failure"]) == (False, "crash")
+    assert record["error"] == "RuntimeError: OptKing moved the input coordinates before the first step"
+    assert (record["force_calls"], record["steps"], record["hessian_calls"]) == (0, 0, 0)
+    assert record["energy"] is None
