@@ -315,6 +315,23 @@ def test_a_success_at_the_cap_is_not_a_success_and_a_failure_keeps_why_it_failed
     ]
 
 
+def test_the_entry_id_of_a_template_is_the_name_of_its_published_campaign_file():
+    from optbench.campaign import list_templates
+
+    published: dict[str, list[str]] = {}
+    for path in sorted((ROOT / "results" / "campaign").glob("*.dat")):
+        fields, _duplicates = parse_lenient(path.read_text(encoding="utf-8"))
+        if "template" in fields:
+            published.setdefault(fields["template"], []).append(path.stem)
+    checked = []
+    for template in list_templates(ROOT):
+        family = template["engine"] in {"ase", "sella"} or ase_sella._geodesic_ase(template)
+        if family and len(published.get(template["id"], [])) == 1:
+            assert entry_id(template) == published[template["id"]][0], template["id"]
+            checked.append(template["id"])
+    assert {name.split("/")[0] for name in checked} >= {"ase", "geodesic"}
+
+
 def test_the_cap_is_the_raw_harness_budget():
     assert raw_cap({"stop": {"max_force_calls": 2500}}) == 2500
     assert raw_cap(load_template(ROOT, "ase/de-lj38-default")) == 2500

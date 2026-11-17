@@ -292,7 +292,10 @@ def _geodesic_ase(template: dict) -> bool:
 
 
 def entry_id(template: dict) -> str:
-    prefix = "ase" if template["engine"] == "ase" else "sella"
+    if _geodesic_ase(template):
+        prefix = "geodesic"
+    else:
+        prefix = "ase" if template["engine"] == "ase" else "sella"
     rest = template["id"].split("/", 1)[1]
     return f"{prefix}-{template['code_version']}-{rest}"
 
