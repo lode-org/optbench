@@ -101,6 +101,13 @@ def _job(**overrides) -> dict:
     return job
 
 
+def _absent(monkeypatch, library: str) -> None:
+    """Fail every import of the library, and of a module of it an earlier test loaded, as if it were not installed."""
+    loaded = [name for name in sys.modules if name == library or name.startswith(f"{library}.")]
+    for name in {*loaded, library}:
+        monkeypatch.setitem(sys.modules, name, None)
+
+
 def _observed(sigma: float, seed: int = 7, cap: int = 50):
     counter = HarnessCounter(cache=True, cap=cap)
     potential = RgpotCounter(lambda positions, _numbers=None, _box=None: lennard_jones(positions), counter)
@@ -413,7 +420,7 @@ def test_an_unknown_family_is_a_crash_that_names_it():
     ],
 )
 def test_a_family_without_its_library_is_a_crash_that_names_the_library(monkeypatch, family, method, module):
-    monkeypatch.setitem(sys.modules, module, None)
+    _absent(monkeypatch, module)
     record = noise_min._minimize_job(_job(family=family, method=method))
     assert record["failure"] == "crash"
     assert module in record["error"]
@@ -616,7 +623,7 @@ def test_a_pele_error_is_a_crash_unless_it_is_the_cap(monkeypatch):
 
 @pytest.mark.parametrize("method", ["newton", "dogleg", "rfo"])
 def test_an_exact_hessian_method_is_refused_under_noise_and_allowed_without_it(monkeypatch, method):
-    monkeypatch.setitem(sys.modules, "rgmin", None)
+    _absent(monkeypatch, "rgmin")
     with pytest.raises(ValueError, match="exact Hessian"):
         noise_min._minimize_job(_job(family="rgmin", method=method, sigma=1.0e-4))
     record = noise_min._minimize_job(_job(family="rgmin", method=method, sigma=0.0))
@@ -884,7 +891,7 @@ def test_a_resumed_run_keeps_the_rows_it_has_and_a_fresh_run_discards_them(tmp_p
 
 def test_a_run_of_starts_that_all_crash_still_writes_its_files_and_pays_twice_the_cap_for_each(tmp_path, monkeypatch):
     _starts(tmp_path / "cons")
-    monkeypatch.setitem(sys.modules, "sella", None)
+    _absent(monkeypatch, "sella")
     template = _template("sella")
     template["solver"] = {"family": "sella", "order": 0}
     summary = _run(tmp_path, template)
