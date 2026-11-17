@@ -283,6 +283,14 @@ def test_a_product_that_has_another_atom_set_than_the_reactant_is_refused(tmp_pa
         load_pairs(_archive(tmp_path, files), "con-reactant-products", None)
 
 
+def test_products_with_no_reactant_are_refused_by_name_like_an_empty_archive(tmp_path):
+    files = {"run/product_1.con": _island(shift=(1.3, 0.2, -0.1))}
+    with pytest.raises(ValueError, match=r"con-reactant-products .*reactant\.con"):
+        load_pairs(_archive(tmp_path, files), "con-reactant-products", None)
+    with pytest.raises(ValueError, match="con-reactant-products has no pairs"):
+        load_pairs(_archive(tmp_path, {"run/reactant.con": _island()}, "alone.tgz"), "con-reactant-products", None)
+
+
 def test_the_two_potentials_are_selected_by_name_and_an_unknown_one_is_named():
     coords = np.array([[0.0, 0.0, 0.0], [2.9, 0.0, 0.0], [1.4, 2.5, 0.0]])
     box = np.array([8.0, 8.0, 8.0])

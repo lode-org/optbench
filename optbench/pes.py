@@ -336,7 +336,9 @@ def _con_minima(texts: dict[str, str]) -> list[Pair]:
 
 
 def _con_reactant_products(texts: dict[str, str]) -> list[Pair]:
-    reactant_name = next(name for name in texts if Path(name).name == "reactant.con")
+    reactant_name = next((name for name in texts if Path(name).name == "reactant.con"), None)
+    if reactant_name is None:
+        raise ValueError("con-reactant-products has no reactant.con")
     reactant, free, box = read_con(texts[reactant_name])
     products = []
     for name, text in texts.items():
