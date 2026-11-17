@@ -526,6 +526,17 @@ def test_gmin_is_stopped_only_when_it_says_so_and_the_harness_agrees(monkeypatch
         assert record["converged"] is success
 
 
+def test_a_gmin_search_the_budget_refused_is_a_cap_failure_at_the_point_it_reached(monkeypatch):
+    point = _tetrahedron(shake=0.02)
+    monkeypatch.setattr("optbench.gmin_lbfgs.minimize", _gmin_double({}, capped=True))
+    record = noise_min._minimize_job(_job(family="gmin", coords=point))
+    assert record["failure"] == "cap"
+    assert record["reasons"] == ["cap"]
+    assert record["error"] == "ForceCallCap: force-call cap"
+    assert record["energy"] == pytest.approx(lennard_jones(point)[0])
+    assert isinstance(record["hessian_index"], int)
+
+
 def _vcsqnm_double(result: dict, seen: dict | None = None):
     def drive(coords, method, options, energy_and_gradient, ready, calls, cap, cell):
         if seen is not None:

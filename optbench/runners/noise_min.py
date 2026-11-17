@@ -396,6 +396,7 @@ def _drive_gmin(job, x0, observed, potential, cap, clean_tol, energy_tol, compon
         ready=ready,
     )
     if result.capped:
+        potential.last_point = [float(value) for value in result.coords]
         raise ForceCallCap("force-call cap")
     stopped = bool(result.mflag and result.info == 0 and observed.met(clean_tol, energy_tol, components))
     return [float(value) for value in result.coords], stopped
