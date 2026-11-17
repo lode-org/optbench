@@ -283,6 +283,12 @@ def test_the_hessian_probes_of_a_search_are_not_charged_to_it(search):
     assert record["force_calls"] == 12 + record["endpoint_calls"]
 
 
+def test_each_search_counts_the_hessian_probes_it_made_and_not_those_of_the_searches_before(search):
+    problem = _problem(goal={"connected_saddles": 5})
+    result, _climbs, _written = search(_climb(), _climb(mode=(0.0, 1.0, 0.0)), _climb(x=(4e-5, 0.0, 0.0)), problem=problem)
+    assert [record["verify_calls"] for record in result["records"]] == [2 * 3, 2 * 3, 2 * 3]
+
+
 def test_the_record_of_a_search_keeps_what_the_climb_reported(search):
     result, _climbs, _written = search(_climb(rotations=7, library_evaluations=41, steps=5, step_calls_max=9, curvature=-8.5))
     (record,) = result["records"]
@@ -875,12 +881,8 @@ def _checkpoint(written: Path) -> tuple[Path, Path]:
 
 
 def _outputs(written: Path) -> dict:
-    """What a run writes, less the Hessian probe count each row carries."""
     document = json.loads(written.with_suffix(".v2.json").read_text(encoding="utf-8"))
-    starts = [{key: value for key, value in row.items() if key != "verify_calls"} for row in _rows(written)]
-    for run in document["runs"]:
-        run["starts"] = [{key: value for key, value in row.items() if key != "verify_calls"} for row in run["starts"]]
-    return {"text": written.read_text(encoding="utf-8"), "starts": starts, "document": document}
+    return {"text": written.read_text(encoding="utf-8"), "starts": _rows(written), "document": document}
 
 
 SEQUENCE = [_climb(), _climb(mode=(0.0, 1.0, 0.0)), _climb(x=(4e-5, 0.0, 0.0)), _climb(calls=30, x=(-4e-5, 0.0, 0.0))]

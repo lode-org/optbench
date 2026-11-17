@@ -1340,6 +1340,7 @@ def _run_saddle_search(
                 "defer_hessian": True,
             }
             before_outer = potential.calls
+            before_verify = potential.verify_calls
             outcome = _dispatch(spec)
             climb = int(outcome.get("calls", outcome.get("force_calls", 0)))
             if int(outcome.get("step_calls_max") or 0) > step_ceiling or climb > climb_cap:
@@ -1374,7 +1375,7 @@ def _run_saddle_search(
                 record["cartesian_index"] = int(index)
                 record["rigid_modes_removed"] = 0
                 record["lowest_eigenvalue"] = float(eigenvalues[0])
-                record["verify_calls"] = int(potential.verify_calls)
+                record["verify_calls"] = int(potential.verify_calls - before_verify)
                 if index == 1 and float(outcome["force_norm"]) <= force_tol + 1e-10:
                     saddle_x = np.asarray(outcome["x"], dtype=np.float64)
                     climb_mode = outcome.get("mode")
