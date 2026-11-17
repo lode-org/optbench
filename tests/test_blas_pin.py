@@ -48,7 +48,10 @@ def _asv_threads(tmp_path: Path, launcher: list[str]) -> dict[str, float]:
     suite = tmp_path / "suite"
     suite.mkdir()
     (suite / "__init__.py").write_text("", encoding="utf-8")
-    (suite / "bench_probe.py").write_text(PROBE, encoding="utf-8")
+    (suite / "bench_probe.py").write_text(
+        f"import sys\nsys.path.insert(0, {str(ROOT)!r})\n" + PROBE,
+        encoding="utf-8",
+    )
     results = tmp_path / "results"
     config = tmp_path / "asv.conf.json"
     config.write_text(
@@ -67,6 +70,8 @@ def _asv_threads(tmp_path: Path, launcher: list[str]) -> dict[str, float]:
         encoding="utf-8",
     )
     env = {key: value for key, value in os.environ.items() if key not in blas_threads.PINNED}
+    existing_pythonpath = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = str(ROOT) if not existing_pythonpath else f"{ROOT}{os.pathsep}{existing_pythonpath}"
     home = tmp_path / "home"
     home.mkdir()
     fields = dict.fromkeys(("os", "arch", "cpu", "num_cpu", "ram"), "")
@@ -132,7 +137,8 @@ def test_asv_workflow_job_sets_the_pinned_variables():
 
 
 def test_pin_replaces_values_already_set():
-    environ = {"OPENBLAS_NUM_THREADS": "8", "PATH": "/bin"}
+    path_value = os.environ.get("PATH", "")
+    environ = {"OPENBLAS_NUM_THREADS": "8", "PATH": path_value}
     blas_threads.pin(environ)
-    assert environ["PATH"] == "/bin"
+    assert environ["PATH"] == path_value
     assert {name: environ[name] for name in blas_threads.PINNED} == blas_threads.PINNED
