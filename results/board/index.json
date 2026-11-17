@@ -701,8 +701,11 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 16947,
-        "wrong_stationary": 0
+        "disconnected": 5126,
+        "divergence": 0,
+        "duplicate": 8353,
+        "over_barrier": 67,
+        "wrong_stationary": 3401
       },
       "family": "min-mode",
       "family_rank": null,
@@ -3806,8 +3809,8 @@
           "failures": {
             "cap": 17,
             "crash": 0,
-            "divergence": 7,
-            "wrong_stationary": 0
+            "divergence": 0,
+            "wrong_stationary": 7
           },
           "family": "band",
           "family_rank": 15,
@@ -4066,8 +4069,8 @@
           "failures": {
             "cap": 14,
             "crash": 0,
-            "divergence": 36,
-            "wrong_stationary": 0
+            "divergence": 0,
+            "wrong_stationary": 36
           },
           "family": "band",
           "family_rank": 20,
@@ -6771,8 +6774,8 @@
           "failures": {
             "cap": 43,
             "crash": 0,
-            "divergence": 1,
-            "wrong_stationary": 2
+            "divergence": 0,
+            "wrong_stationary": 3
           },
           "family": "band",
           "family_rank": 19,
@@ -6927,8 +6930,8 @@
           "failures": {
             "cap": 44,
             "crash": 0,
-            "divergence": 3,
-            "wrong_stationary": 4
+            "divergence": 0,
+            "wrong_stationary": 7
           },
           "family": "band",
           "family_rank": 22,
@@ -9327,8 +9330,8 @@
           "failures": {
             "cap": 1,
             "crash": 0,
-            "divergence": 20,
-            "wrong_stationary": 0
+            "divergence": 0,
+            "wrong_stationary": 20
           },
           "family": "band",
           "family_rank": 18,
@@ -9535,8 +9538,8 @@
           "failures": {
             "cap": 3,
             "crash": 0,
-            "divergence": 56,
-            "wrong_stationary": 0
+            "divergence": 0,
+            "wrong_stationary": 56
           },
           "family": "band",
           "family_rank": 21,
@@ -14928,8 +14931,8 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 22,
-            "wrong_stationary": 0
+            "divergence": 0,
+            "wrong_stationary": 22
           },
           "family": "min-mode",
           "family_rank": 21,
@@ -14980,8 +14983,8 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 26,
-            "wrong_stationary": 0
+            "divergence": 0,
+            "wrong_stationary": 26
           },
           "family": "min-mode",
           "family_rank": 22,
@@ -15032,8 +15035,8 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 40,
-            "wrong_stationary": 0
+            "divergence": 0,
+            "wrong_stationary": 40
           },
           "family": "min-mode",
           "family_rank": 23,
@@ -18951,8 +18954,8 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 5,
-            "wrong_stationary": 4
+            "divergence": 0,
+            "wrong_stationary": 9
           },
           "family": "minimize",
           "family_rank": 59,
@@ -19050,8 +19053,8 @@
           "failures": {
             "cap": 148,
             "crash": 0,
-            "divergence": 1,
-            "wrong_stationary": 3
+            "divergence": 0,
+            "wrong_stationary": 4
           },
           "family": "minimize",
           "family_rank": 61,
@@ -21086,8 +21089,8 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 2,
-            "wrong_stationary": 3
+            "divergence": 0,
+            "wrong_stationary": 5
           },
           "family": "minimize",
           "family_rank": 10,
@@ -21658,8 +21661,8 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 3,
-            "wrong_stationary": 0
+            "divergence": 0,
+            "wrong_stationary": 3
           },
           "family": "minimize",
           "family_rank": 21,
@@ -21814,8 +21817,8 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 5,
-            "wrong_stationary": 4
+            "divergence": 0,
+            "wrong_stationary": 9
           },
           "family": "minimize",
           "family_rank": 24,
@@ -30710,8 +30713,8 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 13,
-            "wrong_stationary": 0
+            "divergence": 0,
+            "wrong_stationary": 13
           },
           "family": "band",
           "family_rank": 13,
@@ -30876,8 +30879,11 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 16947,
-            "wrong_stationary": 0
+            "disconnected": 5126,
+            "divergence": 0,
+            "duplicate": 8353,
+            "over_barrier": 67,
+            "wrong_stationary": 3401
           },
           "family": "min-mode",
           "family_rank": null,
@@ -31921,7 +31927,10 @@
           "failures": {
             "cap": 5,
             "crash": 0,
-            "divergence": 19970,
+            "disconnected": 399,
+            "divergence": 0,
+            "duplicate": 19286,
+            "over_barrier": 285,
             "wrong_stationary": 1
           },
           "family": "min-mode",
@@ -31973,7 +31982,10 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 4736,
+            "disconnected": 575,
+            "divergence": 0,
+            "duplicate": 2910,
+            "over_barrier": 1251,
             "wrong_stationary": 0
           },
           "family": "min-mode",
@@ -32025,7 +32037,10 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 7301,
+            "disconnected": 888,
+            "divergence": 0,
+            "duplicate": 4457,
+            "over_barrier": 1956,
             "wrong_stationary": 8
           },
           "family": "min-mode",
@@ -32077,7 +32092,10 @@
           "failures": {
             "cap": 17,
             "crash": 0,
-            "divergence": 12985,
+            "disconnected": 1399,
+            "divergence": 0,
+            "duplicate": 8729,
+            "over_barrier": 2857,
             "wrong_stationary": 9
           },
           "family": "min-mode",
@@ -32703,8 +32721,11 @@
           "failures": {
             "cap": 108,
             "crash": 0,
-            "divergence": 4884,
-            "wrong_stationary": 6
+            "disconnected": 1,
+            "divergence": 0,
+            "duplicate": 4101,
+            "over_barrier": 100,
+            "wrong_stationary": 688
           },
           "family": "min-mode",
           "family_rank": null,
@@ -32755,8 +32776,11 @@
           "failures": {
             "cap": 0,
             "crash": 0,
-            "divergence": 4999,
-            "wrong_stationary": 1
+            "disconnected": 1,
+            "divergence": 0,
+            "duplicate": 4977,
+            "over_barrier": 20,
+            "wrong_stationary": 2
           },
           "family": "min-mode",
           "family_rank": null,
@@ -41191,8 +41215,11 @@
       "failures": {
         "cap": 108,
         "crash": 0,
-        "divergence": 4884,
-        "wrong_stationary": 6
+        "disconnected": 1,
+        "divergence": 0,
+        "duplicate": 4101,
+        "over_barrier": 100,
+        "wrong_stationary": 688
       },
       "family": "min-mode",
       "family_rank": null,
@@ -41243,8 +41270,11 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 4999,
-        "wrong_stationary": 1
+        "disconnected": 1,
+        "divergence": 0,
+        "duplicate": 4977,
+        "over_barrier": 20,
+        "wrong_stationary": 2
       },
       "family": "min-mode",
       "family_rank": null,

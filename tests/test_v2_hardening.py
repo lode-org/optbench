@@ -176,7 +176,12 @@ def test_descent_from_the_origin_matches_the_smoke_count():
 def test_failure_classes_stay_in_the_par2_mean():
     assert classify_failure(["cap", "force_norm"]) == "cap"
     assert classify_failure(["hessian_index", "rmsd"]) == "wrong_stationary"
+    assert classify_failure(["force_norm"]) == "wrong_stationary"
     assert classify_failure(["divergence", "force_norm"]) == "divergence"
+    assert classify_failure(["duplicate", "barrier"]) == "duplicate"
+    assert classify_failure(["barrier"]) == "over_barrier"
+    assert classify_failure(["not_connected", "barrier"]) == "over_barrier"
+    assert classify_failure(["not_connected"]) == "disconnected"
     assert classify_failure(["crash"]) == "crash"
     assert failure_of({"force_calls": 40, "success": False}, 100) == "divergence"
     assert failure_of({"force_calls": 100, "success": False}, 100) == "cap"

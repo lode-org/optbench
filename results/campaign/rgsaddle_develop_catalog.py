@@ -27,6 +27,9 @@ GOAL = 27
 MAX_SEARCHES = 20000
 BARRIER_EV = 1.5
 CSV_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island.csv"
+TIMING_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island-timing.json"
+COMMANDS_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island-commands.json"
+PROVENANCE_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-eon-provenance.json"
 
 RGSADDLE_ROWS = {
     "dimer-fire": "rgsaddle/develop-saddle-dimer-fire",
@@ -65,9 +68,10 @@ def classify_search(record: dict, step_ceiling: int | None) -> str:
     """One class per search.
 
     Divergence is only a non-finite point or a step past the ceiling.
-    The other misses are over_barrier (barrier at least 1.5 eV), duplicate,
-    disconnected, and wrong_stationary, in that order when more than one
-    reason is present.
+    When more than one reason is present the class is the first of
+    duplicate, over_barrier, disconnected, cap, and hessian_index.
+    eOn ``Saddle Search Terminated High Energy`` is ``high_energy``.
+    Anything left is wrong_stationary.
     """
     if record.get("success"):
         return "connected"
@@ -94,6 +98,12 @@ def classify_search(record: dict, step_ceiling: int | None) -> str:
             return "divergence"
     if "not_connected" in reasons:
         return "disconnected"
+    if "cap" in reasons:
+        return "cap"
+    if "hessian_index" in reasons:
+        return "hessian_index"
+    if str(record.get("result") or "") == "Saddle Search Terminated High Energy":
+        return "high_energy"
     return "wrong_stationary"
 
 
@@ -122,6 +132,9 @@ def tally(records: list[dict], step_ceiling: int | None) -> dict[str, int]:
         "duplicate": 0,
         "wrong_stationary": 0,
         "divergence": 0,
+        "cap": 0,
+        "hessian_index": 0,
+        "high_energy": 0,
         "overlap_disconnected": 0,
         "overlap_over_barrier": 0,
         "overlap_duplicate": 0,
@@ -157,12 +170,8 @@ def step_ceiling(method: str) -> int | None:
 
 
 def _ledger(method: str) -> list[dict]:
-    if method == "eon-classic":
-        raw = _checkpoint_dir(method) / "work" / "states" / "0" / "search_results.txt"
-        if raw.is_file():
-            return _eon_records(raw.read_text(encoding="utf-8", errors="replace"))
     finished = _output_path(method).with_suffix(".starts.jsonl")
-    if method != "eon-classic" and finished.is_file() and finished.stat().st_size:
+    if finished.is_file() and finished.stat().st_size:
         return _load_jsonl(finished)
     return _load_jsonl(_checkpoint_dir(method) / "searches.jsonl")
 
@@ -174,7 +183,7 @@ def progress_text() -> str:
         "includes 116b92e83fdbd5ec24fcfe500e9de2663d1a35b2 retain rotation state across translations",
         f"seed {SEED}",
         f"stop {GOAL} connected or {MAX_SEARCHES} searches",
-        "exclusive class order: connected, divergence, duplicate, over_barrier, disconnected, wrong_stationary",
+        "exclusive class order: connected, divergence, duplicate, over_barrier, disconnected, cap, hessian_index, high_energy, wrong_stationary",
         "divergence: non-finite point or a step past the ceiling",
         f"over_barrier: barrier at least {BARRIER_EV} eV",
     ]
@@ -183,7 +192,8 @@ def progress_text() -> str:
         lines.append(
             "method {method} searches {searches} connected {connected} "
             "disconnected {disconnected} over_barrier {over_barrier} "
-            "duplicate {duplicate} wrong_stationary {wrong_stationary} "
+            "duplicate {duplicate} cap {cap} hessian_index {hessian_index} "
+            "high_energy {high_energy} wrong_stationary {wrong_stationary} "
             "divergence {divergence} "
             "overlap_disconnected {overlap_disconnected} "
             "overlap_over_barrier {overlap_over_barrier} "
@@ -307,7 +317,12 @@ def _write_eon_ledger(folder: Path, records: list[dict]) -> None:
 
 
 def run_eon(cpu: int, client: Path) -> None:
-    """Classic dimer, one core, seed 20261016, stop at 27 or 20000 searches."""
+    """Classic dimer, one core, seed 20261016, stop at 27 or 20000 searches.
+
+    ``client`` is a local prefix of conda-forge ``eon`` 3.5.0 build
+    ``np2py312h3e7f63d_0``. ``eonclient --version`` prints the feedstock
+    commit. The public source pin is ``rgsaddle-develop-179e90f2-eon-provenance.json``.
+    """
     import inspect
     import logging
     import traceback
@@ -484,22 +499,27 @@ def _hardware_rows() -> list[dict[str, str]]:
 
 
 def _command_rows() -> list[dict[str, str]]:
+    stored = json.loads(COMMANDS_PATH.read_text(encoding="utf-8")) if COMMANDS_PATH.is_file() else {}
+    provenance = json.loads(PROVENANCE_PATH.read_text(encoding="utf-8")) if PROVENANCE_PATH.is_file() else {}
     rows = []
     for method in (*RGSADDLE_ROWS, "eon-classic"):
-        path = _checkpoint_dir(method) / "command.json"
-        if not path.is_file():
-            continue
-        payload = json.loads(path.read_text(encoding="utf-8"))
-        rows.append(
-            {
-                "row_kind": "command",
-                "method": method,
-                "argv": " ".join(payload.get("argv") or []),
-                "cpu_affinity": ",".join(str(cpu) for cpu in payload.get("cpu_affinity") or []),
-                "threads": " ".join(f"{key}={value}" for key, value in sorted((payload.get("threads") or {}).items())),
-                "rgsaddle_head": payload.get("rgsaddle_head", ""),
-            }
-        )
+        payload = stored.get(method)
+        if payload is None:
+            path = _checkpoint_dir(method) / "command.json"
+            if not path.is_file():
+                continue
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        row = {
+            "row_kind": "command",
+            "method": method,
+            "argv": " ".join(payload.get("argv") or []) if isinstance(payload.get("argv"), list) else str(payload.get("argv") or ""),
+            "cpu_affinity": ",".join(str(cpu) for cpu in payload.get("cpu_affinity") or []),
+            "threads": " ".join(f"{key}={value}" for key, value in sorted((payload.get("threads") or {}).items())),
+            "rgsaddle_head": payload.get("rgsaddle_head", ""),
+        }
+        if method == "eon-classic":
+            row["argv_origin"] = str(provenance.get("argv_origin") or "")
+        rows.append(row)
     return rows
 
 
@@ -510,8 +530,9 @@ def _method_rows() -> list[dict[str, str]]:
     for method in (*RGSADDLE_ROWS, "eon-classic"):
         records = _ledger(method)
         counts = tally(records, step_ceiling(method))
-        timing_path = _checkpoint_dir(method) / "timing.json"
-        timing = json.loads(timing_path.read_text(encoding="utf-8")) if timing_path.is_file() else {}
+        timing = {}
+        if TIMING_PATH.is_file():
+            timing = json.loads(TIMING_PATH.read_text(encoding="utf-8")).get(method) or {}
         dat = _output_path(method)
         fields = {}
         if dat.is_file():

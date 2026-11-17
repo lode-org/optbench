@@ -3,20 +3,26 @@
 The order is fixed, so a start lands in one bin:
 
 1. ``crash`` — the optimizer raised, or the record says so.
-2. ``divergence`` — a non-finite result, an explicit blow-up, or a
-   return that is still above the force stop and under the cap.
+2. ``divergence`` — a non-finite point, or a step past the ceiling.
 3. ``cap`` — the search used the whole force-call budget and did not
    blow up.
-4. ``wrong_stationary`` — the force is at the stop, and the Hessian
-   index, the energy, or the Kabsch RMSD rejects the point.
+4. ``duplicate`` — the saddle repeats one already kept.
+5. ``over_barrier`` — the barrier is at or above the problem ceiling.
+6. ``disconnected`` — the minimized endpoints are not the reactant.
+7. ``wrong_stationary`` — the force stop, the Hessian index, the
+   energy, or the Kabsch RMSD rejects the point.
 
 A success has no class. Every failure stays in the PAR-2 mean; the
-class says why it is there.
+class says why it is there. ``FAILURES`` is the four bins an asv
+track records. ``CATALOG_FAILURES`` are the saddle-catalog misses
+that used to fall through to ``divergence``.
 """
 
 from __future__ import annotations
 
 FAILURES = ("crash", "divergence", "cap", "wrong_stationary")
+CATALOG_FAILURES = ("duplicate", "over_barrier", "disconnected")
+ALL_FAILURES = FAILURES + CATALOG_FAILURES
 
 
 def classify_failure(reasons: list[str]) -> str | None:
@@ -29,11 +35,15 @@ def classify_failure(reasons: list[str]) -> str | None:
         return "divergence"
     if "cap" in reasons:
         return "cap"
-    if "force_norm" in reasons:
-        return "divergence"
-    if any(name in reasons for name in ("hessian_index", "energy", "rmsd")):
+    if "duplicate" in reasons:
+        return "duplicate"
+    if "barrier" in reasons or "over_barrier" in reasons:
+        return "over_barrier"
+    if "not_connected" in reasons:
+        return "disconnected"
+    if any(name in reasons for name in ("hessian_index", "energy", "rmsd", "force_norm")):
         return "wrong_stationary"
-    return "divergence"
+    return "wrong_stationary"
 
 
 def failure_of(record: dict, cap: int | None) -> str | None:
@@ -43,12 +53,12 @@ def failure_of(record: dict, cap: int | None) -> str | None:
         if label not in (None, "", "none"):
             raise ValueError("a success cannot carry a failure class")
         return None
-    label = record.get("failure")
-    if label in FAILURES:
-        return str(label)
     reasons = [str(reason) for reason in record.get("reasons") or []]
     if reasons:
         return classify_failure(reasons)
+    label = record.get("failure")
+    if label in ALL_FAILURES:
+        return str(label)
     calls = float(record["force_calls"])
     if cap is not None and calls >= cap:
         return "cap"
@@ -56,8 +66,8 @@ def failure_of(record: dict, cap: int | None) -> str | None:
 
 
 def failure_tally(records: list[dict], cap: int | None) -> dict[str, int]:
-    """Count each class. The four counts plus nothing else equal ``nfailed``."""
-    counts = {name: 0 for name in FAILURES}
+    """Count each class. The counts plus nothing else equal ``nfailed``."""
+    counts = {name: 0 for name in ALL_FAILURES}
     for record in records:
         label = failure_of(record, cap)
         if label is None:

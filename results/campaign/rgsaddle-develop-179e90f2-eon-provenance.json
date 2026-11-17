@@ -1,0 +1,15 @@
+{
+  "argv_origin": "The eon argv path is a local prefix of conda-forge eon 3.5.0 build np2py312h3e7f63d_0. eonclient --version prints 3.5.0 (7ec1840), and 7ec1840 is the feedstock commit in info/about.json extra.sha, not an eOn source commit.",
+  "build": "np2py312h3e7f63d_0",
+  "channel": "conda-forge",
+  "feedstock": "https://github.com/conda-forge/eon-feedstock",
+  "feedstock_sha": "7ec184029c7cfde572a408f08f656d55694f0153",
+  "git_commit": "d9cc6c5bee432d625eb6c56d7ea74b723a37ee3b",
+  "git_tag": "v3.5.0",
+  "name": "eon",
+  "package_sha256": "f3453a602ee1838ca6eae46c82e780a5b11048eb479612f135ef360b73f2d19a",
+  "package_url": "https://conda.anaconda.org/conda-forge/linux-64/eon-3.5.0-np2py312h3e7f63d_0.conda",
+  "source_sha256": "2af417ab5eb2870e0447cbcef0fda89c58bcbd62c151b31bb012efd20e0321ff",
+  "source_url": "https://github.com/TheochemUI/eOn/releases/download/v3.5.0/eon-v3.5.0.tar.xz",
+  "version": "3.5.0"
+}

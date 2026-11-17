@@ -1355,8 +1355,8 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 22,
-        "wrong_stationary": 0
+        "divergence": 0,
+        "wrong_stationary": 22
       },
       "family": "min-mode",
       "family_rank": 21,
@@ -1407,8 +1407,8 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 26,
-        "wrong_stationary": 0
+        "divergence": 0,
+        "wrong_stationary": 26
       },
       "family": "min-mode",
       "family_rank": 22,
@@ -1459,8 +1459,8 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 40,
-        "wrong_stationary": 0
+        "divergence": 0,
+        "wrong_stationary": 40
       },
       "family": "min-mode",
       "family_rank": 23,

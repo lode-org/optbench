@@ -1,0 +1,18 @@
+{
+  "dimer-fire": {
+    "wall_seconds": 95384.65582823753
+  },
+  "dimer-lbfgs": {
+    "wall_seconds": 37345.03957605362
+  },
+  "dimer-rotskip": {
+    "wall_seconds": 21212.581012248993
+  },
+  "eon-classic": {
+    "client_version": "3.5.0 (7ec1840) compiled Fri Oct 02 07:25:16 AM GMT 2026",
+    "wall_seconds": 72596.20297002792
+  },
+  "lanczos": {
+    "wall_seconds": 104351.00658464432
+  }
+}

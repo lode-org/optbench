@@ -161,7 +161,7 @@
    <td data-label="Mean calls" data-field="mean_calls">3020.94</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 5, cap 0, wrong_stationary 4</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 9</td>
    <td data-label="Runs" data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="LAMMPS (30 Sep 2026) · conjugate gradient">
@@ -177,7 +177,7 @@
    <td data-label="Mean calls" data-field="mean_calls">2810.32</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 1, cap 148, wrong_stationary 3</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 148, wrong_stationary 4</td>
    <td data-label="Runs" data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="LAMMPS (30 Sep 2026) · FIRE">
@@ -241,7 +241,7 @@
    <td data-label="Mean calls" data-field="mean_calls">1993.39</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 3, cap 0, wrong_stationary 0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 3</td>
    <td data-label="Runs" data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-label="LAMMPS (30 Sep 2026) · Quickmin">
@@ -257,7 +257,7 @@
    <td data-label="Mean calls" data-field="mean_calls">3020.94</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 5, cap 0, wrong_stationary 4</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 9</td>
    <td data-label="Runs" data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-label="LAMMPS (30 Sep 2026) · FIRE">

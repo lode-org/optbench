@@ -558,7 +558,7 @@
    <td data-label="Mean calls" data-field="mean_calls">629.942</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 19970, cap 5, wrong_stationary 1</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 5, wrong_stationary 1, duplicate 19286, over_barrier 285, disconnected 399</td>
    <td data-label="Runs" data-field="n">20000</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop 179e90f2) · Dimer rotation-skip L-BFGS">
@@ -574,7 +574,7 @@
    <td data-label="Mean calls" data-field="mean_calls">446.937</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 4736, cap 0, wrong_stationary 0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0, duplicate 2910, over_barrier 1251, disconnected 575</td>
    <td data-label="Runs" data-field="n">4763</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop 179e90f2) · Dimer L-BFGS">
@@ -590,7 +590,7 @@
    <td data-label="Mean calls" data-field="mean_calls">464.286</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 7301, cap 0, wrong_stationary 8</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 8, duplicate 4457, over_barrier 1956, disconnected 888</td>
    <td data-label="Runs" data-field="n">7336</td>
    </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop 179e90f2) · Dimer FIRE">
@@ -606,7 +606,7 @@
    <td data-label="Mean calls" data-field="mean_calls">1058.02</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 12985, cap 17, wrong_stationary 9</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 17, wrong_stationary 9, duplicate 8729, over_barrier 2857, disconnected 1399</td>
    <td data-label="Runs" data-field="n">13038</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="rgsaddle (0.2.2) · P-RFO">

@@ -13,8 +13,11 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 16947,
-        "wrong_stationary": 0
+        "disconnected": 5126,
+        "divergence": 0,
+        "duplicate": 8353,
+        "over_barrier": 67,
+        "wrong_stationary": 3401
       },
       "family": "min-mode",
       "family_rank": null,
@@ -1058,7 +1061,10 @@
       "failures": {
         "cap": 5,
         "crash": 0,
-        "divergence": 19970,
+        "disconnected": 399,
+        "divergence": 0,
+        "duplicate": 19286,
+        "over_barrier": 285,
         "wrong_stationary": 1
       },
       "family": "min-mode",
@@ -1110,7 +1116,10 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 4736,
+        "disconnected": 575,
+        "divergence": 0,
+        "duplicate": 2910,
+        "over_barrier": 1251,
         "wrong_stationary": 0
       },
       "family": "min-mode",
@@ -1162,7 +1171,10 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 7301,
+        "disconnected": 888,
+        "divergence": 0,
+        "duplicate": 4457,
+        "over_barrier": 1956,
         "wrong_stationary": 8
       },
       "family": "min-mode",
@@ -1214,7 +1226,10 @@
       "failures": {
         "cap": 17,
         "crash": 0,
-        "divergence": 12985,
+        "disconnected": 1399,
+        "divergence": 0,
+        "duplicate": 8729,
+        "over_barrier": 2857,
         "wrong_stationary": 9
       },
       "family": "min-mode",
@@ -1840,8 +1855,11 @@
       "failures": {
         "cap": 108,
         "crash": 0,
-        "divergence": 4884,
-        "wrong_stationary": 6
+        "disconnected": 1,
+        "divergence": 0,
+        "duplicate": 4101,
+        "over_barrier": 100,
+        "wrong_stationary": 688
       },
       "family": "min-mode",
       "family_rank": null,
@@ -1892,8 +1910,11 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 4999,
-        "wrong_stationary": 1
+        "disconnected": 1,
+        "divergence": 0,
+        "duplicate": 4977,
+        "over_barrier": 20,
+        "wrong_stationary": 2
       },
       "family": "min-mode",
       "family_rank": null,

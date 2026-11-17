@@ -14,7 +14,7 @@ import math
 import random
 import statistics
 
-from .failures import FAILURES, failure_tally
+from .failures import ALL_FAILURES, failure_tally
 
 RATE_Z = 1.959963984540054
 PAR_FACTOR = 2
@@ -363,7 +363,7 @@ def score_v2(
             "par2_mean": summary["mean"] if cap is not None else None,
             "includes_failures": True,
             "success_only_mean": (sum(finished) / len(finished)) if finished else None,
-            **{f"n_{name}": tally[name] for name in FAILURES},
+            **{f"n_{name}": tally[name] for name in ALL_FAILURES},
         }
     )
     return summary

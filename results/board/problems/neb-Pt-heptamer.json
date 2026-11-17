@@ -2459,8 +2459,8 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 13,
-        "wrong_stationary": 0
+        "divergence": 0,
+        "wrong_stationary": 13
       },
       "family": "band",
       "family_rank": 13,

@@ -42,7 +42,7 @@ from .corrections import corrected, load_corrections
 from .differences import difference_note, load_differences
 from .counts import entry_count, load_counts
 from .dat import DatError, parse_lenient
-from .failures import FAILURES, failure_of
+from .failures import ALL_FAILURES, CATALOG_FAILURES, FAILURES, classify_failure, failure_of
 from .families import (
     FAMILIES,
     coordinate_count,
@@ -440,12 +440,13 @@ def _record_from_raw(raw: dict, cap: int | None, force_tol: float | None) -> dic
         record["call_unit"] = str(raw["call_unit"])
     if success:
         return record
-    if failure in FAILURES:
-        record["failure"] = failure
-        return record
     reasons = raw.get("reasons")
     if isinstance(reasons, list) and reasons:
         record["reasons"] = [str(item) for item in reasons]
+        record["failure"] = classify_failure(record["reasons"])
+        return record
+    if failure in ALL_FAILURES:
+        record["failure"] = failure
         return record
     record["failure_inferred"] = True
     if raw.get("error"):
@@ -700,7 +701,11 @@ def _apply_summary(row: dict, summary: dict, records: list[dict]) -> None:
     row["call_unit"] = summary.get("call_unit") or "total"
     row["mean_per_image"] = summary.get("mean_per_image")
     row["median_per_image"] = summary.get("median_per_image")
-    row["failures"] = {name: summary[f"n_{name}"] for name in FAILURES}
+    row["failures"] = {name: summary.get(f"n_{name}", 0) for name in FAILURES}
+    for name in CATALOG_FAILURES:
+        count = summary.get(f"n_{name}", 0)
+        if count:
+            row["failures"][name] = count
     inferred: dict[str, int] = defaultdict(int)
     for record in records:
         if record.get("failure_inferred"):
@@ -1707,6 +1712,10 @@ def _failure_text(failures: dict, inferred: dict | None = None) -> str:
         if (inferred or {}).get(name):
             part += f" ({inferred[name]} inferred)"
         parts.append(part)
+    for name in CATALOG_FAILURES:
+        count = failures.get(name, 0)
+        if count:
+            parts.append(f"{name} {count}")
     return ", ".join(parts)
 
 

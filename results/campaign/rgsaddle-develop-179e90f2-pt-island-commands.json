@@ -1,0 +1,97 @@
+{
+  "dimer-fire": {
+    "argv": [
+      "results/campaign/rgsaddle_develop_catalog.py",
+      "run",
+      "dimer-fire",
+      "0"
+    ],
+    "cpu_affinity": [
+      0
+    ],
+    "rgsaddle_head": "179e90f29a3b2cbd4ea5804a5c4c132ab19acba4",
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "RAYON_NUM_THREADS": "1"
+    }
+  },
+  "dimer-lbfgs": {
+    "argv": [
+      "results/campaign/rgsaddle_develop_catalog.py",
+      "run",
+      "dimer-lbfgs",
+      "1"
+    ],
+    "cpu_affinity": [
+      1
+    ],
+    "rgsaddle_head": "179e90f29a3b2cbd4ea5804a5c4c132ab19acba4",
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "RAYON_NUM_THREADS": "1"
+    }
+  },
+  "dimer-rotskip": {
+    "argv": [
+      "results/campaign/rgsaddle_develop_catalog.py",
+      "run",
+      "dimer-rotskip",
+      "2"
+    ],
+    "cpu_affinity": [
+      2
+    ],
+    "rgsaddle_head": "179e90f29a3b2cbd4ea5804a5c4c132ab19acba4",
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "RAYON_NUM_THREADS": "1"
+    }
+  },
+  "eon-classic": {
+    "argv": [
+      "results/campaign/rgsaddle_develop_catalog.py",
+      "eon",
+      "4",
+      "/agent/repos/micromamba/eon-350/bin/eonclient"
+    ],
+    "cpu_affinity": [
+      4
+    ],
+    "rgsaddle_head": "179e90f29a3b2cbd4ea5804a5c4c132ab19acba4",
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "RAYON_NUM_THREADS": "1"
+    }
+  },
+  "lanczos": {
+    "argv": [
+      "results/campaign/rgsaddle_develop_catalog.py",
+      "run",
+      "lanczos",
+      "3"
+    ],
+    "cpu_affinity": [
+      3
+    ],
+    "rgsaddle_head": "179e90f29a3b2cbd4ea5804a5c4c132ab19acba4",
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "RAYON_NUM_THREADS": "1"
+    }
+  }
+}

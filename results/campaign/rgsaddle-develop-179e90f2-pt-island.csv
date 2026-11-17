@@ -1,17 +1,17 @@
-row_kind,key,value,method,argv,cpu_affinity,threads,rgsaddle_head,template,commit,code_version,client_version,seed,wall_seconds,par2_mean,force_calls,cap,goal,searches,connected,disconnected,over_barrier,duplicate,wrong_stationary,divergence,overlap_disconnected,overlap_over_barrier,overlap_duplicate,par2_nfailed
-hardware,model_name,Intel(R) Xeon(R) Processor,,,,,,,,,,,,,,,,,,,,,,,,,,
-hardware,cpu_cores,8,,,,,,,,,,,,,,,,,,,,,,,,,,
-hardware,cpus_online,0-7,,,,,,,,,,,,,,,,,,,,,,,,,,
-hardware,mem_total_kb,49342816,,,,,,,,,,,,,,,,,,,,,,,,,,
-hardware,affinity_policy,one core per method,,,,,,,,,,,,,,,,,,,,,,,,,,
-hardware,thread_vars,"RAYON_NUM_THREADS=1,OMP_NUM_THREADS=1,OPENBLAS_NUM_THREADS=1,MKL_NUM_THREADS=1,NUMEXPR_NUM_THREADS=1",,,,,,,,,,,,,,,,,,,,,,,,,,
-command,,,dimer-fire,results/campaign/rgsaddle_develop_catalog.py run dimer-fire 0,0,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,,,,,,,,,,,,,,,,,,,,,
-command,,,dimer-lbfgs,results/campaign/rgsaddle_develop_catalog.py run dimer-lbfgs 1,1,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,,,,,,,,,,,,,,,,,,,,,
-command,,,dimer-rotskip,results/campaign/rgsaddle_develop_catalog.py run dimer-rotskip 2,2,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,,,,,,,,,,,,,,,,,,,,,
-command,,,lanczos,results/campaign/rgsaddle_develop_catalog.py run lanczos 3,3,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,,,,,,,,,,,,,,,,,,,,,
-command,,,eon-classic,results/campaign/rgsaddle_develop_catalog.py eon 4 /agent/repos/micromamba/eon-350/bin/eonclient,4,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,,,,,,,,,,,,,,,,,,,,,
-method,,,dimer-fire,,,,,rgsaddle/develop-saddle-dimer-fire,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,(develop 179e90f2),,20261016,95384.655828,95803.07378432275,13794457.0,48000,27,13038,27,1399,2857,8729,26,0,4150,4833,8729,13011
-method,,,dimer-lbfgs,,,,,rgsaddle/develop-saddle-dimer-lbfgs,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,(develop 179e90f2),,20261016,37345.039576,95648.3219738277,3406018.0,48000,27,7336,27,888,1956,4457,8,0,2750,3158,4457,7309
-method,,,dimer-rotskip,,,,,rgsaddle/develop-saddle-dimer-rotskip,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,(develop 179e90f2),,20261016,21212.581012,95458.3308838967,2128776.0,48000,27,4763,27,575,1251,2910,0,0,1748,2106,2910,4736
-method,,,lanczos,,,,,rgsaddle/develop-saddle-lanczos,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,(develop 179e90f2),,20261016,104351.006585,59928.92065,12598860.0,30000,27,20000,24,399,285,19286,6,0,602,2291,19286,19976
-method,,,eon-classic,,,,,eon/develop-saddle-pt-dimer,,3.5.0 (7ec1840) compiled Fri Oct 02 07:25:16 AM GMT 2026,3.5.0 (7ec1840) compiled Fri Oct 02 07:25:16 AM GMT 2026,20261016,72596.202970,,7968457,,27,16974,27,5126,67,8353,3401,0,5126,2531,8353,
+row_kind,key,value,method,argv,cpu_affinity,threads,rgsaddle_head,argv_origin,template,commit,code_version,client_version,seed,wall_seconds,par2_mean,force_calls,cap,goal,searches,connected,disconnected,over_barrier,duplicate,wrong_stationary,divergence,hessian_index,high_energy,overlap_disconnected,overlap_over_barrier,overlap_duplicate,par2_nfailed
+hardware,model_name,Intel(R) Xeon(R) Processor,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+hardware,cpu_cores,8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+hardware,cpus_online,0-7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+hardware,mem_total_kb,49342816,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+hardware,affinity_policy,one core per method,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+hardware,thread_vars,"RAYON_NUM_THREADS=1,OMP_NUM_THREADS=1,OPENBLAS_NUM_THREADS=1,MKL_NUM_THREADS=1,NUMEXPR_NUM_THREADS=1",,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+command,,,dimer-fire,results/campaign/rgsaddle_develop_catalog.py run dimer-fire 0,0,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,,,,,,,,,,,,,,,,,,,,,,,,
+command,,,dimer-lbfgs,results/campaign/rgsaddle_develop_catalog.py run dimer-lbfgs 1,1,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,,,,,,,,,,,,,,,,,,,,,,,,
+command,,,dimer-rotskip,results/campaign/rgsaddle_develop_catalog.py run dimer-rotskip 2,2,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,,,,,,,,,,,,,,,,,,,,,,,,
+command,,,lanczos,results/campaign/rgsaddle_develop_catalog.py run lanczos 3,3,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,,,,,,,,,,,,,,,,,,,,,,,,
+command,,,eon-classic,results/campaign/rgsaddle_develop_catalog.py eon 4 /agent/repos/micromamba/eon-350/bin/eonclient,4,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,"The eon argv path is a local prefix of conda-forge eon 3.5.0 build np2py312h3e7f63d_0. eonclient --version prints 3.5.0 (7ec1840), and 7ec1840 is the feedstock commit in info/about.json extra.sha, not an eOn source commit.",,,,,,,,,,,,,,,,,,,,,,,
+method,,,dimer-fire,,,,,,rgsaddle/develop-saddle-dimer-fire,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,(develop 179e90f2),,20261016,95384.655828,95803.07378432275,13794457.0,17,27,13038,27,1399,2857,8729,0,0,9,0,4150,4833,8729,13011
+method,,,dimer-lbfgs,,,,,,rgsaddle/develop-saddle-dimer-lbfgs,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,(develop 179e90f2),,20261016,37345.039576,95648.3219738277,3406018.0,0,27,7336,27,888,1956,4457,0,0,8,0,2750,3158,4457,7309
+method,,,dimer-rotskip,,,,,,rgsaddle/develop-saddle-dimer-rotskip,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,(develop 179e90f2),,20261016,21212.581012,95458.3308838967,2128776.0,0,27,4763,27,575,1251,2910,0,0,0,0,1748,2106,2910,4736
+method,,,lanczos,,,,,,rgsaddle/develop-saddle-lanczos,179e90f29a3b2cbd4ea5804a5c4c132ab19acba4,(develop 179e90f2),,20261016,104351.006585,59928.92065,12598860.0,5,27,20000,24,399,285,19286,0,0,1,0,602,2291,19286,19976
+method,,,eon-classic,,,,,,eon/develop-saddle-pt-dimer,,3.5.0 (7ec1840) compiled Fri Oct 02 07:25:16 AM GMT 2026,3.5.0 (7ec1840) compiled Fri Oct 02 07:25:16 AM GMT 2026,20261016,72596.202970,,7968457,0,27,16974,27,5126,67,8353,0,0,0,3401,5126,2531,8353,

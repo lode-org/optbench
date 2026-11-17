@@ -3506,8 +3506,8 @@
       "failures": {
         "cap": 0,
         "crash": 0,
-        "divergence": 5,
-        "wrong_stationary": 4
+        "divergence": 0,
+        "wrong_stationary": 9
       },
       "family": "minimize",
       "family_rank": 59,
@@ -3605,8 +3605,8 @@
       "failures": {
         "cap": 148,
         "crash": 0,
-        "divergence": 1,
-        "wrong_stationary": 3
+        "divergence": 0,
+        "wrong_stationary": 4
       },
       "family": "minimize",
       "family_rank": 61,

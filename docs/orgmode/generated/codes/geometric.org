@@ -71,7 +71,7 @@
    <td data-label="Mean calls" data-field="mean_calls">390.099</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 2, cap 0, wrong_stationary 3</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 5</td>
    <td data-label="Runs" data-field="n">1000</td>
    </tr>
    <tr data-problem="minimization/lj38-noise" data-label="geomeTRIC (1.1.1) · TRIC">

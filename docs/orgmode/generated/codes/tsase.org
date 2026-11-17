@@ -50,7 +50,7 @@
    <td data-label="Mean calls" data-field="mean_calls">1726.98</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 7, cap 17, wrong_stationary 0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 17, wrong_stationary 7</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="TSASE (1.0) · NEB">
@@ -66,7 +66,7 @@
    <td data-label="Mean calls" data-field="mean_calls">1652.86</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 36, cap 14, wrong_stationary 0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 14, wrong_stationary 36</td>
    <td data-label="Runs" data-field="n">50</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="TSASE (1.0) · CI-NEB">
@@ -82,7 +82,7 @@
    <td data-label="Mean calls" data-field="mean_calls">9690.35</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 1, cap 43, wrong_stationary 2</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 43, wrong_stationary 3</td>
    <td data-label="Runs" data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/lj38_2ts_separation" data-label="TSASE (1.0) · NEB">
@@ -98,7 +98,7 @@
    <td data-label="Mean calls" data-field="mean_calls">9720.22</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 3, cap 44, wrong_stationary 4</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 44, wrong_stationary 7</td>
    <td data-label="Runs" data-field="n">51</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="TSASE (1.0) · CI-NEB">
@@ -114,7 +114,7 @@
    <td data-label="Mean calls" data-field="mean_calls">639.61</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 20, cap 1, wrong_stationary 0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 1, wrong_stationary 20</td>
    <td data-label="Runs" data-field="n">59</td>
    </tr>
    <tr data-problem="double-ended-saddle-search/pt-island" data-label="TSASE (1.0) · NEB">
@@ -130,7 +130,7 @@
    <td data-label="Mean calls" data-field="mean_calls">788.746</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 56, cap 3, wrong_stationary 0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 3, wrong_stationary 56</td>
    <td data-label="Runs" data-field="n">59</td>
    </tr>
    <tr data-problem="hTST/Pt" data-label="TSASE · quenchDimer+neb-QM">
@@ -258,7 +258,7 @@
    <td data-label="Mean calls" data-field="mean_calls">267.945</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 22, cap 0, wrong_stationary 0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 22</td>
    <td data-label="Runs" data-field="n">200</td>
    </tr>
    <tr data-problem="minimization/lj38" data-label="tsase-SDLBFGS maxstep=0.1 optimizer=&#x27;maxatom&#x27;">
@@ -370,7 +370,7 @@
    <td data-label="Mean calls" data-field="mean_calls">1521.77</td>
    <td data-label="Hessians" data-field="hessian_calls">0</td>
    <td data-label="FD calls" data-field="fd_calls">0</td>
-   <td data-label="Failures" data-field="failures">crash 0, divergence 13, cap 0, wrong_stationary 0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 13</td>
    <td data-label="Runs" data-field="n">13</td>
    </tr>
    <tr data-problem="tsopt/LJ38" data-label="TSASE (1.0) · SSDimer">
