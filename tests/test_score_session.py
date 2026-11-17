@@ -91,16 +91,20 @@ def test_a_success_cannot_carry_a_failure_class() -> None:
         _score_records([(1.0, True, "cap", None, None)], 10)
 
 
-def test_reaching_the_cap_costs_twice_the_cap_and_stays_a_success() -> None:
+def test_a_success_on_the_cap_keeps_its_count_and_a_failure_there_costs_twice_the_cap() -> None:
     summary = _score_records([{"force_calls": 10.0, "success": True}], 10)
     assert summary["nfailed"] == 0
     assert summary["par_applied"] is True
-    assert summary["par2_mean"] == 20.0
+    assert summary["par2_mean"] == 10.0
     assert summary["success_only_mean"] == 10.0
     assert summary["n"] == 1
-    assert summary["median"] == 20.0
+    assert summary["median"] == 10.0
     assert summary["success_rate"] == 1.0
     assert summary["rate_high"] == 1.0
+    failed = _score_records([{"force_calls": 10.0, "success": False}], 10)
+    assert failed["par2_mean"] == 20.0
+    assert failed["median"] == 20.0
+    assert failed["success_rate"] == 0.0
 
 
 def test_an_unlabeled_failure_is_divergence_under_the_cap_and_cap_at_it() -> None:
