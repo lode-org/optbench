@@ -155,7 +155,9 @@ def _load():
     lib.SellaConfig = SellaConfig
     lib.ConstraintsConfig = ConstraintsConfig
     lib.surface_fn = surface_fn
-    lib.rgsaddle_last_error.restype = ctypes.c_char_p
+    last_error = getattr(lib, "rgsaddle_last_error", None)
+    if last_error is not None:
+        last_error.restype = ctypes.c_char_p
     for name, restype, argtypes in (
         ("rgsaddle_minmode_create", ctypes.c_void_p, [ctypes.POINTER(MinModeConfig), ctypes.c_int64, ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double)]),
         ("rgsaddle_minmode_step", ctypes.c_int, [ctypes.c_void_p, surface_fn, ctypes.c_void_p, ctypes.POINTER(Report)]),
@@ -185,6 +187,14 @@ def _load():
 
 def _section(template: dict, name: str) -> dict:
     return ((template.get("ini") or {}).get(name) or {})
+
+
+def _last_error(lib) -> str:
+    fn = getattr(lib, "rgsaddle_last_error", None)
+    if fn is None:
+        return ""
+    text = fn()
+    return text.decode() if text else ""
 
 
 def _stored(root: Path, archive_path: str) -> Path:
@@ -266,6 +276,8 @@ def _outcome(reasons: list[str]) -> tuple[bool, str | None]:
 
 
 def _callback(lib, potential, dof: int):
+    import traceback
+
     errors: list[str] = []
 
     def surface(_user, req) -> int:
@@ -286,7 +298,7 @@ def _callback(lib, potential, dof: int):
                 gradients[sl] = np.asarray(gradient, dtype=np.float64)
             return 0
         except Exception as exc:
-            errors.append(repr(exc))
+            errors.append(f"{type(exc).__name__}: {exc}\n{traceback.format_exc()}")
             return -6
 
     wrapped = lib.surface_fn(surface)
@@ -533,6 +545,12 @@ def _potential_for(spec: dict, positions: np.ndarray, free: np.ndarray, cell: np
     return HarnessSurface(_bind(raw, positions, free, cell))
 
 
+def _raise_surface_error(name: str, errors: list[str]) -> None:
+    """Raise the first surface-callback failure before a record is returned."""
+    if errors:
+        raise RuntimeError(f"{name} surface callback failed: {errors[0]}")
+
+
 def _finite_point(point: np.ndarray) -> bool:
     return bool(np.all(np.isfinite(point)))
 
@@ -564,8 +582,7 @@ def _run_minmode(spec: dict) -> dict:
         np.ascontiguousarray(mode).ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
     )
     if not session:
-        text = lib.rgsaddle_last_error()
-        detail = text.decode() if text else "null session"
+        detail = _last_error(lib) or "null session"
         raise RuntimeError(f"rgsaddle_minmode_create failed: {detail}")
     callback = _callback(lib, potential, dof)
     surface_errors: list[str] = []
@@ -652,6 +669,8 @@ def _run_minmode(spec: dict) -> dict:
                 record["verify_calls"] = int(potential.verify_calls)
             # Overlap is the mode-finder score. The Hessian index of the
             # unmoved guess is recorded and does not decide success.
+            # A surface error is raised before the record is returned.
+            _raise_surface_error(spec["name"], list(callback.errors))
             return record
         report = None
         max_steps = spec.get("max_steps")
@@ -680,6 +699,7 @@ def _run_minmode(spec: dict) -> dict:
     finally:
         lib.rgsaddle_minmode_free(session)
         del callback
+    _raise_surface_error(spec["name"], surface_errors)
     if solver_rc != OK and not _finite_point(point):
         reasons = ["solver"]
         success, failure = _outcome(reasons)
@@ -784,8 +804,7 @@ def _run_prfo(spec: dict) -> dict:
             masses.ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
         )
     if not session:
-        text = lib.rgsaddle_last_error()
-        detail = text.decode() if text else "null session"
+        detail = _last_error(lib) or "null session"
         if constraints:
             lib.rgsaddle_constraints_free(constraints)
         raise RuntimeError(f"rgsaddle_sella_saddle_create failed: {detail}")
@@ -806,6 +825,7 @@ def _run_prfo(spec: dict) -> dict:
                 lib.rgsaddle_constraints_free(constraints)
             raise RuntimeError(f"rgsaddle_sella_saddle_seed_mode returned {seed_rc}")
     callback = _callback(lib, potential, dof)
+    surface_errors: list[str] = []
     converged = False
     steps = 0
     library_evals = 0
@@ -824,11 +844,14 @@ def _run_prfo(spec: dict) -> dict:
             if potential.calls == before:
                 break
         point = _position(lib, lib.rgsaddle_sella_saddle_position, session, dof)
+        surface_errors = list(callback.errors)
     finally:
         lib.rgsaddle_sella_saddle_free(session)
         if constraints:
             lib.rgsaddle_constraints_free(constraints)
         del callback
+    if surface_errors:
+        raise RuntimeError(f"{spec['name']} surface callback failed: {surface_errors[0]}")
     return _saddle_record(
         spec["name"],
         potential,
