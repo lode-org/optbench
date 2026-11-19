@@ -190,6 +190,7 @@ def test_failure_classes_stay_in_the_par2_mean():
         )
         == "high_energy"
     )
+    assert classify_failure(["timeout"]) == "divergence"
     assert classify_failure(["divergence", "force_norm"]) == "divergence"
     assert classify_failure(["duplicate", "barrier"]) == "duplicate"
     assert classify_failure(["barrier"]) == "over_barrier"

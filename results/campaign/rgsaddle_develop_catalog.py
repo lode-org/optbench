@@ -81,7 +81,7 @@ def classify_search(record: dict, step_ceiling: int | None) -> str:
     reasons = {str(item) for item in (record.get("reasons") or [])}
     step_max = int(record.get("step_calls_max") or 0)
     barrier = record.get("barrier")
-    non_finite = "divergence" in reasons
+    non_finite = "divergence" in reasons or "timeout" in reasons
     if barrier is not None:
         try:
             non_finite = non_finite or not (float(barrier) == float(barrier))
