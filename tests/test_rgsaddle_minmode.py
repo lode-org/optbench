@@ -271,8 +271,8 @@ def test_rgsaddle_templates_match_their_problem_stop():
             assert template["commit"] == "8fa0eb1559c92b6ae9d1de190e253787a183729d"
             assert template["code_version"] == "(main 8fa0eb15)"
         elif template["id"] in develop:
-            assert template["commit"] == "179e90f29a3b2cbd4ea5804a5c4c132ab19acba4"
-            assert template["code_version"] == "(develop 179e90f2)"
+            assert template["commit"] == "aa6dd9371d6a63103010a6829cb62c74a39c7ff1"
+            assert template["code_version"] == "(develop aa6dd937)"
         else:
             assert template["commit"] == "2db34b42e6e029ebcf5b9868b94fcdf969103c9f"
             assert template["code_version"] == "0.2.2"

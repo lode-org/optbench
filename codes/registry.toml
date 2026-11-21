@@ -209,9 +209,20 @@ name = "rgsaddle"
 role = "saddle search"
 repository = "https://github.com/OmniPotentRPC/rgsaddle"
 ref = "develop"
+commit = "aa6dd9371d6a63103010a6829cb62c74a39c7ff1"
+committed = "2026-11-17"
+note = "develop aa6dd9371d6a63103010a6829cb62c74a39c7ff1, including fix/lanczos-pt-on-develop and the PAFI series. The four saddle-search/pt-island catalog rows dimer FIRE, dimer L-BFGS, rotation-skip, and Lanczos were measured on this commit at 1 thread."
+
+[[code]]
+id = "rgsaddle-develop-179e90f2"
+name = "rgsaddle"
+role = "saddle search"
+repository = "https://github.com/OmniPotentRPC/rgsaddle"
+ref = "develop"
 commit = "179e90f29a3b2cbd4ea5804a5c4c132ab19acba4"
 committed = "2026-11-15"
-note = "develop 179e90f29a3b2cbd4ea5804a5c4c132ab19acba4, which is after ef1fd6463763be811a52ec33bae1f21870a600d4 and contains 116b92e83fdbd5ec24fcfe500e9de2663d1a35b2 (dimer rotation history kept across translations). The four saddle-search/pt-island catalog rows dimer FIRE, dimer L-BFGS, rotation-skip, and Lanczos were measured on this commit. The main and 0.2.2 pins stay for the rows recorded on them."
+historical = true
+note = "develop 179e90f29a3b2cbd4ea5804a5c4c132ab19acba4. The four saddle-search/pt-island catalog rows dimer FIRE, dimer L-BFGS, rotation-skip, and Lanczos were measured on this commit at 1 thread."
 
 [[code]]
 id = "geodesic"
