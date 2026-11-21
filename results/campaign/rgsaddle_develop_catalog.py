@@ -299,6 +299,211 @@ def meson_setup_command(*, cc: str, cxx: str, fc: str, builddir: str, options: l
     return command
 
 
+_ARM_TOOL = frozenset({"binary_sha256", "label", "realpath_sha256", "version"})
+_ARM_COMPILER = frozenset({"binary_sha256", "label", "realpath_sha256", "version_first_line"})
+_ARM_FIELD = frozenset({"match", "recorded", "this_run"})
+_ARM_KEYS = {
+    "": frozenset(
+        {
+            "arm",
+            "base",
+            "budgets",
+            "build",
+            "eon",
+            "eonclient",
+            "hardware",
+            "hardware_comparison",
+            "prefixes",
+            "rgsaddle",
+            "run",
+            "spec",
+            "summary",
+            "version_suffix",
+        }
+    ),
+    "budgets": frozenset(
+        {"catalog_force_call_budget", "goal_connected", "max_searches", "template_failure_cap"}
+    ),
+    "build": frozenset(
+        {
+            "builddir",
+            "commands",
+            "compilers",
+            "cwd",
+            "meson",
+            "ninja",
+            "prefix",
+            "rustc",
+            "source",
+        }
+    ),
+    "build.compilers": frozenset({"cc", "cxx", "fc"}),
+    "build.compilers.cc": _ARM_COMPILER,
+    "build.compilers.cxx": _ARM_COMPILER,
+    "build.compilers.fc": _ARM_COMPILER,
+    "build.meson": _ARM_TOOL,
+    "build.ninja": _ARM_TOOL,
+    "build.rustc": _ARM_TOOL,
+    "eon": frozenset({"commit", "repository", "tag"}),
+    "eonclient": frozenset(
+        {"path", "sha256_after", "sha256_before", "sha256_match", "version_stdout"}
+    ),
+    "hardware": frozenset(
+        {
+            "cores_per_socket",
+            "cpu_cores",
+            "cpu_family",
+            "cpus_online",
+            "kernel_release",
+            "l1d_cache",
+            "l1i_cache",
+            "l2_cache",
+            "l3_cache",
+            "machine",
+            "machine_id_sha256",
+            "mem_total_kb",
+            "model",
+            "model_name",
+            "sockets",
+            "stepping",
+            "threads_per_core",
+            "vendor_id",
+        }
+    ),
+    "hardware_comparison": frozenset(
+        {
+            "differed_fields",
+            "fields",
+            "matched_fields",
+            "note",
+            "reference",
+            "same_hardware_claimed",
+            "unrecorded_on_other_arms",
+        }
+    ),
+    "hardware_comparison.fields": frozenset(
+        {"cpu_cores", "cpus_online", "mem_total_kb", "model_name"}
+    ),
+    "hardware_comparison.fields.cpu_cores": _ARM_FIELD,
+    "hardware_comparison.fields.cpus_online": _ARM_FIELD,
+    "hardware_comparison.fields.mem_total_kb": _ARM_FIELD,
+    "hardware_comparison.fields.model_name": _ARM_FIELD,
+    "prefixes[]": frozenset({"binary_sha256", "label", "realpath_sha256"}),
+    "rgsaddle": frozenset({"develop_commit", "repository", "role"}),
+    "run": frozenset(
+        {
+            "argv",
+            "client_commands",
+            "communicator_jobs",
+            "config_ini",
+            "cpu_affinity",
+            "env",
+            "error",
+            "number_of_cpus",
+            "resumed",
+            "seed",
+            "segments",
+            "threads",
+            "version_probes",
+            "wall_seconds",
+        }
+    ),
+    "run.client_commands[]": frozenset(
+        {"argv", "cwd", "index", "returncode", "taskset", "wall_seconds"}
+    ),
+    "run.env": None,
+    "run.threads": None,
+    "run.segments[]": frozenset(
+        {"cpu_affinity", "finished_unix", "resumed", "started_unix", "wall_seconds"}
+    ),
+    "run.version_probes[]": frozenset({"argv", "returncode"}),
+    "spec": frozenset({"goal_connected", "max_searches", "runner", "seed", "template"}),
+    "summary": frozenset(
+        {
+            "connected",
+            "force_call_median",
+            "force_call_median_connected",
+            "searches",
+            "wall_median",
+            "wall_seconds",
+        }
+    ),
+}
+
+
+def _arm_schema(where: str) -> str:
+    """Drop list indexes so every element shares one allowlist."""
+    return re.sub(r"\[\d+\]", "[]", where)
+
+
+def _walk_arm(value, where: str) -> None:
+    """Refuse a key that the arm document does not list."""
+    if isinstance(value, dict):
+        place = _arm_schema(where)
+        if place not in _ARM_KEYS:
+            raise ProvenanceError(f"{place or 'provenance'} is not an allowed object")
+        allowed = _ARM_KEYS[place]
+        for key, item in value.items():
+            name = str(key)
+            child = f"{where}.{name}" if where else name
+            if allowed is None:
+                if re.fullmatch(r"[A-Z][A-Z0-9_]*", name) is None:
+                    raise ProvenanceError(f"{child} is not an allowed key")
+            elif name not in allowed:
+                raise ProvenanceError(f"{child} is not an allowed key")
+            if isinstance(item, str) and "sha256" in name.lower():
+                if _SHA256_TEXT.fullmatch(item) is None:
+                    raise ProvenanceError(f"{child} is invalid")
+            elif item is None and "sha256" in name.lower():
+                raise ProvenanceError(f"{child} is null")
+            _walk_arm(item, child)
+        return
+    if isinstance(value, list):
+        for index, item in enumerate(value):
+            _walk_arm(item, f"{where}[{index}]")
+        return
+    if isinstance(value, str):
+        _reject_unexpanded(value, where)
+
+
+def _validate_arm_provenance(document: dict) -> None:
+    """Accept an arm capture whose compilers and client digest check out.
+
+    This shape has a top-level ``arm`` and no ``binary``. Compiler banners are
+    ``version_first_line`` values. The client digest before the run matches the
+    digest after it. Kit and prior-arm metadata are not in the allowlist.
+    """
+    arm = document.get("arm")
+    if not isinstance(arm, str) or not arm.strip():
+        raise ProvenanceError("arm is empty")
+    _walk_arm(document, "")
+    compilers = (document.get("build") or {}).get("compilers") if isinstance(document.get("build"), dict) else None
+    if not isinstance(compilers, dict):
+        raise ProvenanceError("build.compilers is not an object")
+    for name in ("cc", "cxx", "fc"):
+        block = compilers.get(name)
+        if not isinstance(block, dict):
+            raise ProvenanceError(f"build.compilers.{name} is not an object")
+        line = block.get("version_first_line")
+        if not isinstance(line, str):
+            raise ProvenanceError(f"build.compilers.{name} is not a full version string")
+        try:
+            identity = _compiler_identity(line)
+        except ProvenanceError as exc:
+            raise ProvenanceError(f"build.compilers.{name} is not a full version string") from exc
+        _require_compiler_role(name, identity)
+    client = document.get("eonclient")
+    if not isinstance(client, dict):
+        raise ProvenanceError("eonclient is not an object")
+    before = client.get("sha256_before")
+    after = client.get("sha256_after")
+    if not isinstance(before, str) or _SHA256_TEXT.fullmatch(before) is None:
+        raise ProvenanceError("eonclient.sha256_before is invalid")
+    if before != after:
+        raise ProvenanceError("eonclient.sha256_before does not match sha256_after")
+    if client.get("sha256_match") is not True:
+        raise ProvenanceError("eonclient.sha256_match is not true")
+
 def validate_provenance(document: dict) -> None:
     """Refuse a null sha256, a key outside the schema, or an unexpanded variable.
 
@@ -308,6 +513,9 @@ def validate_provenance(document: dict) -> None:
     """
     if not isinstance(document, dict):
         raise ProvenanceError("provenance is not an object")
+    if "arm" in document and "binary" not in document:
+        _validate_arm_provenance(document)
+        return
     _walk_provenance(document, "")
     binary = document.get("binary")
     if not isinstance(binary, dict):

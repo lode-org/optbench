@@ -833,10 +833,29 @@ def _dedup(rows: list[dict]) -> list[dict]:
     return merged
 
 
+def _skip_unpublished_eon(directory: Path, stem: str) -> bool:
+    """An eon ledger with a provenance file stays off the board until that file validates."""
+    provenance = directory / f"{stem}-eon-provenance.json"
+    if not provenance.is_file():
+        return False
+    import importlib.util
+
+    script = directory / "rgsaddle_develop_catalog.py"
+    spec = importlib.util.spec_from_file_location("rgsaddle_develop_catalog_board", script)
+    if spec is None or spec.loader is None:
+        return True
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return not module.provenance_publishes(provenance)
+
+
 def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict]) -> tuple[list[dict], list[dict]]:
     rows: list[dict] = []
     unparsed: list[dict] = []
-    for stem, group in _campaign_groups(root / "results" / "campaign").items():
+    directory = root / "results" / "campaign"
+    for stem, group in _campaign_groups(directory).items():
+        if _skip_unpublished_eon(directory, stem):
+            continue
         path = group.get("dat") or group.get("v2") or group.get("starts_jsonl") or group.get("starts")
         fields: dict[str, str] = {}
         parse_note = ""
