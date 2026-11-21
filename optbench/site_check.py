@@ -16,6 +16,7 @@ from .board import (
     difference_rows,
     difference_text,
     family_cells,
+    headline_row,
     inferred_rows,
     ranked_cells,
     unit_per_image,
@@ -195,7 +196,8 @@ def _check_headline(label: str, table: dict, document: dict) -> list[str]:
         return [f"{label} {problem_id} headline rows {len(body)} != 1"]
     per_image = _show_per_image(problem) if problem else False
     got = _cell_map(body[0])
-    expected = dict(ranked_cells(ranked[0], per_image))
+    best = headline_row(ranked)
+    expected = dict(ranked_cells(best, per_image)) if best is not None else {}
     errors = []
     for field, value in expected.items():
         if got.get(field) != value:

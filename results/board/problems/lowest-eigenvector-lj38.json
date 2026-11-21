@@ -298,7 +298,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 10000,
       "code": "Sella",
       "code_version": "0.1.1",
       "commit": "",
@@ -345,7 +345,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 10000,
       "code": "OPTIM",
       "code_version": "",
       "commit": "",
@@ -392,7 +392,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 10000,
       "code": "TSASE",
       "code_version": "410",
       "commit": "",
@@ -439,7 +439,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 10000,
       "code": "pele",
       "code_version": "",
       "commit": "",
@@ -694,7 +694,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 10000,
       "code": "TSASE",
       "code_version": "408",
       "commit": "",
@@ -793,7 +793,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 10000,
       "code": "Eon",
       "code_version": "r2156",
       "commit": "",
@@ -840,7 +840,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 10000,
       "code": "Eon",
       "code_version": "r2156",
       "commit": "",
@@ -991,7 +991,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 10000,
       "code": "TSASE",
       "code_version": "408",
       "commit": "",
@@ -1038,7 +1038,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 10000,
       "code": "Eon",
       "code_version": "r2156",
       "commit": "",

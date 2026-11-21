@@ -186,7 +186,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 2000000,
       "code": "GMIN",
       "code_version": "",
       "commit": "",
@@ -233,7 +233,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 2000000,
       "code": "GMIN",
       "code_version": "",
       "commit": "",
@@ -332,7 +332,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 2000000,
       "code": "GMIN",
       "code_version": "",
       "commit": "",
@@ -483,7 +483,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 2000000,
       "code": "Eon",
       "code_version": "r2156",
       "commit": "",

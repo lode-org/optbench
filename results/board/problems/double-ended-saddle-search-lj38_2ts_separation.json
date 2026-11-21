@@ -885,7 +885,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 250000,
       "code": "OPTIM",
       "code_version": "",
       "commit": "",
@@ -1192,7 +1192,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 250000,
       "code": "pele",
       "code_version": "",
       "commit": "",

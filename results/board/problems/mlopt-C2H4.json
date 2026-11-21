@@ -605,7 +605,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 5,
+      "family_rank": 1,
       "fd_calls": 0.0,
       "full_n": 50,
       "hessian_calls": 0.0,
@@ -657,7 +657,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 6,
+      "family_rank": 2,
       "fd_calls": 0.0,
       "full_n": 50,
       "hessian_calls": 0.0,
@@ -709,7 +709,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 7,
+      "family_rank": 3,
       "fd_calls": 0.0,
       "full_n": 50,
       "hessian_calls": 0.0,
@@ -761,7 +761,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 8,
+      "family_rank": 4,
       "fd_calls": 0.0,
       "full_n": 50,
       "hessian_calls": 0.0,

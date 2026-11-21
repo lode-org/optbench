@@ -9,7 +9,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "TSASE",
       "code_version": "",
       "commit": "",
@@ -56,7 +56,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "Eon r2006",
       "code_version": "",
       "commit": "",
@@ -155,7 +155,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "Eon r2006",
       "code_version": "",
       "commit": "",
@@ -254,7 +254,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "Eon r2006",
       "code_version": "",
       "commit": "",
@@ -301,7 +301,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "Eon r2006",
       "code_version": "",
       "commit": "",
@@ -348,7 +348,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "Eon r2006",
       "code_version": "",
       "commit": "",
@@ -395,7 +395,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "Eon r2006",
       "code_version": "",
       "commit": "",
@@ -442,7 +442,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "Eon r2006",
       "code_version": "",
       "commit": "",
@@ -489,7 +489,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "Eon r2006",
       "code_version": "",
       "commit": "",
@@ -588,7 +588,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "TSASE",
       "code_version": "",
       "commit": "",
@@ -635,7 +635,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 20000000,
       "code": "TSASE",
       "code_version": "",
       "commit": "",

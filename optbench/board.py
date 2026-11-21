@@ -1166,13 +1166,32 @@ def _public(row: dict) -> dict:
     }
 
 
+def _rank_cap(row: dict) -> int | None:
+    cap = row.get("cap")
+    if cap is None or cap == "":
+        return None
+    try:
+        return int(cap)
+    except (TypeError, ValueError):
+        return None
+
+
 def _rank_key(row: dict) -> tuple:
+    """Order rows inside one failure cap, then by cost.
+
+    A failed search is charged twice its own cap, so two caps are two
+    budgets. Rows of one cap stay together and the cheaper row of that
+    cap comes first.
+    """
     score = row.get("rank_cost")
     if score is None:
         score = row.get("par2_mean")
     if score is None:
         score = row.get("published")
+    cap = _rank_cap(row)
     return (
+        cap is None,
+        cap if cap is not None else 0,
         score is None,
         float(score) if score is not None else 0.0,
         str(row.get("label") or ""),
@@ -1385,11 +1404,12 @@ def board_rows(problem: dict) -> list[dict]:
 
 
 def _assign_family_ranks(ranked: list[dict]) -> None:
-    seen: dict[str, int] = defaultdict(int)
+    """Rank within one family and one failure cap. A new cap starts again at 1."""
+    seen: dict[tuple, int] = defaultdict(int)
     for row in ranked:
-        family = str(row.get("family") or "")
-        seen[family] += 1
-        row["family_rank"] = seen[family]
+        key = (str(row.get("family") or ""), _rank_cap(row))
+        seen[key] += 1
+        row["family_rank"] = seen[key]
 
 
 def rank_violations(document: dict) -> list[str]:
@@ -1490,6 +1510,10 @@ def build_board(root: Path) -> dict:
         unit = rank_unit(problem, ranked)
         other_units = _unit_groups([row for row in ranked if row.get("unit") != unit])
         ranked = [row for row in ranked if row.get("unit") == unit]
+        stated_cap = _cap_of(problem, None, {})
+        for row in ranked:
+            if _rank_cap(row) is None and stated_cap is not None:
+                row["cap"] = stated_cap
         ranked.sort(key=_rank_key)
         _assign_family_ranks(ranked)
         problems_out[problem_id] = {
@@ -1754,6 +1778,7 @@ def _headers(problem: dict) -> list[str]:
         "Family rank",
         "Unit",
         "PAR-2",
+        "Cap",
         "Published",
         "Median calls",
         "Mean calls",
@@ -1775,6 +1800,7 @@ def ranked_cells(row: dict, per_image: bool) -> list[tuple[str, str]]:
         ("family_rank", "" if row.get("family_rank") is None else str(row.get("family_rank"))),
         ("unit", str(row.get("unit") or "")),
         ("par2_mean", _format_number(row.get("par2_mean"))),
+        ("cap", "" if _rank_cap(row) is None else str(_rank_cap(row))),
         ("published", _format_number(row.get("published"))),
         ("median_calls", _format_number(row.get("median_calls"))),
         ("mean_calls", _format_number(row.get("mean_calls"))),
@@ -1794,6 +1820,7 @@ def family_cells(row: dict) -> list[tuple[str, str]]:
         ("family_rank", "" if row.get("family_rank") is None else str(row.get("family_rank"))),
         ("label", str(row.get("label") or "")),
         ("rank_cost", _format_number(row.get("rank_cost"))),
+        ("cap", "" if _rank_cap(row) is None else str(_rank_cap(row))),
         ("unit", str(row.get("unit") or "")),
         ("hessian_calls", _format_number(row.get("hessian_calls"))),
         ("fd_calls", _format_number(row.get("fd_calls"))),
@@ -1932,10 +1959,25 @@ def summary_codes(document: dict, registry: list[dict]) -> list[str]:
     return ordered
 
 
+def _cost_key(row: dict) -> tuple:
+    score = row.get("rank_cost")
+    if score is None:
+        score = row.get("par2_mean")
+    if score is None:
+        score = row.get("published")
+    return (
+        score is None,
+        float(score) if score is not None else 0.0,
+        str(row.get("label") or ""),
+        str(row.get("template") or ""),
+        str(row.get("path") or ""),
+    )
+
+
 def best_ranked_by_code(ranked: list[dict]) -> dict[str, dict]:
-    """First ranked row of each code. The list is already best-PAR-2 first."""
+    """Lowest PAR-2 row of each code. Cap groups do not choose this row."""
     best: dict[str, dict] = {}
-    for row in ranked:
+    for row in sorted(ranked, key=_cost_key):
         code = str(row.get("code") or "").strip()
         if code and code not in best:
             best[code] = row
@@ -2016,8 +2058,15 @@ def _winner_html(row: dict) -> str:
     return "".join(parts)
 
 
+def headline_row(ranked: list[dict]) -> dict | None:
+    """Lowest PAR-2 row. Cap order in the full table does not choose this row."""
+    if not ranked:
+        return None
+    return min(ranked, key=_cost_key)
+
+
 def headline_table(problem: dict) -> str:
-    """One ranked row: the lowest cost."""
+    """One ranked row: the lowest PAR-2, with that row's own cap."""
     per_image = _show_per_image(problem)
     headers = _headers(problem)
     lines = [
@@ -2026,15 +2075,16 @@ def headline_table(problem: dict) -> str:
         "<thead><tr>" + "".join(f"<th>{_cell(header)}</th>" for header in headers) + "</tr></thead><tbody>",
     ]
     ranked = list(problem.get("ranked") or [])
-    if ranked:
-        lines.append(f"<tr>{_row_cells(ranked[0], per_image)}</tr>")
+    best = headline_row(ranked)
+    if best is not None:
+        lines.append(f"<tr>{_row_cells(best, per_image)}</tr>")
     else:
         lines.append(f'<tr><td colspan="{len(headers)}">No ranked row.</td></tr>')
     lines.append("</tbody></table></div>")
-    winner = _winner_html(ranked[0]) if ranked else ""
-    finding = str(ranked[0].get("finding") or "").strip() if ranked else ""
-    if finding:
-        label = ranked[0].get("template") or ranked[0].get("entry") or ""
+    winner = _winner_html(best) if best is not None else ""
+    finding = str(best.get("finding") or "").strip() if best is not None else ""
+    if finding and best is not None:
+        label = best.get("template") or best.get("entry") or ""
         lines.append(f'<p class="bench-finding">{_cell(label)}: {_cell(finding)}.</p>')
     body = "\n".join(lines)
     return f"{winner}\n{body}" if winner else body
@@ -2074,6 +2124,7 @@ def _caption(per_image: bool) -> str:
     caption = (
         "One row is one code, one version, and one method. A lower cost is better. "
         "PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. "
+        "Rank starts again for each cap, because a different cap is a different failure budget. "
         "An archived row shows the average it published, "
         "and its PAR-2 applies that rule to the failures the entry records. "
         "Hessians is the mean analytic Hessian count. "
@@ -2085,7 +2136,7 @@ def _caption(per_image: bool) -> str:
 
 
 def _family_table(problem: dict, family_id: str, rows: list[dict]) -> str:
-    headers = ["Rank", "Row", "Cost", "Unit", "Hessians", "FD calls", "Runs"]
+    headers = ["Rank", "Row", "Cost", "Cap", "Unit", "Hessians", "FD calls", "Runs"]
     lines = [
         '<div class="bench-scroll">',
         (

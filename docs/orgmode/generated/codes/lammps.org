@@ -35,7 +35,7 @@
    <p>Ranked rows for this code, one version and one method on each row. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. <a href="../../methodology.html">Scoring rules</a>.</p>
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
-   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Cap</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="double-ended-saddle-search/lj38" data-label="LAMMPS (30 Sep 2026) · CI-NEB-fire">
    <td data-label="Suite">Double-ended saddle search</td>
    <td data-label="Problem"><a href="../suites/double-ended-saddle-search/lj38.html">LJ38 double-ended saddle</a></td>
@@ -44,6 +44,7 @@
    <td data-label="Family rank" data-field="family_rank">16</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">4526.2</td>
+   <td data-label="Cap" data-field="cap">2500</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">2065</td>
    <td data-label="Mean calls" data-field="mean_calls">2055.2</td>
@@ -60,6 +61,7 @@
    <td data-label="Family rank" data-field="family_rank">19</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">4949.7</td>
+   <td data-label="Cap" data-field="cap">2500</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">2485</td>
    <td data-label="Mean calls" data-field="mean_calls">2485</td>
@@ -76,6 +78,7 @@
    <td data-label="Family rank" data-field="family_rank">20</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">451959</td>
+   <td data-label="Cap" data-field="cap">250000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">9982</td>
    <td data-label="Mean calls" data-field="mean_calls">9982</td>
@@ -92,6 +95,7 @@
    <td data-label="Family rank" data-field="family_rank">21</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">500000</td>
+   <td data-label="Cap" data-field="cap">250000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">8120</td>
    <td data-label="Mean calls" data-field="mean_calls">8114.78</td>
@@ -108,6 +112,7 @@
    <td data-label="Family rank" data-field="family_rank">19</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">2668.64</td>
+   <td data-label="Cap" data-field="cap">3000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">1405</td>
    <td data-label="Mean calls" data-field="mean_calls">1471.69</td>
@@ -124,6 +129,7 @@
    <td data-label="Family rank" data-field="family_rank">20</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">4566.78</td>
+   <td data-label="Cap" data-field="cap">3000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">2760</td>
    <td data-label="Mean calls" data-field="mean_calls">2508.98</td>
@@ -140,6 +146,7 @@
    <td data-label="Family rank" data-field="family_rank">47</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">1123.81</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">974</td>
    <td data-label="Mean calls" data-field="mean_calls">1066.61</td>
@@ -156,6 +163,7 @@
    <td data-label="Family rank" data-field="family_rank">59</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">3138.21</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">2545</td>
    <td data-label="Mean calls" data-field="mean_calls">3020.94</td>
@@ -172,6 +180,7 @@
    <td data-label="Family rank" data-field="family_rank">61</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">4361.3</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">1550.5</td>
    <td data-label="Mean calls" data-field="mean_calls">2810.32</td>
@@ -188,6 +197,7 @@
    <td data-label="Family rank" data-field="family_rank">62</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">5844.9</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">413</td>
    <td data-label="Mean calls" data-field="mean_calls">421.053</td>
@@ -204,6 +214,7 @@
    <td data-label="Family rank" data-field="family_rank">67</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">14468.2</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">10000</td>
    <td data-label="Mean calls" data-field="mean_calls">8298.19</td>
@@ -220,6 +231,7 @@
    <td data-label="Family rank" data-field="family_rank">18</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">1123.81</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">974</td>
    <td data-label="Mean calls" data-field="mean_calls">1066.61</td>
@@ -236,6 +248,7 @@
    <td data-label="Family rank" data-field="family_rank">21</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">2046.69</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">1776.5</td>
    <td data-label="Mean calls" data-field="mean_calls">1993.39</td>
@@ -252,6 +265,7 @@
    <td data-label="Family rank" data-field="family_rank">24</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">3138.21</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">2545</td>
    <td data-label="Mean calls" data-field="mean_calls">3020.94</td>
@@ -268,6 +282,7 @@
    <td data-label="Family rank" data-field="family_rank">25</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">5802.74</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">411.5</td>
    <td data-label="Mean calls" data-field="mean_calls">417.719</td>
@@ -284,6 +299,7 @@
    <td data-label="Family rank" data-field="family_rank">26</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">10074.7</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">6420.5</td>
    <td data-label="Mean calls" data-field="mean_calls">6693.33</td>
@@ -300,6 +316,7 @@
    <td data-label="Family rank" data-field="family_rank">66</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">17656.7</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">478</td>
    <td data-label="Mean calls" data-field="mean_calls">473.48</td>
@@ -316,6 +333,7 @@
    <td data-label="Family rank" data-field="family_rank">67</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">19004.7</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">95.5</td>
    <td data-label="Mean calls" data-field="mean_calls">100.24</td>
@@ -332,6 +350,7 @@
    <td data-label="Family rank" data-field="family_rank">68</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">19150.8</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">1695.5</td>
    <td data-label="Mean calls" data-field="mean_calls">2050.36</td>
@@ -348,6 +367,7 @@
    <td data-label="Family rank" data-field="family_rank">69</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">19211.2</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">258.5</td>
    <td data-label="Mean calls" data-field="mean_calls">262.2</td>
@@ -364,6 +384,7 @@
    <td data-label="Family rank" data-field="family_rank">70</td>
    <td data-label="Unit" data-field="unit">force calls</td>
    <td data-label="PAR-2" data-field="par2_mean">19415</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">480</td>
    <td data-label="Mean calls" data-field="mean_calls">512.54</td>
@@ -380,6 +401,7 @@
    <td data-label="Family rank" data-field="family_rank">10</td>
    <td data-label="Unit" data-field="unit">force calls per band</td>
    <td data-label="PAR-2" data-field="par2_mean">1398.46</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">1400</td>
    <td data-label="Mean calls" data-field="mean_calls">1398.46</td>
@@ -396,6 +418,7 @@
    <td data-label="Family rank" data-field="family_rank">12</td>
    <td data-label="Unit" data-field="unit">force calls per band</td>
    <td data-label="PAR-2" data-field="par2_mean">3417.69</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">4020</td>
    <td data-label="Mean calls" data-field="mean_calls">3417.69</td>
