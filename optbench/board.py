@@ -853,6 +853,8 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
                     )
                 )
                 continue
+            if not _library_hash_bound(root / "results" / "campaign", stem, fields):
+                continue
         probe = _first_raw(group)
         template_id = fields.get("template") or str(probe.get("template") or "")
         template = templates.get(template_id)
@@ -2541,6 +2543,58 @@ def _render_page_plots(root: Path, document: dict, plot_dir: Path, score_stems: 
     return written
 
 
+_AA_LEDGER = "rgsaddle-develop-aa6dd937-saddle-"
+_AA_COMMANDS = "rgsaddle-develop-aa6dd937-pt-island-commands.json"
+_AA_SIDECAR = "rgsaddle-develop-aa6dd937-pt-island-lib-sha256.json"
+
+
+def _sha256_text(value: str) -> bool:
+    return len(value) == 64 and all(char in "0123456789abcdef" for char in value)
+
+
+def _library_hash_bound(directory: Path, stem: str, fields: dict[str, str]) -> bool:
+    """An aa6dd937 saddle ledger is published only when it names the built library.
+
+    The ledger, that method's command record, and the sidecar must carry one sha256.
+    """
+    if not stem.startswith(_AA_LEDGER):
+        return True
+    method = stem[len(_AA_LEDGER) :]
+    named = str(fields.get("rgsaddle_lib_sha256") or "")
+    if not _sha256_text(named):
+        return False
+    try:
+        commands = json.loads((directory / _AA_COMMANDS).read_text(encoding="utf-8"))
+        sidecar = json.loads((directory / _AA_SIDECAR).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    command_sha = str((commands.get(method) or {}).get("rgsaddle_lib_sha256") or "")
+    side_sha = str(sidecar.get("rgsaddle_lib_sha256") or "") if isinstance(sidecar, dict) else ""
+    return named == command_sha == side_sha
+
+
+def _library_sha256(root: Path) -> str | None:
+    """The pinned rgsaddle library sha256, when the sidecar record is present."""
+    path = (
+        Path(root)
+        / "results"
+        / "campaign"
+        / "rgsaddle-develop-aa6dd937-pt-island-lib-sha256.json"
+    )
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(payload, dict):
+        return None
+    sha = payload.get("rgsaddle_lib_sha256")
+    if not isinstance(sha, str) or len(sha) != 64 or any(char not in "0123456789abcdef" for char in sha):
+        return None
+    return sha
+
+
 def _strip_private(document: dict) -> dict:
     public_problems = {}
     for problem_id, problem in document["problems"].items():
@@ -2635,6 +2689,9 @@ def write_board(root: Path, output: Path, *, site: bool | None = None) -> dict:
                 shutil.copy(path, site_plots / path.name)
         _drop_unwritten(site_plots, written_names)
     public = _strip_private(document)
+    library = _library_sha256(root)
+    if library is not None:
+        public["rgsaddle_lib_sha256"] = library
     (output / "index.json").write_text(
         json.dumps(public, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",

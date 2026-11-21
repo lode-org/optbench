@@ -1,0 +1,7 @@
+{
+  "commit": "aa6dd9371d6a63103010a6829cb62c74a39c7ff1",
+  "library": "librgsaddle.so",
+  "profile": "release",
+  "rgsaddle_lib_sha256": "de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0",
+  "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)"
+}

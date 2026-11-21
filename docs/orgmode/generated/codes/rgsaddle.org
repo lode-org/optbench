@@ -582,12 +582,29 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 9596, cap 10382, wrong_stationary 22</td>
    <td data-label="Runs" data-field="n">20000</td>
    </tr>
+   <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop aa6dd937) · Lanczos L-BFGS">
+   <td data-label="Suite">Saddle search</td>
+   <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
+   <td data-label="Row" data-field="label">rgsaddle (develop aa6dd937) · Lanczos L-BFGS</td>
+   <td data-label="Family" data-field="family">Minimum mode</td>
+   <td data-label="Family rank" data-field="family_rank">1</td>
+   <td data-label="Unit" data-field="unit">force calls per search</td>
+   <td data-label="PAR-2" data-field="par2_mean">59911.5</td>
+   <td data-label="Cap" data-field="cap">30000</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">436</td>
+   <td data-label="Mean calls" data-field="mean_calls">464.766</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 2, wrong_stationary 3, duplicate 9591, over_barrier 6002, disconnected 2546</td>
+   <td data-label="Runs" data-field="n">18171</td>
+   </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop 179e90f2) · Lanczos L-BFGS">
    <td data-label="Suite">Saddle search</td>
    <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">rgsaddle (develop 179e90f2) · Lanczos L-BFGS</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">1</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">force calls per search</td>
    <td data-label="PAR-2" data-field="par2_mean">59928.9</td>
    <td data-label="Cap" data-field="cap">30000</td>
@@ -616,12 +633,29 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0, duplicate 2910, over_barrier 1251, disconnected 575</td>
    <td data-label="Runs" data-field="n">4763</td>
    </tr>
+   <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop aa6dd937) · Dimer rotation-skip L-BFGS">
+   <td data-label="Suite">Saddle search</td>
+   <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
+   <td data-label="Row" data-field="label">rgsaddle (develop aa6dd937) · Dimer rotation-skip L-BFGS</td>
+   <td data-label="Family" data-field="family">Minimum mode</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Unit" data-field="unit">force calls per search</td>
+   <td data-label="PAR-2" data-field="par2_mean">95458.3</td>
+   <td data-label="Cap" data-field="cap">48000</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">403</td>
+   <td data-label="Mean calls" data-field="mean_calls">446.988</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 0, duplicate 2910, over_barrier 1250, disconnected 576</td>
+   <td data-label="Runs" data-field="n">4763</td>
+   </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop 179e90f2) · Dimer L-BFGS">
    <td data-label="Suite">Saddle search</td>
    <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">rgsaddle (develop 179e90f2) · Dimer L-BFGS</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">2</td>
+   <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">force calls per search</td>
    <td data-label="PAR-2" data-field="par2_mean">95648.3</td>
    <td data-label="Cap" data-field="cap">48000</td>
@@ -633,12 +667,46 @@
    <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 8, duplicate 4457, over_barrier 1956, disconnected 888</td>
    <td data-label="Runs" data-field="n">7336</td>
    </tr>
+   <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop aa6dd937) · Dimer L-BFGS">
+   <td data-label="Suite">Saddle search</td>
+   <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
+   <td data-label="Row" data-field="label">rgsaddle (develop aa6dd937) · Dimer L-BFGS</td>
+   <td data-label="Family" data-field="family">Minimum mode</td>
+   <td data-label="Family rank" data-field="family_rank">4</td>
+   <td data-label="Unit" data-field="unit">force calls per search</td>
+   <td data-label="PAR-2" data-field="par2_mean">95648.3</td>
+   <td data-label="Cap" data-field="cap">48000</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">415</td>
+   <td data-label="Mean calls" data-field="mean_calls">464.106</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 0, wrong_stationary 8, duplicate 4457, over_barrier 1956, disconnected 888</td>
+   <td data-label="Runs" data-field="n">7336</td>
+   </tr>
+   <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop aa6dd937) · Dimer FIRE">
+   <td data-label="Suite">Saddle search</td>
+   <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
+   <td data-label="Row" data-field="label">rgsaddle (develop aa6dd937) · Dimer FIRE</td>
+   <td data-label="Family" data-field="family">Minimum mode</td>
+   <td data-label="Family rank" data-field="family_rank">5</td>
+   <td data-label="Unit" data-field="unit">force calls per search</td>
+   <td data-label="PAR-2" data-field="par2_mean">95707.8</td>
+   <td data-label="Cap" data-field="cap">48000</td>
+   <td data-label="Published" data-field="published"></td>
+   <td data-label="Median calls" data-field="median_calls">1045</td>
+   <td data-label="Mean calls" data-field="mean_calls">1026.79</td>
+   <td data-label="Hessians" data-field="hessian_calls">0</td>
+   <td data-label="FD calls" data-field="fd_calls">0</td>
+   <td data-label="Failures" data-field="failures">crash 0, divergence 0, cap 7, wrong_stationary 2, duplicate 5908, over_barrier 1933, disconnected 921</td>
+   <td data-label="Runs" data-field="n">8798</td>
+   </tr>
    <tr data-problem="saddle-search/pt-island" data-label="rgsaddle (develop 179e90f2) · Dimer FIRE">
    <td data-label="Suite">Saddle search</td>
    <td data-label="Problem"><a href="../suites/saddle-search/pt-island.html">Pt heptamer island</a></td>
    <td data-label="Row" data-field="label">rgsaddle (develop 179e90f2) · Dimer FIRE</td>
    <td data-label="Family" data-field="family">Minimum mode</td>
-   <td data-label="Family rank" data-field="family_rank">3</td>
+   <td data-label="Family rank" data-field="family_rank">6</td>
    <td data-label="Unit" data-field="unit">force calls per search</td>
    <td data-label="PAR-2" data-field="par2_mean">95803.1</td>
    <td data-label="Cap" data-field="cap">48000</td>

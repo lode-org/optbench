@@ -1027,6 +1027,7 @@ def _command_rows() -> list[dict[str, str]]:
             "cpu_affinity": ",".join(str(cpu) for cpu in payload.get("cpu_affinity") or []),
             "threads": " ".join(f"{key}={value}" for key, value in sorted((payload.get("threads") or {}).items())),
             "rgsaddle_head": payload.get("rgsaddle_head", ""),
+            "rgsaddle_lib_sha256": payload.get("rgsaddle_lib_sha256", ""),
         }
         if method == "eon-classic":
             if not provenance:
