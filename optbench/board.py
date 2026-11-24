@@ -64,6 +64,9 @@ from .units import FORCE_CALL_FIELDS, harness_unit, rank_unit, row_unit, unit_so
 from .v2 import parse_repetitions
 
 BOARD_SCHEMA = "optbench.board/v2"
+# Ten figures keep a published cost. The last bits of the same cost can
+# move on another platform, and the board files are compared byte for byte.
+PUBLISHED_FIGURES = 10
 
 
 def _slug(problem_id: str) -> str:
@@ -2633,6 +2636,35 @@ def _strip_private(document: dict) -> dict:
     }
 
 
+def published_number(value: float) -> float:
+    """The number stored in the board JSON.
+
+    Non-finite values are left alone. Zero of either sign is ``0.0``.
+    """
+    if not math.isfinite(value):
+        return value
+    if value == 0.0:
+        return 0.0
+    return float(format(value, f".{PUBLISHED_FIGURES}g"))
+
+
+def _publish(value):
+    if isinstance(value, float):
+        return published_number(value)
+    if isinstance(value, dict):
+        return {key: _publish(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_publish(item) for item in value]
+    if isinstance(value, tuple):
+        return [_publish(item) for item in value]
+    return value
+
+
+def dumps_board(document) -> str:
+    """Board JSON with sorted keys and one trailing newline."""
+    return json.dumps(_publish(document), indent=2, sort_keys=True) + "\n"
+
+
 def write_board(root: Path, output: Path, *, site: bool | None = None) -> dict:
     """Write the leaderboard JSON, the plots, and the Board page include.
 
@@ -2711,15 +2743,12 @@ def write_board(root: Path, output: Path, *, site: bool | None = None) -> dict:
     library = _library_sha256(root)
     if library is not None:
         public["rgsaddle_lib_sha256"] = library
-    (output / "index.json").write_text(
-        json.dumps(public, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    (output / "index.json").write_text(dumps_board(public), encoding="utf-8")
     problem_dir = output / "problems"
     problem_dir.mkdir(parents=True, exist_ok=True)
     for problem_id, problem in public["problems"].items():
         (problem_dir / f"{_slug(problem_id)}.json").write_text(
-            json.dumps(problem, indent=2, sort_keys=True) + "\n",
+            dumps_board(problem),
             encoding="utf-8",
         )
     include = root / "docs" / "include" / "v2-board.org" if site else output / "v2-board.org"

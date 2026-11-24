@@ -294,13 +294,13 @@
   "over_budget": [],
   "profile": {
     "area_log10": {
-      "PyAMFF (0.1.0-beta) \u00b7 Adam": 0.09030899869919436,
-      "PyAMFF (0.1.0-beta) \u00b7 Adam force": 0.0030102999566398126,
-      "PyAMFF (0.1.0-beta) \u00b7 LBFGS": 0.006020599913279625,
-      "PyAMFF (0.1.0-beta) \u00b7 Rprop": 0.018061799739838874,
-      "PyAMFF (240f51d) \u00b7 LBFGS": 0.021072099696478688,
-      "PyAMFF (240f51d0) \u00b7 Rprop": 0.5569054919783653,
-      "n2p2 (2.3.0) \u00b7 Kalman energy": 1.1980993827426452,
+      "PyAMFF (0.1.0-beta) \u00b7 Adam": 0.0903089987,
+      "PyAMFF (0.1.0-beta) \u00b7 Adam force": 0.003010299957,
+      "PyAMFF (0.1.0-beta) \u00b7 LBFGS": 0.006020599913,
+      "PyAMFF (0.1.0-beta) \u00b7 Rprop": 0.01806179974,
+      "PyAMFF (240f51d) \u00b7 LBFGS": 0.0210720997,
+      "PyAMFF (240f51d0) \u00b7 Rprop": 0.556905492,
+      "n2p2 (2.3.0) \u00b7 Kalman energy": 1.198099383,
       "n2p2 (2.3.0) \u00b7 Kalman force": 0.0
     },
     "rho": {
@@ -460,7 +460,7 @@
       "mean_per_image": null,
       "median": 75.0,
       "median_calls": 75.0,
-      "median_high": 97.08749999999952,
+      "median_high": 97.0875,
       "median_low": 65.0,
       "median_per_image": null,
       "method": "Rprop",
@@ -512,7 +512,7 @@
       "mean_per_image": null,
       "median": 867.5,
       "median_calls": 867.5,
-      "median_high": 1230.6249999999966,
+      "median_high": 1230.625,
       "median_low": 555.0,
       "median_per_image": null,
       "method": "Adam",
