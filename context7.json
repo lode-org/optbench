@@ -1,7 +1,7 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
   "projectTitle": "OptBench",
-  "description": "Benchmark replay of OptBench geometry and saddle suites.",
+  "description": "Benchmark replay of the OptBench suite comparing geometry optimizers, saddle searches, and global optimization.",
   "folders": [
     "docs/orgmode",
     "problems",
