@@ -3,10 +3,11 @@
   "projectTitle": "OptBench",
   "description": "Benchmark replay of the OptBench suite comparing geometry optimizers, saddle searches, and global optimization.",
   "folders": [
-    "docs/orgmode",
+    "docs",
     "problems",
     "codes",
-    "contract"
+    "contract",
+    "templates"
   ],
   "excludeFolders": [
     "docs/source",
