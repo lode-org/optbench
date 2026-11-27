@@ -32,7 +32,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/python-3.12.15-h5f976f7_1_cpython.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/readline-8.3-hd6e31c0_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-noxft_h1df4ec4_4.conda
-      - conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.13.0-h535ca38_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.13.9-h779873d_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.7-hb78ec9c_7.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/ca-certificates-2026.7.22-hbd8a1cb_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2026c-h151e31d_0.conda
@@ -133,7 +133,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/python-3.12.15-h5f976f7_1_cpython.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/readline-8.3-hd6e31c0_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-noxft_h1df4ec4_4.conda
-      - conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.13.0-h535ca38_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.13.9-h779873d_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/wayland-1.26.0-hc1c935e_2.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/xkeyboard-config-2.48-h280c20c_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/xorg-libice-1.1.2-h280c20c_0.conda
@@ -1707,9 +1707,9 @@ packages:
     - tk >=8.6.13,<8.7.0a0
   size: 3566806
   timestamp: 1787272857910
-- conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.13.0-h535ca38_0.conda
-  sha256: 7b5adaeea6a8063d6d2b8616ca2c9bd2f22c651900121610601817cd021baba4
-  md5: 4b7caa30d9d6a3e03e51315d6324f2b8
+- conda: https://conda.anaconda.org/conda-forge/linux-64/uv-0.13.9-h779873d_0.conda
+  sha256: f241f055533168af3445edece0a9de68498830b26a9efc7784ab015e24758640
+  md5: 29f42ed4b59daa19d0d894dcc0a21f6e
   depends:
   - libstdcxx >=15
   - libgcc >=15
@@ -1720,8 +1720,8 @@ packages:
   license: Apache-2.0 OR MIT
   purls: []
   run_exports: {}
-  size: 15402666
-  timestamp: 1791605206284
+  size: 15055448
+  timestamp: 1794940237431
 - conda: https://conda.anaconda.org/conda-forge/linux-64/wayland-1.26.0-hc1c935e_2.conda
   sha256: df65b987979e6d7f88e756494da5a230d4f2d08d17437d04eecd35559c3a04e4
   md5: 88a47e22b53e50865b1cabe2eb648352
