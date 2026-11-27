@@ -193,7 +193,7 @@ def run_rgsaddle(method: str, arm: str, cpu: int, lib: Path, src: Path | None) -
     _timing_finish(method, arm, started, {"method": method, "arm": arm, "commit": SHAS[arm], "wall_comparable": True})
 
 
-def run_eon(arm: str, cpu: int, client: Path) -> None:
+def run_eon(arm: str, cpu: int, client: Path, provenance_facts: dict | None = None) -> None:
     _single_thread(cpu)
     method = "eon-classic"
     os.environ["OPTBENCH_RGSADDLE_CHECKPOINT_DIR"] = str(_checkpoint_dir(method, arm))
@@ -213,13 +213,16 @@ def run_eon(arm: str, cpu: int, client: Path) -> None:
     # Reuse the existing runner with arm-local paths.
     saved_output = catalog._output_path
     saved_checkpoint = catalog._checkpoint_dir
+    saved_provenance = catalog.PROVENANCE_PATH
     try:
         catalog._output_path = lambda _method: output  # type: ignore[assignment]
         catalog._checkpoint_dir = lambda _method: checkpoint  # type: ignore[assignment]
-        catalog.run_eon(cpu, client)
+        catalog.PROVENANCE_PATH = checkpoint / "eon-provenance.json"
+        catalog.run_eon(cpu, client, provenance_facts)
     finally:
         catalog._output_path = saved_output  # type: ignore[assignment]
         catalog._checkpoint_dir = saved_checkpoint  # type: ignore[assignment]
+        catalog.PROVENANCE_PATH = saved_provenance
     timing_path = checkpoint / "timing.json"
     payload = _read_json(timing_path)
     payload.setdefault("method", method)
@@ -266,6 +269,7 @@ def main() -> None:
     eon.add_argument("arm", choices=["old", "new"])
     eon.add_argument("cpu", type=int)
     eon.add_argument("client", type=Path)
+    eon.add_argument("facts", type=Path)
 
     sample = sub.add_parser("sample-system")
     sample.add_argument("--interval", type=int, default=60)
@@ -279,7 +283,7 @@ def main() -> None:
     if args.command == "run-rgsaddle":
         run_rgsaddle(args.method, args.arm, args.cpu, args.lib, args.src)
     elif args.command == "run-eon":
-        run_eon(args.arm, args.cpu, args.client)
+        run_eon(args.arm, args.cpu, args.client, catalog._load_provenance_facts(args.facts))
     elif args.command == "sample-system":
         sample_system(args.interval, args.output)
 

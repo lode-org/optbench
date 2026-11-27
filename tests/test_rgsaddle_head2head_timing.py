@@ -46,8 +46,9 @@ def test_run_eon_does_not_add_outer_timing_segments(tmp_path, monkeypatch):
         def __init__(self):
             self._output_path = lambda _method: tmp_path / "unused.dat"
             self._checkpoint_dir = lambda _method: tmp_path / "unused"
+            self.PROVENANCE_PATH = tmp_path / "unused-provenance.json"
 
-        def run_eon(self, _cpu, _client):
+        def run_eon(self, _cpu, _client, _provenance_facts=None):
             checkpoint = self._checkpoint_dir("eon-classic")
             checkpoint.mkdir(parents=True, exist_ok=True)
             timing = {
