@@ -30,7 +30,7 @@ def test_asv_uses_the_uv_environment():
     assert "uv pip install" in conf["install_command"][0]
     assert "asv==0.6.6" in text
     assert "asv-runner==0.3.1" in text
-    assert "uv==0.13.1" in (ROOT / "optbench" / "asv_uv.py").read_text(encoding="utf-8")
+    assert "uv==0.13.9" in (ROOT / "optbench" / "asv_uv.py").read_text(encoding="utf-8")
     assert "env/" in (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
     assert Uv.tool_name == "uv-pip"
     assert Uv.matches("3.12") is True
@@ -55,7 +55,7 @@ def test_asv_uses_the_uv_environment():
         re.fullmatch(r"[\w.-]+/[\w.-]+@[0-9a-f]{40}", ref)
         for ref in uses + comment_uses
     )
-    assert 'version: "0.13.1"' in workflow
+    assert 'version: "0.13.9"' in workflow
     assert 'python-version: "3.12.3"' in workflow
     assert "uv python install 3.12.3" in workflow
     assert "if: always() && github.event_name == 'pull_request'" in workflow

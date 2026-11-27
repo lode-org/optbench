@@ -127,7 +127,7 @@ optbench reads `cap` from the class when it writes `results/validation/statistic
 
 `Environment.find_executable` searches the environment `bin` and then `util.which`. It does not search `PATH`. `asv.conf.json` runs `uv pip install` for the project. A fresh uv virtualenv does not contain `uv`, so project install fails before any benchmark runs.
 
-Upstream: `airspeed-velocity/asv`, `Environment.find_executable` (or the install-command runner). Search `PATH` after the environment `bin`, or document that every executable named in `install_command` must already be inside the environment. optbench installs `uv==0.13.1` into the environment during `_setup` so the existing install command works. That pin is the installer, not a change to asv's lookup.
+Upstream: `airspeed-velocity/asv`, `Environment.find_executable` (or the install-command runner). Search `PATH` after the environment `bin`, or document that every executable named in `install_command` must already be inside the environment. optbench installs `uv==0.13.9` into the environment during `_setup` so the existing install command works. That pin is the installer, not a change to asv's lookup.
 
 ```bash
 uv run python docs/asv-gaps/install_executable.py
