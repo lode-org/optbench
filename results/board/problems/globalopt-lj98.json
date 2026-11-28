@@ -106,8 +106,8 @@
   "over_budget": [],
   "profile": {
     "area_log10": {
-      "GMIN (df8da599) \u00b7 basin-hopping with core-orbit symmetrisation": 1.071666784563773,
-      "GMIN (df8da599) \u00b7 parallel tempering basin-hopping with core-orbit symmetrisation": 0.8097706883361093
+      "GMIN (df8da599) \u00b7 basin-hopping with core-orbit symmetrisation": 1.071666785,
+      "GMIN (df8da599) \u00b7 parallel tempering basin-hopping with core-orbit symmetrisation": 0.8097706883
     },
     "rho": {
       "GMIN (df8da599) \u00b7 basin-hopping with core-orbit symmetrisation": [

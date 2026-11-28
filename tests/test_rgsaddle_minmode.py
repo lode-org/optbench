@@ -271,8 +271,8 @@ def test_rgsaddle_templates_match_their_problem_stop():
             assert template["commit"] == "8fa0eb1559c92b6ae9d1de190e253787a183729d"
             assert template["code_version"] == "(main 8fa0eb15)"
         elif template["id"] in develop:
-            assert template["commit"] == "179e90f29a3b2cbd4ea5804a5c4c132ab19acba4"
-            assert template["code_version"] == "(develop 179e90f2)"
+            assert template["commit"] == "aa6dd9371d6a63103010a6829cb62c74a39c7ff1"
+            assert template["code_version"] == "(develop aa6dd937)"
         else:
             assert template["commit"] == "2db34b42e6e029ebcf5b9868b94fcdf969103c9f"
             assert template["code_version"] == "0.2.2"
@@ -358,3 +358,96 @@ def test_prfo_finds_the_quadratic_saddle():
     assert record["success"], record
     assert record["hessian_index"] == 1
     assert np.linalg.norm(record["x"]) < 1e-2
+
+
+def test_mode_task_raises_a_surface_error_before_returning(monkeypatch):
+    import ctypes
+
+    from optbench import rgsaddle_minmode as mm
+
+    class Config(ctypes.Structure):
+        _fields_ = [
+            ("major", ctypes.c_uint32),
+            ("minor", ctypes.c_uint32),
+            ("flags", ctypes.c_uint64),
+            ("kind", ctypes.c_int32),
+            ("method", ctypes.c_int32),
+            ("dr", ctypes.c_double),
+            ("rotation_tol", ctypes.c_double),
+            ("max_rotations", ctypes.c_int64),
+            ("krylov_dim", ctypes.c_int64),
+            ("force_tol", ctypes.c_double),
+            ("max_move", ctypes.c_double),
+            ("rotation_angle_tol", ctypes.c_double),
+            ("difference", ctypes.c_int32),
+            ("reserved", ctypes.c_int32),
+        ]
+
+    class ReportStruct(ctypes.Structure):
+        _fields_ = [
+            ("major", ctypes.c_uint32),
+            ("minor", ctypes.c_uint32),
+            ("flags", ctypes.c_uint64),
+            ("status", ctypes.c_int32),
+            ("evaluations", ctypes.c_int32),
+            ("max_force", ctypes.c_double),
+            ("ci_index", ctypes.c_int64),
+            ("iteration", ctypes.c_int64),
+            ("curvature", ctypes.c_double),
+            ("rotations", ctypes.c_int64),
+        ]
+
+    class Lib:
+        MinModeConfig = Config
+        Report = ReportStruct
+        surface_fn = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_void_p, ctypes.c_void_p)
+
+        def rgsaddle_minmode_create(self, *_args):
+            return 1
+
+        def rgsaddle_minmode_set_force_gate(self, *_args):
+            return 0
+
+        def rgsaddle_minmode_estimate(self, *_args):
+            return 0
+
+        def rgsaddle_minmode_free(self, *_args):
+            return None
+
+    def read_zero(_session, ptr):
+        values = np.ctypeslib.as_array(ptr, shape=(3,))
+        values[:] = 0.0
+        return 0
+
+    lib = Lib()
+    lib.rgsaddle_minmode_position = read_zero
+    lib.rgsaddle_minmode_mode = read_zero
+    monkeypatch.setattr(mm, "_load", lambda: lib)
+
+    def callback(_lib, _potential, _dof):
+        wrapped = lib.surface_fn(lambda *_args: 0)
+        wrapped.errors = ["boom"]
+        return wrapped
+
+    monkeypatch.setattr(mm, "_callback", callback)
+    spec = {
+        "name": "mode-0",
+        "positions": np.zeros((1, 3)),
+        "fixed": np.array([False]),
+        "cell": np.array([10.0, 10.0, 10.0]),
+        "evaluate": lambda flat: (0.0, np.zeros_like(flat)),
+        "kind": "dimer",
+        "method": "fire",
+        "saddle": {},
+        "optimizer": {},
+        "force_tol": 1e-3,
+        "cap": 10,
+        "mode_seed": "gradient",
+        "reactant": None,
+        "file_mode": None,
+        "task": "mode",
+        "reference_mode": np.array([1.0, 0.0, 0.0]),
+        "overlap": 0.99,
+    }
+    with pytest.raises(RuntimeError, match="surface callback failed: boom"):
+        mm._run_minmode(spec)

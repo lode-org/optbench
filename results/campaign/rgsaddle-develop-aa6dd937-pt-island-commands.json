@@ -1,0 +1,82 @@
+{
+  "dimer-fire": {
+    "argv": [
+      "results/campaign/rgsaddle_develop_catalog.py",
+      "run",
+      "dimer-fire",
+      "0"
+    ],
+    "cpu_affinity": [
+      0
+    ],
+    "rgsaddle_head": "aa6dd9371d6a63103010a6829cb62c74a39c7ff1",
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "RAYON_NUM_THREADS": "1"
+    },
+    "rgsaddle_lib_sha256": "de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0"
+  },
+  "dimer-lbfgs": {
+    "argv": [
+      "results/campaign/rgsaddle_develop_catalog.py",
+      "run",
+      "dimer-lbfgs",
+      "1"
+    ],
+    "cpu_affinity": [
+      1
+    ],
+    "rgsaddle_head": "aa6dd9371d6a63103010a6829cb62c74a39c7ff1",
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "RAYON_NUM_THREADS": "1"
+    },
+    "rgsaddle_lib_sha256": "de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0"
+  },
+  "dimer-rotskip": {
+    "argv": [
+      "results/campaign/rgsaddle_develop_catalog.py",
+      "run",
+      "dimer-rotskip",
+      "2"
+    ],
+    "cpu_affinity": [
+      2
+    ],
+    "rgsaddle_head": "aa6dd9371d6a63103010a6829cb62c74a39c7ff1",
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "RAYON_NUM_THREADS": "1"
+    },
+    "rgsaddle_lib_sha256": "de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0"
+  },
+  "lanczos": {
+    "argv": [
+      "results/campaign/rgsaddle_develop_catalog.py",
+      "run",
+      "lanczos",
+      "3"
+    ],
+    "cpu_affinity": [
+      3
+    ],
+    "rgsaddle_head": "aa6dd9371d6a63103010a6829cb62c74a39c7ff1",
+    "threads": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "RAYON_NUM_THREADS": "1"
+    },
+    "rgsaddle_lib_sha256": "de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0"
+  }
+}

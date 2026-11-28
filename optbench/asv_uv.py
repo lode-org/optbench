@@ -52,7 +52,7 @@ class Uv(environment.Environment):
         # The pinned uv is what `uv pip install` in asv.conf.json executes.
         python = os.path.join(self._path, "bin", "python")
         util.check_call(
-            ["uv", "pip", "install", "--python", python, "uv==0.13.1"],
+            ["uv", "pip", "install", "--python", python, "uv==0.13.9"],
             env=env,
         )
         self._install_requirements()

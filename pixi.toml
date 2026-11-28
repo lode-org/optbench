@@ -13,7 +13,7 @@ platforms = ["linux-64"]
 
 [dependencies]
 python = "3.12.*"
-uv = ">=0.8"
+uv = "==0.13.9"
 
 [tasks]
 test = "uv run pytest"

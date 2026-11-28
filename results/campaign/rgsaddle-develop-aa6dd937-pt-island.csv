@@ -1,0 +1,15 @@
+row_kind,key,value,method,argv,cpu_affinity,threads,rgsaddle_head,rgsaddle_lib_sha256,template,commit,code_version,client_version,seed,wall_seconds,wall_comparable,par2_mean,force_calls,budget,goal,cap_failures,searches,connected,disconnected,over_barrier,duplicate,wrong_stationary,divergence,hessian_index,high_energy,overlap_disconnected,overlap_over_barrier,overlap_duplicate,par2_nfailed
+hardware,model_name,Intel(R) Xeon(R) Processor,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+hardware,cpu_cores,8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+hardware,cpus_online,0-7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+hardware,mem_total_kb,49342816,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+hardware,affinity_policy,one core per method,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+hardware,thread_vars,"RAYON_NUM_THREADS=1,OMP_NUM_THREADS=1,OPENBLAS_NUM_THREADS=1,MKL_NUM_THREADS=1,NUMEXPR_NUM_THREADS=1",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+command,,,dimer-fire,results/campaign/rgsaddle_develop_catalog.py run dimer-fire 0,0,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,aa6dd9371d6a63103010a6829cb62c74a39c7ff1,de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0,,,,,,,,,,,,,,,,,,,,,,,,,
+command,,,dimer-lbfgs,results/campaign/rgsaddle_develop_catalog.py run dimer-lbfgs 1,1,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,aa6dd9371d6a63103010a6829cb62c74a39c7ff1,de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0,,,,,,,,,,,,,,,,,,,,,,,,,
+command,,,dimer-rotskip,results/campaign/rgsaddle_develop_catalog.py run dimer-rotskip 2,2,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,aa6dd9371d6a63103010a6829cb62c74a39c7ff1,de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0,,,,,,,,,,,,,,,,,,,,,,,,,
+command,,,lanczos,results/campaign/rgsaddle_develop_catalog.py run lanczos 3,3,MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 RAYON_NUM_THREADS=1,aa6dd9371d6a63103010a6829cb62c74a39c7ff1,de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0,,,,,,,,,,,,,,,,,,,,,,,,,
+method,,,dimer-fire,,,,,,rgsaddle/develop-saddle-dimer-fire,aa6dd9371d6a63103010a6829cb62c74a39c7ff1,(develop aa6dd937),,20261016,,false,95707.81689020232,9033677.0,48000,27,7,8798,27,921,1933,5908,0,0,2,0,2760,3288,5908,8771
+method,,,dimer-lbfgs,,,,,,rgsaddle/develop-saddle-dimer-lbfgs,aa6dd9371d6a63103010a6829cb62c74a39c7ff1,(develop aa6dd937),,20261016,,false,95648.32224645583,3404696.0,48000,27,0,7336,27,888,1956,4457,0,0,8,0,2750,3158,4457,7309
+method,,,dimer-rotskip,,,,,,rgsaddle/develop-saddle-dimer-rotskip,aa6dd9371d6a63103010a6829cb62c74a39c7ff1,(develop aa6dd937),,20261016,,false,95458.33235355868,2129016.0,48000,27,0,4763,27,576,1250,2910,0,0,0,0,1748,2105,2910,4736
+method,,,lanczos,,,,,,rgsaddle/develop-saddle-lanczos,aa6dd9371d6a63103010a6829cb62c74a39c7ff1,(develop aa6dd937),,20261016,,false,59911.4947443729,8445282.0,30000,27,2,18171,27,2546,6002,9591,0,0,3,0,8430,9547,9591,18144

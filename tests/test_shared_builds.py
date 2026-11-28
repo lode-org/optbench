@@ -28,16 +28,29 @@ def _together(call, workers: int = 6) -> list:
 
 
 def _read_while_building(build, workers: int = 12) -> set:
-    """Each caller builds, then reads its path until every caller has built."""
+    """Each caller builds, then reads its path until every caller has built.
+
+    A builder that raises clears the wait. The other callers stop instead
+    of spinning until the process is killed.
+    """
     lock = threading.Lock()
     building = [workers]
+    failed: list[BaseException] = []
 
     def call():
-        path = build()
+        try:
+            path = build()
+        except BaseException as exc:
+            with lock:
+                failed.append(exc)
+                building[0] = 0
+            raise
         with lock:
             building[0] -= 1
         seen = {(path, path.read_bytes())}
         while building[0]:
+            if failed:
+                raise failed[0]
             seen.add((path, path.read_bytes()))
         return seen
 
@@ -48,6 +61,18 @@ def _read_while_building(build, workers: int = 12) -> set:
 def gcc():
     if shutil.which("gcc") is None:
         pytest.skip("gcc is not installed")
+
+
+def test_a_builder_error_ends_the_wait():
+    import time
+
+    def boom():
+        raise RuntimeError("build failed")
+
+    started = time.monotonic()
+    with pytest.raises(RuntimeError, match="build failed"):
+        _read_while_building(boom, workers=4)
+    assert time.monotonic() - started < 2
 
 
 def test_concurrent_fastpot_compiles_publish_one_library(gcc, tmp_path):

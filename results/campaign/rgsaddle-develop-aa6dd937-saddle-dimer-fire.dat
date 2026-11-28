@@ -1,0 +1,20 @@
+# rep 1 force_calls 9033677 unique_saddles 121 fraction_connected 0.6862923391679927 total_searches 8798 connected 27 minimize_calls 14 minimum_converged 1 seed 20261016
+force_calls 9033677.0
+force_calls_min 9033677
+force_calls_max 9033677
+code rgsaddle
+code_version (develop aa6dd937)
+commit aa6dd9371d6a63103010a6829cb62c74a39c7ff1
+rgsaddle_lib_sha256 de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0
+algorithm Dimer FIRE
+tuning default
+template rgsaddle/develop-saddle-dimer-fire
+problem saddle-search/pt-island
+counter harness
+repetitions 1
+nfailed 0
+goal 27
+cap 48000
+n 8798
+par2_mean 95707.81689020232
+v2_nfailed 8771

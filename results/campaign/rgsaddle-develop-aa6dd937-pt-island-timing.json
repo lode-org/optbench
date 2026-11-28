@@ -1,0 +1,14 @@
+{
+  "dimer-fire": {
+    "wall_comparable": false
+  },
+  "dimer-lbfgs": {
+    "wall_comparable": false
+  },
+  "dimer-rotskip": {
+    "wall_comparable": false
+  },
+  "lanczos": {
+    "wall_comparable": false
+  }
+}

@@ -118,7 +118,7 @@ L 0 2
      </g>
     </g>
     <g id="text_6">
-     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #1c140c" x="247.417266" y="209.456735" transform="rotate(-0 247.417266 209.456735)">Cost ratio</text>
+     <text style="font-size: 8px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle; fill: #1c140c" x="247.417266" y="209.456735" transform="rotate(-0 247.417266 209.456735)">performance ratio (tau)</text>
     </g>
    </g>
    <g id="matplotlib.axis_2">

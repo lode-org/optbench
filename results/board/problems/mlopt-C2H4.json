@@ -294,12 +294,12 @@
   "over_budget": [],
   "profile": {
     "area_log10": {
-      "PyAMFF (0.1.0-beta) \u00b7 Adam": 0.03311329952303794,
+      "PyAMFF (0.1.0-beta) \u00b7 Adam": 0.03311329952,
       "PyAMFF (0.1.0-beta) \u00b7 Adam force": 0.0,
-      "PyAMFF (0.1.0-beta) \u00b7 LBFGS": 0.2016900970948674,
+      "PyAMFF (0.1.0-beta) \u00b7 LBFGS": 0.2016900971,
       "PyAMFF (0.1.0-beta) \u00b7 LBFGS force": 0.0,
-      "PyAMFF (0.1.0-beta) \u00b7 Rprop": 1.2041199826559248,
-      "PyAMFF (0.1.0-beta) \u00b7 Rprop force": 0.06020599913279624,
+      "PyAMFF (0.1.0-beta) \u00b7 Rprop": 1.204119983,
+      "PyAMFF (0.1.0-beta) \u00b7 Rprop force": 0.06020599913,
       "n2p2 (2.3.0) \u00b7 Kalman energy": 0.0,
       "n2p2 (2.3.0) \u00b7 Kalman force": 0.0
     },
@@ -605,7 +605,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 5,
+      "family_rank": 1,
       "fd_calls": 0.0,
       "full_n": 50,
       "hessian_calls": 0.0,
@@ -657,7 +657,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 6,
+      "family_rank": 2,
       "fd_calls": 0.0,
       "full_n": 50,
       "hessian_calls": 0.0,
@@ -668,7 +668,7 @@
       "mean_per_image": null,
       "median": 4597.0,
       "median_calls": 4597.0,
-      "median_high": 5858.362499999993,
+      "median_high": 5858.3625,
       "median_low": 3125.0,
       "median_per_image": null,
       "method": "Rprop force",
@@ -709,7 +709,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 7,
+      "family_rank": 3,
       "fd_calls": 0.0,
       "full_n": 50,
       "hessian_calls": 0.0,
@@ -761,7 +761,7 @@
         "wrong_stationary": 0
       },
       "family": "minimize",
-      "family_rank": 8,
+      "family_rank": 4,
       "fd_calls": 0.0,
       "full_n": 50,
       "hessian_calls": 0.0,

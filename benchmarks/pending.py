@@ -51,7 +51,7 @@ def problem_ids() -> list[str]:
 
 def code_ids() -> list[str]:
     data = tomllib.loads((ROOT / "codes" / "registry.toml").read_text(encoding="utf-8"))
-    return [row["id"] for row in data["code"]]
+    return [row["id"] for row in data["code"] if not bool(row.get("historical"))]
 
 
 def covered() -> set[tuple[str, str]]:

@@ -3,7 +3,7 @@
 The order is fixed, so a start lands in one bin:
 
 1. ``crash`` — the optimizer raised, or the record says so.
-2. ``divergence`` — a non-finite point, or a step past the ceiling.
+2. ``divergence`` — the record says so, a coordinate or energy or force is non-finite, a timeout, or the return is still above the force stop and under the cap.
 3. ``cap`` — the search used the whole force-call budget and did not
    blow up.
 4. ``duplicate`` — the saddle repeats one already kept.
@@ -36,6 +36,8 @@ def classify_failure(reasons: list[str], result: str | None = None) -> str | Non
     if "crash" in reasons:
         return "crash"
     if "divergence" in reasons:
+        return "divergence"
+    if "timeout" in reasons:
         return "divergence"
     if "cap" in reasons:
         return "cap"

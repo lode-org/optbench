@@ -24,7 +24,7 @@
    <p>Ranked rows for this code, one version and one method on each row. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. <a href="../../methodology.html">Scoring rules</a>.</p>
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
-   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Cap</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="mlopt/C2H4" data-label="PyAMFF (8037eb98) · pyamff-rprop10-7-fcoeff0">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
@@ -33,6 +33,7 @@
    <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">184.56</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -49,6 +50,7 @@
    <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">191.02</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">188</td>
    <td data-label="Mean calls" data-field="mean_calls">191.02</td>
@@ -65,6 +67,7 @@
    <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">2157.14</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -81,6 +84,7 @@
    <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">2999.06</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">1911.5</td>
    <td data-label="Mean calls" data-field="mean_calls">2599.02</td>
@@ -97,6 +101,7 @@
    <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">4329.84</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">4162.5</td>
    <td data-label="Mean calls" data-field="mean_calls">4329.84</td>
@@ -113,6 +118,7 @@
    <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">4395.3</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -129,6 +135,7 @@
    <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">12926.9</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -145,6 +152,7 @@
    <td data-label="Family rank" data-field="family_rank">5</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">13876.7</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -158,9 +166,10 @@
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Adam force</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">5</td>
+   <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">17653.2</td>
+   <td data-label="Cap" data-field="cap">30000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">7754</td>
    <td data-label="Mean calls" data-field="mean_calls">12253.2</td>
@@ -174,9 +183,10 @@
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Rprop force</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">6</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">21463.1</td>
+   <td data-label="Cap" data-field="cap">30000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">4597</td>
    <td data-label="Mean calls" data-field="mean_calls">11863.1</td>
@@ -193,6 +203,7 @@
    <td data-label="Family rank" data-field="family_rank">6</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">23314.5</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -206,9 +217,10 @@
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · LBFGS force</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">7</td>
+   <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">35203.7</td>
+   <td data-label="Cap" data-field="cap">30000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">24554</td>
    <td data-label="Mean calls" data-field="mean_calls">24403.3</td>
@@ -225,6 +237,7 @@
    <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">91.04</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">75</td>
    <td data-label="Mean calls" data-field="mean_calls">91.04</td>
@@ -241,6 +254,7 @@
    <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">97.58</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -254,9 +268,10 @@
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Rprop</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">3</td>
+   <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">947.86</td>
+   <td data-label="Cap" data-field="cap">30000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">931.5</td>
    <td data-label="Mean calls" data-field="mean_calls">947.86</td>
@@ -273,6 +288,7 @@
    <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">1022.86</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -286,9 +302,10 @@
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Adam</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">4</td>
+   <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">1071.28</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">867.5</td>
    <td data-label="Mean calls" data-field="mean_calls">1071.28</td>
@@ -305,6 +322,7 @@
    <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">1103.24</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -321,6 +339,7 @@
    <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">1708.8</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -334,9 +353,10 @@
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · Adam force</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">5</td>
+   <td data-label="Family rank" data-field="family_rank">2</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">1788.26</td>
+   <td data-label="Cap" data-field="cap">30000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">1597.5</td>
    <td data-label="Mean calls" data-field="mean_calls">1788.26</td>
@@ -353,6 +373,7 @@
    <td data-label="Family rank" data-field="family_rank">5</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">1791.8</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -369,6 +390,7 @@
    <td data-label="Family rank" data-field="family_rank">6</td>
    <td data-label="Unit" data-field="unit">epochs</td>
    <td data-label="PAR-2" data-field="par2_mean"></td>
+   <td data-label="Cap" data-field="cap"></td>
    <td data-label="Published" data-field="published">1943.34</td>
    <td data-label="Median calls" data-field="median_calls"></td>
    <td data-label="Mean calls" data-field="mean_calls"></td>
@@ -382,9 +404,10 @@
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-label="Row" data-field="label">PyAMFF (240f51d) · LBFGS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">6</td>
+   <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">1948.42</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">1065</td>
    <td data-label="Mean calls" data-field="mean_calls">1748.4</td>
@@ -398,9 +421,10 @@
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-label="Row" data-field="label">PyAMFF (0.1.0-beta) · LBFGS</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">7</td>
+   <td data-label="Family rank" data-field="family_rank">3</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">2172.68</td>
+   <td data-label="Cap" data-field="cap">30000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">1650.5</td>
    <td data-label="Mean calls" data-field="mean_calls">2172.68</td>

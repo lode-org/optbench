@@ -181,7 +181,7 @@ def profile_svg(problem: dict) -> str:
         f'<line class="axis" x1="{left}" y1="{top + inner_h:.2f}" x2="{width - right}" y2="{top + inner_h:.2f}"/>'
     )
     parts.append(
-        f'<text class="axis-name" x="{left + inner_w / 2:.2f}" y="{height - 6}" text-anchor="middle">Cost ratio</text>'
+        f'<text class="axis-name" x="{left + inner_w / 2:.2f}" y="{height - 6}" text-anchor="middle">performance ratio (tau)</text>'
     )
     parts.append(
         f'<text class="axis-name" transform="rotate(-90 16 {top + inner_h / 2:.2f})" '
@@ -211,7 +211,7 @@ def profile_svg(problem: dict) -> str:
         )
     legend = '<ul class="chart-legend">' + "".join(legend_items) + "</ul>" if legend_items else ""
     display = str(problem.get("title") or problem.get("id") or "this problem")
-    caption = "Performance profile. Higher means more starts solved within that cost ratio."
+    caption = "Performance profile. Higher means more starts solved within that performance ratio (tau)."
     if muted:
         caption += f" {PALETTE_SENTENCE} Thin lines are the other {len(muted)}."
     slug = _slug(str(problem.get("id") or display)) + "-profile"

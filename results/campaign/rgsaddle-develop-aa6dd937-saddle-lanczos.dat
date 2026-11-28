@@ -1,0 +1,20 @@
+# rep 1 force_calls 8445282 unique_saddles 145 fraction_connected 0.5360739640085851 total_searches 18171 connected 27 minimize_calls 14 minimum_converged 1 seed 20261016
+force_calls 8445282.0
+force_calls_min 8445282
+force_calls_max 8445282
+code rgsaddle
+code_version (develop aa6dd937)
+commit aa6dd9371d6a63103010a6829cb62c74a39c7ff1
+rgsaddle_lib_sha256 de80b814c908c4fa3b3ea9f76b7e4115d323824eb4081221b258c22ed148c1a0
+algorithm Lanczos L-BFGS
+tuning default
+template rgsaddle/develop-saddle-lanczos
+problem saddle-search/pt-island
+counter harness
+repetitions 1
+nfailed 0
+goal 27
+cap 30000
+n 18171
+par2_mean 59911.4947443729
+v2_nfailed 18144

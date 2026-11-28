@@ -64,6 +64,9 @@ from .units import FORCE_CALL_FIELDS, harness_unit, rank_unit, row_unit, unit_so
 from .v2 import parse_repetitions
 
 BOARD_SCHEMA = "optbench.board/v2"
+# Ten figures keep a published cost. The last bits of the same cost can
+# move on another platform, and the board files are compared byte for byte.
+PUBLISHED_FIGURES = 10
 
 
 def _slug(problem_id: str) -> str:
@@ -833,10 +836,29 @@ def _dedup(rows: list[dict]) -> list[dict]:
     return merged
 
 
+def _skip_unpublished_eon(directory: Path, stem: str) -> bool:
+    """An eon ledger with a provenance file stays off the board until that file validates."""
+    provenance = directory / f"{stem}-eon-provenance.json"
+    if not provenance.is_file():
+        return False
+    import importlib.util
+
+    script = directory / "rgsaddle_develop_catalog.py"
+    spec = importlib.util.spec_from_file_location("rgsaddle_develop_catalog_board", script)
+    if spec is None or spec.loader is None:
+        return True
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return not module.provenance_publishes(provenance)
+
+
 def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, dict]) -> tuple[list[dict], list[dict]]:
     rows: list[dict] = []
     unparsed: list[dict] = []
-    for stem, group in _campaign_groups(root / "results" / "campaign").items():
+    directory = root / "results" / "campaign"
+    for stem, group in _campaign_groups(directory).items():
+        if _skip_unpublished_eon(directory, stem):
+            continue
         path = group.get("dat") or group.get("v2") or group.get("starts_jsonl") or group.get("starts")
         fields: dict[str, str] = {}
         parse_note = ""
@@ -852,6 +874,8 @@ def _campaign_rows(root: Path, problems: dict[str, dict], templates: dict[str, d
                         source="campaign",
                     )
                 )
+                continue
+            if not _library_hash_bound(root / "results" / "campaign", stem, fields):
                 continue
         probe = _first_raw(group)
         template_id = fields.get("template") or str(probe.get("template") or "")
@@ -1166,13 +1190,47 @@ def _public(row: dict) -> dict:
     }
 
 
+def _rank_cap(row: dict) -> int | None:
+    cap = row.get("cap")
+    if cap is None or cap == "":
+        return None
+    try:
+        return int(cap)
+    except (TypeError, ValueError):
+        return None
+
+
+def _listing_key(row: dict) -> tuple:
+    """Order for rows that are listed, not ranked.
+
+    asv walks ``results/asv`` in directory order. That order is not the
+    same on every filesystem, so a listing sorted by name is.
+    """
+    return (
+        str(row.get("problem") or ""),
+        str(row.get("entry") or ""),
+        str(row.get("path") or ""),
+        str(row.get("note") or ""),
+        str(row.get("label") or ""),
+    )
+
+
 def _rank_key(row: dict) -> tuple:
+    """Order rows inside one failure cap, then by cost.
+
+    A failed search is charged twice its own cap, so two caps are two
+    budgets. Rows of one cap stay together and the cheaper row of that
+    cap comes first.
+    """
     score = row.get("rank_cost")
     if score is None:
         score = row.get("par2_mean")
     if score is None:
         score = row.get("published")
+    cap = _rank_cap(row)
     return (
+        cap is None,
+        cap if cap is not None else 0,
         score is None,
         float(score) if score is not None else 0.0,
         str(row.get("label") or ""),
@@ -1385,11 +1443,12 @@ def board_rows(problem: dict) -> list[dict]:
 
 
 def _assign_family_ranks(ranked: list[dict]) -> None:
-    seen: dict[str, int] = defaultdict(int)
+    """Rank within one family and one failure cap. A new cap starts again at 1."""
+    seen: dict[tuple, int] = defaultdict(int)
     for row in ranked:
-        family = str(row.get("family") or "")
-        seen[family] += 1
-        row["family_rank"] = seen[family]
+        key = (str(row.get("family") or ""), _rank_cap(row))
+        seen[key] += 1
+        row["family_rank"] = seen[key]
 
 
 def rank_violations(document: dict) -> list[str]:
@@ -1474,22 +1533,30 @@ def build_board(root: Path) -> dict:
         for row in group:
             if row.get("short"):
                 held_short.append(row)
-                short.append(row)
             elif not row.get("comparable"):
                 held_client.append(row)
-                not_comparable.append(row)
             elif is_adjusted(row):
                 held_adjusted.append(row)
-                withheld.append(row)
             elif row.get("_over_budget"):
                 held_budget.append(row)
-                over_budget.append(row)
             else:
                 ranked.append(row)
+        held_short.sort(key=_rank_key)
+        held_client.sort(key=_rank_key)
+        held_adjusted.sort(key=_rank_key)
+        held_budget.sort(key=_rank_key)
+        short.extend(held_short)
+        not_comparable.extend(held_client)
+        withheld.extend(held_adjusted)
+        over_budget.extend(held_budget)
         problem = problems.get(problem_id) or {}
         unit = rank_unit(problem, ranked)
         other_units = _unit_groups([row for row in ranked if row.get("unit") != unit])
         ranked = [row for row in ranked if row.get("unit") == unit]
+        stated_cap = _cap_of(problem, None, {})
+        for row in ranked:
+            if _rank_cap(row) is None and stated_cap is not None:
+                row["cap"] = stated_cap
         ranked.sort(key=_rank_key)
         _assign_family_ranks(ranked)
         problems_out[problem_id] = {
@@ -1508,6 +1575,8 @@ def build_board(root: Path) -> dict:
             "over_budget": [_public(row) for row in sorted(held_budget, key=_rank_key)],
             "_ranked_rows": ranked,
         }
+    unparsed.sort(key=_listing_key)
+    unmapped.sort(key=_listing_key)
     return {
         "schema": BOARD_SCHEMA,
         "problems": problems_out,
@@ -1754,6 +1823,7 @@ def _headers(problem: dict) -> list[str]:
         "Family rank",
         "Unit",
         "PAR-2",
+        "Cap",
         "Published",
         "Median calls",
         "Mean calls",
@@ -1775,6 +1845,7 @@ def ranked_cells(row: dict, per_image: bool) -> list[tuple[str, str]]:
         ("family_rank", "" if row.get("family_rank") is None else str(row.get("family_rank"))),
         ("unit", str(row.get("unit") or "")),
         ("par2_mean", _format_number(row.get("par2_mean"))),
+        ("cap", "" if _rank_cap(row) is None else str(_rank_cap(row))),
         ("published", _format_number(row.get("published"))),
         ("median_calls", _format_number(row.get("median_calls"))),
         ("mean_calls", _format_number(row.get("mean_calls"))),
@@ -1794,6 +1865,7 @@ def family_cells(row: dict) -> list[tuple[str, str]]:
         ("family_rank", "" if row.get("family_rank") is None else str(row.get("family_rank"))),
         ("label", str(row.get("label") or "")),
         ("rank_cost", _format_number(row.get("rank_cost"))),
+        ("cap", "" if _rank_cap(row) is None else str(_rank_cap(row))),
         ("unit", str(row.get("unit") or "")),
         ("hessian_calls", _format_number(row.get("hessian_calls"))),
         ("fd_calls", _format_number(row.get("fd_calls"))),
@@ -1932,10 +2004,25 @@ def summary_codes(document: dict, registry: list[dict]) -> list[str]:
     return ordered
 
 
+def _cost_key(row: dict) -> tuple:
+    score = row.get("rank_cost")
+    if score is None:
+        score = row.get("par2_mean")
+    if score is None:
+        score = row.get("published")
+    return (
+        score is None,
+        float(score) if score is not None else 0.0,
+        str(row.get("label") or ""),
+        str(row.get("template") or ""),
+        str(row.get("path") or ""),
+    )
+
+
 def best_ranked_by_code(ranked: list[dict]) -> dict[str, dict]:
-    """First ranked row of each code. The list is already best-PAR-2 first."""
+    """Lowest PAR-2 row of each code. Cap groups do not choose this row."""
     best: dict[str, dict] = {}
-    for row in ranked:
+    for row in sorted(ranked, key=_cost_key):
         code = str(row.get("code") or "").strip()
         if code and code not in best:
             best[code] = row
@@ -2016,8 +2103,15 @@ def _winner_html(row: dict) -> str:
     return "".join(parts)
 
 
+def headline_row(ranked: list[dict]) -> dict | None:
+    """Lowest PAR-2 row. Cap order in the full table does not choose this row."""
+    if not ranked:
+        return None
+    return min(ranked, key=_cost_key)
+
+
 def headline_table(problem: dict) -> str:
-    """One ranked row: the lowest cost."""
+    """One ranked row: the lowest PAR-2, with that row's own cap."""
     per_image = _show_per_image(problem)
     headers = _headers(problem)
     lines = [
@@ -2026,15 +2120,16 @@ def headline_table(problem: dict) -> str:
         "<thead><tr>" + "".join(f"<th>{_cell(header)}</th>" for header in headers) + "</tr></thead><tbody>",
     ]
     ranked = list(problem.get("ranked") or [])
-    if ranked:
-        lines.append(f"<tr>{_row_cells(ranked[0], per_image)}</tr>")
+    best = headline_row(ranked)
+    if best is not None:
+        lines.append(f"<tr>{_row_cells(best, per_image)}</tr>")
     else:
         lines.append(f'<tr><td colspan="{len(headers)}">No ranked row.</td></tr>')
     lines.append("</tbody></table></div>")
-    winner = _winner_html(ranked[0]) if ranked else ""
-    finding = str(ranked[0].get("finding") or "").strip() if ranked else ""
-    if finding:
-        label = ranked[0].get("template") or ranked[0].get("entry") or ""
+    winner = _winner_html(best) if best is not None else ""
+    finding = str(best.get("finding") or "").strip() if best is not None else ""
+    if finding and best is not None:
+        label = best.get("template") or best.get("entry") or ""
         lines.append(f'<p class="bench-finding">{_cell(label)}: {_cell(finding)}.</p>')
     body = "\n".join(lines)
     return f"{winner}\n{body}" if winner else body
@@ -2074,6 +2169,7 @@ def _caption(per_image: bool) -> str:
     caption = (
         "One row is one code, one version, and one method. A lower cost is better. "
         "PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. "
+        "Rank starts again for each cap, because a different cap is a different failure budget. "
         "An archived row shows the average it published, "
         "and its PAR-2 applies that rule to the failures the entry records. "
         "Hessians is the mean analytic Hessian count. "
@@ -2085,7 +2181,7 @@ def _caption(per_image: bool) -> str:
 
 
 def _family_table(problem: dict, family_id: str, rows: list[dict]) -> str:
-    headers = ["Rank", "Row", "Cost", "Unit", "Hessians", "FD calls", "Runs"]
+    headers = ["Rank", "Row", "Cost", "Cap", "Unit", "Hessians", "FD calls", "Runs"]
     lines = [
         '<div class="bench-scroll">',
         (
@@ -2490,6 +2586,58 @@ def _render_page_plots(root: Path, document: dict, plot_dir: Path, score_stems: 
     return written
 
 
+_AA_LEDGER = "rgsaddle-develop-aa6dd937-saddle-"
+_AA_COMMANDS = "rgsaddle-develop-aa6dd937-pt-island-commands.json"
+_AA_SIDECAR = "rgsaddle-develop-aa6dd937-pt-island-lib-sha256.json"
+
+
+def _sha256_text(value: str) -> bool:
+    return len(value) == 64 and all(char in "0123456789abcdef" for char in value)
+
+
+def _library_hash_bound(directory: Path, stem: str, fields: dict[str, str]) -> bool:
+    """An aa6dd937 saddle ledger is published only when it names the built library.
+
+    The ledger, that method's command record, and the sidecar must carry one sha256.
+    """
+    if not stem.startswith(_AA_LEDGER):
+        return True
+    method = stem[len(_AA_LEDGER) :]
+    named = str(fields.get("rgsaddle_lib_sha256") or "")
+    if not _sha256_text(named):
+        return False
+    try:
+        commands = json.loads((directory / _AA_COMMANDS).read_text(encoding="utf-8"))
+        sidecar = json.loads((directory / _AA_SIDECAR).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    command_sha = str((commands.get(method) or {}).get("rgsaddle_lib_sha256") or "")
+    side_sha = str(sidecar.get("rgsaddle_lib_sha256") or "") if isinstance(sidecar, dict) else ""
+    return named == command_sha == side_sha
+
+
+def _library_sha256(root: Path) -> str | None:
+    """The pinned rgsaddle library sha256, when the sidecar record is present."""
+    path = (
+        Path(root)
+        / "results"
+        / "campaign"
+        / "rgsaddle-develop-aa6dd937-pt-island-lib-sha256.json"
+    )
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(payload, dict):
+        return None
+    sha = payload.get("rgsaddle_lib_sha256")
+    if not isinstance(sha, str) or len(sha) != 64 or any(char not in "0123456789abcdef" for char in sha):
+        return None
+    return sha
+
+
 def _strip_private(document: dict) -> dict:
     public_problems = {}
     for problem_id, problem in document["problems"].items():
@@ -2507,6 +2655,35 @@ def _strip_private(document: dict) -> dict:
         "unmapped": document["unmapped"],
         "client_counter": document["not_comparable"],
     }
+
+
+def published_number(value: float) -> float:
+    """The number stored in the board JSON.
+
+    Non-finite values are left alone. Zero of either sign is ``0.0``.
+    """
+    if not math.isfinite(value):
+        return value
+    if value == 0.0:
+        return 0.0
+    return float(format(value, f".{PUBLISHED_FIGURES}g"))
+
+
+def _publish(value):
+    if isinstance(value, float):
+        return published_number(value)
+    if isinstance(value, dict):
+        return {key: _publish(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_publish(item) for item in value]
+    if isinstance(value, tuple):
+        return [_publish(item) for item in value]
+    return value
+
+
+def dumps_board(document) -> str:
+    """Board JSON with sorted keys and one trailing newline."""
+    return json.dumps(_publish(document), indent=2, sort_keys=True) + "\n"
 
 
 def write_board(root: Path, output: Path, *, site: bool | None = None) -> dict:
@@ -2584,15 +2761,15 @@ def write_board(root: Path, output: Path, *, site: bool | None = None) -> dict:
                 shutil.copy(path, site_plots / path.name)
         _drop_unwritten(site_plots, written_names)
     public = _strip_private(document)
-    (output / "index.json").write_text(
-        json.dumps(public, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    library = _library_sha256(root)
+    if library is not None:
+        public["rgsaddle_lib_sha256"] = library
+    (output / "index.json").write_text(dumps_board(public), encoding="utf-8")
     problem_dir = output / "problems"
     problem_dir.mkdir(parents=True, exist_ok=True)
     for problem_id, problem in public["problems"].items():
         (problem_dir / f"{_slug(problem_id)}.json").write_text(
-            json.dumps(problem, indent=2, sort_keys=True) + "\n",
+            dumps_board(problem),
             encoding="utf-8",
         )
     include = root / "docs" / "include" / "v2-board.org" if site else output / "v2-board.org"

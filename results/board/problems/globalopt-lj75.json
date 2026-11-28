@@ -9,7 +9,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 1000000,
       "code": "GMIN",
       "code_version": "",
       "commit": "",

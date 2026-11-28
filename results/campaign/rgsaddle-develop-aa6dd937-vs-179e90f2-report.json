@@ -1,0 +1,105 @@
+{
+  "hardware": {
+    "affinity_policy": "one core per method",
+    "cpu_cores": "8",
+    "cpus_online": "0-7",
+    "mem_total_kb": "49342816",
+    "model_name": "Intel(R) Xeon(R) Processor",
+    "nproc": "8",
+    "thread_vars": "RAYON_NUM_THREADS=1,OMP_NUM_THREADS=1,OPENBLAS_NUM_THREADS=1,MKL_NUM_THREADS=1,NUMEXPR_NUM_THREADS=1"
+  },
+  "rows": [
+    {
+      "method": "dimer-fire",
+      "new": {
+        "calls_per_search": 1026.7875653557626,
+        "cap_failures": 7,
+        "code_version": "(develop aa6dd937)",
+        "connected": 27,
+        "force_calls": 9033677.0,
+        "goal": 27,
+        "reached_goal": true,
+        "searches": 8798
+      },
+      "old": {
+        "calls_per_search": 1058.0194048166898,
+        "cap_failures": 17,
+        "code_version": "(develop 179e90f2)",
+        "connected": 27,
+        "force_calls": 13794457.0,
+        "goal": 27,
+        "reached_goal": true,
+        "searches": 13038
+      }
+    },
+    {
+      "method": "dimer-lbfgs",
+      "new": {
+        "calls_per_search": 464.10796074154854,
+        "cap_failures": 0,
+        "code_version": "(develop aa6dd937)",
+        "connected": 27,
+        "force_calls": 3404696.0,
+        "goal": 27,
+        "reached_goal": true,
+        "searches": 7336
+      },
+      "old": {
+        "calls_per_search": 464.2881679389313,
+        "cap_failures": 0,
+        "code_version": "(develop 179e90f2)",
+        "connected": 27,
+        "force_calls": 3406018.0,
+        "goal": 27,
+        "reached_goal": true,
+        "searches": 7336
+      }
+    },
+    {
+      "method": "dimer-rotskip",
+      "new": {
+        "calls_per_search": 446.9905521730002,
+        "cap_failures": 0,
+        "code_version": "(develop aa6dd937)",
+        "connected": 27,
+        "force_calls": 2129016.0,
+        "goal": 27,
+        "reached_goal": true,
+        "searches": 4763
+      },
+      "old": {
+        "calls_per_search": 446.94016376233463,
+        "cap_failures": 0,
+        "code_version": "(develop 179e90f2)",
+        "connected": 27,
+        "force_calls": 2128776.0,
+        "goal": 27,
+        "reached_goal": true,
+        "searches": 4763
+      }
+    },
+    {
+      "method": "lanczos",
+      "new": {
+        "calls_per_search": 464.7670463926036,
+        "cap_failures": 2,
+        "code_version": "(develop aa6dd937)",
+        "connected": 27,
+        "force_calls": 8445282.0,
+        "goal": 27,
+        "reached_goal": true,
+        "searches": 18171
+      },
+      "old": {
+        "calls_per_search": 629.943,
+        "cap_failures": 5,
+        "code_version": "(develop 179e90f2)",
+        "connected": 24,
+        "force_calls": 12598860.0,
+        "goal": 27,
+        "reached_goal": false,
+        "searches": 20000
+      }
+    }
+  ]
+}

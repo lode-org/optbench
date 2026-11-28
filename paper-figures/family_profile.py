@@ -102,7 +102,7 @@ def main() -> None:
             ax.set_ylim(-PROFILE_MARGIN, PROFILE_TOP)
             ax.set_xticks(list(taus))
             ax.set_xticklabels([str(int(tau)) for tau in taus])
-            ax.set_xlabel("Cost ratio")
+            ax.set_xlabel("performance ratio (tau)")
             ax.set_ylabel("Fraction of starts")
             ax.set_title(f"{family_name}, {title}")
             ax.spines["top"].set_visible(False)

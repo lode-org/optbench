@@ -54,13 +54,13 @@
   ],
   "profile": {
     "area_log10": {
-      "AIRSS (0.9.4) \u00b7 random structure search": 0.2769475960108627,
-      "Eon svn (r2549) \u00b7 Basin hopping": 0.04364934937127728,
-      "GMIN (df8da599) \u00b7 basin-hopping": 0.10987594841735314,
-      "GMIN (df8da599) \u00b7 basin-hopping with continuous symmetry measures": 1.1770272830461666,
-      "GMIN (df8da599) \u00b7 parallel tempering basin-hopping": 0.0722471989593555,
-      "eOn (3.5.0) \u00b7 Basin hopping": 0.06622659904607586,
-      "pele (0.1.2) \u00b7 basin hopping": 0.08579354876423465
+      "AIRSS (0.9.4) \u00b7 random structure search": 0.276947596,
+      "Eon svn (r2549) \u00b7 Basin hopping": 0.04364934937,
+      "GMIN (df8da599) \u00b7 basin-hopping": 0.1098759484,
+      "GMIN (df8da599) \u00b7 basin-hopping with continuous symmetry measures": 1.177027283,
+      "GMIN (df8da599) \u00b7 parallel tempering basin-hopping": 0.07224719896,
+      "eOn (3.5.0) \u00b7 Basin hopping": 0.06622659905,
+      "pele (0.1.2) \u00b7 basin hopping": 0.08579354876
     },
     "rho": {
       "AIRSS (0.9.4) \u00b7 random structure search": [
@@ -186,7 +186,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 2000000,
       "code": "GMIN",
       "code_version": "",
       "commit": "",
@@ -233,7 +233,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 2000000,
       "code": "GMIN",
       "code_version": "",
       "commit": "",
@@ -332,7 +332,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 2000000,
       "code": "GMIN",
       "code_version": "",
       "commit": "",
@@ -483,7 +483,7 @@
     {
       "asv_commit": "",
       "call_unit": "",
-      "cap": null,
+      "cap": 2000000,
       "code": "Eon",
       "code_version": "r2156",
       "commit": "",
@@ -663,7 +663,7 @@
       "median": 307290.5,
       "median_calls": 307290.5,
       "median_high": 416931.0,
-      "median_low": 162305.38749999998,
+      "median_low": 162305.3875,
       "median_per_image": null,
       "method": "parallel tempering basin-hopping",
       "min_calls": 11134.0,

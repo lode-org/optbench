@@ -16,6 +16,7 @@ from .board import (
     difference_rows,
     difference_text,
     family_cells,
+    headline_row,
     inferred_rows,
     ranked_cells,
     unit_per_image,
@@ -195,7 +196,8 @@ def _check_headline(label: str, table: dict, document: dict) -> list[str]:
         return [f"{label} {problem_id} headline rows {len(body)} != 1"]
     per_image = _show_per_image(problem) if problem else False
     got = _cell_map(body[0])
-    expected = dict(ranked_cells(ranked[0], per_image))
+    best = headline_row(ranked)
+    expected = dict(ranked_cells(best, per_image)) if best is not None else {}
     errors = []
     for field, value in expected.items():
         if got.get(field) != value:
@@ -407,4 +409,95 @@ def check_site(root: Path) -> list[str]:
                 built,
                 errors,
             )
+    errors.extend(ledger_summary_errors(root))
+    return errors
+
+
+def ledger_summary_errors(root: Path) -> list[str]:
+    """Derived catalog totals have to match the search ledgers.
+
+    A ``par2_mean`` on a develop saddle dat is the PAR-2 of that dat's
+    ``.starts.jsonl``. ``force_calls`` is the sum of those searches plus the
+    ``minimize_calls`` named in the dat comment. ``metrics.mean`` in the
+    companion ``.v2.json`` is that same PAR-2.
+    """
+    import json
+    import math
+    import re
+
+    from .dat import DatError, parse_lenient
+    from .score import score_v2
+
+    errors: list[str] = []
+    campaign = Path(root) / "results" / "campaign"
+    if not campaign.is_dir():
+        return errors
+    names = list(campaign.glob("rgsaddle-develop-*.dat"))
+    names += list(campaign.glob("eon-3.5.0-saddle-*.dat"))
+    names += list(campaign.glob("eon-3.5.0-d9cc6c5be-*.dat"))
+    for dat in sorted(names):
+        starts = dat.with_suffix(".starts.jsonl")
+        if not starts.is_file():
+            continue
+        try:
+            text = dat.read_text(encoding="utf-8")
+            fields, _duplicates = parse_lenient(text)
+        except (OSError, DatError) as exc:
+            errors.append(f"{dat.name} cannot be read: {exc}")
+            continue
+        records = []
+        for line in starts.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                records.append(json.loads(line))
+            except json.JSONDecodeError as exc:
+                errors.append(f"{dat.name} ledger line is not json: {exc}")
+                records = []
+                break
+        if not records or "force_calls" not in records[0]:
+            continue
+        total = sum(float(row["force_calls"]) for row in records)
+        comment = text.splitlines()[0] if text else ""
+        extra_match = re.search(r"minimize_calls (\d+)", comment)
+        extra = int(extra_match.group(1)) if extra_match else 0
+        stated = fields.get("force_calls")
+        if stated in (None, ""):
+            comment_calls = re.search(r"force_calls (\d+)", comment)
+            stated = comment_calls.group(1) if comment_calls else ""
+        if stated not in (None, ""):
+            if not math.isclose(float(stated), total + extra, rel_tol=0.0, abs_tol=0.1):
+                errors.append(f"{dat.name} force_calls {stated} is not the ledger sum {total + extra:g}")
+        if not fields.get("par2_mean"):
+            continue
+        cap = int(float(fields["cap"])) if fields.get("cap") else None
+        try:
+            scored = score_v2(
+                [
+                    {
+                        "force_calls": float(row["force_calls"]),
+                        "success": bool(row.get("success")),
+                        "failure": row.get("failure"),
+                        "reasons": row.get("reasons") or [],
+                    }
+                    for row in records
+                ],
+                cap,
+            )
+        except (TypeError, ValueError, RuntimeError) as exc:
+            errors.append(f"{dat.name} ledger cannot be scored: {exc}")
+            continue
+        got = scored.get("par2_mean")
+        if got is None or not math.isclose(float(fields["par2_mean"]), float(got), rel_tol=1e-9, abs_tol=1e-4):
+            errors.append(f"{dat.name} par2_mean {fields['par2_mean']} is not the ledger PAR-2 {got}")
+        v2_path = dat.with_suffix(".v2.json")
+        if not v2_path.is_file() or got is None:
+            continue
+        document = json.loads(v2_path.read_text(encoding="utf-8"))
+        runs = document.get("runs") or []
+        if not runs:
+            continue
+        mean = (runs[0].get("metrics") or {}).get("mean")
+        if mean is None or not math.isclose(float(mean), float(got), rel_tol=1e-9, abs_tol=1e-4):
+            errors.append(f"{v2_path.name} metrics.mean {mean} is not the ledger PAR-2 {got}")
     return errors

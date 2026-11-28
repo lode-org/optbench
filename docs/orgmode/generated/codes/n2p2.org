@@ -24,7 +24,7 @@
    <p>Ranked rows for this code, one version and one method on each row. PAR-2 counts a finished run as the calls it used and a failed run as twice the cap. An archived row shows the average it published, and its PAR-2 applies that rule to the failures the entry records. <a href="../../methodology.html">Scoring rules</a>.</p>
    <div class="bench-scroll"><table class="bench-sortable" data-board-table="code-rows">
    <caption>Every ranked row for this code. Select a column heading to sort.</caption>
-   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
+   <thead><tr><th>Suite</th><th>Problem</th><th>Row</th><th>Family</th><th>Family rank</th><th>Unit</th><th>PAR-2</th><th>Cap</th><th>Published</th><th>Median calls</th><th>Mean calls</th><th>Hessians</th><th>FD calls</th><th>Failures</th><th>Runs</th></tr></thead><tbody>
    <tr data-problem="mlopt/C2H4" data-label="n2p2 (2.3.0) · Kalman energy">
    <td data-label="Suite">Machine learning optimization</td>
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
@@ -33,6 +33,7 @@
    <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">17397.1</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">10000</td>
    <td data-label="Mean calls" data-field="mean_calls">9397.12</td>
@@ -46,9 +47,10 @@
    <td data-label="Problem"><a href="../suites/mlopt/C2H4.html">Ethene</a></td>
    <td data-label="Row" data-field="label">n2p2 (2.3.0) · Kalman force</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">8</td>
+   <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">60000</td>
+   <td data-label="Cap" data-field="cap">30000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">30000</td>
    <td data-label="Mean calls" data-field="mean_calls">30000</td>
@@ -65,6 +67,7 @@
    <td data-label="Family rank" data-field="family_rank">1</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">25.02</td>
+   <td data-label="Cap" data-field="cap">10000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">14</td>
    <td data-label="Mean calls" data-field="mean_calls">25.02</td>
@@ -78,9 +81,10 @@
    <td data-label="Problem"><a href="../suites/mlopt/emt-pt38.html">EMT Pt 38 nanoparticle</a></td>
    <td data-label="Row" data-field="label">n2p2 (2.3.0) · Kalman force</td>
    <td data-label="Family" data-field="family">Minimizers</td>
-   <td data-label="Family rank" data-field="family_rank">8</td>
+   <td data-label="Family rank" data-field="family_rank">4</td>
    <td data-label="Unit" data-field="unit">loss-gradient evaluations</td>
    <td data-label="PAR-2" data-field="par2_mean">60000</td>
+   <td data-label="Cap" data-field="cap">30000</td>
    <td data-label="Published" data-field="published"></td>
    <td data-label="Median calls" data-field="median_calls">30000</td>
    <td data-label="Mean calls" data-field="mean_calls">30000</td>

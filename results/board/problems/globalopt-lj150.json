@@ -106,8 +106,8 @@
   "over_budget": [],
   "profile": {
     "area_log10": {
-      "GMIN (df8da599) \u00b7 basin-hopping": 1.1077903840434509,
-      "GMIN (df8da599) \u00b7 parallel tempering basin-hopping": 0.8368633879458678
+      "GMIN (df8da599) \u00b7 basin-hopping": 1.107790384,
+      "GMIN (df8da599) \u00b7 parallel tempering basin-hopping": 0.8368633879
     },
     "rho": {
       "GMIN (df8da599) \u00b7 basin-hopping": [

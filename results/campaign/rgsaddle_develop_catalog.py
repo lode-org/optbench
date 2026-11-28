@@ -4,9 +4,9 @@ Seed 20261016. Each row stops at 27 connected saddles or 20000 searches.
 One process uses one core and one thread. Checkpoints are catalog.json
 and searches.jsonl under build/rgsaddle/<method>/ so a row can resume.
 
-The csv command writes results/campaign/rgsaddle-develop-179e90f2-pt-island.csv
+The csv command writes results/campaign/rgsaddle-develop-aa6dd937-pt-island.csv
 from the search ledgers, the campaign files, and
-results/campaign/rgsaddle-develop-179e90f2-pt-island-hardware.json.
+results/campaign/rgsaddle-develop-aa6dd937-pt-island-hardware.json.
 Nothing in that file is typed by hand. Method rows keep the force-call
 budget in ``budget`` and the cap failure count in ``cap_failures``.
 """
@@ -15,24 +15,29 @@ from __future__ import annotations
 
 import copy
 import csv
+import hashlib
+import io
 import json
 import os
+import re
+import shlex
 import shutil
+import socket
 import sys
 import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SHA = "179e90f29a3b2cbd4ea5804a5c4c132ab19acba4"
+SHA = "aa6dd9371d6a63103010a6829cb62c74a39c7ff1"
 SEED = 20261016
 GOAL = 27
 MAX_SEARCHES = 20000
 BARRIER_EV = 1.5
-CSV_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island.csv"
-HARDWARE_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island-hardware.json"
-TIMING_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island-timing.json"
-COMMANDS_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-pt-island-commands.json"
-PROVENANCE_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-179e90f2-eon-provenance.json"
+CSV_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-aa6dd937-pt-island.csv"
+HARDWARE_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-aa6dd937-pt-island-hardware.json"
+TIMING_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-aa6dd937-pt-island-timing.json"
+COMMANDS_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-aa6dd937-pt-island-commands.json"
+PROVENANCE_PATH = ROOT / "results" / "campaign" / "rgsaddle-develop-aa6dd937-eon-provenance.json"
 
 RGSADDLE_ROWS = {
     "dimer-fire": "rgsaddle/develop-saddle-dimer-fire",
@@ -49,6 +54,734 @@ THREAD_VARS = (
 )
 
 
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+_UNEXPANDED_VAR = re.compile(r"\$\{[A-Za-z_][A-Za-z0-9_]*\}|\$[A-Za-z_][A-Za-z0-9_]*")
+_SHA256_TEXT = re.compile(r"[0-9a-f]{64}")
+_GCC_LINE = re.compile(
+    r"^(?P<bin>gcc|g\+\+|cc|c\+\+) \((?:GCC|(?:[A-Za-z][\w.+-]* )*\d+\.\d+[^)]*)\) (?P<ver>[1-9]\d*\.\d+(?:\.\d+)*)$"
+)
+_CLANG_LINE = re.compile(
+    r"^(?:(?P<distro>Ubuntu|Debian|Amazon|Homebrew) )?(?P<bin>Apple clang|clang\+\+|clang) version "
+    r"(?P<ver>[1-9]\d*\.\d+(?:\.\d+)*)(?: \([^)]+\))?$"
+)
+_FC_LINE = re.compile(
+    r"^(?P<bin>GNU Fortran|gfortran) \((?:GCC|(?:[A-Za-z][\w.+-]* )*\d+\.\d+[^)]*)\) (?P<ver>[1-9]\d*\.\d+(?:\.\d+)*)$"
+)
+_BUILDTYPES = frozenset({"plain", "debug", "debugoptimized", "release", "minsize"})
+_ALLOWED_KEYS = {
+    "": frozenset({"argv_origin", "binary", "build", "run", "source"}),
+    "binary": frozenset({"name", "sha256", "version_stdout"}),
+    "build": frozenset(
+        {
+            "buildtype",
+            "commands",
+            "compilers",
+            "meson",
+            "ninja",
+            "optimization",
+            "options",
+            "prefix",
+            "toolchain",
+        }
+    ),
+    "build.compilers": frozenset({"cc", "cxx", "fc"}),
+    "source": frozenset({"commit", "tag"}),
+    "run": frozenset({"communicator_jobs", "core", "threads"}),
+}
+
+
+class ProvenanceError(ValueError):
+    """The eOn provenance document cannot be recorded."""
+
+
+def _schema_where(where: str) -> str:
+    """The schema path of a value, dropping list indexes."""
+    return re.sub(r"\[\d+\]", "", where)
+
+
+def _allowed_keys(where: str) -> frozenset[str] | None:
+    """Keys a provenance object may hold, or None when the object is a thread map."""
+    place = _schema_where(where)
+    if place == "run.threads":
+        return None
+    return _ALLOWED_KEYS.get(place)
+
+
+def _reject_unexpanded(value: str, where: str) -> None:
+    if _UNEXPANDED_VAR.search(value):
+        raise ProvenanceError(f"{where} contains an unexpanded variable")
+
+
+def _walk_provenance(value, where: str) -> None:
+    if isinstance(value, dict):
+        allowed = _allowed_keys(where)
+        for key, item in value.items():
+            name = str(key)
+            place = f"{where}.{name}" if where else name
+            if allowed is None:
+                if re.fullmatch(r"[A-Z][A-Z0-9_]*", name) is None:
+                    raise ProvenanceError(f"{place} is not an allowed key")
+            elif name not in allowed:
+                raise ProvenanceError(f"{place} is not an allowed key")
+            if "sha256" in name.lower() and item is None:
+                raise ProvenanceError(f"{place} is null")
+            _walk_provenance(item, place)
+        return
+    if isinstance(value, list):
+        for index, item in enumerate(value):
+            _walk_provenance(item, f"{where}[{index}]")
+        return
+    if isinstance(value, str):
+        _reject_unexpanded(value, where)
+        return
+    if value is None and "sha256" in where.lower():
+        raise ProvenanceError(f"{where} is null")
+
+
+def _compiler_identity(line: str) -> dict[str, str]:
+    """Parse one compiler banner into family, argv name, and version."""
+    match = _GCC_LINE.fullmatch(line)
+    if match is not None:
+        binary = match.group("bin")
+        family = "gnu-cxx" if binary in {"g++", "c++"} else "gnu-c"
+        identity = {"family": family, "binary": binary, "version": match.group("ver")}
+    else:
+        match = _CLANG_LINE.fullmatch(line)
+        if match is not None:
+            token = match.group("bin")
+            distro = bool(match.group("distro") or token == "Apple clang")
+            binary = "clang++" if token == "clang++" else "clang"
+            identity = {
+                "family": "clang",
+                "binary": binary,
+                "version": match.group("ver"),
+                "distro": "1" if distro else "",
+            }
+        else:
+            match = _FC_LINE.fullmatch(line)
+            if match is None:
+                raise ProvenanceError(f"{line!r} is not a full compiler version string")
+            identity = {"family": "fortran", "binary": "gfortran", "version": match.group("ver")}
+    major = int(identity["version"].split(".", 1)[0])
+    floor = 3 if identity["family"] == "clang" else 4
+    if major < floor:
+        raise ProvenanceError(f"{line!r} is not a full compiler version string")
+    return identity
+
+
+def compiler_version(stdout: str) -> str:
+    """The first line of a compiler ``--version`` report.
+
+    A bare compiler name, or a string that only contains a number, is not a version.
+    """
+    line = next((part.strip() for part in stdout.splitlines() if part.strip()), "")
+    _compiler_identity(line)
+    return line
+
+
+def _compiler_argv(role: str, identity: dict[str, str]) -> str:
+    if role == "fc":
+        return "gfortran"
+    if role == "cxx" and identity["family"] == "clang":
+        return "clang++"
+    return identity["binary"]
+
+
+def _require_compiler_role(role: str, identity: dict[str, str]) -> None:
+    family = identity["family"]
+    if role == "cc" and family in {"gnu-c", "clang"}:
+        return
+    if role == "cxx" and family == "gnu-cxx":
+        return
+    if role == "cxx" and family == "clang" and (identity["binary"] == "clang++" or identity.get("distro")):
+        return
+    if role == "fc" and family == "fortran":
+        return
+    raise ProvenanceError(f"build.compilers.{role} is not a full version string")
+
+
+def _meson_head(command: str) -> str:
+    """The setup words before a comment or a shell operator."""
+    cut = len(command)
+    for marker in ("&&", "||", ";", "#"):
+        index = command.find(marker)
+        if index != -1:
+            cut = min(cut, index)
+    cursor = 0
+    while True:
+        index = command.find("|", cursor)
+        if index == -1 or index >= cut:
+            break
+        if command[index : index + 2] == "||":
+            cursor = index + 2
+            continue
+        cut = index
+        break
+    return command[:cut].strip()
+
+
+def _parse_meson_setup(command: str) -> dict:
+    """Read CC, CXX, FC, the build directory, and the meson options."""
+    if not isinstance(command, str) or not command.strip():
+        raise ProvenanceError("build.commands[0] is not the meson setup command")
+    head = _meson_head(command)
+    try:
+        tokens = shlex.split(head)
+    except ValueError as exc:
+        raise ProvenanceError("build.commands[0] is not the meson setup command") from exc
+    env: dict[str, str] = {}
+    index = 0
+    while index < len(tokens) and "=" in tokens[index] and not tokens[index].startswith("-"):
+        name, _, value = tokens[index].partition("=")
+        if name in {"CC", "CXX", "FC"}:
+            env[name] = value
+        index += 1
+    if tokens[index : index + 2] != ["meson", "setup"]:
+        raise ProvenanceError("build.commands[0] is not the meson setup command")
+    index += 2
+    if index >= len(tokens) or tokens[index].startswith("-"):
+        raise ProvenanceError("meson setup command omits the build directory")
+    index += 1
+    flags: dict[str, str] = {}
+    while index < len(tokens):
+        token = tokens[index]
+        if token.startswith("-D") and "=" in token[2:]:
+            body = token[2:]
+        elif token.startswith("--") and "=" in token:
+            body = token[2:]
+        else:
+            raise ProvenanceError("build.commands[0] is not the meson setup command")
+        name, _, value = body.partition("=")
+        flags[name] = value
+        index += 1
+    for name in ("CC", "CXX", "FC"):
+        if not env.get(name, "").strip():
+            raise ProvenanceError(f"meson setup command has an empty {name}")
+    if flags.get("optimization") != "3":
+        raise ProvenanceError("meson setup command omits -Doptimization=3")
+    for name in ("prefix", "libdir", "buildtype"):
+        value = flags.get(name, "")
+        if (
+            not value
+            or _UNEXPANDED_VAR.search(value)
+            or "<" in value
+            or ">" in value
+            or "~" in value
+        ):
+            raise ProvenanceError(f"meson setup command omits {name}")
+    if flags["buildtype"] not in _BUILDTYPES:
+        raise ProvenanceError("meson setup command has an invalid buildtype")
+    return {"head": head, "env": env, "flags": flags}
+
+
+def meson_setup_command(*, cc: str, cxx: str, fc: str, builddir: str, options: list[str]) -> str:
+    """The meson setup line, with every required option spelled on the command."""
+    for label, value in (("cc", cc), ("cxx", cxx), ("fc", fc), ("builddir", builddir)):
+        _reject_unexpanded(value, label)
+        if not value.strip():
+            raise ProvenanceError(f"meson setup command has an empty {label.upper() if label != 'builddir' else 'build directory'}")
+    rendered: list[str] = []
+    for option in options:
+        _reject_unexpanded(option, "option")
+        if not option.startswith("-D") or "=" not in option[2:]:
+            raise ProvenanceError(f"meson option {option!r} is not -Dname=value")
+        rendered.append(option)
+    flags = " ".join(rendered)
+    command = f"CC={cc} CXX={cxx} FC={fc} meson setup {builddir} {flags}".rstrip()
+    _parse_meson_setup(command)
+    return command
+
+
+_ARM_TOOL = frozenset({"binary_sha256", "label", "realpath_sha256", "version"})
+_ARM_COMPILER = frozenset({"binary_sha256", "label", "realpath_sha256", "version_first_line"})
+_ARM_FIELD = frozenset({"match", "recorded", "this_run"})
+_ARM_KEYS = {
+    "": frozenset(
+        {
+            "arm",
+            "base",
+            "budgets",
+            "build",
+            "eon",
+            "eonclient",
+            "hardware",
+            "hardware_comparison",
+            "prefixes",
+            "rgsaddle",
+            "run",
+            "spec",
+            "summary",
+            "version_suffix",
+        }
+    ),
+    "budgets": frozenset(
+        {"catalog_force_call_budget", "goal_connected", "max_searches", "template_failure_cap"}
+    ),
+    "build": frozenset(
+        {
+            "builddir",
+            "commands",
+            "compilers",
+            "cwd",
+            "meson",
+            "ninja",
+            "prefix",
+            "rustc",
+            "source",
+        }
+    ),
+    "build.compilers": frozenset({"cc", "cxx", "fc"}),
+    "build.compilers.cc": _ARM_COMPILER,
+    "build.compilers.cxx": _ARM_COMPILER,
+    "build.compilers.fc": _ARM_COMPILER,
+    "build.meson": _ARM_TOOL,
+    "build.ninja": _ARM_TOOL,
+    "build.rustc": _ARM_TOOL,
+    "eon": frozenset({"commit", "repository", "tag"}),
+    "eonclient": frozenset(
+        {"path", "sha256_after", "sha256_before", "sha256_match", "version_stdout"}
+    ),
+    "hardware": frozenset(
+        {
+            "cores_per_socket",
+            "cpu_cores",
+            "cpu_family",
+            "cpus_online",
+            "kernel_release",
+            "l1d_cache",
+            "l1i_cache",
+            "l2_cache",
+            "l3_cache",
+            "machine",
+            "machine_id_sha256",
+            "mem_total_kb",
+            "model",
+            "model_name",
+            "sockets",
+            "stepping",
+            "threads_per_core",
+            "vendor_id",
+        }
+    ),
+    "hardware_comparison": frozenset(
+        {
+            "differed_fields",
+            "fields",
+            "matched_fields",
+            "note",
+            "reference",
+            "same_hardware_claimed",
+            "unrecorded_on_other_arms",
+        }
+    ),
+    "hardware_comparison.fields": frozenset(
+        {"cpu_cores", "cpus_online", "mem_total_kb", "model_name"}
+    ),
+    "hardware_comparison.fields.cpu_cores": _ARM_FIELD,
+    "hardware_comparison.fields.cpus_online": _ARM_FIELD,
+    "hardware_comparison.fields.mem_total_kb": _ARM_FIELD,
+    "hardware_comparison.fields.model_name": _ARM_FIELD,
+    "prefixes[]": frozenset({"binary_sha256", "label", "realpath_sha256"}),
+    "rgsaddle": frozenset({"develop_commit", "repository", "role"}),
+    "run": frozenset(
+        {
+            "argv",
+            "client_commands",
+            "communicator_jobs",
+            "config_ini",
+            "cpu_affinity",
+            "env",
+            "error",
+            "number_of_cpus",
+            "resumed",
+            "seed",
+            "segments",
+            "threads",
+            "version_probes",
+            "wall_seconds",
+        }
+    ),
+    "run.client_commands[]": frozenset(
+        {"argv", "cwd", "index", "returncode", "taskset", "wall_seconds"}
+    ),
+    "run.env": None,
+    "run.threads": None,
+    "run.segments[]": frozenset(
+        {"cpu_affinity", "finished_unix", "resumed", "started_unix", "wall_seconds"}
+    ),
+    "run.version_probes[]": frozenset({"argv", "returncode"}),
+    "spec": frozenset({"goal_connected", "max_searches", "runner", "seed", "template"}),
+    "summary": frozenset(
+        {
+            "connected",
+            "force_call_median",
+            "force_call_median_connected",
+            "searches",
+            "wall_median",
+            "wall_seconds",
+        }
+    ),
+}
+
+
+def _arm_schema(where: str) -> str:
+    """Drop list indexes so every element shares one allowlist."""
+    return re.sub(r"\[\d+\]", "[]", where)
+
+
+def _walk_arm(value, where: str) -> None:
+    """Refuse a key that the arm document does not list."""
+    if isinstance(value, dict):
+        place = _arm_schema(where)
+        if place not in _ARM_KEYS:
+            raise ProvenanceError(f"{place or 'provenance'} is not an allowed object")
+        allowed = _ARM_KEYS[place]
+        for key, item in value.items():
+            name = str(key)
+            child = f"{where}.{name}" if where else name
+            if allowed is None:
+                if re.fullmatch(r"[A-Z][A-Z0-9_]*", name) is None:
+                    raise ProvenanceError(f"{child} is not an allowed key")
+            elif name not in allowed:
+                raise ProvenanceError(f"{child} is not an allowed key")
+            if isinstance(item, str) and "sha256" in name.lower():
+                if _SHA256_TEXT.fullmatch(item) is None:
+                    raise ProvenanceError(f"{child} is invalid")
+            elif item is None and "sha256" in name.lower():
+                raise ProvenanceError(f"{child} is null")
+            _walk_arm(item, child)
+        return
+    if isinstance(value, list):
+        for index, item in enumerate(value):
+            _walk_arm(item, f"{where}[{index}]")
+        return
+    if isinstance(value, str):
+        _reject_unexpanded(value, where)
+
+
+def _validate_arm_provenance(document: dict) -> None:
+    """Accept an arm capture whose compilers and client digest check out.
+
+    This shape has a top-level ``arm`` and no ``binary``. Compiler banners are
+    ``version_first_line`` values. The client digest before the run matches the
+    digest after it. Kit and prior-arm metadata are not in the allowlist.
+    """
+    arm = document.get("arm")
+    if not isinstance(arm, str) or not arm.strip():
+        raise ProvenanceError("arm is empty")
+    _walk_arm(document, "")
+    compilers = (document.get("build") or {}).get("compilers") if isinstance(document.get("build"), dict) else None
+    if not isinstance(compilers, dict):
+        raise ProvenanceError("build.compilers is not an object")
+    for name in ("cc", "cxx", "fc"):
+        block = compilers.get(name)
+        if not isinstance(block, dict):
+            raise ProvenanceError(f"build.compilers.{name} is not an object")
+        line = block.get("version_first_line")
+        if not isinstance(line, str):
+            raise ProvenanceError(f"build.compilers.{name} is not a full version string")
+        try:
+            identity = _compiler_identity(line)
+        except ProvenanceError as exc:
+            raise ProvenanceError(f"build.compilers.{name} is not a full version string") from exc
+        _require_compiler_role(name, identity)
+    client = document.get("eonclient")
+    if not isinstance(client, dict):
+        raise ProvenanceError("eonclient is not an object")
+    before = client.get("sha256_before")
+    after = client.get("sha256_after")
+    if not isinstance(before, str) or _SHA256_TEXT.fullmatch(before) is None:
+        raise ProvenanceError("eonclient.sha256_before is invalid")
+    if before != after:
+        raise ProvenanceError("eonclient.sha256_before does not match sha256_after")
+    if client.get("sha256_match") is not True:
+        raise ProvenanceError("eonclient.sha256_match is not true")
+
+def validate_provenance(document: dict) -> None:
+    """Refuse a null sha256, a key outside the schema, or an unexpanded variable.
+
+    ``cc``, ``cxx``, and ``fc`` are full version strings for that role. The
+    first build command is a meson setup line whose compilers, build directory,
+    optimization, prefix, libdir, and buildtype are real values.
+    """
+    if not isinstance(document, dict):
+        raise ProvenanceError("provenance is not an object")
+    if "arm" in document and "binary" not in document:
+        _validate_arm_provenance(document)
+        return
+    _walk_provenance(document, "")
+    binary = document.get("binary")
+    if not isinstance(binary, dict):
+        raise ProvenanceError("binary is not an object")
+    sha = binary.get("sha256")
+    if sha is None:
+        raise ProvenanceError("binary.sha256 is null")
+    if not isinstance(sha, str) or _SHA256_TEXT.fullmatch(sha) is None:
+        raise ProvenanceError("binary.sha256 is invalid")
+    build = document.get("build")
+    if not isinstance(build, dict):
+        raise ProvenanceError("build is not an object")
+    compilers = build.get("compilers")
+    if not isinstance(compilers, dict):
+        raise ProvenanceError("build.compilers is not an object")
+    identities: dict[str, dict[str, str]] = {}
+    for name in ("cc", "cxx", "fc"):
+        text = compilers.get(name)
+        if not isinstance(text, str):
+            raise ProvenanceError(f"build.compilers.{name} is not a full version string")
+        try:
+            identity = _compiler_identity(text)
+        except ProvenanceError as exc:
+            raise ProvenanceError(f"build.compilers.{name} is not a full version string") from exc
+        _require_compiler_role(name, identity)
+        identities[name] = identity
+    options = build.get("options")
+    commands = build.get("commands")
+    if not isinstance(options, list) or not isinstance(commands, list) or not commands:
+        raise ProvenanceError("build.commands has no meson setup command")
+    parsed = _parse_meson_setup(commands[0])
+    for name in ("cc", "cxx", "fc"):
+        expected = _compiler_argv(name, identities[name])
+        if parsed["env"][name.upper()] != expected:
+            raise ProvenanceError(f"meson setup command {name.upper()} does not match build.compilers.{name}")
+    for option in options:
+        if not isinstance(option, str) or option not in parsed["head"]:
+            raise ProvenanceError(f"meson setup command omits {option}")
+
+
+def provenance_document(
+    *,
+    binary_sha256: str,
+    version_stdout: str,
+    cc_stdout: str,
+    cxx_stdout: str,
+    fc_stdout: str,
+    cc: str,
+    cxx: str,
+    fc: str,
+    builddir: str,
+    options: list[str],
+    meson: str,
+    ninja: str,
+    source: dict,
+    run: dict,
+    argv_origin: str,
+) -> dict:
+    """Build a provenance document and refuse one that cannot be recorded."""
+    command = meson_setup_command(cc=cc, cxx=cxx, fc=fc, builddir=builddir, options=options)
+    prefix = ""
+    optimization = ""
+    buildtype = ""
+    for option in options:
+        name, _, value = option[2:].partition("=")
+        if name == "prefix":
+            prefix = value
+        elif name == "optimization":
+            optimization = value
+        elif name == "buildtype":
+            buildtype = value
+    document = {
+        "argv_origin": argv_origin,
+        "binary": {
+            "name": "eonclient",
+            "sha256": binary_sha256,
+            "version_stdout": version_stdout,
+        },
+        "build": {
+            "buildtype": buildtype,
+            "commands": [command, f"meson install -C {builddir}"],
+            "compilers": {
+                "cc": compiler_version(cc_stdout),
+                "cxx": compiler_version(cxx_stdout),
+                "fc": compiler_version(fc_stdout),
+            },
+            "meson": meson,
+            "ninja": ninja,
+            "optimization": optimization,
+            "options": list(options),
+            "prefix": prefix,
+            "toolchain": f"meson {meson} + ninja {ninja}",
+        },
+        "run": run,
+        "source": source,
+    }
+    validate_provenance(document)
+    return document
+
+
+def write_provenance(path: Path, document: dict) -> None:
+    """Write ``document`` after it passes :func:`validate_provenance`."""
+    validate_provenance(document)
+    destination = Path(path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(json.dumps(document, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def provenance_publishes(path: Path) -> bool:
+    """True when ``path`` is a provenance document this writer accepts."""
+    if not path.is_file():
+        return False
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    try:
+        validate_provenance(document)
+    except ProvenanceError:
+        return False
+    return True
+
+
+def _published_eon_dat() -> Path | None:
+    """The eon-classic ledger, when its provenance passes :func:`validate_provenance`."""
+    candidates = (
+        (_output_path("eon-classic"), PROVENANCE_PATH),
+    )
+    for dat, provenance in candidates:
+        if dat.is_file() and provenance_publishes(provenance):
+            return dat
+    return None
+
+
+def _eon_record_ready() -> bool:
+    return _published_eon_dat() is not None
+
+
+def _method_dat(method: str) -> Path:
+    if method == "eon-classic":
+        published = _published_eon_dat()
+        if published is not None:
+            return published
+    return _output_path(method)
+
+
+def _provenance_kwargs(client: Path, facts: dict) -> dict:
+    return {
+        "binary_sha256": _sha256(client),
+        "version_stdout": str(facts["version_stdout"]),
+        "cc_stdout": str(facts["cc_stdout"]),
+        "cxx_stdout": str(facts["cxx_stdout"]),
+        "fc_stdout": str(facts["fc_stdout"]),
+        "cc": str(facts["cc"]),
+        "cxx": str(facts["cxx"]),
+        "fc": str(facts["fc"]),
+        "builddir": str(facts["builddir"]),
+        "options": list(facts["options"]),
+        "meson": str(facts["meson"]),
+        "ninja": str(facts["ninja"]),
+        "source": dict(facts["source"]),
+        "run": dict(facts["run"]),
+        "argv_origin": str(facts["argv_origin"]),
+    }
+
+
+def _load_provenance() -> dict:
+    if not PROVENANCE_PATH.is_file():
+        return {}
+    document = json.loads(PROVENANCE_PATH.read_text(encoding="utf-8"))
+    validate_provenance(document)
+    return document
+
+
+def _read_json(path: Path) -> dict:
+    if not path.is_file():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {}
+
+
+def _merge_wall_comparable(stored: dict, extra: dict | None) -> None:
+    if not extra:
+        return
+    merged = dict(extra)
+    if stored.get("wall_comparable") is False:
+        merged["wall_comparable"] = False
+    stored.update(merged)
+
+
+def _sanitize_token(token: str) -> str:
+    candidate = Path(token)
+    if candidate.is_absolute():
+        if candidate.exists() and candidate.is_file():
+            return candidate.name
+        try:
+            return str(candidate.relative_to(ROOT))
+        except ValueError:
+            return candidate.name
+    return token
+
+
+def _sanitize_argv(argv: list[str]) -> list[str]:
+    return [_sanitize_token(item) for item in argv]
+
+
+def _sanitize_command_payload(payload: dict) -> dict:
+    cleaned = dict(payload)
+    argv = cleaned.get("argv")
+    if isinstance(argv, list):
+        cleaned["argv"] = _sanitize_argv([str(token) for token in argv])
+    return cleaned
+
+
+def _timing_paths(method: str) -> tuple[Path, Path]:
+    base = _checkpoint_dir(method)
+    return base / "timing.json", base / "timing.segments.jsonl"
+
+
+def _timing_start(method: str, *, extra: dict | None = None) -> float:
+    now = time.time()
+    timing_path, segments_path = _timing_paths(method)
+    stored = _read_json(timing_path)
+    if "started_unix" not in stored:
+        stored["started_unix"] = now
+    if "host" not in stored:
+        stored["host"] = socket.gethostname()
+    _merge_wall_comparable(stored, extra)
+    timing_path.write_text(json.dumps(stored, sort_keys=True) + "\n", encoding="utf-8")
+    segment = {
+        "segment_started_unix": now,
+        "argv": _sanitize_argv(sys.argv),
+        "cpu_affinity": sorted(os.sched_getaffinity(0)),
+    }
+    with segments_path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(segment, sort_keys=True) + "\n")
+    return now
+
+
+def _timing_finish(method: str, started: float, *, extra: dict | None = None) -> None:
+    finished = time.time()
+    duration = max(0.0, finished - started)
+    timing_path, segments_path = _timing_paths(method)
+    stored = _read_json(timing_path)
+    stored["finished_unix"] = finished
+    previous = float(stored.get("wall_seconds_total") or 0.0)
+    stored["wall_seconds_total"] = previous + duration
+    _merge_wall_comparable(stored, extra)
+    timing_path.write_text(json.dumps(stored, sort_keys=True) + "\n", encoding="utf-8")
+    with segments_path.open("a", encoding="utf-8") as handle:
+        handle.write(
+            json.dumps(
+                {
+                    "segment_finished_unix": finished,
+                    "segment_wall_seconds": duration,
+                    "argv": _sanitize_argv(sys.argv),
+                    "cpu_affinity": sorted(os.sched_getaffinity(0)),
+                },
+                sort_keys=True,
+            )
+            + "\n"
+        )
+
+
 def _single_thread(cpu: int) -> None:
     os.sched_setaffinity(0, {cpu})
     for name in THREAD_VARS:
@@ -63,8 +796,8 @@ def _checkpoint_dir(method: str) -> Path:
 
 def _output_path(method: str) -> Path:
     if method == "eon-classic":
-        return ROOT / "results" / "campaign" / "eon-3.5.0-saddle-pt-classic-develop-protocol.dat"
-    return ROOT / "results" / "campaign" / f"rgsaddle-develop-179e90f2-saddle-{method}.dat"
+        return ROOT / "results" / "campaign" / "eon-3.5.0-d9cc6c5be-saddle-pt-classic-aa6dd937.dat"
+    return ROOT / "results" / "campaign" / f"rgsaddle-develop-aa6dd937-saddle-{method}.dat"
 
 
 def classify_search(record: dict, step_ceiling: int | None) -> str:
@@ -81,7 +814,7 @@ def classify_search(record: dict, step_ceiling: int | None) -> str:
     reasons = {str(item) for item in (record.get("reasons") or [])}
     step_max = int(record.get("step_calls_max") or 0)
     barrier = record.get("barrier")
-    non_finite = "divergence" in reasons
+    non_finite = "divergence" in reasons or "timeout" in reasons
     if barrier is not None:
         try:
             non_finite = non_finite or not (float(barrier) == float(barrier))
@@ -173,7 +906,7 @@ def step_ceiling(method: str) -> int | None:
 
 
 def _ledger(method: str) -> list[dict]:
-    finished = _output_path(method).with_suffix(".starts.jsonl")
+    finished = _method_dat(method).with_suffix(".starts.jsonl")
     if finished.is_file() and finished.stat().st_size:
         return _load_jsonl(finished)
     return _load_jsonl(_checkpoint_dir(method) / "searches.jsonl")
@@ -182,15 +915,17 @@ def _ledger(method: str) -> list[dict]:
 def progress_text() -> str:
     lines = [
         f"rgsaddle develop {SHA}",
-        "ancestor ef1fd6463763be811a52ec33bae1f21870a600d4",
-        "includes 116b92e83fdbd5ec24fcfe500e9de2663d1a35b2 retain rotation state across translations",
+        "includes fix/lanczos-pt-on-develop and the PAFI series",
         f"seed {SEED}",
         f"stop {GOAL} connected or {MAX_SEARCHES} searches",
         "exclusive class order: connected, divergence, duplicate, over_barrier, disconnected, cap, hessian_index, high_energy, wrong_stationary",
         "divergence: non-finite point or a step past the ceiling",
         f"over_barrier: barrier at least {BARRIER_EV} eV",
     ]
-    for method in (*RGSADDLE_ROWS, "eon-classic"):
+    methods = list(RGSADDLE_ROWS)
+    if _eon_record_ready():
+        methods.append("eon-classic")
+    for method in methods:
         counts = tally(_ledger(method), step_ceiling(method))
         lines.append(
             "method {method} searches {searches} connected {connected} "
@@ -214,16 +949,21 @@ def _write_command(method: str, cpu: int) -> None:
         head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=src, text=True).strip()
     payload = {
         "method": method,
-        "argv": sys.argv,
+        "argv": _sanitize_argv(sys.argv),
         "cpu_affinity": sorted(os.sched_getaffinity(0)),
         "requested_cpu": cpu,
         "threads": {name: os.environ.get(name, "") for name in THREAD_VARS},
         "rgsaddle_head": head,
-        "rgsaddle_lib": os.environ.get("RGSADDLE_LIB", ""),
     }
-    (_checkpoint_dir(method) / "command.json").write_text(
-        json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
+    lib = Path(os.environ.get("RGSADDLE_LIB", ""))
+    if not lib.is_file():
+        raise ProvenanceError("RGSADDLE_LIB is not a library file")
+    payload["rgsaddle_lib_sha256"] = _sha256(lib)
+    path = _checkpoint_dir(method) / "command.json"
+    existing = _read_json(path)
+    merged = dict(existing)
+    merged.update(payload)
+    path.write_text(json.dumps(merged, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def run_rgsaddle(method: str, cpu: int) -> None:
@@ -236,24 +976,9 @@ def run_rgsaddle(method: str, cpu: int) -> None:
     template = load_template(ROOT, RGSADDLE_ROWS[method])
     problem = resolve_problem(ROOT, "saddle-search/pt-island")
     output = _output_path(method)
-    started = time.time()
-    (_checkpoint_dir(method) / "timing.json").write_text(
-        json.dumps({"method": method, "started_unix": started}) + "\n", encoding="utf-8"
-    )
+    started = _timing_start(method, extra={"method": method, "wall_comparable": False})
     run_template(ROOT, problem, template, output=output, workers=1, repetition=1)
-    finished = time.time()
-    (_checkpoint_dir(method) / "timing.json").write_text(
-        json.dumps(
-            {
-                "method": method,
-                "started_unix": started,
-                "finished_unix": finished,
-                "wall_seconds": finished - started,
-            }
-        )
-        + "\n",
-        encoding="utf-8",
-    )
+    _timing_finish(method, started, extra={"method": method, "wall_comparable": False})
 
 
 def _eon_records(text: str) -> list[dict]:
@@ -319,18 +1044,22 @@ def _write_eon_ledger(folder: Path, records: list[dict]) -> None:
         handle.flush()
 
 
-def run_eon(cpu: int, client: Path) -> None:
+def run_eon(cpu: int, client: Path, provenance_facts: dict | None = None) -> None:
     """Classic dimer, one core, seed 20261016, stop at 27 or 20000 searches.
 
-    ``client`` is a local prefix of conda-forge ``eon`` 3.5.0 build
-    ``np2py312h3e7f63d_0``. ``eonclient --version`` prints the feedstock
-    commit. The public source pin is ``rgsaddle-develop-179e90f2-eon-provenance.json``.
+    ``client`` is the source build of tag ``v3.5.0`` (``d9cc6c5be``).
+    ``provenance_document`` and ``write_provenance`` record the Meson command,
+    the compiler version strings, and the eonclient sha256 before the search.
     """
     import inspect
     import logging
     import traceback
 
     _single_thread(cpu)
+    if not provenance_facts:
+        raise ProvenanceError("eon-classic provenance is required")
+    document = provenance_document(**_provenance_kwargs(client, provenance_facts))
+    write_provenance(PROVENANCE_PATH, document)
     folder = _checkpoint_dir("eon-classic")
     _write_command("eon-classic", cpu)
     version = _client_version(client)
@@ -363,15 +1092,10 @@ def run_eon(cpu: int, client: Path) -> None:
     prepare_client_env(client)
     for name in ("akmc", "eon", "state", "communicator"):
         logging.getLogger(name).setLevel(logging.WARNING)
-    started = time.time()
-    timing_path = folder / "timing.json"
-    if not timing_path.is_file():
-        timing_path.write_text(
-            json.dumps({"method": "eon-classic", "started_unix": started, "client_version": version}) + "\n",
-            encoding="utf-8",
-        )
-    else:
-        started = float(json.loads(timing_path.read_text(encoding="utf-8")).get("started_unix", started))
+    started = _timing_start(
+        "eon-classic",
+        extra={"method": "eon-classic", "client_version": version, "wall_comparable": False},
+    )
     previous = Path.cwd()
     last_error = ""
     records: list[dict] = []
@@ -423,27 +1147,25 @@ def run_eon(cpu: int, client: Path) -> None:
     if results.is_file():
         records = _eon_records(results.read_text(encoding="utf-8", errors="replace"))
         _write_eon_ledger(folder, records)
-    finished = time.time()
-    timing_path.write_text(
-        json.dumps(
-            {
-                "method": "eon-classic",
-                "started_unix": started,
-                "finished_unix": finished,
-                "wall_seconds": finished - started,
-                "client_version": version,
-                "error": last_error,
-                "ledger_searches": len(records),
-                "ledger_connected": sum(1 for record in records if record["success"]),
-            }
-        )
-        + "\n",
-        encoding="utf-8",
+    _timing_finish(
+        "eon-classic",
+        started,
+        extra={
+            "method": "eon-classic",
+            "client_version": version,
+            "error": last_error,
+            "ledger_searches": len(records),
+            "ledger_connected": sum(1 for record in records if record["success"]),
+            "wall_comparable": False,
+        },
     )
-    _write_eon_dat(records, finished - started, version, last_error)
+    timing_totals = _read_json(_checkpoint_dir("eon-classic") / "timing.json")
+    wall_total = float(timing_totals.get("wall_seconds_total") or 0.0)
+    wall_comparable = bool(timing_totals.get("wall_comparable"))
+    _write_eon_dat(records, wall_total, version, last_error, wall_comparable=wall_comparable)
 
 
-def _write_eon_dat(records: list[dict], wall: float, version: str, error: str) -> None:
+def _write_eon_dat(records: list[dict], wall: float, version: str, error: str, *, wall_comparable: bool) -> None:
     output = _output_path("eon-classic")
     connected = sum(1 for record in records if record["success"])
     calls = [int(record["force_calls"]) for record in records]
@@ -465,8 +1187,9 @@ def _write_eon_dat(records: list[dict], wall: float, version: str, error: str) -
         f"connected {connected}",
         f"goal {GOAL}",
         f"nfailed {0 if stopped else 1}",
-        f"wall_seconds {wall:.6f}",
     ]
+    if wall_comparable:
+        lines.append(f"wall_seconds {wall:.6f}")
     if error:
         lines.append(f"error {error.splitlines()[0]}")
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -492,15 +1215,19 @@ def _hardware_rows() -> list[dict[str, str]]:
 
 def _command_rows() -> list[dict[str, str]]:
     stored = json.loads(COMMANDS_PATH.read_text(encoding="utf-8")) if COMMANDS_PATH.is_file() else {}
-    provenance = json.loads(PROVENANCE_PATH.read_text(encoding="utf-8")) if PROVENANCE_PATH.is_file() else {}
+    provenance = _load_provenance()
     rows = []
-    for method in (*RGSADDLE_ROWS, "eon-classic"):
+    methods = list(RGSADDLE_ROWS)
+    if _eon_record_ready():
+        methods.append("eon-classic")
+    for method in methods:
         payload = stored.get(method)
         if payload is None:
             path = _checkpoint_dir(method) / "command.json"
             if not path.is_file():
                 continue
             payload = json.loads(path.read_text(encoding="utf-8"))
+        payload = _sanitize_command_payload(payload)
         row = {
             "row_kind": "command",
             "method": method,
@@ -508,9 +1235,12 @@ def _command_rows() -> list[dict[str, str]]:
             "cpu_affinity": ",".join(str(cpu) for cpu in payload.get("cpu_affinity") or []),
             "threads": " ".join(f"{key}={value}" for key, value in sorted((payload.get("threads") or {}).items())),
             "rgsaddle_head": payload.get("rgsaddle_head", ""),
+            "rgsaddle_lib_sha256": payload.get("rgsaddle_lib_sha256", ""),
         }
         if method == "eon-classic":
-            row["argv_origin"] = str(provenance.get("argv_origin") or "")
+            if not provenance:
+                raise ProvenanceError("eon-classic provenance is required")
+            row["argv_origin"] = str(provenance["argv_origin"])
         rows.append(row)
     return rows
 
@@ -544,13 +1274,17 @@ def _method_rows() -> list[dict[str, str]]:
     from optbench.score import score_v2
 
     rows = []
-    for method in (*RGSADDLE_ROWS, "eon-classic"):
+    methods = list(RGSADDLE_ROWS)
+    if _eon_record_ready():
+        methods.append("eon-classic")
+    for method in methods:
         records = _ledger(method)
         counts = tally(records, step_ceiling(method))
         timing = {}
         if TIMING_PATH.is_file():
             timing = json.loads(TIMING_PATH.read_text(encoding="utf-8")).get(method) or {}
-        dat = _output_path(method)
+        wall_comparable = bool(timing.get("wall_comparable"))
+        dat = _method_dat(method)
         fields = {}
         if dat.is_file():
             for line in dat.read_text(encoding="utf-8").splitlines():
@@ -582,7 +1316,8 @@ def _method_rows() -> list[dict[str, str]]:
             "code_version": fields.get("code_version", ""),
             "client_version": timing.get("client_version", ""),
             "seed": fields.get("seed", str(SEED)),
-            "wall_seconds": "" if timing.get("wall_seconds") is None else f"{float(timing['wall_seconds']):.6f}",
+            "wall_seconds": f"{float(timing['wall_seconds']):.6f}" if wall_comparable and timing.get("wall_seconds") is not None else "",
+            "wall_comparable": str(wall_comparable).lower(),
             "par2_mean": scored or fields.get("par2_mean", ""),
             "force_calls": fields.get("force_calls", "")
             or (str(sum(int(record["force_calls"]) for record in records)) if records else ""),
@@ -598,7 +1333,8 @@ def _method_rows() -> list[dict[str, str]]:
     return rows
 
 
-def write_csv() -> Path:
+def csv_text() -> str:
+    """The catalog CSV, without opening a record for writing."""
     hardware = _hardware_rows()
     commands = _command_rows()
     methods = _method_rows()
@@ -607,19 +1343,37 @@ def write_csv() -> Path:
         for key in row:
             if key not in columns:
                 columns.append(key)
-    CSV_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with CSV_PATH.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=columns, extrasaction="ignore")
-        writer.writeheader()
-        for row in hardware + commands + methods:
-            writer.writerow(row)
-    return CSV_PATH
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=columns, extrasaction="ignore", lineterminator="\n")
+    writer.writeheader()
+    for row in hardware + commands + methods:
+        writer.writerow(row)
+    return buffer.getvalue()
+
+
+def write_csv(path: Path | None = None) -> Path:
+    """Write the catalog CSV. An existing destination stays unchanged."""
+    destination = Path(path) if path is not None else CSV_PATH
+    if destination.exists():
+        raise ProvenanceError(f"{destination} is already a record")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(csv_text(), encoding="utf-8")
+    return destination
+
+
+def _load_provenance_facts(path: Path) -> dict:
+    document = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(document, dict):
+        raise ProvenanceError("provenance facts are not an object")
+    return document
 
 
 def main(argv: list[str]) -> None:
     if not argv or argv[0] in {"-h", "--help"}:
         print(
-            "usage: rgsaddle_develop_catalog.py run <method> <cpu> | eon <cpu> <client> | progress <path> | csv",
+            "usage: rgsaddle_develop_catalog.py run <method> <cpu> | "
+            "eon <cpu> <client> <facts.json> | provenance <client> <facts.json> | "
+            "progress <path> | csv",
             file=sys.stderr,
         )
         raise SystemExit(2)
@@ -631,7 +1385,14 @@ def main(argv: list[str]) -> None:
         run_rgsaddle(method, cpu)
         return
     if command == "eon":
-        run_eon(int(argv[1]), Path(argv[2]))
+        run_eon(int(argv[1]), Path(argv[2]), _load_provenance_facts(Path(argv[3])))
+        return
+    if command == "provenance":
+        client = Path(argv[1])
+        facts = _load_provenance_facts(Path(argv[2]))
+        document = provenance_document(**_provenance_kwargs(client, facts))
+        write_provenance(PROVENANCE_PATH, document)
+        print(PROVENANCE_PATH)
         return
     if command == "progress":
         Path(argv[1]).write_text(progress_text(), encoding="utf-8")
