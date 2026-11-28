@@ -1242,8 +1242,8 @@ def test_unmapped_asv_rows_follow_the_entry_name(tmp_path: Path, monkeypatch):
         }
         (machine / f"{commit[:8]}-py.json").write_text(json.dumps(payload), encoding="utf-8")
 
-    write("a" * 40, "zzz.Zed")
-    write("f" * 40, "aaa.Aye")
+    write("f" * 40, "zzz.Zed")
+    write("a" * 40, "aaa.Aye")
     _reverse_directory_walk(monkeypatch)
 
     entries = [row["entry"] for row in build_board(tmp_path)["unmapped"]]
