@@ -1200,6 +1200,21 @@ def _rank_cap(row: dict) -> int | None:
         return None
 
 
+def _listing_key(row: dict) -> tuple:
+    """Order for rows that are listed, not ranked.
+
+    asv walks ``results/asv`` in directory order. That order is not the
+    same on every filesystem, so a listing sorted by name is.
+    """
+    return (
+        str(row.get("problem") or ""),
+        str(row.get("entry") or ""),
+        str(row.get("path") or ""),
+        str(row.get("note") or ""),
+        str(row.get("label") or ""),
+    )
+
+
 def _rank_key(row: dict) -> tuple:
     """Order rows inside one failure cap, then by cost.
 
@@ -1518,18 +1533,22 @@ def build_board(root: Path) -> dict:
         for row in group:
             if row.get("short"):
                 held_short.append(row)
-                short.append(row)
             elif not row.get("comparable"):
                 held_client.append(row)
-                not_comparable.append(row)
             elif is_adjusted(row):
                 held_adjusted.append(row)
-                withheld.append(row)
             elif row.get("_over_budget"):
                 held_budget.append(row)
-                over_budget.append(row)
             else:
                 ranked.append(row)
+        held_short.sort(key=_rank_key)
+        held_client.sort(key=_rank_key)
+        held_adjusted.sort(key=_rank_key)
+        held_budget.sort(key=_rank_key)
+        short.extend(held_short)
+        not_comparable.extend(held_client)
+        withheld.extend(held_adjusted)
+        over_budget.extend(held_budget)
         problem = problems.get(problem_id) or {}
         unit = rank_unit(problem, ranked)
         other_units = _unit_groups([row for row in ranked if row.get("unit") != unit])
@@ -1556,6 +1575,8 @@ def build_board(root: Path) -> dict:
             "over_budget": [_public(row) for row in sorted(held_budget, key=_rank_key)],
             "_ranked_rows": ranked,
         }
+    unparsed.sort(key=_listing_key)
+    unmapped.sort(key=_listing_key)
     return {
         "schema": BOARD_SCHEMA,
         "problems": problems_out,

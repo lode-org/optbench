@@ -196,9 +196,9 @@
    <tr><td data-label="Row" data-field="label">Gman (r235) · SD</td><td data-label="Family" data-field="family">Connect / double-ended</td><td data-label="Family rank" data-field="family_rank">12</td><td data-label="Unit" data-field="unit">force calls per image</td><td data-label="PAR-2" data-field="par2_mean"></td><td data-label="Cap" data-field="cap"></td><td data-label="Published" data-field="published">412</td><td data-label="Median calls" data-field="median_calls"></td><td data-label="Mean calls" data-field="mean_calls">412</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">not recorded</td><td data-label="Runs" data-field="n">13</td></tr>
    </tbody></table></div>
    <h3>Off the ranked table</h3><ul>
-   <li>eOn (3.5.0) · CG n=13, not yet on the harness counter.</li>
-   <li>eOn (3.5.0) · FIRE n=13, not yet on the harness counter.</li>
    <li>eOn (3.5.0) · LBFGS n=13, not yet on the harness counter.</li>
+   <li>eOn (3.5.0) · FIRE n=13, not yet on the harness counter.</li>
+   <li>eOn (3.5.0) · CG n=13, not yet on the harness counter.</li>
    <li>eOn (3.5.0) · QuickMin n=13, not yet on the harness counter.</li>
    <li>eOn (3.6.0) · LBFGS n=13, not yet on the harness counter.</li>
    <li>eOn (3.6.0) · LBFGS n=13, not yet on the harness counter.</li>

@@ -36,9 +36,11 @@ Archived rows that spell the same code are on that page.
    <a class="code-card" href="generated/codes/airss.html">AIRSS</a>
    <a class="code-card" href="generated/codes/vc-sqnm.html">vc-SQNM</a>
    <a class="code-card" href="generated/codes/softsaddle.html">SoftSaddle</a>
+   <a class="code-card" href="generated/codes/ogolem.html">ogolem</a>
+   <a class="code-card" href="generated/codes/pyamff.html">PyAMFF</a>
+   <a class="code-card" href="generated/codes/geometric.html">geomeTRIC</a>
    <a class="code-card" href="generated/codes/gpridge.html">GPRidge</a>
    <a class="code-card" href="generated/codes/unknown.html">unknown</a>
-   <a class="code-card" href="generated/codes/pyamff.html">Pyamff</a>
    <a class="code-card" href="generated/codes/gman.html">Gman</a>
    </div></section>
 
@@ -68,7 +70,9 @@ Archived rows that spell the same code are on that page.
    generated/codes/airss
    generated/codes/vc-sqnm
    generated/codes/softsaddle
+   generated/codes/ogolem
+   generated/codes/pyamff
+   generated/codes/geometric
    generated/codes/gpridge
    generated/codes/unknown
-   generated/codes/pyamff
    generated/codes/gman

@@ -135,10 +135,10 @@
    <tr><td data-label="Row" data-field="label">eOn (r2213) · eon-dimer-cg-20-rotations</td><td data-label="Family" data-field="family">Minimum mode</td><td data-label="Family rank" data-field="family_rank">10</td><td data-label="Unit" data-field="unit">force calls per campaign</td><td data-label="PAR-2" data-field="par2_mean"></td><td data-label="Cap" data-field="cap"></td><td data-label="Published" data-field="published">7.94707e+06</td><td data-label="Median calls" data-field="median_calls"></td><td data-label="Mean calls" data-field="mean_calls">7.94707e+06</td><td data-label="Hessians" data-field="hessian_calls">0</td><td data-label="FD calls" data-field="fd_calls">0</td><td data-label="Failures" data-field="failures">not recorded</td><td data-label="Runs" data-field="n">9</td></tr>
    </tbody></table></div>
    <h3>Off the ranked table</h3><ul>
+   <li>eOn (3.5.0 (d9cc6c5b) compiled Thu Nov 19 08:39:08 AM GMT 2026) · Dimer n=16974, counter client-search-results.</li>
    <li>eOn (3.5.0 (7ec1840) compiled Fri Oct 02 07:25:16 AM GMT 2026) · Dimer n=16974, counter client-search-results.</li>
    <li>eOn (3.5.0) n=10, not yet on the harness counter.</li>
    <li>eOn (3.5.0) n=10, not yet on the harness counter.</li>
-   <li>eOn (3.5.0 (d9cc6c5b) compiled Thu Nov 19 08:39:08 AM GMT 2026) · Dimer n=16974, counter client-search-results.</li>
    </ul>
    <p class="bench-note">Success on this problem: index 1 at eigenvalue tolerance 1e-6, force norm at the stop, barrier below 1.5 eV, and exactly one minimized endpoint the same structure as the minimized minimum.</p>
    <p class="bench-note">Two structures are the same when every atom is closer than distance_difference to its own position in the other (minimum image, atoms by index), as eOn Matter::compare.</p>

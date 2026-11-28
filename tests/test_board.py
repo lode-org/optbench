@@ -1,6 +1,7 @@
 """Behaviour of the v2 board built from committed result files."""
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -1164,3 +1165,86 @@ def test_initializations_are_the_full_set(tmp_path: Path):
     assert problem["full_n"] == 4
     assert problem["ranked"] == []
     assert problem["short"][0]["short_reason"] == "scored 2 of 4 starts"
+
+
+def _lj38_asv_problem(root: Path) -> None:
+    _problem(root, starts=1000, cap=10000)
+    problem = root / "problems" / "minimization" / "toy.toml"
+    text = problem.read_text(encoding="utf-8").replace('id = "minimization/toy"', 'id = "minimization/lj38"')
+    text = text.replace('problem = "toy"', 'problem = "lj38"')
+    text = text.replace('title = "Toy"', 'title = "Lennard-Jones 38 clusters"')
+    problem.write_text(text, encoding="utf-8")
+    template = root / "templates" / "eon-client" / "lbfgs-m20.toml"
+    template.parent.mkdir(parents=True)
+    template.write_text(
+        "\n".join(
+            [
+                'id = "eon-client/lbfgs-m20"',
+                'engine = "eon"',
+                'problem = "minimization/lj38"',
+                'code = "eOn"',
+                'code_version = "3.5.0"',
+                f'commit = "{PIN}"',
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+
+def _reverse_directory_walk(monkeypatch) -> None:
+    real = os.walk
+
+    def reversed_files(top, topdown=True, onerror=None, followlinks=False):
+        for dirpath, dirnames, filenames in real(top, topdown, onerror, followlinks):
+            yield dirpath, dirnames, sorted(filenames, reverse=True)
+
+    monkeypatch.setattr(os, "walk", reversed_files)
+
+
+def test_short_asv_rows_follow_cost_not_directory_order(tmp_path: Path, monkeypatch):
+    _lj38_asv_problem(tmp_path)
+    _asv_track(tmp_path, "bench_lj38.Lj38EonLbfgsM20", [1.0], commit="a" * 40)
+    _asv_track(tmp_path, "bench_lj38.Lj38EonLbfgsM20", [9.0], commit="f" * 40)
+    _reverse_directory_walk(monkeypatch)
+
+    short = build_board(tmp_path)["problems"]["minimization/lj38"]["short"]
+    assert [row["par2_mean"] for row in short] == [1.0, 9.0]
+
+
+def test_unmapped_asv_rows_follow_the_entry_name(tmp_path: Path, monkeypatch):
+    machine = tmp_path / "results" / "asv" / "testbox"
+    machine.mkdir(parents=True)
+    (machine / "machine.json").write_text(
+        json.dumps({"machine": "testbox", "version": 1}) + "\n",
+        encoding="utf-8",
+    )
+
+    def write(commit: str, entry: str) -> None:
+        params = [["'0'"]]
+        tracks = {"track_force_calls": [1.0], "track_success": [1.0]}
+        for failure in ("cap", "wrong_stationary", "divergence", "crash"):
+            tracks[f"track_failure_{failure}"] = [0.0]
+        columns = ["result", "params", "version", "started_at", "duration"]
+        results = {f"{entry}.{key}": [value, params, "v", 0, 0.1] for key, value in tracks.items()}
+        payload = {
+            "commit_hash": commit,
+            "env_name": "py",
+            "date": 1,
+            "params": {"machine": "testbox"},
+            "python": "3.12",
+            "requirements": {},
+            "env_vars": {},
+            "result_columns": columns,
+            "results": results,
+            "durations": {},
+            "version": 2,
+        }
+        (machine / f"{commit[:8]}-py.json").write_text(json.dumps(payload), encoding="utf-8")
+
+    write("a" * 40, "zzz.Zed")
+    write("f" * 40, "aaa.Aye")
+    _reverse_directory_walk(monkeypatch)
+
+    entries = [row["entry"] for row in build_board(tmp_path)["unmapped"]]
+    assert entries == ["aaa.Aye", "zzz.Zed"]
