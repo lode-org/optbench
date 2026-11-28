@@ -1,0 +1,39 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "OptBench",
+  "description": "Benchmark replay of the OptBench suite comparing geometry optimizers, saddle searches, and global optimization.",
+  "excludeFolders": [
+    "docs/include",
+    "docs/orgmode/generated",
+    "docs/orgmode/codes.org",
+    "docs/source/_static",
+    "docs/source/_templates",
+    "docs/newsfragments",
+    "newsfragments",
+    "paper-figures",
+    "archive",
+    "oracle",
+    "inputs",
+    "environments",
+    "optbench/data",
+    "softsaddle",
+    ".impeccable",
+    "tests",
+    "ci",
+    ".github"
+  ],
+  "excludeFiles": [
+    "LICENSE",
+    "archive.org",
+    "board.org",
+    "run.org",
+    "changelog.org",
+    "codes.rst",
+    "findings.md",
+    "summary.md",
+    "svn-compare.txt",
+    "eon-3.6.0-aladatom-akmc.rep1.search_results.txt",
+    "eon-3.6.0-standard-aladatom-akmc.rep1.search_results.txt"
+  ],
+  "rules": []
+}
